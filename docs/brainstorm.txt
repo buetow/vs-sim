@@ -1,0 +1,120 @@
+pstricks
+
+"Himmelobjekt"
+
+1.12 Methoden zur Synchronisation:
+	2.12.1 Interne Synchronisation in einem synchronen System
+		t_min und t_max, sowie t_max - t_min = "Die Unsicherheit"
+		t_2 = t + 1/2(t_max + t_min) -> Synchronisationsfehler < U/2
+	2.12.2 Christians Methode zur externen Synchronisation
+		Nutzt die Roundtrip-Time
+
+Features:
+	Lokale Zeit
+	Globale Zeit
+	Software Uhr vs. Hardware Uhr
+	Abweichungsgeschwindigkeit der Uhren
+	Externe Synchronisierung von Uhren
+	Interne Synchronisierung von Uhren
+
+
+=== Szenario Konfiguration === in [] bedeutet, wird spaeter implementiert
+
+Anzahl der Prozesse
+	1 - n (z.b. 3, wenn ein Prozess der Zeitserver, und 2 Prozesse Clients darstellen sollen)
+Szenario
+	Interne Synchronisation der Zeit
+		t_min -> Einstellen
+		t_max -> Einstellen
+	Externe Synchronisation der Zeit nach Christians Methode
+Voreingestellte Prozessausfallwahrscheinlichkeit (z.B. Prozessabsturz)
+	0% - 100%
+Voreingestellte Prozessverzoegerungswahrscheinlichkeit (z.B. wg. Scheduling des Betriebssystems)
+	0% - 100%
+Voreingestellte Nachrichtenausfallwahrscheinlichkeit (z.B. Paket geht im Netzwerk verloren)
+	0% - 100%
+Voreingestellte Nachrichtenverzoegerungswahrscheinlichkeit (z.B. wg. Netzwerkstau)
+	0% - 100%
+Voreingestellte Gangabweichungsgeschwindigkeit der Hardwareuhr (Keine Hardwareuhr geht 100% richtig)
+	0 - n 
+
+=== Main classes ===
+
+class Process 
+	processNumber (einzigartig, num@ipnummer)
+	time (lokale Hardwareuhr)
+
+	outageProbability (wahrscheinlichkeit, dass der prozess abstuerzt)
+	delayProbability (wahrscheinlichkeit, dass der prozess sich verzoegert)
+	programmingVector (gibt an, wann [welche zeit] der prozess eine anfrage startet)
+
+=== Message classes ===
+
+class Message (Wird als Javaobjekt an die anderen Prozesse uebergeben) 
+	receivers (all [standard] oder liste aller prozesse [nummern])
+	isRequest (true = request, false = answer)
+	sendTime (zeit vom sender)
+	recvTime (zeit vom empfaenger)
+	messageComment (irgendein string)
+	messageType (von welchem typ, evtl weglassen und instanceof operator nutzen)
+		internSync
+		externSync
+		etc..
+	outageProbability (wahscheinlichkeit, dass das nachrichtenpaket verloren geht)
+	delayProbability (wahrscheinlichkeit, dass der nachrichtenversand sich verzoegert)
+
+class InternalSynchronizationMessage extends Message
+	time
+
+class ExternalSynchronizationMessage extends Message /* Christians Methode */
+	time
+	requestTime
+
+
+=== Implementation classes ===
+
+abstract class Implementation
+	abstract sendRequestMessage(...)
+
+	receivedMessage(Message message)
+		if (!isForMe(message.receivers))
+			return
+		if (message.isRequest)
+			receivedRequestMessage(message)
+		else
+			receivedResponseMessage(message)
+
+	abstract receivedRequestMessage(Message message)
+
+	abstract receivedResponseMessage(Message message)
+
+
+class InternalSynchronizationImplementation extends Implementation
+	sendRequestMessage
+		message.isRequest = true
+		sendOverNetwork(message)
+
+	receivedRequestMessage
+		process.time = message.time
+		sendOverNetwork(message)
+
+	receivedResponseMessage(Message message)
+		message.time = process.time + 1/2 * (t_max + t_min)
+
+class ExternalSynchronizationImplementation extends Implementation
+	sendRequestMessage
+		message.isRequest = true
+		message.requestTime = process.time
+		sendOverNetwork(message)
+
+	receivedRequestMessage
+		message.time = time
+		sendOverNetwork(message)
+
+	receivedResponseMessage(Message message)
+		rtt = process.time - message.requestTime
+		process.time = message.time + rtt / 2
+
+	
+
+

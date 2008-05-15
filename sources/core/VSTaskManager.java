@@ -1,0 +1,291 @@
+package core;
+
+import java.util.*;
+
+import protocols.*;
+import prefs.*;
+
+public class VSTaskManager {
+    private PriorityQueue<VSTask> tasks;
+    private PriorityQueue<VSTask> globalTasks;
+    private LinkedList<VSTask> fullfilledProgrammedTasks;
+    public final static boolean PROGRAMMED_TASK = true;
+    public final static boolean NOT_PROGRAMMED_TASK = false;
+    private VSPrefs prefs;
+
+    public VSTaskManager(VSPrefs prefs) {
+        this.prefs = prefs;
+        Comparator<VSTask> comparator = createComparator();
+        this.tasks = new PriorityQueue<VSTask>(100, comparator);
+        this.globalTasks = new PriorityQueue<VSTask>(100, comparator);
+        this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
+    }
+
+    private Comparator<VSTask> createComparator() {
+        return new Comparator<VSTask>() {
+            public int compare(VSTask a, VSTask b) {
+                if (a.getTaskTime() > b.getTaskTime())
+                    return 1;
+
+                if (a.getTaskTime() < b.getTaskTime())
+                    return -1;
+
+                return 0;
+            }
+        };
+    }
+
+    public synchronized void runVSTasks(final long step, final long offset, final long lastGlobalTime) {
+        VSTask task = null;
+        VSProcess process = null;
+        long localTime;
+        long offsetTime;
+        long taskTime;
+        long globalTime;
+        final long globalOffsetTime = lastGlobalTime + step;
+        boolean redo;
+
+        do {
+            redo = false;
+
+            /* Run tasks which have for its schedule the global time */
+            while (globalTasks.size() != 0) {
+                task = globalTasks.peek();
+                process = task.getProcess();
+                localTime = process.getTime();
+                offsetTime = localTime + step;
+                taskTime = task.getTaskTime();
+                globalTime = process.getGlobalTime();
+
+                if (globalOffsetTime < taskTime)
+                    break;
+
+                globalTasks.poll();
+                redo = true;
+
+                if (process.isCrashed()) {
+                    if (task.isProgrammed())
+                        fullfilledProgrammedTasks.add(task);
+                    continue;
+                }
+
+                if (globalOffsetTime == taskTime) {
+                    process.setGlobalTime(globalOffsetTime);
+                    process.setLocalTime(offsetTime);
+                    process.timeModified(false);
+                    task.run();
+                    process.setGlobalTime(globalTime);
+                    if (process.isCrashed())
+                        process.addClockOffset(step);
+                    if (process.timeModified())
+                        process.addClockOffset(process.getTime()-offsetTime);
+                    process.setLocalTime(localTime);
+
+                } else /* if (globalOffsetTime > taskTime) */ {
+                    final long diff = globalOffsetTime - taskTime;
+                    if (globalOffsetTime - diff < lastGlobalTime)
+                        process.setGlobalTime(lastGlobalTime);
+                    else
+                        process.setGlobalTime(globalOffsetTime - diff);
+                    process.setLocalTime(offsetTime - diff);
+                    process.timeModified(false);
+                    task.run();
+                    process.setGlobalTime(globalTime);
+                    if (process.isCrashed())
+                        process.addClockOffset(step);
+                    if (process.timeModified())
+                        process.addClockOffset(process.getTime()-(offsetTime-diff));
+                    process.setLocalTime(localTime);
+                }
+
+                if (task.isProgrammed())
+                    fullfilledProgrammedTasks.add(task);
+            }
+
+            /* Run tasks which have for its schedule the local process times */
+            while (tasks.size() != 0) {
+                task = tasks.peek();
+                process = task.getProcess();
+                localTime = process.getTime();
+                offsetTime = localTime + step;
+                taskTime = task.getTaskTime();
+                globalTime = process.getGlobalTime();
+
+                if (offsetTime < taskTime)
+                    break;
+
+                tasks.poll();
+                redo = true;
+
+                if (process.isCrashed()) {
+                    if (task.isProgrammed())
+                        fullfilledProgrammedTasks.add(task);
+                    continue;
+                }
+
+                if (offsetTime == taskTime) {
+                    process.setGlobalTime(globalOffsetTime);
+                    process.setLocalTime(offsetTime);
+                    process.timeModified(false);
+                    task.run();
+                    process.setGlobalTime(globalTime);
+                    if (process.timeModified())
+                        process.addClockOffset(process.getTime()-offsetTime);
+                    process.setLocalTime(localTime);
+
+                } else /* if (offsetTime > taskTime) */ {
+                    final long diff = offsetTime - taskTime;
+                    if (globalOffsetTime - diff < lastGlobalTime)
+                        process.setGlobalTime(lastGlobalTime);
+                    else
+                        process.setGlobalTime(globalOffsetTime - diff);
+                    process.setLocalTime(offsetTime - diff);
+                    process.timeModified(false);
+                    task.run();
+                    process.setGlobalTime(globalTime);
+                    if (process.timeModified())
+                        process.addClockOffset(process.getTime()-(offsetTime-diff));
+                    process.setLocalTime(localTime);
+                }
+
+                if (task.isProgrammed())
+                    fullfilledProgrammedTasks.add(task);
+            }
+
+        } while (redo);
+    }
+
+    public synchronized void reset() {
+        PriorityQueue<VSTask> tmp = tasks;
+        PriorityQueue<VSTask> tmp2 = globalTasks;
+        tasks = new PriorityQueue<VSTask>();
+        globalTasks = new PriorityQueue<VSTask>();
+
+        while (fullfilledProgrammedTasks.size() != 0) {
+            VSTask task = fullfilledProgrammedTasks.removeFirst();
+            if (task.isProgrammed())
+                insert(task);
+        }
+
+        while (tmp.size() != 0) {
+            VSTask task = tmp.poll();
+            if (task.isProgrammed())
+                insert(task);
+        }
+
+        while (tmp2.size() != 0) {
+            VSTask task = tmp2.poll();
+            if (task.isProgrammed())
+                insert(task);
+        }
+    }
+
+    private void insert(VSTask task) {
+        if (task.isGlobalTimed())
+            globalTasks.add(task);
+        else
+            tasks.add(task);
+    }
+
+    public void addTask(VSTask task) {
+        addTask(task, VSTaskManager.NOT_PROGRAMMED_TASK);
+    }
+
+    public synchronized void addTask(VSTask task, boolean isProgrammed) {
+        task.isProgrammed(isProgrammed);
+        insert(task);
+    }
+
+    public synchronized void removeTask(VSTask task) {
+        if (task.isGlobalTimed())
+            globalTasks.remove(task);
+        else
+            tasks.remove(task);
+    }
+
+    public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {
+        LinkedList<VSTask> protocolVSTasks = new LinkedList<VSTask>();
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (task.isProtocol(protocol))
+                protocolVSTasks.addLast(task);
+
+        for (VSTask task : globalTasks)
+            if (task.isProtocol(protocol))
+                protocolVSTasks.addLast(task);
+
+        for (VSTask task : tasks)
+            if (task.isProtocol(protocol))
+                protocolVSTasks.addLast(task);
+
+        return protocolVSTasks;
+    }
+
+    public synchronized LinkedList<VSTask> getNonProtocolTasks(VSProtocol protocol) {
+        LinkedList<VSTask> nonProtocolTasks = new LinkedList<VSTask>();
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (!task.isProtocol(protocol))
+                nonProtocolTasks.addLast(task);
+
+        for (VSTask task : globalTasks)
+            if (!task.isProtocol(protocol))
+                nonProtocolTasks.addLast(task);
+
+        for (VSTask task : tasks)
+            if (!task.isProtocol(protocol))
+                nonProtocolTasks.addLast(task);
+
+        return nonProtocolTasks;
+    }
+
+    public synchronized void modifyProtocolTasks(VSProtocol protocol, LinkedList<VSTask> protocolVSTasks) {
+        VSProcess process = protocol.getProcess();
+        LinkedList<VSTask> nonProtocolTasks = getNonProtocolTasks(protocol);
+        //System.out.println("NON PROTO: " + nonProtocolTasks);
+        ListIterator<VSTask> iter1 = protocolVSTasks.listIterator(0);
+        ListIterator<VSTask> iter2 = nonProtocolTasks.listIterator(0);
+        long localTime = process.getTime();
+
+        fullfilledProgrammedTasks.clear();
+        globalTasks.clear();
+        tasks.clear();
+
+        for (VSTask task : nonProtocolTasks) {
+            if (task.getTaskTime() < localTime)
+                fullfilledProgrammedTasks.addLast(task);
+            else
+                insert(task);
+        }
+
+        for (VSTask task : protocolVSTasks) {
+            if (task.getTaskTime() < localTime)
+                fullfilledProgrammedTasks.addLast(task);
+            else
+                insert(task);
+        }
+    }
+
+    public String toString() {
+        final String taskManager = prefs.getString("lang.taskmanager");
+        String descr = "fullfilled: ";
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            descr += task + "; ";
+
+        descr += "global: ";
+
+        for (VSTask task : globalTasks)
+            descr += task + "; ";
+
+        descr += "local: ";
+
+        for (VSTask task : tasks)
+            descr += task + "; ";
+
+        if (descr.endsWith("; "))
+            return taskManager + " (" + descr.substring(0, descr.length()-2) + ")";
+
+        return taskManager + " (" + descr + ")";
+    }
+}

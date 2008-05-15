@@ -1,0 +1,12 @@
+Software:
+	Apache Ant
+	GVim
+	Java 1.6 JDK
+	Sodipodi
+	Subversion
+	The Gimp
+	FreeBSD
+
+Check out:
+	pstricks (LaTeX plugin) fuer grafiken
+

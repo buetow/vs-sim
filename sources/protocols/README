@@ -1,0 +1,10 @@
+How to add a new protocol:
+
+1. Copy the file DummyProtocol.java into YourOwnNiceProtocol.java
+
+2. Edit YourOwnNiceProtocol.java and replace the classname!
+
+3. Edit the initialize method of RegisteredProtocols.java and add the classname
+of your protocol.  E.g.: "org.buetow.vs.protocols.YourOwnNiceProtocol"
+
+
