@@ -105,7 +105,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.simulation.started", "Simulation gestartet");
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
-        initString("name", "Verteilte Systeme v0.1");
+        initString("name", "Verteilte Systeme v0.2-devel");
     }
 
     public void fillDefaultIntegers() {
