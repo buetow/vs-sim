@@ -30,7 +30,7 @@ public final class VSProcess extends VSPrefs {
     private static int processCounter;
     private boolean isCrashed;
     private long lamportTime;
-    private ArrayList<VSLamport> lamportTimeHistory;
+    private ArrayList<VSLamportTime> lamportTimeHistory;
     private VSVectorTime vectorTime;
     private ArrayList<VSVectorTime> vectorTimeHistory;
 
@@ -109,7 +109,7 @@ public final class VSProcess extends VSPrefs {
 
     private void initTimeFormats() {
         lamportTime = 0;
-        lamportTimeHistory = new ArrayList<VSLamport>();
+        lamportTimeHistory = new ArrayList<VSLamportTime>();
 
         vectorTime = new VSVectorTime(0);
         vectorTimeHistory = new ArrayList<VSVectorTime>();
@@ -397,12 +397,12 @@ public final class VSProcess extends VSPrefs {
 
     public synchronized void setLamportTime(long lamportTime) {
         this.lamportTime = lamportTime;
-        lamportTimeHistory.add(new VSLamport(globalTime, lamportTime));
+        lamportTimeHistory.add(new VSLamportTime(globalTime, lamportTime));
     }
 
     public synchronized VSTime[] getLamportTimeArray() {
         final int size = lamportTimeHistory.size();
-        final VSTime[] arr = new VSLamport[size];
+        final VSTime[] arr = new VSLamportTime[size];
 
         for (int i = 0; i < size; ++i)
             arr[i] = (VSTime) lamportTimeHistory.get(i);
