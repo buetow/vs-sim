@@ -31,7 +31,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     }
 
     public final String getProtocolName() {
-        return RegisteredProtocols.getProtocolName(protocolClassname);
+        return VSRegisteredProtocols.getProtocolName(protocolClassname);
     }
 
     public final VSProcess getProcess() {
@@ -121,6 +121,6 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
             type += prefs.getString("lang.client");
 
         return prefs.getString("lang.protocol") + ": "
-               + RegisteredProtocols.getProtocolName(getProtocolClassname()) + " " + type;// + "; ID: " + getID();
+               + VSRegisteredProtocols.getProtocolName(getProtocolClassname()) + " " + type;// + "; ID: " + getID();
     }
 }

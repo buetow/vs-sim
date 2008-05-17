@@ -65,7 +65,7 @@ public class VSProcessEditor extends VSEditorFrame {
     private JPanel createProtocolSelector() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        Vector<String> registeredProtocols = RegisteredProtocols.getProtocolNames();
+        Vector<String> registeredProtocols = VSRegisteredProtocols.getProtocolNames();
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -83,7 +83,7 @@ public class VSProcessEditor extends VSEditorFrame {
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getActionCommand().equals(prefs.getString("lang.edit"))) {
                     String protocolName = (String) comboBox.getSelectedItem();
-                    String protocolClassname = RegisteredProtocols.getProtocolClassname(protocolName);
+                    String protocolClassname = VSRegisteredProtocols.getProtocolClassname(protocolName);
                     VSProtocol protocol = null;
                     if (process.objectExists(protocolClassname)) {
                         Object object = process.getObject(protocolClassname);
@@ -92,7 +92,7 @@ public class VSProcessEditor extends VSEditorFrame {
                         else
                             return;
                     } else {
-                        protocol = RegisteredProtocols.getProtocolInstanceByName(protocolName, process);
+                        protocol = VSRegisteredProtocols.getProtocolInstanceByName(protocolName, process);
                         process.setObject(protocolClassname, protocol);
                     }
                     new VSProtocolEditor(prefs, frame, protocol);

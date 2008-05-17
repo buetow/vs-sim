@@ -19,7 +19,7 @@ public class VSMessage extends VSPrefs implements VSEvent {
     }
 
     public String getProtocolName() {
-        return RegisteredProtocols.getProtocolName(getProtocolClassname());
+        return VSRegisteredProtocols.getProtocolName(getProtocolClassname());
     }
 
     public String getProtocolClassname() {

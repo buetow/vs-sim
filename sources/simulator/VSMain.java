@@ -28,7 +28,7 @@ public class VSMain {
         } catch (Exception e) { }
 
         VSPrefs prefs = VSDefaultPrefs.init();
-        RegisteredProtocols.init(prefs);
+        VSRegisteredProtocols.init(prefs);
         new VSMain(prefs);
     }
 }

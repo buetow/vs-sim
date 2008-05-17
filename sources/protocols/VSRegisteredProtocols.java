@@ -6,7 +6,7 @@ import prefs.*;
 import core.*;
 import utils.*;
 
-public final class RegisteredProtocols {
+public final class VSRegisteredProtocols {
     private static HashMap<String,String> protocolClassnames;
     private static HashMap<String,String> protocolNames;
     private static VSPrefs prefs;
