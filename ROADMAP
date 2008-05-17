@@ -1,13 +1,11 @@
 TODO:
 
-Angeben, ob Prozesse ihre eigenen Nachrichten erhalten
-Angeben, ob Nachrichten, die ein Prozess von sich selbst erhaelt, verzoegert sind
 Prozesse manuell abstuerzen lassen
 Prozesse duerfen wiederbelebt werden
 
 Prozess Quick Panel: Uhrabweichung / Geschwindigkeit direkt einstellen koennen
 Event Manager (Prozessabstuerze genau vorprogrammieren)
-Himmelobjekt
+"Himmelobjekt"
 
 Ganze simulationseinstellungen abspeichern/laden koennen
 Systemschnitte?

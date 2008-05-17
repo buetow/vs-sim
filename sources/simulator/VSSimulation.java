@@ -257,7 +257,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 String actionCommand = ae.getActionCommand();
-
                 if (actionCommand.equals(prefs.getString("lang.logging.clear"))) {
                     logging.clear();
                 }
