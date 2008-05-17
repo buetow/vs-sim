@@ -1,4 +1,4 @@
-package core;
+package core.time;
 
 public class VSLamportTime implements VSTime {
     private long globalTime;

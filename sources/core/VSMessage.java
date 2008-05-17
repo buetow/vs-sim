@@ -1,8 +1,9 @@
 package core;
 
+import core.time.*;
+import events.*;
 import prefs.VSPrefs;
 import protocols.*;
-import events.VSEvent;
 
 public class VSMessage extends VSPrefs implements VSEvent {
     private String protocolClassname;

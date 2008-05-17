@@ -3,11 +3,12 @@ package core;
 import java.awt.*;
 import java.util.*;
 
+import core.time.*;
+import events.*;
 import prefs.*;
 import protocols.*;
 import simulator.*;
 import utils.*;
-import events.*;
 
 public final class VSProcess extends VSPrefs {
     private VSTask randomCrashTask;

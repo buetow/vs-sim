@@ -7,10 +7,11 @@ import java.util.*;
 import javax.swing.*;
 
 import core.*;
+import core.time.*;
 import editors.*;
+import events.*;
 import prefs.*;
 import utils.*;
-import events.*;
 
 public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
     private VSProcess highlightedProcess;
