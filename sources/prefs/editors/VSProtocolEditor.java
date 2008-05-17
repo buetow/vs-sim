@@ -1,4 +1,4 @@
-package editors;
+package prefs.editors;
 
 import java.awt.*;
 import java.awt.event.*;

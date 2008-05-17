@@ -8,9 +8,9 @@ import javax.swing.*;
 
 import core.*;
 import core.time.*;
-import editors.*;
 import events.*;
 import prefs.*;
+import prefs.editors.*;
 import utils.*;
 
 public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {

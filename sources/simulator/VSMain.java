@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import editors.*;
 import prefs.*;
+import prefs.editors.*;
 import protocols.*;
 
 public class VSMain {
