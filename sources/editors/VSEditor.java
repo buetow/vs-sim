@@ -228,7 +228,6 @@ abstract class VSEditor implements ActionListener {
             booleanFields.put(key, valField);
         }
 
-
         for (String key : longKeys) {
             String fullKey = VSPrefs.LONG_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);

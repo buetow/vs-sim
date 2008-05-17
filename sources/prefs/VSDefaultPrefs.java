@@ -30,12 +30,12 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillWithDefaults() {
         super.clear();
+        fillDefaultBooleans();
         fillDefaultColors();
         fillDefaultFloats();
         fillDefaultIntegers();
         fillDefaultLongs();
         fillDefaultStrings();
-        fillDefaultBooleans();
     }
 
     public void fillDefaultStrings() {
@@ -175,5 +175,6 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public void fillDefaultBooleans() {
+        initBoolean("sim.message.own.recv", false, "Prozesse empfangen ihre eigenen Nachrichten");
     }
 }

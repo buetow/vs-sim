@@ -57,8 +57,8 @@ public class BerkelyTimeProtocol extends VSProtocol {
             process.setTime(avgTime);
             /* Tell all other processes what to do in order to justify their times */
             sendJustifyRequests(avgTime);
-			/* Start "clean" next time */
-			onClientReset();
+            /* Start "clean" next time */
+            onClientReset();
         }
     }
 
@@ -91,7 +91,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
             message.setBoolean("isJustify", true);
             message.setLong("timeDiff", diff);
             message.setInteger("receiverProcessID", processID);
-			sendMessage(message);
+            sendMessage(message);
         }
     }
 
@@ -104,17 +104,17 @@ public class BerkelyTimeProtocol extends VSProtocol {
             message.setInteger("processID", process.getProcessID());
             message.setLong("time", process.getTime());
             message.setBoolean("isResponse", true);
-			sendMessage(message);
+            sendMessage(message);
 
         } else if (recvMessage.getBoolean("isJustify")) {
             /* Check if it's "my" justify message */
-            if (recvMessage.getInteger("receiverProcessID") != process.getProcessID()) 
+            if (recvMessage.getInteger("receiverProcessID") != process.getProcessID())
                 return;
 
             long timeDiff = recvMessage.getLong("timeDiff");
             long recvTime = process.getTime();
             long newTime = process.getTime() + timeDiff;
-			logg("Neue Zeit: " + newTime);
+            logg("Neue Zeit: " + newTime);
 
             process.setTime(newTime);
         }

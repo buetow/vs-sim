@@ -570,9 +570,10 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         VSTask task = null;
         VSProcess sendingProcess = message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
+        boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
 
         for (VSProcess receiverProcess : processes) {
-            if (receiverProcess.equals(sendingProcess)) {
+            if (receiverProcess.equals(sendingProcess) && recvOwn) {
                 deliverTime = sendingProcess.getGlobalTime();
                 task = new VSTask(deliverTime, receiverProcess, message);
                 taskManager.addTask(task);

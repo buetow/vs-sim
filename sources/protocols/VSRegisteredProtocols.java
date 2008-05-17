@@ -51,7 +51,7 @@ public final class VSRegisteredProtocols {
         if (protocolObj instanceof VSProtocol) {
             VSProtocol protocol = (VSProtocol) protocolObj;
             protocol.init(process);
-			return protocol;
+            return protocol;
         }
 
         return null;
