@@ -41,7 +41,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     protected void sendMessage(VSMessage message) {
         process.increaseLamportTime();
         process.increaseVectorTime();
-        message.setSendingProcess(process);
+        message.init(process);
         process.sendMessage(message);
     }
 

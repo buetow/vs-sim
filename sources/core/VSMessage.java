@@ -18,6 +18,12 @@ public class VSMessage extends VSPrefs implements VSEvent {
         this.messageID = ++messageCounter;
     }
 
+    public void init(VSProcess process) {
+        this.sendingProcess = process;
+        lamportTime = sendingProcess.getLamportTime();
+        vectorTime = sendingProcess.getVectorTime().getCopy();
+    }
+
     public String getProtocolName() {
         return VSRegisteredProtocols.getProtocolName(getProtocolClassname());
     }
@@ -28,12 +34,6 @@ public class VSMessage extends VSPrefs implements VSEvent {
 
     public long getMessageID() {
         return messageID;
-    }
-
-    public void setSendingProcess(VSProcess sendingProcess) {
-        this.sendingProcess = sendingProcess;
-        lamportTime = sendingProcess.getLamportTime();
-        vectorTime = sendingProcess.getVectorTime().getCopy();
     }
 
     public VSProcess getSendingProcess() {

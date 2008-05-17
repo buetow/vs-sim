@@ -5,7 +5,7 @@ import events.*;
 import protocols.VSProtocol;
 import simulator.*;
 
-public class VSTask implements Comparable {
+public class VSTask {
     //public final static int RUN_ON_CLIENT_START = 1;
     private long taskTime;
     private VSEvent event;
@@ -114,7 +114,7 @@ public class VSTask implements Comparable {
 
     private void onProcessEventStart() {
         final VSProcessEvent processEvent = (VSProcessEvent) event;
-        processEvent.onStart(process);
+        processEvent.onStart();
     }
 
     public long getTaskTime() {
@@ -127,20 +127,6 @@ public class VSTask implements Comparable {
 
     private void logg(String message) {
         process.logg(message);
-    }
-
-    public int compareTo(Object object) {
-        if (object instanceof VSTask) {
-            final VSTask task = (VSTask) object;
-
-            if (taskTime < task.getTaskTime())
-                return -1;
-
-            else if (taskTime > task.getTaskTime())
-                return 1;
-        }
-
-        return 0;
     }
 
     public String toString() {

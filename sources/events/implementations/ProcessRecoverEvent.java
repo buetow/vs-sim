@@ -1,10 +1,11 @@
 package events.implementations;
 
 import core.VSProcess;
+import events.VSProcessEvent;
 
 public class ProcessRecoverEvent extends VSProcessEvent {
-    public void onStart(VSProcess process) {
-        process.logg("Recovered");
+    public void onStart() {
+        process.logg(prefs.getString("lang.recovered"));
         process.isCrashed(false);
     }
 }

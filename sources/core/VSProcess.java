@@ -5,6 +5,7 @@ import java.util.*;
 
 import core.time.*;
 import events.*;
+import events.implementations.*;
 import prefs.*;
 import protocols.*;
 import simulator.*;
@@ -225,9 +226,10 @@ public final class VSProcess extends VSPrefs {
                 taskManager.removeTask(randomCrashTask);
 
             if (crashTime >= 0 && crashTime >= getGlobalTime())  {
-                randomCrashTask = new VSTask(crashTime, this, new ProcessCrashEvent());
+                VSProcessEvent event = new ProcessCrashEvent();
+                event.init(this);
+                randomCrashTask = new VSTask(crashTime, this, event);
                 taskManager.addTask(randomCrashTask);
-                //System.out.println("DEBUG " + processID + " crashes at " + crashTime);
 
             } else {
                 randomCrashTask = null;

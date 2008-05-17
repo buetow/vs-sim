@@ -9,6 +9,7 @@ import javax.swing.*;
 import core.*;
 import core.time.*;
 import events.*;
+import events.implementations.*;
 import prefs.*;
 import prefs.editors.*;
 import utils.*;
@@ -603,8 +604,55 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     }
 
     public void mouseClicked(MouseEvent e) {
-        VSProcess process = getProcessAtYPos(e.getY());
-        editProcess(process);
+        final VSProcess process = getProcessAtYPos(e.getY());
+
+        if (process == null)
+            return;
+
+        if (SwingUtilities.isRightMouseButton(e)) {
+            ActionListener actionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    String actionCommand = ae.getActionCommand();
+                    if (actionCommand.equals(prefs.getString("lang.edit"))) {
+                        editProcess(process);
+
+                    } else if (actionCommand.equals(prefs.getString("lang.crash"))) {
+                        VSProcessEvent event = new ProcessCrashEvent();
+                        event.init(process);
+                        taskManager.addTask(new VSTask(process.getTime(), process, event));
+
+                    } else if (actionCommand.equals(prefs.getString("lang.recover"))) {
+                        VSProcessEvent event = new ProcessRecoverEvent();
+                        event.init(process);
+                        taskManager.addTask(new VSTask(process.getTime(), process, event));
+                    }
+                }
+            };
+
+            JPopupMenu popup = new JPopupMenu();
+            JMenuItem item = new JMenuItem(prefs.getString("lang.edit"));
+            item.addActionListener(actionListener);
+            popup.add(item);
+
+            item = new JMenuItem(prefs.getString("lang.crash"));
+            if (process.isCrashed() || isPaused || time == 0)
+                item.setEnabled(false);
+            else
+                item.addActionListener(actionListener);
+            popup.add(item);
+
+            item = new JMenuItem(prefs.getString("lang.recover"));
+            if (!process.isCrashed() || isPaused || time == 0)
+                item.setEnabled(false);
+            else
+                item.addActionListener(actionListener);
+            popup.add(item);
+
+            popup.show(e.getComponent(), e.getX(), e.getY());
+
+        } else {
+            editProcess(process);
+        }
     }
 
     public void editProcess(int processNum) {
