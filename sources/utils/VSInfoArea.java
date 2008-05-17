@@ -6,15 +6,15 @@ import javax.swing.border.*;
 
 public class VSInfoArea extends JTextPane {
     public VSInfoArea() {
-        initialize();
+        init();
     }
 
     public VSInfoArea(String text) {
         setText(text);
-        initialize();
+        init();
     }
 
-    private void initialize() {
+    private void init() {
         setOpaque(false);
         setBorder(null);
         setFocusable(false);

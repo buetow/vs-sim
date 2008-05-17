@@ -5,11 +5,11 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 
 public class VSDefaultPrefs extends VSPrefs {
-    public static VSPrefs initialize() {
-        return initialize(VSPrefs.PREFERENCES_FILENAME);
+    public static VSPrefs init() {
+        return init(VSPrefs.PREFERENCES_FILENAME);
     }
 
-    public static VSPrefs initialize(String fileName) {
+    public static VSPrefs init(String fileName) {
         File file = new File(fileName);
         VSPrefs prefs = null;
 
@@ -40,7 +40,8 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultStrings() {
         /* Internal prefs */
-        initString("lang.time.lamport", "Lamport");
+        initString("lang.time.vector", "Vektorzeit");
+        initString("lang.time.lamport", "Lamportzeit");
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.logging.active", "Logging");
         initString("lang.message", "Nachricht");
@@ -141,7 +142,7 @@ public class VSDefaultPrefs extends VSPrefs {
 
         initIntegerUnit("window.prefs.xsize", 400, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
         initIntegerUnit("window.prefs.ysize", 650, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
-        initIntegerUnit("window.loggsize", 350, "Y-Grösse des Loggingfensters", 100, 1000, "px");
+        initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
         initIntegerUnit("window.splitsize", 180, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
         initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");

@@ -7,7 +7,7 @@ public class PingPongProtocol extends VSProtocol {
     private int clientCounter;
     private int serverCounter;
 
-    public PingPongProtocol() {
+    protected void onInit() {
         setProtocolClassname(getClass().toString());
     }
 
@@ -16,7 +16,6 @@ public class PingPongProtocol extends VSProtocol {
     }
 
     protected void onClientStart() {
-
         VSMessage message = new VSMessage(getProtocolClassname());
         message.setBoolean("fromClient", true);
         message.setInteger("counter", ++clientCounter);

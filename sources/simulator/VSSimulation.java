@@ -23,6 +23,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private VSPrefs prefs;
     private boolean hasStarted = false;
     private VSLogging logging;
+    private JCheckBox lamportActiveCheckBox;
+    private JCheckBox vectorTimeActiveCheckBox;
 
     public VSSimulation (VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("name"), relativeTo);
@@ -193,16 +195,31 @@ public class VSSimulation extends VSFrame implements ActionListener {
         });
         toolsPanel.add(loggingActiveCheckBox);
 
-        JCheckBox lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
+        lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
         lamportActiveCheckBox.setSelected(false);
         lamportActiveCheckBox.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 AbstractButton abstractButton = (AbstractButton) ce.getSource();
                 ButtonModel buttonModel = abstractButton.getModel();
                 simulationPanel.showLamport(buttonModel.isSelected());
+                if (buttonModel.isSelected())
+                    vectorTimeActiveCheckBox.setSelected(false);
             }
         });
         toolsPanel.add(lamportActiveCheckBox);
+
+        vectorTimeActiveCheckBox = new JCheckBox(prefs.getString("lang.time.vector"));
+        vectorTimeActiveCheckBox.setSelected(false);
+        vectorTimeActiveCheckBox.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                ButtonModel buttonModel = abstractButton.getModel();
+                simulationPanel.showVectorTime(buttonModel.isSelected());
+                if (buttonModel.isSelected())
+                    lamportActiveCheckBox.setSelected(false);
+            }
+        });
+        toolsPanel.add(vectorTimeActiveCheckBox);
 
         return toolsPanel;
     }
@@ -252,7 +269,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             dispose();
 
         } else if (source.getText().equals(prefs.getString("lang.new"))) {
-            new VSMain(VSDefaultPrefs.initialize(), VSSimulation.this);
+            new VSMain(VSDefaultPrefs.init(), VSSimulation.this);
 
         } else if (source.getText().equals(prefs.getString("lang.about"))) {
             new VSAbout(prefs, VSSimulation.this);

@@ -20,7 +20,7 @@ public class VSSimulationEditor extends VSEditorFrame {
               + " - " + prefs.getString("lang.prefs"));
 
         startNewVSSimulation = true;
-        initialize();
+        init();
     }
 
     public VSSimulationEditor(VSPrefs prefs, Component relativeTo, int prefsCategory) {
@@ -30,10 +30,10 @@ public class VSSimulationEditor extends VSEditorFrame {
               prefsCategory);
 
         startNewVSSimulation = false;
-        initialize();
+        init();
     }
 
-    private void initialize() {
+    private void init() {
         super.infoArea.setText(prefs.getString("lang.prefs.info!"));
     }
 

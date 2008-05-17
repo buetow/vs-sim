@@ -24,7 +24,7 @@ public class VSProcessEditor extends VSEditorFrame {
 
         this.process = process;
 
-        initialize();
+        init();
     }
 
     public VSProcessEditor(VSPrefs prefs, Component relativeTo, VSProcess process, int prefsCategory) {
@@ -35,10 +35,10 @@ public class VSProcessEditor extends VSEditorFrame {
 
         this.process = process;
 
-        initialize();
+        init();
     }
 
-    private void initialize() {
+    private void init() {
         super.infoArea.setText(prefs.getString("lang.prefs.process.info!"));
         getFrame().disposeWithParent();
         createButtonPanel();
@@ -92,10 +92,8 @@ public class VSProcessEditor extends VSEditorFrame {
                         else
                             return;
                     } else {
-                        protocol = RegisteredProtocols.getProtocolInstanceByName(protocolName);
+                        protocol = RegisteredProtocols.getProtocolInstanceByName(protocolName, process);
                         process.setObject(protocolClassname, protocol);
-                        protocol.setProcess(process);
-                        protocol.setVSPrefs(prefs);
                     }
                     new VSProtocolEditor(prefs, frame, protocol);
                 }

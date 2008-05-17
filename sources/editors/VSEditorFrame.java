@@ -19,16 +19,16 @@ public abstract class VSEditorFrame extends VSEditor {
     public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title) {
         super(prefs, prefsToEdit);
         frame = new VSFrame(title, relativeTo);
-        initialize();
+        init();
     }
 
     public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title, int prefsCategory) {
         super(prefs, prefsToEdit, prefsCategory);
         frame = new VSFrame(title, relativeTo);
-        initialize();
+        init();
     }
 
-    private void initialize() {
+    private void init() {
         frame.setJMenuBar(createJMenuBar());
         frame.setContentPane(createContentPane());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -198,7 +198,7 @@ public abstract class VSEditorFrame extends VSEditor {
 
             if (ret == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
-                prefsToEdit = prefs = VSDefaultPrefs.initialize(file.getName());
+                prefsToEdit = prefs = VSDefaultPrefs.init(file.getName());
                 resetEditPanel();
             }
 

@@ -10,14 +10,14 @@ import protocols.*;
 
 public class VSMain {
     public VSMain(VSPrefs prefs) {
-        initialize(prefs, null);
+        init(prefs, null);
     }
 
     public VSMain(VSPrefs prefs, Component relativeTo) {
-        initialize(prefs, relativeTo);
+        init(prefs, relativeTo);
     }
 
-    private void initialize(VSPrefs prefs, Component relativeTo) {
+    private void init(VSPrefs prefs, Component relativeTo) {
         new VSSimulationEditor(prefs, relativeTo);
     }
 
@@ -27,8 +27,8 @@ public class VSMain {
                 UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) { }
 
-        VSPrefs prefs = VSDefaultPrefs.initialize();
-        RegisteredProtocols.initialize(prefs);
+        VSPrefs prefs = VSDefaultPrefs.init();
+        RegisteredProtocols.init(prefs);
         new VSMain(prefs);
     }
 }

@@ -11,9 +11,12 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     private boolean isClient;
     protected VSProcess process;
     private boolean currentContextIsServer;
-    private boolean lamportIncreased;
 
-    public VSProtocol() {
+    public void init(VSProcess process) {
+        this.process = process;
+        this.prefs = process.getPrefs();
+
+        onInit();
     }
 
     protected final void setProtocolClassname(String protocolClassname) {
@@ -36,7 +39,8 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     }
 
     protected void sendMessage(VSMessage message) {
-        process.setLamportTime(process.getLamportTime()+1);
+        process.increaseLamportTime();
+        process.increaseVectorTime();
         message.setSendingProcess(process);
         process.sendMessage(message);
     }
@@ -75,14 +79,6 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
         this.isClient = isClient;
     }
 
-    public final void setVSPrefs(VSPrefs prefs) {
-        this.prefs = prefs;
-    }
-
-    public final void setProcess(VSProcess process) {
-        this.process = process;
-    }
-
     public void reset() {
         if (isServer) {
             currentContextIsServer = true;
@@ -95,6 +91,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
         }
     }
 
+    abstract protected void onInit();
     abstract protected void onClientStart();
     abstract protected void onClientReset();
     abstract protected void onClientRecv(VSMessage message);
@@ -108,6 +105,10 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
 
     public boolean equals(VSProtocol protocol) {
         return protocol.getID() == getID();
+    }
+
+    protected int getNumProcesses() {
+        return process.getSimulationPanel().getNumProcesses();
     }
 
     public String toString() {

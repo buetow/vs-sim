@@ -520,6 +520,13 @@ public abstract class VSPrefs implements Serializable {
                 descr += key + "=" + getInteger(key) + "; ";
         }
 
+        set = getLongKeySet();
+        if (set.size() > 0) {
+            descr += LONG_PREFIX;
+            for (String key : set)
+                descr += key + "=" + getLong(key) + "; ";
+        }
+
         set = getFloatKeySet();
         if (set.size() > 0) {
             descr += FLOAT_PREFIX;

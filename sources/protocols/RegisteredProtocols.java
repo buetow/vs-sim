@@ -11,7 +11,7 @@ public final class RegisteredProtocols {
     private static HashMap<String,String> protocolNames;
     private static VSPrefs prefs;
 
-    public static void initialize(VSPrefs prefs_) {
+    public static void init(VSPrefs prefs_) {
         prefs = prefs_;
         protocolNames = new HashMap<String, String>();
         protocolClassnames = new HashMap<String, String>();
@@ -21,6 +21,7 @@ public final class RegisteredProtocols {
         registerProtocol("protocols.ExternalTimeSyncProtocol");
         registerProtocol("protocols.InternalTimeSyncProtocol");
         registerProtocol("protocols.BroadcastSturmProtocol");
+        registerProtocol("protocols.BerkelyTimeProtocol");
     }
 
     public static Vector<String> getProtocolNames() {
@@ -43,12 +44,15 @@ public final class RegisteredProtocols {
         return protocolNames.get(protocolClassname);
     }
 
-    public static VSProtocol getProtocolInstanceByName(String protocolName) {
+    public static VSProtocol getProtocolInstanceByName(String protocolName, VSProcess process) {
         final String protocolClassname = protocolClassnames.get(protocolName);
         final Object protocolObj = new VSClassLoader().newInstance(protocolClassname);
 
-        if (protocolObj instanceof VSProtocol)
-            return (VSProtocol) protocolObj;
+        if (protocolObj instanceof VSProtocol) {
+            VSProtocol protocol = (VSProtocol) protocolObj;
+            protocol.init(process);
+			return protocol;
+        }
 
         return null;
     }

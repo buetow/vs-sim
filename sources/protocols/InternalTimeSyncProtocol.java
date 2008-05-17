@@ -6,7 +6,7 @@ import core.VSMessage;
 public class InternalTimeSyncProtocol extends VSProtocol {
     private boolean waitingForResponse;
 
-    public InternalTimeSyncProtocol() {
+    protected void onInit() {
         setProtocolClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */

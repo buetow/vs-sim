@@ -38,14 +38,14 @@ abstract class VSEditor implements ActionListener {
     protected Insets insets = new Insets(0, 0, 0, 0);
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
-        initialize(prefs, prefsToEdit, SIMULATION_PREFERENCES);
+        init(prefs, prefsToEdit, SIMULATION_PREFERENCES);
     }
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
-        initialize(prefs, prefsToEdit, prefsCategory);
+        init(prefs, prefsToEdit, prefsCategory);
     }
 
-    private void initialize(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
+    private void init(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
         this.prefs = prefs;
         this.prefsToEdit = prefsToEdit;
         this.prefsCategory = prefsCategory;

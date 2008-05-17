@@ -26,6 +26,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     private volatile boolean isFinished = false;
     private volatile boolean isResetted = false;
     private volatile boolean showLamport = false;
+    private volatile boolean showVectorTime = false;
     private volatile long pauseTime;
     private volatile long startTime;
     private volatile long time;
@@ -39,9 +40,10 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     private static final int SEPLINE_WIDTH = 2;
     private static final int XOFFSET = 50;
     private static final int YOFFSET = 30;
-    private static final int YOUTER_SPACEING = 10;
+    private static final int YOUTER_SPACEING = 15;
     private static final int YSEPLINE_SPACEING = 20;
     private static final int TEXT_SPACEING = 10;
+    private static final int ROW_HEIGHT = 14;
 
     /* Constats, which have to get calculated once after start */
     private Color processlineColor;
@@ -226,7 +228,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     }
 
     public VSProcess createProcess(int i) {
-        VSProcess process = new VSProcess(prefs, this, logging, i+1);
+        VSProcess process = new VSProcess(prefs, this, logging);
         processes.add(process);
         logging.logg(prefs.getString("lang.process.new") + "; " + process);
 
@@ -293,24 +295,52 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             g.drawLine(xPos, yStart, xPos, yEnd);
             g.drawString(localTime+"ms", xPos + 2, yStart + TEXT_SPACEING);
 
-            if (showLamport) {
-                int last = -1;
-                final int distance = 20;
-                final VSLamport[] lamportStamps = process.getLamportArray();
-                for (VSLamport lamport : lamportStamps) {
-                    int xPos_ = (int) getTimeXPosition(lamport.getTime());
-                    if (last >= 0) {
-                        int diff = xPos_ - last;
-                        if (diff < distance)
-                            xPos_ += distance - diff;
-                    }
-                    g.drawString(""+lamport.getLamportTime(), xPos_ + 2, yStart + 3 * TEXT_SPACEING);
-                    last = xPos_;
-                }
-            }
+            if (showLamport)
+                paintTime(g, process.getLamportTimeArray(), process, yStart, 25);
+            else if (showVectorTime)
+                paintTime(g, process.getVectorTimeArray(), process, yStart, 20 * numProcesses);
 
             for (int i = 0; i < 5; ++i)
                 yPoints[i] += paintProcessesOffset;
+        }
+    }
+
+    private void paintTime(final Graphics2D g, final VSTime times[], final VSProcess process,
+                           final int yStart, final int distance) {
+
+        final int lastPos[] = { -1, -1, -1, -1 };
+
+        for (VSTime time : times) {
+            int xPos = (int) getTimeXPosition(time.getGlobalTime());
+            int bestRow[] = { -1, -1 };
+
+            for (int i = 0; i < 4; ++i) {
+                if (lastPos[i] != -1) {
+                    int diff = xPos - lastPos[i];
+                    if (diff > distance) {
+                        bestRow[0] = i;
+                        bestRow[1] = -1;
+                        break;
+                    } else if (bestRow[0] == -1) {
+                        bestRow[0] = i;
+                        bestRow[1] = diff;
+                    } else if (diff > bestRow[1]) {
+                        bestRow[0] = i;
+                        bestRow[1] = diff;
+                    }
+                } else {
+                    bestRow[0] = i;
+                    bestRow[1] = -1;
+                    break;
+                }
+            }
+
+            final int row = bestRow[0];
+            if (bestRow[1] != -1)
+                xPos += distance - bestRow[1];
+
+            g.drawString(time.toString(), xPos + 2, yStart + 3 * TEXT_SPACEING + row * ROW_HEIGHT);
+            lastPos[row] = xPos;
         }
     }
 
@@ -324,7 +354,8 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
             final int xStringPos = paintSecondlinesLine[0] - 5;
             g.drawString(i+"s", xStringPos, paintSecondlinesYStringPos1);
-            g.drawString(i+"s", xStringPos, paintSecondlinesYStringPos2);
+            if (!showVectorTime && !showLamport)
+                g.drawString(i+"s", xStringPos, paintSecondlinesYStringPos2);
         }
 
         if (i > paintSecondlinesSeconds) {
@@ -529,6 +560,11 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         repaint();
     }
 
+    public void showVectorTime(boolean showVectorTime) {
+        this.showVectorTime = showVectorTime;
+        repaint();
+    }
+
     public void sendMessage(VSMessage message) {
         VSTask task = null;
         VSProcess sendingProcess = message.getSendingProcess();
@@ -554,7 +590,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 synchronized (messageLines) {
                     messageLines.add(new VSMessageLine(receiverProcess,
                                                        sendingProcess.getGlobalTime(), deliverTime, outageTime,
-                                                       sendingProcess.getNum(), receiverProcess.getNum()));
+                                                       sendingProcess.getProcessID(), receiverProcess.getProcessID()));
                 }
             }
         }

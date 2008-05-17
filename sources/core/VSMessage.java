@@ -10,6 +10,7 @@ public class VSMessage extends VSPrefs implements VSEvent {
     private long messageID;
     private static long messageCounter;
     private long lamportTime;
+    private VSVectorTime vectorTime;
 
     public VSMessage(String protocolClassname) {
         this.protocolClassname = protocolClassname;
@@ -31,6 +32,7 @@ public class VSMessage extends VSPrefs implements VSEvent {
     public void setSendingProcess(VSProcess sendingProcess) {
         this.sendingProcess = sendingProcess;
         lamportTime = sendingProcess.getLamportTime();
+        vectorTime = sendingProcess.getVectorTime().getCopy();
     }
 
     public VSProcess getSendingProcess() {
@@ -39,6 +41,10 @@ public class VSMessage extends VSPrefs implements VSEvent {
 
     public long getLamportTime() {
         return lamportTime;
+    }
+
+    public VSVectorTime getVectorTime() {
+        return vectorTime;
     }
 
     public String toString() {

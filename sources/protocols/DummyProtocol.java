@@ -3,7 +3,7 @@ package protocols;
 import core.VSMessage;
 
 public class DummyProtocol extends VSProtocol {
-    public DummyProtocol() {
+    protected void onInit() {
         setProtocolClassname(getClass().toString());
     }
 

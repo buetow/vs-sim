@@ -84,13 +84,8 @@ public class VSTask implements Comparable {
         final String protocolName = message.getProtocolName();
         final String protocolClassname = message.getProtocolClassname();
 
-        final long recvLamportTime = message.getLamportTime() + 1;
-        final long lamportTime = process.getLamportTime() + 1;
-
-        if (recvLamportTime > lamportTime)
-            process.setLamportTime(recvLamportTime);
-        else
-            process.setLamportTime(lamportTime);
+        process.updateLamportTime(message.getLamportTime()+1);
+        process.updateVectorTime(message.getVectorTime());
 
         Object protocolObj;
 
@@ -120,10 +115,6 @@ public class VSTask implements Comparable {
     private void onProcessEventStart() {
         final VSProcessEvent processEvent = (VSProcessEvent) event;
         processEvent.onStart(process);
-        /*
-        if (process.isCrashed())
-        	process.setLamportTime(process.getLamportTime()-1);
-        */
     }
 
     public long getTaskTime() {

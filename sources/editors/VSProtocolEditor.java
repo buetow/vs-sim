@@ -32,14 +32,14 @@ public class VSProtocolEditor extends VSEditorFrame {
         this.protocol = protocol;
         this.taskManager = protocol.getProcess().getSimulationPanel().getTaskManager();
 
-        initialize();
+        init();
     }
 
-    private void initialize() {
+    private void init() {
         super.getFrame().disposeWithParent();
         super.infoArea.setText(prefs.getString("lang.prefs.protocol.info!"));
-        initializeTaskManagerEditor(clientTaskManagerEditorPanel);
-        initlializeClientServerCheckboxes();
+        initTaskManagerEditor(clientTaskManagerEditorPanel);
+        initClientServerCheckboxes();
         createButtonPanel();
     }
 
@@ -129,7 +129,7 @@ public class VSProtocolEditor extends VSEditorFrame {
         return panel;
     }
 
-    private void initlializeClientServerCheckboxes() {
+    private void initClientServerCheckboxes() {
         final String protocolName = protocol.getProtocolName();
         final VSProcess process = protocol.getProcess();
 
@@ -140,7 +140,7 @@ public class VSProtocolEditor extends VSEditorFrame {
 
     }
 
-    private void initializeTaskManagerEditor(JPanel panel) {
+    private void initTaskManagerEditor(JPanel panel) {
         clientComboBox = new JComboBox();
         deleteButton = new JButton(prefs.getString("lang.remove"));
         takeOverButton = new JButton(prefs.getString("lang.takeover"));

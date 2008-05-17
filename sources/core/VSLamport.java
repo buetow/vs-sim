@@ -1,19 +1,23 @@
 package core;
 
-public class VSLamport {
-    private long time;
+public class VSLamport implements VSTime {
+    private long globalTime;
     private long lamportTime;
 
-    public VSLamport(long time, long lamportTime) {
-        this.time = time;
+    public VSLamport(long globalTime, long lamportTime) {
+        this.globalTime = globalTime;
         this.lamportTime = lamportTime;
     }
 
-    public long getTime() {
-        return time;
+    public long getGlobalTime() {
+        return globalTime;
     }
 
     public long getLamportTime() {
         return lamportTime;
+    }
+
+    public String toString() {
+        return "(" + lamportTime + ")";
     }
 }

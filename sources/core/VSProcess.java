@@ -24,15 +24,15 @@ public final class VSProcess extends VSPrefs {
     private boolean timeModified;
     private double clockOffset;
     private float clockVariance;
-    private int num;
     private int processID;
     private long globalTime;
     private long localTime;
     private static int processCounter;
     private boolean isCrashed;
     private long lamportTime;
-    private ArrayList<VSLamport> lamportTimestamps;
-    private ArrayList<Integer> vectorTimestamps;
+    private ArrayList<VSLamport> lamportTimeHistory;
+    private VSVectorTime vectorTime;
+    private ArrayList<VSVectorTime> vectorTimeHistory;
 
     /* This array contains all Integer prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
@@ -79,16 +79,13 @@ public final class VSProcess extends VSPrefs {
     private static final String DEFAULT_STRING_VALUE_KEYS[] = {
     };
 
-    public VSProcess(VSPrefs prefs, VSSimulationPanel simulationPanel, VSLogging logging, int num) {
+    public VSProcess(VSPrefs prefs, VSSimulationPanel simulationPanel, VSLogging logging) {
         this.prefs = prefs;
         this.simulationPanel = simulationPanel;
         this.logging = logging;
-        this.num = num;
-        this.random = new VSRandom(processID+processCounter);
-        this.lamportTimestamps = new ArrayList<VSLamport>();
-        this.vectorTimestamps = new ArrayList<Integer>();
-        setLamportTime(0);
+        random = new VSRandom(processID+processCounter);
 
+        initTimeFormats();
         setObject("protocols", new ArrayList<VSProtocol>());
 
         isPaused = true;
@@ -109,6 +106,31 @@ public final class VSProcess extends VSPrefs {
         crashedColor = getColor("process.crashed");
         createRandomCrashTask();
     }
+
+    private void initTimeFormats() {
+        lamportTime = 0;
+        lamportTimeHistory = new ArrayList<VSLamport>();
+
+        vectorTime = new VSVectorTime(0);
+        vectorTimeHistory = new ArrayList<VSVectorTime>();
+
+        final int numProcesses = simulationPanel.getNumProcesses();
+        for (int i = 0; i < numProcesses; ++i)
+            vectorTime.add(new Long(0));
+    }
+
+    private void resetTimeFormats() {
+        lamportTime = 0;
+        lamportTimeHistory.clear();
+
+        vectorTime = new VSVectorTime(0);
+        vectorTimeHistory.clear();
+
+        final int numProcesses = simulationPanel.getNumProcesses();
+        for (int i = numProcesses; i > 0; --i)
+            vectorTime.add(new Long(0));
+    }
+
 
     /**
      * Called from the VSProcessEditor, after finishing editing!
@@ -178,9 +200,6 @@ public final class VSProcess extends VSPrefs {
         localTime = 0;
         globalTime = 0;
         clockOffset = 0;
-        lamportTime = 0;
-        lamportTimestamps.clear();
-        vectorTimestamps.clear();
 
         if (objectExists("protocols.registered")) {
             Object protocolsObj = getObject("protocols.registered");
@@ -193,6 +212,7 @@ public final class VSProcess extends VSPrefs {
 
         setCurrentColor(getColor("process.default"));
         createRandomCrashTask();
+        resetTimeFormats();
     }
 
     private void createRandomCrashTask() {
@@ -277,10 +297,6 @@ public final class VSProcess extends VSPrefs {
         return crashedColor;
     }
 
-    public int getNum() {
-        return num;
-    }
-
     public synchronized boolean timeModified() {
         return timeModified;
     }
@@ -362,40 +378,83 @@ public final class VSProcess extends VSPrefs {
         return isPaused;
     }
 
+    public void increaseLamportTime() {
+        setLamportTime(getLamportTime()+1);
+    }
+
+    public void updateLamportTime(long time) {
+        final long lamportTime = getLamportTime() + 1;
+
+        if (time > lamportTime)
+            setLamportTime(time);
+        else
+            setLamportTime(lamportTime);
+    }
+
     public synchronized long getLamportTime() {
         return lamportTime;
     }
 
     public synchronized void setLamportTime(long lamportTime) {
         this.lamportTime = lamportTime;
-        lamportTimestamps.add(new VSLamport(globalTime, lamportTime));
+        lamportTimeHistory.add(new VSLamport(globalTime, lamportTime));
     }
 
-    public synchronized VSLamport[] getLamportArray() {
-        final int size = lamportTimestamps.size();
-        final VSLamport[] arr = new VSLamport[size];
+    public synchronized VSTime[] getLamportTimeArray() {
+        final int size = lamportTimeHistory.size();
+        final VSTime[] arr = new VSLamport[size];
 
         for (int i = 0; i < size; ++i)
-            arr[i] = lamportTimestamps.get(i);
+            arr[i] = (VSTime) lamportTimeHistory.get(i);
 
         return arr;
     }
 
-    public synchronized int[] getVectorTime() {
-        final int size = vectorTimestamps.size();
-        final int[] arr = new int[size];
+    public synchronized void increaseVectorTime() {
+        vectorTime.set(processID-1, new Long(vectorTime.get(processID-1).longValue()+1));
+        vectorTime.setGlobalTime(globalTime);
+        vectorTimeHistory.add(vectorTime.getCopy());
+    }
+
+    public synchronized void updateVectorTime(VSVectorTime vectorTimeUpdate) {
+        final int size = vectorTime.size();
+
+        for (int i = 0; i < size; ++i) {
+            if (i == processID-1)
+                vectorTime.set(i, new Long(vectorTime.get(i).longValue()+1));
+            else if (vectorTimeUpdate.get(i) > vectorTime.get(i))
+                vectorTime.set(i, vectorTimeUpdate.get(i));
+        }
+
+        vectorTime.setGlobalTime(globalTime);
+        vectorTimeHistory.add(vectorTime.getCopy());
+    }
+
+    public synchronized VSVectorTime getVectorTime() {
+        return vectorTime;
+    }
+
+    public synchronized VSTime[] getVectorTimeArray() {
+        final int size = vectorTimeHistory.size();
+        final VSTime[] arr = new VSTime[size];
 
         for (int i = 0; i < size; ++i)
-            arr[i] = vectorTimestamps.get(i);
+            arr[i] = (VSTime) vectorTimeHistory.get(i);
 
         return arr;
     }
-
 
     public void sendMessage(VSMessage message) {
-        logg(prefs.getString("lang.message.sent") + "; "
-             + prefs.getString("lang.protocol") + ": " + message.getProtocolName() + "; "
-             + prefs.getString("lang.message") + " " + message.toStringFull());
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(prefs.getString("lang.message.sent"));
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.protocol"));
+        buffer.append(": " + message.getProtocolName());
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.message"));
+        buffer.append(" ");
+        buffer.append(message.toStringFull());
+        logg(buffer.toString());
         simulationPanel.sendMessage(message);
     }
 
@@ -412,20 +471,39 @@ public final class VSProcess extends VSPrefs {
     }
 
     public String toString() {
-        return
-            prefs.getString("lang.process.id") + ": "
-            + getProcessID() + "; "
-            + prefs.getString("lang.process.time.local") + ": "
-            + VSTools.getTimeString(getTime())
-            + "; Lamport: " + lamportTime;
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(prefs.getString("lang.process.id"));
+        buffer.append(": ");
+        buffer.append(getProcessID());
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.process.time.local"));
+        buffer.append(": ");
+        buffer.append(VSTools.getTimeString(getTime()));
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.time.lamport"));
+        buffer.append(": ");
+        buffer.append(lamportTime);
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.time.vector"));
+        buffer.append(": ");
+        buffer.append(vectorTime);
+        return buffer.toString();
     }
 
     public String toStringFull() {
-        return toString() + "; paused: " + isPaused + "; crashed: " + isCrashed + "; crashTask: " + randomCrashTask;
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(toString());
+        buffer.append("; paused: ");
+        buffer.append(isPaused);
+        buffer.append("; crashed: ");
+        buffer.append(isCrashed);
+        buffer.append("; crashTask: ");
+        buffer.append(randomCrashTask);
+        return buffer.toString();
     }
 
     public boolean equals(VSProcess process) {
-        return process.getNum() == getNum();
+        return process.getProcessID() == processID;
     }
 
     public VSSimulationPanel getSimulationPanel() {

@@ -1,8 +1,15 @@
+DONE: 
+Vectortimestamps work
+Better representation of Lamporttimestamps
+BerkelyTimeProtocol
+
+TODO:
+
 Prozesse manuell abstuerzen lassen
 Prozesse duerfen wiederbelebt werden
+	
 Prozess Quick Panel: Uhrabweichung / Geschwindigkeit direkt einstellen koennen
 Event Manager (Prozessabstuerze genau vorprogrammieren)
-Vektorzeitstempel
 Himmelobjekt
 
 Ganze simulationseinstellungen abspeichern/laden koennen
@@ -10,9 +17,11 @@ Systemschnitte?
 Middleware-Schicht?
 Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
 JTree Editor
+Systemschnitte
+
+Create schedules from Protocols
 
 Protocols:
-	Berkely Alpgorithmus zur interenen Synchronisierung
 	ReliableMulticast
 	Ein-Phasen Commit Protokoll
 	Zwei-Phasen Commit Protokoll

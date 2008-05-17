@@ -12,15 +12,15 @@ public class VSFrame extends JFrame {
 
     public VSFrame(String title, Component parent) {
         super(title);
-        initialize(parent);
+        init(parent);
     }
 
     public VSFrame(String title) {
         super(title);
-        initialize(null);
+        init(null);
     }
 
-    private void initialize(Component parent) {
+    private void init(Component parent) {
         this.parent = parent;
         this.dispose = false;
 
