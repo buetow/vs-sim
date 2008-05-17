@@ -634,12 +634,12 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                     } else if (actionCommand.equals(prefs.getString("lang.crash"))) {
                         VSProcessEvent event = new ProcessCrashEvent();
                         event.init(process);
-                        taskManager.addTask(new VSTask(process.getTime(), process, event));
+                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event));
 
                     } else if (actionCommand.equals(prefs.getString("lang.recover"))) {
                         VSProcessEvent event = new ProcessRecoverEvent();
                         event.init(process);
-                        taskManager.addTask(new VSTask(process.getTime(), process, event));
+                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event));
                     }
                 }
             };

@@ -54,10 +54,6 @@ public class VSTask implements Comparable {
     }
 
     public void run() {
-        /* Process crash allready checked in VSTaskManager */
-        //if (process.isCrashed() && !(event instanceof ProcessRecoverEvent))
-        //   	return;
-
         if (event instanceof VSMessage) {
             onMessageRecv();
 

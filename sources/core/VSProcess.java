@@ -297,15 +297,15 @@ public final class VSProcess extends VSPrefs {
         return isCrashed;
     }
 
-    public synchronized boolean hasCrashed() {
-        return hasCrashed;
-    }
-
     public synchronized void isCrashed(boolean isCrashed) {
         this.isCrashed = isCrashed;
         crashHistory.add(new Long(globalTime));
         if (!hasCrashed)
             hasCrashed = true;
+    }
+
+    public synchronized boolean hasCrashed() {
+        return hasCrashed;
     }
 
     public synchronized Color getCrashedColor() {
