@@ -1,9 +1,10 @@
-package protocols;
+package protocols.implementations;
 
 import java.util.ArrayList;
 
-import prefs.VSPrefs;
 import core.VSMessage;
+import prefs.VSPrefs;
+import protocols.VSProtocol;
 
 public class BroadcastSturmProtocol extends VSProtocol {
     private ArrayList<VSMessage> sentMessages;

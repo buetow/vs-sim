@@ -16,12 +16,12 @@ public final class VSRegisteredProtocols {
         protocolNames = new HashMap<String, String>();
         protocolClassnames = new HashMap<String, String>();
 
-        registerProtocol("protocols.DummyProtocol");
-        registerProtocol("protocols.PingPongProtocol");
-        registerProtocol("protocols.ExternalTimeSyncProtocol");
-        registerProtocol("protocols.InternalTimeSyncProtocol");
-        registerProtocol("protocols.BroadcastSturmProtocol");
-        registerProtocol("protocols.BerkelyTimeProtocol");
+        registerProtocol("protocols.implementations.DummyProtocol");
+        registerProtocol("protocols.implementations.PingPongProtocol");
+        registerProtocol("protocols.implementations.ExternalTimeSyncProtocol");
+        registerProtocol("protocols.implementations.InternalTimeSyncProtocol");
+        registerProtocol("protocols.implementations.BroadcastSturmProtocol");
+        registerProtocol("protocols.implementations.BerkelyTimeProtocol");
     }
 
     public static Vector<String> getProtocolNames() {

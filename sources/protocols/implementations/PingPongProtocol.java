@@ -1,7 +1,8 @@
-package protocols;
+package protocols.implementations;
 
-import prefs.VSPrefs;
 import core.VSMessage;
+import prefs.VSPrefs;
+import protocols.VSProtocol;
 
 public class PingPongProtocol extends VSProtocol {
     private int clientCounter;

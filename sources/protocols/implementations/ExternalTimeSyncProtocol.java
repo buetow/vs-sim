@@ -1,23 +1,22 @@
-package protocols;
+package protocols.implementations;
 
-import prefs.VSPrefs;
 import core.VSMessage;
+import prefs.VSPrefs;
+import protocols.VSProtocol;
 
-public class InternalTimeSyncProtocol extends VSProtocol {
+public class ExternalTimeSyncProtocol extends VSProtocol {
+    private long requestTime;
     private boolean waitingForResponse;
 
     protected void onInit() {
         setProtocolClassname(getClass().toString());
-
-        /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
-        setLong("t_min", 1000);
-        setLong("t_max", 5000);
     }
 
     protected void onClientReset() {
     }
 
     protected void onClientStart() {
+        requestTime = process.getTime();
         waitingForResponse = true;
 
         /* Multicast message to all processes */
@@ -27,7 +26,6 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     protected void onClientRecv(VSMessage recvMessage) {
-        /* Ignore all protocol messages which are not a response message, e.g. itself */
         if (!recvMessage.getBoolean("isServerResponse"))
             return;
 
@@ -36,15 +34,12 @@ public class InternalTimeSyncProtocol extends VSProtocol {
         else
             return;
 
-        long tMax = getLong("t_max");
-        long tMin = getLong("t_min");
+        long recvTime = process.getTime();
+        long roundTripTime = recvTime - requestTime;
         long serverTime = recvMessage.getLong("time");
-        long newTime = serverTime + (long) ((tMax + tMin) / 2 );
+        long newTime = serverTime + (long) (roundTripTime / 2);
 
-        logg("Server Zeit: " + serverTime + "; (t_min,t_max): (" + tMin + "," + tMax
-             + "); Alte Zeit: " + process.getTime() + "; Neue Zeit: " + newTime
-             + "; Offset: " + (process.getTime() - newTime));
-
+        logg("Server Zeit: " + serverTime + "; RTT: " + roundTripTime + "; Alte Zeit: " + recvTime + "; Neue Zeit: " + newTime + "; Offset: " + (newTime - recvTime));
         process.setTime(newTime);
     }
 
@@ -52,7 +47,6 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     protected void onServerRecv(VSMessage recvMessage) {
-        /* Ignore all protocol messages which are not a request message, e.g. itself */
         if (!recvMessage.getBoolean("isClientRequest"))
             return;
 
@@ -64,6 +58,6 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     public String toString() {
-        return super.toString();
+        return super.toString(); //+ "; " + prefs.getString("lang.requesttime") + ": " + requestTime;
     }
 }

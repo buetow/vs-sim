@@ -1,5 +1,6 @@
-package protocols;
+package protocols.implementations;
 
+import protocols.VSProtocol;
 import core.VSMessage;
 
 public class DummyProtocol extends VSProtocol {
