@@ -164,6 +164,7 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultColors() {
         /* Internal prefs */
+        initColor("paintarea.background", new Color(0xFF, 0xFB, 0xEF));
         initColor("process.default", new Color(0x00, 0x00, 0x00));
         initColor("process.running", new Color(0x0D, 0xD8, 0x09));
         initColor("process.crashed", new Color(0xff, 0x00, 0x00));

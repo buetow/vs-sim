@@ -166,7 +166,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         simulationPanel = new VSSimulationPanel(prefs, this, logging);
         logging.setSimulationPanel(simulationPanel);
-        simulationPanel.setBackground(new Color(0xFD, 0xFC, 0xF7));
+        simulationPanel.setBackground(prefs.getColor("paintarea.background"));//new Color(0xFD, 0xFC, 0xF7));
         //processEditPanel = createProcessEditPanel();
 
         JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
