@@ -604,6 +604,15 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
     public void mouseClicked(MouseEvent e) {
         VSProcess process = getProcessAtYPos(e.getY());
+        editProcess(process);
+    }
+
+    public void editProcess(int processNum) {
+        VSProcess process = processes.get(processNum);
+        editProcess(process);
+    }
+
+    public void editProcess(VSProcess process) {
         if (process != null) {
             process.updatePrefs();
             new VSProcessEditor(prefs, simulation, process);

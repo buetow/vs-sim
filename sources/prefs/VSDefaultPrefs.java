@@ -91,11 +91,10 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.process.clock.variance", "Uhrabweichung");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
-        //initString("lang.process.prob.delay", "Verzögerungswahrscheinlichkeit");
-        //initString("lang.process.prob.outage", "Ausfallwahrscheinlichkeit");
         initString("lang.process.time.local", "Lokale Zeit");
         initString("lang.quit", "Beenden");
         initString("lang.replay", "Wiederholen");
+        initString("lang.process", "Prozess");
         initString("lang.reset", "Reset");
         initString("lang.save", "Speichern");
         initString("lang.saveas", "Speichern unter");

@@ -37,8 +37,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         setSize(prefs.getInteger("window.xsize")+100,
                 prefs.getInteger("window.ysize"));
-        setJMenuBar(createJMenuBar());
         setContentPane(createContentPane());
+        setJMenuBar(createJMenuBar());
         setVisible(true);
 
         thread = new Thread(simulationPanel);
@@ -83,10 +83,29 @@ public class VSSimulation extends VSFrame implements ActionListener {
         menuItem.addActionListener(this);
         menuFile.add(menuItem);
 
-        /* VSSimulation menu */
-        JMenu menuVSSimulation = new JMenu(
+        /* Edit menu */
+        JMenu menuEdit = new JMenu(
+            prefs.getString("lang.edit"));
+        menuEdit.setMnemonic(prefs.getInteger("keyevent.edit"));
+        int numProcesses = simulationPanel.getNumProcesses();
+        final String processString = prefs.getString("lang.process");
+        for (int i = 0; i < numProcesses; ++i) {
+            JMenuItem processItem = new JMenuItem(processString + " " + (i+1));
+            processItem.setAccelerator(KeyStroke.getKeyStroke(0x31+i,
+                                       ActionEvent.ALT_MASK));
+            final int processNum = i;
+            processItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    simulationPanel.editProcess(processNum);
+                }
+            });
+            menuEdit.add(processItem);
+        }
+
+        /* Simulation menu */
+        JMenu menuSimulation = new JMenu(
             prefs.getString("lang.simulation"));
-        menuVSSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
+        menuSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
 
         startItem = new JMenuItem(
             prefs.getString("lang.start"));
@@ -94,7 +113,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
                                      prefs.getInteger("keyevent.start"),
                                      ActionEvent.ALT_MASK));
         startItem.addActionListener(this);
-        menuVSSimulation.add(startItem);
+        menuSimulation.add(startItem);
 
         pauseItem = new JMenuItem(
             prefs.getString("lang.pause"));
@@ -102,7 +121,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
                                      prefs.getInteger("keyevent.pause"),
                                      ActionEvent.ALT_MASK));
         pauseItem.addActionListener(this);
-        menuVSSimulation.add(pauseItem);
+        menuSimulation.add(pauseItem);
         pauseItem.setEnabled(false);
 
         resetItem = new JMenuItem(
@@ -112,7 +131,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
                                      ActionEvent.ALT_MASK));
         resetItem.addActionListener(this);
         resetItem.setEnabled(false);
-        menuVSSimulation.add(resetItem);
+        menuSimulation.add(resetItem);
 
         replayItem = new JMenuItem(
             prefs.getString("lang.replay"));
@@ -121,11 +140,12 @@ public class VSSimulation extends VSFrame implements ActionListener {
                                       ActionEvent.ALT_MASK));
         replayItem.addActionListener(this);
         replayItem.setEnabled(false);
-        menuVSSimulation.add(replayItem);
+        menuSimulation.add(replayItem);
 
         JMenuBar mainMenuBar = new JMenuBar();
         mainMenuBar.add(menuFile);
-        mainMenuBar.add(menuVSSimulation);
+        mainMenuBar.add(menuEdit);
+        mainMenuBar.add(menuSimulation);
 
         return mainMenuBar;
     }
