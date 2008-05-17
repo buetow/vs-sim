@@ -143,8 +143,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("keyevent.start", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
-        initIntegerUnit("window.prefs.xsize", 400, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
-        initIntegerUnit("window.prefs.ysize", 650, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
+        initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
+        initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
         initIntegerUnit("window.splitsize", 180, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");

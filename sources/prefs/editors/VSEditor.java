@@ -145,8 +145,8 @@ abstract class VSEditor implements ActionListener {
 
         editPanelConstraints = new GridBagConstraints();
         editPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        editPanelConstraints.ipady = 20;
-        editPanelConstraints.ipadx = 20;
+        editPanelConstraints.ipady = 15;
+        editPanelConstraints.ipadx = 15;
         editPanelRow = 0;
 
         addToEditPanelFront(editPanel);
