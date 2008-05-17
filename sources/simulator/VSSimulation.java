@@ -11,20 +11,22 @@ import core.*;
 import utils.*;
 
 public class VSSimulation extends VSFrame implements ActionListener {
+    private JTextField filterTextField;
+    private JCheckBox filterActiveCheckBox;
+    private JCheckBox lamportActiveCheckBox;
+    private JCheckBox vectorTimeActiveCheckBox;
     private JMenuItem pauseItem;
     private JMenuItem replayItem;
     private JMenuItem resetItem;
     private JMenuItem startItem;
+    private JPanel processEditPanel;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
-    private JPanel processEditPanel;
-    private VSSimulationPanel simulationPanel;
     private Thread thread;
-    private VSPrefs prefs;
-    private boolean hasStarted = false;
     private VSLogging logging;
-    private JCheckBox lamportActiveCheckBox;
-    private JCheckBox vectorTimeActiveCheckBox;
+    private VSPrefs prefs;
+    private VSSimulationPanel simulationPanel;
+    private boolean hasStarted = false;
 
     public VSSimulation (VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("name"), relativeTo);
@@ -184,16 +186,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
         JPanel toolsPanel = new JPanel();
 
         toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
-        JCheckBox loggingActiveCheckBox = new JCheckBox(prefs.getString("lang.logging.active"));
-        loggingActiveCheckBox.setSelected(true);
-        loggingActiveCheckBox.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                AbstractButton abstractButton = (AbstractButton) ce.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-                logging.isPaused(!buttonModel.isSelected());
-            }
-        });
-        toolsPanel.add(loggingActiveCheckBox);
 
         lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
         lamportActiveCheckBox.setSelected(false);
@@ -220,6 +212,58 @@ public class VSSimulation extends VSFrame implements ActionListener {
             }
         });
         toolsPanel.add(vectorTimeActiveCheckBox);
+
+        JCheckBox loggingActiveCheckBox = new JCheckBox(prefs.getString("lang.logging.active"));
+        loggingActiveCheckBox.setSelected(true);
+        loggingActiveCheckBox.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                ButtonModel buttonModel = abstractButton.getModel();
+                logging.isPaused(!buttonModel.isSelected());
+            }
+        });
+        toolsPanel.add(loggingActiveCheckBox);
+
+        filterActiveCheckBox = new JCheckBox(prefs.getString("lang.filter"));
+        filterActiveCheckBox.setSelected(false);
+        filterActiveCheckBox.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                ButtonModel buttonModel = abstractButton.getModel();
+                logging.isFiltered(buttonModel.isSelected());
+                if (buttonModel.isSelected())
+                    logging.setFilterText(filterTextField.getText());
+            }
+        });
+        toolsPanel.add(filterActiveCheckBox);
+
+        filterTextField = new JTextField();
+        filterTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent de) {
+                logging.setFilterText(filterTextField.getText());
+            }
+
+            public void removeUpdate(DocumentEvent de) {
+                logging.setFilterText(filterTextField.getText());
+            }
+
+            public void changedUpdate(DocumentEvent de) {
+                logging.setFilterText(filterTextField.getText());
+            }
+        });
+        toolsPanel.add(filterTextField);
+
+        JButton clearButton = new JButton(prefs.getString("lang.logging.clear"));
+        clearButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                String actionCommand = ae.getActionCommand();
+
+                if (actionCommand.equals(prefs.getString("lang.logging.clear"))) {
+                    logging.clear();
+                }
+            }
+        });
+        toolsPanel.add(clearButton);
 
         return toolsPanel;
     }

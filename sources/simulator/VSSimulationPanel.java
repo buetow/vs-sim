@@ -545,6 +545,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 messageLines.clear();
             }
             repaint();
+            logging.clear();
         }
     }
 
@@ -574,11 +575,11 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
         for (VSProcess receiverProcess : processes) {
             if (receiverProcess.equals(sendingProcess)) {
-				if (recvOwn) {
-                	deliverTime = sendingProcess.getGlobalTime();
-                	task = new VSTask(deliverTime, receiverProcess, message);
-                	taskManager.addTask(task);
-				}
+                if (recvOwn) {
+                    deliverTime = sendingProcess.getGlobalTime();
+                    task = new VSTask(deliverTime, receiverProcess, message);
+                    taskManager.addTask(task);
+                }
 
             } else {
                 durationTime = sendingProcess.getDurationTime();
@@ -593,9 +594,9 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
                 synchronized (messageLines) {
                     messageLines.add(
-							new VSMessageLine(receiverProcess, sendingProcess.getGlobalTime(), 
-								deliverTime, outageTime, sendingProcess.getProcessID(), 
-								receiverProcess.getProcessID()));
+                        new VSMessageLine(receiverProcess, sendingProcess.getGlobalTime(),
+                                          deliverTime, outageTime, sendingProcess.getProcessID(),
+                                          receiverProcess.getProcessID()));
                 }
             }
         }

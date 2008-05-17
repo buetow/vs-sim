@@ -44,6 +44,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.logging.active", "Logging");
+        initString("lang.logging.clear", "Loggs löschen");
         initString("lang.message", "Nachricht");
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.about", "About");
@@ -55,6 +56,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
         initString("lang.default", "Defaults");
         initString("lang.remove", "Entfernen");
+        initString("lang.filter", "Filter");
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
         initString("lang.activate", "aktivieren");
