@@ -12,15 +12,21 @@ import simulator.*;
 import utils.*;
 
 public final class VSProcess extends VSPrefs {
-    private VSTask randomCrashTask;
+    private ArrayList<Long> crashHistory;
+    private ArrayList<VSLamportTime> lamportTimeHistory;
+    private ArrayList<VSVectorTime> vectorTimeHistory;
+    private Color crashedColor;;
     private Color currentColor;
     private Color tmpColor;
-    private Color crashedColor;;
     private VSLogging logging;
     private VSPrefs prefs;
     private VSRandom random;
     private VSSimulationPanel simulationPanel;
+    private VSTask randomCrashTask;
+    private VSVectorTime vectorTime;
+    private boolean hasCrashed;
     private boolean hasStarted;
+    private boolean isCrashed;
     private boolean isHighlighted;
     private boolean isPaused;
     private boolean timeModified;
@@ -28,13 +34,9 @@ public final class VSProcess extends VSPrefs {
     private float clockVariance;
     private int processID;
     private long globalTime;
+    private long lamportTime;
     private long localTime;
     private static int processCounter;
-    private boolean isCrashed;
-    private long lamportTime;
-    private ArrayList<VSLamportTime> lamportTimeHistory;
-    private VSVectorTime vectorTime;
-    private ArrayList<VSVectorTime> vectorTimeHistory;
 
     /* This array contains all Integer prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
@@ -115,6 +117,7 @@ public final class VSProcess extends VSPrefs {
 
         vectorTime = new VSVectorTime(0);
         vectorTimeHistory = new ArrayList<VSVectorTime>();
+        crashHistory = new ArrayList<Long>();
 
         final int numProcesses = simulationPanel.getNumProcesses();
         for (int i = 0; i < numProcesses; ++i)
@@ -127,6 +130,7 @@ public final class VSProcess extends VSPrefs {
 
         vectorTime = new VSVectorTime(0);
         vectorTimeHistory.clear();
+        crashHistory.clear();
 
         final int numProcesses = simulationPanel.getNumProcesses();
         for (int i = numProcesses; i > 0; --i)
@@ -199,6 +203,7 @@ public final class VSProcess extends VSPrefs {
     public synchronized void reset() {
         isPaused = true;
         isCrashed = false;
+        hasCrashed = false;
         localTime = 0;
         globalTime = 0;
         clockOffset = 0;
@@ -292,8 +297,15 @@ public final class VSProcess extends VSPrefs {
         return isCrashed;
     }
 
+    public synchronized boolean hasCrashed() {
+        return hasCrashed;
+    }
+
     public synchronized void isCrashed(boolean isCrashed) {
         this.isCrashed = isCrashed;
+        crashHistory.add(new Long(globalTime));
+        if (!hasCrashed)
+            hasCrashed = true;
     }
 
     public synchronized Color getCrashedColor() {
@@ -443,6 +455,16 @@ public final class VSProcess extends VSPrefs {
 
         for (int i = 0; i < size; ++i)
             arr[i] = (VSTime) vectorTimeHistory.get(i);
+
+        return arr;
+    }
+
+    public synchronized Long[] getCrashHistoryArray() {
+        final int size = crashHistory.size();
+        final Long[] arr = new Long[size];
+
+        for (int i = 0; i < size; ++i)
+            arr[i] = crashHistory.get(i);
 
         return arr;
     }

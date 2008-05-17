@@ -63,7 +63,7 @@ public class VSTaskManager {
                 globalTasks.poll();
                 redo = true;
 
-                if (process.isCrashed()) {
+                if (process.isCrashed() && !task.isProcessRecoverEvent()) {
                     if (task.isProgrammed())
                         fullfilledProgrammedTasks.add(task);
                     continue;
@@ -117,7 +117,7 @@ public class VSTaskManager {
                 tasks.poll();
                 redo = true;
 
-                if (process.isCrashed()) {
+                if (process.isCrashed() && !task.isProcessRecoverEvent()) {
                     if (task.isProgrammed())
                         fullfilledProgrammedTasks.add(task);
                     continue;

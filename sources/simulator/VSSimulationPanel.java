@@ -278,14 +278,29 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
             g.setColor(process.getColor());
             g.fillPolygon(xPoints, yPoints, 5);
-            if (process.isCrashed()) {
-                final VSTask crashTask = process.getCrashTask();
-                final int crashPos = (int) getTimeXPosition(crashTask.getTaskTime());
-                final int xPointsCrashed[] = { crashPos, xoffset_plus_xpaintsize, xoffset_plus_xpaintsize, crashPos, crashPos };
+
+            if (process.hasCrashed()) {
                 g.setColor(process.getCrashedColor());
-                g.fillPolygon(xPointsCrashed, yPoints, 5);
+                final Long crashHistory[] = process.getCrashHistoryArray();
+                final int length = crashHistory.length;
+
+                for (int i = 0; i < length; i += 2) {
+                    final int crashStartPos = (int) getTimeXPosition(crashHistory[i].longValue());
+                    int crashEndPos;
+
+                    if (i == length - 1)
+                        crashEndPos = xoffset_plus_xpaintsize;
+                    else
+                        crashEndPos = (int) getTimeXPosition(crashHistory[i+1].longValue());
+
+                    final int xPointsCrashed[] = { crashStartPos, crashEndPos,
+                                                   crashEndPos, crashStartPos, crashStartPos
+                                                 };
+                    g.fillPolygon(xPointsCrashed, yPoints, 5);
+                }
             }
 
+            g.setColor(process.getColor());
             g.drawString("P" + process.getProcessID() + ":", XOFFSET - 30, yPoints[0] + LINE_WIDTH);
 
             final long tmp = localTime > untilTime ? untilTime : localTime;
@@ -635,14 +650,14 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             popup.add(item);
 
             item = new JMenuItem(prefs.getString("lang.crash"));
-            if (process.isCrashed() || isPaused || time == 0)
+            if (process.isCrashed() || isPaused || time == 0 || isFinished)
                 item.setEnabled(false);
             else
                 item.addActionListener(actionListener);
             popup.add(item);
 
             item = new JMenuItem(prefs.getString("lang.recover"));
-            if (!process.isCrashed() || isPaused || time == 0)
+            if (!process.isCrashed() || isPaused || time == 0 || isFinished)
                 item.setEnabled(false);
             else
                 item.addActionListener(actionListener);

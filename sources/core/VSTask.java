@@ -1,12 +1,11 @@
 package core;
 
-import prefs.VSPrefs;
 import events.*;
+import prefs.VSPrefs;
 import protocols.VSProtocol;
 import simulator.*;
 
-public class VSTask {
-    //public final static int RUN_ON_CLIENT_START = 1;
+public class VSTask implements Comparable {
     private long taskTime;
     private VSEvent event;
     private VSProcess process;
@@ -32,6 +31,10 @@ public class VSTask {
         return event instanceof VSMessage;
     }
 
+    public boolean isProcessRecoverEvent() {
+        return event instanceof events.implementations.ProcessRecoverEvent;
+    }
+
     public boolean isProtocol(VSProtocol protocol) {
         if (event instanceof VSProtocol)
             return ((VSProtocol) event).equals(protocol);
@@ -51,8 +54,9 @@ public class VSTask {
     }
 
     public void run() {
-        if (process.isCrashed())
-            return;
+        /* Process crash allready checked in VSTaskManager */
+        //if (process.isCrashed() && !(event instanceof ProcessRecoverEvent))
+        //   	return;
 
         if (event instanceof VSMessage) {
             onMessageRecv();
@@ -139,6 +143,20 @@ public class VSTask {
             descr += (VSProtocol) event;
 
         return descr;
+    }
+
+    public int compareTo(Object object) {
+        if (object instanceof VSTask) {
+            final VSTask task = (VSTask) object;
+
+            if (taskTime < task.getTaskTime())
+                return -1;
+
+            else if (taskTime > task.getTaskTime())
+                return 1;
+        }
+
+        return 0;
     }
 }
 
