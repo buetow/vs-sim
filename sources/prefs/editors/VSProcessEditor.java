@@ -66,7 +66,17 @@ public class VSProcessEditor extends VSEditorFrame {
     private JPanel createProtocolSelector() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        Vector<String> registeredProtocols = VSRegisteredEvents.getProtocolNames();
+
+        Vector<String> registeredProtocolsNames = VSRegisteredEvents.getProtocolNames();
+        Vector<String> registeredProtocolsShortnames = new Vector<String>();
+        final HashMap<String,String> eventNames = new HashMap<String,String>();
+
+        for (String protocolName : registeredProtocolsNames) {
+            String protocolClassname = VSRegisteredEvents.getClassname(protocolName);
+            String protocolShortname = VSRegisteredEvents.getShortname(protocolClassname);
+            registeredProtocolsShortnames.add(protocolShortname);
+            eventNames.put(protocolShortname, protocolName);
+        }
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -75,7 +85,8 @@ public class VSProcessEditor extends VSEditorFrame {
         constraints.insets = new Insets(5, 0, 5, 0);
         constraints.ipadx = 10;
         constraints.ipady = 10;
-        final JComboBox comboBox = new JComboBox(registeredProtocols);
+
+        final JComboBox comboBox = new JComboBox(registeredProtocolsShortnames);
         comboBox.setBackground(Color.WHITE);
         panel.add(comboBox, constraints);
         constraints.gridy = 1;
@@ -83,7 +94,8 @@ public class VSProcessEditor extends VSEditorFrame {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getActionCommand().equals(prefs.getString("lang.edit"))) {
-                    String eventName = (String) comboBox.getSelectedItem();
+                    String eventShortname = (String) comboBox.getSelectedItem();
+                    String eventName = eventNames.get(eventShortname);
                     String eventClassname = VSRegisteredEvents.getClassname(eventName);
                     VSProtocol protocol = null;
                     if (process.objectExists(eventClassname)) {
@@ -96,6 +108,7 @@ public class VSProcessEditor extends VSEditorFrame {
                         protocol = (VSProtocol) VSRegisteredEvents.createEventInstanceByName(eventName, process);
                         process.setObject(eventClassname, protocol);
                     }
+
                     new VSProtocolEditor(prefs, frame, protocol);
                 }
             }

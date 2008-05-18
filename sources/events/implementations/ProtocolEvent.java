@@ -34,18 +34,7 @@ public class ProtocolEvent extends VSEvent {
     }
 
     public void onStart() {
-        //String type = isClientProtocol ? " Client!" : " Server!";
-        //process.setBoolean(protocolClassname + type, isProtocolActivation);
-
-        VSProtocol protocol;
-
-        if (!process.objectExists(protocolClassname)) {
-            protocol = (VSProtocol) VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, process);
-            process.setObject(protocolClassname, protocol);
-
-        } else {
-            protocol = (VSProtocol) process.getObject(protocolClassname);
-        }
+        VSProtocol protocol = process.getProtocolObject(protocolClassname);
 
         if (isClientProtocol)
             protocol.isClient(isProtocolActivation);

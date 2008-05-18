@@ -53,11 +53,13 @@ abstract public class VSProtocol extends VSEvent {
     public void reset() {
         if (isServer) {
             currentContextIsServer = true;
+            isServer = false;
             onServerReset();
         }
 
         if (isClient) {
             currentContextIsServer = false;
+            isClient = false;
             onClientReset();
         }
     }

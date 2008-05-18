@@ -12,6 +12,7 @@ import simulator.*;
 import utils.*;
 
 public final class VSProcess extends VSPrefs {
+    private ArrayList<VSProtocol> protocolsToReset;
     private ArrayList<Long> crashHistory;
     private ArrayList<VSLamportTime> lamportTimeHistory;
     private ArrayList<VSVectorTime> vectorTimeHistory;
@@ -84,13 +85,13 @@ public final class VSProcess extends VSPrefs {
     };
 
     public VSProcess(VSPrefs prefs, VSSimulationPanel simulationPanel, VSLogging logging) {
+        this.protocolsToReset = new ArrayList<VSProtocol>();
         this.prefs = prefs;
         this.simulationPanel = simulationPanel;
         this.logging = logging;
         random = new VSRandom(processID+processCounter);
 
         initTimeFormats();
-        setObject("protocols", new ArrayList<VSProtocol>());
 
         isPaused = true;
         processID = ++processCounter;
@@ -208,14 +209,8 @@ public final class VSProcess extends VSPrefs {
         globalTime = 0;
         clockOffset = 0;
 
-        if (objectExists("protocols.registered")) {
-            Object protocolsObj = getObject("protocols.registered");
-            if (protocolsObj instanceof Vector) {
-                Vector<VSProtocol> protocols = (Vector<VSProtocol>) protocolsObj;
-                for (VSProtocol protocol : protocols)
-                    protocol.reset();
-            }
-        }
+        for (VSProtocol protocol : protocolsToReset)
+            protocol.reset();
 
         setCurrentColor(getColor("process.default"));
         createRandomCrashTask();
@@ -541,5 +536,20 @@ public final class VSProcess extends VSPrefs {
 
     public static void resetProcessCounter() {
         processCounter = 0;
+    }
+
+    public VSProtocol getProtocolObject(String protocolClassname) {
+        VSProtocol protocol = null;
+
+        if (!objectExists(protocolClassname)) {
+            protocol = (VSProtocol) VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, this);
+            setObject(protocolClassname, protocol);
+            protocolsToReset.add(protocol);
+
+        } else {
+            protocol = (VSProtocol) getObject(protocolClassname);
+        }
+
+        return protocol;
     }
 }

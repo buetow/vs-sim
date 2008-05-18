@@ -21,6 +21,11 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JCheckBox lamportActiveCheckBox;
     private JCheckBox vectorTimeActiveCheckBox;
     private JComboBox processesComboBox;
+    private int lastSelectedProcessNum;
+    private ArrayList<String> localTextFields;
+    private ArrayList<String> globalTextFields;
+    private JTextField localTextField;
+    private JTextField globalTextField;
     private ArrayList<VSCreateTask> createTasks;
     private JMenuItem pauseItem;
     private JMenuItem replayItem;
@@ -53,6 +58,16 @@ public class VSSimulation extends VSFrame implements ActionListener {
         thread = new Thread(simulationPanel);
         //logging.start();
         logging.logg(prefs.getString("lang.simulation.new"));
+
+        this.localTextFields = new ArrayList<String>();
+        this.globalTextFields = new ArrayList<String>();
+        int numProcesses = simulationPanel.getNumProcesses();
+
+        for (int i = 0; i < numProcesses; ++i) {
+            localTextFields.add("0000");
+            globalTextFields.add("0000");
+        }
+
     }
 
     private JMenuBar createJMenuBar() {
@@ -294,6 +309,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
         processesComboBox = new JComboBox();
+        lastSelectedProcessNum = 0;
         int numProcesses = simulationPanel.getNumProcesses();
         String processString = prefs.getString("lang.process");
         for (int i = 1; i <= numProcesses; ++i)
@@ -316,7 +332,16 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         processesComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
+                localTextFields.set(lastSelectedProcessNum, localTextField.getText());
+                globalTextFields.set(lastSelectedProcessNum, globalTextField.getText());
                 updateTaskManagerTable();
+
+                int processNum = getSelectedProcessNum();
+                localTextField.setText(localTextFields.get(processNum));
+                globalTextField.setText(globalTextFields.get(processNum));
+                localTextField.setBackground(Color.WHITE);
+                globalTextField.setBackground(Color.WHITE);
+                lastSelectedProcessNum = processNum;
             }
         });
 
@@ -399,12 +424,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
             VSEvent event = null;
 
             if (isClientRequest) {
-                if (process.objectExists(eventClassname)) {
-                    event = (VSEvent) process.getObject(eventClassname);
-                } else {
-                    event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
-                    process.setObject(eventClassname, event);
-                }
+                event = process.getProtocolObject(eventClassname);
+
             } else {
                 event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
             }
@@ -547,6 +568,11 @@ public class VSSimulation extends VSFrame implements ActionListener {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
         final JTextField textField = new JTextField();
+        if (localTasks)
+            localTextField = textField;
+        else
+            globalTextField = textField;
+
         textField.setText("0000");
         textField.setBackground(Color.WHITE);
         panel1.add(textField);
@@ -787,13 +813,15 @@ public class VSSimulation extends VSFrame implements ActionListener {
         }
     }
 
-    private VSProcess getSelectedProcess() {
+    private int getSelectedProcessNum() {
         String string = (String) processesComboBox.getSelectedItem();
         int cutLen = prefs.getString("lang.process").length() + 1;
         string = string.substring(cutLen);
-        int processNum = Integer.parseInt(string) - 1;
+        return Integer.parseInt(string) - 1;
+    }
 
-        return simulationPanel.getProcess(processNum);
+    private VSProcess getSelectedProcess() {
+        return simulationPanel.getProcess(getSelectedProcessNum());
     }
 
     public void updateTaskManagerTable() {
