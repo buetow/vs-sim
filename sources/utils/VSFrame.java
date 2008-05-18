@@ -45,7 +45,7 @@ public class VSFrame extends JFrame {
         if (parent == null) {
             final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             x = (int) (screenSize.width - getWidth()) / 2;
-            y = (int) (screenSize.height - getHeight()) / 2;
+            y = 50;//(int) (screenSize.height - getHeight()) / 2;
 
         } else {
             final Point location = parent.getLocation();

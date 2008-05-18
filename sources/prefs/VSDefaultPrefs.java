@@ -45,6 +45,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.activated", "Aktiviert");
         initString("lang.actualize", "Aktualisieren");
         initString("lang.cancel", "Abbrechen");
+        initString("lang.global", "Global");
+        initString("lang.local", "Lokal");
         initString("lang.client", "Client");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
@@ -105,9 +107,11 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
+        initString("lang.task", "Task");
         initString("lang.taskmanager", "Taskmanager");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
+        initString("lang.time", "Zeit");
         initString("lang.type", "Typ");
         initString("name", "Verteilte Systeme v0.2-devel");
     }
@@ -146,7 +150,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
         initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
-        initIntegerUnit("window.splitsize", 180, null, 100, 1000, "px");
+        initIntegerUnit("window.splitsize", 225, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
         initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");
     }

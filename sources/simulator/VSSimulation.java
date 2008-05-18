@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.border.*;
 
 import prefs.*;
 import core.*;
@@ -19,7 +20,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JMenuItem replayItem;
     private JMenuItem resetItem;
     private JMenuItem startItem;
-    private JPanel processEditPanel;
+    private JPanel processPanel;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
     private Thread thread;
@@ -153,12 +154,10 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private Container createContentPane() {
         JTextArea loggingArea = logging.getLoggingArea();
 
-        /*
         splitPaneH = new JSplitPane();
         splitPaneH.setDividerLocation(
             prefs.getInteger("window.splitsize"));
 
-        	*/
         splitPaneV = new JSplitPane();
         splitPaneV.setDividerLocation(
             prefs.getInteger("window.ysize")
@@ -167,7 +166,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         simulationPanel = new VSSimulationPanel(prefs, this, logging);
         logging.setSimulationPanel(simulationPanel);
         simulationPanel.setBackground(prefs.getColor("paintarea.background"));//new Color(0xFD, 0xFC, 0xF7));
-        //processEditPanel = createProcessEditPanel();
+        processPanel = createProcessPanel();
 
         JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
@@ -178,19 +177,15 @@ public class VSSimulation extends VSFrame implements ActionListener {
         loggingPane.add(toolsPanel, BorderLayout.SOUTH);
         loggingPane.setPreferredSize(new Dimension(200, 1));
 
-        //JScrollPane processEditScrollPane = new JScrollPane(processEditPanel);
-
-        /*
         splitPaneH.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        splitPaneH.setLeftComponent(processEditScrollPane);
+        splitPaneH.setLeftComponent(processPanel);
         splitPaneH.setRightComponent(paintScrollPane);
         splitPaneH.setContinuousLayout(true);
         splitPaneH.setOneTouchExpandable(true);
-        */
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        //splitPaneV.setTopComponent(splitPaneH);
-        splitPaneV.setTopComponent(paintScrollPane);
+        splitPaneV.setTopComponent(splitPaneH);
+        //splitPaneV.setTopComponent(paintScrollPane);
         splitPaneV.setBottomComponent(loggingPane);
         splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
@@ -287,33 +282,86 @@ public class VSSimulation extends VSFrame implements ActionListener {
         return toolsPanel;
     }
 
-    /*
-    private JPanel createProcessEditPanel() {
+    private JPanel createProcessPanel() {
         JPanel editPanel = new JPanel(new GridBagLayout());
         editPanel.setBackground(Color.WHITE);
+        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
+        JComboBox comboBox = new JComboBox();
+        int numProcesses = simulationPanel.getNumProcesses();
+        String processString = prefs.getString("lang.process");
+        for (int i = 1; i <= numProcesses; ++i)
+            comboBox.addItem(processString + " " + i);
 
-        Insets insets = new Insets(5, 5, 5, 5);
-        constraints.insets = insets;
-        constraints.ipady = 5;
-        constraints.ipadx = 5;
-        int row = 0;
+        JPanel localPanel = createTaskLabel(true);
+        JPanel globalPanel = createTaskLabel(false);
 
-        Vector<VSProcess> processes = simulationPanel.getProcesses();
+        JSplitPane splitPane1 = new JSplitPane();
+        splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        splitPane1.setTopComponent(localPanel);
+        splitPane1.setBottomComponent(globalPanel);
+        splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
-        for (VSProcess p : processes) {
-            constraints.gridy = row++;
-            //editPanel.add(new VSProcessEditor(prefs, p), constraints);
-        }
+        JSplitPane splitPane2 = new JSplitPane();
+        splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        splitPane2.setTopComponent(comboBox);
+        splitPane2.setBottomComponent(splitPane1);
 
+        editPanel.add(splitPane2);
         return editPanel;
     }
-    */
+
+    private JPanel createLabelPanel(String text) {
+        JPanel panel = new JPanel();
+        panel.setBorder(new CompoundBorder(
+                            new LineBorder(Color.BLACK),
+                            new EmptyBorder(0, 0, 0, 0)));
+
+        JLabel label = new JLabel(text);
+        panel.add(label);
+
+        return panel;
+    }
+
+    private JPanel createTaskLabel(boolean localTasks) {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        if (localTasks)
+            panel.add(createLabelPanel(prefs.getString("lang.local")));
+        else
+            panel.add(createLabelPanel(prefs.getString("lang.global")));
+
+        JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
+        panel.add(scrollPane);
+        /*
+        JTextArea emptyArea = new JTextArea(0, 0);
+        emptyArea.setEditable(false);
+        panel.add(emptyArea);
+        */
+
+        return panel;
+    }
+
+    private JTable createTaskTable(boolean localTasks) {
+        String[] columnNames = { prefs.getString("lang.time"), prefs.getString("lang.task") };
+        Object[][] data = {
+            {"foo", "bar" },
+            {"foo", "bar" },
+            {"foo", "bar" },
+            {"foo", "bar" },
+            {"foo", "bar" },
+            { "baz", "bay" }
+        };
+
+        JTable table = new JTable(data, columnNames);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+        return table;
+    }
 
     public int getSplitSize() {
-        return 0;//splitPaneH.getDividerLocation();
+        return splitPaneH.getDividerLocation();
     }
 
     public int getPaintSize() {
