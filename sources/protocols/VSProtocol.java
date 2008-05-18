@@ -34,6 +34,10 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
         return VSRegisteredProtocols.getProtocolName(protocolClassname);
     }
 
+    public final String getProtocolShortname() {
+        return VSRegisteredProtocols.getProtocolShortname(protocolClassname);
+    }
+
     public final VSProcess getProcess() {
         return process;
     }
@@ -99,7 +103,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     abstract protected void onServerReset();
     abstract protected void onServerRecv(VSMessage message);
 
-    protected void logg(String message) {
+    public void logg(String message) {
         process.logg(toString() + "; " + message);
     }
 
@@ -112,15 +116,18 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     }
 
     public String toString() {
-        String type = new String();
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(prefs.getString("lang.protocol"));
+        buffer.append(": ");
+        buffer.append(getProtocolShortname());
+        buffer.append(" ");
 
         if (currentContextIsServer)
-            type += prefs.getString("lang.server");
-
+            buffer.append(prefs.getString("lang.server"));
         else
-            type += prefs.getString("lang.client");
+            buffer.append(prefs.getString("lang.client"));
 
-        return prefs.getString("lang.protocol") + ": "
-               + VSRegisteredProtocols.getProtocolName(getProtocolClassname()) + " " + type;// + "; ID: " + getID();
+        return buffer.toString();
     }
 }

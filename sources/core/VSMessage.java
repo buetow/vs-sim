@@ -59,5 +59,9 @@ public class VSMessage extends VSPrefs implements VSEvent {
     public boolean equals(VSMessage message) {
         return messageID == message.getMessageID();
     }
+
+    public void logg(String message) {
+        //System.out.println(message);
+    }
 }
 

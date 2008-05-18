@@ -45,9 +45,9 @@ public class VSLogging {
         buffer.append(": ");
         buffer.append(message);
 
-        if (isPaused) 
+        if (isPaused)
             pauseLines.add(buffer);
-        else 
+        else
             loggFiltered(buffer);
     }
 

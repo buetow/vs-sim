@@ -204,21 +204,21 @@ public class VSTaskManager {
     }
 
     public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {
-        LinkedList<VSTask> protocolVSTasks = new LinkedList<VSTask>();
+        LinkedList<VSTask> protocolTasks = new LinkedList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (task.isProtocol(protocol))
-                protocolVSTasks.addLast(task);
+                protocolTasks.addLast(task);
 
         for (VSTask task : globalTasks)
             if (task.isProtocol(protocol))
-                protocolVSTasks.addLast(task);
+                protocolTasks.addLast(task);
 
         for (VSTask task : tasks)
             if (task.isProtocol(protocol))
-                protocolVSTasks.addLast(task);
+                protocolTasks.addLast(task);
 
-        return protocolVSTasks;
+        return protocolTasks;
     }
 
     public synchronized LinkedList<VSTask> getNonProtocolTasks(VSProtocol protocol) {
@@ -239,11 +239,10 @@ public class VSTaskManager {
         return nonProtocolTasks;
     }
 
-    public synchronized void modifyProtocolTasks(VSProtocol protocol, LinkedList<VSTask> protocolVSTasks) {
+    public synchronized void modifyProtocolTasks(VSProtocol protocol, LinkedList<VSTask> protocolTasks) {
         VSProcess process = protocol.getProcess();
         LinkedList<VSTask> nonProtocolTasks = getNonProtocolTasks(protocol);
-        //System.out.println("NON PROTO: " + nonProtocolTasks);
-        ListIterator<VSTask> iter1 = protocolVSTasks.listIterator(0);
+        ListIterator<VSTask> iter1 = protocolTasks.listIterator(0);
         ListIterator<VSTask> iter2 = nonProtocolTasks.listIterator(0);
         long localTime = process.getTime();
 
@@ -258,7 +257,7 @@ public class VSTaskManager {
                 insert(task);
         }
 
-        for (VSTask task : protocolVSTasks) {
+        for (VSTask task : protocolTasks) {
             if (task.getTaskTime() < localTime)
                 fullfilledProgrammedTasks.addLast(task);
             else
@@ -267,25 +266,37 @@ public class VSTaskManager {
     }
 
     public String toString() {
-        final String taskManager = prefs.getString("lang.taskmanager");
-        String descr = "fullfilled: ";
+        StringBuffer buffer = new StringBuffer();
 
-        for (VSTask task : fullfilledProgrammedTasks)
-            descr += task + "; ";
+        buffer.append(prefs.getString("lang.task.manager"));
+        buffer.append(" (");
+        buffer.append(prefs.getString("lang.tasks.fullfilled"));
+        buffer.append(": ");
 
-        descr += "global: ";
+        for (VSTask task : fullfilledProgrammedTasks) {
+            buffer.append(task);
+            buffer.append("; ");
+        }
 
-        for (VSTask task : globalTasks)
-            descr += task + "; ";
+        buffer.append(prefs.getString("lang.tasks.global"));
 
-        descr += "local: ";
+        for (VSTask task : globalTasks) {
+            buffer.append(task);
+            buffer.append("; ");
+        }
 
-        for (VSTask task : tasks)
-            descr += task + "; ";
+        buffer.append(prefs.getString("lang.tasks.local"));
+
+        for (VSTask task : tasks) {
+            buffer.append(task);
+            buffer.append("; ");
+        }
+
+        String descr = buffer.toString();
 
         if (descr.endsWith("; "))
-            return taskManager + " (" + descr.substring(0, descr.length()-2) + ")";
+            return descr.substring(0, descr.length()-2) + ")";
 
-        return taskManager + " (" + descr + ")";
+        return descr + ")";
     }
 }

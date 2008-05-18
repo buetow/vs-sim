@@ -12,5 +12,9 @@ abstract public class VSProcessEvent implements VSEvent {
         this.prefs = process.getPrefs();
     }
 
+    public void logg(String message) {
+        process.logg(message);
+    }
+
     abstract public void onStart();
 }

@@ -7,8 +7,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.border.*;
 
-import prefs.*;
 import core.*;
+import prefs.*;
+import protocols.*;
 import utils.*;
 
 public class VSSimulation extends VSFrame implements ActionListener {
@@ -304,7 +305,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         splitPane2.setTopComponent(comboBox);
         splitPane2.setBottomComponent(splitPane1);
 
-		return splitPane2;
+        return splitPane2;
     }
 
     private JPanel createLabelPanel(String text) {
@@ -327,7 +328,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
         panel.add(scrollPane);
 
-		initAddPanel(panel);
+        initAddPanel(panel);
 
         return panel;
     }
@@ -350,44 +351,47 @@ public class VSSimulation extends VSFrame implements ActionListener {
         return table;
     }
 
-	private void initAddPanel(JPanel panel) {
-		JPanel panel1 = new JPanel();
+    private void initAddPanel(JPanel panel) {
+        JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
-	
-		panel1.add(new JTextField());
-		panel1.add(new JLabel(" ms "));
-		JButton takeoverButton = new JButton(prefs.getString("lang.takeover")); 
-		panel1.add(takeoverButton);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("-- Prozessereignisse --");
-		comboBox.addItem("Prozessabsturz");
-		comboBox.addItem("Prozesswiederbelebung");
-		comboBox.addItem("-- Protokollereignisse --");
-		comboBox.addItem("BerkelyTime Client aktivieren");
-		comboBox.addItem("BerkelyTime Client deaktivieren");
-		comboBox.addItem("BerkelyTime Server aktivieren");
-		comboBox.addItem("BerkelyTime Server deaktivieren");
-		comboBox.addItem("ExternalTimeSync Client aktivieren");
-		comboBox.addItem("ExternalTimeSync Client deaktivieren");
-		comboBox.addItem("ExternalTimeSync Server aktivieren");
-		comboBox.addItem("ExternalTimeSync Server deaktivieren");
-		comboBox.addItem("InternalTimeSync Client aktivieren");
-		comboBox.addItem("InternalTimeSync Client deaktivieren");
-		comboBox.addItem("InternalTimeSync Server aktivieren");
-		comboBox.addItem("InternalTimeSync Server deaktivieren");
-		comboBox.addItem("PingPong Client aktivieren");
-		comboBox.addItem("PingPong Client deaktivieren");
-		comboBox.addItem("PingPong Server aktivieren");
-		comboBox.addItem("PingPong Server deaktivieren");
-		comboBox.addItem("-- Anfragen --");
-		comboBox.addItem("BerkelyTime Anfrage starten");
-		comboBox.addItem("ExternalTimeSync Anfrage starten");
-		comboBox.addItem("InternalTimeSync Anfrage starten");
-		comboBox.addItem("PingPong Anfrage starten");
-		panel.add(comboBox);
-		panel.add(panel1);
-	}
+        panel1.add(new JTextField());
+        panel1.add(new JLabel(" ms "));
+        JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
+        panel1.add(takeoverButton);
+
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
+        comboBox.addItem("Prozessabsturz");
+        comboBox.addItem("Prozesswiederbelebung");
+
+        comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
+
+        Vector<String> protocolClassnames = VSRegisteredProtocols.getProtocolClassnames();
+        String activate = prefs.getString("lang.activate");
+        String deactivate = prefs.getString("lang.deactivate");
+        String client = prefs.getString("lang.client");
+        String server = prefs.getString("lang.server");
+
+        for (String protocolClassname : protocolClassnames) {
+            String protocolShortname = VSRegisteredProtocols.getProtocolShortname(protocolClassname);
+            comboBox.addItem(protocolShortname + " " + client + " " + activate);
+            comboBox.addItem(protocolShortname + " " + client + " " + deactivate);
+            comboBox.addItem(protocolShortname + " " + server + " " + activate);
+            comboBox.addItem(protocolShortname + " " + server + " " + deactivate);
+        }
+
+        comboBox.addItem("-- " + prefs.getString("lang.requests") + " --");
+        String clientrequest = prefs.getString("lang.clientrequest.start");
+
+        for (String protocolClassname : protocolClassnames) {
+            String protocolShortname = VSRegisteredProtocols.getProtocolShortname(protocolClassname);
+            comboBox.addItem(protocolShortname + " " + clientrequest);
+        }
+
+        panel.add(comboBox);
+        panel.add(panel1);
+    }
 
     public int getSplitSize() {
         return splitPaneH.getDividerLocation();

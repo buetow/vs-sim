@@ -39,25 +39,30 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public void fillDefaultStrings() {
+        initString("lang.clientrequest.start", "Clientanfrage starten");
         initString("lang.about", "About");
         initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
         initString("lang.activated", "Aktiviert");
         initString("lang.actualize", "Aktualisieren");
         initString("lang.cancel", "Abbrechen");
-        initString("lang.global", "Global");
-        initString("lang.local", "Lokal");
         initString("lang.client", "Client");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
         initString("lang.crash", "Abstürzen");
         initString("lang.crashed", "Abgestürzt");
+        initString("lang.deactivate", "deaktivieren");
         initString("lang.default", "Defaults");
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
+        initString("lang.event", "Ereignis");
+        initString("lang.events.process", "Prozessereignisse");
+        initString("lang.events.protocol", "Protokollereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
+        initString("lang.global", "Global");
+        initString("lang.local", "Lokal");
         initString("lang.logging.active", "Logging");
         initString("lang.logging.clear", "Loggs löschen");
         initString("lang.message", "Nachricht");
@@ -77,10 +82,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.protocol", "Protokolleinstellungen");
         initString("lang.prefs.protocol.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder \"OK\" Knopfes übernommen!");
         initString("lang.process", "Prozess");
-        initString("lang.process.clock.variance", "Uhrabweichung");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
-        initString("lang.process.task", "Prozessereignis");
         initString("lang.process.time.local", "Lokale Zeit");
         initString("lang.protocol", "Protokoll");
         initString("lang.protocol.client", "Clientseite");
@@ -93,7 +96,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.recovered", "Wiederbelebt");
         initString("lang.remove", "Entfernen");
         initString("lang.replay", "Wiederholen");
-        initString("lang.requesttime", "Requestzeit");
+        initString("lang.requests", "Anfragen");
         initString("lang.reset", "Reset");
         initString("lang.save", "Speichern");
         initString("lang.saveas", "Speichern unter");
@@ -107,11 +110,13 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
-        initString("lang.taskmanager", "Taskmanager");
+        initString("lang.task.manager", "Aufgabenmanager");
+        initString("lang.tasks.fullfilled", "Abgelaufene Aufgaben");
+        initString("lang.tasks.global", "Globale Aufgaben");
+        initString("lang.tasks.local", "Lokale Aufgaben");
+        initString("lang.time", "Zeit");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
-        initString("lang.time", "Zeit");
-        initString("lang.event", "Ereignis");
         initString("lang.type", "Typ");
         initString("name", "Verteilte Systeme v0.2-devel");
     }
@@ -150,7 +155,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
         initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
-        initIntegerUnit("window.splitsize", 265, null, 100, 1000, "px");
+        initIntegerUnit("window.splitsize", 285, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
         initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");
     }
