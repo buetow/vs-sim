@@ -80,7 +80,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.process.clock.variance", "Uhrabweichung");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
-        initString("lang.process.task", "Prozess-Task");
+        initString("lang.process.task", "Prozessereignis");
         initString("lang.process.time.local", "Lokale Zeit");
         initString("lang.protocol", "Protokoll");
         initString("lang.protocol.client", "Clientseite");
@@ -107,11 +107,11 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
-        initString("lang.task", "Task");
         initString("lang.taskmanager", "Taskmanager");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
         initString("lang.time", "Zeit");
+        initString("lang.event", "Ereignis");
         initString("lang.type", "Typ");
         initString("name", "Verteilte Systeme v0.2-devel");
     }
@@ -150,7 +150,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
         initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
-        initIntegerUnit("window.splitsize", 225, null, 100, 1000, "px");
+        initIntegerUnit("window.splitsize", 265, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
         initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");
     }
@@ -168,7 +168,7 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultColors() {
         /* Internal prefs */
-        initColor("paintarea.background", new Color(0xFF, 0xFB, 0xEF));
+        initColor("paintarea.background", new Color(0xFF, 0xFF, 0xFF));
         initColor("process.default", new Color(0x00, 0x00, 0x00));
         initColor("process.running", new Color(0x0D, 0xD8, 0x09));
         initColor("process.crashed", new Color(0xff, 0x00, 0x00));

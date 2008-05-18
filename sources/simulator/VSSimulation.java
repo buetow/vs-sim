@@ -20,7 +20,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JMenuItem replayItem;
     private JMenuItem resetItem;
     private JMenuItem startItem;
-    private JPanel processPanel;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
     private Thread thread;
@@ -166,7 +165,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
         simulationPanel = new VSSimulationPanel(prefs, this, logging);
         logging.setSimulationPanel(simulationPanel);
         simulationPanel.setBackground(prefs.getColor("paintarea.background"));//new Color(0xFD, 0xFC, 0xF7));
-        processPanel = createProcessPanel();
 
         JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
@@ -178,14 +176,13 @@ public class VSSimulation extends VSFrame implements ActionListener {
         loggingPane.setPreferredSize(new Dimension(200, 1));
 
         splitPaneH.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-        splitPaneH.setLeftComponent(processPanel);
+        splitPaneH.setLeftComponent(createProcessPane());
         splitPaneH.setRightComponent(paintScrollPane);
         splitPaneH.setContinuousLayout(true);
         splitPaneH.setOneTouchExpandable(true);
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
-        //splitPaneV.setTopComponent(paintScrollPane);
         splitPaneV.setBottomComponent(loggingPane);
         splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
@@ -282,9 +279,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
         return toolsPanel;
     }
 
-    private JPanel createProcessPanel() {
+    private JSplitPane createProcessPane() {
         JPanel editPanel = new JPanel(new GridBagLayout());
-        editPanel.setBackground(Color.WHITE);
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
         JComboBox comboBox = new JComboBox();
@@ -301,22 +297,18 @@ public class VSSimulation extends VSFrame implements ActionListener {
         splitPane1.setTopComponent(localPanel);
         splitPane1.setBottomComponent(globalPanel);
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
+        splitPane1.setOneTouchExpandable(true);
 
         JSplitPane splitPane2 = new JSplitPane();
         splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPane2.setTopComponent(comboBox);
         splitPane2.setBottomComponent(splitPane1);
 
-        editPanel.add(splitPane2);
-        return editPanel;
+		return splitPane2;
     }
 
     private JPanel createLabelPanel(String text) {
         JPanel panel = new JPanel();
-        panel.setBorder(new CompoundBorder(
-                            new LineBorder(Color.BLACK),
-                            new EmptyBorder(0, 0, 0, 0)));
-
         JLabel label = new JLabel(text);
         panel.add(label);
 
@@ -334,17 +326,14 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
         panel.add(scrollPane);
-        /*
-        JTextArea emptyArea = new JTextArea(0, 0);
-        emptyArea.setEditable(false);
-        panel.add(emptyArea);
-        */
+
+		initAddPanel(panel);
 
         return panel;
     }
 
     private JTable createTaskTable(boolean localTasks) {
-        String[] columnNames = { prefs.getString("lang.time"), prefs.getString("lang.task") };
+        String[] columnNames = { prefs.getString("lang.time"), prefs.getString("lang.event") };
         Object[][] data = {
             {"foo", "bar" },
             {"foo", "bar" },
@@ -356,9 +345,49 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         JTable table = new JTable(data, columnNames);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        table.setBackground(Color.WHITE);
 
         return table;
     }
+
+	private void initAddPanel(JPanel panel) {
+		JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+	
+		panel1.add(new JTextField());
+		panel1.add(new JLabel(" ms "));
+		JButton takeoverButton = new JButton(prefs.getString("lang.takeover")); 
+		panel1.add(takeoverButton);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.addItem("-- Prozessereignisse --");
+		comboBox.addItem("Prozessabsturz");
+		comboBox.addItem("Prozesswiederbelebung");
+		comboBox.addItem("-- Protokollereignisse --");
+		comboBox.addItem("BerkelyTime Client aktivieren");
+		comboBox.addItem("BerkelyTime Client deaktivieren");
+		comboBox.addItem("BerkelyTime Server aktivieren");
+		comboBox.addItem("BerkelyTime Server deaktivieren");
+		comboBox.addItem("ExternalTimeSync Client aktivieren");
+		comboBox.addItem("ExternalTimeSync Client deaktivieren");
+		comboBox.addItem("ExternalTimeSync Server aktivieren");
+		comboBox.addItem("ExternalTimeSync Server deaktivieren");
+		comboBox.addItem("InternalTimeSync Client aktivieren");
+		comboBox.addItem("InternalTimeSync Client deaktivieren");
+		comboBox.addItem("InternalTimeSync Server aktivieren");
+		comboBox.addItem("InternalTimeSync Server deaktivieren");
+		comboBox.addItem("PingPong Client aktivieren");
+		comboBox.addItem("PingPong Client deaktivieren");
+		comboBox.addItem("PingPong Server aktivieren");
+		comboBox.addItem("PingPong Server deaktivieren");
+		comboBox.addItem("-- Anfragen --");
+		comboBox.addItem("BerkelyTime Anfrage starten");
+		comboBox.addItem("ExternalTimeSync Anfrage starten");
+		comboBox.addItem("InternalTimeSync Anfrage starten");
+		comboBox.addItem("PingPong Anfrage starten");
+		panel.add(comboBox);
+		panel.add(panel1);
+	}
 
     public int getSplitSize() {
         return splitPaneH.getDividerLocation();
