@@ -2,9 +2,10 @@ package events.implementations;
 
 import core.VSProcess;
 import events.*;
+import protocols.VSProtocol;
 
 public class ProtocolEvent extends VSEvent {
-    private String eventClassname;
+    private String protocolClassname;
     private boolean isClientProtocol; /* true = client, false = server */
     private boolean isProtocolActivation; /* true = activate, false = deactivate */
 
@@ -28,24 +29,38 @@ public class ProtocolEvent extends VSEvent {
         return isProtocolActivation;
     }
 
-    public void setEventClassname(String eventClassname) {
-        this.eventClassname = eventClassname;
+    public void setProtocolClassname(String protocolClassname) {
+        this.protocolClassname = protocolClassname;
     }
 
     public void onStart() {
-        String type = isClientProtocol ? "client" : "server";
-        String name = VSRegisteredEvents.getName(eventClassname);
-        process.setBoolean("sim."+name.toLowerCase()+"."+type+".enabled!", isProtocolActivation);
+        //String type = isClientProtocol ? " Client!" : " Server!";
+        //process.setBoolean(protocolClassname + type, isProtocolActivation);
+
+        VSProtocol protocol;
+
+        if (!process.objectExists(protocolClassname)) {
+            protocol = (VSProtocol) VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, process);
+            process.setObject(protocolClassname, protocol);
+
+        } else {
+            protocol = (VSProtocol) process.getObject(protocolClassname);
+        }
+
+        if (isClientProtocol)
+            protocol.isClient(isProtocolActivation);
+
+        else
+            protocol.isServer(isProtocolActivation);
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append(VSRegisteredEvents.getShortname(eventClassname));
+        buffer.append(VSRegisteredEvents.getShortname(protocolClassname));
         buffer.append(" ");
         buffer.append(isClientProtocol
                       ? prefs.getString("lang.client") : prefs.getString("lang.server"));
         buffer.append(" ");
         buffer.append(isProtocolActivation
                       ? prefs.getString("lang.activated") : prefs.getString("lang.deactivated"));
-
         logg(buffer.toString());
     }
 }

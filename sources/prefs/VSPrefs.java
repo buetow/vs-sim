@@ -12,15 +12,15 @@ public abstract class VSPrefs implements Serializable {
     public static final String INTEGER_PREFIX = "Integer: ";
     public static final String LONG_PREFIX = "Long: ";
     public static final String STRING_PREFIX = "String: ";
-    private HashMap<String,Color> colorVSPrefs;
-    private HashMap<String,Float> floatVSPrefs;
-    private HashMap<String,Integer> integerVSPrefs;
-    private HashMap<String,Long> longVSPrefs;
+    private HashMap<String,Color> colorPrefs;
+    private HashMap<String,Float> floatPrefs;
+    private HashMap<String,Integer> integerPrefs;
+    private HashMap<String,Long> longPrefs;
     private HashMap<String,SettingRestriction> settingRestrictionPrefs;
     private HashMap<String,String> descriptionPrefs;
-    private HashMap<String,String> stringVSPrefs;
-    private HashMap<String,Boolean> booleanVSPrefs;
-    private HashMap<String,Object> objectVSPrefs;
+    private HashMap<String,String> stringPrefs;
+    private HashMap<String,Boolean> booleanPrefs;
+    private HashMap<String,Object> objectPrefs;
     private HashMap<String,String> units;
     private static final long serialVersionUID = 4L;
     protected final static String PREFERENCES_FILENAME = "vs.dat";
@@ -64,33 +64,33 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public VSPrefs() {
-        colorVSPrefs = new HashMap<String,Color>();
+        colorPrefs = new HashMap<String,Color>();
         descriptionPrefs = new HashMap<String,String>();
-        floatVSPrefs = new HashMap<String,Float>();
-        integerVSPrefs = new HashMap<String,Integer>();
-        longVSPrefs = new HashMap<String,Long>();
+        floatPrefs = new HashMap<String,Float>();
+        integerPrefs = new HashMap<String,Integer>();
+        longPrefs = new HashMap<String,Long>();
         settingRestrictionPrefs = new HashMap<String,SettingRestriction>();
-        stringVSPrefs = new HashMap<String,String>();
-        booleanVSPrefs = new HashMap<String,Boolean>();
-        objectVSPrefs = new HashMap<String,Object>();
+        stringPrefs = new HashMap<String,String>();
+        booleanPrefs = new HashMap<String,Boolean>();
+        objectPrefs = new HashMap<String,Object>();
         units = new HashMap<String,String>();
         id = ++idCounter;
     }
 
     protected synchronized void clear() {
-        colorVSPrefs.clear();
-        floatVSPrefs.clear();
-        integerVSPrefs.clear();
-        longVSPrefs.clear();
-        stringVSPrefs.clear();
-        booleanVSPrefs.clear();
-        objectVSPrefs.clear();
+        colorPrefs.clear();
+        floatPrefs.clear();
+        integerPrefs.clear();
+        longPrefs.clear();
+        stringPrefs.clear();
+        booleanPrefs.clear();
+        objectPrefs.clear();
         descriptionPrefs.clear();
         settingRestrictionPrefs.clear();
     }
 
     public synchronized Object getObject(String key) {
-        Object val = objectVSPrefs.get(key);
+        Object val = objectPrefs.get(key);
 
         if (val == null) {
             System.err.println("Fatal: No such object config value \""
@@ -101,12 +101,16 @@ public abstract class VSPrefs implements Serializable {
         return val;
     }
 
+    public synchronized void removeObject(String key) {
+        objectPrefs.remove(key);
+    }
+
     public synchronized boolean objectExists(String key) {
-        return null != objectVSPrefs.get(key);
+        return null != objectPrefs.get(key);
     }
 
     public synchronized String getString(String key) {
-        String val = stringVSPrefs.get(key);
+        String val = stringPrefs.get(key);
 
         if (val == null) {
             System.err.println("Fatal: No such string config value \""
@@ -118,7 +122,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Integer getIntegerObj(String key) {
-        Integer val = integerVSPrefs.get(key);
+        Integer val = integerPrefs.get(key);
 
         if (val == null) {
             System.err.println("Fatal: No such integer config value \""
@@ -134,7 +138,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Float getFloatObj(String key) {
-        Float val = floatVSPrefs.get(key);
+        Float val = floatPrefs.get(key);
 
         if (val == null) {
             System.err.println("Fatal: No such float config value \""
@@ -150,7 +154,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Long getLongObj(String key) {
-        Long val = longVSPrefs.get(key);
+        Long val = longPrefs.get(key);
 
         if (val == null) {
             System.err.println("Fatal: No such long config value \""
@@ -166,7 +170,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Boolean getBooleanObj(String key) {
-        Boolean val = booleanVSPrefs.get(key);
+        Boolean val = booleanPrefs.get(key);
 
         if (val == null)
             return new Boolean(false);
@@ -179,7 +183,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Color getColor(String key) {
-        Color color = colorVSPrefs.get(key);
+        Color color = colorPrefs.get(key);
 
         if (color == null) {
             System.err.println("Fatal: No such color config value \""
@@ -203,81 +207,81 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized Set<String> getStringKeySet() {
-        return stringVSPrefs.keySet();
+        return stringPrefs.keySet();
     }
 
     public synchronized Set<String> getIntegerKeySet() {
-        return integerVSPrefs.keySet();
+        return integerPrefs.keySet();
     }
 
     public synchronized Set<String> getFloatKeySet() {
-        return floatVSPrefs.keySet();
+        return floatPrefs.keySet();
     }
 
     public synchronized Set<String> getLongKeySet() {
-        return longVSPrefs.keySet();
+        return longPrefs.keySet();
     }
 
     public synchronized Set<String> getBooleanKeySet() {
-        return booleanVSPrefs.keySet();
+        return booleanPrefs.keySet();
     }
 
     public synchronized Set<String> getColorKeySet() {
-        return colorVSPrefs.keySet();
+        return colorPrefs.keySet();
     }
 
     public synchronized void setObject(String key, Object val) {
-        objectVSPrefs.put(key, val);
+        objectPrefs.put(key, val);
     }
 
     public synchronized void setString(String key, String val) {
-        stringVSPrefs.put(key, val);
+        stringPrefs.put(key, val);
     }
 
     public synchronized void setInteger(String key, Integer val) {
-        integerVSPrefs.put(key, val);
+        integerPrefs.put(key, val);
     }
 
     public synchronized void setColor(String key, Color color) {
-        colorVSPrefs.put(key, color);
+        colorPrefs.put(key, color);
     }
 
     public synchronized void setInt(String key, int val) {
-        integerVSPrefs.put(key, new Integer(val));
+        integerPrefs.put(key, new Integer(val));
     }
 
     public synchronized void setFloat(String key, float val) {
-        floatVSPrefs.put(key, new Float(val));
+        floatPrefs.put(key, new Float(val));
     }
 
     public synchronized void setFloat(String key, Float val) {
-        floatVSPrefs.put(key, val);
+        floatPrefs.put(key, val);
     }
 
     public synchronized void setLong(String key, long val) {
-        longVSPrefs.put(key, new Long(val));
+        longPrefs.put(key, new Long(val));
     }
 
     public synchronized void setLong(String key, Long val) {
-        longVSPrefs.put(key, val);
+        longPrefs.put(key, val);
     }
 
     public synchronized void setBoolean(String key, boolean val) {
-        booleanVSPrefs.put(key, new Boolean(val));
+        booleanPrefs.put(key, new Boolean(val));
     }
 
     public synchronized void setBoolean(String key, Boolean val) {
-        booleanVSPrefs.put(key, val);
+        booleanPrefs.put(key, val);
     }
 
     public synchronized void initString(String key, String val) {
-        if (!stringVSPrefs.containsKey(key))
-            stringVSPrefs.put(key, val);
+        if (!stringPrefs.containsKey(key))
+            stringPrefs.put(key, val);
     }
 
     public synchronized void initInteger(String key, Integer val) {
-        if (!integerVSPrefs.containsKey(key))
-            integerVSPrefs.put(key, val);
+        if (!integerPrefs.containsKey(key))
+            integerPrefs.put(key, val);
     }
 
     public void initInteger(String key, int val) {
@@ -285,8 +289,8 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized void initLong(String key, Long val) {
-        if (!longVSPrefs.containsKey(key))
-            longVSPrefs.put(key, val);
+        if (!longPrefs.containsKey(key))
+            longPrefs.put(key, val);
     }
 
     public void initLong(String key, int val) {
@@ -294,8 +298,8 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized void initFloat(String key, Float val) {
-        if (!floatVSPrefs.containsKey(key))
-            floatVSPrefs.put(key, val);
+        if (!floatPrefs.containsKey(key))
+            floatPrefs.put(key, val);
     }
 
     public void initFloat(String key, float val) {
@@ -303,8 +307,8 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized void setLongIfUnset(String key, Long val) {
-        if (!longVSPrefs.containsKey(key))
-            longVSPrefs.put(key, val);
+        if (!longPrefs.containsKey(key))
+            longPrefs.put(key, val);
     }
 
     public void setLongIfUnset(String key, long val) {
@@ -312,8 +316,8 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized void initBoolean(String key, Boolean val) {
-        if (!booleanVSPrefs.containsKey(key))
-            booleanVSPrefs.put(key, val);
+        if (!booleanPrefs.containsKey(key))
+            booleanPrefs.put(key, val);
     }
 
     public void initBoolean(String key, boolean val) {
@@ -321,8 +325,8 @@ public abstract class VSPrefs implements Serializable {
     }
 
     public synchronized void initColor(String key, Color color) {
-        if (!colorVSPrefs.containsKey(key))
-            colorVSPrefs.put(key, color);
+        if (!colorPrefs.containsKey(key))
+            colorPrefs.put(key, color);
     }
 
     public synchronized void setDescriptionIfUnset(String key, String descr) {
@@ -425,25 +429,25 @@ public abstract class VSPrefs implements Serializable {
 
     public synchronized void writeObject(ObjectOutputStream objectOutputStream)
     throws IOException {
-        objectOutputStream.writeObject(booleanVSPrefs);
-        objectOutputStream.writeObject(colorVSPrefs);
-        objectOutputStream.writeObject(floatVSPrefs);
-        objectOutputStream.writeObject(integerVSPrefs);
-        objectOutputStream.writeObject(longVSPrefs);
-        objectOutputStream.writeObject(stringVSPrefs);
+        objectOutputStream.writeObject(booleanPrefs);
+        objectOutputStream.writeObject(colorPrefs);
+        objectOutputStream.writeObject(floatPrefs);
+        objectOutputStream.writeObject(integerPrefs);
+        objectOutputStream.writeObject(longPrefs);
+        objectOutputStream.writeObject(stringPrefs);
         objectOutputStream.writeObject(units);
     }
 
     public synchronized void readObject(ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        booleanVSPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
-        colorVSPrefs = (HashMap<String,Color>) objectInputStream.readObject();
+        booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
+        colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
         descriptionPrefs = new HashMap<String,String>();
-        floatVSPrefs = (HashMap<String,Float>) objectInputStream.readObject();
-        integerVSPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
-        longVSPrefs = (HashMap<String,Long>) objectInputStream.readObject();
+        floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
+        integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
+        longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
         settingRestrictionPrefs = new HashMap<String,SettingRestriction>();
-        stringVSPrefs = (HashMap<String,String>) objectInputStream.readObject();
+        stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
         units = (HashMap<String,String>) objectInputStream.readObject();
     }
 

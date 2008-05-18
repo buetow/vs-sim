@@ -6,6 +6,7 @@ import prefs.VSPrefs;
 abstract public class VSEvent extends VSPrefs {
     protected VSPrefs prefs;
     protected VSProcess process;
+    private String eventShortname;
     private String eventClassname;
 
     public void init(VSProcess process) {
@@ -22,7 +23,7 @@ abstract public class VSEvent extends VSPrefs {
         this.eventClassname = eventClassname;
     }
 
-    public final String getClassname() {
+    public String getClassname() {
         return eventClassname;
     }
 
@@ -30,11 +31,18 @@ abstract public class VSEvent extends VSPrefs {
         return VSRegisteredEvents.getName(eventClassname);
     }
 
-    public final String getShortname() {
-        return VSRegisteredEvents.getShortname(eventClassname);
+    public void setShortname(String eventShortname) {
+        this.eventShortname = eventShortname;
     }
 
-    public final VSProcess getProcess() {
+    public String getShortname() {
+        if (eventShortname == null)
+            return VSRegisteredEvents.getShortname(eventClassname);
+
+        return eventShortname;
+    }
+
+    public VSProcess getProcess() {
         return process;
     }
 

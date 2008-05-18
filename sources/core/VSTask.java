@@ -95,15 +95,15 @@ public class VSTask implements Comparable {
     private void onMessageRecv() {
         final VSMessage message = (VSMessage) event;
         final String eventName = message.getName();
-        final String eventClassname = message.getProtocolClassname();
+        final String protocolClassname = message.getProtocolClassname();
 
         process.updateLamportTime(message.getLamportTime()+1);
         process.updateVectorTime(message.getVectorTime());
 
         Object protocolObj;
 
-        if (process.objectExists(eventClassname))
-            protocolObj = process.getObject(eventClassname);
+        if (process.objectExists(protocolClassname))
+            protocolObj = process.getObject(protocolClassname);
         else
             protocolObj = null;
 

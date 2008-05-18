@@ -350,11 +350,16 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
     private class VSCreateTask {
         private String eventClassname;
+        private String protocolClassname;
+        private String shortname;
 
         /* Those 3 values are for ProtocolEvent events */
         private boolean isProtocolActivation;
         private boolean isProtocolDeactivation;
         private boolean isClientProtocol;
+
+        /* Those values are for ProtocolClient onStart events */
+        private boolean isClientRequest;
 
         public VSCreateTask(String eventClassname) {
             this.eventClassname = eventClassname;
@@ -378,14 +383,39 @@ public class VSSimulation extends VSFrame implements ActionListener {
             this.isClientProtocol = isClientProtocol;
         }
 
+        public void isClientRequest(boolean isClientRequest) {
+            this.isClientRequest = isClientRequest;
+        }
+
+        public void setProtocolClassname(String protocolClassname) {
+            this.protocolClassname = protocolClassname;
+        }
+
+        public void setShortname(String shortname) {
+            this.shortname = shortname;
+        }
+
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
-            VSEvent event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
+            VSEvent event = null;
+
+            if (isClientRequest) {
+                if (process.objectExists(eventClassname)) {
+                    event = (VSEvent) process.getObject(eventClassname);
+                } else {
+                    event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
+                    process.setObject(eventClassname, event);
+                }
+            } else {
+                event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
+            }
 
             event.init(process);
+            if (shortname != null)
+                event.setShortname(shortname);
 
             if (isProtocolActivation || isProtocolDeactivation) {
                 ProtocolEvent protocolEvent = (ProtocolEvent) event;
-                protocolEvent.setEventClassname(eventClassname);
+                protocolEvent.setProtocolClassname(protocolClassname);
                 protocolEvent.isProtocolActivation(isProtocolActivation);
                 protocolEvent.isClientProtocol(isClientProtocol);
             }
@@ -615,33 +645,52 @@ public class VSSimulation extends VSFrame implements ActionListener {
         String deactivate = prefs.getString("lang.deactivate");
         String client = prefs.getString("lang.client");
         String server = prefs.getString("lang.server");
+        String protocolEventClassname = "events.implementations.ProtocolEvent";
 
         for (String eventClassname : eventClassnames) {
-            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
-            comboBox.addItem(eventShortname + " " + client + " " + activate);
-            comboBox.addItem(eventShortname + " " + client + " " + deactivate);
-            comboBox.addItem(eventShortname + " " + server + " " + activate);
-            comboBox.addItem(eventShortname + " " + server + " " + deactivate);
+            String eventShortname_ = VSRegisteredEvents.getShortname(eventClassname);
 
+            String eventShortname = eventShortname_ + " " + client + " " + activate;
+            comboBox.addItem(eventShortname);
             if (flag) {
-                VSCreateTask createTask = new VSCreateTask(eventClassname);
+                VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(true);
+                createTask.setProtocolClassname(eventClassname);
+                createTask.setShortname(eventShortname);
                 createTasks.add(createTask);
+            }
 
-                createTask = new VSCreateTask(eventClassname);
+            eventShortname = eventShortname_ + " " + client + " " + deactivate;
+            comboBox.addItem(eventShortname);
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(true);
+                createTask.setProtocolClassname(eventClassname);
+                createTask.setShortname(eventShortname);
                 createTasks.add(createTask);
+            }
 
-                createTask = new VSCreateTask(eventClassname);
+            eventShortname = eventShortname_ + " " + server + " " + activate;
+            comboBox.addItem(eventShortname);
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(false);
+                createTask.setProtocolClassname(eventClassname);
+                createTask.setShortname(eventShortname);
                 createTasks.add(createTask);
+            }
 
-                createTask = new VSCreateTask(eventClassname);
+            eventShortname = eventShortname_ + " " + server + " " + deactivate;
+            comboBox.addItem(eventShortname);
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(false);
+                createTask.setProtocolClassname(eventClassname);
+                createTask.setShortname(eventShortname);
                 createTasks.add(createTask);
             }
         }
@@ -651,9 +700,17 @@ public class VSSimulation extends VSFrame implements ActionListener {
         String clientrequest = prefs.getString("lang.clientrequest.start");
 
         for (String eventClassname : eventClassnames) {
-            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
-            comboBox.addItem(eventShortname + " " + clientrequest);
-            if (flag) createTasks.add(new VSCreateTask(eventClassname));
+            String eventShortname = VSRegisteredEvents.getShortname(eventClassname)
+                                    + " " + clientrequest;
+
+            comboBox.addItem(eventShortname);
+
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(eventClassname);
+                createTask.setShortname(eventShortname);
+                createTask.isClientRequest(true);
+                createTasks.add(createTask);
+            }
         }
 
         panel.add(comboBox);

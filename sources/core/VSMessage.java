@@ -6,15 +6,15 @@ import prefs.VSPrefs;
 import protocols.*;
 
 public class VSMessage extends VSEvent {
-    private String eventClassname;
+    private String protocolClassname;
     private VSProcess sendingProcess;
     private long messageID;
     private static long messageCounter;
     private long lamportTime;
     private VSVectorTime vectorTime;
 
-    public VSMessage(String eventClassname) {
-        this.eventClassname = eventClassname;
+    public VSMessage(String protocolClassname) {
+        this.protocolClassname = protocolClassname;
         this.messageID = ++messageCounter;
     }
 
@@ -29,7 +29,7 @@ public class VSMessage extends VSEvent {
     }
 
     public String getProtocolClassname() {
-        return eventClassname;
+        return protocolClassname;
     }
 
     public long getMessageID() {

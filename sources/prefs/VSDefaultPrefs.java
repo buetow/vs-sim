@@ -43,7 +43,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.about", "About");
         initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
-        initString("lang.activated", "Aktiviert");
+        initString("lang.activated", "aktiviert");
+        initString("lang.deactivated", "deaktiviert");
         initString("lang.actualize", "Aktualisieren");
         initString("lang.cancel", "Abbrechen");
         initString("lang.client", "Client");

@@ -59,7 +59,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (!getClassname(eventName).startsWith("protocols"))
+            if (getClassname(eventName).startsWith("events"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -72,7 +72,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventClassname : set)
-            if (!eventClassname.startsWith("protocols"))
+            if (eventClassname.startsWith("events"))
                 vector.add(eventClassname);
 
         Collections.sort(vector);
@@ -93,11 +93,6 @@ public final class VSRegisteredEvents {
     }
 
     public static VSEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
-        return createEventInstanceByName(getName(eventClassname), process);
-    }
-
-    public static VSEvent createEventInstanceByName(String eventName, VSProcess process) {
-        final String eventClassname = eventClassnames.get(eventName);
         final Object protocolObj = new VSClassLoader().newInstance(eventClassname);
 
         if (protocolObj instanceof VSEvent) {
@@ -109,10 +104,15 @@ public final class VSRegisteredEvents {
         return null;
     }
 
+    public static VSEvent createEventInstanceByName(String eventName, VSProcess process) {
+        return createEventInstanceByClassname(eventClassnames.get(eventName), process);
+    }
+
     private static void registerEvent(String eventClassname, String eventName, String eventShortname) {
         if (eventShortname == null)
             eventShortname = eventName;
 
+        //System.out.println(eventClassname);
         eventNames.put(eventClassname, eventName);
         eventShortnames.put(eventClassname, eventShortname);
         eventClassnames.put(eventName, eventClassname);

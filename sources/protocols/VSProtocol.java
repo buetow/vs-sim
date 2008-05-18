@@ -17,7 +17,7 @@ abstract public class VSProtocol extends VSEvent {
     }
 
     private final boolean isIncorrectProtocol(VSMessage message) {
-        return !message.getClassname().equals(getClassname());
+        return !message.getProtocolClassname().equals(getClassname());
     }
 
     public final void onStart() {
