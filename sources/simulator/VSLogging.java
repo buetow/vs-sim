@@ -45,15 +45,10 @@ public class VSLogging {
         buffer.append(": ");
         buffer.append(message);
 
-        if (isPaused) {
+        if (isPaused) 
             pauseLines.add(buffer);
-            loggingLines.add(buffer);
-            loggingArea.append(buffer.toString()+"\n");
-            loggingArea.setCaretPosition(loggingArea.getDocument().getLength());
-
-        } else {
+        else 
             loggFiltered(buffer);
-        }
     }
 
     public synchronized void isPaused(boolean isPaused) {
