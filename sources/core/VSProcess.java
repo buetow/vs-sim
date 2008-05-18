@@ -231,9 +231,9 @@ public final class VSProcess extends VSPrefs {
                 taskManager.removeTask(randomCrashTask);
 
             if (crashTime >= 0 && crashTime >= getGlobalTime())  {
-                VSProcessEvent event = new ProcessCrashEvent();
+                VSEvent event = new ProcessCrashEvent();
                 event.init(this);
-                randomCrashTask = new VSTask(crashTime, this, event);
+                randomCrashTask = new VSTask(crashTime, this, event, VSTask.GLOBAL);
                 taskManager.addTask(randomCrashTask);
 
             } else {
@@ -474,7 +474,7 @@ public final class VSProcess extends VSPrefs {
         buffer.append(prefs.getString("lang.message.sent"));
         buffer.append("; ");
         buffer.append(prefs.getString("lang.protocol"));
-        buffer.append(": " + message.getProtocolName());
+        buffer.append(": " + message.getName());
         buffer.append("; ");
         buffer.append(prefs.getString("lang.message"));
         buffer.append(" ");

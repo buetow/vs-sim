@@ -13,6 +13,7 @@ import simulator.*;
 import utils.*;
 import core.*;
 import protocols.*;
+import events.*;
 import prefs.VSPrefs;
 
 public class VSProcessEditor extends VSEditorFrame {
@@ -65,7 +66,7 @@ public class VSProcessEditor extends VSEditorFrame {
     private JPanel createProtocolSelector() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        Vector<String> registeredProtocols = VSRegisteredProtocols.getProtocolNames();
+        Vector<String> registeredProtocols = VSRegisteredEvents.getProtocolNames();
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -82,18 +83,18 @@ public class VSProcessEditor extends VSEditorFrame {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getActionCommand().equals(prefs.getString("lang.edit"))) {
-                    String protocolName = (String) comboBox.getSelectedItem();
-                    String protocolClassname = VSRegisteredProtocols.getProtocolClassname(protocolName);
+                    String eventName = (String) comboBox.getSelectedItem();
+                    String eventClassname = VSRegisteredEvents.getClassname(eventName);
                     VSProtocol protocol = null;
-                    if (process.objectExists(protocolClassname)) {
-                        Object object = process.getObject(protocolClassname);
+                    if (process.objectExists(eventClassname)) {
+                        Object object = process.getObject(eventClassname);
                         if (object instanceof VSProtocol)
-                            protocol = (VSProtocol) process.getObject(protocolClassname);
+                            protocol = (VSProtocol) process.getObject(eventClassname);
                         else
                             return;
                     } else {
-                        protocol = VSRegisteredProtocols.getProtocolInstanceByName(protocolName, process);
-                        process.setObject(protocolClassname, protocol);
+                        protocol = (VSProtocol) VSRegisteredEvents.createEventInstanceByName(eventName, process);
+                        process.setObject(eventClassname, protocol);
                     }
                     new VSProtocolEditor(prefs, frame, protocol);
                 }

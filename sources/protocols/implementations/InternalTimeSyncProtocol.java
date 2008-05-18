@@ -8,7 +8,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     private boolean waitingForResponse;
 
     protected void onInit() {
-        setProtocolClassname(getClass().toString());
+        setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
         setLong("t_min", 1000);
@@ -22,7 +22,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
         waitingForResponse = true;
 
         /* Multicast message to all processes */
-        VSMessage message = new VSMessage(getProtocolClassname());
+        VSMessage message = new VSMessage(getClassname());
         message.setBoolean("isClientRequest", true);
         sendMessage(message);
     }
@@ -58,7 +58,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
             return;
 
         /* Multicast message to all processes */
-        VSMessage message = new VSMessage(getProtocolClassname());
+        VSMessage message = new VSMessage(getClassname());
         message.setLong("time", process.getTime());
         message.setBoolean("isServerResponse", true);
         sendMessage(message);

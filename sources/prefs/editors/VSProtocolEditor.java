@@ -27,7 +27,7 @@ public class VSProtocolEditor extends VSEditorFrame {
 
     public VSProtocolEditor(VSPrefs prefs, Component relativeTo, VSProtocol protocol) {
         super(prefs, relativeTo, protocol, prefs.getString("name") + " - "
-              + protocol.getProtocolName() + " " + prefs.getString("lang.editor"), ALL_PREFERENCES);
+              + protocol.getName() + " " + prefs.getString("lang.editor"), ALL_PREFERENCES);
 
         this.protocol = protocol;
         this.taskManager = protocol.getProcess().getSimulationPanel().getTaskManager();
@@ -130,12 +130,12 @@ public class VSProtocolEditor extends VSEditorFrame {
     }
 
     private void initClientServerCheckboxes() {
-        final String protocolName = protocol.getProtocolName();
+        final String eventName = protocol.getName();
         final VSProcess process = protocol.getProcess();
 
-        String protocolKey = "sim."+protocolName.toLowerCase()+".client.enabled!";
+        String protocolKey = "sim."+eventName.toLowerCase()+".client.enabled!";
         clientCheckBox.setSelected(process.getBoolean(protocolKey));
-        protocolKey = "sim."+protocolName.toLowerCase()+".server.enabled!";
+        protocolKey = "sim."+eventName.toLowerCase()+".server.enabled!";
         serverCheckBox.setSelected(process.getBoolean(protocolKey));
 
     }
@@ -235,10 +235,10 @@ public class VSProtocolEditor extends VSEditorFrame {
         resetTaskManager();
 
         final VSProcess process = protocol.getProcess();
-        final String protocolName = protocol.getProtocolName();
-        String protocolKey = "sim."+protocolName.toLowerCase()+".client.enabled!";
+        final String eventName = protocol.getName();
+        String protocolKey = "sim."+eventName.toLowerCase()+".client.enabled!";
         clientCheckBox.setSelected(process.getBoolean(protocolKey));
-        protocolKey = "sim."+protocolName.toLowerCase()+".server.enabled!";
+        protocolKey = "sim."+eventName.toLowerCase()+".server.enabled!";
         serverCheckBox.setSelected(process.getBoolean(protocolKey));
 
         takeOverButton.setEnabled(clientCheckBox.isSelected());
@@ -269,7 +269,7 @@ public class VSProtocolEditor extends VSEditorFrame {
         numItems = clientComboBox.getItemCount();
         for (int i = 0; i < numItems; ++i) {
             long taskTime = VSTools.getStringTime((String) clientComboBox.getItemAt(i));
-            VSTask task = new VSTask(taskTime, protocol.getProcess(), protocol);
+            VSTask task = new VSTask(taskTime, protocol.getProcess(), protocol, VSTask.LOCAL);
             task.isProgrammed(true);
             tasks.addLast(task);
         }
@@ -277,12 +277,12 @@ public class VSProtocolEditor extends VSEditorFrame {
         taskManager.modifyProtocolTasks(protocol, tasks);
 
         final VSProcess process = protocol.getProcess();
-        final String protocolName = protocol.getProtocolName();
-        String protocolKey = "sim."+protocolName.toLowerCase()+".client.enabled!";
+        final String eventName = protocol.getName();
+        String protocolKey = "sim."+eventName.toLowerCase()+".client.enabled!";
         process.setBoolean(protocolKey, clientCheckBox.isSelected());
         protocol.isClient(clientCheckBox.isSelected());
 
-        protocolKey = "sim."+protocolName.toLowerCase()+".server.enabled!";
+        protocolKey = "sim."+eventName.toLowerCase()+".server.enabled!";
         process.setBoolean(protocolKey, serverCheckBox.isSelected());
         protocol.isServer(serverCheckBox.isSelected());
 

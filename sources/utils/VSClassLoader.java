@@ -12,11 +12,9 @@ public class VSClassLoader extends ClassLoader {
 
         try {
             object = super.loadClass(classname, true).newInstance();
-            //Constructor constructors[] = theClass.getConstructors();
-            //object = constructors[0].newInstance(process);
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "; Classname " + classname);
         }
 
         return object;

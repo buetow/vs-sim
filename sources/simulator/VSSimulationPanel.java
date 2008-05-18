@@ -597,7 +597,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             if (receiverProcess.equals(sendingProcess)) {
                 if (recvOwn) {
                     deliverTime = sendingProcess.getGlobalTime();
-                    task = new VSTask(deliverTime, receiverProcess, message);
+                    task = new VSTask(deliverTime, receiverProcess, message, VSTask.GLOBAL);
                     taskManager.addTask(task);
                 }
 
@@ -608,7 +608,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
                 /* Only add a 'receiving message' task if the message will not get lost! */
                 if (outageTime == -1) {
-                    task = new VSTask(deliverTime, receiverProcess, message);
+                    task = new VSTask(deliverTime, receiverProcess, message, VSTask.GLOBAL);
                     taskManager.addTask(task);
                 }
 
@@ -636,14 +636,14 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                         editProcess(process);
 
                     } else if (actionCommand.equals(prefs.getString("lang.crash"))) {
-                        VSProcessEvent event = new ProcessCrashEvent();
+                        VSEvent event = new ProcessCrashEvent();
                         event.init(process);
-                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event));
+                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.recover"))) {
-                        VSProcessEvent event = new ProcessRecoverEvent();
+                        VSEvent event = new ProcessRecoverEvent();
                         event.init(process);
-                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event));
+                        taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
                     }
                 }
             };

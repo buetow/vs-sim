@@ -4,13 +4,14 @@ import java.util.*;
 
 import protocols.*;
 import prefs.*;
+import utils.*;
 
 public class VSTaskManager {
     private PriorityQueue<VSTask> tasks;
     private PriorityQueue<VSTask> globalTasks;
     private LinkedList<VSTask> fullfilledProgrammedTasks;
-    public final static boolean PROGRAMMED_TASK = true;
-    public final static boolean NOT_PROGRAMMED_TASK = false;
+    public final static boolean PROGRAMMED = true;
+    public final static boolean ONLY_ONCE = false;
     private VSPrefs prefs;
 
     public VSTaskManager(VSPrefs prefs) {
@@ -188,7 +189,7 @@ public class VSTaskManager {
     }
 
     public void addTask(VSTask task) {
-        addTask(task, VSTaskManager.NOT_PROGRAMMED_TASK);
+        addTask(task, VSTaskManager.ONLY_ONCE);
     }
 
     public synchronized void addTask(VSTask task, boolean isProgrammed) {
@@ -265,33 +266,33 @@ public class VSTaskManager {
         }
     }
 
-	public synchronized ArrayList<VSTask> getProcessLocalTasks(VSProcess process) {
-		ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
+    public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(VSProcess process) {
+        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
-		for (VSTask task : fullfilledProgrammedTasks) 
-			if (!task.isGlobalTimed() && task.isProcess(process))
-				processTasks.add(task);
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (!task.isGlobalTimed() && task.isProcess(process) && task.isProgrammed())
+                processTasks.add(task);
 
-		for (VSTask task : tasks) 
-			if (task.isProcess(process))
-				processTasks.add(task);
+        for (VSTask task : tasks)
+            if (task.isProcess(process) && task.isProgrammed())
+                processTasks.add(task);
 
-		return processTasks;
-	}
+        return processTasks;
+    }
 
-	public synchronized ArrayList<VSTask> getProcessGlobalTasks(VSProcess process) {
-		ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
+    public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(VSProcess process) {
+        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
-		for (VSTask task : fullfilledProgrammedTasks) 
-			if (task.isGlobalTimed() && task.isProcess(process))
-				processTasks.add(task);
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (task.isGlobalTimed() && task.isProcess(process) && task.isProgrammed())
+                processTasks.add(task);
 
-		for (VSTask task : globalTasks) 
-			if (task.isProcess(process))
-				processTasks.add(task);
+        for (VSTask task : globalTasks)
+            if (task.isProcess(process) && task.isProgrammed())
+                processTasks.add(task);
 
-		return processTasks;
-	}
+        return processTasks;
+    }
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();

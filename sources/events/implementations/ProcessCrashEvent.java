@@ -1,11 +1,17 @@
 package events.implementations;
 
 import core.VSProcess;
-import events.VSProcessEvent;
+import events.VSEvent;
 
-public class ProcessCrashEvent extends VSProcessEvent {
+public class ProcessCrashEvent extends VSEvent {
+    protected void onInit() {
+        setClassname(getClass().toString());
+    }
+
     public void onStart() {
-        process.isCrashed(true);
-        logg(prefs.getString("lang.crashed"));
+        if (!process.isCrashed()) {
+            process.isCrashed(true);
+            logg(prefs.getString("lang.crashed"));
+        }
     }
 }

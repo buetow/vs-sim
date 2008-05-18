@@ -1,20 +1,15 @@
 package events.implementations;
 
 import core.VSProcess;
-import events.VSProcessEvent;
-import protocols.VSRegisteredProtocols;
+import events.*;
 
-public class ProtocolEvent extends VSProcessEvent {
-    private String protocolClassname;
+public class ProtocolEvent extends VSEvent {
+    private String eventClassname;
     private boolean isClientProtocol; /* true = client, false = server */
     private boolean isProtocolActivation; /* true = activate, false = deactivate */
 
-    public void setProtocolClassname(String protocolClassname) {
-        this.protocolClassname = protocolClassname;
-    }
-
-    public String getProtocolClassname() {
-        return protocolClassname;
+    protected void onInit() {
+        setClassname(getClass().toString());
     }
 
     public void isClientProtocol(boolean isClientProtocol) {
@@ -33,13 +28,17 @@ public class ProtocolEvent extends VSProcessEvent {
         return isProtocolActivation;
     }
 
+    public void setEventClassname(String eventClassname) {
+        this.eventClassname = eventClassname;
+    }
+
     public void onStart() {
         String type = isClientProtocol ? "client" : "server";
-        String name = VSRegisteredProtocols.getProtocolName(protocolClassname);
+        String name = VSRegisteredEvents.getName(eventClassname);
         process.setBoolean("sim."+name.toLowerCase()+"."+type+".enabled!", isProtocolActivation);
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append(VSRegisteredProtocols.getProtocolShortname(protocolClassname));
+        buffer.append(VSRegisteredEvents.getShortname(eventClassname));
         buffer.append(" ");
         buffer.append(isClientProtocol
                       ? prefs.getString("lang.client") : prefs.getString("lang.server"));

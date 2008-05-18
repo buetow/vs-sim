@@ -21,7 +21,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
     /* Berkely Client vairables */
 
     protected void onInit() {
-        setProtocolClassname(getClass().toString());
+        setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
         setInteger("numProcesses", getNumProcesses()-1);
@@ -35,7 +35,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
 
     protected void onClientStart() {
         requestTime = process.getTime();
-        VSMessage message = new VSMessage(getProtocolClassname());
+        VSMessage message = new VSMessage(getClassname());
         message.setBoolean("isRequest", true);
         sendMessage(message);
     }
@@ -88,7 +88,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
         for (Integer processID : processTimes.keySet()) {
             long realProcessTime = realTimesRTT.get(processID).longValue();
             long diff = avgTime - realProcessTime;
-            VSMessage message = new VSMessage(getProtocolClassname());
+            VSMessage message = new VSMessage(getClassname());
             message.setBoolean("isJustify", true);
             message.setLong("timeDiff", diff);
             message.setInteger("receiverProcessID", processID);
@@ -101,7 +101,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
 
     protected void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isRequest")) {
-            VSMessage message = new VSMessage(getProtocolClassname());
+            VSMessage message = new VSMessage(getClassname());
             message.setInteger("processID", process.getProcessID());
             message.setLong("time", process.getTime());
             message.setBoolean("isResponse", true);

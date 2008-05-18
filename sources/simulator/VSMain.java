@@ -4,9 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import events.*;
 import prefs.*;
 import prefs.editors.*;
-import protocols.*;
 
 public class VSMain {
     public VSMain(VSPrefs prefs) {
@@ -28,7 +28,7 @@ public class VSMain {
         } catch (Exception e) { }
 
         VSPrefs prefs = VSDefaultPrefs.init();
-        VSRegisteredProtocols.init(prefs);
+        VSRegisteredEvents.init(prefs);
         new VSMain(prefs);
     }
 }

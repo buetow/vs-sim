@@ -1,45 +1,17 @@
 package protocols;
 
 import prefs.VSPrefs;
-import events.VSEvent;
+import events.*;
 import core.*;
 
-abstract public class VSProtocol extends VSPrefs implements VSEvent {
-    protected VSPrefs prefs;
-    private String protocolClassname;
+abstract public class VSProtocol extends VSEvent {
     private boolean isServer;
     private boolean isClient;
-    protected VSProcess process;
     private boolean currentContextIsServer;
 
     public void init(VSProcess process) {
-        this.process = process;
-        this.prefs = process.getPrefs();
-
+        super.init(process);
         onInit();
-    }
-
-    protected final void setProtocolClassname(String protocolClassname) {
-        if (protocolClassname.startsWith("class "))
-            protocolClassname = protocolClassname.substring(6);
-
-        this.protocolClassname = protocolClassname;
-    }
-
-    public final String getProtocolClassname() {
-        return protocolClassname;
-    }
-
-    public final String getProtocolName() {
-        return VSRegisteredProtocols.getProtocolName(protocolClassname);
-    }
-
-    public final String getProtocolShortname() {
-        return VSRegisteredProtocols.getProtocolShortname(protocolClassname);
-    }
-
-    public final VSProcess getProcess() {
-        return process;
     }
 
     protected void sendMessage(VSMessage message) {
@@ -50,7 +22,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     }
 
     private final boolean isIncorrectProtocol(VSMessage message) {
-        return !message.getProtocolClassname().equals(getProtocolClassname());
+        return !message.getClassname().equals(getClassname());
     }
 
     public final void onStart() {
@@ -103,14 +75,6 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
     abstract protected void onServerReset();
     abstract protected void onServerRecv(VSMessage message);
 
-    public void logg(String message) {
-        process.logg(toString() + "; " + message);
-    }
-
-    public boolean equals(VSProtocol protocol) {
-        return protocol.getID() == getID();
-    }
-
     protected int getNumProcesses() {
         return process.getSimulationPanel().getNumProcesses();
     }
@@ -120,7 +84,7 @@ abstract public class VSProtocol extends VSPrefs implements VSEvent {
 
         buffer.append(prefs.getString("lang.protocol"));
         buffer.append(": ");
-        buffer.append(getProtocolShortname());
+        buffer.append(getShortname());
         buffer.append(" ");
 
         if (currentContextIsServer)

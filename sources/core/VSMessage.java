@@ -5,16 +5,16 @@ import events.*;
 import prefs.VSPrefs;
 import protocols.*;
 
-public class VSMessage extends VSPrefs implements VSEvent {
-    private String protocolClassname;
+public class VSMessage extends VSEvent {
+    private String eventClassname;
     private VSProcess sendingProcess;
     private long messageID;
     private static long messageCounter;
     private long lamportTime;
     private VSVectorTime vectorTime;
 
-    public VSMessage(String protocolClassname) {
-        this.protocolClassname = protocolClassname;
+    public VSMessage(String eventClassname) {
+        this.eventClassname = eventClassname;
         this.messageID = ++messageCounter;
     }
 
@@ -24,12 +24,12 @@ public class VSMessage extends VSPrefs implements VSEvent {
         vectorTime = sendingProcess.getVectorTime().getCopy();
     }
 
-    public String getProtocolName() {
-        return VSRegisteredProtocols.getProtocolName(getProtocolClassname());
+    public String getName() {
+        return VSRegisteredEvents.getName(getProtocolClassname());
     }
 
     public String getProtocolClassname() {
-        return protocolClassname;
+        return eventClassname;
     }
 
     public long getMessageID() {
@@ -60,8 +60,8 @@ public class VSMessage extends VSPrefs implements VSEvent {
         return messageID == message.getMessageID();
     }
 
-    public void logg(String message) {
-        //System.out.println(message);
-    }
+    public void logg(String message) { }
+    public void onInit() { }
+    public void onStart() { }
 }
 

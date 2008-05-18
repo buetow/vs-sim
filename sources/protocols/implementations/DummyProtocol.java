@@ -5,7 +5,7 @@ import core.VSMessage;
 
 public class DummyProtocol extends VSProtocol {
     protected void onInit() {
-        setProtocolClassname(getClass().toString());
+        setClassname(getClass().toString());
     }
 
     protected void onClientReset() {
@@ -15,7 +15,7 @@ public class DummyProtocol extends VSProtocol {
     protected void onClientStart() {
         logg("onClientStart()");
 
-        VSMessage message = new VSMessage(getProtocolClassname());
+        VSMessage message = new VSMessage(getClassname());
         message.setString("Greeting", "Hello World!");
         message.setInteger("A number", 1);
         message.setBoolean("A boolean", true);

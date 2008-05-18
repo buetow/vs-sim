@@ -9,6 +9,8 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 
 import core.*;
+import events.*;
+import events.implementations.*;
 import prefs.*;
 import protocols.*;
 import utils.*;
@@ -18,7 +20,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JCheckBox filterActiveCheckBox;
     private JCheckBox lamportActiveCheckBox;
     private JCheckBox vectorTimeActiveCheckBox;
-	private JComboBox processesComboBox;
+    private JComboBox processesComboBox;
+    private ArrayList<VSCreateTask> createTasks;
     private JMenuItem pauseItem;
     private JMenuItem replayItem;
     private JMenuItem resetItem;
@@ -30,8 +33,9 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private VSPrefs prefs;
     private VSSimulationPanel simulationPanel;
     private boolean hasStarted = false;
-	private VSTaskManagerTableModel taskManagerLocalModel;
-	private VSTaskManagerTableModel taskManagerGlobalModel;
+    private VSTaskManagerTableModel taskManagerLocalModel;
+    private VSTaskManagerTableModel taskManagerGlobalModel;
+    private VSTaskManager taskManager;
 
     public VSSimulation (VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("name"), relativeTo);
@@ -168,8 +172,9 @@ public class VSSimulation extends VSFrame implements ActionListener {
             - prefs.getInteger("window.loggsize"));
 
         simulationPanel = new VSSimulationPanel(prefs, this, logging);
+        taskManager = simulationPanel.getTaskManager();
         logging.setSimulationPanel(simulationPanel);
-        simulationPanel.setBackground(prefs.getColor("paintarea.background"));//new Color(0xFD, 0xFC, 0xF7));
+        simulationPanel.setBackground(prefs.getColor("paintarea.background"));
 
         JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
@@ -309,11 +314,11 @@ public class VSSimulation extends VSFrame implements ActionListener {
         splitPane2.setTopComponent(processesComboBox);
         splitPane2.setBottomComponent(splitPane1);
 
-		processesComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				updateTaskManagerTable();
-			}
-		});
+        processesComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                updateTaskManagerTable();
+            }
+        });
 
         return splitPane2;
     }
@@ -338,124 +343,277 @@ public class VSSimulation extends VSFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
         panel.add(scrollPane);
 
-        initAddPanel(panel);
+        initAddPanel(panel, localTasks);
 
         return panel;
     }
 
+    private class VSCreateTask {
+        private String eventClassname;
+
+        /* Those 3 values are for ProtocolEvent events */
+        private boolean isProtocolActivation;
+        private boolean isProtocolDeactivation;
+        private boolean isClientProtocol;
+
+        public VSCreateTask(String eventClassname) {
+            this.eventClassname = eventClassname;
+        }
+
+        public void isProtocolActivation(boolean isProtocolActivation) {
+            this.isProtocolActivation = isProtocolActivation;
+
+            if (isProtocolActivation)
+                isProtocolDeactivation(false);
+        }
+
+        public void isProtocolDeactivation(boolean isProtocolDeactivation) {
+            this.isProtocolDeactivation = isProtocolDeactivation;
+
+            if (isProtocolDeactivation)
+                isProtocolActivation(false);
+        }
+
+        public void isClientProtocol(boolean isClientProtocol) {
+            this.isClientProtocol = isClientProtocol;
+        }
+
+        public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
+            VSEvent event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
+
+            if (isProtocolActivation || isProtocolDeactivation) {
+                ProtocolEvent protocolEvent = (ProtocolEvent) event;
+                protocolEvent.setEventClassname(eventClassname);
+                protocolEvent.isProtocolActivation(isProtocolActivation);
+                protocolEvent.isClientProtocol(isClientProtocol);
+            }
+
+            return new VSTask(time, process, event, localTimedTask);
+        }
+    }
+
     private class VSTaskManagerTableModel extends AbstractTableModel {
-		public static final boolean LOCAL = true;
-		public static final boolean GLOBAL = false;
-		private VSTaskManager taskManager;
-		private ArrayList<VSTask> tasks;
+        public static final boolean LOCAL = true;
+        public static final boolean GLOBAL = false;
+        private VSPriorityQueue<VSTask> tasks;
         private String columnNames[];
-		private VSProcess process;
-		
-		public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
-			taskManager = simulationPanel.getTaskManager();
-			set(process, localTask);
-			columnNames = new String[2];
-			columnNames[0]= prefs.getString("lang.time") + " (ms)";
-			columnNames[1] = prefs.getString("lang.event");
-		}
+        private VSProcess process;
 
-		public void set(VSProcess process, boolean localTasks) {
-			this.process = process;
-			this.tasks = localTasks
-				?  taskManager.getProcessLocalTasks(process)
-				:  taskManager.getProcessGlobalTasks(process);
+        public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
+            set(process, localTask);
+            columnNames = new String[2];
+            columnNames[0]= prefs.getString("lang.time") + " (ms)";
+            columnNames[1] = prefs.getString("lang.event");
+        }
 
-			fireTableDataChanged();
-		}
+        public void set(VSProcess process, boolean localTasks) {
+            this.process = process;
+            this.tasks = localTasks
+                         ?  taskManager.getProcessLocalTasks(process)
+                         :  taskManager.getProcessGlobalTasks(process);
 
-		public String getColumnName(int col) {
-			if (col == 0) 
-				return columnNames[0];
-			return columnNames[1];
-		}
-	
-		public int getRowCount() {
-			return tasks.size();
-		}
-	
-		public int getColumnCount() {
-			return 2;
-		}
-	
-		public Object getValueAt(int row, int col) {
-			VSTask task = tasks.get(row);
-	
-			if (col == 0) 
-				return task.getTaskTime();
-	
-			return task.toStringBrief();
-		}			
-	
-		public boolean isCellEditable(int row, int col) {
-			return false;
-		}
-	
-		public void setValueAt(Object value, int row, int col) {
-		}
-	}
+            fireTableDataChanged();
+        }
+
+        public String getColumnName(int col) {
+            if (col == 0)
+                return columnNames[0];
+            return columnNames[1];
+        }
+
+        public int getRowCount() {
+            return tasks.size();
+        }
+
+        public int getColumnCount() {
+            return 2;
+        }
+
+        public Object getValueAt(int row, int col) {
+            VSTask task = tasks.get(row);
+
+            if (col == 0)
+                return task.getTaskTime();
+
+            return task.getEvent().getShortname();
+        }
+
+        public boolean isCellEditable(int row, int col) {
+            return false;
+        }
+
+        public void setValueAt(Object value, int row, int col) {
+            fireTableDataChanged();
+        }
+
+        public void addTask(VSTask task) {
+            tasks.add(task);
+            fireTableDataChanged();
+        }
+    }
 
     private JTable createTaskTable(boolean localTasks) {
-		VSProcess process = getSelectedProcess();
-		VSTaskManagerTableModel model = new VSTaskManagerTableModel(process, localTasks);
+        VSProcess process = getSelectedProcess();
+        VSTaskManagerTableModel model = new VSTaskManagerTableModel(process, localTasks);
 
-		if (localTasks) 
-			taskManagerLocalModel = model;
-		else 
-			taskManagerGlobalModel = model;
+        if (localTasks)
+            taskManagerLocalModel = model;
+        else
+            taskManagerGlobalModel = model;
 
         JTable table = new JTable(model);
-		TableColumn col = table.getColumnModel().getColumn(0);
-		col.setMaxWidth(75);
-		col.setResizable(false);
-		col = table.getColumnModel().getColumn(1);
-		col.sizeWidthToFit();
+        TableColumn col = table.getColumnModel().getColumn(0);
+        col.setMaxWidth(75);
+        col.setResizable(false);
+        col = table.getColumnModel().getColumn(1);
+        col.sizeWidthToFit();
         table.setBackground(Color.WHITE);
 
         return table;
     }
 
-    private void initAddPanel(JPanel panel) {
+    private void initAddPanel(JPanel panel, final boolean localTasks) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
-        panel1.add(new JTextField());
+        final JTextField textField = new JTextField();
+        textField.setText("0000");
+        textField.setBackground(Color.WHITE);
+        panel1.add(textField);
+
         panel1.add(new JLabel(" ms "));
+        final JComboBox comboBox = new JComboBox();
+
         JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
+        takeoverButton.addActionListener(new ActionListener() {
+            private boolean isRed;
+
+            public void actionPerformed(ActionEvent ae) {
+                String textValue = textField.getText();
+                Long longValue = null;
+
+                try {
+                    longValue = Long.valueOf(textValue);
+
+                    if (longValue.longValue() < 0) {
+                        makeRed();
+                        return;
+                    }
+
+                    if (isRed) {
+                        makeWhite();
+                    }
+
+                } catch (NumberFormatException e) {
+                    makeRed();
+                }
+
+                if (longValue == null)
+                    return;
+
+                if (takeover(longValue.longValue())) {
+                    if (isRed)
+                        makeWhite();
+
+                } else {
+                    makeRed();
+                }
+            }
+
+            private void makeWhite() {
+                textField.setBackground(Color.WHITE);
+                isRed = false;
+            }
+
+            private void makeRed() {
+                textField.setBackground(Color.RED);
+                isRed = true;
+            }
+
+            private boolean takeover(long time) {
+                VSProcess process = getSelectedProcess();
+                int index = comboBox.getSelectedIndex();
+                VSCreateTask createTask = createTasks.get(index);
+
+                if (createTask == null)
+                    return false;
+
+                VSTask task = createTask.createTask(process, time, localTasks);
+                taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+
+                if (localTasks)
+                    taskManagerLocalModel.addTask(task);
+                else
+                    taskManagerGlobalModel.addTask(task);
+
+                return true;
+            }
+        });
+
         panel1.add(takeoverButton);
 
-        JComboBox comboBox = new JComboBox();
-		comboBox.setMaximumRowCount(15);
+        boolean flag = createTasks == null;
+        if (flag) createTasks = new ArrayList<VSCreateTask>();
+
+        Vector<String> eventClassnames = VSRegisteredEvents.getNonProtocolClassnames();
+
+        comboBox.setMaximumRowCount(15);
         comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
-        comboBox.addItem(prefs.getString("lang.crash"));
-        comboBox.addItem(prefs.getString("lang.recover"));
+        if (flag) createTasks.add(null);
+
+        for (String eventClassname : eventClassnames) {
+            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
+            comboBox.addItem(eventShortname);
+            if (flag) createTasks.add(new VSCreateTask(eventClassname));
+        }
 
         comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
+        if (flag) createTasks.add(null);
 
-        Vector<String> protocolClassnames = VSRegisteredProtocols.getProtocolClassnames();
+        eventClassnames = VSRegisteredEvents.getProtocolClassnames();
         String activate = prefs.getString("lang.activate");
         String deactivate = prefs.getString("lang.deactivate");
         String client = prefs.getString("lang.client");
         String server = prefs.getString("lang.server");
 
-        for (String protocolClassname : protocolClassnames) {
-            String protocolShortname = VSRegisteredProtocols.getProtocolShortname(protocolClassname);
-            comboBox.addItem(protocolShortname + " " + client + " " + activate);
-            comboBox.addItem(protocolShortname + " " + client + " " + deactivate);
-            comboBox.addItem(protocolShortname + " " + server + " " + activate);
-            comboBox.addItem(protocolShortname + " " + server + " " + deactivate);
+        for (String eventClassname : eventClassnames) {
+            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
+            comboBox.addItem(eventShortname + " " + client + " " + activate);
+            comboBox.addItem(eventShortname + " " + client + " " + deactivate);
+            comboBox.addItem(eventShortname + " " + server + " " + activate);
+            comboBox.addItem(eventShortname + " " + server + " " + deactivate);
+
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(eventClassname);
+                createTask.isProtocolActivation(true);
+                createTask.isClientProtocol(true);
+                createTasks.add(createTask);
+
+                createTask = new VSCreateTask(eventClassname);
+                createTask.isProtocolDeactivation(true);
+                createTask.isClientProtocol(true);
+                createTasks.add(createTask);
+
+                createTask = new VSCreateTask(eventClassname);
+                createTask.isProtocolActivation(true);
+                createTask.isClientProtocol(false);
+                createTasks.add(createTask);
+
+                createTask = new VSCreateTask(eventClassname);
+                createTask.isProtocolDeactivation(true);
+                createTask.isClientProtocol(false);
+                createTasks.add(createTask);
+            }
         }
 
         comboBox.addItem("-- " + prefs.getString("lang.requests") + " --");
+        if (flag) createTasks.add(null);
         String clientrequest = prefs.getString("lang.clientrequest.start");
 
-        for (String protocolClassname : protocolClassnames) {
-            String protocolShortname = VSRegisteredProtocols.getProtocolShortname(protocolClassname);
-            comboBox.addItem(protocolShortname + " " + clientrequest);
+        for (String eventClassname : eventClassnames) {
+            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
+            comboBox.addItem(eventShortname + " " + clientrequest);
+            if (flag) createTasks.add(new VSCreateTask(eventClassname));
         }
 
         panel.add(comboBox);
@@ -532,20 +690,20 @@ public class VSSimulation extends VSFrame implements ActionListener {
         }
     }
 
-	private VSProcess getSelectedProcess() {
-		String string = (String) processesComboBox.getSelectedItem();
-		int cutLen = prefs.getString("lang.process").length() + 1; 
-		string = string.substring(cutLen);
-		int processNum = Integer.parseInt(string) - 1;
+    private VSProcess getSelectedProcess() {
+        String string = (String) processesComboBox.getSelectedItem();
+        int cutLen = prefs.getString("lang.process").length() + 1;
+        string = string.substring(cutLen);
+        int processNum = Integer.parseInt(string) - 1;
 
-		return simulationPanel.getProcess(processNum);
-	}
+        return simulationPanel.getProcess(processNum);
+    }
 
-	public void updateTaskManagerTable() {
-		VSProcess process = getSelectedProcess();
-		taskManagerLocalModel.set(process, VSTaskManagerTableModel.LOCAL);
-		taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL);
-	}
+    public void updateTaskManagerTable() {
+        VSProcess process = getSelectedProcess();
+        taskManagerLocalModel.set(process, VSTaskManagerTableModel.LOCAL);
+        taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL);
+    }
 
     public void finish() {
         startItem.setEnabled(false);
