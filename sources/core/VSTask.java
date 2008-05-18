@@ -1,6 +1,7 @@
 package core;
 
 import events.*;
+import events.implementations.*;
 import prefs.VSPrefs;
 import protocols.VSProtocol;
 import simulator.*;
@@ -40,6 +41,10 @@ public class VSTask implements Comparable {
             return ((VSProtocol) event).equals(protocol);
 
         return false;
+    }
+
+    public boolean isProcess(VSProcess process) {
+        return this.process.equals(process);
     }
 
     public boolean isGlobalTimed() {
@@ -94,16 +99,23 @@ public class VSTask implements Comparable {
         else
             protocolObj = null;
 
-        String loggVSMessage = prefs.getString("lang.message.recv")
-                               + "; " + prefs.getString("lang.protocol") + ": " + protocolName
-                               + "; " + prefs.getString("lang.message") + " " + message;
+		StringBuffer buffer = new StringBuffer();
+        buffer.append(prefs.getString("lang.message.recv"));
+		buffer.append("; ");
+		buffer.append(prefs.getString("lang.protocol"));
+		buffer.append(": " );
+		buffer.append(protocolName);
+		buffer.append("; ");
+		buffer.append(prefs.getString("lang.message")); 
+		buffer.append(" "); 
+		buffer.append(message);;
 
         if (protocolObj == null) {
-            logg(loggVSMessage);
+            logg(buffer.toString());
 
         } else {
             final VSProtocol protocol = (VSProtocol) protocolObj;
-            logg(loggVSMessage);
+            logg(buffer.toString());
             protocol.onMessageRecv(message);
         }
     }
@@ -129,16 +141,42 @@ public class VSTask implements Comparable {
         process.logg(message);
     }
 
+    public String toStringBrief() {
+		StringBuffer buffer = new StringBuffer();
+		if (event instanceof ProcessCrashEvent) {
+			buffer.append(prefs.getString("process.crash"));
+
+		} else if (event instanceof ProcessRecoverEvent) {
+			buffer.append(prefs.getString("process.recover"));
+
+		} else if (event instanceof VSProtocol) {
+			buffer.append(((VSProtocol) event).getProtocolShortname());
+			buffer.append(" ");
+        	buffer.append(prefs.getString("lang.clientrequest.start"));
+
+		} else {
+			buffer.append("null"); 
+		}
+
+		return buffer.toString();
+	}
+
     public String toString() {
-        String descr = "VSTask: " + getTaskTime();
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(prefs.getString("lang.task"));
+		buffer.append(" ");
+		buffer.append(getTaskTime());
 
-        if (event instanceof VSMessage)
-            descr += (VSMessage) event;
+        if (event instanceof VSMessage) {
+			buffer.append("; ");
+			buffer.append(((VSMessage)event).toString());
 
-        else if (event instanceof VSProtocol)
-            descr += (VSProtocol) event;
+		} else if (event instanceof VSProtocol) {
+			buffer.append("; ");
+			buffer.append(((VSProtocol)event).toString());
+		}
 
-        return descr;
+        return buffer.toString();
     }
 
     public int compareTo(Object object) {

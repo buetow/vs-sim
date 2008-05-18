@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
 
 import core.*;
 import prefs.*;
@@ -17,6 +18,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JCheckBox filterActiveCheckBox;
     private JCheckBox lamportActiveCheckBox;
     private JCheckBox vectorTimeActiveCheckBox;
+	private JComboBox processesComboBox;
     private JMenuItem pauseItem;
     private JMenuItem replayItem;
     private JMenuItem resetItem;
@@ -28,6 +30,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private VSPrefs prefs;
     private VSSimulationPanel simulationPanel;
     private boolean hasStarted = false;
+	private VSTaskManagerTableModel taskManagerLocalModel;
+	private VSTaskManagerTableModel taskManagerGlobalModel;
 
     public VSSimulation (VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("name"), relativeTo);
@@ -284,14 +288,14 @@ public class VSSimulation extends VSFrame implements ActionListener {
         JPanel editPanel = new JPanel(new GridBagLayout());
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
-        JComboBox comboBox = new JComboBox();
+        processesComboBox = new JComboBox();
         int numProcesses = simulationPanel.getNumProcesses();
         String processString = prefs.getString("lang.process");
         for (int i = 1; i <= numProcesses; ++i)
-            comboBox.addItem(processString + " " + i);
+            processesComboBox.addItem(processString + " " + i);
 
-        JPanel localPanel = createTaskLabel(true);
-        JPanel globalPanel = createTaskLabel(false);
+        JPanel localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
+        JPanel globalPanel = createTaskLabel(VSTaskManagerTableModel.GLOBAL);
 
         JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
@@ -302,8 +306,14 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         JSplitPane splitPane2 = new JSplitPane();
         splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane2.setTopComponent(comboBox);
+        splitPane2.setTopComponent(processesComboBox);
         splitPane2.setBottomComponent(splitPane1);
+
+		processesComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				updateTaskManagerTable();
+			}
+		});
 
         return splitPane2;
     }
@@ -333,19 +343,77 @@ public class VSSimulation extends VSFrame implements ActionListener {
         return panel;
     }
 
-    private JTable createTaskTable(boolean localTasks) {
-        String[] columnNames = { prefs.getString("lang.time"), prefs.getString("lang.event") };
-        Object[][] data = {
-            {"foo", "bar" },
-            {"foo", "bar" },
-            {"foo", "bar" },
-            {"foo", "bar" },
-            {"foo", "bar" },
-            { "baz", "bay" }
-        };
+    private class VSTaskManagerTableModel extends AbstractTableModel {
+		public static final boolean LOCAL = true;
+		public static final boolean GLOBAL = false;
+		private VSTaskManager taskManager;
+		private ArrayList<VSTask> tasks;
+        private String columnNames[];
+		private VSProcess process;
+		
+		public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
+			taskManager = simulationPanel.getTaskManager();
+			set(process, localTask);
+			columnNames = new String[2];
+			columnNames[0]= prefs.getString("lang.time") + " (ms)";
+			columnNames[1] = prefs.getString("lang.event");
+		}
 
-        JTable table = new JTable(data, columnNames);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		public void set(VSProcess process, boolean localTasks) {
+			this.process = process;
+			this.tasks = localTasks
+				?  taskManager.getProcessLocalTasks(process)
+				:  taskManager.getProcessGlobalTasks(process);
+
+			fireTableDataChanged();
+		}
+
+		public String getColumnName(int col) {
+			if (col == 0) 
+				return columnNames[0];
+			return columnNames[1];
+		}
+	
+		public int getRowCount() {
+			return tasks.size();
+		}
+	
+		public int getColumnCount() {
+			return 2;
+		}
+	
+		public Object getValueAt(int row, int col) {
+			VSTask task = tasks.get(row);
+	
+			if (col == 0) 
+				return task.getTaskTime();
+	
+			return task.toStringBrief();
+		}			
+	
+		public boolean isCellEditable(int row, int col) {
+			return false;
+		}
+	
+		public void setValueAt(Object value, int row, int col) {
+		}
+	}
+
+    private JTable createTaskTable(boolean localTasks) {
+		VSProcess process = getSelectedProcess();
+		VSTaskManagerTableModel model = new VSTaskManagerTableModel(process, localTasks);
+
+		if (localTasks) 
+			taskManagerLocalModel = model;
+		else 
+			taskManagerGlobalModel = model;
+
+        JTable table = new JTable(model);
+		TableColumn col = table.getColumnModel().getColumn(0);
+		col.setMaxWidth(75);
+		col.setResizable(false);
+		col = table.getColumnModel().getColumn(1);
+		col.sizeWidthToFit();
         table.setBackground(Color.WHITE);
 
         return table;
@@ -361,9 +429,10 @@ public class VSSimulation extends VSFrame implements ActionListener {
         panel1.add(takeoverButton);
 
         JComboBox comboBox = new JComboBox();
+		comboBox.setMaximumRowCount(15);
         comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
-        comboBox.addItem("Prozessabsturz");
-        comboBox.addItem("Prozesswiederbelebung");
+        comboBox.addItem(prefs.getString("lang.crash"));
+        comboBox.addItem(prefs.getString("lang.recover"));
 
         comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
 
@@ -426,7 +495,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             pauseItem.setEnabled(true);
             resetItem.setEnabled(false);
             replayItem.setEnabled(true);
-            runThread();
+            registeredProhread();
 
         } else if (source.getText().equals(prefs.getString("lang.pause"))) {
             startItem.setEnabled(true);
@@ -448,11 +517,11 @@ public class VSSimulation extends VSFrame implements ActionListener {
             resetItem.setEnabled(false);
             replayItem.setEnabled(true);
             simulationPanel.reset();
-            runThread();
+            registeredProhread();
         }
     }
 
-    private void runThread() {
+    private void registeredProhread() {
         if (hasStarted) {
             simulationPanel.play();
 
@@ -462,6 +531,21 @@ public class VSSimulation extends VSFrame implements ActionListener {
             thread.start();
         }
     }
+
+	private VSProcess getSelectedProcess() {
+		String string = (String) processesComboBox.getSelectedItem();
+		int cutLen = prefs.getString("lang.process").length() + 1; 
+		string = string.substring(cutLen);
+		int processNum = Integer.parseInt(string) - 1;
+
+		return simulationPanel.getProcess(processNum);
+	}
+
+	public void updateTaskManagerTable() {
+		VSProcess process = getSelectedProcess();
+		taskManagerLocalModel.set(process, VSTaskManagerTableModel.LOCAL);
+		taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL);
+	}
 
     public void finish() {
         startItem.setEnabled(false);

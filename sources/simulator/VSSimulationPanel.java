@@ -240,7 +240,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     private void updateSimulation(final long globalTime, final long lastGlobalTime) {
         final long offset = globalTime - lastGlobalTime;
         for (long l = 0; l < offset; ++l)
-            taskManager.runVSTasks(l, offset, lastGlobalTime);
+            taskManager.runTasks(l, offset, lastGlobalTime);
 
         for (VSProcess process : processes)
             process.syncTime(globalTime);
@@ -445,6 +445,10 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
     public int getNumProcesses() {
         return numProcesses;
+    }
+
+    public VSProcess getProcess(int processNum) {
+        return processes.get(processNum);
     }
 
     public void run() {

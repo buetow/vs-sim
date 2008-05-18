@@ -35,7 +35,7 @@ public class VSTaskManager {
         };
     }
 
-    public synchronized void runVSTasks(final long step, final long offset, final long lastGlobalTime) {
+    public synchronized void runTasks(final long step, final long offset, final long lastGlobalTime) {
         VSTask task = null;
         VSProcess process = null;
         long localTime;
@@ -264,6 +264,34 @@ public class VSTaskManager {
                 insert(task);
         }
     }
+
+	public synchronized ArrayList<VSTask> getProcessLocalTasks(VSProcess process) {
+		ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
+
+		for (VSTask task : fullfilledProgrammedTasks) 
+			if (!task.isGlobalTimed() && task.isProcess(process))
+				processTasks.add(task);
+
+		for (VSTask task : tasks) 
+			if (task.isProcess(process))
+				processTasks.add(task);
+
+		return processTasks;
+	}
+
+	public synchronized ArrayList<VSTask> getProcessGlobalTasks(VSProcess process) {
+		ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
+
+		for (VSTask task : fullfilledProgrammedTasks) 
+			if (task.isGlobalTimed() && task.isProcess(process))
+				processTasks.add(task);
+
+		for (VSTask task : globalTasks) 
+			if (task.isProcess(process))
+				processTasks.add(task);
+
+		return processTasks;
+	}
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();
