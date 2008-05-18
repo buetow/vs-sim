@@ -9,11 +9,6 @@ abstract public class VSProtocol extends VSEvent {
     private boolean isClient;
     private boolean currentContextIsServer;
 
-    public void init(VSProcess process) {
-        super.init(process);
-        onInit();
-    }
-
     protected void sendMessage(VSMessage message) {
         process.increaseLamportTime();
         process.increaseVectorTime();

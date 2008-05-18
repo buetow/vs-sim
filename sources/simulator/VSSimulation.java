@@ -381,6 +381,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
             VSEvent event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
 
+			event.init(process);
+
             if (isProtocolActivation || isProtocolDeactivation) {
                 ProtocolEvent protocolEvent = (ProtocolEvent) event;
                 protocolEvent.setEventClassname(eventClassname);
