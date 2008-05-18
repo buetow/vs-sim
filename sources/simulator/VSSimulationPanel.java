@@ -622,13 +622,13 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
-        final VSProcess process = getProcessAtYPos(e.getY());
+    public void mouseClicked(MouseEvent me) {
+        final VSProcess process = getProcessAtYPos(me.getY());
 
         if (process == null)
             return;
 
-        if (SwingUtilities.isRightMouseButton(e)) {
+        if (SwingUtilities.isRightMouseButton(me)) {
             ActionListener actionListener = new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     String actionCommand = ae.getActionCommand();
@@ -667,7 +667,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 item.addActionListener(actionListener);
             popup.add(item);
 
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(me.getComponent(), me.getX(), me.getY());
 
         } else {
             editProcess(process);

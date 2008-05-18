@@ -197,11 +197,17 @@ public class VSTaskManager {
         insert(task);
     }
 
-    public synchronized void removeTask(VSTask task) {
-        if (task.isGlobalTimed())
-            globalTasks.remove(task);
-        else
-            tasks.remove(task);
+    public synchronized boolean removeTask(VSTask task) {
+        if (fullfilledProgrammedTasks.remove(task))
+            return true;
+
+        else if (task.isGlobalTimed() && globalTasks.remove(task))
+            return true;
+
+        else if (!task.isGlobalTimed() && tasks.remove(task))
+            return true;
+
+        return false;
     }
 
     public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {

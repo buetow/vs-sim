@@ -47,6 +47,13 @@ public class VSTask implements Comparable {
         return false;
     }
 
+    public boolean equals(VSTask task) {
+        return event.equals(task.getEvent())
+               && taskTime == task.getTaskTime()
+               && isGlobalTimed == task.isGlobalTimed()
+               && isProgrammed == task.isProgrammed;
+    }
+
     public boolean isProcess(VSProcess process) {
         return this.process.equals(process);
     }

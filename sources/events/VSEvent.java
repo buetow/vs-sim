@@ -12,7 +12,7 @@ abstract public class VSEvent extends VSPrefs {
         this.process = process;
         this.prefs = process.getPrefs();
 
-		onInit();
+        onInit();
     }
 
     protected final void setClassname(String eventClassname) {
@@ -31,7 +31,6 @@ abstract public class VSEvent extends VSPrefs {
     }
 
     public final String getShortname() {
-		System.out.println("getShortname " + eventClassname);
         return VSRegisteredEvents.getShortname(eventClassname);
     }
 

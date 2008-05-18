@@ -381,7 +381,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
             VSEvent event = VSRegisteredEvents.createEventInstanceByClassname(eventClassname, process);
 
-			event.init(process);
+            event.init(process);
 
             if (isProtocolActivation || isProtocolDeactivation) {
                 ProtocolEvent protocolEvent = (ProtocolEvent) event;
@@ -394,7 +394,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         }
     }
 
-    private class VSTaskManagerTableModel extends AbstractTableModel {
+    private class VSTaskManagerTableModel extends AbstractTableModel implements MouseListener {
         public static final boolean LOCAL = true;
         public static final boolean GLOBAL = false;
         private VSPriorityQueue<VSTask> tasks;
@@ -452,6 +452,42 @@ public class VSSimulation extends VSFrame implements ActionListener {
             tasks.add(task);
             fireTableDataChanged();
         }
+
+        private void removeRow(int row) {
+            VSTask task = tasks.get(row);
+            tasks.remove(task);
+            taskManager.removeTask(task);
+            fireTableDataChanged();
+        }
+
+        public void mouseClicked(MouseEvent me) {
+            JTable source = (JTable) me.getSource();
+            final int row = source.rowAtPoint(me.getPoint());
+            final int col = source.columnAtPoint(me.getPoint());
+
+            if (SwingUtilities.isRightMouseButton(me)) {
+                ActionListener actionListener = new ActionListener() {
+                    public void actionPerformed(ActionEvent ae) {
+                        String actionCommand = ae.getActionCommand();
+                        if (actionCommand.equals(prefs.getString("lang.remove"))) {
+                            removeRow(row);
+                        }
+                    }
+                };
+
+                JPopupMenu popup = new JPopupMenu();
+                JMenuItem item = new JMenuItem(prefs.getString("lang.remove"));
+                item.addActionListener(actionListener);
+                popup.add(item);
+
+                popup.show(me.getComponent(), me.getX(), me.getY());
+            }
+        }
+
+        public void mouseEntered(MouseEvent me) { }
+        public void mouseExited(MouseEvent me) { }
+        public void mousePressed(MouseEvent me) { }
+        public void mouseReleased(MouseEvent me) { }
     }
 
     private JTable createTaskTable(boolean localTasks) {
@@ -464,6 +500,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
             taskManagerGlobalModel = model;
 
         JTable table = new JTable(model);
+        table.addMouseListener(model);
+
         TableColumn col = table.getColumnModel().getColumn(0);
         col.setMaxWidth(75);
         col.setResizable(false);
