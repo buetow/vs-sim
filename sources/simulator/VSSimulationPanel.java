@@ -448,8 +448,8 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     }
 
     public VSProcess getProcess(int processNum) {
-		if (processNum >= processes.size())
-			return null;
+        if (processNum >= processes.size())
+            return null;
 
         return processes.get(processNum);
     }
@@ -496,7 +496,6 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             while (!isFinalized && (isPaused || isFinished || isResetted)) {
                 try {
                     Thread.sleep(100);
-                    repaint();
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -562,7 +561,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             for (VSProcess p : processes)
                 p.reset();
 
-			/* Reset the task manager AFTER the processes, for the programmed tasks */
+            /* Reset the task manager AFTER the processes, for the programmed tasks */
             taskManager.reset();
 
             synchronized (messageLines) {
@@ -740,12 +739,12 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         recalcOnWindowChanged();
     }
 
-	public ArrayList<VSProcess> getProcessesArray() {
-		ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
+    public ArrayList<VSProcess> getProcessesArray() {
+        ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
 
-		for (VSProcess process : processes)
-			arr.add(process);
+        for (VSProcess process : processes)
+            arr.add(process);
 
-		return arr;
-	}
+        return arr;
+    }
 }

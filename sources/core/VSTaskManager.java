@@ -22,7 +22,7 @@ public class VSTaskManager {
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
 
-	/*
+    /*
     private Comparator<VSTask> createComparator() {
         return new Comparator<VSTask>() {
             public int compare(VSTask a, VSTask b) {
@@ -36,7 +36,7 @@ public class VSTaskManager {
             }
         };
     }
-	*/
+    */
 
     public synchronized void runTasks(final long step, final long offset, final long lastGlobalTime) {
         VSTask task = null;
@@ -184,10 +184,10 @@ public class VSTaskManager {
     }
 
     private void insert(VSTask task) {
-		if (task.timeOver())  
-			fullfilledProgrammedTasks.addLast(task);
+        if (task.timeOver())
+            fullfilledProgrammedTasks.addLast(task);
 
-		else if (task.isGlobalTimed())
+        else if (task.isGlobalTimed())
             globalTasks.add(task);
 
         else
@@ -216,7 +216,7 @@ public class VSTaskManager {
         return false;
     }
 
-	/*
+    /*
     public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {
         LinkedList<VSTask> protocolTasks = new LinkedList<VSTask>();
 
@@ -278,7 +278,7 @@ public class VSTaskManager {
                 insert(task);
         }
     }
-*/
+    */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 

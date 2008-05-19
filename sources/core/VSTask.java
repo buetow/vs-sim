@@ -47,12 +47,12 @@ public class VSTask implements Comparable {
         return false;
     }
 
-	public boolean timeOver() {
-		if (isGlobalTimed)
-			return taskTime < process.getGlobalTime();
+    public boolean timeOver() {
+        if (isGlobalTimed)
+            return taskTime < process.getGlobalTime();
 
-		return taskTime < process.getTime();
-	}
+        return taskTime < process.getTime();
+    }
 
     public boolean equals(VSTask task) {
         return event.equals(task.getEvent())
@@ -183,18 +183,18 @@ public class VSTask implements Comparable {
             else if (taskTime > task.getTaskTime())
                 return 1;
 
-			/* If it's a ProtocolEvent, it should get handled first */
-			boolean a = event instanceof ProtocolEvent;
-			boolean b = task.getEvent() instanceof ProtocolEvent;
+            /* If it's a ProtocolEvent, it should get handled first */
+            boolean a = event instanceof ProtocolEvent;
+            boolean b = task.getEvent() instanceof ProtocolEvent;
 
-			if (a && b)
-				return 0;
+            if (a && b)
+                return 0;
 
-			if (a)
-				return -1;
+            if (a)
+                return -1;
 
-			if (b)
-				return 1;
+            if (b)
+                return 1;
         }
 
         return 0;
