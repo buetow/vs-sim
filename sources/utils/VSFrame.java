@@ -23,8 +23,6 @@ public class VSFrame extends JFrame {
     private void init(Component parent) {
         this.parent = parent;
         this.dispose = false;
-
-        setLocation();
     }
 
     public void disposeWithParent() {
@@ -39,11 +37,11 @@ public class VSFrame extends JFrame {
         dispose = true;
     }
 
-    private void setLocation() {
+    private void setCorrectLocation() {
         int x = 0, y = 0;
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         if (parent == null) {
-            final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             x = (int) (screenSize.width - getWidth()) / 2;
             y = 50;//(int) (screenSize.height - getHeight()) / 2;
 
@@ -53,6 +51,17 @@ public class VSFrame extends JFrame {
             y = (int) location.getY() + Y_LOCATION_OFFSET;
         }
 
-        setLocation(x, y);
+		if (x + super.getWidth() >= screenSize.width)
+			x = screenSize.width - super.getWidth();	
+
+		if (y + super.getHeight() >= screenSize.height)
+			y = screenSize.height - super.getHeight();	
+
+        super.setLocation(x, y);
     }
+
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		setCorrectLocation();
+	}
 }
