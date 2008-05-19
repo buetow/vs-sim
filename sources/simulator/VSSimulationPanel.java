@@ -236,9 +236,11 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
         }
 
         if (strategy != null) {
-            //setPreferredSize(new Dimension(simulation.getWidth()-simulation.getSplitSize(),(int)paintSize-20));
-            g = (Graphics2D) strategy.getDrawGraphics();
-            g.setColor(Color.WHITE);
+            synchronized (strategy) {
+                //setPreferredSize(new Dimension(simulation.getWidth()-simulation.getSplitSize(),(int)paintSize-20));
+                g = (Graphics2D) strategy.getDrawGraphics();
+                g.setColor(Color.WHITE);
+            }
         }
     }
 
@@ -297,23 +299,24 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
             }
         }
 
-        g.fillRect(0, 0, getWidth(), getHeight());
+        synchronized (strategy) {
+            g.fillRect(0, 0, getWidth(), getHeight());
+            final long globalTime = time;
 
-        final long globalTime = time;
+            globalTimeXPosition = getTimeXPosition(globalTime);
+            paintSecondlines(g);
+            paintProcesses(g, globalTime);
+            paintGlobalTime(g, globalTime);
 
-        globalTimeXPosition = getTimeXPosition(globalTime);
-        paintSecondlines(g);
-        paintProcesses(g, globalTime);
-        paintGlobalTime(g, globalTime);
+            synchronized (messageLines) {
+                for (VSMessageLine line : messageLines)
+                    line.draw(g, globalTime);
+            }
 
-        synchronized (messageLines) {
-            for (VSMessageLine line : messageLines)
-                line.draw(g, globalTime);
+            g.setColor(Color.WHITE);
+
+            strategy.show();
         }
-
-        g.setColor(Color.WHITE);
-
-        strategy.show();
     }
 
     private void paintProcesses(Graphics2D g, long globalTime) {
