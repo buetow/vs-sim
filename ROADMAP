@@ -10,8 +10,6 @@ Middleware-Schicht?
 Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
 JTree Editor
 
-Create schedules from Protocols
-
 Protocols:
 	ReliableMulticast
 	Ein-Phasen Commit Protokoll
