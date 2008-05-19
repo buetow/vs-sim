@@ -8,7 +8,8 @@ Ganze simulationseinstellungen abspeichern/laden koennen
 Systemschnitte?
 Middleware-Schicht?
 Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
-JTree Editor
+JTree Editor?
+Non-Broadcast Nachrichten
 
 Protocols:
 	ReliableMulticast
