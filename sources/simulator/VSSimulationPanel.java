@@ -724,6 +724,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 }
             };
 
+		
             JPopupMenu popup = new JPopupMenu();
             JMenuItem item = new JMenuItem(prefs.getString("lang.edit"));
             item.addActionListener(actionListener);
