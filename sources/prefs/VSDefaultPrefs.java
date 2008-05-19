@@ -52,6 +52,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
         initString("lang.crash", "Abstürzen");
+        initString("lang.antialiasing", "Anti-Aliasing");
         initString("lang.all", "Alle");
         initString("lang.crashed", "Abgestürzt");
         initString("lang.deactivate", "deaktivieren");

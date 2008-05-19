@@ -258,6 +258,17 @@ public class VSSimulation extends VSFrame implements ActionListener {
         });
         toolsPanel.add(vectorTimeActiveCheckBox);
 
+        JCheckBox antiAliasing = new JCheckBox(prefs.getString("lang.antialiasing"));
+        antiAliasing.setSelected(false);
+        antiAliasing.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                ButtonModel buttonModel = abstractButton.getModel();
+                simulationPanel.isAntiAliased(buttonModel.isSelected());
+            }
+        });
+        toolsPanel.add(antiAliasing);
+
         JCheckBox loggingActiveCheckBox = new JCheckBox(prefs.getString("lang.logging.active"));
         loggingActiveCheckBox.setSelected(true);
         loggingActiveCheckBox.addChangeListener(new ChangeListener() {

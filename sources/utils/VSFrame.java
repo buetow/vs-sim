@@ -51,17 +51,19 @@ public class VSFrame extends JFrame {
             y = (int) location.getY() + Y_LOCATION_OFFSET;
         }
 
-		if (x + super.getWidth() >= screenSize.width)
-			x = screenSize.width - super.getWidth();	
+        if (x + super.getWidth() >= screenSize.width)
+            x = screenSize.width - super.getWidth();
+        else if (x < 0)
+            x = 0;
 
-		if (y + super.getHeight() >= screenSize.height)
-			y = screenSize.height - super.getHeight();	
+        if (y + super.getHeight() >= screenSize.height)
+            y = screenSize.height - super.getHeight();
 
         super.setLocation(x, y);
     }
 
-	public void setSize(int width, int height) {
-		super.setSize(width, height);
-		setCorrectLocation();
-	}
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        setCorrectLocation();
+    }
 }

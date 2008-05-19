@@ -28,6 +28,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     private volatile boolean isFinalized = false;
     private volatile boolean isFinished = false;
     private volatile boolean isResetted = false;
+    private volatile boolean isAntiAliased = false;
+    private volatile boolean isAntiAliasedChanged = false;
     private volatile boolean showLamport = false;
     private volatile boolean showVectorTime = false;
     private volatile long pauseTime;
@@ -240,6 +242,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 //setPreferredSize(new Dimension(simulation.getWidth()-simulation.getSplitSize(),(int)paintSize-20));
                 g = (Graphics2D) strategy.getDrawGraphics();
                 g.setColor(Color.WHITE);
+                if (isAntiAliased)
+                    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             }
         }
     }
@@ -300,6 +304,13 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
         }
 
         synchronized (strategy) {
+            if (isAntiAliasedChanged) {
+                if (isAntiAliased)
+                    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                else
+                    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                isAntiAliasedChanged = false;
+            }
             g.fillRect(0, 0, getWidth(), getHeight());
             final long globalTime = time;
 
@@ -645,6 +656,11 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     public void showVectorTime(boolean showVectorTime) {
         this.showVectorTime = showVectorTime;
         paint();
+    }
+
+    public void isAntiAliased(boolean isAntiAliased) {
+        this.isAntiAliased = isAntiAliased;
+        this.isAntiAliasedChanged = true;
     }
 
     public void sendMessage(VSMessage message) {
