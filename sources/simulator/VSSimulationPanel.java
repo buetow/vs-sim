@@ -448,6 +448,9 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     }
 
     public VSProcess getProcess(int processNum) {
+		if (processNum >= processes.size())
+			return null;
+
         return processes.get(processNum);
     }
 

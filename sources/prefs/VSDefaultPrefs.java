@@ -52,6 +52,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
         initString("lang.crash", "Abstürzen");
+        initString("lang.all", "Alle");
         initString("lang.crashed", "Abgestürzt");
         initString("lang.deactivate", "deaktivieren");
         initString("lang.default", "Defaults");
@@ -83,6 +84,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.protocol", "Protokolleinstellungen");
         initString("lang.prefs.protocol.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder \"OK\" Knopfes übernommen!");
         initString("lang.process", "Prozess");
+        initString("lang.processes.all", "Alle Prozesse");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
         initString("lang.process.time.local", "Lokale Zeit");

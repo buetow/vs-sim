@@ -21,6 +21,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JCheckBox lamportActiveCheckBox;
     private JCheckBox vectorTimeActiveCheckBox;
     private JComboBox processesComboBox;
+	private JComboBox localPIDComboBox;
+	private JComboBox globalPIDComboBox;
     private int lastSelectedProcessNum;
     private ArrayList<String> localTextFields;
     private ArrayList<String> globalTextFields;
@@ -63,7 +65,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         this.globalTextFields = new ArrayList<String>();
         int numProcesses = simulationPanel.getNumProcesses();
 
-        for (int i = 0; i < numProcesses; ++i) {
+        for (int i = 0; i <= numProcesses; ++i) {
             localTextFields.add("0000");
             globalTextFields.add("0000");
         }
@@ -309,11 +311,23 @@ public class VSSimulation extends VSFrame implements ActionListener {
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
         processesComboBox = new JComboBox();
+        localPIDComboBox = new JComboBox();
+        globalPIDComboBox = new JComboBox();
+
         lastSelectedProcessNum = 0;
         int numProcesses = simulationPanel.getNumProcesses();
         String processString = prefs.getString("lang.process");
-        for (int i = 1; i <= numProcesses; ++i)
-            processesComboBox.addItem(processString + " " + i);
+
+        for (int i = 0; i < numProcesses; ++i) {
+			int pid = simulationPanel.getProcess(i).getProcessID();
+            processesComboBox.addItem(processString + " " + pid);
+			localPIDComboBox.addItem("PID: " + pid);
+			globalPIDComboBox.addItem("PID: " + pid);
+		}
+
+		processesComboBox.addItem(prefs.getString("lang.processes.all"));
+		localPIDComboBox.addItem(prefs.getString("lang.all"));
+		globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
         JPanel localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
         JPanel globalPanel = createTaskLabel(VSTaskManagerTableModel.GLOBAL);
@@ -342,6 +356,9 @@ public class VSSimulation extends VSFrame implements ActionListener {
                 localTextField.setBackground(Color.WHITE);
                 globalTextField.setBackground(Color.WHITE);
                 lastSelectedProcessNum = processNum;
+
+				localPIDComboBox.setSelectedIndex(processNum);
+				globalPIDComboBox.setSelectedIndex(processNum);
             }
         });
 
@@ -448,47 +465,66 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private class VSTaskManagerTableModel extends AbstractTableModel implements MouseListener {
         public static final boolean LOCAL = true;
         public static final boolean GLOBAL = false;
+        public static final boolean ALL_PROCESSES = true;
+        public static final boolean ONE_PROCESS = false;
+        public boolean allProcesses;
         private VSPriorityQueue<VSTask> tasks;
         private String columnNames[];
-        private VSProcess process;
+		private int numColumns;
+		private JTable table;
 
         public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
-            set(process, localTask);
-            columnNames = new String[2];
+            set(process, localTask, ONE_PROCESS);
+            columnNames = new String[3];
             columnNames[0]= prefs.getString("lang.time") + " (ms)";
-            columnNames[1] = prefs.getString("lang.event");
+            columnNames[1] = prefs.getString("lang.process.id");
+            columnNames[2] = prefs.getString("lang.event");
+			numColumns = 3;
         }
 
-        public void set(VSProcess process, boolean localTasks) {
-            this.process = process;
-            this.tasks = localTasks
+		public void setTable(JTable table) {
+			this.table = table;
+		}
+
+        public void set(VSProcess process, boolean localTasks, boolean allProcesses) {
+			this.allProcesses = allProcesses;
+
+			if (allProcesses) {
+            	this.tasks = localTasks
+                         ?  taskManager.getLocalTasks()
+                         :  taskManager.getGlobalTasks();
+			} else {
+            	this.tasks = localTasks
                          ?  taskManager.getProcessLocalTasks(process)
                          :  taskManager.getProcessGlobalTasks(process);
+			}
 
             fireTableDataChanged();
         }
 
         public String getColumnName(int col) {
-            if (col == 0)
-                return columnNames[0];
-            return columnNames[1];
+			return columnNames[col];
         }
 
         public int getRowCount() {
-            return tasks.size();
+            return tasks == null ? 0 : tasks.size();
         }
 
         public int getColumnCount() {
-            return 2;
+            return numColumns;
         }
 
         public Object getValueAt(int row, int col) {
             VSTask task = tasks.get(row);
 
-            if (col == 0)
-                return task.getTaskTime();
-
-            return task.getEvent().getShortname();
+			switch (col) {
+           		case 0: 
+                	return task.getTaskTime();
+				case 1:
+					return task.getProcess().getProcessID(); 
+			}
+        
+			return task.getEvent().getShortname();
         }
 
         public boolean isCellEditable(int row, int col) {
@@ -504,7 +540,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             fireTableDataChanged();
         }
 
-        private void removeRow(int row) {
+        private void removeTaskAtRow(int row) {
             VSTask task = tasks.get(row);
             tasks.remove(task);
             taskManager.removeTask(task);
@@ -521,7 +557,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
                     public void actionPerformed(ActionEvent ae) {
                         String actionCommand = ae.getActionCommand();
                         if (actionCommand.equals(prefs.getString("lang.remove"))) {
-                            removeRow(row);
+                            removeTaskAtRow(row);
                         }
                     }
                 };
@@ -551,12 +587,18 @@ public class VSSimulation extends VSFrame implements ActionListener {
             taskManagerGlobalModel = model;
 
         JTable table = new JTable(model);
+		model.setTable(table);
         table.addMouseListener(model);
 
         TableColumn col = table.getColumnModel().getColumn(0);
-        col.setMaxWidth(75);
+        col.setMaxWidth(62);
         col.setResizable(false);
+
         col = table.getColumnModel().getColumn(1);
+        col.setMaxWidth(23);
+        col.setResizable(false);
+
+        col = table.getColumnModel().getColumn(2);
         col.sizeWidthToFit();
         table.setBackground(Color.WHITE);
 
@@ -578,8 +620,13 @@ public class VSSimulation extends VSFrame implements ActionListener {
         panel1.add(textField);
 
         panel1.add(new JLabel(" ms "));
-        final JComboBox comboBox = new JComboBox();
 
+		if (localTasks)
+			panel1.add(localPIDComboBox);
+		else
+			panel1.add(globalPIDComboBox);
+
+        final JComboBox comboBox = new JComboBox();
         JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
         takeoverButton.addActionListener(new ActionListener() {
             private boolean isRed;
@@ -655,16 +702,38 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         comboBox.setMaximumRowCount(15);
         comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
-        if (flag) createTasks.add(null);
+        if (flag) 
+			createTasks.add(null);
 
         for (String eventClassname : eventClassnames) {
             String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
             comboBox.addItem(eventShortname);
-            if (flag) createTasks.add(new VSCreateTask(eventClassname));
+            if (flag) 
+				createTasks.add(new VSCreateTask(eventClassname));
+        }
+
+        comboBox.addItem("-- " + prefs.getString("lang.requests") + " --");
+        if (flag) 
+			createTasks.add(null);
+        String clientrequest = prefs.getString("lang.clientrequest.start");
+
+        for (String eventClassname : eventClassnames) {
+            String eventShortname = VSRegisteredEvents.getShortname(eventClassname)
+                                    + " " + clientrequest;
+
+            comboBox.addItem(eventShortname);
+
+            if (flag) {
+                VSCreateTask createTask = new VSCreateTask(eventClassname);
+                createTask.setShortname(eventShortname);
+                createTask.isClientRequest(true);
+                createTasks.add(createTask);
+            }
         }
 
         comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
-        if (flag) createTasks.add(null);
+        if (flag) 
+			createTasks.add(null);
 
         eventClassnames = VSRegisteredEvents.getProtocolClassnames();
         String activate = prefs.getString("lang.activate");
@@ -717,24 +786,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
                 createTask.isClientProtocol(false);
                 createTask.setProtocolClassname(eventClassname);
                 createTask.setShortname(eventShortname);
-                createTasks.add(createTask);
-            }
-        }
-
-        comboBox.addItem("-- " + prefs.getString("lang.requests") + " --");
-        if (flag) createTasks.add(null);
-        String clientrequest = prefs.getString("lang.clientrequest.start");
-
-        for (String eventClassname : eventClassnames) {
-            String eventShortname = VSRegisteredEvents.getShortname(eventClassname)
-                                    + " " + clientrequest;
-
-            comboBox.addItem(eventShortname);
-
-            if (flag) {
-                VSCreateTask createTask = new VSCreateTask(eventClassname);
-                createTask.setShortname(eventShortname);
-                createTask.isClientRequest(true);
                 createTasks.add(createTask);
             }
         }
@@ -814,20 +865,27 @@ public class VSSimulation extends VSFrame implements ActionListener {
     }
 
     private int getSelectedProcessNum() {
-        String string = (String) processesComboBox.getSelectedItem();
-        int cutLen = prefs.getString("lang.process").length() + 1;
-        string = string.substring(cutLen);
-        return Integer.parseInt(string) - 1;
+		try {
+        	String string = (String) processesComboBox.getSelectedItem();
+        	int cutLen = prefs.getString("lang.process").length() + 1;
+        	string = string.substring(cutLen);
+        	return Integer.parseInt(string) - 1;
+		} catch (NumberFormatException e) {
+		}
+
+		return simulationPanel.getNumProcesses();
     }
 
     private VSProcess getSelectedProcess() {
-        return simulationPanel.getProcess(getSelectedProcessNum());
+		int processNum = getSelectedProcessNum();
+        return simulationPanel.getProcess(processNum);
     }
 
     public void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
-        taskManagerLocalModel.set(process, VSTaskManagerTableModel.LOCAL);
-        taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL);
+		boolean allProcesses = process == null;
+        taskManagerLocalModel.set(process, VSTaskManagerTableModel.LOCAL, allProcesses);
+        taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL, allProcesses);
     }
 
     public void finish() {

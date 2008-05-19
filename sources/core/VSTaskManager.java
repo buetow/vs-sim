@@ -216,6 +216,7 @@ public class VSTaskManager {
         return false;
     }
 
+	/*
     public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {
         LinkedList<VSTask> protocolTasks = new LinkedList<VSTask>();
 
@@ -276,6 +277,34 @@ public class VSTaskManager {
             else
                 insert(task);
         }
+    }
+*/
+    public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
+        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (!task.isGlobalTimed() && task.isProgrammed())
+                processTasks.add(task);
+
+        for (VSTask task : tasks)
+            if (task.isProgrammed())
+                processTasks.add(task);
+
+        return processTasks;
+    }
+
+    public synchronized VSPriorityQueue<VSTask> getGlobalTasks() {
+        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (task.isGlobalTimed() && task.isProgrammed())
+                processTasks.add(task);
+
+        for (VSTask task : globalTasks)
+            if (task.isProgrammed())
+                processTasks.add(task);
+
+        return processTasks;
     }
 
     public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(VSProcess process) {
