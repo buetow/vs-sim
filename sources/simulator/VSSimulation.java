@@ -212,12 +212,12 @@ public class VSSimulation extends VSFrame implements ActionListener {
         splitPaneH.setLeftComponent(createProcessPane());
         splitPaneH.setRightComponent(canvasPanel);
         splitPaneH.setContinuousLayout(true);
-        splitPaneH.setOneTouchExpandable(true);
+        //splitPaneH.setOneTouchExpandable(true);
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
         splitPaneV.setBottomComponent(loggingPane);
-        splitPaneV.setOneTouchExpandable(true);
+        //splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
 
         Container contentPane = getContentPane();
