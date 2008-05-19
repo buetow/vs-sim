@@ -175,6 +175,18 @@ public class VSTask implements Comparable {
 
             else if (taskTime > task.getTaskTime())
                 return 1;
+
+			boolean a = event instanceof ProtocolEvent;
+			boolean b = task.getEvent() instanceof ProtocolEvent;
+
+			if (a && b)
+				return 0;
+
+			if (a)
+				return -1;
+
+			if (b)
+				return 1;
         }
 
         return 0;
