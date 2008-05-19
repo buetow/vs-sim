@@ -739,4 +739,13 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     public void ancestorResized(HierarchyEvent e) {
         recalcOnWindowChanged();
     }
+
+	public ArrayList<VSProcess> getProcessesArray() {
+		ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
+
+		for (VSProcess process : processes)
+			arr.add(process);
+
+		return arr;
+	}
 }

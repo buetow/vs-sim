@@ -674,20 +674,26 @@ public class VSSimulation extends VSFrame implements ActionListener {
             }
 
             private boolean takeover(long time) {
-                VSProcess process = getSelectedProcess();
-                int index = comboBox.getSelectedIndex();
+                VSProcess selectedProcess = getSelectedProcess();
+				int index = comboBox.getSelectedIndex();
                 VSCreateTask createTask = createTasks.get(index);
 
                 if (createTask == null)
                     return false;
 
-                VSTask task = createTask.createTask(process, time, localTasks);
-                taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+                ArrayList<VSProcess> processes = getConcernedProcesses(localTasks); 
 
-                if (localTasks)
-                    taskManagerLocalModel.addTask(task);
-                else
-                    taskManagerGlobalModel.addTask(task);
+				for (VSProcess process : processes) {
+                	VSTask task = createTask.createTask(process, time, localTasks);
+                	taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+
+					if (process.equals(selectedProcess)) {
+                	if (localTasks)
+               	    	 taskManagerLocalModel.addTask(task);
+                	else
+               	    	 taskManagerGlobalModel.addTask(task);
+						 }
+				}
 
                 return true;
             }
@@ -880,6 +886,20 @@ public class VSSimulation extends VSFrame implements ActionListener {
 		int processNum = getSelectedProcessNum();
         return simulationPanel.getProcess(processNum);
     }
+
+	private ArrayList<VSProcess> getConcernedProcesses(boolean localTasks) {
+		int processNum = localTasks 
+			? localPIDComboBox.getSelectedIndex()
+			: globalPIDComboBox.getSelectedIndex();
+
+		if (processNum == simulationPanel.getNumProcesses())
+			return simulationPanel.getProcessesArray();
+
+		ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
+		arr.add(simulationPanel.getProcess(processNum));
+
+		return arr;
+	}
 
     public void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
