@@ -556,14 +556,16 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             time = 0;
             lastTime = 0;
 
-            taskManager.reset();
-
             for (VSProcess p : processes)
                 p.reset();
+
+			/* Reset the task manager AFTER the processes, for the programmed tasks */
+            taskManager.reset();
 
             synchronized (messageLines) {
                 messageLines.clear();
             }
+
             repaint();
             logging.clear();
         }

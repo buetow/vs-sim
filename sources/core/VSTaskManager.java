@@ -184,8 +184,12 @@ public class VSTaskManager {
     }
 
     private void insert(VSTask task) {
-        if (task.isGlobalTimed())
+		if (task.timeOver())  
+			fullfilledProgrammedTasks.addLast(task);
+
+		else if (task.isGlobalTimed())
             globalTasks.add(task);
+
         else
             tasks.add(task);
     }

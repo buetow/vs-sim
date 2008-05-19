@@ -164,10 +164,8 @@ public final class VSProcess extends VSPrefs {
         final long currentGlobalTimestep = globalTime - this.globalTime;
         this.globalTime = globalTime;
 
-        //if (!isCrashed) {
-            localTime += currentGlobalTimestep;
-            clockOffset += currentGlobalTimestep * (double) clockVariance;
-       //}
+        localTime += currentGlobalTimestep;
+        clockOffset += currentGlobalTimestep * (double) clockVariance;
 
         while (clockOffset >= 1) {
             clockOffset -= 1;
