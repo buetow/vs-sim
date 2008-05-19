@@ -3,6 +3,7 @@ package simulator;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.awt.image.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -14,7 +15,7 @@ import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
-public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
+public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
     private VSProcess highlightedProcess;
     private VSSimulation simulation;
     private VSPrefs prefs;
@@ -23,7 +24,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     private int secondsSpaceing;
     private int threadSleep;
     private long untilTime;
-    private volatile boolean isPaused = false;
+    private volatile boolean isPaused = true;
     private volatile boolean isFinalized = false;
     private volatile boolean isFinished = false;
     private volatile boolean isResetted = false;
@@ -36,6 +37,10 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     private VSTaskManager taskManager;
     private LinkedList<VSMessageLine> messageLines;
     private LinkedList<VSProcess> processes;
+
+    /* GFX buffering */
+    private BufferStrategy strategy;
+    private Graphics2D g;
 
     /* Static constats */
     private static final int LINE_WIDTH = 5;
@@ -98,6 +103,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             this.y = getProcessYPosition(senderNum) + offset1;
 
             recalcOnWindowChanged();
+            paint();
         }
 
         public void recalcOnWindowChanged() {
@@ -110,6 +116,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 x = getTimeXPosition(z);
                 y = y1 + ( ( (y2-y1) / (x2-x1)) * (x-x1));
             }
+
         }
 
         public void draw(final Graphics2D g, final long globalTime) {
@@ -227,6 +234,12 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         {
             paintGlobalTimeYPosition = YOFFSET + YOUTER_SPACEING + (int) (numProcesses * yDistance);
         }
+
+        if (strategy != null) {
+            //setPreferredSize(new Dimension(simulation.getWidth()-simulation.getSplitSize(),(int)paintSize-20));
+            g = (Graphics2D) strategy.getDrawGraphics();
+            g.setColor(Color.WHITE);
+        }
     }
 
     public VSProcess createProcess(int i) {
@@ -246,23 +259,61 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             process.syncTime(globalTime);
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paint() {
+        while (getBufferStrategy() == null) {
+            createBufferStrategy(3);
+            strategy = getBufferStrategy();
+
+            if (strategy != null) {
+                g = (Graphics2D) strategy.getDrawGraphics();
+                g.setColor(Color.WHITE);
+
+
+                // Determine if antialiasing is enabled
+                //RenderingHints rhints = g2d.getRenderingHints();
+                //boolean antialiasOn = rhints.containsValue(RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Enable antialiasing for shapes
+                /*
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+                */
+                // Disable antialiasing for shapes
+                //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                //                    RenderingHints.VALUE_ANTIALIAS_OFF);
+
+                // Draw shapes...; see e586 Drawing Simple Shapes
+
+                // Enable antialiasing for text
+                /*
+                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                */
+                // Draw text...; see e591 Drawing Simple Text
+
+                // Disable antialiasing for text
+//        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+//                            RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+            }
+        }
+
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         final long globalTime = time;
-        final Graphics2D g2d = (Graphics2D) g;
 
         globalTimeXPosition = getTimeXPosition(globalTime);
-
-        paintSecondlines(g2d);
-        paintProcesses(g2d, globalTime);
-        paintGlobalTime(g2d, globalTime);
+        paintSecondlines(g);
+        paintProcesses(g, globalTime);
+        paintGlobalTime(g, globalTime);
 
         synchronized (messageLines) {
             for (VSMessageLine line : messageLines)
-                line.draw(g2d, globalTime);
+                line.draw(g, globalTime);
         }
 
+        g.setColor(Color.WHITE);
+
+        strategy.show();
     }
 
     private void paintProcesses(Graphics2D g, long globalTime) {
@@ -401,6 +452,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                       ?  (int) ((paintSize-2*(YOFFSET+YOUTER_SPACEING+YSEPLINE_SPACEING))/(numProcesses-1))
                       :  (int) ((paintSize-2*(YOFFSET+YOUTER_SPACEING+YSEPLINE_SPACEING)));
 
+        //System.out.println("JO " + yPos + " " + yDistance + " " + yOffset);
         for (int i = 0; i < numProcesses; ++i) {
             if (yPos < y + reachDistance && yPos > y - reachDistance - LINE_WIDTH)
                 return processes.get(i);
@@ -455,9 +507,21 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
     }
 
     public void run() {
-        play();
+        //play();
 
         while (true) {
+            while (!isFinalized && (isPaused || isFinished || isResetted)) {
+                try {
+                    Thread.sleep(100);
+                    paint();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
+            if (isFinalized)
+                break; /* Exit the thread */
+
             while (!isPaused && !isFinalized) {
                 try {
                     Thread.sleep(threadSleep);
@@ -466,7 +530,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 }
 
                 updateSimulation(time, lastTime);
-                repaint();
+                paint();
 
                 lastTime = time;
                 time = System.currentTimeMillis() - startTime;
@@ -487,22 +551,11 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 pauseTime = System.currentTimeMillis();
 
                 logging.logg(prefs.getString("lang.simulation.paused"));
-                repaint();
+                paint();
             }
 
             updateSimulation(time, lastTime);
-            repaint();
-
-            while (!isFinalized && (isPaused || isFinished || isResetted)) {
-                try {
-                    Thread.sleep(100);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-
-            if (isFinalized)
-                break; /* Exit the thread */
+            paint();
         }
     }
 
@@ -529,7 +582,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             time = 0;
         }
 
-        repaint();
+        paint();
     }
 
     public void finish() {
@@ -540,7 +593,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         isFinished = true;
 
         logging.logg(prefs.getString("lang.simulation.finished"));
-        repaint();
+        paint();
     }
 
     public void pause() {
@@ -568,7 +621,7 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 messageLines.clear();
             }
 
-            repaint();
+            paint();
             logging.clear();
         }
     }
@@ -583,12 +636,12 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
 
     public void showLamport(boolean showLamport) {
         this.showLamport = showLamport;
-        repaint();
+        paint();
     }
 
     public void showVectorTime(boolean showVectorTime) {
         this.showVectorTime = showVectorTime;
-        repaint();
+        paint();
     }
 
     public void sendMessage(VSMessage message) {
@@ -696,15 +749,21 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
         if (highlightedProcess != null) {
             highlightedProcess.highlightOff();
             highlightedProcess = null;
-            repaint();
+            paint();
         }
     }
 
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+        System.out.println("pressed");
+    }
 
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("release");
+    }
 
-    public void mouseDragged(MouseEvent e) { }
+    public void mouseDragged(MouseEvent e) {
+        System.out.println("dragged");
+    }
 
     public void mouseMoved(MouseEvent e) {
         VSProcess p = getProcessAtYPos(e.getY());
@@ -713,7 +772,6 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
             if (highlightedProcess != null) {
                 highlightedProcess.highlightOff();
                 highlightedProcess = null;
-                repaint();
             }
 
             return;
@@ -724,12 +782,10 @@ public class VSSimulationPanel extends JPanel implements Runnable, MouseMotionLi
                 highlightedProcess.highlightOff();
                 highlightedProcess = p;
                 p.highlightOn();
-                repaint();
             }
         } else {
             highlightedProcess = p;
             p.highlightOn();
-            repaint();
         }
     }
 

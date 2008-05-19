@@ -58,6 +58,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         setVisible(true);
 
         thread = new Thread(simulationPanel);
+        thread.start();
         //logging.start();
         logging.logg(prefs.getString("lang.simulation.new"));
 
@@ -69,7 +70,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
             localTextFields.add("0000");
             globalTextFields.add("0000");
         }
-
     }
 
     private JMenuBar createJMenuBar() {
@@ -193,7 +193,13 @@ public class VSSimulation extends VSFrame implements ActionListener {
         logging.setSimulationPanel(simulationPanel);
         simulationPanel.setBackground(prefs.getColor("paintarea.background"));
 
-        JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
+        JPanel canvasPanel = new JPanel();
+        canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
+        canvasPanel.add(simulationPanel);
+        canvasPanel.setMinimumSize(new Dimension(0, 0));
+        canvasPanel.setMaximumSize(new Dimension(0, 0));
+
+        //JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
         JPanel toolsPanel = createToolsPanel();
 
@@ -204,7 +210,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         splitPaneH.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPaneH.setLeftComponent(createProcessPane());
-        splitPaneH.setRightComponent(paintScrollPane);
+        splitPaneH.setRightComponent(canvasPanel);
         splitPaneH.setContinuousLayout(true);
         splitPaneH.setOneTouchExpandable(true);
 
@@ -834,7 +840,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             pauseItem.setEnabled(true);
             resetItem.setEnabled(false);
             replayItem.setEnabled(true);
-            registeredProhread();
+            simulationPanel.play();
 
         } else if (source.getText().equals(prefs.getString("lang.pause"))) {
             startItem.setEnabled(true);
@@ -856,18 +862,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             resetItem.setEnabled(false);
             replayItem.setEnabled(true);
             simulationPanel.reset();
-            registeredProhread();
-        }
-    }
-
-    private void registeredProhread() {
-        if (hasStarted) {
             simulationPanel.play();
-
-        } else {
-            hasStarted = true;
-            thread = new Thread(simulationPanel);
-            thread.start();
         }
     }
 
