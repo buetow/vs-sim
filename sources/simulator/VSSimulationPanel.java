@@ -773,7 +773,6 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     }
 
     public void mousePressed(MouseEvent e) {
-        System.out.println("pressed");
     }
 
     public void mouseReleased(MouseEvent e) {

@@ -1,5 +1,6 @@
 TODO:
 
+Mausrechtsklick auf Prozess tut nichtmehr
 Prozess Quick Panel: Uhrabweichung / Geschwindigkeit direkt einstellen koennen
 "Himmelobjekt"
 KeyEvent Manager
@@ -8,7 +9,6 @@ Ganze simulationseinstellungen abspeichern/laden koennen
 Systemschnitte?
 Middleware-Schicht?
 Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
-JTree Editor?
 Non-Broadcast Nachrichten
 
 Protocols:
