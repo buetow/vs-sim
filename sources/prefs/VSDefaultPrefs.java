@@ -129,8 +129,8 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultIntegers() {
         /* Simulation prefs */
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
-        initIntegerUnit("sim.message.prob.outage", 5, "W'keit, dass eine Nachricht verloren geht", 0, 100, "%");
-        initIntegerUnit("sim.process.prob.crash", 5, "W'keit, dass der Prozess ausfällt", 0, 100, "%");
+        initIntegerUnit("sim.message.prob.outage", 0, "W'keit, dass eine Nachricht verloren geht", 0, 100, "%");
+        initIntegerUnit("sim.process.prob.crash", 0, "W'keit, dass der Prozess ausfällt", 0, 100, "%");
         initIntegerUnit("sim.seconds", 30, "Simulationsdauer", 5, 120, "s");
 
         /* Internal prefs */
