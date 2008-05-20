@@ -665,6 +665,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
 
     public void sendMessage(VSMessage message) {
         VSTask task = null;
+        VSEvent messageReceiveEvent = null;
         VSProcess sendingProcess = message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
@@ -673,7 +674,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
             if (receiverProcess.equals(sendingProcess)) {
                 if (recvOwn) {
                     deliverTime = sendingProcess.getGlobalTime();
-                    task = new VSTask(deliverTime, receiverProcess, message, VSTask.GLOBAL);
+                    messageReceiveEvent = new MessageReceiveEvent(message);
+                    task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
                     taskManager.addTask(task);
                 }
 
@@ -684,7 +686,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
 
                 /* Only add a 'receiving message' task if the message will not get lost! */
                 if (outageTime == -1) {
-                    task = new VSTask(deliverTime, receiverProcess, message, VSTask.GLOBAL);
+                    messageReceiveEvent = new MessageReceiveEvent(message);
+                    task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
                     taskManager.addTask(task);
                 }
 
@@ -724,7 +727,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 }
             };
 
-		
+
             JPopupMenu popup = new JPopupMenu();
             JMenuItem item = new JMenuItem(prefs.getString("lang.edit"));
             item.addActionListener(actionListener);

@@ -32,8 +32,8 @@ public class VSTask implements Comparable {
         return isProgrammed;
     }
 
-    public boolean isMessage() {
-        return event instanceof VSMessage;
+    public boolean isMessageReceiveEvent() {
+        return event instanceof events.implementations.MessageReceiveEvent;
     }
 
     public boolean isProcessRecoverEvent() {
@@ -74,72 +74,8 @@ public class VSTask implements Comparable {
     }
 
     public void run() {
-        if (event instanceof VSMessage) {
-            onMessageRecv();
-
-        } else if (event instanceof VSProtocol) {
-            /* Lamport time will get incremented by the VSProtocol class */
-            onProtocolStart();
-
-        } else if (event instanceof VSEvent) {
-            onEventStart();
-
-        } else {
-            onDummy();
-        }
-    }
-
-    private void onDummy() {
-        logg(prefs.getString("lang.process.task"));
-    }
-
-    /**
-     * If the process recv a message, check if the message's protocol is activated
-     * by the process. If yes, run the protocol on the message! If not, just logg
-     * that the process does not support this protocol! The process will ignore the
-     * message!
-     */
-    private void onMessageRecv() {
-        final VSMessage message = (VSMessage) event;
-        final String eventName = message.getName();
-        final String protocolClassname = message.getProtocolClassname();
-
-        process.updateLamportTime(message.getLamportTime()+1);
-        process.updateVectorTime(message.getVectorTime());
-
-        Object protocolObj;
-
-        if (process.objectExists(protocolClassname))
-            protocolObj = process.getObject(protocolClassname);
-        else
-            protocolObj = null;
-
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(prefs.getString("lang.message.recv"));
-        buffer.append("; ");
-        buffer.append(prefs.getString("lang.protocol"));
-        buffer.append(": " );
-        buffer.append(eventName);
-        buffer.append("; ");
-        buffer.append(prefs.getString("lang.message"));
-        buffer.append(" ");
-        buffer.append(message);;
-
-        if (protocolObj == null) {
-            logg(buffer.toString());
-
-        } else {
-            final VSProtocol protocol = (VSProtocol) protocolObj;
-            logg(buffer.toString());
-            protocol.onMessageRecv(message);
-        }
-    }
-
-    private void onProtocolStart() {
-        ((VSProtocol) event).onStart();
-    }
-
-    private void onEventStart() {
+        if (event.getProcess() == null)
+            event.init(process);
         event.onStart();
     }
 
@@ -160,16 +96,7 @@ public class VSTask implements Comparable {
         buffer.append(prefs.getString("lang.task"));
         buffer.append(" ");
         buffer.append(getTaskTime());
-
-        if (event instanceof VSMessage) {
-            buffer.append("; ");
-            buffer.append(((VSMessage)event).toString());
-
-        } else if (event instanceof VSProtocol) {
-            buffer.append("; ");
-            buffer.append(((VSProtocol)event).toString());
-        }
-
+        buffer.append(event.toString());
         return buffer.toString();
     }
 

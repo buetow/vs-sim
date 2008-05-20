@@ -193,6 +193,7 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public void fillDefaultBooleans() {
+        //initBoolean("sim.message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.message.own.recv", false, "Prozesse empfangen ihre eigenen Nachrichten");
     }
 }

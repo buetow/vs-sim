@@ -27,7 +27,7 @@ public class VSMain {
                 UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) { }
 
-			javax.swing.JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+        javax.swing.JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         VSPrefs prefs = VSDefaultPrefs.init();
         VSRegisteredEvents.init(prefs);
         new VSMain(prefs);

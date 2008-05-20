@@ -5,7 +5,7 @@ import events.*;
 import prefs.VSPrefs;
 import protocols.*;
 
-public class VSMessage extends VSEvent {
+public class VSMessage extends VSPrefs {
     private String protocolClassname;
     private VSProcess sendingProcess;
     private long messageID;

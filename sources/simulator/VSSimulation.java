@@ -70,7 +70,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
             globalTextFields.add("0000");
         }
 
-		processesComboBox.setSelectedIndex(numProcesses);
+        processesComboBox.setSelectedIndex(numProcesses);
     }
 
     private JMenuBar createJMenuBar() {
