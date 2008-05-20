@@ -25,7 +25,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     private int threadSleep;
     private long untilTime;
     private volatile boolean isPaused = true;
-    private volatile boolean isFinalized = false;
+    private volatile boolean isThreadStopped = false;
     private volatile boolean isFinished = false;
     private volatile boolean isResetted = false;
     private volatile boolean isAntiAliased = false;
@@ -239,7 +239,6 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
 
         if (strategy != null) {
             synchronized (strategy) {
-                //setPreferredSize(new Dimension(simulation.getWidth()-simulation.getSplitSize(),(int)paintSize-20));
                 g = (Graphics2D) strategy.getDrawGraphics();
                 g.setColor(Color.WHITE);
                 if (isAntiAliased)
@@ -273,33 +272,6 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
             if (strategy != null) {
                 g = (Graphics2D) strategy.getDrawGraphics();
                 g.setColor(Color.WHITE);
-
-
-                // Determine if antialiasing is enabled
-                //RenderingHints rhints = g2d.getRenderingHints();
-                //boolean antialiasOn = rhints.containsValue(RenderingHints.VALUE_ANTIALIAS_ON);
-
-                // Enable antialiasing for shapes
-                /*
-                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                             RenderingHints.VALUE_ANTIALIAS_ON);
-                */
-                // Disable antialiasing for shapes
-                //g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                //                    RenderingHints.VALUE_ANTIALIAS_OFF);
-
-                // Draw shapes...; see e586 Drawing Simple Shapes
-
-                // Enable antialiasing for text
-                /*
-                g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                */
-                // Draw text...; see e591 Drawing Simple Text
-
-                // Disable antialiasing for text
-//        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-//                            RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
             }
         }
 
@@ -311,6 +283,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 isAntiAliasedChanged = false;
             }
+
             g.fillRect(0, 0, getWidth(), getHeight());
             final long globalTime = time;
 
@@ -524,7 +497,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
         //play();
 
         while (true) {
-            while (!isFinalized && (isPaused || isFinished || isResetted)) {
+            while (!isThreadStopped && (isPaused || isFinished || isResetted)) {
                 try {
                     Thread.sleep(100);
                     paint();
@@ -533,10 +506,10 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 }
             }
 
-            if (isFinalized)
+            if (isThreadStopped)
                 break; /* Exit the thread */
 
-            while (!isPaused && !isFinalized) {
+            while (!isPaused && !isThreadStopped) {
                 try {
                     Thread.sleep(threadSleep);
                 } catch (Exception e) {
@@ -640,31 +613,31 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
-    public void finalize() {
-        isFinalized = true;
+    public void stopThread() {
+        isThreadStopped = true;
     }
 
-    public boolean isFinalized() {
-        return isFinalized;
+    public boolean isThreadStopped() {
+        return isThreadStopped;
     }
 
     public void showLamport(boolean showLamport) {
         this.showLamport = showLamport;
-		if (isPaused)
-			paint();
+        if (isPaused)
+            paint();
     }
 
     public void showVectorTime(boolean showVectorTime) {
         this.showVectorTime = showVectorTime;
-		if (isPaused)
-			paint();
+        if (isPaused)
+            paint();
     }
 
     public void isAntiAliased(boolean isAntiAliased) {
         this.isAntiAliased = isAntiAliased;
         this.isAntiAliasedChanged = true;
-		if (isPaused)
-			paint();
+        if (isPaused)
+            paint();
     }
 
     public void sendMessage(VSMessage message) {
@@ -766,7 +739,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     public void editProcess(VSProcess process) {
         if (process != null) {
             process.updatePrefs();
-            new VSProcessEditor(prefs, simulation, process);
+            new VSProcessEditor(prefs, simulation.getSimulatorFrame(), process);
         }
     }
 
@@ -798,8 +771,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 highlightedProcess = null;
             }
 
-			if (isPaused)
-				paint();
+            if (isPaused)
+                paint();
 
             return;
         }
@@ -815,8 +788,8 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
             p.highlightOn();
         }
 
-		if (isPaused)
-			paint();
+        if (isPaused)
+            paint();
     }
 
     public void ancestorMoved(HierarchyEvent e) { }

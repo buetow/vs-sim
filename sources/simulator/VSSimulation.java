@@ -15,7 +15,10 @@ import prefs.*;
 import protocols.*;
 import utils.*;
 
-public class VSSimulation extends VSFrame implements ActionListener {
+public class VSSimulation extends JPanel {
+    private static int simulationCounter;
+    private static int simulationNum;
+    private VSSimulatorFrame simulatorFrame;
     private JTextField filterTextField;
     private JCheckBox filterActiveCheckBox;
     private JCheckBox lamportActiveCheckBox;
@@ -29,10 +32,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private JTextField localTextField;
     private JTextField globalTextField;
     private ArrayList<VSCreateTask> createTasks;
-    private JMenuItem pauseItem;
-    private JMenuItem replayItem;
-    private JMenuItem resetItem;
-    private JMenuItem startItem;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
     private Thread thread;
@@ -43,26 +42,66 @@ public class VSSimulation extends VSFrame implements ActionListener {
     private VSTaskManagerTableModel taskManagerLocalModel;
     private VSTaskManagerTableModel taskManagerGlobalModel;
     private VSTaskManager taskManager;
+    private VSMenuItemStates menuItemStates;
 
-    public VSSimulation (VSPrefs prefs, Component relativeTo) {
-        super(prefs.getString("name"), relativeTo);
+    public class VSMenuItemStates {
+        private boolean pause;
+        private boolean replay;
+        private boolean reset;
+        private boolean start;
+
+        public VSMenuItemStates(boolean pause, boolean replay, boolean reset, boolean start) {
+            this.pause = pause;
+            this.replay = replay;
+            this.reset = reset;
+            this.start = start;
+        }
+
+        public void setPause(boolean pause) {
+            this.pause = pause;
+        }
+
+        public void setReplay(boolean replay) {
+            this.replay = replay;
+        }
+
+        public void setReset(boolean pause) {
+            this.reset = reset;
+        }
+
+        public void setStart(boolean start) {
+            this.start = start;
+        }
+
+        public boolean getPause() {
+            return pause;
+        }
+
+        public boolean getReplay() {
+            return replay;
+        }
+
+        public boolean getReset() {
+            return reset;
+        }
+
+        public boolean getStart() {
+            return start;
+        }
+    }
+
+    public VSSimulation(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         this.prefs = prefs;
+        this.simulatorFrame = simulatorFrame;
         this.logging = new VSLogging();
-
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        setSize(prefs.getInteger("window.xsize")+100,
-                prefs.getInteger("window.ysize"));
-        setContentPane(createContentPane());
-        setJMenuBar(createJMenuBar());
-        setVisible(true);
-
-        thread = new Thread(simulationPanel);
-        thread.start();
-        logging.logg(prefs.getString("lang.simulation.new"));
-
+        this.simulationNum = ++simulationCounter;
+        this.menuItemStates = new VSMenuItemStates(false, false, false, true);
         this.localTextFields = new ArrayList<String>();
         this.globalTextFields = new ArrayList<String>();
+
+        logging.logg(prefs.getString("lang.simulation.new"));
+        fillContentPane();
+
         int numProcesses = simulationPanel.getNumProcesses();
 
         for (int i = 0; i <= numProcesses; ++i) {
@@ -71,113 +110,12 @@ public class VSSimulation extends VSFrame implements ActionListener {
         }
 
         processesComboBox.setSelectedIndex(numProcesses);
+
+        thread = new Thread(simulationPanel);
+        thread.start();
     }
 
-    private JMenuBar createJMenuBar() {
-        /* File menu */
-        JMenu menuFile = new JMenu(prefs.getString("lang.file"));
-        menuFile.setMnemonic(prefs.getInteger("keyevent.file"));
-        JMenuItem menuItem;
-
-        menuItem = new JMenuItem(prefs.getString("lang.new"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.new"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
-        menuFile.add(menuItem);
-
-        menuItem = new JMenuItem(
-            prefs.getString("lang.close"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.close"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
-        menuFile.add(menuItem);
-
-        menuFile.addSeparator();
-
-        menuItem = new JMenuItem(prefs.getString("lang.about"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.about"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
-        menuFile.add(menuItem);
-
-        menuItem = new JMenuItem(prefs.getString("lang.quit"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.quit"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
-        menuFile.add(menuItem);
-
-        /* Edit menu */
-        JMenu menuEdit = new JMenu(
-            prefs.getString("lang.edit"));
-        menuEdit.setMnemonic(prefs.getInteger("keyevent.edit"));
-        int numProcesses = simulationPanel.getNumProcesses();
-        final String processString = prefs.getString("lang.process");
-        for (int i = 0; i < numProcesses; ++i) {
-            JMenuItem processItem = new JMenuItem(processString + " " + (i+1));
-            processItem.setAccelerator(KeyStroke.getKeyStroke(0x31+i,
-                                       ActionEvent.ALT_MASK));
-            final int processNum = i;
-            processItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    simulationPanel.editProcess(processNum);
-                }
-            });
-            menuEdit.add(processItem);
-        }
-
-        /* Simulation menu */
-        JMenu menuSimulation = new JMenu(
-            prefs.getString("lang.simulation"));
-        menuSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
-
-        startItem = new JMenuItem(
-            prefs.getString("lang.start"));
-        startItem.setAccelerator(KeyStroke.getKeyStroke(
-                                     prefs.getInteger("keyevent.start"),
-                                     ActionEvent.ALT_MASK));
-        startItem.addActionListener(this);
-        menuSimulation.add(startItem);
-
-        pauseItem = new JMenuItem(
-            prefs.getString("lang.pause"));
-        pauseItem.setAccelerator(KeyStroke.getKeyStroke(
-                                     prefs.getInteger("keyevent.pause"),
-                                     ActionEvent.ALT_MASK));
-        pauseItem.addActionListener(this);
-        menuSimulation.add(pauseItem);
-        pauseItem.setEnabled(false);
-
-        resetItem = new JMenuItem(
-            prefs.getString("lang.reset"));
-        resetItem.setAccelerator(KeyStroke.getKeyStroke(
-                                     prefs.getInteger("keyevent.reset"),
-                                     ActionEvent.ALT_MASK));
-        resetItem.addActionListener(this);
-        resetItem.setEnabled(false);
-        menuSimulation.add(resetItem);
-
-        replayItem = new JMenuItem(
-            prefs.getString("lang.replay"));
-        replayItem.setAccelerator(KeyStroke.getKeyStroke(
-                                      prefs.getInteger("keyevent.replay"),
-                                      ActionEvent.ALT_MASK));
-        replayItem.addActionListener(this);
-        replayItem.setEnabled(false);
-        menuSimulation.add(replayItem);
-
-        JMenuBar mainMenuBar = new JMenuBar();
-        mainMenuBar.add(menuFile);
-        mainMenuBar.add(menuEdit);
-        mainMenuBar.add(menuSimulation);
-
-        return mainMenuBar;
-    }
-
-    private Container createContentPane() {
+    private void fillContentPane() {
         JTextArea loggingArea = logging.getLoggingArea();
 
         splitPaneH = new JSplitPane();
@@ -221,11 +159,7 @@ public class VSSimulation extends VSFrame implements ActionListener {
         //splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
 
-        Container contentPane = getContentPane();
-        contentPane.add(splitPaneV, BorderLayout.CENTER);
-
-
-        return contentPane;
+        this.add(splitPaneV, BorderLayout.CENTER);
     }
 
     private JPanel createToolsPanel() {
@@ -827,57 +761,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
         return splitPaneV.getDividerLocation();
     }
 
-    public void dispose() {
-        simulationPanel.finalize();
-        super.dispose();
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        JMenuItem source = (JMenuItem) e.getSource();
-
-        if (source.getText().equals(prefs.getString("lang.close"))) {
-            dispose();
-
-        } else if (source.getText().equals(prefs.getString("lang.new"))) {
-            new VSMain(VSDefaultPrefs.init(), VSSimulation.this);
-
-        } else if (source.getText().equals(prefs.getString("lang.about"))) {
-            new VSAbout(prefs, VSSimulation.this);
-
-        } else if (source.getText().equals(prefs.getString("lang.quit"))) {
-            System.exit(0);
-
-        } else if (source.getText().equals(prefs.getString("lang.start"))) {
-            startItem.setEnabled(false);
-            pauseItem.setEnabled(true);
-            resetItem.setEnabled(false);
-            replayItem.setEnabled(true);
-            simulationPanel.play();
-
-        } else if (source.getText().equals(prefs.getString("lang.pause"))) {
-            startItem.setEnabled(true);
-            pauseItem.setEnabled(false);
-            resetItem.setEnabled(true);
-            replayItem.setEnabled(true);
-            simulationPanel.pause();
-
-        } else if (source.getText().equals(prefs.getString("lang.reset"))) {
-            startItem.setEnabled(true);
-            pauseItem.setEnabled(false);
-            resetItem.setEnabled(false);
-            replayItem.setEnabled(false);
-            simulationPanel.reset();
-
-        } else if (source.getText().equals(prefs.getString("lang.replay"))) {
-            startItem.setEnabled(false);
-            pauseItem.setEnabled(true);
-            resetItem.setEnabled(false);
-            replayItem.setEnabled(true);
-            simulationPanel.reset();
-            simulationPanel.play();
-        }
-    }
-
     private int getSelectedProcessNum() {
         try {
             String string = (String) processesComboBox.getSelectedItem();
@@ -917,9 +800,26 @@ public class VSSimulation extends VSFrame implements ActionListener {
     }
 
     public void finish() {
-        startItem.setEnabled(false);
-        pauseItem.setEnabled(false);
-        resetItem.setEnabled(true);
-        replayItem.setEnabled(true);
+        menuItemStates.setStart(false);
+        menuItemStates.setPause(false);
+        menuItemStates.setReset(true);
+        menuItemStates.setReplay(true);
+        simulatorFrame.updateSimulationMenu();
+    }
+
+    public int getSimulationNum() {
+        return simulationNum;
+    }
+
+    public VSSimulation.VSMenuItemStates getMenuItemStates() {
+        return menuItemStates;
+    }
+
+    public VSSimulationPanel getSimulationPanel() {
+        return simulationPanel;
+    }
+
+    public VSFrame getSimulatorFrame() {
+        return simulatorFrame;
     }
 }

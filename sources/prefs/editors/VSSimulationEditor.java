@@ -13,13 +13,15 @@ import utils.*;
 import prefs.VSPrefs;
 
 public class VSSimulationEditor extends VSEditorFrame {
-    private boolean startNewVSSimulation;
+    private boolean startNewSimulation;
+    private VSSimulatorFrame simulatorFrame;
 
     public VSSimulationEditor(VSPrefs prefs, Component relativeTo) {
         super(prefs, relativeTo, prefs, prefs.getString("name")
               + " - " + prefs.getString("lang.prefs"));
+        this.simulatorFrame = (VSSimulatorFrame) relativeTo;
 
-        startNewVSSimulation = true;
+        startNewSimulation = true;
         init();
     }
 
@@ -29,7 +31,7 @@ public class VSSimulationEditor extends VSEditorFrame {
                                         + (prefsCategory == ALL_PREFERENCES ? ".ext" : "")),
               prefsCategory);
 
-        startNewVSSimulation = false;
+        startNewSimulation = false;
         init();
     }
 
@@ -46,8 +48,9 @@ public class VSSimulationEditor extends VSEditorFrame {
 
             frame.dispose();
 
-            if (startNewVSSimulation)
-                new VSSimulation(prefs, getFrame());
+            if (startNewSimulation)
+                simulatorFrame.addSimulation(
+                    new VSSimulation(prefs, simulatorFrame));
 
         } else {
             super.actionPerformed(e);
