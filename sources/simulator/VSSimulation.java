@@ -59,7 +59,6 @@ public class VSSimulation extends VSFrame implements ActionListener {
 
         thread = new Thread(simulationPanel);
         thread.start();
-        //logging.start();
         logging.logg(prefs.getString("lang.simulation.new"));
 
         this.localTextFields = new ArrayList<String>();
@@ -70,6 +69,8 @@ public class VSSimulation extends VSFrame implements ActionListener {
             localTextFields.add("0000");
             globalTextFields.add("0000");
         }
+
+		processesComboBox.setSelectedIndex(numProcesses);
     }
 
     private JMenuBar createJMenuBar() {
