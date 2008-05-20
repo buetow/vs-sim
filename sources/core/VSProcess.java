@@ -22,7 +22,7 @@ public final class VSProcess extends VSPrefs {
     private VSLogging logging;
     private VSPrefs prefs;
     private VSRandom random;
-    private VSSimulationPanel simulationPanel;
+    private VSSimulationCanvas simulationCanvas;
     private VSTask randomCrashTask;
     private VSVectorTime vectorTime;
     private boolean hasCrashed;
@@ -84,10 +84,10 @@ public final class VSProcess extends VSPrefs {
     private static final String DEFAULT_STRING_VALUE_KEYS[] = {
     };
 
-    public VSProcess(VSPrefs prefs, VSSimulationPanel simulationPanel, VSLogging logging) {
+    public VSProcess(VSPrefs prefs, VSSimulationCanvas simulationCanvas, VSLogging logging) {
         this.protocolsToReset = new ArrayList<VSProtocol>();
         this.prefs = prefs;
-        this.simulationPanel = simulationPanel;
+        this.simulationCanvas = simulationCanvas;
         this.logging = logging;
         random = new VSRandom(processID+processCounter);
 
@@ -120,7 +120,7 @@ public final class VSProcess extends VSPrefs {
         vectorTimeHistory = new ArrayList<VSVectorTime>();
         crashHistory = new ArrayList<Long>();
 
-        final int numProcesses = simulationPanel.getNumProcesses();
+        final int numProcesses = simulationCanvas.getNumProcesses();
         for (int i = 0; i < numProcesses; ++i)
             vectorTime.add(new Long(0));
     }
@@ -133,7 +133,7 @@ public final class VSProcess extends VSPrefs {
         vectorTimeHistory.clear();
         crashHistory.clear();
 
-        final int numProcesses = simulationPanel.getNumProcesses();
+        final int numProcesses = simulationCanvas.getNumProcesses();
         for (int i = numProcesses; i > 0; --i)
             vectorTime.add(new Long(0));
     }
@@ -147,7 +147,7 @@ public final class VSProcess extends VSPrefs {
         setProcessID(getInteger("sim.process.id"));
         setLocalTime(getLong("sim.process.localtime"));
         crashedColor = getColor("process.crashed");
-        simulationPanel.repaint();
+        simulationCanvas.repaint();
         createRandomCrashTask();
     }
 
@@ -217,7 +217,7 @@ public final class VSProcess extends VSPrefs {
 
     private void createRandomCrashTask() {
         if (!isCrashed) {
-            VSTaskManager taskManager = simulationPanel.getTaskManager();
+            VSTaskManager taskManager = simulationCanvas.getTaskManager();
             long crashTime = getARandomCrashTime();
 
             if (randomCrashTask != null)
@@ -358,7 +358,7 @@ public final class VSProcess extends VSPrefs {
         /* Check if the message will have an outage or not */
         if (random.nextInt(100) <= getInteger("sim.message.prob.outage")) {
             /* Calculate the random outage time! */
-            final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationPanel.getUntilTime();
+            final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
             return outageTime;
         }
 
@@ -370,7 +370,7 @@ public final class VSProcess extends VSPrefs {
         /* Check if the process will crash or not */
         if (random.nextInt(100) <= getInteger("sim.process.prob.crash")) {
             /* Calculate the random crash time! */
-            final long crashTime =  random.nextLong(simulationPanel.getUntilTime()+1) % simulationPanel.getUntilTime();
+            final long crashTime =  random.nextLong(simulationCanvas.getUntilTime()+1) % simulationCanvas.getUntilTime();
             return crashTime;
         }
 
@@ -468,7 +468,7 @@ public final class VSProcess extends VSPrefs {
         buffer.append("; ");
         buffer.append(message.toStringFull());
         logg(buffer.toString());
-        simulationPanel.sendMessage(message);
+        simulationCanvas.sendMessage(message);
     }
 
     public void logg(String message) {
@@ -519,8 +519,8 @@ public final class VSProcess extends VSPrefs {
         return process.getProcessID() == processID;
     }
 
-    public VSSimulationPanel getSimulationPanel() {
-        return simulationPanel;
+    public VSSimulationCanvas getSimulationCanvas() {
+        return simulationCanvas;
     }
 
     public VSPrefs getPrefs() {

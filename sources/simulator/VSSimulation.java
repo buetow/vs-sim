@@ -11,6 +11,7 @@ import javax.swing.table.*;
 import core.*;
 import events.*;
 import events.implementations.*;
+import events.internal.*;
 import prefs.*;
 import protocols.*;
 import utils.*;
@@ -37,7 +38,7 @@ public class VSSimulation extends JPanel {
     private Thread thread;
     private VSLogging logging;
     private VSPrefs prefs;
-    private VSSimulationPanel simulationPanel;
+    private VSSimulationCanvas simulationCanvas;
     private boolean hasStarted = false;
     private VSTaskManagerTableModel taskManagerLocalModel;
     private VSTaskManagerTableModel taskManagerGlobalModel;
@@ -102,7 +103,7 @@ public class VSSimulation extends JPanel {
         logging.logg(prefs.getString("lang.simulation.new"));
         fillContentPane();
 
-        int numProcesses = simulationPanel.getNumProcesses();
+        int numProcesses = simulationCanvas.getNumProcesses();
 
         for (int i = 0; i <= numProcesses; ++i) {
             localTextFields.add("0000");
@@ -113,7 +114,7 @@ public class VSSimulation extends JPanel {
         localPIDComboBox.setSelectedIndex(0);
         globalPIDComboBox.setSelectedIndex(0);
 
-        thread = new Thread(simulationPanel);
+        thread = new Thread(simulationCanvas);
         thread.start();
     }
 
@@ -129,18 +130,18 @@ public class VSSimulation extends JPanel {
             prefs.getInteger("window.ysize")
             - prefs.getInteger("window.loggsize"));
 
-        simulationPanel = new VSSimulationPanel(prefs, this, logging);
-        taskManager = simulationPanel.getTaskManager();
-        logging.setSimulationPanel(simulationPanel);
-        simulationPanel.setBackground(prefs.getColor("paintarea.background"));
+        simulationCanvas = new VSSimulationCanvas(prefs, this, logging);
+        taskManager = simulationCanvas.getTaskManager();
+        logging.setSimulationCanvas(simulationCanvas);
+        simulationCanvas.setBackground(prefs.getColor("paintarea.background"));
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
-        canvasPanel.add(simulationPanel);
+        canvasPanel.add(simulationCanvas);
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
-        //JScrollPane paintScrollPane = new JScrollPane(simulationPanel);
+        //JScrollPane paintScrollPane = new JScrollPane(simulationCanvas);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
         JPanel toolsPanel = createToolsPanel();
 
@@ -175,7 +176,7 @@ public class VSSimulation extends JPanel {
             public void stateChanged(ChangeEvent ce) {
                 AbstractButton abstractButton = (AbstractButton) ce.getSource();
                 ButtonModel buttonModel = abstractButton.getModel();
-                simulationPanel.showLamport(buttonModel.isSelected());
+                simulationCanvas.showLamport(buttonModel.isSelected());
                 if (buttonModel.isSelected())
                     vectorTimeActiveCheckBox.setSelected(false);
             }
@@ -188,7 +189,7 @@ public class VSSimulation extends JPanel {
             public void stateChanged(ChangeEvent ce) {
                 AbstractButton abstractButton = (AbstractButton) ce.getSource();
                 ButtonModel buttonModel = abstractButton.getModel();
-                simulationPanel.showVectorTime(buttonModel.isSelected());
+                simulationCanvas.showVectorTime(buttonModel.isSelected());
                 if (buttonModel.isSelected())
                     lamportActiveCheckBox.setSelected(false);
             }
@@ -201,7 +202,7 @@ public class VSSimulation extends JPanel {
             public void stateChanged(ChangeEvent ce) {
                 AbstractButton abstractButton = (AbstractButton) ce.getSource();
                 ButtonModel buttonModel = abstractButton.getModel();
-                simulationPanel.isAntiAliased(buttonModel.isSelected());
+                simulationCanvas.isAntiAliased(buttonModel.isSelected());
             }
         });
         toolsPanel.add(antiAliasing);
@@ -269,11 +270,11 @@ public class VSSimulation extends JPanel {
         globalPIDComboBox = new JComboBox();
 
         lastSelectedProcessNum = 0;
-        int numProcesses = simulationPanel.getNumProcesses();
+        int numProcesses = simulationCanvas.getNumProcesses();
         String processString = prefs.getString("lang.process");
 
         for (int i = 0; i < numProcesses; ++i) {
-            int pid = simulationPanel.getProcess(i).getProcessID();
+            int pid = simulationCanvas.getProcess(i).getProcessID();
             processesComboBox.addItem(processString + " " + pid);
             localPIDComboBox.addItem("PID: " + pid);
             globalPIDComboBox.addItem("PID: " + pid);
@@ -701,7 +702,7 @@ public class VSSimulation extends JPanel {
         String deactivate = prefs.getString("lang.deactivate");
         String client = prefs.getString("lang.client");
         String server = prefs.getString("lang.server");
-        String protocolEventClassname = "events.implementations.ProtocolEvent";
+        String protocolEventClassname = "events.internal.ProtocolEvent";
 
         for (String eventClassname : eventClassnames) {
             String eventShortname_ = VSRegisteredEvents.getShortname(eventClassname);
@@ -772,12 +773,12 @@ public class VSSimulation extends JPanel {
         } catch (NumberFormatException e) {
         }
 
-        return simulationPanel.getNumProcesses();
+        return simulationCanvas.getNumProcesses();
     }
 
     private VSProcess getSelectedProcess() {
         int processNum = getSelectedProcessNum();
-        return simulationPanel.getProcess(processNum);
+        return simulationCanvas.getProcess(processNum);
     }
 
     private ArrayList<VSProcess> getConcernedProcesses(boolean localTasks) {
@@ -785,11 +786,11 @@ public class VSSimulation extends JPanel {
                          ? localPIDComboBox.getSelectedIndex()
                          : globalPIDComboBox.getSelectedIndex();
 
-        if (processNum == simulationPanel.getNumProcesses())
-            return simulationPanel.getProcessesArray();
+        if (processNum == simulationCanvas.getNumProcesses())
+            return simulationCanvas.getProcessesArray();
 
         ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
-        arr.add(simulationPanel.getProcess(processNum));
+        arr.add(simulationCanvas.getProcess(processNum));
 
         return arr;
     }
@@ -817,8 +818,8 @@ public class VSSimulation extends JPanel {
         return menuItemStates;
     }
 
-    public VSSimulationPanel getSimulationPanel() {
-        return simulationPanel;
+    public VSSimulationCanvas getSimulationCanvas() {
+        return simulationCanvas;
     }
 
     public VSFrame getSimulatorFrame() {

@@ -72,7 +72,7 @@ abstract public class VSProtocol extends VSEvent {
     abstract protected void onServerRecv(VSMessage message);
 
     protected int getNumProcesses() {
-        return process.getSimulationPanel().getNumProcesses();
+        return process.getSimulationCanvas().getNumProcesses();
     }
 
     public String toString() {

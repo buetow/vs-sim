@@ -1,4 +1,4 @@
-package events.implementations;
+package events.internal;
 
 import core.VSProcess;
 import events.*;

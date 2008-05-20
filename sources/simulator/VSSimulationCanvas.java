@@ -11,11 +11,12 @@ import core.*;
 import core.time.*;
 import events.*;
 import events.implementations.*;
+import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
-public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
+public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
     private VSProcess highlightedProcess;
     private VSSimulation simulation;
     private VSPrefs prefs;
@@ -152,7 +153,7 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
-    public VSSimulationPanel(VSPrefs prefs, VSSimulation simulation, VSLogging logging) {
+    public VSSimulationCanvas(VSPrefs prefs, VSSimulation simulation, VSLogging logging) {
         this.prefs = prefs;
         this.simulation = simulation;
         this.logging = logging;

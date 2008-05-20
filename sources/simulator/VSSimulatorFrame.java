@@ -145,7 +145,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
                 currentSimulation = (VSSimulation) pane.getSelectedComponent();
-                currentSimulation.getSimulationPanel().paint();
+                currentSimulation.getSimulationCanvas().paint();
                 updateEditMenu();
                 updateSimulationMenu();
             }
@@ -162,7 +162,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             return;
 
         final String processString = prefs.getString("lang.process");
-        final int numProcesses = currentSimulation.getSimulationPanel().getNumProcesses();
+        final int numProcesses = currentSimulation.getSimulationCanvas().getNumProcesses();
 
         for (int i = 0; i < numProcesses; ++i) {
             JMenuItem processItem = new JMenuItem(processString + " " + (i+1));
@@ -171,7 +171,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             final int finalProcessNum = i;
             processItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-                    currentSimulation.getSimulationPanel().editProcess(finalProcessNum);
+                    currentSimulation.getSimulationCanvas().editProcess(finalProcessNum);
                 }
             });
             menuEdit.add(processItem);
@@ -189,7 +189,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     public void dispose() {
         for (VSSimulation simulation : simulations)
-            simulation.getSimulationPanel().stopThread();
+            simulation.getSimulationCanvas().stopThread();
         super.dispose();
     }
 
@@ -223,7 +223,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             menuItemState.setPause(true);
             menuItemState.setReset(false);
             menuItemState.setReplay(true);
-            currentSimulation.getSimulationPanel().play();
+            currentSimulation.getSimulationCanvas().play();
             updateSimulationMenu();
 
         } else if (source.getText().equals(prefs.getString("lang.pause"))) {
@@ -232,7 +232,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             menuItemState.setPause(false);
             menuItemState.setReset(true);
             menuItemState.setReplay(true);
-            currentSimulation.getSimulationPanel().pause();
+            currentSimulation.getSimulationCanvas().pause();
             updateSimulationMenu();
 
         } else if (source.getText().equals(prefs.getString("lang.reset"))) {
@@ -241,7 +241,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             menuItemState.setPause(false);
             menuItemState.setReset(false);
             menuItemState.setReplay(false);
-            currentSimulation.getSimulationPanel().reset();
+            currentSimulation.getSimulationCanvas().reset();
             updateSimulationMenu();
 
         } else if (source.getText().equals(prefs.getString("lang.replay"))) {
@@ -250,8 +250,8 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             menuItemState.setPause(true);
             menuItemState.setReset(false);
             menuItemState.setReplay(true);
-            currentSimulation.getSimulationPanel().reset();
-            currentSimulation.getSimulationPanel().play();
+            currentSimulation.getSimulationCanvas().reset();
+            currentSimulation.getSimulationCanvas().play();
             updateSimulationMenu();
         }
     }
@@ -271,6 +271,6 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         VSSimulation simulationToRemove = currentSimulation;
         simulations.remove(simulationToRemove);
         tabbedPane.remove(simulationToRemove);
-        simulationToRemove.getSimulationPanel().stopThread();
+        simulationToRemove.getSimulationCanvas().stopThread();
     }
 }

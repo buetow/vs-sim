@@ -2,6 +2,7 @@ package core;
 
 import events.*;
 import events.implementations.*;
+import events.internal.*;
 import prefs.VSPrefs;
 import protocols.VSProtocol;
 import simulator.*;
@@ -33,7 +34,7 @@ public class VSTask implements Comparable {
     }
 
     public boolean isMessageReceiveEvent() {
-        return event instanceof events.implementations.MessageReceiveEvent;
+        return event instanceof events.internal.MessageReceiveEvent;
     }
 
     public boolean isProcessRecoverEvent() {

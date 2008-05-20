@@ -1,4 +1,4 @@
-package events.implementations;
+package events.internal;
 
 import core.VSMessage;
 import core.VSProcess;

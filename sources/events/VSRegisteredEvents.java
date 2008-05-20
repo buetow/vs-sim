@@ -33,7 +33,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassname(eventName).startsWith("protocols"))
+            if (getClassname(eventName).startsWith("protocols.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -46,7 +46,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventClassname : set)
-            if (eventClassname.startsWith("protocols"))
+            if (eventClassname.startsWith("protocols.implementations"))
                 vector.add(eventClassname);
 
         Collections.sort(vector);
@@ -59,7 +59,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassname(eventName).startsWith("events"))
+            if (getClassname(eventName).startsWith("events.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -72,7 +72,7 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventClassname : set)
-            if (eventClassname.startsWith("events"))
+            if (eventClassname.startsWith("events.implementations"))
                 vector.add(eventClassname);
 
         Collections.sort(vector);
