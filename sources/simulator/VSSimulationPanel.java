@@ -650,17 +650,21 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
 
     public void showLamport(boolean showLamport) {
         this.showLamport = showLamport;
-        paint();
+		if (isPaused)
+			paint();
     }
 
     public void showVectorTime(boolean showVectorTime) {
         this.showVectorTime = showVectorTime;
-        paint();
+		if (isPaused)
+			paint();
     }
 
     public void isAntiAliased(boolean isAntiAliased) {
         this.isAntiAliased = isAntiAliased;
         this.isAntiAliasedChanged = true;
+		if (isPaused)
+			paint();
     }
 
     public void sendMessage(VSMessage message) {

@@ -62,7 +62,7 @@ public class VSTask implements Comparable {
     }
 
     public boolean isProcess(VSProcess process) {
-        return this.process.equals(process);
+        return process.equals(process);
     }
 
     public boolean isGlobalTimed() {
