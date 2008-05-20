@@ -466,11 +466,6 @@ public final class VSProcess extends VSPrefs {
         StringBuffer buffer = new StringBuffer();
         buffer.append(prefs.getString("lang.message.sent"));
         buffer.append("; ");
-        buffer.append(prefs.getString("lang.protocol"));
-        buffer.append(": " + message.getName());
-        buffer.append("; ");
-        buffer.append(prefs.getString("lang.message"));
-        buffer.append(" ");
         buffer.append(message.toStringFull());
         logg(buffer.toString());
         simulationPanel.sendMessage(message);

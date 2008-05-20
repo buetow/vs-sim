@@ -23,14 +23,14 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     private JMenuItem startItem;
     private JMenu menuEdit;
     private VSPrefs prefs;
-    private ArrayList<VSSimulation> simulations;
+    private Vector<VSSimulation> simulations;
     private VSSimulation currentSimulation;
     private JTabbedPane tabbedPane;
 
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("name"), relativeTo);
         this.prefs = prefs;
-        this.simulations = new ArrayList<VSSimulation>();
+        this.simulations = new Vector<VSSimulation>();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -47,7 +47,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         menuFile.setMnemonic(prefs.getInteger("keyevent.file"));
         JMenuItem menuItem;
 
-        menuItem = new JMenuItem(prefs.getString("lang.new"));
+        menuItem = new JMenuItem(prefs.getString("lang.simulation.new"));
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.new"),
                                     ActionEvent.ALT_MASK));
@@ -55,7 +55,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         menuFile.add(menuItem);
 
         menuItem = new JMenuItem(
-            prefs.getString("lang.close"));
+            prefs.getString("lang.simulation.close"));
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.close"),
                                     ActionEvent.ALT_MASK));
@@ -64,17 +64,22 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         menuFile.addSeparator();
 
+        menuItem = new JMenuItem(prefs.getString("lang.window.new"));
+        menuItem.addActionListener(this);
+        menuFile.add(menuItem);
+
+        menuItem = new JMenuItem(prefs.getString("lang.window.close"));
+        menuItem.addActionListener(this);
+        menuFile.add(menuItem);
+
+
+        menuFile.addSeparator();
+
         menuItem = new JMenuItem(prefs.getString("lang.about"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.about"),
-                                    ActionEvent.ALT_MASK));
         menuItem.addActionListener(this);
         menuFile.add(menuItem);
 
         menuItem = new JMenuItem(prefs.getString("lang.quit"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.quit"),
-                                    ActionEvent.ALT_MASK));
         menuItem.addActionListener(this);
         menuFile.add(menuItem);
 
@@ -123,7 +128,6 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         replayItem.addActionListener(this);
         replayItem.setEnabled(false);
         menuSimulation.add(replayItem);
-        updateSimulationMenu();
 
         JMenuBar mainMenuBar = new JMenuBar();
         mainMenuBar.add(menuFile);
@@ -174,20 +178,13 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         }
     }
 
-    public void updateSimulationMenu() {
-        if (currentSimulation == null) {
-            pauseItem.setEnabled(false);
-            replayItem.setEnabled(false);
-            resetItem.setEnabled(false);
-            startItem.setEnabled(false);
-
-        } else {
-            VSSimulation.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
-            pauseItem.setEnabled(menuItemState.getPause());
-            replayItem.setEnabled(menuItemState.getReplay());
-            resetItem.setEnabled(menuItemState.getReset());
-            startItem.setEnabled(menuItemState.getStart());
-        }
+    /* updateSimulationMenu can be called from concurrent threads */
+    public synchronized void updateSimulationMenu() {
+        VSSimulation.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+        pauseItem.setEnabled(menuItemState.getPause());
+        replayItem.setEnabled(menuItemState.getReplay());
+        resetItem.setEnabled(menuItemState.getReset());
+        startItem.setEnabled(menuItemState.getStart());
     }
 
     public void dispose() {
@@ -199,11 +196,20 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JMenuItem source = (JMenuItem) e.getSource();
 
-        if (source.getText().equals(prefs.getString("lang.close"))) {
-            dispose();
+        if (source.getText().equals(prefs.getString("lang.simulation.close"))) {
+            if (simulations.size() == 1)
+                dispose();
+            else
+                removeCurrentSimulation();
 
-        } else if (source.getText().equals(prefs.getString("lang.new"))) {
+        } else if (source.getText().equals(prefs.getString("lang.simulation.new"))) {
             new VSSimulationEditor(VSDefaultPrefs.init(), this);
+
+        } else if (source.getText().equals(prefs.getString("lang.window.new"))) {
+            new VSMain(VSDefaultPrefs.init(), this);
+
+        } else if (source.getText().equals(prefs.getString("lang.window.close"))) {
+            dispose();
 
         } else if (source.getText().equals(prefs.getString("lang.about"))) {
             new VSAbout(prefs, this);
@@ -256,8 +262,15 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         simulation.setMaximumSize(new Dimension(0, 0));
 
         simulations.add(simulation);
-
         tabbedPane.addTab(prefs.getString("lang.simulation")
                           + " " + simulation.getSimulationNum(), simulation);
+        tabbedPane.setSelectedComponent(simulation);
+    }
+
+    private void removeCurrentSimulation() {
+        VSSimulation simulationToRemove = currentSimulation;
+        simulations.remove(simulationToRemove);
+        tabbedPane.remove(simulationToRemove);
+        simulationToRemove.getSimulationPanel().stopThread();
     }
 }

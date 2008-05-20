@@ -39,23 +39,23 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public void fillDefaultStrings() {
-        initString("lang.clientrequest.start", "Clientanfrage starten");
         initString("lang.about", "About");
-        initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
+        initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulation verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
         initString("lang.activated", "aktiviert");
-        initString("lang.deactivated", "deaktiviert");
         initString("lang.actualize", "Aktualisieren");
+        initString("lang.all", "Alle");
+        initString("lang.antialiasing", "Anti-Aliasing");
         initString("lang.cancel", "Abbrechen");
         initString("lang.client", "Client");
+        initString("lang.clientrequest.start", "Clientanfrage starten");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
         initString("lang.crash", "Abstürzen");
-        initString("lang.antialiasing", "Anti-Aliasing");
-        initString("lang.all", "Alle");
         initString("lang.crashed", "Abgestürzt");
         initString("lang.deactivate", "deaktivieren");
+        initString("lang.deactivated", "deaktiviert");
         initString("lang.default", "Defaults");
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
@@ -71,7 +71,6 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.message", "Nachricht");
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
-        initString("lang.new", "Neu");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
@@ -85,10 +84,10 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.protocol", "Protokolleinstellungen");
         initString("lang.prefs.protocol.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder \"OK\" Knopfes übernommen!");
         initString("lang.process", "Prozess");
-        initString("lang.processes.all", "Alle Prozesse");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
         initString("lang.process.time.local", "Lokale Zeit");
+        initString("lang.processes.all", "Alle Prozesse");
         initString("lang.protocol", "Protokoll");
         initString("lang.protocol.client", "Clientseite");
         initString("lang.protocol.editor", "Protokolleditor");
@@ -106,7 +105,9 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.saveas", "Speichern unter");
         initString("lang.server", "Server");
         initString("lang.simulation", "Simulation");
+        initString("lang.simulation.close", "Simulation schliessen");
         initString("lang.simulation.finished", "Simulation beendet");
+        initString("lang.simulation.new", "Neue Simulation");
         initString("lang.simulation.new", "Neue Simulation");
         initString("lang.simulation.paused", "Simulation pausiert");
         initString("lang.simulation.resetted", "Simulation zurückgesetzt");
@@ -123,6 +124,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
         initString("lang.type", "Typ");
+        initString("lang.window.close", "Fenster schliessen");
+        initString("lang.window.new", "Neues Fenster");
         initString("name", "Verteilte Systeme v0.2-devel");
     }
 

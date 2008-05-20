@@ -31,12 +31,6 @@ public class MessageReceiveEvent extends VSEvent {
         StringBuffer buffer = new StringBuffer();
         buffer.append(prefs.getString("lang.message.recv"));
         buffer.append("; ");
-        buffer.append(prefs.getString("lang.protocol"));
-        buffer.append(": " );
-        buffer.append(eventName);
-        buffer.append("; ");
-        buffer.append(prefs.getString("lang.message"));
-        buffer.append(" ");
         buffer.append(message);;
 
         if (protocolObj == null) {

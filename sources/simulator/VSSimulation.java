@@ -45,10 +45,10 @@ public class VSSimulation extends JPanel {
     private VSMenuItemStates menuItemStates;
 
     public class VSMenuItemStates {
-        private boolean pause;
-        private boolean replay;
-        private boolean reset;
-        private boolean start;
+        private volatile boolean pause;
+        private volatile boolean replay;
+        private volatile boolean reset;
+        private volatile boolean start;
 
         public VSMenuItemStates(boolean pause, boolean replay, boolean reset, boolean start) {
             this.pause = pause;
@@ -110,6 +110,8 @@ public class VSSimulation extends JPanel {
         }
 
         processesComboBox.setSelectedIndex(numProcesses);
+        localPIDComboBox.setSelectedIndex(0);
+        globalPIDComboBox.setSelectedIndex(0);
 
         thread = new Thread(simulationPanel);
         thread.start();

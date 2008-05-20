@@ -12,6 +12,7 @@ public class VSMessage extends VSPrefs {
     private static long messageCounter;
     private long lamportTime;
     private VSVectorTime vectorTime;
+    private VSPrefs prefs;
 
     public VSMessage(String protocolClassname) {
         this.protocolClassname = protocolClassname;
@@ -20,6 +21,7 @@ public class VSMessage extends VSPrefs {
 
     public void init(VSProcess process) {
         this.sendingProcess = process;
+        this.prefs = process.getPrefs();
         lamportTime = sendingProcess.getLamportTime();
         vectorTime = sendingProcess.getVectorTime().getCopy();
     }
@@ -49,7 +51,16 @@ public class VSMessage extends VSPrefs {
     }
 
     public String toString() {
-        return "ID: " + messageID;
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("ID: ");
+        buffer.append(messageID);
+        buffer.append("; ");
+        buffer.append(prefs.getString("lang.protocol"));
+        buffer.append(": ");
+        buffer.append(VSRegisteredEvents.getShortname(getProtocolClassname()));
+
+        return buffer.toString();
     }
 
     public String toStringFull() {

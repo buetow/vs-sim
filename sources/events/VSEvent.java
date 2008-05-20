@@ -47,7 +47,7 @@ abstract public class VSEvent extends VSPrefs {
     }
 
     public void logg(String message) {
-        process.logg(toString() + "; " + message);
+        process.logg(/*toString() + "; " + */message);
     }
 
     public boolean equals(VSEvent event) {
