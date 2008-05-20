@@ -11,7 +11,7 @@ public class VSLogging {
     private String filterText;
     private ArrayList<StringBuffer> pauseLines;
     private ArrayList<StringBuffer> loggingLines;
-    private VSSimulationPanel simulationPanel;
+    private VSSimulationCanvas simulationCanvas;
     private boolean isFiltered;
     private boolean isPaused;
     private Pattern filterPattern;
@@ -19,13 +19,15 @@ public class VSLogging {
     public VSLogging() {
         loggingArea = new JTextArea(0, 0);
         loggingArea.setEditable(false);
+		loggingArea.setLineWrap(true);
+		loggingArea.setWrapStyleWord(true);
         loggingLines = new ArrayList<StringBuffer>();
         pauseLines = new ArrayList<StringBuffer>();
         filterText = "";
     }
 
-    public void setSimulationPanel(VSSimulationPanel simulationPanel) {
-        this.simulationPanel = simulationPanel;
+    public void setSimulationCanvas(VSSimulationCanvas simulationCanvas) {
+        this.simulationCanvas = simulationCanvas;
     }
 
     public JTextArea getLoggingArea() {
@@ -33,10 +35,10 @@ public class VSLogging {
     }
 
     public void logg(String message) {
-        if (simulationPanel == null)
+        if (simulationCanvas == null)
             logg(message, 0);
         else
-            logg(message, simulationPanel.getTime());
+            logg(message, simulationCanvas.getTime());
     }
 
     public synchronized void logg(String message, long time) {
