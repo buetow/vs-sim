@@ -780,11 +780,9 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
     }
 
     public void mouseReleased(MouseEvent e) {
-        System.out.println("release");
     }
 
     public void mouseDragged(MouseEvent e) {
-        System.out.println("dragged");
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -795,6 +793,9 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
                 highlightedProcess.highlightOff();
                 highlightedProcess = null;
             }
+
+			if (isPaused)
+				paint();
 
             return;
         }
@@ -809,6 +810,9 @@ public class VSSimulationPanel extends Canvas implements Runnable, MouseMotionLi
             highlightedProcess = p;
             p.highlightOn();
         }
+
+		if (isPaused)
+			paint();
     }
 
     public void ancestorMoved(HierarchyEvent e) { }
