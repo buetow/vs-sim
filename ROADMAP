@@ -1,14 +1,12 @@
 TODO:
 
 Bug: Ausfallwkeit geht nicht?!?!?! (Nur beim 1. mal tut das)
-Prozess Quick Panel: Uhrabweichung / Geschwindigkeit direkt einstellen koennen
+Prozesse hinzufuegen/loeschen koennen
+Neuen Protokolleditor bauen
 "Himmelobjekt"
-KeyEvent Manager
+Periodische Tasks anlegen koennen
 
 Ganze simulationseinstellungen abspeichern/laden koennen
-Systemschnitte?
-Middleware-Schicht?
-Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
 Non-Broadcast Nachrichten
 
 Protocols:
@@ -22,9 +20,13 @@ Protocols:
 	Replikation
 	Namensdienste
 
-Prefs:
+Evtl:
 	Local deliver max/min time
 	Sender <-> Receiver specific deliver time calc
+	Systemschnitte?
+	Middleware-Schicht?
 
-Eclipse code tools:
-	Methoden alphanumerisch sortieren
+Optimierungen:
+	Methoden alphanumerisch sortieren, code tools
+	KeyEvent Manager
+	Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!
