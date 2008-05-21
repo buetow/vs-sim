@@ -14,7 +14,7 @@ import utils.*;
 import core.*;
 import prefs.VSPrefs;
 
-public class VSProtocolEditor extends VSEditorFrame {
+public class VSProtocolEditor extends VSBetterEditor {
     private VSProtocol protocol;
     private JTextField textField;
 

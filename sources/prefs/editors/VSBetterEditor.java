@@ -12,17 +12,17 @@ import prefs.*;
 import simulator.*;
 import utils.*;
 
-public abstract class VSEditorFrame extends VSEditor {
+public abstract class VSBetterEditor extends VSEditor {
     protected VSInfoArea infoArea;
     protected VSFrame frame;
 
-    public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title) {
+    public VSBetterEditor(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title) {
         super(prefs, prefsToEdit);
         frame = new VSFrame(title, relativeTo);
         init();
     }
 
-    public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title, int prefsCategory) {
+    public VSBetterEditor(VSPrefs prefs, Component relativeTo, VSPrefs prefsToEdit, String title, int prefsCategory) {
         super(prefs, prefsToEdit, prefsCategory);
         frame = new VSFrame(title, relativeTo);
         init();

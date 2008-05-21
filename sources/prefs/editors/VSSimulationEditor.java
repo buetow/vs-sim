@@ -12,7 +12,7 @@ import simulator.*;
 import utils.*;
 import prefs.VSPrefs;
 
-public class VSSimulationEditor extends VSEditorFrame {
+public class VSSimulationEditor extends VSBetterEditor {
     private boolean startNewSimulation;
     private VSSimulatorFrame simulatorFrame;
 

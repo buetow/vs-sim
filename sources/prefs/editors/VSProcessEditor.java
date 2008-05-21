@@ -16,7 +16,7 @@ import protocols.*;
 import events.*;
 import prefs.VSPrefs;
 
-public class VSProcessEditor extends VSEditorFrame {
+public class VSProcessEditor extends VSBetterEditor {
     private VSProcess process;
 
     public VSProcessEditor(VSPrefs prefs, Component relativeTo, VSProcess process) {
