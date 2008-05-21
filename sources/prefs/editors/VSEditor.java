@@ -15,6 +15,7 @@ import prefs.VSPrefs;
 public abstract class VSEditor implements ActionListener {
     protected static final int LABEL_FIELD_COLS = 18;
     protected static final int VALUE_FIELD_COLS = 7;
+    protected static final int MIN_UNIT_LENGTH = 5;
     protected int prefsCategory;
     private HashMap<String,JComboBox> integerFields;
     private HashMap<String,JTextField> colorFields;
@@ -148,12 +149,16 @@ public abstract class VSEditor implements ActionListener {
     private JPanel createUnitPanel(Component comp, String key) {
         JPanel unitPanel = new JPanel(new GridBagLayout());
         unitPanel.setBackground(Color.WHITE);
+		unitPanel.setBorder(null);
 
         String unitText = prefs.getUnit(key);
         if (unitText == null)
             unitText = "";
 
-        JLabel unitLabel = new JLabel(" " + unitText);
+		unitText = " " + unitText;
+		while (unitText.length() < MIN_UNIT_LENGTH)
+			unitText = unitText + " ";
+        JLabel unitLabel = new JLabel(unitText);
 
         unitPanel.setLayout(new BoxLayout(unitPanel, BoxLayout.X_AXIS));
         unitPanel.add(comp);
@@ -166,11 +171,12 @@ public abstract class VSEditor implements ActionListener {
         JPanel editPanel = new JPanel();
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
         editPanel.setBackground(Color.WHITE);
+        addToEditPanelFront(editPanel);
 
         editTable = new VSEditorTable(prefs);
-        editPanel.add(editTable);
-
-        addToEditPanelFront(editPanel);
+		JScrollPane scrollPane = new JScrollPane(editTable);
+		//scrollPane.setBackground(Color.WHITE);
+        editPanel.add(scrollPane);
 
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
@@ -197,6 +203,7 @@ public abstract class VSEditor implements ActionListener {
 
             //valComboBox.repaint();
             integerFields.put(key, valComboBox);
+			valComboBox.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valComboBox, fullKey));
         }
 
@@ -208,6 +215,7 @@ public abstract class VSEditor implements ActionListener {
             JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
             valField.setBackground(Color.WHITE);
             booleanFields.put(key, valField);
+			valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -225,6 +233,7 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(""+prefsToEdit.getLong(key));
             longFields.put(key, valField);
+			valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -243,6 +252,7 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(""+prefsToEdit.getFloat(key));
             floatFields.put(key, valField);
+			valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -277,6 +287,7 @@ public abstract class VSEditor implements ActionListener {
                 }
             });
             colorFields.put(key, valField);
+			valField.setBorder(null);
             editTable.addVariable(label, valField);
         }
 
@@ -294,10 +305,12 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(prefsToEdit.getString(key));
             stringFields.put(key, valField);
+			valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
         addToEditPanelLast(editPanel);
+
         return editPanel;
     }
 

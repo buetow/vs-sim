@@ -46,8 +46,6 @@ public class VSSimulation extends JPanel {
     private VSTaskManager taskManager;
     private VSMenuItemStates menuItemStates;
     private JTabbedPane tabbedPane;
-    private JPanel variablesPanel;
-    private JPanel globalVariablesPanel;
 
     public class VSMenuItemStates {
         private volatile boolean pause;
@@ -288,6 +286,7 @@ public class VSSimulation extends JPanel {
         globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+		//tabbedPane.setBackground(Color.WHITE);
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
@@ -333,25 +332,18 @@ public class VSSimulation extends JPanel {
                 }
 
                 if (processNum != simulationCanvas.getNumProcesses()) {
-                    variablesPanel.removeAll();
                     VSProcess process = getSelectedProcess();
                     VSProcessEditor editor = new VSProcessEditor(prefs, process);
-                    variablesPanel.add(new JScrollPane(editor.getContentPane()));
+                    tabbedPane.setComponentAt(1, editor.getContentPane());
                 }
             }
         });
 
-        variablesPanel = new JPanel();
-        globalVariablesPanel = new JPanel();
-
-        variablesPanel.setLayout(new BoxLayout(variablesPanel, BoxLayout.Y_AXIS));
-        globalVariablesPanel.setLayout(new BoxLayout(globalVariablesPanel, BoxLayout.Y_AXIS));
-
-        tabbedPane.add(prefs.getString("lang.variables"), variablesPanel);
-        tabbedPane.add(prefs.getString("lang.variables.global"), globalVariablesPanel);
+        tabbedPane.add(prefs.getString("lang.variables"), null);
+        tabbedPane.add(prefs.getString("lang.variables.global"), null);
 
         VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
-        globalVariablesPanel.add(new JScrollPane(editor.getContentPane()));
+        tabbedPane.setComponentAt(2, editor.getContentPane());
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);

@@ -34,6 +34,7 @@ public abstract class VSBetterEditor extends VSEditor {
     }
 
     public Container getContentPane() {
+		contentPane.setBackground(Color.WHITE);
         return contentPane;
     }
 
@@ -45,10 +46,10 @@ public abstract class VSBetterEditor extends VSEditor {
         JPanel editPanel = super.editPanel;
         JPanel buttonPanel = createButtonPanel();
 
-        JScrollPane scrollPane = new JScrollPane(editPanel);
-        panel.add(infoArea, BorderLayout.NORTH);
-        panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+        //JScrollPane scrollPane = new JScrollPane(editPanel);
+        panel.add(infoArea);
+        panel.add(editPanel);
+        panel.add(buttonPanel);
 
         return panel;
     }

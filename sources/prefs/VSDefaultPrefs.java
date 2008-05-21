@@ -80,13 +80,13 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.variables.global", "Globale Variablen");
         initString("lang.prefs", "Einstellungen");
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
-        initString("lang.prefs.info!", "Prozesseinstellungen können später für jeden Prozess einzelnd eingestellt werden.Die folgenden Werte sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
+        initString("lang.prefs.info!", "Prozesseinstellungen können für jeden Prozess einzelnd eingestellt werden. Die folgenden Werte sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
         initString("lang.prefs.more", "Mehr Einstellungen");
         initString("lang.prefs.process", "Prozesseinstellungen");
         initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
-        initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder \"OK\" Knopfes übernommen!");
+        initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" Knopfes übernommen!");
         initString("lang.prefs.protocol", "Protokolleinstellungen");
-        initString("lang.prefs.protocol.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder \"OK\" Knopfes übernommen!");
+        initString("lang.prefs.protocol.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" oder Knopfes übernommen!");
         initString("lang.process", "Prozess");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
@@ -166,7 +166,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
         initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
-        initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
+        initIntegerUnit("window.prefs.ysize", 400, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
         initIntegerUnit("window.splitsize", 320, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
