@@ -13,6 +13,8 @@ import utils.*;
 import prefs.VSPrefs;
 
 abstract class VSEditor implements ActionListener {
+    protected static final int LABEL_FIELD_COLS = 18;
+    protected static final int VALUE_FIELD_COLS = 7;
     protected int prefsCategory;
     private HashMap<String,JComboBox> integerFields;
     private HashMap<String,JTextField> colorFields;
@@ -34,7 +36,8 @@ abstract class VSEditor implements ActionListener {
     public static final int SIMULATION_PREFERENCES = 1;
     protected GridBagConstraints editPanelConstraints;
     protected int editPanelRow;
-    protected Insets insetsTopSpaceing = new Insets(15, 0, 0, 0);
+    //protected Insets insetsTopSpaceing = new Insets(15, 0, 0, 0);
+    protected Insets insetsTopSpaceing = new Insets(0, 0, 0, 0);
     protected Insets insets = new Insets(0, 0, 0, 0);
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
@@ -75,10 +78,8 @@ abstract class VSEditor implements ActionListener {
         booleanFields = new HashMap<String,JCheckBox>();
         stringFields = new HashMap<String,JTextField>();
 
-        //this.editPanel = createEditPanel();
-        //this.buttonPanel = createButtonPanel();
-        this.editPanel = createEditPanel();
-        this.buttonPanel = createButtonPanel();
+        editPanel = createEditPanel();
+        buttonPanel = createButtonPanel();
     }
 
     private Vector<String> setToSortedVector(Set<String> set, String startsWith, boolean reversed) {
@@ -145,8 +146,8 @@ abstract class VSEditor implements ActionListener {
 
         editPanelConstraints = new GridBagConstraints();
         editPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        editPanelConstraints.ipady = 15;
-        editPanelConstraints.ipadx = 15;
+        editPanelConstraints.ipady = 10;//15;
+        editPanelConstraints.ipadx = 10;//15;
         editPanelRow = 0;
 
         addToEditPanelFront(editPanel);
@@ -155,11 +156,14 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);;
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
+
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
@@ -190,14 +194,16 @@ abstract class VSEditor implements ActionListener {
 
             valComboBox.repaint();
 
-            JPanel pane = new JPanel(new BorderLayout());
-            pane.setBackground(Color.WHITE);
-            pane.add(createUnitPanel(valComboBox, fullKey), BorderLayout.WEST);
+            //JPanel pane = new JPanel(new BorderLayout());
+            //pane.setBackground(Color.WHITE);
+            //pane.add(createUnitPanel(valComboBox, fullKey), BorderLayout.WEST);
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
-            editPanel.add(pane, editPanelConstraints);
+            editPanelConstraints.gridx = 1;
+            editPanel.add(createUnitPanel(valComboBox, fullKey), editPanelConstraints);
             integerFields.put(key, valComboBox);
+            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 0;
         }
 
         final String activated = prefs.getString("lang.activated");
@@ -205,11 +211,13 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.BOOLEAN_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
@@ -223,8 +231,10 @@ abstract class VSEditor implements ActionListener {
             pane.add(createUnitPanel(valField, fullKey), BorderLayout.WEST);
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 1;
             editPanel.add(pane, editPanelConstraints);
+            editPanelConstraints.gridx = 0;
+            editPanelConstraints.gridy = editPanelRow++;
             booleanFields.put(key, valField);
         }
 
@@ -232,17 +242,19 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.LONG_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
             editPanel.add(keyLabel, editPanelConstraints);
 
-            JTextField valField = new JTextField(15);
+            JTextField valField = new JTextField(VALUE_FIELD_COLS);
             valField.addKeyListener(new java.awt.event.KeyAdapter() {
                 public void keyTyped(java.awt.event.KeyEvent e) {
                     JTextField valField = (JTextField)e.getSource();
@@ -257,8 +269,10 @@ abstract class VSEditor implements ActionListener {
             pane.add(createUnitPanel(valField, fullKey), BorderLayout.WEST);
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 1;
             editPanel.add(pane, editPanelConstraints);
+            editPanelConstraints.gridx = 0;
+            editPanelConstraints.gridy = editPanelRow++;
             longFields.put(key, valField);
         }
 
@@ -267,17 +281,19 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.FLOAT_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
             editPanel.add(keyLabel, editPanelConstraints);
 
-            JTextField valField = new JTextField(15);
+            JTextField valField = new JTextField(VALUE_FIELD_COLS);
             valField.addKeyListener(new java.awt.event.KeyAdapter() {
                 public void keyTyped(java.awt.event.KeyEvent e) {
                     JTextField valField = (JTextField)e.getSource();
@@ -292,8 +308,10 @@ abstract class VSEditor implements ActionListener {
             pane.add(createUnitPanel(valField, fullKey), BorderLayout.WEST);
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 1;
             editPanel.add(pane, editPanelConstraints);
+            editPanelConstraints.gridx = 0;
+            editPanelConstraints.gridy = editPanelRow++;
             floatFields.put(key, valField);
         }
 
@@ -302,17 +320,19 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.COLOR_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
             editPanel.add(keyLabel, editPanelConstraints);
 
-            final JTextField valField = new JTextField(15);
+            final JTextField valField = new JTextField(VALUE_FIELD_COLS);
             Color color = prefsToEdit.getColor(key);
             valField.setBackground(color);
             valField.setEditable(false);
@@ -339,8 +359,10 @@ abstract class VSEditor implements ActionListener {
             });
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 1;
             editPanel.add(valField, editPanelConstraints);
+            editPanelConstraints.gridx = 0;
+            editPanelConstraints.gridy = editPanelRow++;
             colorFields.put(key, valField);
         }
 
@@ -348,17 +370,19 @@ abstract class VSEditor implements ActionListener {
             String fullKey = VSPrefs.STRING_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
 
-            JLabel keyLabel = null;
+            JTextField keyLabel = new JTextField(LABEL_FIELD_COLS);
+            keyLabel.setEditable(false);
+            keyLabel.setBackground(Color.WHITE);
             if (descr == null)
-                keyLabel = new JLabel(fullKey);
+                keyLabel.setText(fullKey);
             else
-                keyLabel = new JLabel(descr);
+                keyLabel.setText(descr);
 
             editPanelConstraints.insets = insetsTopSpaceing;
             editPanelConstraints.gridy = editPanelRow++;
             editPanel.add(keyLabel, editPanelConstraints);
 
-            JTextField valField = new JTextField(15);
+            JTextField valField = new JTextField(VALUE_FIELD_COLS);
             valField.addKeyListener(new java.awt.event.KeyAdapter() {
                 public void keyTyped(java.awt.event.KeyEvent e) {
                     JTextField valField = (JTextField)e.getSource();
@@ -369,8 +393,10 @@ abstract class VSEditor implements ActionListener {
             valField.setText(prefsToEdit.getString(key));
 
             editPanelConstraints.insets = insets;
-            editPanelConstraints.gridy = editPanelRow++;
+            editPanelConstraints.gridx = 1;
             editPanel.add(createUnitPanel(valField, fullKey), editPanelConstraints);
+            editPanelConstraints.gridx = 0;
+            editPanelConstraints.gridy = editPanelRow++;
             stringFields.put(key, valField);
         }
 

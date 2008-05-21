@@ -74,6 +74,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
+        initString("lang.variables", "Variablen");
+        initString("lang.variables.global", "Globale Variablen");
         initString("lang.prefs", "Einstellungen");
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
         initString("lang.prefs.info!", "Prozesseinstellungen können später für jeden Prozess einzelnd eingestellt werden.Die folgenden Werte sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
@@ -116,7 +118,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
         initString("lang.task", "Aufgabe");
-        initString("lang.task.manager", "Aufgabenmanager");
+        initString("lang.events", "Ereignisse");
+        initString("lang.task.manager", "Ereigniseditor");
         initString("lang.tasks.fullfilled", "Abgelaufene Aufgaben");
         initString("lang.tasks.global", "Globale Aufgaben");
         initString("lang.tasks.local", "Lokale Aufgaben");
@@ -132,8 +135,8 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultIntegers() {
         /* Simulation prefs */
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
-        initIntegerUnit("sim.message.prob.outage", 0, "W'keit, dass eine Nachricht verloren geht", 0, 100, "%");
-        initIntegerUnit("sim.process.prob.crash", 0, "W'keit, dass der Prozess ausfällt", 0, 100, "%");
+        initIntegerUnit("sim.message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
+        initIntegerUnit("sim.process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
         initIntegerUnit("sim.seconds", 30, "Simulationsdauer", 5, 120, "s");
 
         /* Internal prefs */
@@ -163,7 +166,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initIntegerUnit("window.prefs.xsize", 350, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
         initIntegerUnit("window.prefs.ysize", 600, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
         initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
-        initIntegerUnit("window.splitsize", 300, null, 100, 1000, "px");
+        initIntegerUnit("window.splitsize", 320, null, 100, 1000, "px");
         initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
         initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");
     }
@@ -175,8 +178,8 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultLongs() {
         /* Simulation prefs */
-        initLongUnit("sim.message.sendingtime.min", 1000, "Minimale Nachrichtenübertragungszeit", "ms");
-        initLongUnit("sim.message.sendingtime.max", 5000, "Maximale Nachrichtenübertragungszeit", "ms");
+        initLongUnit("sim.message.sendingtime.min", 1000, "Min. Übertragung", "ms");
+        initLongUnit("sim.message.sendingtime.max", 5000, "Max. Übertragung", "ms");
     }
 
     public void fillDefaultColors() {
@@ -197,6 +200,6 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultBooleans() {
         //initBoolean("sim.message.broadcast", false, "Nachrichten sind immer Broadcasts");
-        initBoolean("sim.message.own.recv", false, "Prozesse empfangen ihre eigenen Nachrichten");
+        initBoolean("sim.message.own.recv", false, "Proz. empfangen eigene Nachrichten");
     }
 }

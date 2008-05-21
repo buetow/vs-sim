@@ -36,14 +36,6 @@ public abstract class VSEditorFrame extends VSEditor {
                       prefs.getInteger("window.prefs.ysize"));
         frame.setResizable(false);
         frame.setVisible(true);
-
-        /*
-        frame.addWindowListener(new WindowAdapter() {
-         public void windowClosing(WindowEvent we) {
-         	Window window = we.getWindow();
-         }
-        });
-        */
     }
 
     private Container createContentPane() {

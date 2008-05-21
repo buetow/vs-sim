@@ -19,8 +19,8 @@ public class VSLogging {
     public VSLogging() {
         loggingArea = new JTextArea(0, 0);
         loggingArea.setEditable(false);
-		loggingArea.setLineWrap(true);
-		loggingArea.setWrapStyleWord(true);
+        loggingArea.setLineWrap(true);
+        loggingArea.setWrapStyleWord(true);
         loggingLines = new ArrayList<StringBuffer>();
         pauseLines = new ArrayList<StringBuffer>();
         filterText = "";

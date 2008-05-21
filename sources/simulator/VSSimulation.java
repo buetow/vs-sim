@@ -13,6 +13,7 @@ import events.*;
 import events.implementations.*;
 import events.internal.*;
 import prefs.*;
+import prefs.editors.*;
 import protocols.*;
 import utils.*;
 
@@ -44,6 +45,9 @@ public class VSSimulation extends JPanel {
     private VSTaskManagerTableModel taskManagerGlobalModel;
     private VSTaskManager taskManager;
     private VSMenuItemStates menuItemStates;
+    private JTabbedPane tabbedPane;
+    private JPanel variablesPanel;
+    private JPanel globalVariablesPanel;
 
     public class VSMenuItemStates {
         private volatile boolean pause;
@@ -141,7 +145,6 @@ public class VSSimulation extends JPanel {
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
-        //JScrollPane paintScrollPane = new JScrollPane(simulationCanvas);
         JScrollPane textScrollPane = new JScrollPane(loggingArea);
         JPanel toolsPanel = createToolsPanel();
 
@@ -261,7 +264,7 @@ public class VSSimulation extends JPanel {
         return toolsPanel;
     }
 
-    private JSplitPane createProcessPane() {
+    private JPanel createProcessPane() {
         JPanel editPanel = new JPanel(new GridBagLayout());
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
@@ -284,6 +287,15 @@ public class VSSimulation extends JPanel {
         localPIDComboBox.addItem(prefs.getString("lang.all"));
         globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                JTabbedPane pane = (JTabbedPane) ce.getSource();
+                //currentSimulation = (VSSimulation) pane.getSelectedComponent();
+            }
+        });
+        //editPanel.add(tabbedPane, BorderLayout.CENTER);
+
         JPanel localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
         JPanel globalPanel = createTaskLabel(VSTaskManagerTableModel.GLOBAL);
 
@@ -293,11 +305,14 @@ public class VSSimulation extends JPanel {
         splitPane1.setBottomComponent(globalPanel);
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
         splitPane1.setOneTouchExpandable(true);
+        tabbedPane.addTab(prefs.getString("lang.events"), splitPane1);
 
-        JSplitPane splitPane2 = new JSplitPane();
-        splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane2.setTopComponent(processesComboBox);
-        splitPane2.setBottomComponent(splitPane1);
+        //JSplitPane splitPane2 = new JSplitPane();
+        //splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        //splitPane2.setTopComponent(processesComboBox);
+        //splitPane2.setBottomComponent(tabbedPane);
+        editPanel.add(processesComboBox);
+        editPanel.add(tabbedPane);
 
         processesComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -314,10 +329,32 @@ public class VSSimulation extends JPanel {
 
                 localPIDComboBox.setSelectedIndex(processNum);
                 globalPIDComboBox.setSelectedIndex(processNum);
+
+                if (processNum == simulationCanvas.getNumProcesses()) {
+                    tabbedPane.setEnabledAt(1, false);
+                    if (tabbedPane.getSelectedIndex() == 1)
+                        tabbedPane.setSelectedIndex(0);
+
+                } else if (!tabbedPane.isEnabledAt(1)) {
+                    tabbedPane.setEnabledAt(1, true);
+                }
+
+                if (processNum != simulationCanvas.getNumProcesses()) {
+                    variablesPanel.removeAll();
+                    VSProcess process = getSelectedProcess();
+                    //VSEditor editor = new VSProcessEditor(prefs, process, VSEditor.ALL_PREFERENCES);
+                    //variablesPanel.add(editor);
+                }
             }
         });
 
-        return splitPane2;
+        variablesPanel = new JPanel();
+        globalVariablesPanel = new JPanel();
+        tabbedPane.add(prefs.getString("lang.variables"), variablesPanel);
+        tabbedPane.add(prefs.getString("lang.variables.global"), globalVariablesPanel);
+        //tabbedPane.add(prefs.getString("lang.variables.global"), new JTextArea(0, 0));
+
+        return editPanel;
     }
 
     private JPanel createLabelPanel(String text) {
