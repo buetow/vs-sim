@@ -16,7 +16,6 @@ public abstract class VSEditor implements ActionListener {
     protected static final int LABEL_FIELD_COLS = 18;
     protected static final int VALUE_FIELD_COLS = 7;
     protected static final int MIN_UNIT_LENGTH = 5;
-    protected int prefsCategory;
     private HashMap<String,JComboBox> integerFields;
     private HashMap<String,JTextField> colorFields;
     private HashMap<String,JTextField> floatFields;
@@ -29,8 +28,8 @@ public abstract class VSEditor implements ActionListener {
     private Vector<String> longKeys;
     private Vector<String> booleanKeys;
     private Vector<String> stringKeys;
-    protected JPanel buttonPanel;
-    protected JPanel editPanel;
+    private JPanel buttonPanel;
+    private JPanel editPanel;
     protected VSPrefs prefs;
     protected VSPrefs prefsToEdit;
     public static final int ALL_PREFERENCES = 0;
@@ -39,15 +38,7 @@ public abstract class VSEditor implements ActionListener {
     protected VSEditorTable editTable;
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
-        init(prefs, prefsToEdit, SIMULATION_PREFERENCES);
-    }
-
-    public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
-        init(prefs, prefsToEdit, prefsCategory);
-    }
-
-    public int getPrefsCategory() {
-        return prefsCategory;
+        init(prefs, prefsToEdit);
     }
 
     public void setPrefs(VSPrefs prefs) {
@@ -71,21 +62,20 @@ public abstract class VSEditor implements ActionListener {
             frame.dispose();
     }
 
-    private void init(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
+    protected void disposeFrameWithParentIfExists() {
+        if (frame != null)
+            frame.disposeWithParent();
+    }
+
+    private void init(VSPrefs prefs, VSPrefs prefsToEdit) {
         this.prefs = prefs;
         this.prefsToEdit = prefsToEdit;
-        this.prefsCategory = prefsCategory;
+
+        editPanel = createEditPanel();
+        buttonPanel = createButtonPanel();
 
         final String keyStartsWith = "sim.";
-        boolean reversed;
-
-        switch (prefsCategory) {
-        case SIMULATION_PREFERENCES:
-            reversed = false;
-            break;
-        default:
-            reversed = true;
-        }
+        boolean reversed = false;
 
         colorKeys = setToSortedVector(prefsToEdit.getColorKeySet(), keyStartsWith, reversed);
         floatKeys = setToSortedVector(prefsToEdit.getFloatKeySet(), keyStartsWith, reversed);
@@ -93,7 +83,6 @@ public abstract class VSEditor implements ActionListener {
         longKeys = setToSortedVector(prefsToEdit.getLongKeySet(), keyStartsWith, reversed);
         booleanKeys = setToSortedVector(prefsToEdit.getBooleanKeySet(), keyStartsWith, reversed);
         stringKeys = setToSortedVector(prefsToEdit.getStringKeySet(), keyStartsWith, reversed);
-
         colorFields = new HashMap<String,JTextField>();
         floatFields = new HashMap<String,JTextField>();
         integerFields = new HashMap<String,JComboBox>();
@@ -101,8 +90,9 @@ public abstract class VSEditor implements ActionListener {
         booleanFields = new HashMap<String,JCheckBox>();
         stringFields = new HashMap<String,JTextField>();
 
-        editPanel = createEditPanel();
-        buttonPanel = createButtonPanel();
+        addToEditPanelFront(editPanel, editTable);
+        fillEditPanel(editPanel, editTable);
+        addToEditPanelLast(editPanel, editTable);
     }
 
     private Vector<String> setToSortedVector(Set<String> set, String startsWith, boolean reversed) {
@@ -123,15 +113,13 @@ public abstract class VSEditor implements ActionListener {
         return vector;
     }
 
+    abstract protected void addToButtonPanelFront(JPanel buttonPanel);
+    abstract protected void addToButtonPanelLast(JPanel buttonPanel);
+
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
-
-        JButton saveButton = new JButton(
-            prefs.getString("lang.ok"));
-        saveButton.setMnemonic(prefs.getInteger("keyevent.ok"));
-        saveButton.addActionListener(this);
-        buttonPanel.add(saveButton);
+        addToButtonPanelFront(buttonPanel);
 
         JButton resetButton = new JButton(
             prefs.getString("lang.reset"));
@@ -139,25 +127,26 @@ public abstract class VSEditor implements ActionListener {
         resetButton.addActionListener(this);
         buttonPanel.add(resetButton);
 
+        addToButtonPanelLast(buttonPanel);
+
         return buttonPanel;
     }
 
-    abstract protected void addToEditPanelFront(JPanel editPanel);
-
-    abstract protected void addToEditPanelLast(JPanel editPanel);
+    abstract protected void addToEditPanelFront(JPanel editPanel, VSEditorTable editTable);
+    abstract protected void addToEditPanelLast(JPanel editPanel, VSEditorTable editTable);
 
     private JPanel createUnitPanel(Component comp, String key) {
         JPanel unitPanel = new JPanel(new GridBagLayout());
         unitPanel.setBackground(Color.WHITE);
-		unitPanel.setBorder(null);
+        unitPanel.setBorder(null);
 
         String unitText = prefs.getUnit(key);
         if (unitText == null)
             unitText = "";
 
-		unitText = " " + unitText;
-		while (unitText.length() < MIN_UNIT_LENGTH)
-			unitText = unitText + " ";
+        unitText = " " + unitText;
+        while (unitText.length() < MIN_UNIT_LENGTH)
+            unitText = unitText + " ";
         JLabel unitLabel = new JLabel(unitText);
 
         unitPanel.setLayout(new BoxLayout(unitPanel, BoxLayout.X_AXIS));
@@ -171,13 +160,15 @@ public abstract class VSEditor implements ActionListener {
         JPanel editPanel = new JPanel();
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
         editPanel.setBackground(Color.WHITE);
-        addToEditPanelFront(editPanel);
 
         editTable = new VSEditorTable(prefs);
-		JScrollPane scrollPane = new JScrollPane(editTable);
-		//scrollPane.setBackground(Color.WHITE);
+        JScrollPane scrollPane = new JScrollPane(editTable);
         editPanel.add(scrollPane);
 
+        return editPanel;
+    }
+
+    private void fillEditPanel(JPanel editPanel, VSEditorTable editTable) {
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
@@ -201,9 +192,8 @@ public abstract class VSEditor implements ActionListener {
             for (int i = minValue; i <= maxValue; ++i)
                 valComboBox.addItem(new Integer(i));
 
-            //valComboBox.repaint();
             integerFields.put(key, valComboBox);
-			valComboBox.setBorder(null);
+            valComboBox.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valComboBox, fullKey));
         }
 
@@ -215,7 +205,7 @@ public abstract class VSEditor implements ActionListener {
             JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
             valField.setBackground(Color.WHITE);
             booleanFields.put(key, valField);
-			valField.setBorder(null);
+            valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -233,7 +223,7 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(""+prefsToEdit.getLong(key));
             longFields.put(key, valField);
-			valField.setBorder(null);
+            valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -252,7 +242,7 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(""+prefsToEdit.getFloat(key));
             floatFields.put(key, valField);
-			valField.setBorder(null);
+            valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
 
@@ -287,7 +277,7 @@ public abstract class VSEditor implements ActionListener {
                 }
             });
             colorFields.put(key, valField);
-			valField.setBorder(null);
+            valField.setBorder(null);
             editTable.addVariable(label, valField);
         }
 
@@ -305,13 +295,9 @@ public abstract class VSEditor implements ActionListener {
             });
             valField.setText(prefsToEdit.getString(key));
             stringFields.put(key, valField);
-			valField.setBorder(null);
+            valField.setBorder(null);
             editTable.addVariable(label, createUnitPanel(valField, fullKey));
         }
-
-        addToEditPanelLast(editPanel);
-
-        return editPanel;
     }
 
     protected void resetEditPanel() {
@@ -348,20 +334,16 @@ public abstract class VSEditor implements ActionListener {
 
     protected void savePrefs() {
         int i = 0;
-        System.out.println("FOO" + ++i);
         for (String key : integerKeys) {
             JComboBox valComboBox = integerFields.get(key);
-            System.out.println(valComboBox == null);
             prefsToEdit.setInteger(key, (Integer) valComboBox.getSelectedItem());
         }
 
-        System.out.println("FOO" + ++i);
         for (String key : booleanKeys) {
             JCheckBox valField = booleanFields.get(key);
             prefsToEdit.setBoolean(key, valField.isSelected());
         }
 
-        System.out.println("FOO" + ++i);
         for (String key : floatKeys) {
             JTextField valField = floatFields.get(key);
 
@@ -374,7 +356,6 @@ public abstract class VSEditor implements ActionListener {
             }
         }
 
-        System.out.println("FOO" + ++i);
         for (String key : longKeys) {
             JTextField valField = longFields.get(key);
 
@@ -387,13 +368,11 @@ public abstract class VSEditor implements ActionListener {
             }
         }
 
-        System.out.println("FOO" + ++i);
         for (String key : colorKeys) {
             JTextField valField = colorFields.get(key);
             prefsToEdit.setColor(key, valField.getBackground());
         }
 
-        System.out.println("FOO" + ++i);
         for (String key : stringKeys) {
             JTextField valField = stringFields.get(key);
             prefsToEdit.setString(key, valField.getText());
@@ -403,24 +382,20 @@ public abstract class VSEditor implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 
-        if (actionCommand.equals(prefs.getString("lang.ok"))) {
+        if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
-
-        } else if (actionCommand.equals(prefs.getString("lang.save"))) {
-            savePrefs();
-            prefs.saveFile();
 
         } else if (actionCommand.equals(prefs.getString("lang.reset"))) {
-            resetEditPanel();
-
-        } else if (actionCommand.equals(prefs.getString("lang.default"))) {
-            prefs.fillWithDefaults();
             resetEditPanel();
         }
     }
 
     public JPanel getEditPanel() {
         return editPanel;
+    }
+
+    public VSEditorTable getEditTable() {
+        return editTable;
     }
 
     public JPanel getButtonPanel() {

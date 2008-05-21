@@ -36,6 +36,7 @@ public class VSSimulation extends JPanel {
     private ArrayList<VSCreateTask> createTasks;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
+    private JSplitPane splitPane1;
     private Thread thread;
     private VSLogging logging;
     private VSPrefs prefs;
@@ -104,6 +105,7 @@ public class VSSimulation extends JPanel {
 
         logging.logg(prefs.getString("lang.simulation.new"));
         fillContentPane();
+        updateFromPrefs();
 
         int numProcesses = simulationCanvas.getNumProcesses();
 
@@ -124,18 +126,12 @@ public class VSSimulation extends JPanel {
         JTextArea loggingArea = logging.getLoggingArea();
 
         splitPaneH = new JSplitPane();
-        splitPaneH.setDividerLocation(
-            prefs.getInteger("window.splitsize"));
 
         splitPaneV = new JSplitPane();
-        splitPaneV.setDividerLocation(
-            prefs.getInteger("window.ysize")
-            - prefs.getInteger("window.loggsize"));
 
         simulationCanvas = new VSSimulationCanvas(prefs, this, logging);
         taskManager = simulationCanvas.getTaskManager();
         logging.setSimulationCanvas(simulationCanvas);
-        simulationCanvas.setBackground(prefs.getColor("paintarea.background"));
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
@@ -286,7 +282,6 @@ public class VSSimulation extends JPanel {
         globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-		//tabbedPane.setBackground(Color.WHITE);
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
@@ -298,11 +293,10 @@ public class VSSimulation extends JPanel {
         JPanel localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
         JPanel globalPanel = createTaskLabel(VSTaskManagerTableModel.GLOBAL);
 
-        JSplitPane splitPane1 = new JSplitPane();
+        splitPane1 = new JSplitPane();
         splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPane1.setTopComponent(localPanel);
         splitPane1.setBottomComponent(globalPanel);
-        splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
         splitPane1.setOneTouchExpandable(true);
         tabbedPane.addTab(prefs.getString("lang.events"), splitPane1);
 
@@ -342,6 +336,7 @@ public class VSSimulation extends JPanel {
         tabbedPane.add(prefs.getString("lang.variables"), null);
         tabbedPane.add(prefs.getString("lang.variables.global"), null);
 
+        VSSimulationEditor.TAKEOVER_BUTTON = true;
         VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
         tabbedPane.setComponentAt(2, editor.getContentPane());
 
@@ -855,5 +850,19 @@ public class VSSimulation extends JPanel {
 
     public VSFrame getSimulatorFrame() {
         return simulatorFrame;
+    }
+
+    public void updateFromPrefs() {
+        splitPaneH.setDividerLocation(
+            prefs.getInteger("window.splitsize"));
+
+        splitPaneV.setDividerLocation(
+            prefs.getInteger("window.ysize")
+            - prefs.getInteger("window.loggsize"));
+
+        splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
+
+        simulationCanvas.setBackground(prefs.getColor("paintarea.background"));
+        simulationCanvas.updateFromPrefs();
     }
 }

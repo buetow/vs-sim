@@ -13,54 +13,40 @@ import utils.*;
 import prefs.*;
 
 public class VSSimulationEditor extends VSBetterEditor {
-    private boolean startNewSimulation;
     private VSSimulatorFrame simulatorFrame;
+    public static boolean TAKEOVER_BUTTON;
 
     public VSSimulationEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         super(prefs, prefs, prefs.getString("name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
-
-        startNewSimulation = true;
-        init();
+        getInfoArea().setText(prefs.getString("lang.prefs.info!"));
     }
 
-    public VSSimulationEditor(VSPrefs prefs, int prefsCategory) {
-        super(prefs, prefs, prefs.getString("name")
-              + " - " + prefs.getString("lang.prefs"
-                                        + (prefsCategory == ALL_PREFERENCES ? ".ext" : "")),
-              prefsCategory);
-
-        startNewSimulation = false;
-        init();
-    }
-
-    private void init() {
-        infoArea.setText(prefs.getString("lang.prefs.info!"));
+    protected void addToButtonPanelFront(JPanel buttonPanel) {
+        if (TAKEOVER_BUTTON) {
+            TAKEOVER_BUTTON = false;
+            JButton takeoverButton = new JButton(
+                prefs.getString("lang.takeover"));
+            takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
+            takeoverButton.addActionListener(this);
+            buttonPanel.add(takeoverButton);
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 
-        if (actionCommand.equals(prefs.getString("lang.ok"))) {
-            super.actionPerformed(e);
-            prefsToEdit.saveFile();
+        if (actionCommand.equals(prefs.getString("lang.takeover"))) {
+            savePrefs();
+            simulatorFrame.getCurrentSimulation().updateFromPrefs();
 
-            VSFrame frame = getFrame();
-            if (frame != null)
-                frame.dispose();
-
-            if (startNewSimulation)
-                simulatorFrame.addSimulation(
-                    new VSSimulation(prefs, simulatorFrame));
+        } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
+            savePrefs();
+            simulatorFrame.addSimulation(new VSSimulation(prefsToEdit, simulatorFrame));
 
         } else {
             super.actionPerformed(e);
         }
-    }
-
-    public void newVSEditorInstance(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
-        VSPrefs newPrefs = VSDefaultPrefs.init();
-        new VSEditorFrame(newPrefs, getFrame(), new VSSimulationEditor(prefs, prefsCategory));
     }
 }

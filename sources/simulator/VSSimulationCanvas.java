@@ -162,16 +162,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         this.processes = new LinkedList<VSProcess>();
 
         numProcesses = prefs.getInteger("sim.process.num");
-        untilTime = prefs.getInteger("sim.seconds") * 1000;
-        recalcOnWindowChanged();
-
-        secondsSpaceing = (int) untilTime / 15000;
-        if (secondsSpaceing == 0)
-            secondsSpaceing = 1;
-
-        threadSleep = (int) untilTime / 7500;
-        if (threadSleep == 0)
-            threadSleep = 1;
+        updateFromPrefs();
 
         VSProcess.resetProcessCounter();
         for (int i = 0; i < numProcesses; ++i)
@@ -807,5 +798,19 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             arr.add(process);
 
         return arr;
+    }
+
+    public void updateFromPrefs() {
+        untilTime = prefs.getInteger("sim.seconds") * 1000;
+
+        secondsSpaceing = (int) untilTime / 15000;
+        if (secondsSpaceing == 0)
+            secondsSpaceing = 1;
+
+        threadSleep = (int) untilTime / 7500;
+        if (threadSleep == 0)
+            threadSleep = 1;
+
+        recalcOnWindowChanged();
     }
 }

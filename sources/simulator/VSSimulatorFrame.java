@@ -274,4 +274,8 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         tabbedPane.remove(simulationToRemove);
         simulationToRemove.getSimulationCanvas().stopThread();
     }
+
+    public VSSimulation getCurrentSimulation() {
+        return currentSimulation;
+    }
 }

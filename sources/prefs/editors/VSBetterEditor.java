@@ -14,17 +14,11 @@ import utils.*;
 
 public abstract class VSBetterEditor extends VSEditor {
     private Container contentPane;
-    protected VSInfoArea infoArea;
+    private VSInfoArea infoArea;
     private String title;
 
     public VSBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit, String title) {
         super(prefs, prefsToEdit);
-        this.title = title;
-        this.contentPane = createContentPane();
-    }
-
-    public VSBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit, String title, int prefsCategory) {
-        super(prefs, prefsToEdit, prefsCategory);
         this.title = title;
         this.contentPane = createContentPane();
     }
@@ -34,7 +28,7 @@ public abstract class VSBetterEditor extends VSEditor {
     }
 
     public Container getContentPane() {
-		contentPane.setBackground(Color.WHITE);
+        contentPane.setBackground(Color.WHITE);
         return contentPane;
     }
 
@@ -43,32 +37,22 @@ public abstract class VSBetterEditor extends VSEditor {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         infoArea = new VSInfoArea();
-        JPanel editPanel = super.editPanel;
-        JPanel buttonPanel = createButtonPanel();
+        JPanel editPanel = getEditPanel();
+        JPanel buttonPanel = getButtonPanel();
 
-        //JScrollPane scrollPane = new JScrollPane(editPanel);
-        panel.add(infoArea);
+        JScrollPane scrollPane = new JScrollPane(editPanel);
         panel.add(editPanel);
+        //panel.add(infoArea);
         panel.add(buttonPanel);
 
         return panel;
     }
 
-    protected void addToEditPanelFront(JPanel editPanel) { }
+    protected void addToButtonPanelFront(JPanel buttonPanel) { }
+    protected void addToButtonPanelLast(JPanel buttonPanel) { }
 
-    protected void addToEditPanelLast(JPanel editPanel) { }
-
-    private JPanel createButtonPanel() {
-        JPanel buttonPanel = super.buttonPanel;
-
-        JButton cancelButton = new JButton(
-            prefs.getString("lang.cancel"));
-        cancelButton.setMnemonic(prefs.getInteger("keyevent.cancel"));
-        cancelButton.addActionListener(this);
-        buttonPanel.add(cancelButton);
-
-        return buttonPanel;
-    }
+    protected void addToEditPanelFront(JPanel editPanel, VSEditorTable editTable) { }
+    protected void addToEditPanelLast(JPanel editPanel, VSEditorTable editTable) { }
 
     public void actionPerformed(ActionEvent e) {
         //String actionCommand = e.getActionCommand();
@@ -77,5 +61,7 @@ public abstract class VSBetterEditor extends VSEditor {
         super.actionPerformed(e);
     }
 
-    public void newVSEditorInstance(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) { };
+    protected VSInfoArea getInfoArea() {
+        return infoArea;
+    }
 }
