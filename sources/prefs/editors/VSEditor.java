@@ -39,6 +39,7 @@ abstract class VSEditor implements ActionListener {
     //protected Insets insetsTopSpaceing = new Insets(15, 0, 0, 0);
     protected Insets insetsTopSpaceing = new Insets(0, 0, 0, 0);
     protected Insets insets = new Insets(0, 0, 0, 0);
+    private VSFrame frame;
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
         init(prefs, prefsToEdit, SIMULATION_PREFERENCES);
@@ -46,6 +47,31 @@ abstract class VSEditor implements ActionListener {
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
         init(prefs, prefsToEdit, prefsCategory);
+    }
+
+    public int getPrefsCategory() {
+        return prefsCategory;
+    }
+
+    public void setPrefs(VSPrefs prefs) {
+        this.prefs = prefs;
+    }
+
+    public void setPrefsToEdit(VSPrefs prefsToEdit) {
+        this.prefsToEdit = prefsToEdit;
+    }
+
+    public void setFrame(VSFrame frame) {
+        this.frame = frame;
+    }
+
+    public VSFrame getFrame() {
+        return frame;
+    }
+
+    protected void disposeFrameIfExists() {
+        if (frame != null)
+            frame.dispose();
     }
 
     private void init(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
@@ -509,6 +535,4 @@ abstract class VSEditor implements ActionListener {
     public JPanel getButtonPanel() {
         return buttonPanel;
     }
-
-    abstract protected JFrame getFrame();
 }

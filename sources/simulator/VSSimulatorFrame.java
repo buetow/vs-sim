@@ -203,7 +203,8 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
                 removeCurrentSimulation();
 
         } else if (source.getText().equals(prefs.getString("lang.simulation.new"))) {
-            new VSSimulationEditor(VSDefaultPrefs.init(), this);
+            VSPrefs newPrefs = VSDefaultPrefs.init();
+            new VSEditorFrame(newPrefs, this, new VSSimulationEditor(newPrefs, this));
 
         } else if (source.getText().equals(prefs.getString("lang.window.new"))) {
             new VSMain(VSDefaultPrefs.init(), this);

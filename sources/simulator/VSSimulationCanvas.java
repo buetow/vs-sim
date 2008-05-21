@@ -740,7 +740,8 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     public void editProcess(VSProcess process) {
         if (process != null) {
             process.updatePrefs();
-            new VSProcessEditor(prefs, simulation.getSimulatorFrame(), process);
+            new VSEditorFrame(prefs, simulation.getSimulatorFrame(),
+                              new VSProcessEditor(prefs, process));
         }
     }
 

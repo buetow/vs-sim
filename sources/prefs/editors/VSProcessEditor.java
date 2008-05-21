@@ -18,31 +18,32 @@ import prefs.VSPrefs;
 
 public class VSProcessEditor extends VSBetterEditor {
     private VSProcess process;
+    private String title;
 
-    public VSProcessEditor(VSPrefs prefs, Component relativeTo, VSProcess process) {
-        super(prefs, relativeTo, process, prefs.getString("name") + " - "
-              + prefs.getString("lang.prefs.process"));
-
+    public VSProcessEditor(VSPrefs prefs, VSProcess process) {
+        super(prefs, process, prefs.getString("name") + " - " + prefs.getString("lang.prefs.process"));;
         this.process = process;
-
         init();
     }
 
-    public VSProcessEditor(VSPrefs prefs, Component relativeTo, VSProcess process, int prefsCategory) {
-        super(prefs, relativeTo, process, prefs.getString("name") + " - "
-              + prefs.getString("lang.prefs.process"
-                                + (prefsCategory == ALL_PREFERENCES ? ".ext" : "")),
-              prefsCategory);
+    public VSProcessEditor(VSPrefs prefs, VSProcess process, int prefsCategory) {
+        super(prefs, process, prefs.getString("name") + " - " + prefs.getString("lang.prefs.process"
+                + (prefsCategory == ALL_PREFERENCES ? ".ext" : "")), prefsCategory);
 
         this.process = process;
-
         init();
     }
 
     private void init() {
-        super.infoArea.setText(prefs.getString("lang.prefs.process.info!"));
-        getFrame().disposeWithParent();
+        infoArea.setText(prefs.getString("lang.prefs.process.info!"));
+        VSFrame frame = getFrame();
+        if (frame != null)
+            frame.disposeWithParent();
         createButtonPanel();
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     protected void addToEditPanelFront(JPanel editPanel) {
@@ -109,7 +110,7 @@ public class VSProcessEditor extends VSBetterEditor {
                         process.setObject(eventClassname, protocol);
                     }
 
-                    new VSProtocolEditor(prefs, frame, protocol);
+                    //new VSProtocolEditor(prefs, frame, protocol);
                 }
             }
         });
@@ -145,7 +146,7 @@ public class VSProcessEditor extends VSBetterEditor {
         if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
             process.updateFromVSPrefs();
-            frame.dispose();
+            disposeFrameIfExists();
 
         } else if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
@@ -159,10 +160,7 @@ public class VSProcessEditor extends VSBetterEditor {
     public void newVSEditorInstance(VSPrefs prefs, VSPrefs prefsToEdit, int prefsCategory) {
         if (prefsToEdit instanceof VSProcess) {
             VSProcess process = (VSProcess) prefsToEdit;
-            new VSProcessEditor(prefs, frame, process, prefsCategory);
-
-        } else {
-            new VSProcessEditor(prefs, frame, process, prefsCategory);
+            new VSEditorFrame(prefs, getFrame(), new VSProcessEditor(prefs, process, prefsCategory));
         }
     }
 }

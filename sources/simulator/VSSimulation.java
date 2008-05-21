@@ -307,13 +307,6 @@ public class VSSimulation extends JPanel {
         splitPane1.setOneTouchExpandable(true);
         tabbedPane.addTab(prefs.getString("lang.events"), splitPane1);
 
-        //JSplitPane splitPane2 = new JSplitPane();
-        //splitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        //splitPane2.setTopComponent(processesComboBox);
-        //splitPane2.setBottomComponent(tabbedPane);
-        editPanel.add(processesComboBox);
-        editPanel.add(tabbedPane);
-
         processesComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 localTextFields.set(lastSelectedProcessNum, localTextField.getText());
@@ -352,7 +345,9 @@ public class VSSimulation extends JPanel {
         globalVariablesPanel = new JPanel();
         tabbedPane.add(prefs.getString("lang.variables"), variablesPanel);
         tabbedPane.add(prefs.getString("lang.variables.global"), globalVariablesPanel);
-        //tabbedPane.add(prefs.getString("lang.variables.global"), new JTextArea(0, 0));
+
+        editPanel.add(processesComboBox);
+        editPanel.add(tabbedPane);
 
         return editPanel;
     }
