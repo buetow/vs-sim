@@ -287,7 +287,7 @@ public class VSSimulation extends JPanel {
         localPIDComboBox.addItem(prefs.getString("lang.all"));
         globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
@@ -350,7 +350,7 @@ public class VSSimulation extends JPanel {
         tabbedPane.add(prefs.getString("lang.variables"), variablesPanel);
         tabbedPane.add(prefs.getString("lang.variables.global"), globalVariablesPanel);
 
-		VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
+        VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
         globalVariablesPanel.add(new JScrollPane(editor.getContentPane()));
 
         editPanel.add(processesComboBox);

@@ -75,6 +75,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
         initString("lang.variables", "Variablen");
+        initString("lang.variable", "Variable");
+        initString("lang.value", "Wert");
         initString("lang.variables.global", "Globale Variablen");
         initString("lang.prefs", "Einstellungen");
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
