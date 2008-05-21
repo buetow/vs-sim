@@ -12,7 +12,7 @@ import simulator.*;
 import utils.*;
 import prefs.VSPrefs;
 
-abstract class VSEditor implements ActionListener {
+public abstract class VSEditor implements ActionListener {
     protected static final int LABEL_FIELD_COLS = 18;
     protected static final int VALUE_FIELD_COLS = 7;
     protected int prefsCategory;

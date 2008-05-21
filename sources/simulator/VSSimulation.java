@@ -335,16 +335,23 @@ public class VSSimulation extends JPanel {
                 if (processNum != simulationCanvas.getNumProcesses()) {
                     variablesPanel.removeAll();
                     VSProcess process = getSelectedProcess();
-                    //VSEditor editor = new VSProcessEditor(prefs, process, VSEditor.ALL_PREFERENCES);
-                    //variablesPanel.add(editor);
+                    VSProcessEditor editor = new VSProcessEditor(prefs, process);
+                    variablesPanel.add(new JScrollPane(editor.getContentPane()));
                 }
             }
         });
 
         variablesPanel = new JPanel();
         globalVariablesPanel = new JPanel();
+
+        variablesPanel.setLayout(new BoxLayout(variablesPanel, BoxLayout.Y_AXIS));
+        globalVariablesPanel.setLayout(new BoxLayout(globalVariablesPanel, BoxLayout.Y_AXIS));
+
         tabbedPane.add(prefs.getString("lang.variables"), variablesPanel);
         tabbedPane.add(prefs.getString("lang.variables.global"), globalVariablesPanel);
+
+		VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
+        globalVariablesPanel.add(new JScrollPane(editor.getContentPane()));
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);
