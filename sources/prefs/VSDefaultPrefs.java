@@ -130,14 +130,19 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.type", "Typ");
         initString("lang.window.close", "Fenster schliessen");
         initString("lang.window.new", "Neues Fenster");
-        initString("name", "Verteilte Systeme v0.2-devel");
+        initString("lang.name", "VS-Simulator v0.2-devel");
+        initString("lang.prefs.simulation", "Simulationseinstellungen");
+        initString("lang.prefs.process", "Prozessstandardeinstellungen");
+        initString("lang.prefs.message", "Nachrichteneinstellungen");
+        initString("lang.prefs.diverse", "Diverse Einstellungen");
+        initString("lang.prefs.color", "Farbeinstellungen");
     }
 
     public void fillDefaultIntegers() {
         /* Simulation prefs */
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
-        initIntegerUnit("sim.message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
-        initIntegerUnit("sim.process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
+        initIntegerUnit("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
+        initIntegerUnit("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
         initIntegerUnit("sim.seconds", 30, "Simulationsdauer", 5, 120, "s");
 
         /* Internal prefs */
@@ -164,43 +169,43 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("keyevent.start", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
-        initIntegerUnit("window.prefs.xsize", 400, "X-Grösse des Einstellungsfensters", 550, 3200, "px");
-        initIntegerUnit("window.prefs.ysize", 400, "Y-Grösse des Einstellungsfensters", 640, 2400, "px");
-        initIntegerUnit("window.loggsize", 300, "Y-Grösse des Loggingfensters", 100, 1000, "px");
-        initIntegerUnit("window.splitsize", 320, null, 100, 1000, "px");
-        initIntegerUnit("window.xsize", 1024, "X-Grösse des Hauptfensters", 800, 3200, "px");
-        initIntegerUnit("window.ysize", 768, "Y-Grösse des Hauptfensters", 600, 2400, "px");
+        initIntegerUnit("div.window.prefs.xsize", 400, "Einstellungsfenster X-Achse", 550, 3200, "px");
+        initIntegerUnit("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
+        initIntegerUnit("div.window.loggsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
+        initIntegerUnit("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
+        initIntegerUnit("div.window.xsize", 1024, "Hauptfenster X-Achse", 800, 3200, "px");
+        initIntegerUnit("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
     }
 
     public void fillDefaultFloats() {
         /* Simulation prefs */
-        initFloat("sim.process.clock.variance", 0, "Uhrabweichung");
+        initFloat("process.clock.variance", 0, "Uhrabweichung");
     }
 
     public void fillDefaultLongs() {
         /* Simulation prefs */
-        initLongUnit("sim.message.sendingtime.min", 1000, "Min. Übertragung", "ms");
-        initLongUnit("sim.message.sendingtime.max", 5000, "Max. Übertragung", "ms");
+        initLongUnit("message.sendingtime.min", 1000, "Min. Übertragungszeit", "ms");
+        initLongUnit("message.sendingtime.max", 5000, "Max. Übertragungszeit", "ms");
     }
 
     public void fillDefaultColors() {
         /* Internal prefs */
-        initColor("paintarea.background", new Color(0xFF, 0xFF, 0xFF));
-        initColor("process.default", new Color(0x00, 0x00, 0x00));
-        initColor("process.running", new Color(0x0D, 0xD8, 0x09));
-        initColor("process.crashed", new Color(0xff, 0x00, 0x00));
-        initColor("process.highlight", new Color(0xff, 0xA5, 0x00));
-        initColor("process.line", new Color(0x00, 0x00, 0x00));
-        initColor("process.secondline", new Color(0xAA, 0xAA, 0xAA));
-        initColor("process.sepline", new Color(0xff, 0x00, 0x00));
-        initColor("process.stopped", new Color(0x00, 0x00, 0x00));
-        initColor("message.arrived", new Color(0x00, 0x85, 0xD2));
-        initColor("message.sending", new Color(0x0D, 0xD8, 0x09));
-        initColor("message.lost", new Color(0xFF, 0x00, 0x00));
+        initColor("col.background", new Color(0xFF, 0xFF, 0xFF));
+        initColor("col.process.default", new Color(0x00, 0x00, 0x00));
+        initColor("col.process.running", new Color(0x0D, 0xD8, 0x09));
+        initColor("col.process.crashed", new Color(0xff, 0x00, 0x00));
+        initColor("col.process.highlight", new Color(0xff, 0xA5, 0x00));
+        initColor("col.process.line", new Color(0x00, 0x00, 0x00));
+        initColor("col.process.secondline", new Color(0xAA, 0xAA, 0xAA));
+        initColor("col.process.sepline", new Color(0xff, 0x00, 0x00));
+        initColor("col.process.stopped", new Color(0x00, 0x00, 0x00));
+        initColor("col.message.arrived", new Color(0x00, 0x85, 0xD2));
+        initColor("col.message.sending", new Color(0x0D, 0xD8, 0x09));
+        initColor("col.message.lost", new Color(0xFF, 0x00, 0x00));
     }
 
     public void fillDefaultBooleans() {
-        //initBoolean("sim.message.broadcast", false, "Nachrichten sind immer Broadcasts");
-        initBoolean("sim.message.own.recv", false, "Proz. empfangen eigene Nachrichten");
+        //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
+        initBoolean("sim.message.own.recv", false, "Eigene Nachrichten empfangen");
     }
 }

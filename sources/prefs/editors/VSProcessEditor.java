@@ -20,7 +20,7 @@ public class VSProcessEditor extends VSBetterEditor {
     private VSProcess process;
     public static boolean TAKEOVER_BUTTON;
     public VSProcessEditor(VSPrefs prefs, VSProcess process) {
-        super(prefs, process, prefs.getString("name") + " - " + prefs.getString("lang.prefs.process"));;
+        super(prefs, process, prefs.getString("lang.name") + " - " + prefs.getString("lang.prefs.process"));;
         this.process = process;
         disposeFrameWithParentIfExists();
         getInfoArea().setText(prefs.getString("lang.prefs.process.info!"));

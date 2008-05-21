@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.text.*;
 
 import prefs.*;
 
@@ -18,6 +19,10 @@ public class VSEditorTable extends JTable {
     private class VSNode {
         private String key;
         private Component comp;
+
+        public VSNode(String key) {
+            this.key = key;
+        }
 
         public VSNode(String key, Component comp) {
             this.key = key;
@@ -34,6 +39,10 @@ public class VSEditorTable extends JTable {
 
         public Component getRendererComponent() {
             return comp;
+        }
+
+        public boolean isSeparator() {
+            return comp == null;
         }
     }
 
@@ -56,14 +65,24 @@ public class VSEditorTable extends JTable {
         public Object getValueAt(int row, int col) {
             VSNode node = nodes.get(row);
 
+            if (node.isSeparator()) {
+                if (col == 1)
+                    return "";
+
+                return node.getKey();
+            }
+
             if (col == 0)
                 return node.getKey();
-            else
-                return node.getComponent();
+
+            return node.getComponent();
         }
 
         public boolean isCellEditable(int row, int col) {
             if (col == 0)
+                return false;
+
+            if (nodes.get(row).isSeparator())
                 return false;
 
             return true;
@@ -77,6 +96,17 @@ public class VSEditorTable extends JTable {
                 row, int col) {
 
             VSNode node = nodes.get(row);
+
+            if (node.isSeparator()) {
+                JTextPane pane = new JTextPane();
+                if (col == 0) {
+                    pane.setText(node.getKey());
+                    Style style = pane.addStyle("Bold", null);
+                    StyleConstants.setBold(style, true);
+                }
+                pane.setBackground(new Color(0xCF, 0xCF, 0XCF));
+                return pane;
+            }
 
             if (col == 0) {
                 JTextField field = new JTextField(" "+node.getKey()+":");
@@ -114,7 +144,8 @@ public class VSEditorTable extends JTable {
         setBackground(Color.WHITE);
         getTableHeader().setVisible(false);
         TableColumn col = getColumnModel().getColumn(1);
-        col.setMaxWidth(90);
+        col.setMinWidth(100);
+        col.setMaxWidth(100);
         col.setResizable(false);
 
         col = getColumnModel().getColumn(0);
@@ -123,6 +154,13 @@ public class VSEditorTable extends JTable {
 
     public void addVariable(String key, Component comp) {
         nodes.add(new VSNode(key, comp));
+    }
+
+    public void addSeparator(String text) {
+        nodes.add(new VSNode(text));
+    }
+
+    public void fireTableDataChanged() {
         model.fireTableDataChanged();
     }
 }

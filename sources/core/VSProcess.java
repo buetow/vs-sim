@@ -44,8 +44,8 @@ public final class VSProcess extends VSPrefs {
      * up in the extended prefs menu!
      */
     private static final String DEFAULT_INTEGER_VALUE_KEYS[] = {
-        "sim.process.prob.crash",
-        "sim.message.prob.outage",
+        "process.prob.crash",
+        "message.prob.outage",
     };
 
     /* This array contains all Long prefs of the process which should show
@@ -53,8 +53,8 @@ public final class VSProcess extends VSPrefs {
      * up in the extended prefs menu!
      */
     private static final String DEFAULT_LONG_VALUE_KEYS[] = {
-        "sim.message.sendingtime.min",
-        "sim.message.sendingtime.max",
+        "message.sendingtime.min",
+        "message.sendingtime.max",
     };
 
     /* This array contains all Float prefs of the process which should show
@@ -62,7 +62,7 @@ public final class VSProcess extends VSPrefs {
      * up in the extended prefs menu!
      */
     private static final String DEFAULT_FLOAT_VALUE_KEYS[] = {
-        "sim.process.clock.variance",
+        "process.clock.variance",
     };
 
     /* This array contains all Color prefs of the process which should show
@@ -70,11 +70,11 @@ public final class VSProcess extends VSPrefs {
      * up in the extended prefs menu!
      */
     private static final String DEFAULT_COLOR_VALUE_KEYS[] = {
-        "process.default",
-        "process.running",
-        "process.stopped",
-        "process.highlight",
-        "process.crashed",
+        "col.process.default",
+        "col.process.running",
+        "col.process.stopped",
+        "col.process.highlight",
+        "col.process.crashed",
     };
 
     /* This array contains all String prefs of the process which should show
@@ -100,15 +100,15 @@ public final class VSProcess extends VSPrefs {
         fillWithDefaults();
 
         /* Make local copys in order to have more performance */
-        clockVariance = getFloat("sim.process.clock.variance");
-        currentColor = getColor("process.default");
+        clockVariance = getFloat("process.clock.variance");
+        currentColor = getColor("col.process.default");
 
         /* Make additional process settings editable through GUI */
-        initInteger("sim.process.id", processID,
+        initInteger("process.id", processID,
                     prefs.getString("lang.process.id"), 1, processID + 10);
-        setLongIfUnset("sim.process.localtime", localTime, prefs.getString("lang.process.time.local"));
+        setLongIfUnset("process.localtime", localTime, prefs.getString("lang.process.time.local"));
 
-        crashedColor = getColor("process.crashed");
+        crashedColor = getColor("col.process.crashed");
         createRandomCrashTask();
     }
 
@@ -143,10 +143,10 @@ public final class VSProcess extends VSPrefs {
      * Called from the VSProcessEditor, after finishing editing!
      */
     public synchronized void updateFromVSPrefs() {
-        setClockVariance(getFloat("sim.process.clock.variance"));
-        setProcessID(getInteger("sim.process.id"));
-        setLocalTime(getLong("sim.process.localtime"));
-        crashedColor = getColor("process.crashed");
+        setClockVariance(getFloat("process.clock.variance"));
+        setProcessID(getInteger("process.id"));
+        setLocalTime(getLong("process.localtime"));
+        crashedColor = getColor("col.process.crashed");
         simulationCanvas.repaint();
         createRandomCrashTask();
     }
@@ -155,9 +155,9 @@ public final class VSProcess extends VSPrefs {
      * Called from the VSProcessEditor, before starting editing!
      */
     public synchronized void updatePrefs() {
-        setFloat("sim.process.clock.variance", getClockVariance());
-        setInteger("sim.process.id", getProcessID());
-        setLong("sim.process.localtime", getTime());
+        setFloat("process.clock.variance", getClockVariance());
+        setInteger("process.id", getProcessID());
+        setLong("process.localtime", getTime());
     }
 
     public synchronized void syncTime(final long globalTime) {
@@ -190,7 +190,7 @@ public final class VSProcess extends VSPrefs {
 
     public synchronized void highlightOn() {
         tmpColor = currentColor;
-        currentColor = getColor("process.highlight");
+        currentColor = getColor("col.process.highlight");
         isHighlighted = true;
     }
 
@@ -210,7 +210,7 @@ public final class VSProcess extends VSPrefs {
         for (VSProtocol protocol : protocolsToReset)
             protocol.reset();
 
-        setCurrentColor(getColor("process.default"));
+        setCurrentColor(getColor("col.process.default"));
         createRandomCrashTask();
         resetTimeFormats();
     }
@@ -241,17 +241,17 @@ public final class VSProcess extends VSPrefs {
 
     public synchronized void play() {
         isPaused = false;
-        setCurrentColor(getColor("process.running"));
+        setCurrentColor(getColor("col.process.running"));
     }
 
     public synchronized void pause() {
         isPaused = true;
-        setCurrentColor(getColor("process.stopped"));
+        setCurrentColor(getColor("col.process.stopped"));
     }
 
     public synchronized void finish() {
         isPaused = true;
-        setCurrentColor(getColor("process.default"));
+        setCurrentColor(getColor("col.process.default"));
     }
 
     public synchronized int getProcessID() {
@@ -339,8 +339,8 @@ public final class VSProcess extends VSPrefs {
     }
 
     public synchronized long getDurationTime() {
-        final long maxDurationTime = getLong("sim.message.sendingtime.max");
-        final long minDurationTime = getLong("sim.message.sendingtime.min");
+        final long maxDurationTime = getLong("message.sendingtime.max");
+        final long minDurationTime = getLong("message.sendingtime.min");
 
         if (maxDurationTime <= minDurationTime)
             return minDurationTime;
@@ -356,7 +356,7 @@ public final class VSProcess extends VSPrefs {
 
     public synchronized long getARandomMessageOutageTime(final long durationTime) {
         /* Check if the message will have an outage or not */
-        if (random.nextInt(100) <= getInteger("sim.message.prob.outage")) {
+        if (random.nextInt(100) <= getInteger("message.prob.outage")) {
             /* Calculate the random outage time! */
             final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
             return outageTime;
@@ -368,7 +368,7 @@ public final class VSProcess extends VSPrefs {
 
     private long getARandomCrashTime() {
         /* Check if the process will crash or not */
-        if (random.nextInt(100) <= getInteger("sim.process.prob.crash")) {
+        if (random.nextInt(100) <= getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
             final long crashTime =  random.nextLong(simulationCanvas.getUntilTime()+1) % simulationCanvas.getUntilTime();
             return crashTime;

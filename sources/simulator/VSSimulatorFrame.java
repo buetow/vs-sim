@@ -28,14 +28,14 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     private JTabbedPane tabbedPane;
 
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
-        super(prefs.getString("name"), relativeTo);
+        super(prefs.getString("lang.name"), relativeTo);
         this.prefs = prefs;
         this.simulations = new Vector<VSSimulation>();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        setSize(prefs.getInteger("window.xsize")+100,
-                prefs.getInteger("window.ysize"));
+        setSize(prefs.getInteger("div.window.xsize")+100,
+                prefs.getInteger("div.window.ysize"));
         setJMenuBar(createJMenuBar());
         setContentPane(createContentPane());
         setVisible(true);

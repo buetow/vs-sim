@@ -13,8 +13,7 @@ import utils.*;
 import prefs.VSPrefs;
 
 public abstract class VSEditor implements ActionListener {
-    protected static final int LABEL_FIELD_COLS = 18;
-    protected static final int VALUE_FIELD_COLS = 7;
+    protected static final int VALUE_FIELD_COLS = 9;
     protected static final int MIN_UNIT_LENGTH = 5;
     private HashMap<String,JComboBox> integerFields;
     private HashMap<String,JTextField> colorFields;
@@ -22,12 +21,12 @@ public abstract class VSEditor implements ActionListener {
     private HashMap<String,JTextField> longFields;
     private HashMap<String,JCheckBox> booleanFields;
     private HashMap<String,JTextField> stringFields;
-    private Vector<String> colorKeys;
-    private Vector<String> floatKeys;
-    private Vector<String> integerKeys;
-    private Vector<String> longKeys;
-    private Vector<String> booleanKeys;
-    private Vector<String> stringKeys;
+    private ArrayList<String> colorKeys;
+    private ArrayList<String> floatKeys;
+    private ArrayList<String> integerKeys;
+    private ArrayList<String> longKeys;
+    private ArrayList<String> booleanKeys;
+    private ArrayList<String> stringKeys;
     private JPanel buttonPanel;
     private JPanel editPanel;
     protected VSPrefs prefs;
@@ -74,15 +73,12 @@ public abstract class VSEditor implements ActionListener {
         editPanel = createEditPanel();
         buttonPanel = createButtonPanel();
 
-        final String keyStartsWith = "sim.";
-        boolean reversed = false;
-
-        colorKeys = setToSortedVector(prefsToEdit.getColorKeySet(), keyStartsWith, reversed);
-        floatKeys = setToSortedVector(prefsToEdit.getFloatKeySet(), keyStartsWith, reversed);
-        integerKeys = setToSortedVector(prefsToEdit.getIntegerKeySet(), keyStartsWith, reversed);
-        longKeys = setToSortedVector(prefsToEdit.getLongKeySet(), keyStartsWith, reversed);
-        booleanKeys = setToSortedVector(prefsToEdit.getBooleanKeySet(), keyStartsWith, reversed);
-        stringKeys = setToSortedVector(prefsToEdit.getStringKeySet(), keyStartsWith, reversed);
+        colorKeys = filterKeys(prefsToEdit.getColorKeySet());
+        floatKeys = filterKeys(prefsToEdit.getFloatKeySet());
+        integerKeys = filterKeys(prefsToEdit.getIntegerKeySet());
+        longKeys = filterKeys(prefsToEdit.getLongKeySet());
+        booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
+        stringKeys = filterKeys(prefsToEdit.getStringKeySet());
         colorFields = new HashMap<String,JTextField>();
         floatFields = new HashMap<String,JTextField>();
         integerFields = new HashMap<String,JComboBox>();
@@ -90,27 +86,17 @@ public abstract class VSEditor implements ActionListener {
         booleanFields = new HashMap<String,JCheckBox>();
         stringFields = new HashMap<String,JTextField>();
 
-        addToEditPanelFront(editPanel, editTable);
         fillEditPanel(editPanel, editTable);
-        addToEditPanelLast(editPanel, editTable);
     }
 
-    private Vector<String> setToSortedVector(Set<String> set, String startsWith, boolean reversed) {
-        Vector<String> vector = new Vector<String>();
+    private ArrayList<String> filterKeys(Set<String> set) {
+        ArrayList<String> filtered = new ArrayList<String>();
 
-        if (reversed) {
-            for (String elem : set)
-                if (!elem.startsWith(startsWith) && !elem.endsWith("!") && !elem.startsWith("keyevent"))
-                    vector.add(elem);
-        } else {
-            for (String elem : set)
-                if (elem.startsWith(startsWith) && !elem.endsWith("!") && !elem.startsWith("keyevent"))
-                    vector.add(elem);
-        }
+        for (String elem : set)
+            if (!elem.startsWith("lang.") && !elem.startsWith("keyevent"))
+                filtered.add(elem);
 
-        Collections.sort(vector);
-
-        return vector;
+        return filtered;
     }
 
     abstract protected void addToButtonPanelFront(JPanel buttonPanel);
@@ -131,9 +117,6 @@ public abstract class VSEditor implements ActionListener {
 
         return buttonPanel;
     }
-
-    abstract protected void addToEditPanelFront(JPanel editPanel, VSEditorTable editTable);
-    abstract protected void addToEditPanelLast(JPanel editPanel, VSEditorTable editTable);
 
     private JPanel createUnitPanel(Component comp, String key) {
         JPanel unitPanel = new JPanel(new GridBagLayout());
@@ -169,6 +152,9 @@ public abstract class VSEditor implements ActionListener {
     }
 
     private void fillEditPanel(JPanel editPanel, VSEditorTable editTable) {
+        HashMap<String,Component> components = new HashMap<String,Component>();
+        HashMap<String,String> labels = new HashMap<String,String>();
+
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
             String descr = prefsToEdit.getDescription(fullKey);
@@ -194,7 +180,9 @@ public abstract class VSEditor implements ActionListener {
 
             integerFields.put(key, valComboBox);
             valComboBox.setBorder(null);
-            editTable.addVariable(label, createUnitPanel(valComboBox, fullKey));
+
+            labels.put(fullKey, label);
+            components.put(fullKey, createUnitPanel(valComboBox, fullKey));
         }
 
         final String activated = prefs.getString("lang.activated");
@@ -206,7 +194,9 @@ public abstract class VSEditor implements ActionListener {
             valField.setBackground(Color.WHITE);
             booleanFields.put(key, valField);
             valField.setBorder(null);
-            editTable.addVariable(label, createUnitPanel(valField, fullKey));
+
+            labels.put(fullKey, label);
+            components.put(fullKey, createUnitPanel(valField, fullKey));
         }
 
         for (String key : longKeys) {
@@ -224,7 +214,9 @@ public abstract class VSEditor implements ActionListener {
             valField.setText(""+prefsToEdit.getLong(key));
             longFields.put(key, valField);
             valField.setBorder(null);
-            editTable.addVariable(label, createUnitPanel(valField, fullKey));
+
+            labels.put(fullKey, label);
+            components.put(fullKey, createUnitPanel(valField, fullKey));
         }
 
 
@@ -243,7 +235,8 @@ public abstract class VSEditor implements ActionListener {
             valField.setText(""+prefsToEdit.getFloat(key));
             floatFields.put(key, valField);
             valField.setBorder(null);
-            editTable.addVariable(label, createUnitPanel(valField, fullKey));
+            labels.put(fullKey, label);
+            components.put(fullKey, createUnitPanel(valField, fullKey));
         }
 
 
@@ -263,7 +256,7 @@ public abstract class VSEditor implements ActionListener {
                 public void mouseClicked(MouseEvent e) {
                     JFrame parentFrame = getFrame();
                     JFrame frame = new VSFrame(
-                        prefs.getString("name") + " - " +
+                        prefs.getString("lang.name") + " - " +
                         prefs.getString(
                             "lang.colorchooser"),parentFrame);
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -278,7 +271,8 @@ public abstract class VSEditor implements ActionListener {
             });
             colorFields.put(key, valField);
             valField.setBorder(null);
-            editTable.addVariable(label, valField);
+            labels.put(fullKey, label);
+            components.put(fullKey, valField);
         }
 
         for (String key : stringKeys) {
@@ -296,8 +290,75 @@ public abstract class VSEditor implements ActionListener {
             valField.setText(prefsToEdit.getString(key));
             stringFields.put(key, valField);
             valField.setBorder(null);
-            editTable.addVariable(label, createUnitPanel(valField, fullKey));
+            labels.put(fullKey, label);
+            components.put(fullKey, createUnitPanel(valField, fullKey));
         }
+
+        ArrayList<String> fullKeys = new ArrayList<String>();
+        fullKeys.addAll(components.keySet());
+        Collections.sort(fullKeys);
+
+        boolean flag = false;
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(' ')+1);
+            if (key.startsWith("sim.")) {
+                if (!flag) {
+                    flag = true;
+                    editTable.addSeparator(prefs.getString("lang.prefs.simulation"));
+                }
+                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+            }
+        }
+
+        flag = false;
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(' ')+1);
+            if (key.startsWith("process.")) {
+                if (!flag) {
+                    flag = true;
+                    editTable.addSeparator(prefs.getString("lang.prefs.process"));
+                }
+                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+            }
+        }
+
+        flag = false;
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(' ')+1);
+            if (key.startsWith("message.")) {
+                if (!flag) {
+                    flag = true;
+                    editTable.addSeparator(prefs.getString("lang.prefs.message"));
+                }
+                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+            }
+        }
+
+        flag = false;
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(' ')+1);
+            if (key.startsWith("col.")) {
+                if (!flag) {
+                    flag = true;
+                    editTable.addSeparator(prefs.getString("lang.prefs.color"));
+                }
+                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+            }
+        }
+
+        flag = false;
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(' ')+1);
+            if (key.startsWith("div.")) {
+                if (!flag) {
+                    flag = true;
+                    editTable.addSeparator(prefs.getString("lang.prefs.diverse"));
+                }
+                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+            }
+        }
+
+        editTable.fireTableDataChanged();
     }
 
     protected void resetEditPanel() {

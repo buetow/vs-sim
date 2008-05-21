@@ -854,15 +854,15 @@ public class VSSimulation extends JPanel {
 
     public void updateFromPrefs() {
         splitPaneH.setDividerLocation(
-            prefs.getInteger("window.splitsize"));
+            prefs.getInteger("div.window.splitsize"));
 
         splitPaneV.setDividerLocation(
-            prefs.getInteger("window.ysize")
-            - prefs.getInteger("window.loggsize"));
+            prefs.getInteger("div.window.ysize")
+            - prefs.getInteger("div.window.loggsize"));
 
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
-        simulationCanvas.setBackground(prefs.getColor("paintarea.background"));
+        simulationCanvas.setBackground(prefs.getColor("col.background"));
         simulationCanvas.updateFromPrefs();
     }
 }

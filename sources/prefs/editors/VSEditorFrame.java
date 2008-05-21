@@ -28,8 +28,8 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
         fillButtonPanel(editor.getButtonPanel());
         setContentPane(editor.getContentPane());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(prefs.getInteger("window.prefs.xsize"),
-                prefs.getInteger("window.prefs.ysize"));
+        setSize(prefs.getInteger("div.window.prefs.xsize"),
+                prefs.getInteger("div.window.prefs.ysize"));
         setResizable(false);
         setVisible(true);
     }

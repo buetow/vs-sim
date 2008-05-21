@@ -17,7 +17,7 @@ public class VSSimulationEditor extends VSBetterEditor {
     public static boolean TAKEOVER_BUTTON;
 
     public VSSimulationEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
-        super(prefs, prefs, prefs.getString("name")
+        super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
         getInfoArea().setText(prefs.getString("lang.prefs.info!"));

@@ -15,7 +15,7 @@ public class VSAbout extends VSFrame implements ActionListener {
     private VSPrefs prefs;
 
     public VSAbout(VSPrefs prefs, Component relativeTo) {
-        super(prefs.getString("name") + " - "
+        super(prefs.getString("lang.name") + " - "
               + prefs.getString("lang.about"), relativeTo);
 
         this.prefs = prefs;

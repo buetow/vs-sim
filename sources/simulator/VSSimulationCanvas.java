@@ -190,12 +190,12 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     /* This method contains very ugly code. But this has to be in order to gain performance! */
     private void recalcOnWindowChanged() {
-        processlineColor = prefs.getColor("process.line");
-        processSecondlineColor = prefs.getColor("process.secondline");
-        processSeplineColor = prefs.getColor("process.sepline");
-        messageArrivedColor = prefs.getColor("message.arrived");
-        messageSendingColor = prefs.getColor("message.sending");
-        messageLostColor = prefs.getColor("message.lost");
+        processlineColor = prefs.getColor("col.process.line");
+        processSecondlineColor = prefs.getColor("col.process.secondline");
+        processSeplineColor = prefs.getColor("col.process.sepline");
+        messageArrivedColor = prefs.getColor("col.message.arrived");
+        messageSendingColor = prefs.getColor("col.message.sending");
+        messageLostColor = prefs.getColor("col.message.lost");
 
         paintSize = simulation.getPaintSize();
         xPaintSize = simulation.getWidth() - (3 * XOFFSET + simulation.getSplitSize());
