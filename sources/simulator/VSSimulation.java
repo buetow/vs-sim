@@ -23,13 +23,12 @@ public class VSSimulation extends JPanel {
     private ArrayList<VSCreateTask> createTasks;
     private JCheckBox filterActiveCheckBox;
     private JCheckBox lamportActiveCheckBox;
-    private JTextArea loggingArea;
     private JCheckBox vectorTimeActiveCheckBox;
     private JComboBox globalPIDComboBox;
     private JComboBox localPIDComboBox;
     private JComboBox processesComboBox;
-    private JPanel localAddPanel;
     private JPanel globalAddPanel;
+    private JPanel localAddPanel;
     private JPanel localPanel;
     private JPanel loggingPanel;
     private JPanel toolsPanel;
@@ -37,6 +36,7 @@ public class VSSimulation extends JPanel {
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
     private JTabbedPane tabbedPane;
+    private JTextArea loggingArea;
     private JTextField filterTextField;
     private JTextField globalTextField;
     private JTextField localTextField;
@@ -158,10 +158,9 @@ public class VSSimulation extends JPanel {
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
         splitPaneV.setBottomComponent(loggingPanel);
-        //splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
 
-        this.add(splitPaneV, BorderLayout.CENTER);
+        this.add(splitPaneV);
     }
 
     private boolean lastExpertState;
