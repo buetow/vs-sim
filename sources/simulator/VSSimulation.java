@@ -899,8 +899,11 @@ public class VSSimulation extends JPanel {
         tabbedPane.setSelectedIndex(selectedIndex);
 
 		/* Update the 'Variables tab' */
-
-
+		if (getSelectedProcessNum() != simulationCanvas.getNumProcesses()) {
+       		VSProcess process = getSelectedProcess();
+           	VSProcessEditor editor = new VSProcessEditor(prefs, process);
+        	tabbedPane.setComponentAt(1, editor.getContentPane());
+         }
 
         /* Update the tools panel */
         loggingPanel.remove(1);
