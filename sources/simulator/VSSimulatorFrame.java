@@ -33,7 +33,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     private Vector<VSSimulation> simulations;
     private VSSimulation currentSimulation;
     private JTabbedPane tabbedPane;
-	//private JSlider speedSlider;
+    //private JSlider speedSlider;
 
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("lang.name"), relativeTo);
@@ -182,11 +182,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         pane.add(toolBar, BorderLayout.PAGE_START);
         pane.add(tabbedPane, BorderLayout.CENTER);
 
-		/*
-		speedSlider = new JSlider(JSlider.HORIZONTAL, 
-				0, 200, (int) (100 * prefs.getFloat("sim.clock.speed")));
-		toolBar.add(speedSlider);
-		*/
+        /*
+        speedSlider = new JSlider(JSlider.HORIZONTAL,
+        		0, 200, (int) (100 * prefs.getFloat("sim.clock.speed")));
+        toolBar.add(speedSlider);
+        */
 
         return pane;
     }
@@ -198,9 +198,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 VSPrefs simulationPrefs = currentSimulation.getPrefs();
-				VSSimulationEditor.TAKEOVER_BUTTON = true;
-				VSSimulationEditor simulationEditor = new VSSimulationEditor(
-					simulationPrefs, VSSimulatorFrame.this, currentSimulation);
+                VSSimulationEditor.TAKEOVER_BUTTON = true;
+                VSSimulationEditor simulationEditor = new VSSimulationEditor(
+                    simulationPrefs, VSSimulatorFrame.this, currentSimulation);
                 new VSEditorFrame(prefs, VSSimulatorFrame.this, simulationEditor);
             }
         });

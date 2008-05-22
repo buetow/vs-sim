@@ -57,7 +57,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
             dispose();
 
         } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
-			editor.actionPerformed(e);
+            editor.actionPerformed(e);
             dispose();
 
         } else {

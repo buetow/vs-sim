@@ -265,7 +265,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         }
 
         if (simulationTime > untilTime)
-        	simulationTime = untilTime;
+            simulationTime = untilTime;
 
         offset = simulationTime - lastSimulationTime;
 

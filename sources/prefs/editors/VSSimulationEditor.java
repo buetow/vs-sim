@@ -51,15 +51,15 @@ public class VSSimulationEditor extends VSBetterEditor {
         if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
 
-			if (simulation != null) {
-            	if (expertModeChanged())
-               	     simulation.fireExpertModeChanged();
-				simulation.updateFromPrefs();
-			}
+            if (simulation != null) {
+                if (expertModeChanged())
+                    simulation.fireExpertModeChanged();
+                simulation.updateFromPrefs();
+            }
 
         } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
-			if (!dontStartNewSimulation)
-				simulatorFrame.dispose();
+            if (!dontStartNewSimulation)
+                simulatorFrame.dispose();
 
         } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
@@ -69,8 +69,8 @@ public class VSSimulationEditor extends VSBetterEditor {
             }
             if (!dontStartNewSimulation)
                 simulatorFrame.addSimulation(new VSSimulation(prefsToEdit, simulatorFrame));
-			else if (simulation != null)
-            	simulation.updateFromPrefs();
+            else if (simulation != null)
+                simulation.updateFromPrefs();
 
         } else {
             super.actionPerformed(e);
