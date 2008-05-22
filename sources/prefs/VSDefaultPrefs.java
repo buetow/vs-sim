@@ -144,7 +144,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
         initIntegerUnit("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
         initIntegerUnit("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
-        initIntegerUnit("sim.seconds", 30, "Simulationsdauer", 5, 120, "s");
+        initIntegerUnit("sim.seconds", 15, "Simulationsdauer", 5, 120, "s");
 
         /* Internal prefs */
         initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);
@@ -186,8 +186,8 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultLongs() {
         /* Simulation prefs */
-        initLongUnit("message.sendingtime.min", 1000, "Minimale Übertragungszeit", "ms");
-        initLongUnit("message.sendingtime.max", 5000, "Maximale Übertragungszeit", "ms");
+        initLongUnit("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
+        initLongUnit("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
     }
 
     public void fillDefaultColors() {

@@ -123,9 +123,9 @@ public class VSTask implements Comparable {
             else if (taskTime > task.getTaskTime())
                 return 1;
 
-            /* If it's a ProtocolEvent, it should get handled first */
-            boolean a = event instanceof ProtocolEvent;
-            boolean b = task.getEvent() instanceof ProtocolEvent;
+            /* If it's a ProtocolRecover, it should get handled very first */
+            boolean a = event instanceof ProcessRecoverEvent;
+            boolean b = task.getEvent() instanceof ProcessRecoverEvent;
 
             if (a && b)
                 return 0;
@@ -135,6 +135,21 @@ public class VSTask implements Comparable {
 
             if (b)
                 return 1;
+
+
+            /* If it's a ProtocolEvent, it should get handled first */
+            a = event instanceof ProtocolEvent;
+            b = task.getEvent() instanceof ProtocolEvent;
+
+            if (a && b)
+                return 0;
+
+            if (a)
+                return -1;
+
+            if (b)
+                return 1;
+
         }
 
         return 0;
