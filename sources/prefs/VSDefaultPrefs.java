@@ -206,6 +206,7 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public void fillDefaultBooleans() {
         //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
+        initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
         initBoolean("sim.message.own.recv", false, "Eigene Nachrichten empfangen");
     }
 }

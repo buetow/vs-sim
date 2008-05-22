@@ -18,35 +18,41 @@ import protocols.*;
 import utils.*;
 
 public class VSSimulation extends JPanel {
-    private static int simulationCounter;
-    private static int simulationNum;
-    private VSSimulatorFrame simulatorFrame;
-    private JTextField filterTextField;
+    private ArrayList<String> globalTextFields;
+    private ArrayList<String> localTextFields;
+    private ArrayList<VSCreateTask> createTasks;
     private JCheckBox filterActiveCheckBox;
     private JCheckBox lamportActiveCheckBox;
+    private JTextArea loggingArea;
     private JCheckBox vectorTimeActiveCheckBox;
-    private JComboBox processesComboBox;
-    private JComboBox localPIDComboBox;
     private JComboBox globalPIDComboBox;
-    private int lastSelectedProcessNum;
-    private ArrayList<String> localTextFields;
-    private ArrayList<String> globalTextFields;
-    private JTextField localTextField;
-    private JTextField globalTextField;
-    private ArrayList<VSCreateTask> createTasks;
+    private JComboBox localPIDComboBox;
+    private JComboBox processesComboBox;
+    private JPanel localAddPanel;
+    private JPanel globalAddPanel;
+    private JPanel localPanel;
+    private JPanel loggingPanel;
+    private JPanel toolsPanel;
+    private JSplitPane splitPane1;
     private JSplitPane splitPaneH;
     private JSplitPane splitPaneV;
-    private JSplitPane splitPane1;
+    private JTabbedPane tabbedPane;
+    private JTextField filterTextField;
+    private JTextField globalTextField;
+    private JTextField localTextField;
     private Thread thread;
     private VSLogging logging;
+    private VSMenuItemStates menuItemStates;
     private VSPrefs prefs;
     private VSSimulationCanvas simulationCanvas;
-    private boolean hasStarted = false;
-    private VSTaskManagerTableModel taskManagerLocalModel;
-    private VSTaskManagerTableModel taskManagerGlobalModel;
+    private VSSimulatorFrame simulatorFrame;
     private VSTaskManager taskManager;
-    private VSMenuItemStates menuItemStates;
-    private JTabbedPane tabbedPane;
+    private VSTaskManagerTableModel taskManagerGlobalModel;
+    private VSTaskManagerTableModel taskManagerLocalModel;
+    private boolean hasStarted = false;
+    private int lastSelectedProcessNum;
+    private static int simulationCounter;
+    private static int simulationNum;
 
     public class VSMenuItemStates {
         private volatile boolean pause;
@@ -123,10 +129,9 @@ public class VSSimulation extends JPanel {
     }
 
     private void fillContentPane() {
-        JTextArea loggingArea = logging.getLoggingArea();
+        loggingArea = logging.getLoggingArea();
 
         splitPaneH = new JSplitPane();
-
         splitPaneV = new JSplitPane();
 
         simulationCanvas = new VSSimulationCanvas(prefs, this, logging);
@@ -139,13 +144,10 @@ public class VSSimulation extends JPanel {
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
-        JScrollPane textScrollPane = new JScrollPane(loggingArea);
-        JPanel toolsPanel = createToolsPanel();
-
-        JPanel loggingPane = new JPanel(new BorderLayout());
-        loggingPane.add(textScrollPane, BorderLayout.CENTER);
-        loggingPane.add(toolsPanel, BorderLayout.SOUTH);
-        loggingPane.setPreferredSize(new Dimension(200, 1));
+        loggingPanel = new JPanel(new BorderLayout());
+        loggingPanel.add(new JScrollPane(loggingArea), BorderLayout.CENTER);
+        loggingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
+        loggingPanel.setPreferredSize(new Dimension(200, 1));
 
         splitPaneH.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPaneH.setLeftComponent(createProcessPane());
@@ -155,7 +157,7 @@ public class VSSimulation extends JPanel {
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
-        splitPaneV.setBottomComponent(loggingPane);
+        splitPaneV.setBottomComponent(loggingPanel);
         //splitPaneV.setOneTouchExpandable(true);
         splitPaneV.setContinuousLayout(true);
 
@@ -164,45 +166,48 @@ public class VSSimulation extends JPanel {
 
     private JPanel createToolsPanel() {
         JPanel toolsPanel = new JPanel();
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
         toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
 
-        lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
-        lamportActiveCheckBox.setSelected(false);
-        lamportActiveCheckBox.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                AbstractButton abstractButton = (AbstractButton) ce.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-                simulationCanvas.showLamport(buttonModel.isSelected());
-                if (buttonModel.isSelected())
-                    vectorTimeActiveCheckBox.setSelected(false);
-            }
-        });
-        toolsPanel.add(lamportActiveCheckBox);
+        if (expertMode) {
+            lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
+            lamportActiveCheckBox.setSelected(false);
+            lamportActiveCheckBox.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent ce) {
+                    AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                    ButtonModel buttonModel = abstractButton.getModel();
+                    simulationCanvas.showLamport(buttonModel.isSelected());
+                    if (buttonModel.isSelected())
+                        vectorTimeActiveCheckBox.setSelected(false);
+                }
+            });
+            toolsPanel.add(lamportActiveCheckBox);
 
-        vectorTimeActiveCheckBox = new JCheckBox(prefs.getString("lang.time.vector"));
-        vectorTimeActiveCheckBox.setSelected(false);
-        vectorTimeActiveCheckBox.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                AbstractButton abstractButton = (AbstractButton) ce.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-                simulationCanvas.showVectorTime(buttonModel.isSelected());
-                if (buttonModel.isSelected())
-                    lamportActiveCheckBox.setSelected(false);
-            }
-        });
-        toolsPanel.add(vectorTimeActiveCheckBox);
+            vectorTimeActiveCheckBox = new JCheckBox(prefs.getString("lang.time.vector"));
+            vectorTimeActiveCheckBox.setSelected(false);
+            vectorTimeActiveCheckBox.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent ce) {
+                    AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                    ButtonModel buttonModel = abstractButton.getModel();
+                    simulationCanvas.showVectorTime(buttonModel.isSelected());
+                    if (buttonModel.isSelected())
+                        lamportActiveCheckBox.setSelected(false);
+                }
+            });
+            toolsPanel.add(vectorTimeActiveCheckBox);
 
-        JCheckBox antiAliasing = new JCheckBox(prefs.getString("lang.antialiasing"));
-        antiAliasing.setSelected(false);
-        antiAliasing.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                AbstractButton abstractButton = (AbstractButton) ce.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-                simulationCanvas.isAntiAliased(buttonModel.isSelected());
-            }
-        });
-        toolsPanel.add(antiAliasing);
+            JCheckBox antiAliasing = new JCheckBox(prefs.getString("lang.antialiasing"));
+            antiAliasing.setSelected(false);
+            antiAliasing.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent ce) {
+                    AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                    ButtonModel buttonModel = abstractButton.getModel();
+                    simulationCanvas.isAntiAliased(buttonModel.isSelected());
+                }
+            });
+            toolsPanel.add(antiAliasing);
+        }
 
         JCheckBox loggingActiveCheckBox = new JCheckBox(prefs.getString("lang.logging.active"));
         loggingActiveCheckBox.setSelected(true);
@@ -215,51 +220,54 @@ public class VSSimulation extends JPanel {
         });
         toolsPanel.add(loggingActiveCheckBox);
 
-        filterActiveCheckBox = new JCheckBox(prefs.getString("lang.filter"));
-        filterActiveCheckBox.setSelected(false);
-        filterActiveCheckBox.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                AbstractButton abstractButton = (AbstractButton) ce.getSource();
-                ButtonModel buttonModel = abstractButton.getModel();
-                logging.isFiltered(buttonModel.isSelected());
-                if (buttonModel.isSelected())
-                    logging.setFilterText(filterTextField.getText());
-            }
-        });
-        toolsPanel.add(filterActiveCheckBox);
-
-        filterTextField = new JTextField();
-        filterTextField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent de) {
-                logging.setFilterText(filterTextField.getText());
-            }
-
-            public void removeUpdate(DocumentEvent de) {
-                logging.setFilterText(filterTextField.getText());
-            }
-
-            public void changedUpdate(DocumentEvent de) {
-                logging.setFilterText(filterTextField.getText());
-            }
-        });
-        toolsPanel.add(filterTextField);
-
-        JButton clearButton = new JButton(prefs.getString("lang.logging.clear"));
-        clearButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                String actionCommand = ae.getActionCommand();
-                if (actionCommand.equals(prefs.getString("lang.logging.clear"))) {
-                    logging.clear();
+        if (expertMode) {
+            filterActiveCheckBox = new JCheckBox(prefs.getString("lang.filter"));
+            filterActiveCheckBox.setSelected(false);
+            filterActiveCheckBox.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent ce) {
+                    AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                    ButtonModel buttonModel = abstractButton.getModel();
+                    logging.isFiltered(buttonModel.isSelected());
+                    if (buttonModel.isSelected())
+                        logging.setFilterText(filterTextField.getText());
                 }
-            }
-        });
-        toolsPanel.add(clearButton);
+            });
+            toolsPanel.add(filterActiveCheckBox);
+
+            filterTextField = new JTextField();
+            filterTextField.getDocument().addDocumentListener(new DocumentListener() {
+                public void insertUpdate(DocumentEvent de) {
+                    logging.setFilterText(filterTextField.getText());
+                }
+
+                public void removeUpdate(DocumentEvent de) {
+                    logging.setFilterText(filterTextField.getText());
+                }
+
+                public void changedUpdate(DocumentEvent de) {
+                    logging.setFilterText(filterTextField.getText());
+                }
+            });
+            toolsPanel.add(filterTextField);
+
+            JButton clearButton = new JButton(prefs.getString("lang.logging.clear"));
+            clearButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    String actionCommand = ae.getActionCommand();
+                    if (actionCommand.equals(prefs.getString("lang.logging.clear"))) {
+                        logging.clear();
+                    }
+                }
+            });
+            toolsPanel.add(clearButton);
+        }
 
         return toolsPanel;
     }
 
     private JPanel createProcessPane() {
         JPanel editPanel = new JPanel(new GridBagLayout());
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
 
         processesComboBox = new JComboBox();
@@ -282,23 +290,21 @@ public class VSSimulation extends JPanel {
         globalPIDComboBox.addItem(prefs.getString("lang.all"));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-        tabbedPane.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent ce) {
-                JTabbedPane pane = (JTabbedPane) ce.getSource();
-                //currentSimulation = (VSSimulation) pane.getSelectedComponent();
-            }
-        });
-        //editPanel.add(tabbedPane, BorderLayout.CENTER);
-
-        JPanel localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
+        localPanel = createTaskLabel(VSTaskManagerTableModel.LOCAL);
         JPanel globalPanel = createTaskLabel(VSTaskManagerTableModel.GLOBAL);
 
         splitPane1 = new JSplitPane();
         splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        //splitPane1.setTopComponent(localPanel);
         splitPane1.setTopComponent(localPanel);
         splitPane1.setBottomComponent(globalPanel);
         splitPane1.setOneTouchExpandable(true);
-        tabbedPane.addTab(prefs.getString("lang.events"), splitPane1);
+
+        if (expertMode)
+            tabbedPane.addTab(prefs.getString("lang.events"), splitPane1);
+
+        else
+            tabbedPane.addTab(prefs.getString("lang.events"), localPanel);
 
         processesComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -334,11 +340,13 @@ public class VSSimulation extends JPanel {
         });
 
         tabbedPane.add(prefs.getString("lang.variables"), null);
-        tabbedPane.add(prefs.getString("lang.variables.global"), null);
+        //tabbedPane.add(prefs.getString("lang.variables.global"), null);
 
+        /*
         VSSimulationEditor.TAKEOVER_BUTTON = true;
         VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
         tabbedPane.setComponentAt(2, editor.getContentPane());
+        */
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);
@@ -366,7 +374,10 @@ public class VSSimulation extends JPanel {
         JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
         panel.add(scrollPane);
 
-        initAddPanel(panel, localTasks);
+        if (localTasks)
+            localAddPanel = initAddPanel(panel, localTasks);
+        else
+            globalAddPanel = initAddPanel(panel, localTasks);
 
         return panel;
     }
@@ -586,9 +597,10 @@ public class VSSimulation extends JPanel {
         return table;
     }
 
-    private void initAddPanel(JPanel panel, final boolean localTasks) {
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+    private JPanel initAddPanel(JPanel panel, final boolean localTasks) {
+        JPanel addPanel = new JPanel();
+        addPanel.setLayout(new BoxLayout(addPanel, BoxLayout.X_AXIS));
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
         final JTextField textField = new JTextField();
         if (localTasks)
@@ -598,14 +610,16 @@ public class VSSimulation extends JPanel {
 
         textField.setText("0000");
         textField.setBackground(Color.WHITE);
-        panel1.add(textField);
+        addPanel.add(textField);
 
-        panel1.add(new JLabel(" ms "));
+        addPanel.add(new JLabel(" ms "));
 
-        if (localTasks)
-            panel1.add(localPIDComboBox);
-        else
-            panel1.add(globalPIDComboBox);
+        if (localTasks) {
+            if (expertMode)
+                addPanel.add(localPIDComboBox);
+        } else {
+            addPanel.add(globalPIDComboBox);
+        }
 
         final JComboBox comboBox = new JComboBox();
         JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
@@ -680,7 +694,7 @@ public class VSSimulation extends JPanel {
             }
         });
 
-        panel1.add(takeoverButton);
+        addPanel.add(takeoverButton);
 
         boolean flag = createTasks == null;
         if (flag) createTasks = new ArrayList<VSCreateTask>();
@@ -779,7 +793,9 @@ public class VSSimulation extends JPanel {
         }
 
         panel.add(comboBox);
-        panel.add(panel1);
+        panel.add(addPanel);
+
+        return addPanel;
     }
 
     public int getSplitSize() {
@@ -864,5 +880,38 @@ public class VSSimulation extends JPanel {
 
         simulationCanvas.setBackground(prefs.getColor("col.background"));
         simulationCanvas.updateFromPrefs();
+    }
+
+    public void fireExpertModeChanged() {
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
+
+        /* Update the Task Manager GUI */
+        int selectedIndex = tabbedPane.getSelectedIndex();
+
+        if (expertMode) {
+            tabbedPane.remove(localPanel);
+            tabbedPane.insertTab(prefs.getString("lang.events"), null, splitPane1, null, 0);
+            splitPane1.setTopComponent(localPanel);
+            splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
+
+            /* addPanel */
+            localAddPanel.add(localPIDComboBox, 1);
+
+        } else {
+            tabbedPane.remove(splitPane1);
+            tabbedPane.insertTab(prefs.getString("lang.events"), null, localPanel, null, 0);
+
+            /* addPanel */
+            localAddPanel.remove(1);
+        }
+
+        tabbedPane.setSelectedIndex(selectedIndex);
+
+
+
+        /* Update the tools panel */
+        loggingPanel.remove(1);
+        loggingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
+        updateUI();
     }
 }

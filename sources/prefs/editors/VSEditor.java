@@ -35,6 +35,7 @@ public abstract class VSEditor implements ActionListener {
     public static final int SIMULATION_PREFERENCES = 1;
     private VSFrame frame;
     protected VSEditorTable editTable;
+    private boolean expertModeChanged;
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
         init(prefs, prefsToEdit);
@@ -91,10 +92,16 @@ public abstract class VSEditor implements ActionListener {
 
     private ArrayList<String> filterKeys(Set<String> set) {
         ArrayList<String> filtered = new ArrayList<String>();
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
-        for (String elem : set)
-            if (!elem.startsWith("lang.") && !elem.startsWith("keyevent"))
-                filtered.add(elem);
+        for (String elem : set) {
+            if (!elem.startsWith("lang.") && !elem.startsWith("keyevent")) {
+                if (expertMode)
+                    filtered.add(elem);
+                else if (!elem.startsWith("col.") && (!elem.startsWith("div.")))
+                    filtered.add(elem);
+            }
+        }
 
         return filtered;
     }
@@ -394,6 +401,8 @@ public abstract class VSEditor implements ActionListener {
     }
 
     protected void savePrefs() {
+        boolean expertMode = prefs.getBoolean("sim.mode.expert");
+
         int i = 0;
         for (String key : integerKeys) {
             JComboBox valComboBox = integerFields.get(key);
@@ -438,6 +447,17 @@ public abstract class VSEditor implements ActionListener {
             JTextField valField = stringFields.get(key);
             prefsToEdit.setString(key, valField.getText());
         }
+
+        expertModeChanged = expertMode != prefs.getBoolean("sim.mode.expert");
+    }
+
+    public boolean expertModeChanged() {
+        boolean ret = expertModeChanged;
+
+        if (expertModeChanged)
+            expertModeChanged = false;
+
+        return ret;
     }
 
     public void actionPerformed(ActionEvent e) {

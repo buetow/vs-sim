@@ -140,7 +140,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     private Container createContentPane() {
         Container pane = getContentPane();
 
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM, JTabbedPane.SCROLL_TAB_LAYOUT);
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
@@ -157,6 +157,16 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     private void updateEditMenu() {
         menuEdit.removeAll();
+
+        JMenuItem globalPrefsItem = new JMenuItem(prefs.getString("lang.prefs"));
+        globalPrefsItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                new VSEditorFrame(prefs, VSSimulatorFrame.this,
+                                  new VSSimulationEditor(prefs, VSSimulatorFrame.this,
+                                                         currentSimulation));
+            }
+        });
+        menuEdit.add(globalPrefsItem);
 
         if (currentSimulation == null)
             return;
