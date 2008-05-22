@@ -161,8 +161,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         JMenuItem globalPrefsItem = new JMenuItem(prefs.getString("lang.prefs"));
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
+				VSPrefs simulationPrefs = currentSimulation.getPrefs();
                 new VSEditorFrame(prefs, VSSimulatorFrame.this,
-                                  new VSSimulationEditor(prefs, VSSimulatorFrame.this,
+                                  new VSSimulationEditor(simulationPrefs, VSSimulatorFrame.this,
                                                          currentSimulation));
             }
         });

@@ -16,6 +16,8 @@ public class VSTask implements Comparable {
     private VSPrefs prefs;
     private boolean isProgrammed;
     private boolean isGlobalTimed;
+	private static int taskCounter;
+	private int taskNum;
 
     public VSTask(long taskTime, VSProcess process, VSEvent event, boolean isLocal) {
         this.process = process;
@@ -23,7 +25,12 @@ public class VSTask implements Comparable {
         this.event = event;
         this.prefs = process.getPrefs();
         this.isGlobalTimed = !isLocal;
+		this.taskNum = ++taskCounter;
     }
+
+	public int getTaskNum() {
+		return taskNum;
+	}
 
     public void isProgrammed(boolean isProgrammed) {
         this.isProgrammed = isProgrammed;
@@ -34,11 +41,11 @@ public class VSTask implements Comparable {
     }
 
     public boolean isMessageReceiveEvent() {
-        return event instanceof events.internal.MessageReceiveEvent;
+        return event instanceof MessageReceiveEvent;
     }
 
     public boolean isProcessRecoverEvent() {
-        return event instanceof events.implementations.ProcessRecoverEvent;
+        return event instanceof ProcessRecoverEvent;
     }
 
     public boolean isProtocol(VSProtocol protocol) {
@@ -56,10 +63,13 @@ public class VSTask implements Comparable {
     }
 
     public boolean equals(VSTask task) {
+		return taskNum == task.getTaskNum();
+		/*
         return event.equals(task.getEvent())
                && taskTime == task.getTaskTime()
                && isGlobalTimed == task.isGlobalTimed()
                && isProgrammed == task.isProgrammed;
+			   */
     }
 
     public boolean isProcess(VSProcess process) {

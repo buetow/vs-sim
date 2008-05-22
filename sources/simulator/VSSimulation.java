@@ -896,12 +896,19 @@ public class VSSimulation extends JPanel {
             /* addPanel */
             localAddPanel.remove(2);
         }
-
         tabbedPane.setSelectedIndex(selectedIndex);
+
+		/* Update the 'Variables tab' */
+
+
 
         /* Update the tools panel */
         loggingPanel.remove(1);
         loggingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
         updateUI();
     }
+
+	public VSPrefs getPrefs() {
+		return prefs;
+	}
 }
