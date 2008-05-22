@@ -198,6 +198,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 VSPrefs simulationPrefs = currentSimulation.getPrefs();
+				VSSimulationEditor.TAKEOVER_BUTTON = true;
 				VSSimulationEditor simulationEditor = new VSSimulationEditor(
 					simulationPrefs, VSSimulatorFrame.this, currentSimulation);
                 new VSEditorFrame(prefs, VSSimulatorFrame.this, simulationEditor);
