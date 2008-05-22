@@ -56,6 +56,10 @@ public class VSSimulationEditor extends VSBetterEditor {
             }
             simulation.updateFromPrefs();
 
+        } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
+			if (!dontStartNewSimulation)
+				simulatorFrame.dispose();
+
         } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
             if (expertModeChanged()) {
