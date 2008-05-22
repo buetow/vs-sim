@@ -103,27 +103,6 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             prefs.getString("lang.simulation"));
         menuSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
 
-        startItem = new JMenuItem(prefs.getString("lang.start"));
-        startItem.setAccelerator(KeyStroke.getKeyStroke(
-                                     prefs.getInteger("keyevent.start"),
-                                     ActionEvent.ALT_MASK));
-        startItem.addActionListener(this);
-        menuSimulation.add(startItem);
-        startButton = new JButton(prefs.getString("lang.start"));
-        startButton.addActionListener(this);
-        toolBar.add(startButton);
-
-        pauseItem = new JMenuItem(prefs.getString("lang.pause"));
-        pauseItem.setAccelerator(KeyStroke.getKeyStroke(
-                                     prefs.getInteger("keyevent.pause"),
-                                     ActionEvent.ALT_MASK));
-        pauseItem.addActionListener(this);
-        menuSimulation.add(pauseItem);
-        pauseItem.setEnabled(false);
-        pauseButton = new JButton(prefs.getString("lang.pause"));
-        pauseButton.addActionListener(this);
-        toolBar.add(pauseButton);
-
         resetItem = new JMenuItem(prefs.getString("lang.reset"));
         resetItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.reset"),
@@ -131,7 +110,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         resetItem.addActionListener(this);
         resetItem.setEnabled(false);
         menuSimulation.add(resetItem);
-        resetButton = new JButton(prefs.getString("lang.reset"));
+        resetButton = new JButton(new ImageIcon("icons/reset.gif", prefs.getString("lang.reset")));
         resetButton.addActionListener(this);
         toolBar.add(resetButton);
 
@@ -143,9 +122,31 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         replayItem.addActionListener(this);
         replayItem.setEnabled(false);
         menuSimulation.add(replayItem);
-        replayButton = new JButton(prefs.getString("lang.replay"));
+        replayButton = new JButton(new ImageIcon("icons/replay.gif", prefs.getString("lang.replay")));
         replayButton.addActionListener(this);
         toolBar.add(replayButton);
+
+        pauseItem = new JMenuItem(prefs.getString("lang.pause"));
+        pauseItem.setAccelerator(KeyStroke.getKeyStroke(
+                                     prefs.getInteger("keyevent.pause"),
+                                     ActionEvent.ALT_MASK));
+        pauseItem.addActionListener(this);
+        menuSimulation.add(pauseItem);
+        pauseItem.setEnabled(false);
+        pauseButton = new JButton(new ImageIcon("icons/pause.gif", prefs.getString("lang.pause")));
+        pauseButton.addActionListener(this);
+        toolBar.add(pauseButton);
+
+        startItem = new JMenuItem(prefs.getString("lang.start"));
+        startItem.setAccelerator(KeyStroke.getKeyStroke(
+                                     prefs.getInteger("keyevent.start"),
+                                     ActionEvent.ALT_MASK));
+        startItem.addActionListener(this);
+        menuSimulation.add(startItem);
+        startButton = new JButton(new ImageIcon("icons/start.gif", prefs.getString("lang.start")));
+        startButton.addActionListener(this);
+        toolBar.add(startButton);
+
 
         JMenuBar mainMenuBar = new JMenuBar();
         mainMenuBar.add(menuFile);
@@ -236,7 +237,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         if (source instanceof JMenuItem)
             sourceText = ((JMenuItem) source).getText();
         else
-            sourceText = ((JButton) source).getText();
+            sourceText = ((ImageIcon) ((JButton) source).getIcon()).getDescription();
 
         if (sourceText.equals(prefs.getString("lang.simulation.close"))) {
             if (simulations.size() == 1)

@@ -16,6 +16,9 @@
     <javac srcdir="${sources}" destdir="${classes}">
 		<compilerarg value="-Xlint:deprecation" />
 	</javac>
+    <copy todir="${classes}/icons">
+		<fileset dir="icons" />
+	</copy>
   </target>
 
   <target name="dist" depends="compile" description="generate the distribution" >
