@@ -69,7 +69,7 @@ public class VSSimulation extends JPanel {
             this.replay = replay;
         }
 
-        public void setReset(boolean pause) {
+        public void setReset(boolean reset) {
             this.reset = reset;
         }
 

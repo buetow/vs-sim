@@ -590,11 +590,14 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             time = 0;
             lastTime = 0;
 
-            for (VSProcess p : processes)
-                p.reset();
+            for (VSProcess process : processes)
+                process.reset();
 
             /* Reset the task manager AFTER the processes, for the programmed tasks */
             taskManager.reset();
+
+            for (VSProcess process : processes)
+                process.createRandomCrashTask();
 
             synchronized (messageLines) {
                 messageLines.clear();

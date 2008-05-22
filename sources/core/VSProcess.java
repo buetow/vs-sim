@@ -211,21 +211,24 @@ public final class VSProcess extends VSPrefs {
             protocol.reset();
 
         setCurrentColor(getColor("col.process.default"));
-        createRandomCrashTask();
         resetTimeFormats();
     }
 
-    private void createRandomCrashTask() {
+    public void createRandomCrashTask() {
         if (!isCrashed) {
             VSTaskManager taskManager = simulationCanvas.getTaskManager();
             long crashTime = getARandomCrashTime();
 
+            if (crashTime < 0)
+                return;
+
             if (randomCrashTask != null)
                 taskManager.removeTask(randomCrashTask);
 
-            if (crashTime >= 0 && crashTime >= getGlobalTime())  {
+
+            if (crashTime >= getGlobalTime())  {
                 VSEvent event = new ProcessCrashEvent();
-                event.init(this);
+                //event.init(this);
                 randomCrashTask = new VSTask(crashTime, this, event, VSTask.GLOBAL);
                 taskManager.addTask(randomCrashTask);
 
@@ -356,7 +359,7 @@ public final class VSProcess extends VSPrefs {
 
     public synchronized long getARandomMessageOutageTime(final long durationTime) {
         /* Check if the message will have an outage or not */
-        if (random.nextInt(100) <= getInteger("message.prob.outage")) {
+        if (random.nextInt(100) < getInteger("message.prob.outage")) {
             /* Calculate the random outage time! */
             final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
             return outageTime;
