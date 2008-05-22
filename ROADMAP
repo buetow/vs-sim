@@ -1,15 +1,9 @@
-TODO:
-
-
-Slow-Motion
 Neuen Protokolleditor bauen
 Prozesse hinzufuegen/loeschen koennen
 "Himmelobjekt"
 Periodische Tasks anlegen koennen
-
 Ganze simulationseinstellungen abspeichern/laden koennen
 Non-Broadcast Nachrichten
-
 Protocols:
 	ReliableMulticast
 	Ein-Phasen Commit Protokoll
@@ -20,13 +14,11 @@ Protocols:
 	AFS
 	Replikation
 	Namensdienste
-
 Evtl:
 	Local deliver max/min time
 	Sender <-> Receiver specific deliver time calc
 	Systemschnitte?
 	Middleware-Schicht?
-
 Optimierungen:
 	Methoden alphanumerisch sortieren, code tools
 	KeyEvent Manager
