@@ -112,6 +112,15 @@ public class VSSimulation extends JPanel {
         logging.logg(prefs.getString("lang.simulation.new"));
         fillContentPane();
         updateFromPrefs();
+        splitPaneH.setDividerLocation(
+            prefs.getInteger("div.window.splitsize"));
+
+        splitPaneV.setDividerLocation(
+            prefs.getInteger("div.window.ysize")
+            - prefs.getInteger("div.window.loggsize"));
+
+        splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
+
 
         int numProcesses = simulationCanvas.getNumProcesses();
 
@@ -877,15 +886,6 @@ public class VSSimulation extends JPanel {
     }
 
     public void updateFromPrefs() {
-        splitPaneH.setDividerLocation(
-            prefs.getInteger("div.window.splitsize"));
-
-        splitPaneV.setDividerLocation(
-            prefs.getInteger("div.window.ysize")
-            - prefs.getInteger("div.window.loggsize"));
-
-        splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
-
         simulationCanvas.setBackground(prefs.getColor("col.background"));
         simulationCanvas.updateFromPrefs();
     }
