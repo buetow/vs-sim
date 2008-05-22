@@ -164,11 +164,28 @@ public class VSSimulation extends JPanel {
         this.add(splitPaneV, BorderLayout.CENTER);
     }
 
+    private boolean lastExpertState;
     private JPanel createToolsPanel() {
         JPanel toolsPanel = new JPanel();
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
         toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
+
+        JCheckBox expertActiveCheckBox = new JCheckBox(prefs.getString("lang.mode.expert"));
+        expertActiveCheckBox.setSelected(expertMode);
+        expertActiveCheckBox.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent ce) {
+                AbstractButton abstractButton = (AbstractButton) ce.getSource();
+                ButtonModel buttonModel = abstractButton.getModel();
+                boolean newState = buttonModel.isSelected();
+                if (lastExpertState != newState) {
+                    lastExpertState = newState;
+                    prefs.setBoolean("sim.mode.expert", newState);
+                    fireExpertModeChanged();
+                }
+            }
+        });
+        toolsPanel.add(expertActiveCheckBox);
 
         if (expertMode) {
             lamportActiveCheckBox = new JCheckBox(prefs.getString("lang.time.lamport"));
@@ -898,12 +915,12 @@ public class VSSimulation extends JPanel {
         }
         tabbedPane.setSelectedIndex(selectedIndex);
 
-		/* Update the 'Variables tab' */
-		if (getSelectedProcessNum() != simulationCanvas.getNumProcesses()) {
-       		VSProcess process = getSelectedProcess();
-           	VSProcessEditor editor = new VSProcessEditor(prefs, process);
-        	tabbedPane.setComponentAt(1, editor.getContentPane());
-         }
+        /* Update the 'Variables tab' */
+        if (getSelectedProcessNum() != simulationCanvas.getNumProcesses()) {
+            VSProcess process = getSelectedProcess();
+            VSProcessEditor editor = new VSProcessEditor(prefs, process);
+            tabbedPane.setComponentAt(1, editor.getContentPane());
+        }
 
         /* Update the tools panel */
         loggingPanel.remove(1);
@@ -911,7 +928,7 @@ public class VSSimulation extends JPanel {
         updateUI();
     }
 
-	public VSPrefs getPrefs() {
-		return prefs;
-	}
+    public VSPrefs getPrefs() {
+        return prefs;
+    }
 }
