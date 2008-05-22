@@ -40,9 +40,9 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     private VSTaskManager taskManager;
     private LinkedList<VSMessageLine> messageLines;
     private LinkedList<VSProcess> processes;
-	private double clockSpeed;
-	private double clockOffset;
-	private long simulationTime;
+    private double clockSpeed;
+    private double clockOffset;
+    private long simulationTime;
 
     /* GFX buffering */
     private BufferStrategy strategy;
@@ -251,20 +251,20 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     }
 
     private void updateSimulation(final long globalTime, final long lastGlobalTime) {
-		if (isPaused || isFinished)
-			return;
+        if (isPaused || isFinished)
+            return;
 
-		final long lastSimulationTime = simulationTime;
+        final long lastSimulationTime = simulationTime;
         long offset = globalTime - lastGlobalTime;
 
-		clockOffset += offset * clockSpeed;
+        clockOffset += offset * clockSpeed;
 
         while (clockOffset >= 1) {
             --clockOffset;
             ++simulationTime;
         }
 
-		offset = simulationTime - lastSimulationTime;
+        offset = simulationTime - lastSimulationTime;
 
         for (long l = 0; l < offset; ++l)
             taskManager.runTasks(l, offset, lastSimulationTime);
@@ -582,13 +582,13 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     public void pause() {
         isPaused = true;
-		for (VSProcess p : processes)
-       		p.pause();
+        for (VSProcess p : processes)
+            p.pause();
 
-           pauseTime = System.currentTimeMillis();
+        pauseTime = System.currentTimeMillis();
 
-           logging.logg(prefs.getString("lang.simulation.paused"));
-           paint();
+        logging.logg(prefs.getString("lang.simulation.paused"));
+        paint();
     }
 
     public void reset() {
@@ -601,8 +601,8 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             startTime = System.currentTimeMillis();
             time = 0;
             lastTime = 0;
-			clockOffset = 0;
-			simulationTime = 0;
+            clockOffset = 0;
+            simulationTime = 0;
 
             for (VSProcess process : processes)
                 process.reset();
@@ -819,7 +819,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     public void updateFromPrefs() {
         untilTime = prefs.getInteger("sim.seconds") * 1000;
-		clockSpeed = prefs.getFloat("sim.clock.speed");
+        clockSpeed = prefs.getFloat("sim.clock.speed");
 
         secondsSpaceing = (int) (untilTime / 15000);
         if (secondsSpaceing == 0)

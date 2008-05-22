@@ -26,6 +26,8 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     private JButton resetButton;
     private JButton startButton;
     private JMenu menuEdit;
+    private JMenu menuFile;
+    private JMenu menuSimulation;
     private JToolBar toolBar;
     private VSPrefs prefs;
     private Vector<VSSimulation> simulations;
@@ -46,12 +48,19 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         setLayout(new BorderLayout());
         setContentPane(createContentPane());
         setVisible(true);
-        setEnabled(false);
+
+		pauseButton.setEnabled(false);
+		replayButton.setEnabled(false);
+		resetButton.setEnabled(false);
+		startButton.setEnabled(false);
+		menuEdit.setEnabled(false);
+		menuFile.setEnabled(false);
+		menuSimulation.setEnabled(false);
     }
 
     private JMenuBar createMenuBar() {
         /* File menu */
-        JMenu menuFile = new JMenu(prefs.getString("lang.file"));
+        menuFile = new JMenu(prefs.getString("lang.file"));
         menuFile.setMnemonic(prefs.getInteger("keyevent.file"));
         JMenuItem menuItem;
 
@@ -99,7 +108,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         /* Simulation menu */
         toolBar = new JToolBar();
-        JMenu menuSimulation = new JMenu(
+		menuSimulation = new JMenu(
             prefs.getString("lang.simulation"));
         menuSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
 
@@ -310,8 +319,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
                           + " " + simulation.getSimulationNum(), simulation);
         tabbedPane.setSelectedComponent(simulation);
 
-        if (!isEnabled())
-            setEnabled(true);
+		if (simulations.size() == 1) {	
+		menuEdit.setEnabled(true);
+		menuFile.setEnabled(true);
+		menuSimulation.setEnabled(true);
+		}
     }
 
     private void removeCurrentSimulation() {
@@ -325,13 +337,13 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         return currentSimulation;
     }
 
-	private ImageIcon getImageIcon(String name, String descr) {
-		java.net.URL imageURL = getClass().getResource("/icons/"+name);
+    private ImageIcon getImageIcon(String name, String descr) {
+        java.net.URL imageURL = getClass().getResource("/icons/"+name);
 
-		if (imageURL == null)
-			return new ImageIcon("icons/"+name, descr);
+        if (imageURL == null)
+            return new ImageIcon("icons/"+name, descr);
 
 
-		return new ImageIcon(imageURL, descr);
-	}
+        return new ImageIcon(imageURL, descr);
+    }
 }
