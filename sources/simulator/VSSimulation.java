@@ -120,7 +120,7 @@ public class VSSimulation extends JPanel {
             globalTextFields.add("0000");
         }
 
-        processesComboBox.setSelectedIndex(numProcesses);
+        processesComboBox.setSelectedIndex(0);
         localPIDComboBox.setSelectedIndex(0);
         globalPIDComboBox.setSelectedIndex(0);
 

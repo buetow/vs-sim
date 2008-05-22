@@ -1,6 +1,6 @@
 TODO:
 
-Icon Toolbar
+
 Slow-Motion
 Neuen Protokolleditor bauen
 Prozesse hinzufuegen/loeschen koennen
@@ -30,4 +30,3 @@ Evtl:
 Optimierungen:
 	Methoden alphanumerisch sortieren, code tools
 	KeyEvent Manager
-	Weitere Optimierungen: Linienobjekte von nicht aendernden Linien erzeugen!

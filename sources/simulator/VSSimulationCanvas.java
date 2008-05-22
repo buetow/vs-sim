@@ -40,6 +40,9 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     private VSTaskManager taskManager;
     private LinkedList<VSMessageLine> messageLines;
     private LinkedList<VSProcess> processes;
+	private double clockSpeed;
+	private double clockOffset;
+	private long simulationTime;
 
     /* GFX buffering */
     private BufferStrategy strategy;
@@ -248,12 +251,26 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     }
 
     private void updateSimulation(final long globalTime, final long lastGlobalTime) {
-        final long offset = globalTime - lastGlobalTime;
+		if (isPaused || isFinished)
+			return;
+
+		final long lastSimulationTime = simulationTime;
+        long offset = globalTime - lastGlobalTime;
+
+		clockOffset += offset * clockSpeed;
+
+        while (clockOffset >= 1) {
+            --clockOffset;
+            ++simulationTime;
+        }
+
+		offset = simulationTime - lastSimulationTime;
+
         for (long l = 0; l < offset; ++l)
-            taskManager.runTasks(l, offset, lastGlobalTime);
+            taskManager.runTasks(l, offset, lastSimulationTime);
 
         for (VSProcess process : processes)
-            process.syncTime(globalTime);
+            process.syncTime(simulationTime);
     }
 
     public void paint() {
@@ -277,7 +294,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             }
 
             g.fillRect(0, 0, getWidth(), getHeight());
-            final long globalTime = time;
+            final long globalTime = simulationTime;
 
             globalTimeXPosition = getTimeXPosition(globalTime);
             paintSecondlines(g);
@@ -459,7 +476,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     }
 
     public long getTime() {
-        return time;
+        return simulationTime;
     }
 
     public long getUntilTime() {
@@ -486,8 +503,6 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     }
 
     public void run() {
-        //play();
-
         while (true) {
             while (!isThreadStopped && (isPaused || isFinished || isResetted)) {
                 try {
@@ -514,23 +529,13 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
                 lastTime = time;
                 time = System.currentTimeMillis() - startTime;
 
-                if (time > untilTime)
-                    time = untilTime;
+                if (simulationTime > untilTime)
+                    simulationTime = untilTime;
 
-                if (time == untilTime) {
+                if (simulationTime == untilTime) {
                     finish();
                     break;
                 }
-            }
-
-            if (isPaused) {
-                for (VSProcess p : processes)
-                    p.pause();
-
-                pauseTime = System.currentTimeMillis();
-
-                logging.logg(prefs.getString("lang.simulation.paused"));
-                paint();
             }
 
             updateSimulation(time, lastTime);
@@ -577,6 +582,13 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     public void pause() {
         isPaused = true;
+		for (VSProcess p : processes)
+       		p.pause();
+
+           pauseTime = System.currentTimeMillis();
+
+           logging.logg(prefs.getString("lang.simulation.paused"));
+           paint();
     }
 
     public void reset() {
@@ -589,6 +601,8 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             startTime = System.currentTimeMillis();
             time = 0;
             lastTime = 0;
+			clockOffset = 0;
+			simulationTime = 0;
 
             for (VSProcess process : processes)
                 process.reset();
@@ -805,12 +819,13 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     public void updateFromPrefs() {
         untilTime = prefs.getInteger("sim.seconds") * 1000;
+		clockSpeed = prefs.getFloat("sim.clock.speed");
 
-        secondsSpaceing = (int) untilTime / 15000;
+        secondsSpaceing = (int) (untilTime / 15000);
         if (secondsSpaceing == 0)
             secondsSpaceing = 1;
 
-        threadSleep = (int) untilTime / 7500;
+        threadSleep = (int) (untilTime / 7500);
         if (threadSleep == 0)
             threadSleep = 1;
 
