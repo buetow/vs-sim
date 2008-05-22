@@ -110,7 +110,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         resetItem.addActionListener(this);
         resetItem.setEnabled(false);
         menuSimulation.add(resetItem);
-        resetButton = new JButton(new ImageIcon("icons/reset.gif", prefs.getString("lang.reset")));
+        resetButton = new JButton(getImageIcon("reset.png", prefs.getString("lang.reset")));
         resetButton.addActionListener(this);
         toolBar.add(resetButton);
 
@@ -122,7 +122,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         replayItem.addActionListener(this);
         replayItem.setEnabled(false);
         menuSimulation.add(replayItem);
-        replayButton = new JButton(new ImageIcon("icons/replay.gif", prefs.getString("lang.replay")));
+        replayButton = new JButton(getImageIcon("replay.png", prefs.getString("lang.replay")));
         replayButton.addActionListener(this);
         toolBar.add(replayButton);
 
@@ -133,7 +133,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         pauseItem.addActionListener(this);
         menuSimulation.add(pauseItem);
         pauseItem.setEnabled(false);
-        pauseButton = new JButton(new ImageIcon("icons/pause.gif", prefs.getString("lang.pause")));
+        pauseButton = new JButton(getImageIcon("pause.png", prefs.getString("lang.pause")));
         pauseButton.addActionListener(this);
         toolBar.add(pauseButton);
 
@@ -143,7 +143,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
                                      ActionEvent.ALT_MASK));
         startItem.addActionListener(this);
         menuSimulation.add(startItem);
-        startButton = new JButton(new ImageIcon("icons/start.gif", prefs.getString("lang.start")));
+        startButton = new JButton(getImageIcon("start.png", prefs.getString("lang.start")));
         startButton.addActionListener(this);
         toolBar.add(startButton);
 
@@ -324,4 +324,14 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     public VSSimulation getCurrentSimulation() {
         return currentSimulation;
     }
+
+	private ImageIcon getImageIcon(String name, String descr) {
+		java.net.URL imageURL = getClass().getResource("/icons/"+name);
+
+		if (imageURL == null)
+			return new ImageIcon("icons/"+name, descr);
+
+
+		return new ImageIcon(imageURL, descr);
+	}
 }
