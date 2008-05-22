@@ -63,7 +63,7 @@ public class VSTask implements Comparable {
     }
 
     public boolean isProcess(VSProcess process) {
-        return process.equals(process);
+        return this.process.equals(process);
     }
 
     public boolean isGlobalTimed() {
@@ -98,6 +98,8 @@ public class VSTask implements Comparable {
         buffer.append(" ");
         buffer.append(getTaskTime());
         buffer.append(event.toString());
+        buffer.append("; PID: ");
+        buffer.append(process.getProcessID());
         return buffer.toString();
     }
 

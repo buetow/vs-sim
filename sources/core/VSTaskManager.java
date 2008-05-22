@@ -216,69 +216,6 @@ public class VSTaskManager {
         return false;
     }
 
-    /*
-    public synchronized LinkedList<VSTask> getProtocolTasks(VSProtocol protocol) {
-        LinkedList<VSTask> protocolTasks = new LinkedList<VSTask>();
-
-        for (VSTask task : fullfilledProgrammedTasks)
-            if (task.isProtocol(protocol))
-                protocolTasks.addLast(task);
-
-        for (VSTask task : globalTasks)
-            if (task.isProtocol(protocol))
-                protocolTasks.addLast(task);
-
-        for (VSTask task : tasks)
-            if (task.isProtocol(protocol))
-                protocolTasks.addLast(task);
-
-        return protocolTasks;
-    }
-
-    public synchronized LinkedList<VSTask> getNonProtocolTasks(VSProtocol protocol) {
-        LinkedList<VSTask> nonProtocolTasks = new LinkedList<VSTask>();
-
-        for (VSTask task : fullfilledProgrammedTasks)
-            if (!task.isProtocol(protocol))
-                nonProtocolTasks.addLast(task);
-
-        for (VSTask task : globalTasks)
-            if (!task.isProtocol(protocol))
-                nonProtocolTasks.addLast(task);
-
-        for (VSTask task : tasks)
-            if (!task.isProtocol(protocol))
-                nonProtocolTasks.addLast(task);
-
-        return nonProtocolTasks;
-    }
-
-    public synchronized void modifyProtocolTasks(VSProtocol protocol, LinkedList<VSTask> protocolTasks) {
-        VSProcess process = protocol.getProcess();
-        LinkedList<VSTask> nonProtocolTasks = getNonProtocolTasks(protocol);
-        ListIterator<VSTask> iter1 = protocolTasks.listIterator(0);
-        ListIterator<VSTask> iter2 = nonProtocolTasks.listIterator(0);
-        long localTime = process.getTime();
-
-        fullfilledProgrammedTasks.clear();
-        globalTasks.clear();
-        tasks.clear();
-
-        for (VSTask task : nonProtocolTasks) {
-            if (task.getTaskTime() < localTime)
-                fullfilledProgrammedTasks.addLast(task);
-            else
-                insert(task);
-        }
-
-        for (VSTask task : protocolTasks) {
-            if (task.getTaskTime() < localTime)
-                fullfilledProgrammedTasks.addLast(task);
-            else
-                insert(task);
-        }
-    }
-    */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 

@@ -153,7 +153,7 @@ public class VSSimulation extends JPanel {
         splitPaneH.setLeftComponent(createProcessPane());
         splitPaneH.setRightComponent(canvasPanel);
         splitPaneH.setContinuousLayout(true);
-        //splitPaneH.setOneTouchExpandable(true);
+        splitPaneH.setOneTouchExpandable(true);
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
@@ -295,7 +295,6 @@ public class VSSimulation extends JPanel {
 
         splitPane1 = new JSplitPane();
         splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        //splitPane1.setTopComponent(localPanel);
         splitPane1.setTopComponent(localPanel);
         splitPane1.setBottomComponent(globalPanel);
         splitPane1.setOneTouchExpandable(true);
@@ -340,13 +339,6 @@ public class VSSimulation extends JPanel {
         });
 
         tabbedPane.add(prefs.getString("lang.variables"), null);
-        //tabbedPane.add(prefs.getString("lang.variables.global"), null);
-
-        /*
-        VSSimulationEditor.TAKEOVER_BUTTON = true;
-        VSSimulationEditor editor = new VSSimulationEditor(prefs, simulatorFrame);
-        tabbedPane.setComponentAt(2, editor.getContentPane());
-        */
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);
@@ -895,19 +887,17 @@ public class VSSimulation extends JPanel {
             splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
             /* addPanel */
-            localAddPanel.add(localPIDComboBox, 1);
+            localAddPanel.add(localPIDComboBox, 2);
 
         } else {
             tabbedPane.remove(splitPane1);
             tabbedPane.insertTab(prefs.getString("lang.events"), null, localPanel, null, 0);
 
             /* addPanel */
-            localAddPanel.remove(1);
+            localAddPanel.remove(2);
         }
 
         tabbedPane.setSelectedIndex(selectedIndex);
-
-
 
         /* Update the tools panel */
         loggingPanel.remove(1);

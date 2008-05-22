@@ -51,14 +51,16 @@ public class VSSimulationEditor extends VSBetterEditor {
         if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
             if (expertModeChanged()) {
-                simulation.fireExpertModeChanged();
+				if (simulation != null)
+                	simulation.fireExpertModeChanged();
             }
             simulation.updateFromPrefs();
 
         } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
             if (expertModeChanged()) {
-                simulation.fireExpertModeChanged();
+				if (simulation != null)
+                	simulation.fireExpertModeChanged();
             }
             if (!dontStartNewSimulation)
                 simulatorFrame.addSimulation(new VSSimulation(prefsToEdit, simulatorFrame));
