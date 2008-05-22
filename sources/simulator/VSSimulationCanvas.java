@@ -264,6 +264,9 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             ++simulationTime;
         }
 
+        if (simulationTime > untilTime)
+        	simulationTime = untilTime;
+
         offset = simulationTime - lastSimulationTime;
 
         for (long l = 0; l < offset; ++l)
@@ -524,18 +527,16 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
                 }
 
                 updateSimulation(time, lastTime);
-                paint();
-
-                lastTime = time;
-                time = System.currentTimeMillis() - startTime;
-
-                if (simulationTime > untilTime)
-                    simulationTime = untilTime;
 
                 if (simulationTime == untilTime) {
                     finish();
                     break;
                 }
+
+                paint();
+                lastTime = time;
+                time = System.currentTimeMillis() - startTime;
+
             }
 
             updateSimulation(time, lastTime);
