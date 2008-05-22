@@ -49,13 +49,13 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         setContentPane(createContentPane());
         setVisible(true);
 
-		pauseButton.setEnabled(false);
-		replayButton.setEnabled(false);
-		resetButton.setEnabled(false);
-		startButton.setEnabled(false);
-		menuEdit.setEnabled(false);
-		menuFile.setEnabled(false);
-		menuSimulation.setEnabled(false);
+        pauseButton.setEnabled(false);
+        replayButton.setEnabled(false);
+        resetButton.setEnabled(false);
+        startButton.setEnabled(false);
+        menuEdit.setEnabled(false);
+        menuFile.setEnabled(false);
+        menuSimulation.setEnabled(false);
     }
 
     private JMenuBar createMenuBar() {
@@ -108,7 +108,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         /* Simulation menu */
         toolBar = new JToolBar();
-		menuSimulation = new JMenu(
+        menuSimulation = new JMenu(
             prefs.getString("lang.simulation"));
         menuSimulation.setMnemonic(prefs.getInteger("keyevent.simulation"));
 
@@ -319,11 +319,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
                           + " " + simulation.getSimulationNum(), simulation);
         tabbedPane.setSelectedComponent(simulation);
 
-		if (simulations.size() == 1) {	
-		menuEdit.setEnabled(true);
-		menuFile.setEnabled(true);
-		menuSimulation.setEnabled(true);
-		}
+        if (simulations.size() == 1) {
+            menuEdit.setEnabled(true);
+            menuFile.setEnabled(true);
+            menuSimulation.setEnabled(true);
+        }
     }
 
     private void removeCurrentSimulation() {
