@@ -121,9 +121,7 @@ public class VSSimulation extends JPanel {
 
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
-
         int numProcesses = simulationCanvas.getNumProcesses();
-
         for (int i = 0; i <= numProcesses; ++i) {
             localTextFields.add("0000");
             globalTextFields.add("0000");
