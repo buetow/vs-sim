@@ -1,8 +1,14 @@
 Neuen Protokolleditor bauen
 Prozesse hinzufuegen/loeschen koennen
-"Himmelobjekt"
+	ProzessID <-> Prozess Nummer
+	Alle Tasks entfernen
+	Alle VSMessageLine's entfernen
 Periodische Tasks anlegen koennen
 Ganze simulationseinstellungen abspeichern/laden koennen
+	TaskManager + Tasks serialisierbar machen
+	Tasks anhand der Tasknummern den richtigen Prozessen zuordnen
+	Jedes Eventobjekte den Tasks und der Prozesse anhand der IDs zuordnen
+"Himmelobjekt"?
 Non-Broadcast Nachrichten
 Protocols:
 	ReliableMulticast
@@ -22,6 +28,7 @@ Evtl:
 	Ereignisse, die Prozessvariablen aendern
 	Bedingte Ereignisse
 	Simulationen beliebig lang machen
+	Loggingfenster soll nur Lamport/Vektorzeit anzeigen, wenn ausgewaehlt
 Optimierungen:
 	Methoden alphanumerisch sortieren, code tools
 	KeyEvent Manager
