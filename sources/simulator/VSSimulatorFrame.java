@@ -42,7 +42,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        setSize(prefs.getInteger("div.window.xsize")+100,
+        setSize(prefs.getInteger("div.window.xsize"),
                 prefs.getInteger("div.window.ysize"));
 
         setJMenuBar(createMenuBar());
