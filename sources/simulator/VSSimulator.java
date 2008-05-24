@@ -881,10 +881,8 @@ public class VSSimulator extends JPanel {
     }
 
     public void removeProcessAtIndex(int index) {
-        if (lastSelectedProcessNum >= index)
+        if (lastSelectedProcessNum > index)
             --lastSelectedProcessNum;
-        if (lastSelectedProcessNum < 0)
-            lastSelectedProcessNum = 0;
 
         globalTextFields.remove(index);
         localTextFields.remove(index);
@@ -894,6 +892,8 @@ public class VSSimulator extends JPanel {
 
         processesComboBox.removeItemAt(index);
         simulatorFrame.updateEditMenu();
+
+        updateTaskManagerTable();
     }
 
     public void addProcessAtIndex(int index) {
@@ -920,7 +920,7 @@ public class VSSimulator extends JPanel {
             tabbedPane.remove(localPanel);
             tabbedPane.insertTab(prefs.getString("lang.events"), null, splitPane1, null, 0);
             splitPane1.setTopComponent(localPanel);
-            splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
+            //splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
             /* addPanel */
             localAddPanel.add(localPIDComboBox, 2);
@@ -932,6 +932,7 @@ public class VSSimulator extends JPanel {
             /* addPanel */
             localAddPanel.remove(2);
         }
+
         tabbedPane.setSelectedIndex(selectedIndex);
 
         /* Update the 'Variables tab' */

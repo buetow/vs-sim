@@ -908,6 +908,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                 }
             }
             numProcesses = processes.size();
+            taskManager.removeTasksOf(process);
             simulation.removeProcessAtIndex(index);
             recalcOnChange();
 
@@ -923,8 +924,6 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                     messageLines.remove(line);
                 }
             }
-
-            taskManager.removeTasksOf(process);
         }
     }
 
