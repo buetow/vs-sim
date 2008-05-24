@@ -358,8 +358,8 @@ public class VSSimulation extends JPanel {
                     VSProcess process = getSelectedProcess();
                     VSProcessEditor processEditor = new VSProcessEditor(prefs, process);
                     tabbedPane.setComponentAt(1, processEditor.getContentPane());
-					VSProtocolEditor protocolEditor = new VSProtocolEditor(prefs, process);
-                    tabbedPane.setComponentAt(2, protocolEditor.getContentPane());
+					VSProtocolsEditor protocolsEditor = new VSProtocolsEditor(prefs, process);
+                    tabbedPane.setComponentAt(2, protocolsEditor.getContentPane());
                 }
             }
         });
