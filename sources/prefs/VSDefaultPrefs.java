@@ -65,8 +65,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.events.protocol", "Protokollereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
-        initString("lang.global", "Global");
-        initString("lang.local", "Lokal");
+        initString("lang.timed.global", "Globale Ereignisse");
+        initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.logging.active", "Logging");
         initString("lang.logging.clear", "Loggs löschen");
         initString("lang.message", "Nachricht");
@@ -76,6 +76,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
         initString("lang.variables", "Variablen");
+        initString("lang.protocols", "Protokolle");
         initString("lang.variable", "Variable");
         initString("lang.value", "Wert");
         initString("lang.variables.global", "Globale Variablen");
@@ -86,7 +87,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.process", "Prozesseinstellungen");
         initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
         initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" Knopfes übernommen!");
-        //initString("lang.prefs.protocol", "Protokolleinstellungen");
+        initString("lang.prefs.protocols", "Protokolleinstellungen");
         initString("lang.process", "Prozess");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");

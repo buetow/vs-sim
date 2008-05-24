@@ -346,6 +346,7 @@ public class VSSimulation extends JPanel {
 
                 if (processNum == simulationCanvas.getNumProcesses()) {
                     tabbedPane.setEnabledAt(1, false);
+                    tabbedPane.setEnabledAt(2, false);
                     if (tabbedPane.getSelectedIndex() == 1)
                         tabbedPane.setSelectedIndex(0);
 
@@ -355,13 +356,16 @@ public class VSSimulation extends JPanel {
 
                 if (processNum != simulationCanvas.getNumProcesses()) {
                     VSProcess process = getSelectedProcess();
-                    VSProcessEditor editor = new VSProcessEditor(prefs, process);
-                    tabbedPane.setComponentAt(1, editor.getContentPane());
+                    VSProcessEditor processEditor = new VSProcessEditor(prefs, process);
+                    tabbedPane.setComponentAt(1, processEditor.getContentPane());
+					VSProtocolEditor protocolEditor = new VSProtocolEditor(prefs, process);
+                    tabbedPane.setComponentAt(2, protocolEditor.getContentPane());
                 }
             }
         });
 
         tabbedPane.add(prefs.getString("lang.variables"), null);
+        tabbedPane.add(prefs.getString("lang.protocols"), null);
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);
@@ -382,9 +386,9 @@ public class VSSimulation extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         if (localTasks)
-            panel.add(createLabelPanel(prefs.getString("lang.local")));
+            panel.add(createLabelPanel(prefs.getString("lang.timed.local")));
         else
-            panel.add(createLabelPanel(prefs.getString("lang.global")));
+            panel.add(createLabelPanel(prefs.getString("lang.timed.global")));
 
         JScrollPane scrollPane = new JScrollPane(createTaskTable(localTasks));
         panel.add(scrollPane);
