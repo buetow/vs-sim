@@ -555,8 +555,8 @@ public class VSProcess extends VSPrefs {
         VSProtocol protocol = null;
 
         if (!objectExists(protocolClassname)) {
-            protocol = (VSProtocol) 
-				VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, this);
+            protocol = (VSProtocol)
+                       VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, this);
             setObject(protocolClassname, protocol);
             protocolsToReset.add(protocol);
 

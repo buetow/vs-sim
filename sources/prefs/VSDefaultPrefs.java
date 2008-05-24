@@ -11,7 +11,7 @@ public class VSDefaultPrefs extends VSPrefs {
 
     public static VSPrefs init(String fileName) {
         VSPrefs prefs = new VSDefaultPrefs();
-		prefs.fillWithDefaults();
+        prefs.fillWithDefaults();
         return prefs;
     }
 
