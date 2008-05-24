@@ -10,22 +10,9 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public static VSPrefs init(String fileName) {
-        File file = new File(fileName);
-        VSPrefs prefs = null;
-
-        if (file.exists()) {
-            prefs = openFile(fileName);
-
-        } else {
-            prefs = new VSDefaultPrefs();
-            prefs.fillWithDefaults();
-        }
-
+        VSPrefs prefs = new VSDefaultPrefs();
+		prefs.fillWithDefaults();
         return prefs;
-    }
-
-    public void saveFile() {
-        super.saveFile(VSPrefs.PREFERENCES_FILENAME);
     }
 
     public void fillWithDefaults() {

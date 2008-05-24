@@ -11,8 +11,8 @@ public class InternalTimeSyncProtocol extends VSProtocol {
         setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
-        setLong("t_min", 1000);
-        setLong("t_max", 5000);
+        setLong("t_min", 500);
+        setLong("t_max", 2000);
     }
 
     protected void onInit() {

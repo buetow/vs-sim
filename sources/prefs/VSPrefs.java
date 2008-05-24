@@ -438,7 +438,8 @@ public abstract class VSPrefs implements Serializable {
         objectOutputStream.writeObject(units);
     }
 
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+	@SuppressWarnings("unchecked") 
+	public synchronized void readObject(ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
         colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
@@ -451,8 +452,8 @@ public abstract class VSPrefs implements Serializable {
         units = (HashMap<String,String>) objectInputStream.readObject();
     }
 
+	/*
     public void saveFile(String filename) {
-        //System.out.println("SAVE FILE " + filename);
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -462,12 +463,11 @@ public abstract class VSPrefs implements Serializable {
             e.printStackTrace();
         }
     }
+	*/
 
-    public void saveFile() { };
-
+	/*
     public static VSPrefs openFile(String filename) {
         VSPrefs prefs = null;
-        //System.out.println("OPEN FILE " + filename);
 
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
@@ -485,6 +485,7 @@ public abstract class VSPrefs implements Serializable {
 
         return prefs;
     }
+	*/
 
     public void copyIntegers(VSPrefs copyInto, String[] keys) {
         for (String key : keys)

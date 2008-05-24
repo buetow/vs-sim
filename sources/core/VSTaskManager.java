@@ -16,27 +16,10 @@ public class VSTaskManager {
 
     public VSTaskManager(VSPrefs prefs) {
         this.prefs = prefs;
-        //Comparator<VSTask> comparator = createComparator();
         this.tasks = new PriorityQueue<VSTask>();//100, comparator);
         this.globalTasks = new PriorityQueue<VSTask>();//(100, comparator);
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
-
-    /*
-    private Comparator<VSTask> createComparator() {
-        return new Comparator<VSTask>() {
-            public int compare(VSTask a, VSTask b) {
-                if (a.getTaskTime() > b.getTaskTime())
-                    return 1;
-
-                if (a.getTaskTime() < b.getTaskTime())
-                    return -1;
-
-                return 0;
-            }
-        };
-    }
-    */
 
     public synchronized void runTasks(final long step, final long offset, final long lastGlobalTime) {
         VSTask task = null;

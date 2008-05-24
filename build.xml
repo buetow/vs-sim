@@ -14,7 +14,7 @@
 
   <target name="compile" depends="init" description="compile the source" >
     <javac srcdir="${sources}" destdir="${classes}">
-		<compilerarg value="-Xlint:deprecation" />
+		<compilerarg value="-Xlint:deprecation,unchecked" />
 	</javac>
     <copy todir="${classes}/icons">
 		<fileset dir="icons" />

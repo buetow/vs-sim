@@ -7,12 +7,12 @@ import protocols.*;
 
 public class VSMessage extends VSPrefs {
     private String protocolClassname;
+    private VSPrefs prefs;
     private VSProcess sendingProcess;
+    private VSVectorTime vectorTime;
+    private long lamportTime;
     private long messageID;
     private static long messageCounter;
-    private long lamportTime;
-    private VSVectorTime vectorTime;
-    private VSPrefs prefs;
 
     public VSMessage(String protocolClassname) {
         this.protocolClassname = protocolClassname;
@@ -72,7 +72,5 @@ public class VSMessage extends VSPrefs {
     }
 
     public void logg(String message) { }
-    public void onInit() { }
-    public void onStart() { }
 }
 

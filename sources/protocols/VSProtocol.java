@@ -67,7 +67,6 @@ abstract public class VSProtocol extends VSEvent {
         }
     }
 
-    abstract protected void onInit();
     abstract protected void onClientStart();
     abstract protected void onClientReset();
     abstract protected void onClientRecv(VSMessage message);
