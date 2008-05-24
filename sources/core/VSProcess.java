@@ -147,7 +147,7 @@ public class VSProcess extends VSPrefs {
         setProcessID(getInteger("process.id"));
         setLocalTime(getLong("process.localtime"));
         crashedColor = getColor("col.process.crashed");
-        simulationCanvas.repaint();
+        //simulationCanvas.repaint();
         createRandomCrashTask();
     }
 
