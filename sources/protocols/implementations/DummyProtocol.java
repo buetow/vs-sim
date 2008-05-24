@@ -4,8 +4,11 @@ import protocols.VSProtocol;
 import core.VSMessage;
 
 public class DummyProtocol extends VSProtocol {
-    protected void onInit() {
+    public DummyProtocol() {
         setClassname(getClass().toString());
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {

@@ -18,13 +18,14 @@ public class BerkelyTimeProtocol extends VSProtocol {
     /* Time the request/response has started */
     private long requestTime;
 
-    /* Berkely Client vairables */
-
-    protected void onInit() {
+    public BerkelyTimeProtocol() {
         setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
-        setInteger("numProcesses", getNumProcesses()-1);
+        setInteger("numProcesses", 0);
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {

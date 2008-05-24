@@ -7,12 +7,15 @@ import protocols.VSProtocol;
 public class InternalTimeSyncProtocol extends VSProtocol {
     private boolean waitingForResponse;
 
-    protected void onInit() {
+    public InternalTimeSyncProtocol() {
         setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
         setLong("t_min", 1000);
         setLong("t_max", 5000);
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {

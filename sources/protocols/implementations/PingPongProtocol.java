@@ -8,8 +8,11 @@ public class PingPongProtocol extends VSProtocol {
     private int clientCounter;
     private int serverCounter;
 
-    protected void onInit() {
+    public PingPongProtocol() {
         setClassname(getClass().toString());
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {

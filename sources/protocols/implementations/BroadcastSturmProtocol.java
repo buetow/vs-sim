@@ -10,9 +10,12 @@ public class BroadcastSturmProtocol extends VSProtocol {
     private ArrayList<VSMessage> sentMessages;
     private static int broadcastCount;
 
-    protected void onInit() {
+    public BroadcastSturmProtocol() {
         setClassname(getClass().toString());
         sentMessages = new ArrayList<VSMessage>();
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {

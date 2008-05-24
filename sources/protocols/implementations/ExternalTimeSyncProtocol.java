@@ -8,8 +8,11 @@ public class ExternalTimeSyncProtocol extends VSProtocol {
     private long requestTime;
     private boolean waitingForResponse;
 
-    protected void onInit() {
+    public ExternalTimeSyncProtocol() {
         setClassname(getClass().toString());
+    }
+
+    protected void onInit() {
     }
 
     protected void onClientReset() {
