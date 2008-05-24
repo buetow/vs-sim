@@ -182,16 +182,10 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         pane.add(toolBar, BorderLayout.PAGE_START);
         pane.add(tabbedPane, BorderLayout.CENTER);
 
-        /*
-        speedSlider = new JSlider(JSlider.HORIZONTAL,
-        		0, 200, (int) (100 * prefs.getFloat("sim.clock.speed")));
-        toolBar.add(speedSlider);
-        */
-
         return pane;
     }
 
-    private void updateEditMenu() {
+    public void updateEditMenu() {
         menuEdit.removeAll();
 
         JMenuItem globalPrefsItem = new JMenuItem(prefs.getString("lang.prefs"));
@@ -210,13 +204,16 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             return;
 
         final String processString = prefs.getString("lang.process");
-        final int numProcesses = currentSimulation.getSimulationCanvas().getNumProcesses();
+        final ArrayList<VSProcess> arr = currentSimulation.getSimulationCanvas().getProcessesArray();
+        final int numProcesses = arr.size();
 
-        for (int i = 0; i < numProcesses; ++i) {
-            JMenuItem processItem = new JMenuItem(processString + " " + (i+1));
-            processItem.setAccelerator(KeyStroke.getKeyStroke(0x31+i,
+        int processNum = 0;
+        for (VSProcess process : arr) {
+            int processID = process.getProcessID();
+            JMenuItem processItem = new JMenuItem(processString + " " + processID);
+            processItem.setAccelerator(KeyStroke.getKeyStroke(0x31+processID,
                                        ActionEvent.ALT_MASK));
-            final int finalProcessNum = i;
+            final int finalProcessNum = processNum++;
             processItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     currentSimulation.getSimulationCanvas().editProcess(finalProcessNum);
@@ -242,8 +239,10 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     }
 
     public void dispose() {
-        for (VSSimulation simulation : simulations)
-            simulation.getSimulationCanvas().stopThread();
+        synchronized (simulations) {
+            for (VSSimulation simulation : simulations)
+                simulation.getSimulationCanvas().stopThread();
+        }
         super.dispose();
     }
 
@@ -257,10 +256,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             sourceText = ((ImageIcon) ((JButton) source).getIcon()).getDescription();
 
         if (sourceText.equals(prefs.getString("lang.simulation.close"))) {
-            if (simulations.size() == 1)
-                dispose();
-            else
-                removeCurrentSimulation();
+            removeCurrentSimulation();
 
         } else if (sourceText.equals(prefs.getString("lang.simulation.new"))) {
             VSPrefs newPrefs = VSDefaultPrefs.init();
@@ -334,11 +330,19 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         }
     }
 
+    public void removeSimulation(VSSimulation simulationToRemove) {
+        if (simulations.size() == 1) {
+            dispose();
+
+        } else {
+            simulations.remove(simulationToRemove);
+            tabbedPane.remove(simulationToRemove);
+            simulationToRemove.getSimulationCanvas().stopThread();
+        }
+    }
+
     private void removeCurrentSimulation() {
-        VSSimulation simulationToRemove = currentSimulation;
-        simulations.remove(simulationToRemove);
-        tabbedPane.remove(simulationToRemove);
-        simulationToRemove.getSimulationCanvas().stopThread();
+        removeSimulation(currentSimulation);
     }
 
     public VSSimulation getCurrentSimulation() {
@@ -354,4 +358,5 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         return new ImageIcon(imageURL, descr);
     }
+
 }

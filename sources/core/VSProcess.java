@@ -104,8 +104,6 @@ public class VSProcess extends VSPrefs {
         currentColor = getColor("col.process.default");
 
         /* Make additional process settings editable through GUI */
-        initInteger("process.id", processID,
-                    prefs.getString("lang.process.id"), 1, processID + 10);
         setLongIfUnset("process.localtime", localTime, prefs.getString("lang.process.time.local"));
 
         crashedColor = getColor("col.process.crashed");
@@ -144,7 +142,6 @@ public class VSProcess extends VSPrefs {
      */
     public synchronized void updateFromVSPrefs() {
         setClockVariance(getFloat("process.clock.variance"));
-        setProcessID(getInteger("process.id"));
         setLocalTime(getLong("process.localtime"));
         crashedColor = getColor("col.process.crashed");
         //simulationCanvas.repaint();
@@ -156,7 +153,6 @@ public class VSProcess extends VSPrefs {
      */
     public synchronized void updatePrefs() {
         setFloat("process.clock.variance", getClockVariance());
-        setInteger("process.id", getProcessID());
         setLong("process.localtime", getTime());
     }
 

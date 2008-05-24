@@ -39,7 +39,6 @@ public class VSDefaultPrefs extends VSPrefs {
     }
 
     public void fillDefaultStrings() {
-        initString("lang.mode.expert", "Expertenmodus");
         initString("lang.about", "About");
         initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulation verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
@@ -53,7 +52,6 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
-        initString("lang.crash", "Abstürzen");
         initString("lang.crashed", "Abgestürzt");
         initString("lang.deactivate", "deaktivieren");
         initString("lang.deactivated", "deaktiviert");
@@ -61,36 +59,41 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
         initString("lang.event", "Ereignis");
+        initString("lang.events", "Ereignisse");
         initString("lang.events.process", "Prozessereignisse");
         initString("lang.events.protocol", "Protokollereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
-        initString("lang.timed.global", "Globale Ereignisse");
-        initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.logging.active", "Logging");
         initString("lang.logging.clear", "Loggs löschen");
         initString("lang.message", "Nachricht");
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
+        initString("lang.mode.expert", "Expertenmodus");
+        initString("lang.name", "VS-Simulator v0.2-devel");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
-        initString("lang.variables", "Variablen");
-        initString("lang.protocols", "Protokolle");
-        initString("lang.variable", "Variable");
-        initString("lang.value", "Wert");
-        initString("lang.variables.global", "Globale Variablen");
         initString("lang.prefs", "Einstellungen");
+        initString("lang.prefs.color", "Farbeinstellungen");
+        initString("lang.prefs.diverse", "Diverse Einstellungen");
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
         initString("lang.prefs.info!", "Prozessvariablen können für jeden Prozess einzelnd eingestellt werden. Die hier gezeigen Prozessvariablen sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
+        initString("lang.prefs.message", "Nachrichteneinstellungen");
         initString("lang.prefs.more", "Mehr Einstellungen");
         initString("lang.prefs.process", "Prozesseinstellungen");
+        initString("lang.prefs.process", "Prozessstandardeinstellungen");
         initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
         initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" Knopfes übernommen!");
         initString("lang.prefs.protocols", "Protokolleinstellungen");
+        initString("lang.prefs.simulation", "Simulationseinstellungen");
         initString("lang.process", "Prozess");
+        initString("lang.process.crash", "Prozess abstürzen");
+        initString("lang.process.remove", "Prozess entfernen");
+        initString("lang.process.edit", "Prozess editieren");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
+        initString("lang.process.recover", "Prozess wiederbeleben");
         initString("lang.process.time.local", "Lokale Zeit");
         initString("lang.processes.all", "Alle Prozesse");
         initString("lang.protocol", "Protokoll");
@@ -99,8 +102,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.protocol.server", "Serverseite");
         initString("lang.protocol.tasks.activation", "Client-/Serverprotokoll Aktivierung");
         initString("lang.protocol.tasks.client", "Client Task-Manager (Clientanfragen)");
+        initString("lang.protocols", "Protokolle");
         initString("lang.quit", "Beenden");
-        initString("lang.recover", "Wiederbeleben");
         initString("lang.recovered", "Wiederbelebt");
         initString("lang.remove", "Entfernen");
         initString("lang.replay", "Wiederholen");
@@ -121,7 +124,6 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
         initString("lang.task", "Aufgabe");
-        initString("lang.events", "Ereignisse");
         initString("lang.task.manager", "Ereigniseditor");
         initString("lang.tasks.fullfilled", "Abgelaufene Aufgaben");
         initString("lang.tasks.global", "Globale Aufgaben");
@@ -129,15 +131,15 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time", "Zeit");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
+        initString("lang.timed.global", "Globale Ereignisse");
+        initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.type", "Typ");
+        initString("lang.value", "Wert");
+        initString("lang.variable", "Variable");
+        initString("lang.variables", "Variablen");
+        initString("lang.variables.global", "Globale Variablen");
         initString("lang.window.close", "Fenster schliessen");
         initString("lang.window.new", "Neues Fenster");
-        initString("lang.name", "VS-Simulator v0.2-devel");
-        initString("lang.prefs.simulation", "Simulationseinstellungen");
-        initString("lang.prefs.process", "Prozessstandardeinstellungen");
-        initString("lang.prefs.message", "Nachrichteneinstellungen");
-        initString("lang.prefs.diverse", "Diverse Einstellungen");
-        initString("lang.prefs.color", "Farbeinstellungen");
     }
 
     public void fillDefaultIntegers() {

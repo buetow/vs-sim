@@ -822,15 +822,7 @@ public class VSSimulation extends JPanel {
     }
 
     private int getSelectedProcessNum() {
-        try {
-            String string = (String) processesComboBox.getSelectedItem();
-            int cutLen = prefs.getString("lang.process").length() + 1;
-            string = string.substring(cutLen);
-            return Integer.parseInt(string) - 1;
-        } catch (NumberFormatException e) {
-        }
-
-        return simulationCanvas.getNumProcesses();
+        return processesComboBox.getSelectedIndex();
     }
 
     private VSProcess getSelectedProcess() {
@@ -879,13 +871,20 @@ public class VSSimulation extends JPanel {
         return simulationCanvas;
     }
 
-    public VSFrame getSimulatorFrame() {
+    public VSSimulatorFrame getSimulatorFrame() {
         return simulatorFrame;
     }
 
     public void updateFromPrefs() {
         simulationCanvas.setBackground(prefs.getColor("col.background"));
         simulationCanvas.updateFromPrefs();
+    }
+
+    public void removeProcessAtIndex(int index) {
+        globalPIDComboBox.removeItemAt(index);
+        localPIDComboBox.removeItemAt(index);
+        processesComboBox.removeItemAt(index);
+        simulatorFrame.updateEditMenu();
     }
 
     public void fireExpertModeChanged() {
