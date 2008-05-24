@@ -346,7 +346,6 @@ public class VSSimulation extends JPanel {
 
                 if (processNum == simulationCanvas.getNumProcesses()) {
                     tabbedPane.setEnabledAt(1, false);
-                    tabbedPane.setEnabledAt(2, false);
                     if (tabbedPane.getSelectedIndex() == 1)
                         tabbedPane.setSelectedIndex(0);
 
@@ -358,14 +357,11 @@ public class VSSimulation extends JPanel {
                     VSProcess process = getSelectedProcess();
                     VSProcessEditor processEditor = new VSProcessEditor(prefs, process);
                     tabbedPane.setComponentAt(1, processEditor.getContentPane());
-					VSProtocolsEditor protocolsEditor = new VSProtocolsEditor(prefs, process);
-                    tabbedPane.setComponentAt(2, protocolsEditor.getContentPane());
                 }
             }
         });
 
         tabbedPane.add(prefs.getString("lang.variables"), null);
-        tabbedPane.add(prefs.getString("lang.protocols"), null);
 
         editPanel.add(processesComboBox);
         editPanel.add(tabbedPane);
