@@ -216,6 +216,29 @@ public class VSTaskManager {
         return false;
     }
 
+    public synchronized void removeTasksOf(VSProcess process) {
+        ArrayList<VSTask> removeThose = new ArrayList<VSTask>();
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (task.isProcess(process))
+                removeThose.add(task);
+        for (VSTask task : removeThose)
+            fullfilledProgrammedTasks.remove(task);
+
+        removeThose.clear();
+        for (VSTask task : globalTasks)
+            if (task.isProcess(process))
+                removeThose.add(task);
+        for (VSTask task : removeThose)
+            globalTasks.remove(task);
+
+        removeThose.clear();
+        for (VSTask task : tasks)
+            if (task.isProcess(process))
+                removeThose.add(task);
+        for (VSTask task : removeThose)
+            tasks.remove(task);
+    }
+
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 

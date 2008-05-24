@@ -11,7 +11,7 @@ public class VSLogging {
     private String filterText;
     private ArrayList<StringBuffer> pauseLines;
     private ArrayList<StringBuffer> loggingLines;
-    private VSSimulationCanvas simulationCanvas;
+    private VSSimulatorCanvas simulationCanvas;
     private boolean isFiltered;
     private boolean isPaused;
     private Pattern filterPattern;
@@ -26,7 +26,7 @@ public class VSLogging {
         filterText = "";
     }
 
-    public void setSimulationCanvas(VSSimulationCanvas simulationCanvas) {
+    public void setSimulationCanvas(VSSimulatorCanvas simulationCanvas) {
         this.simulationCanvas = simulationCanvas;
     }
 

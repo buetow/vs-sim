@@ -17,7 +17,7 @@ import prefs.editors.*;
 import protocols.*;
 import utils.*;
 
-public class VSSimulation extends JPanel {
+public class VSSimulator extends JPanel {
     private ArrayList<String> globalTextFields;
     private ArrayList<String> localTextFields;
     private ArrayList<VSCreateTask> createTasks;
@@ -44,7 +44,7 @@ public class VSSimulation extends JPanel {
     private VSLogging logging;
     private VSMenuItemStates menuItemStates;
     private VSPrefs prefs;
-    private VSSimulationCanvas simulationCanvas;
+    private VSSimulatorCanvas simulationCanvas;
     private VSSimulatorFrame simulatorFrame;
     private VSTaskManager taskManager;
     private VSTaskManagerTableModel taskManagerGlobalModel;
@@ -100,7 +100,7 @@ public class VSSimulation extends JPanel {
         }
     }
 
-    public VSSimulation(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
+    public VSSimulator(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         this.prefs = prefs;
         this.simulatorFrame = simulatorFrame;
         this.logging = new VSLogging();
@@ -141,7 +141,7 @@ public class VSSimulation extends JPanel {
         splitPaneH = new JSplitPane();
         splitPaneV = new JSplitPane();
 
-        simulationCanvas = new VSSimulationCanvas(prefs, this, logging);
+        simulationCanvas = new VSSimulatorCanvas(prefs, this, logging);
         taskManager = simulationCanvas.getTaskManager();
         logging.setSimulationCanvas(simulationCanvas);
 
@@ -863,11 +863,11 @@ public class VSSimulation extends JPanel {
         return simulationNum;
     }
 
-    public VSSimulation.VSMenuItemStates getMenuItemStates() {
+    public VSSimulator.VSMenuItemStates getMenuItemStates() {
         return menuItemStates;
     }
 
-    public VSSimulationCanvas getSimulationCanvas() {
+    public VSSimulatorCanvas getSimulationCanvas() {
         return simulationCanvas;
     }
 
@@ -881,9 +881,32 @@ public class VSSimulation extends JPanel {
     }
 
     public void removeProcessAtIndex(int index) {
+        if (lastSelectedProcessNum >= index)
+            --lastSelectedProcessNum;
+        if (lastSelectedProcessNum < 0)
+            lastSelectedProcessNum = 0;
+
+        globalTextFields.remove(index);
+        localTextFields.remove(index);
+
         globalPIDComboBox.removeItemAt(index);
         localPIDComboBox.removeItemAt(index);
+
         processesComboBox.removeItemAt(index);
+        simulatorFrame.updateEditMenu();
+    }
+
+    public void addProcessAtIndex(int index) {
+        int processID = simulationCanvas.getProcess(index).getProcessID();
+        String processString = prefs.getString("lang.process");
+
+        localTextFields.add(index, "0000");
+        globalTextFields.add(index, "0000");
+
+        localPIDComboBox.insertItemAt("PID: " + processID, index);
+        globalPIDComboBox.insertItemAt("PID: " + processID, index);
+
+        processesComboBox.insertItemAt(processString + " " + processID, index);
         simulatorFrame.updateEditMenu();
     }
 

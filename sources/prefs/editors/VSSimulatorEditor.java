@@ -12,13 +12,13 @@ import simulator.*;
 import utils.*;
 import prefs.*;
 
-public class VSSimulationEditor extends VSBetterEditor {
+public class VSSimulatorEditor extends VSBetterEditor {
     private VSSimulatorFrame simulatorFrame;
-    private VSSimulation simulation;
+    private VSSimulator simulation;
     public static boolean TAKEOVER_BUTTON;
     private boolean dontStartNewSimulation;
 
-    public VSSimulationEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame, VSSimulation simulation) {
+    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame, VSSimulator simulation) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.dontStartNewSimulation = true;//simulation != null;
@@ -26,7 +26,7 @@ public class VSSimulationEditor extends VSBetterEditor {
         this.simulation = simulation;
     }
 
-    public VSSimulationEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
+    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
@@ -66,7 +66,7 @@ public class VSSimulationEditor extends VSBetterEditor {
                     simulation.fireExpertModeChanged();
             }
             if (!dontStartNewSimulation)
-                simulatorFrame.addSimulation(new VSSimulation(prefsToEdit, simulatorFrame));
+                simulatorFrame.addSimulation(new VSSimulator(prefsToEdit, simulatorFrame));
             else if (simulation != null)
                 simulation.updateFromPrefs();
 

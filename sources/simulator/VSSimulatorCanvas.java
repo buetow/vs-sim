@@ -16,9 +16,9 @@ import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
-public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
+public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
     private VSProcess highlightedProcess;
-    private VSSimulation simulation;
+    private VSSimulator simulation;
     private VSPrefs prefs;
     private VSLogging logging;
     private volatile int numProcesses;
@@ -65,7 +65,9 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
     private Color messageArrivedColor;
     private Color messageSendingColor;
     private Color messageLostColor;
+    private Color backgroundColor;
 
+    private long messageLineCounter;
     private class VSMessageLine {
         private VSProcess receiverProcess;
         private Color color;
@@ -85,8 +87,10 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         private double y;
         private long outageTime;
         private long z;
+        private long messageLineNum;
+        private VSTask task;
 
-        public VSMessageLine(VSProcess receiverProcess, long sendTime, long recvTime, long outageTime, int senderNum , int receiverNum) {
+        public VSMessageLine(VSProcess receiverProcess, long sendTime, long recvTime, long outageTime, int senderNum , int receiverNum, VSTask task) {
             this.receiverProcess = receiverProcess;
             this.sendTime = sendTime;
             this.recvTime = recvTime;
@@ -95,6 +99,8 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
             this.receiverNum = receiverNum;
             this.isArrived = false;
             this.isLost = false;
+            this.messageLineNum = ++messageLineCounter;
+            this.task = task;
 
             if (senderNum > receiverNum) {
                 //offset1 = 1;
@@ -106,7 +112,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
             /* Needed if the message gets lost after 0ms */
             this.x = getTimeXPosition(sendTime);
-            this.y = getProcessYPosition(senderNum) + offset1;
+            this.y = getProcessYPosition(senderNum+1) + offset1;
 
             recalcOnChange();
             paint();
@@ -114,9 +120,9 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
         public void recalcOnChange() {
             x1 = getTimeXPosition(sendTime);
-            y1 = getProcessYPosition(senderNum) + offset1;
+            y1 = getProcessYPosition(senderNum+1) + offset1;
             x2 = getTimeXPosition(recvTime);
-            y2 = getProcessYPosition(receiverNum) + offset2;
+            y2 = getProcessYPosition(receiverNum+1) + offset2;
 
             if (isLost) {
                 x = getTimeXPosition(z);
@@ -154,9 +160,36 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
                 g.drawLine((int) x1, (int) y1, (int) x, (int) y);
             }
         }
+
+        public boolean removeProcessAtIndex(int index) {
+            if (index == receiverNum || index == senderNum)
+                return true;
+
+            if (index < receiverNum)
+                --receiverNum;
+
+            if (index < senderNum)
+                --senderNum;
+
+            recalcOnChange();
+
+            return false;
+        }
+
+        public long getMessageLineNum() {
+            return messageLineNum;
+        }
+
+        public boolean equals(VSMessageLine line) {
+            return messageLineNum == line.getMessageLineNum();
+        }
+
+        public VSTask getTask() {
+            return task;
+        }
     }
 
-    public VSSimulationCanvas(VSPrefs prefs, VSSimulation simulation, VSLogging logging) {
+    public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulation, VSLogging logging) {
         this.prefs = prefs;
         this.simulation = simulation;
         this.logging = logging;
@@ -169,7 +202,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
         VSProcess.resetProcessCounter();
         for (int i = 0; i < numProcesses; ++i)
-            addProcess();
+            processes.add(createProcess(i));
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -199,6 +232,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         messageArrivedColor = prefs.getColor("col.message.arrived");
         messageSendingColor = prefs.getColor("col.message.sending");
         messageLostColor = prefs.getColor("col.message.lost");
+        backgroundColor = prefs.getColor("col.background");
 
         paintSize = simulation.getPaintSize();
         xPaintSize = simulation.getWidth() - (3 * XOFFSET + simulation.getSplitSize());
@@ -235,19 +269,11 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         if (strategy != null) {
             synchronized (strategy) {
                 g = (Graphics2D) strategy.getDrawGraphics();
-                g.setColor(Color.WHITE);
+                g.setColor(backgroundColor);
                 if (isAntiAliased)
                     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             }
         }
-    }
-
-    public VSProcess addProcess() {
-        VSProcess process = new VSProcess(prefs, this, logging);
-        processes.add(process);
-        logging.logg(prefs.getString("lang.process.new") + "; " + process);
-
-        return process;
     }
 
     private void updateSimulation(final long globalTime, final long lastGlobalTime) {
@@ -285,7 +311,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
             if (strategy != null) {
                 g = (Graphics2D) strategy.getDrawGraphics();
-                g.setColor(Color.WHITE);
+                g.setColor(backgroundColor);
             }
         }
 
@@ -311,7 +337,7 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
                     line.draw(g, globalTime);
             }
 
-            g.setColor(Color.WHITE);
+            g.setColor(backgroundColor);
 
             strategy.show();
         }
@@ -696,8 +722,8 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
                     synchronized (messageLines) {
                         messageLines.add(
                             new VSMessageLine(receiverProcess, sendingProcess.getGlobalTime(),
-                                              deliverTime, outageTime, sendingProcess.getProcessID(),
-                                              receiverProcess.getProcessID()));
+                                              deliverTime, outageTime, sendingProcess.getProcessNum(),
+                                              receiverProcess.getProcessNum(), task));
                     }
                 }
             }
@@ -706,9 +732,6 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
     public void mouseClicked(MouseEvent me) {
         final VSProcess process = getProcessAtYPos(me.getY());
-
-        if (process == null)
-            return;
 
         if (SwingUtilities.isRightMouseButton(me)) {
             ActionListener actionListener = new ActionListener() {
@@ -719,16 +742,17 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.crash"))) {
                         VSEvent event = new ProcessCrashEvent();
-                        //event.init(process);
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.recover"))) {
                         VSEvent event = new ProcessRecoverEvent();
-                        //event.init(process);
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.remove"))) {
                         removeProcess(process);
+
+                    } else if (actionCommand.equals(prefs.getString("lang.process.add.new"))) {
+                        addProcess();
                     }
                 }
             };
@@ -736,28 +760,39 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
 
             JPopupMenu popup = new JPopupMenu();
             JMenuItem item = new JMenuItem(prefs.getString("lang.process.edit"));
-            item.addActionListener(actionListener);
+            if (process == null)
+                item.setEnabled(false);
+            else
+                item.addActionListener(actionListener);
             popup.add(item);
 
             item = new JMenuItem(prefs.getString("lang.process.crash"));
-            if (process.isCrashed() || isPaused || time == 0 || isFinished)
+            if (process == null || process.isCrashed() || isPaused || time == 0 || isFinished)
                 item.setEnabled(false);
             else
                 item.addActionListener(actionListener);
             popup.add(item);
 
             item = new JMenuItem(prefs.getString("lang.process.recover"));
-            if (!process.isCrashed() || isPaused || time == 0 || isFinished)
+            if (process == null || !process.isCrashed() || isPaused || time == 0 || isFinished)
                 item.setEnabled(false);
             else
                 item.addActionListener(actionListener);
             popup.add(item);
 
             item = new JMenuItem(prefs.getString("lang.process.remove"));
-            item.addActionListener(actionListener);
+            if (process == null)
+                item.setEnabled(false);
+            else
+                item.addActionListener(actionListener);
             popup.add(item);
 
             popup.addSeparator();
+
+            item = new JMenuItem(prefs.getString("lang.process.add.new"));
+            item.addActionListener(actionListener);
+            popup.add(item);
+
 
             popup.show(me.getComponent(), me.getX(), me.getY());
 
@@ -860,16 +895,55 @@ public class VSSimulationCanvas extends Canvas implements Runnable, MouseMotionL
         recalcOnChange();
     }
 
-    public void removeProcess(VSProcess process) {
+    private void removeProcess(VSProcess process) {
         if (numProcesses == 1) {
             simulation.getSimulatorFrame().removeSimulation(simulation);
 
         } else {
             int index = processes.indexOf(process);
             processes.remove(index);
+            synchronized (processes) {
+                for (VSProcess p : processes) {
+                    p.removeProcessAtIndex(index);
+                }
+            }
             numProcesses = processes.size();
-            recalcOnChange();
             simulation.removeProcessAtIndex(index);
+            recalcOnChange();
+
+            ArrayList<VSMessageLine> removeThose = new ArrayList<VSMessageLine>();
+            synchronized (messageLines) {
+                for (VSMessageLine line : messageLines)
+                    if (line.removeProcessAtIndex(index))
+                        removeThose.add(line);
+                for (VSMessageLine line : removeThose) {
+                    VSTask deliverTask = line.getTask();
+                    if (deliverTask != null)
+                        taskManager.removeTask(deliverTask);
+                    messageLines.remove(line);
+                }
+            }
+
+            taskManager.removeTasksOf(process);
         }
+    }
+
+    private VSProcess createProcess(int processNum) {
+        VSProcess process = new VSProcess(prefs, processNum, this, logging);
+        logging.logg(prefs.getString("lang.process.new") + "; " + process);
+        return process;
+    }
+
+    private void addProcess() {
+        numProcesses = processes.size() + 1;
+        VSProcess newProcess = createProcess(processes.size());
+        processes.add(newProcess);
+        synchronized (processes) {
+            for (VSProcess process : processes)
+                if (!process.equals(newProcess))
+                    process.addedAProcess();
+        }
+        recalcOnChange();
+        simulation.addProcessAtIndex(processes.size()-1);
     }
 }

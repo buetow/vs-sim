@@ -22,7 +22,7 @@ public class VSProcess extends VSPrefs {
     private VSLogging logging;
     private VSPrefs prefs;
     private VSRandom random;
-    private VSSimulationCanvas simulationCanvas;
+    private VSSimulatorCanvas simulationCanvas;
     private VSTask randomCrashTask;
     private VSVectorTime vectorTime;
     private boolean hasCrashed;
@@ -33,7 +33,8 @@ public class VSProcess extends VSPrefs {
     private boolean timeModified;
     private double clockOffset;
     private float clockVariance;
-    private int processID;
+    private int processID; // Represents the PID of a process
+    private int processNum; // Represents the array index of the process, for internal usage
     private long globalTime;
     private long lamportTime;
     private long localTime;
@@ -84,8 +85,9 @@ public class VSProcess extends VSPrefs {
     private static final String DEFAULT_STRING_VALUE_KEYS[] = {
     };
 
-    public VSProcess(VSPrefs prefs, VSSimulationCanvas simulationCanvas, VSLogging logging) {
+    public VSProcess(VSPrefs prefs, int processNum, VSSimulatorCanvas simulationCanvas, VSLogging logging) {
         this.protocolsToReset = new ArrayList<VSProtocol>();
+        this.processNum = processNum;
         this.prefs = prefs;
         this.simulationCanvas = simulationCanvas;
         this.logging = logging;
@@ -257,6 +259,10 @@ public class VSProcess extends VSPrefs {
         return processID;
     }
 
+    public synchronized int getProcessNum() {
+        return processNum;
+    }
+
     public synchronized void setProcessID(int processID) {
         this.processID = processID;
     }
@@ -418,7 +424,7 @@ public class VSProcess extends VSPrefs {
     }
 
     public synchronized void increaseVectorTime() {
-        vectorTime.set(processID-1, new Long(vectorTime.get(processID-1).longValue()+1));
+        vectorTime.set(processNum, new Long(vectorTime.get(processNum).longValue()+1));
         vectorTime.setGlobalTime(globalTime);
         vectorTimeHistory.add(vectorTime.getCopy());
     }
@@ -427,7 +433,7 @@ public class VSProcess extends VSPrefs {
         final int size = vectorTime.size();
 
         for (int i = 0; i < size; ++i) {
-            if (i == processID-1)
+            if (i == processNum)
                 vectorTime.set(i, new Long(vectorTime.get(i).longValue()+1));
             else if (vectorTimeUpdate.get(i) > vectorTime.get(i))
                 vectorTime.set(i, vectorTimeUpdate.get(i));
@@ -518,7 +524,7 @@ public class VSProcess extends VSPrefs {
         return process.getProcessID() == processID;
     }
 
-    public VSSimulationCanvas getSimulationCanvas() {
+    public VSSimulatorCanvas getSimulationCanvas() {
         return simulationCanvas;
     }
 
@@ -528,6 +534,21 @@ public class VSProcess extends VSPrefs {
 
     public static void resetProcessCounter() {
         processCounter = 0;
+    }
+
+    public void removeProcessAtIndex(int index) {
+        if (index < processNum)
+            --processNum;
+
+        vectorTime.remove(index);
+        for (VSVectorTime vectorTime : vectorTimeHistory)
+            vectorTime.remove(index);
+    }
+
+    public void addedAProcess() {
+        vectorTime.add(new Long(0));
+        for (VSVectorTime vectorTime : vectorTimeHistory)
+            vectorTime.add(new Long(0));
     }
 
     public VSProtocol getProtocolObject(String protocolClassname) {

@@ -49,4 +49,11 @@ public class VSVectorTime extends ArrayList<Long> implements VSTime {
 
         return buffer.toString();
     }
+
+    public Long get(int index) {
+        if (index >= super.size())
+            return new Long(0);
+
+        return super.get(index);
+    }
 }

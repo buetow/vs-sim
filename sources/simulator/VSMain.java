@@ -19,7 +19,7 @@ public class VSMain {
 
     private void init(VSPrefs prefs, Component relativeTo) {
         VSSimulatorFrame simulatorFrame = new VSSimulatorFrame(prefs, relativeTo);
-        new VSEditorFrame(prefs, relativeTo, new VSSimulationEditor(prefs, simulatorFrame));
+        new VSEditorFrame(prefs, relativeTo, new VSSimulatorEditor(prefs, simulatorFrame));
     }
 
     public static void main(String[] args) {

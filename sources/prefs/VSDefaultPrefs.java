@@ -88,6 +88,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.protocols", "Protokolleinstellungen");
         initString("lang.prefs.simulation", "Simulationseinstellungen");
         initString("lang.process", "Prozess");
+        initString("lang.process.add.new", "Neuen Prozess hinzufügen");
         initString("lang.process.crash", "Prozess abstürzen");
         initString("lang.process.remove", "Prozess entfernen");
         initString("lang.process.edit", "Prozess editieren");
