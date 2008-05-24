@@ -10,6 +10,7 @@ public final class VSRegisteredEvents {
     private static HashMap<String,String> eventClassnames;
     private static HashMap<String,String> eventShortnames;
     private static HashMap<String,String> eventNames;
+    private static ArrayList<String> editableProtocolsClassnames;
     private static VSPrefs prefs;
 
     public static void init(VSPrefs prefs_) {
@@ -17,6 +18,7 @@ public final class VSRegisteredEvents {
         eventNames = new HashMap<String, String>();
         eventShortnames = new HashMap<String, String>();
         eventClassnames = new HashMap<String, String>();
+        editableProtocolsClassnames = new ArrayList<String>();
 
         registerEvent("events.implementations.ProcessCrashEvent", "Prozessabsturz", null);
         registerEvent("events.implementations.ProcessRecoverEvent", "Prozesswiederbelebung", null);
@@ -26,6 +28,22 @@ public final class VSRegisteredEvents {
         registerEvent("protocols.implementations.ExternalTimeSyncProtocol", "Christians Methode zur externen Sync.", "Christians");
         registerEvent("protocols.implementations.InternalTimeSyncProtocol", "Interne Synchronisation", "Interne Sync.");
         registerEvent("protocols.implementations.PingPongProtocol", "Ping Pong", null);
+
+        /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
+        Vector<String> protocolClassnames = getProtocolClassnames();
+        VSClassLoader classLoader = new VSClassLoader();
+        for (String protocolClassname : protocolClassnames) {
+            Object object = classLoader.newInstance(protocolClassname);
+            if (object instanceof protocols.VSProtocol) {
+                protocols.VSProtocol protocol = (protocols.VSProtocol) object;
+                if (!protocol.isEmpty())
+                    editableProtocolsClassnames.add(protocolClassname);
+            }
+        }
+    }
+
+    public static ArrayList<String> getEditableProtocolsClassnames() {
+        return editableProtocolsClassnames;
     }
 
     public static Vector<String> getProtocolNames() {

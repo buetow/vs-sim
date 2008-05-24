@@ -23,7 +23,7 @@ public class VSProcessEditor extends VSBetterEditor {
         super(prefs, process, prefs.getString("lang.name") + " - " + prefs.getString("lang.prefs.process"));;
         this.process = process;
         disposeFrameWithParentIfExists();
-        getInfoArea().setText(prefs.getString("lang.prefs.process.info!"));
+        makeProtocolVariablesEditable();
     }
 
     protected void addToButtonPanelFront(JPanel buttonPanel) {
@@ -32,6 +32,18 @@ public class VSProcessEditor extends VSBetterEditor {
         takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
         takeoverButton.addActionListener(this);
         buttonPanel.add(takeoverButton);
+    }
+
+    protected void makeProtocolVariablesEditable() {
+        ArrayList<String> editableProtocolsClassnames =
+            VSRegisteredEvents.getEditableProtocolsClassnames();
+
+        String protocolString = " " + prefs.getString("lang.protocol");
+        for (String protocolClassname : editableProtocolsClassnames) {
+            String protocolShortname = VSRegisteredEvents.getShortname(protocolClassname);
+            VSProtocol protocol = process.getProtocolObject(protocolClassname);
+            addToEditor(protocolShortname + protocolString, protocolShortname, protocol);
+        }
     }
 
     public void actionPerformed(ActionEvent e) {

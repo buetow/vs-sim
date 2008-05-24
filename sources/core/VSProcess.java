@@ -11,7 +11,7 @@ import protocols.*;
 import simulator.*;
 import utils.*;
 
-public final class VSProcess extends VSPrefs {
+public class VSProcess extends VSPrefs {
     private ArrayList<VSProtocol> protocolsToReset;
     private ArrayList<Long> crashHistory;
     private ArrayList<VSLamportTime> lamportTimeHistory;

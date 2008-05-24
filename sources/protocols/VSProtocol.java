@@ -10,6 +10,9 @@ abstract public class VSProtocol extends VSEvent {
     private boolean currentContextIsServer;
 
     protected void sendMessage(VSMessage message) {
+        if (process == null)
+            return;
+
         process.increaseLamportTime();
         process.increaseVectorTime();
         message.init(process);
@@ -72,10 +75,16 @@ abstract public class VSProtocol extends VSEvent {
     abstract protected void onServerRecv(VSMessage message);
 
     protected int getNumProcesses() {
+        if (process == null)
+            return 0;
+
         return process.getSimulationCanvas().getNumProcesses();
     }
 
     public String toString() {
+        if (process == null)
+            return "";
+
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(prefs.getString("lang.protocol"));

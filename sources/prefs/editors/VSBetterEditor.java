@@ -50,6 +50,7 @@ public abstract class VSBetterEditor extends VSEditor {
 
     protected void addToButtonPanelFront(JPanel buttonPanel) { }
     protected void addToButtonPanelLast(JPanel buttonPanel) { }
+    protected void addToEditTableLast() { }
 
     public void actionPerformed(ActionEvent e) {
         //String actionCommand = e.getActionCommand();

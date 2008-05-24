@@ -13,33 +13,38 @@ import utils.*;
 import prefs.VSPrefs;
 
 public abstract class VSEditor implements ActionListener {
-    protected static final int VALUE_FIELD_COLS = 9;
-    protected static final int MIN_UNIT_LENGTH = 5;
-    private HashMap<String,JComboBox> integerFields;
-    private HashMap<String,JTextField> colorFields;
-    private HashMap<String,JTextField> floatFields;
-    private HashMap<String,JTextField> longFields;
-    private HashMap<String,JCheckBox> booleanFields;
-    private HashMap<String,JTextField> stringFields;
+    private ArrayList<String> booleanKeys;
     private ArrayList<String> colorKeys;
     private ArrayList<String> floatKeys;
     private ArrayList<String> integerKeys;
     private ArrayList<String> longKeys;
-    private ArrayList<String> booleanKeys;
     private ArrayList<String> stringKeys;
+    private HashMap<String,JCheckBox> booleanFields;
+    private HashMap<String,JComboBox> integerFields;
+    private HashMap<String,JTextField> colorFields;
+    private HashMap<String,JTextField> floatFields;
+    private HashMap<String,JTextField> longFields;
+    private HashMap<String,JTextField> stringFields;
+    private HashMap<String,VSPrefs> prefsToEditMap;
     private JPanel buttonPanel;
     private JPanel editPanel;
+    private VSEditorTable editTable;
+    private VSFrame frame;
+    private boolean expertModeChanged;
     protected VSPrefs prefs;
     protected VSPrefs prefsToEdit;
+    protected static final int MIN_UNIT_LENGTH = 5;
+    protected static final int VALUE_FIELD_COLS = 9;
     public static final int ALL_PREFERENCES = 0;
     public static final int SIMULATION_PREFERENCES = 1;
-    private VSFrame frame;
-    protected VSEditorTable editTable;
-    private boolean expertModeChanged;
 
     public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
         init(prefs, prefsToEdit);
     }
+
+    abstract protected void addToButtonPanelFront(JPanel buttonPanel);
+    abstract protected void addToButtonPanelLast(JPanel buttonPanel);
+    abstract protected void addToEditTableLast();
 
     public void setPrefs(VSPrefs prefs) {
         this.prefs = prefs;
@@ -74,12 +79,8 @@ public abstract class VSEditor implements ActionListener {
         editPanel = createEditPanel();
         buttonPanel = createButtonPanel();
 
-        colorKeys = filterKeys(prefsToEdit.getColorKeySet());
-        floatKeys = filterKeys(prefsToEdit.getFloatKeySet());
-        integerKeys = filterKeys(prefsToEdit.getIntegerKeySet());
-        longKeys = filterKeys(prefsToEdit.getLongKeySet());
-        booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
-        stringKeys = filterKeys(prefsToEdit.getStringKeySet());
+        prefsToEditMap = new HashMap<String,VSPrefs>();
+
         colorFields = new HashMap<String,JTextField>();
         floatFields = new HashMap<String,JTextField>();
         integerFields = new HashMap<String,JComboBox>();
@@ -87,7 +88,14 @@ public abstract class VSEditor implements ActionListener {
         booleanFields = new HashMap<String,JCheckBox>();
         stringFields = new HashMap<String,JTextField>();
 
-        fillEditPanel(editPanel, editTable);
+        colorKeys = filterKeys(prefsToEdit.getColorKeySet());
+        floatKeys = filterKeys(prefsToEdit.getFloatKeySet());
+        integerKeys = filterKeys(prefsToEdit.getIntegerKeySet());
+        longKeys = filterKeys(prefsToEdit.getLongKeySet());
+        booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
+        stringKeys = filterKeys(prefsToEdit.getStringKeySet());
+
+        fillEditPanel(prefsToEdit);
     }
 
     private ArrayList<String> filterKeys(Set<String> set) {
@@ -105,9 +113,6 @@ public abstract class VSEditor implements ActionListener {
 
         return filtered;
     }
-
-    abstract protected void addToButtonPanelFront(JPanel buttonPanel);
-    abstract protected void addToButtonPanelLast(JPanel buttonPanel);
 
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
@@ -158,147 +163,175 @@ public abstract class VSEditor implements ActionListener {
         return editPanel;
     }
 
-    private void fillEditPanel(JPanel editPanel, VSEditorTable editTable) {
+    protected VSTupel<String,Component,JComboBox> createIntegerComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        Integer integer = prefsToEdit.getInteger(key);
+        Integer initialSelection[] = { integer };
+        JComboBox valComboBox = new JComboBox(initialSelection);
+        VSPrefs.SettingRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
+
+        int minValue, maxValue;
+        if (settingRestriction != null) {
+            VSPrefs.IntegerSettingRestriction integerSettingRestriction =
+                (VSPrefs.IntegerSettingRestriction) settingRestriction;
+            minValue = integerSettingRestriction.getMinValue();
+            maxValue = integerSettingRestriction.getMaxValue();
+
+        } else {
+            minValue = 0;
+            maxValue = 100;
+        }
+
+        for (int i = minValue; i <= maxValue; ++i)
+            valComboBox.addItem(new Integer(i));
+        valComboBox.setBorder(null);
+
+        return new VSTupel<String,Component,JComboBox>(label, createUnitPanel(valComboBox, fullKey), valComboBox);
+    }
+
+    protected VSTupel<String,Component,JCheckBox> createBooleanComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        final String activated = prefs.getString("lang.activated");
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
+        valField.setBackground(Color.WHITE);
+        valField.setBorder(null);
+        return new VSTupel<String,Component,JCheckBox>(label, createUnitPanel(valField, fullKey), valField);
+    }
+
+    protected VSTupel<String,Component,JTextField> createLongComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        JTextField valField = new JTextField(VALUE_FIELD_COLS);
+        valField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                JTextField valField = (JTextField)e.getSource();
+                if (valField.getText().length() >= valField.getColumns() + 10)
+                    e.consume();
+            }
+        });
+        valField.setText(""+prefsToEdit.getLong(key));
+        valField.setBorder(null);
+        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+    }
+
+    protected VSTupel<String,Component,JTextField> createFloatComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        JTextField valField = new JTextField(VALUE_FIELD_COLS);
+        valField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                JTextField valField = (JTextField)e.getSource();
+                if (valField.getText().length() >= valField.getColumns() + 10)
+                    e.consume();
+            }
+        });
+        valField.setText(""+prefsToEdit.getFloat(key));
+        valField.setBorder(null);
+        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+    }
+
+    protected VSTupel<String,Component,JTextField> createColorComponent(String fullKey, String key, final VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        final JTextField valField = new JTextField(VALUE_FIELD_COLS);
+        Color color = prefsToEdit.getColor(key);
+        valField.setBackground(color);
+        valField.setEditable(false);
+        valField.addMouseListener(new MouseListener() {
+            public void mouseExited(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mousePressed(MouseEvent e) { }
+            public void mouseClicked(MouseEvent e) {
+                JFrame parentFrame = getFrame();
+                JFrame frame = new VSFrame(
+                    prefs.getString("lang.name") + " - " +
+                    prefs.getString(
+                        "lang.colorchooser"),parentFrame);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                JComponent colorChooserPane = new VSColorChooser(prefs, valField);
+                colorChooserPane.setOpaque(true);
+
+                frame.setContentPane(colorChooserPane);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        valField.setBorder(null);
+        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+    }
+
+    protected VSTupel<String,Component,JTextField> createStringComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        JTextField valField = new JTextField(VALUE_FIELD_COLS);
+        valField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                JTextField valField = (JTextField)e.getSource();
+                if (valField.getText().length() >= valField.getColumns() + 10)
+                    e.consume();
+            }
+        });
+        valField.setText(prefsToEdit.getString(key));
+        valField.setBorder(null);
+        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+    }
+
+    private void fillEditPanel(VSPrefs prefsToEdit) {
         HashMap<String,Component> components = new HashMap<String,Component>();
         HashMap<String,String> labels = new HashMap<String,String>();
 
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            Integer integer = prefsToEdit.getInteger(key);
-            Integer initialSelection[] = { integer };
-            JComboBox valComboBox = new JComboBox(initialSelection);
-            VSPrefs.SettingRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
-
-            int minValue, maxValue;
-            if (settingRestriction != null) {
-                VSPrefs.IntegerSettingRestriction integerSettingRestriction =
-                    (VSPrefs.IntegerSettingRestriction) settingRestriction;
-                minValue = integerSettingRestriction.getMinValue();
-                maxValue = integerSettingRestriction.getMaxValue();
-            } else {
-                minValue = 0;
-                maxValue = 100;
-            }
-
-            for (int i = minValue; i <= maxValue; ++i)
-                valComboBox.addItem(new Integer(i));
-
-            integerFields.put(key, valComboBox);
-            valComboBox.setBorder(null);
-
-            labels.put(fullKey, label);
-            components.put(fullKey, createUnitPanel(valComboBox, fullKey));
+            VSTupel<String,Component,JComboBox> tupel = createIntegerComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            integerFields.put(key, tupel.getC());
         }
 
-        final String activated = prefs.getString("lang.activated");
         for (String key : booleanKeys) {
             String fullKey = VSPrefs.BOOLEAN_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
-            valField.setBackground(Color.WHITE);
-            booleanFields.put(key, valField);
-            valField.setBorder(null);
-
-            labels.put(fullKey, label);
-            components.put(fullKey, createUnitPanel(valField, fullKey));
+            VSTupel<String,Component,JCheckBox> tupel = createBooleanComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            booleanFields.put(key, tupel.getC());
         }
 
         for (String key : longKeys) {
             String fullKey = VSPrefs.LONG_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            JTextField valField = new JTextField(VALUE_FIELD_COLS);
-            valField.addKeyListener(new java.awt.event.KeyAdapter() {
-                public void keyTyped(java.awt.event.KeyEvent e) {
-                    JTextField valField = (JTextField)e.getSource();
-                    if (valField.getText().length() >= valField.getColumns() + 10)
-                        e.consume();
-                }
-            });
-            valField.setText(""+prefsToEdit.getLong(key));
-            longFields.put(key, valField);
-            valField.setBorder(null);
-
-            labels.put(fullKey, label);
-            components.put(fullKey, createUnitPanel(valField, fullKey));
+            VSTupel<String,Component,JTextField> tupel = createLongComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            longFields.put(key, tupel.getC());
         }
 
 
         for (String key : floatKeys) {
             String fullKey = VSPrefs.FLOAT_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            JTextField valField = new JTextField(VALUE_FIELD_COLS);
-            valField.addKeyListener(new java.awt.event.KeyAdapter() {
-                public void keyTyped(java.awt.event.KeyEvent e) {
-                    JTextField valField = (JTextField)e.getSource();
-                    if (valField.getText().length() >= valField.getColumns() + 10)
-                        e.consume();
-                }
-            });
-            valField.setText(""+prefsToEdit.getFloat(key));
-            floatFields.put(key, valField);
-            valField.setBorder(null);
-            labels.put(fullKey, label);
-            components.put(fullKey, createUnitPanel(valField, fullKey));
+            VSTupel<String,Component,JTextField> tupel = createFloatComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            floatFields.put(key, tupel.getC());
         }
 
 
         for (String key : colorKeys) {
             String fullKey = VSPrefs.COLOR_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            final JTextField valField = new JTextField(VALUE_FIELD_COLS);
-            Color color = prefsToEdit.getColor(key);
-            valField.setBackground(color);
-            valField.setEditable(false);
-            valField.addMouseListener(new MouseListener() {
-                public void mouseExited(MouseEvent e) { }
-                public void mouseReleased(MouseEvent e) { }
-                public void mouseEntered(MouseEvent e) { }
-                public void mousePressed(MouseEvent e) { }
-                public void mouseClicked(MouseEvent e) {
-                    JFrame parentFrame = getFrame();
-                    JFrame frame = new VSFrame(
-                        prefs.getString("lang.name") + " - " +
-                        prefs.getString(
-                            "lang.colorchooser"),parentFrame);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-                    JComponent colorChooserPane = new VSColorChooser(prefs, valField);
-                    colorChooserPane.setOpaque(true);
-
-                    frame.setContentPane(colorChooserPane);
-                    frame.pack();
-                    frame.setVisible(true);
-                }
-            });
-            colorFields.put(key, valField);
-            valField.setBorder(null);
-            labels.put(fullKey, label);
-            components.put(fullKey, valField);
+            VSTupel<String,Component,JTextField> tupel = createColorComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            colorFields.put(key, tupel.getC());
         }
 
         for (String key : stringKeys) {
             String fullKey = VSPrefs.STRING_PREFIX + key;
-            String descr = prefsToEdit.getDescription(fullKey);
-            String label = descr == null ? fullKey : descr;
-            JTextField valField = new JTextField(VALUE_FIELD_COLS);
-            valField.addKeyListener(new java.awt.event.KeyAdapter() {
-                public void keyTyped(java.awt.event.KeyEvent e) {
-                    JTextField valField = (JTextField)e.getSource();
-                    if (valField.getText().length() >= valField.getColumns() + 10)
-                        e.consume();
-                }
-            });
-            valField.setText(prefsToEdit.getString(key));
-            stringFields.put(key, valField);
-            valField.setBorder(null);
-            labels.put(fullKey, label);
-            components.put(fullKey, createUnitPanel(valField, fullKey));
+            VSTupel<String,Component,JTextField> tupel = createStringComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            stringFields.put(key, tupel.getC());
         }
 
         ArrayList<String> fullKeys = new ArrayList<String>();
@@ -311,9 +344,9 @@ public abstract class VSEditor implements ActionListener {
             if (key.startsWith("sim.")) {
                 if (!flag) {
                     flag = true;
-                    editTable.addSeparator(prefs.getString("lang.prefs.simulation"));
+                    addSeparator(prefs.getString("lang.prefs.simulation"));
                 }
-                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
         }
 
@@ -323,9 +356,9 @@ public abstract class VSEditor implements ActionListener {
             if (key.startsWith("process.")) {
                 if (!flag) {
                     flag = true;
-                    editTable.addSeparator(prefs.getString("lang.prefs.process"));
+                    addSeparator(prefs.getString("lang.prefs.process"));
                 }
-                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
         }
 
@@ -335,9 +368,9 @@ public abstract class VSEditor implements ActionListener {
             if (key.startsWith("message.")) {
                 if (!flag) {
                     flag = true;
-                    editTable.addSeparator(prefs.getString("lang.prefs.message"));
+                    addSeparator(prefs.getString("lang.prefs.message"));
                 }
-                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
         }
 
@@ -347,9 +380,9 @@ public abstract class VSEditor implements ActionListener {
             if (key.startsWith("col.")) {
                 if (!flag) {
                     flag = true;
-                    editTable.addSeparator(prefs.getString("lang.prefs.color"));
+                    addSeparator(prefs.getString("lang.prefs.color"));
                 }
-                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
         }
 
@@ -359,13 +392,88 @@ public abstract class VSEditor implements ActionListener {
             if (key.startsWith("div.")) {
                 if (!flag) {
                     flag = true;
-                    editTable.addSeparator(prefs.getString("lang.prefs.diverse"));
+                    addSeparator(prefs.getString("lang.prefs.diverse"));
                 }
-                editTable.addVariable(labels.get(fullKey), components.get(fullKey));
+                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
         }
 
+        addToEditTableLast();
         editTable.fireTableDataChanged();
+    }
+
+    protected void addToEditor(String label, String prefsKey, VSPrefs prefsToAdd) {
+        addSeparator(label);
+        prefsKey = "(" + prefsKey + ")";
+
+        ArrayList<String> fullKeys = new ArrayList<String>();
+
+        Set<String> integerKeys = prefsToAdd.getIntegerKeySet();
+        Set<String> floatKeys = prefsToAdd.getFloatKeySet();
+        Set<String> longKeys = prefsToAdd.getLongKeySet();
+        Set<String> booleanKeys = prefsToAdd.getBooleanKeySet();
+        Set<String> stringKeys = prefsToAdd.getStringKeySet();
+
+        for (String key : integerKeys) fullKeys.add(VSPrefs.INTEGER_PREFIX + key);
+        for (String key : floatKeys) fullKeys.add(VSPrefs.FLOAT_PREFIX + key);
+        for (String key : longKeys) fullKeys.add(VSPrefs.LONG_PREFIX + key);
+        for (String key : booleanKeys) fullKeys.add(VSPrefs.BOOLEAN_PREFIX + key);
+        for (String key : stringKeys) fullKeys.add(VSPrefs.STRING_PREFIX + key);
+
+        Collections.sort(fullKeys);
+
+        for (String fullKey : fullKeys) {
+            String key = fullKey.substring(fullKey.indexOf(": ") + 2);
+            if (fullKey.startsWith(VSPrefs.INTEGER_PREFIX)) {
+                VSTupel<String,Component,JComboBox> tupel =
+                    createIntegerComponent(fullKey, key, prefsToAdd);
+                this.integerKeys.add(prefsKey+key);
+                this.integerFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+
+            } else if (fullKey.startsWith(VSPrefs.BOOLEAN_PREFIX)) {
+                VSTupel<String,Component,JCheckBox> tupel =
+                    createBooleanComponent(fullKey, key, prefsToAdd);
+                this.booleanKeys.add(prefsKey + key);
+                this.booleanFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+
+            } else if (fullKey.startsWith(VSPrefs.LONG_PREFIX)) {
+                VSTupel<String,Component,JTextField> tupel =
+                    createLongComponent(fullKey, key, prefsToAdd);
+                this.longKeys.add(prefsKey+key);
+                this.longFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+
+            } else if (fullKey.startsWith(VSPrefs.FLOAT_PREFIX)) {
+                VSTupel<String,Component,JTextField> tupel =
+                    createFloatComponent(fullKey, key, prefsToAdd);
+                this.floatKeys.add(prefsKey + key);
+                this.floatFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+
+            } else if (fullKey.startsWith(VSPrefs.STRING_PREFIX)) {
+                VSTupel<String,Component,JTextField> tupel =
+                    createStringComponent(fullKey, key, prefsToAdd);
+                this.stringKeys.add(prefsKey + key);
+                this.stringFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+            }
+
+        }
+    }
+
+    private void addSeparator(String label) {
+        editTable.addSeparator(label);
+    }
+
+    private void addVariable(String label, Component component, VSPrefs prefs) {
+        addVariable("", label, component, prefs);
+    }
+
+    private void addVariable(String prefsKey, String label, Component component, VSPrefs prefs) {
+        prefsToEditMap.put(prefsKey, prefs);
+        editTable.addVariable(label, component);
     }
 
     protected void resetEditPanel() {
@@ -375,51 +483,75 @@ public abstract class VSEditor implements ActionListener {
         }
 
         for (String key : booleanKeys) {
+            String keys[] = getKeys(key);
             JCheckBox valField = booleanFields.get(key);
-            valField.setSelected(prefsToEdit.getBoolean(key));
+            valField.setSelected(prefsToEditMap.get(keys[1]).getBoolean(keys[0]));
         }
 
         for (String key : floatKeys) {
+            String keys[] = getKeys(key);
             JTextField valField = floatFields.get(key);
-            valField.setText(""+prefsToEdit.getFloat(key));
+            valField.setText(""+prefsToEditMap.get(keys[1]).getFloat(keys[0]));
         }
 
         for (String key : longKeys) {
+            String keys[] = getKeys(key);
             JTextField valField = longFields.get(key);
-            valField.setText(""+prefsToEdit.getLong(key));
+            valField.setText(""+prefsToEditMap.get(keys[1]).getLong(keys[0]));
         }
 
         for (String key : colorKeys) {
+            String keys[] = getKeys(key);
             JTextField valField = colorFields.get(key);
-            valField.setBackground(prefsToEdit.getColor(key));
+            valField.setBackground(prefsToEditMap.get(keys[1]).getColor(keys[0]));
         }
 
         for (String key : stringKeys) {
-            JTextField valField = stringFields.get(key);
-            valField.setText(prefsToEdit.getString(key));
+            String keys[] = getKeys(key);
+            JTextField valField = stringFields.get(keys);
+            valField.setText(prefsToEditMap.get(keys[1]).getString(keys[0]));
         }
+    }
+
+    /**
+     * @return [0] := key, [1] := prefsKey
+     */
+    private String[] getKeys(String key) {
+        String keys[] = { key, "" };
+
+        if (key.startsWith("(")) {
+            keys[1] = key.substring(0, key.indexOf(")") + 1);
+            keys[0] = key.substring(key.indexOf(")")+1);
+        }
+
+        return keys;
     }
 
     protected void savePrefs() {
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
-        int i = 0;
         for (String key : integerKeys) {
+            String keys[] = getKeys(key);
+            //String fullKey = VSPrefs.INTEGER_PREFIX + keys[0];
             JComboBox valComboBox = integerFields.get(key);
-            prefsToEdit.setInteger(key, (Integer) valComboBox.getSelectedItem());
+            prefsToEditMap.get(keys[1]).setInteger(keys[0], (Integer) valComboBox.getSelectedItem());
         }
 
         for (String key : booleanKeys) {
+            String keys[] = getKeys(key);
+            //String fullKey = VSPrefs.BOOLEAN_PREFIX + keys[0];
             JCheckBox valField = booleanFields.get(key);
-            prefsToEdit.setBoolean(key, valField.isSelected());
+            prefsToEditMap.get(keys[1]).setBoolean(keys[0], valField.isSelected());
         }
 
         for (String key : floatKeys) {
+            String keys[] = getKeys(key);
             JTextField valField = floatFields.get(key);
 
             try {
+                //String fullKey = VSPrefs.FLOAT_PREFIX + keys[0];
                 Float val = Float.valueOf(valField.getText());
-                prefsToEdit.setFloat(key, val);
+                prefsToEditMap.get(keys[1]).setFloat(keys[0], val);
 
             } catch (NumberFormatException e) {
                 valField.setText("0.0");
@@ -427,11 +559,13 @@ public abstract class VSEditor implements ActionListener {
         }
 
         for (String key : longKeys) {
+            String keys[] = getKeys(key);
             JTextField valField = longFields.get(key);
 
             try {
+                //String fullKey = VSPrefs.LONG_PREFIX + keys[0];
                 Long val = Long.valueOf(valField.getText());
-                prefsToEdit.setLong(key, val);
+                prefsToEditMap.get(keys[1]).setLong(keys[0], val);
 
             } catch (NumberFormatException e) {
                 valField.setText("0");
@@ -439,13 +573,17 @@ public abstract class VSEditor implements ActionListener {
         }
 
         for (String key : colorKeys) {
+            String keys[] = getKeys(key);
+            //String fullKey = VSPrefs.COLOR_PREFIX + keys[0];
             JTextField valField = colorFields.get(key);
-            prefsToEdit.setColor(key, valField.getBackground());
+            prefsToEditMap.get(keys[1]).setColor(keys[0], valField.getBackground());
         }
 
         for (String key : stringKeys) {
+            String keys[] = getKeys(key);
+            //String fullKey = VSPrefs.STRING_PREFIX + keys[0];
             JTextField valField = stringFields.get(key);
-            prefsToEdit.setString(key, valField.getText());
+            prefsToEditMap.get(keys[1]).setString(keys[0], valField.getText());
         }
 
         expertModeChanged = expertMode != prefs.getBoolean("sim.mode.expert");

@@ -24,14 +24,12 @@ public class VSSimulationEditor extends VSBetterEditor {
         this.dontStartNewSimulation = true;//simulation != null;
         this.simulatorFrame = simulatorFrame;
         this.simulation = simulation;
-        getInfoArea().setText(prefs.getString("lang.prefs.info!"));
     }
 
     public VSSimulationEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
-        getInfoArea().setText(prefs.getString("lang.prefs.info!"));
     }
 
     protected void addToButtonPanelFront(JPanel buttonPanel) {

@@ -561,4 +561,26 @@ public abstract class VSPrefs implements Serializable {
     public long getID() {
         return id;
     }
+
+    public boolean isEmpty() {
+        if (!colorPrefs.isEmpty())
+            return false;
+
+        if (!floatPrefs.isEmpty())
+            return false;
+
+        if (!integerPrefs.isEmpty())
+            return false;
+
+        if (!longPrefs.isEmpty())
+            return false;
+
+        if (!stringPrefs.isEmpty())
+            return false;
+
+        if (!booleanPrefs.isEmpty())
+            return false;
+
+        return true;
+    }
 }
