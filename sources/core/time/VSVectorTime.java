@@ -3,7 +3,6 @@ package core.time;
 import java.util.ArrayList;
 
 public class VSVectorTime extends ArrayList<Long> implements VSTime {
-    /* Only needed for painting in the painting panel */
     private long globalTime;
 
     public VSVectorTime(long globalTime) {
