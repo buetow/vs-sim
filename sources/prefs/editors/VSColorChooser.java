@@ -26,7 +26,7 @@ public class VSColorChooser extends JPanel implements ChangeListener {
     private JTextField valField;
     
     /** The prefs. */
-    private VSPrefs prefs;
+   //private VSPrefs prefs;
 
     /**
      * Instantiates a new vS color chooser.
@@ -36,7 +36,7 @@ public class VSColorChooser extends JPanel implements ChangeListener {
      */
     public VSColorChooser(VSPrefs prefs, JTextField valField) {
         super(new BorderLayout());
-        this.prefs = prefs;
+        //this.prefs = prefs;
         this.color = valField.getBackground();
         this.valField = valField;
 
