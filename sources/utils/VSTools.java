@@ -10,6 +10,7 @@ package utils;
  * The Class VSTools.
  */
 public final class VSTools {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Gets the time string.

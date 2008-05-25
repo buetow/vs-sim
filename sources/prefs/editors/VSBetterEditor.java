@@ -16,6 +16,7 @@ import utils.*;
  * The Class VSBetterEditor.
  */
 public abstract class VSBetterEditor extends VSEditor {
+    private static final long serialVersionUID = 1L;
 
     /** The content pane. */
     private Container contentPane;

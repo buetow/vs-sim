@@ -12,6 +12,7 @@ import core.*;
  * The Class VSProtocol.
  */
 abstract public class VSProtocol extends VSEvent {
+    private static final long serialVersionUID = 1L;
 
     /** The is server. */
     private boolean isServer;

@@ -9,25 +9,27 @@ package simulator;
  * "simulation" bar of the VSSimulationFrame.
  */
 public class VSMenuItemStates {
-    /** The pause. */
+    private static final long serialVersionUID = 1L;
+
+    /** The pause state. */
     private volatile boolean pause;
 
-    /** The replay. */
+    /** The replay state. */
     private volatile boolean replay;
 
-    /** The reset. */
+    /** The reset state. */
     private volatile boolean reset;
 
-    /** The start. */
+    /** The start state. */
     private volatile boolean start;
 
     /**
      * Instantiates a new lang.process.removemenu item states.
      *
-     * @param pause the pause
-     * @param replay the replay
-     * @param reset the reset
-     * @param start the start
+     * @param pause the pause state
+     * @param replay the replay state
+     * @param reset the reset state
+     * @param start the start state
      */
     public VSMenuItemStates(boolean pause, boolean replay, boolean reset, boolean start) {
         this.pause = pause;
@@ -37,72 +39,72 @@ public class VSMenuItemStates {
     }
 
     /**
-     * Sets the pause.
+     * Sets the pause state.
      *
-     * @param pause the new pause
+     * @param pause the new pause state
      */
     public void setPause(boolean pause) {
         this.pause = pause;
     }
 
     /**
-     * Sets the replay.
+     * Sets the replay state.
      *
-     * @param replay the new replay
+     * @param replay the new replay state
      */
     public void setReplay(boolean replay) {
         this.replay = replay;
     }
 
     /**
-     * Sets the reset.
+     * Sets the reset state.
      *
-     * @param reset the new reset
+     * @param reset the new reset state
      */
     public void setReset(boolean reset) {
         this.reset = reset;
     }
 
     /**
-     * Sets the start.
+     * Sets the start state.
      *
-     * @param start the new start
+     * @param start the new start state
      */
     public void setStart(boolean start) {
         this.start = start;
     }
 
     /**
-     * Gets the pause.
+     * Gets the pause state.
      *
-     * @return the pause
+     * @return the pause state
      */
     public boolean getPause() {
         return pause;
     }
 
     /**
-     * Gets the replay.
+     * Gets the replay state.
      *
-     * @return the replay
+     * @return the replay state
      */
     public boolean getReplay() {
         return replay;
     }
 
     /**
-     * Gets the reset.
+     * Gets the reset state.
      *
-     * @return the reset
+     * @return the reset state
      */
     public boolean getReset() {
         return reset;
     }
 
     /**
-     * Gets the start.
+     * Gets the start state.
      *
-     * @return the start
+     * @return the start state
      */
     public boolean getStart() {
         return start;

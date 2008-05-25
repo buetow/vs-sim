@@ -16,6 +16,7 @@ import utils.*;
  * The Class VSEditorFrame.
  */
 public class VSEditorFrame extends VSFrame implements ActionListener {
+    private static final long serialVersionUID = 1L;
 
     /** The editor. */
     private VSBetterEditor editor;

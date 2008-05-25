@@ -11,6 +11,8 @@ import prefs.VSPrefs;
  * The Class VSEvent.
  */
 abstract public class VSEvent extends VSPrefs {
+    private static final long serialVersionUID = 1L;
+
     /** The prefs. */
     protected VSPrefs prefs;
 

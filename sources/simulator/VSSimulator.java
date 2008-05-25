@@ -22,6 +22,7 @@ import utils.*;
  * The Class VSSimulator.
  */
 public class VSSimulator extends JPanel {
+    private static final long serialVersionUID = 1L;
 
     /** The global text fields. */
     private ArrayList<String> globalTextFields;

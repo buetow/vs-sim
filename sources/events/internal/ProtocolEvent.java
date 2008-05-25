@@ -11,6 +11,7 @@ import protocols.VSProtocol;
  * The Class ProtocolEvent.
  */
 public class ProtocolEvent extends VSEvent {
+    private static final long serialVersionUID = 1L;
 
     /** The protocol classname. */
     private String protocolClassname;

@@ -17,6 +17,7 @@ import protocols.VSProtocol;
  * Global timed tasks are being fullfilled if the simulation's time is reached.
  */
 public class VSTask implements Comparable {
+    private static final long serialVersionUID = 1L;
 
     /** The Constant LOCAL. Used for the constructor if it's a local timed task. */
     public final static boolean LOCAL = true;

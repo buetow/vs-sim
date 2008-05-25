@@ -16,6 +16,7 @@ import prefs.editors.*;
  * The Class VSMain.
  */
 public class VSMain {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Instantiates a new lang.process.removemain.

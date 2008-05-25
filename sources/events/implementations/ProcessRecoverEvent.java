@@ -10,6 +10,7 @@ import events.VSEvent;
  * The Class ProcessRecoverEvent.
  */
 public class ProcessRecoverEvent extends VSEvent {
+    private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)
      * @see events.VSEvent#onInit()

@@ -12,6 +12,7 @@ import prefs.VSPrefs;
  * This class represents a message which is send from one process to another process in the simulation.
  */
 public class VSMessage extends VSPrefs {
+    private static final long serialVersionUID = 1L;
 
     /** Each message belongs to a specific protocol. This variable defined the class name of the protocol being used. */
     private String protocolClassname;

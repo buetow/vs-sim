@@ -14,6 +14,8 @@ import utils.*;
  * The Class VSRegisteredEvents.
  */
 public final class VSRegisteredEvents {
+    private static final long serialVersionUID = 1L;
+
     /** The event classnames. */
     private static HashMap<String,String> eventClassnames;
 

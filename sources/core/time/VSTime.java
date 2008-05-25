@@ -9,7 +9,6 @@ package core.time;
  * This interface is a guidline for general time format classes.
  */
 public interface VSTime {
-
     /**
      * Getter method.
      *

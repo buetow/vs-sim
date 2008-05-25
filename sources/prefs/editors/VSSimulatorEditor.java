@@ -15,6 +15,7 @@ import prefs.*;
  * The Class VSSimulatorEditor.
  */
 public class VSSimulatorEditor extends VSBetterEditor {
+    private static final long serialVersionUID = 1L;
 
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;

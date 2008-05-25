@@ -12,6 +12,7 @@ import protocols.VSProtocol;
  * The Class MessageReceiveEvent.
  */
 public class MessageReceiveEvent extends VSEvent {
+    private static final long serialVersionUID = 1L;
 
     /** The message. */
     private VSMessage message;

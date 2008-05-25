@@ -18,6 +18,7 @@ import prefs.VSPrefs;
  * The Class VSProcessEditor.
  */
 public class VSProcessEditor extends VSBetterEditor {
+    private static final long serialVersionUID = 1L;
 
     /** The process. */
     private VSProcess process;

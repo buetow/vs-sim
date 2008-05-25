@@ -8,6 +8,7 @@ package utils;
  * The Class VSTupel.
  */
 public final class VSTupel<A,B,C> {
+    private static final long serialVersionUID = 1L;
 
     /** The a. */
     private A a;

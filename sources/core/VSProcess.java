@@ -19,6 +19,7 @@ import utils.*;
  * The Class VSProcess. A object of this class represents a process of a simulation.
  */
 public class VSProcess extends VSPrefs {
+    private static final long serialVersionUID = 1L;
 
     /** The protocols to reset if the simulation is over or the reset button has been pressed. */
     private ArrayList<VSProtocol> protocolsToReset;

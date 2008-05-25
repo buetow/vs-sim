@@ -11,6 +11,7 @@ package utils;
  * The Class VSClassLoader.
  */
 public class VSClassLoader extends ClassLoader {
+    private static final long serialVersionUID = 1L;
 
     /**
      * New instance.

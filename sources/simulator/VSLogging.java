@@ -15,6 +15,7 @@ import utils.*;
  * The Class VSLogging.
  */
 public class VSLogging {
+    private static final long serialVersionUID = 1L;
 
     /** The logging area. */
     private JTextArea loggingArea;

@@ -17,6 +17,7 @@ import prefs.VSPrefs;
  * The Class VSEditor.
  */
 public abstract class VSEditor implements ActionListener {
+    private static final long serialVersionUID = 1L;
 
     /** The boolean keys. */
     private ArrayList<String> booleanKeys;

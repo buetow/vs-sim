@@ -13,6 +13,7 @@ import utils.*;
  * The Class VSTaskManager.
  */
 public class VSTaskManager {
+    private static final long serialVersionUID = 1L;
 
     /** The tasks. */
     private PriorityQueue<VSTask> tasks;

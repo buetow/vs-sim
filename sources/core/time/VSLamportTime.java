@@ -9,6 +9,7 @@ package core.time;
  * This class defined how the lamport timestamps are represented.
  */
 public class VSLamportTime implements VSTime {
+    private static final long serialVersionUID = 1L;
 
     /** Specified the global time of the lamport timestamp. It's used for correct painting in the simulator paint area. */
     private long globalTime;

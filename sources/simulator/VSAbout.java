@@ -16,6 +16,7 @@ import utils.*;
  * The Class VSAbout.
  */
 public class VSAbout extends VSFrame implements ActionListener {
+    private static final long serialVersionUID = 1L;
 
     /** The prefs. */
     private VSPrefs prefs;

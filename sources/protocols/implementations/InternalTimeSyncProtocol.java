@@ -12,6 +12,7 @@ import protocols.VSProtocol;
  * The Class InternalTimeSyncProtocol.
  */
 public class InternalTimeSyncProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
 
     /** The waiting for response. */
     private boolean waitingForResponse;

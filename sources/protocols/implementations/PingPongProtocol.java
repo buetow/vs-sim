@@ -12,6 +12,7 @@ import protocols.VSProtocol;
  * The Class PingPongProtocol.
  */
 public class PingPongProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
 
     /** The client counter. */
     private int clientCounter;

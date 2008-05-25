@@ -12,6 +12,7 @@ import core.VSMessage;
  * The Class DummyProtocol.
  */
 public class DummyProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Instantiates a new dummy protocol.

@@ -12,6 +12,7 @@ import protocols.VSProtocol;
  * The Class ExternalTimeSyncProtocol.
  */
 public class ExternalTimeSyncProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
 
     /** The request time. */
     private long requestTime;

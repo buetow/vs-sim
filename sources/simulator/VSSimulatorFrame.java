@@ -20,6 +20,7 @@ import utils.*;
  * The Class VSSimulatorFrame.
  */
 public class VSSimulatorFrame extends VSFrame implements ActionListener {
+    private static final long serialVersionUID = 1L;
 
     /** The pause item. */
     private JMenuItem pauseItem;

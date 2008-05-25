@@ -14,6 +14,8 @@ import java.util.HashMap;
  * The Class BerkelyTimeProtocol.
  */
 public class BerkelyTimeProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
+
     /* Berkely Server variables */
 
     /* Integer: Process ID, Long: Local time of the process */

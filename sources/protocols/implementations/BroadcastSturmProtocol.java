@@ -14,6 +14,7 @@ import protocols.VSProtocol;
  * The Class BroadcastSturmProtocol.
  */
 public class BroadcastSturmProtocol extends VSProtocol {
+    private static final long serialVersionUID = 1L;
 
     /** The sent messages. */
     private ArrayList<VSMessage> sentMessages;
