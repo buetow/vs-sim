@@ -11,7 +11,7 @@ import events.VSEvent;
  * The Class ProcessCrashEvent.
  */
 public class ProcessCrashEvent extends VSEvent {
-    
+
     /* (non-Javadoc)
      * @see events.VSEvent#onInit()
      */

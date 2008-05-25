@@ -13,64 +13,64 @@ import java.util.*;
  * The Class VSPrefs.
  */
 public abstract class VSPrefs implements Serializable {
-    
+
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";
-    
+
     /** The Constant COLOR_PREFIX. */
     public static final String COLOR_PREFIX = "Color: ";
-    
+
     /** The Constant FLOAT_PREFIX. */
     public static final String FLOAT_PREFIX = "Float: ";
-    
+
     /** The Constant INTEGER_PREFIX. */
     public static final String INTEGER_PREFIX = "Integer: ";
-    
+
     /** The Constant LONG_PREFIX. */
     public static final String LONG_PREFIX = "Long: ";
-    
+
     /** The Constant STRING_PREFIX. */
     public static final String STRING_PREFIX = "String: ";
-    
+
     /** The color prefs. */
     private HashMap<String,Color> colorPrefs;
-    
+
     /** The float prefs. */
     private HashMap<String,Float> floatPrefs;
-    
+
     /** The integer prefs. */
     private HashMap<String,Integer> integerPrefs;
-    
+
     /** The long prefs. */
     private HashMap<String,Long> longPrefs;
-    
+
     /** The setting restriction prefs. */
     private HashMap<String,SettingRestriction> settingRestrictionPrefs;
-    
+
     /** The description prefs. */
     private HashMap<String,String> descriptionPrefs;
-    
+
     /** The string prefs. */
     private HashMap<String,String> stringPrefs;
-    
+
     /** The boolean prefs. */
     private HashMap<String,Boolean> booleanPrefs;
-    
+
     /** The object prefs. */
     private HashMap<String,Object> objectPrefs;
-    
+
     /** The units. */
     private HashMap<String,String> units;
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4L;
-    
+
     /** The Constant PREFERENCES_FILENAME. */
     protected final static String PREFERENCES_FILENAME = "vs.dat";
-    
+
     /** The id counter. */
     private static long idCounter;
-    
+
     /** The id. */
     protected long id;
 
@@ -78,23 +78,23 @@ public abstract class VSPrefs implements Serializable {
      * The Class SettingRestriction.
      */
     public class SettingRestriction implements Serializable {
-    	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
     }
 
     /**
      * The Class IntegerSettingRestriction.
      */
     public class IntegerSettingRestriction extends SettingRestriction {
-    	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
         /** The min value. */
         private int minValue;
-        
+
         /** The max value. */
         private int maxValue;
 
         /**
          * Instantiates a new integer setting restriction.
-         * 
+         *
          * @param minValue the min value
          * @param maxValue the max value
          */
@@ -105,7 +105,7 @@ public abstract class VSPrefs implements Serializable {
 
         /**
          * Gets the min value.
-         * 
+         *
          * @return the min value
          */
         public int getMinValue() {
@@ -114,7 +114,7 @@ public abstract class VSPrefs implements Serializable {
 
         /**
          * Gets the max value.
-         * 
+         *
          * @return the max value
          */
         public int getMaxValue() {
@@ -126,14 +126,14 @@ public abstract class VSPrefs implements Serializable {
      * The Class StringSettingRestriction.
      */
     public class StringSettingRestriction extends SettingRestriction {
-    	private static final long serialVersionUID = 1L;
-    	
+        private static final long serialVersionUID = 1L;
+
         /** The possible selections. */
         Vector<String> possibleSelections;
 
         /**
          * Instantiates a new string setting restriction.
-         * 
+         *
          * @param possibleSelections the possible selections
          */
         public StringSettingRestriction(String [] possibleSelections) {
@@ -145,7 +145,7 @@ public abstract class VSPrefs implements Serializable {
 
         /**
          * Gets the possible selections.
-         * 
+         *
          * @return the possible selections
          */
         public Vector<String> getPossibleSelections() {
@@ -187,9 +187,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the object.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the object
      */
     public synchronized Object getObject(String key) {
@@ -206,7 +206,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Removes the object.
-     * 
+     *
      * @param key the key
      */
     public synchronized void removeObject(String key) {
@@ -215,9 +215,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Object exists.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return true, if successful
      */
     public synchronized boolean objectExists(String key) {
@@ -226,9 +226,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the string.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the string
      */
     public synchronized String getString(String key) {
@@ -245,9 +245,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the integer obj.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the integer obj
      */
     public synchronized Integer getIntegerObj(String key) {
@@ -264,9 +264,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the integer.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the integer
      */
     public int getInteger(String key) {
@@ -275,9 +275,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the float obj.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the float obj
      */
     public synchronized Float getFloatObj(String key) {
@@ -294,9 +294,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the float.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the float
      */
     public float getFloat(String key) {
@@ -305,9 +305,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the long obj.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the long obj
      */
     public synchronized Long getLongObj(String key) {
@@ -324,9 +324,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the long.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the long
      */
     public long getLong(String key) {
@@ -335,9 +335,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the boolean obj.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the boolean obj
      */
     public synchronized Boolean getBooleanObj(String key) {
@@ -351,9 +351,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the boolean.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the boolean
      */
     public boolean getBoolean(String key) {
@@ -362,9 +362,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the color.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the color
      */
     public synchronized Color getColor(String key) {
@@ -381,9 +381,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the description.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the description
      */
     public synchronized String getDescription(String key) {
@@ -392,9 +392,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the unit.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the unit
      */
     public synchronized String getUnit(String key) {
@@ -403,9 +403,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the restriction.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return the restriction
      */
     public synchronized SettingRestriction getRestriction(String key) {
@@ -414,7 +414,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the string key set.
-     * 
+     *
      * @return the string key set
      */
     public synchronized Set<String> getStringKeySet() {
@@ -423,7 +423,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the integer key set.
-     * 
+     *
      * @return the integer key set
      */
     public synchronized Set<String> getIntegerKeySet() {
@@ -432,7 +432,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the float key set.
-     * 
+     *
      * @return the float key set
      */
     public synchronized Set<String> getFloatKeySet() {
@@ -441,7 +441,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the long key set.
-     * 
+     *
      * @return the long key set
      */
     public synchronized Set<String> getLongKeySet() {
@@ -450,7 +450,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the boolean key set.
-     * 
+     *
      * @return the boolean key set
      */
     public synchronized Set<String> getBooleanKeySet() {
@@ -459,7 +459,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the color key set.
-     * 
+     *
      * @return the color key set
      */
     public synchronized Set<String> getColorKeySet() {
@@ -468,7 +468,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the object.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -478,7 +478,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the string.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -488,7 +488,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -498,7 +498,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the color.
-     * 
+     *
      * @param key the key
      * @param color the color
      */
@@ -508,7 +508,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the int.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -518,7 +518,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -528,7 +528,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -538,7 +538,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -548,7 +548,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -558,7 +558,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the boolean.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -568,7 +568,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the boolean.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -578,7 +578,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the string.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -589,7 +589,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -600,7 +600,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -610,7 +610,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -621,7 +621,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -631,7 +631,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -642,7 +642,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -652,7 +652,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the long if unset.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -663,7 +663,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the long if unset.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -673,7 +673,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the boolean.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -684,7 +684,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the boolean.
-     * 
+     *
      * @param key the key
      * @param val the val
      */
@@ -694,7 +694,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the color.
-     * 
+     *
      * @param key the key
      * @param color the color
      */
@@ -705,7 +705,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the description if unset.
-     * 
+     *
      * @param key the key
      * @param descr the descr
      */
@@ -717,7 +717,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the restriction.
-     * 
+     *
      * @param key the key
      * @param settingRestriction the setting restriction
      */
@@ -727,7 +727,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the unit.
-     * 
+     *
      * @param key the key
      * @param unit the unit
      */
@@ -737,7 +737,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the string.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -749,7 +749,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Sets the long if unset.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -761,7 +761,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the boolean.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -773,7 +773,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the boolean unit.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -786,7 +786,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -800,7 +800,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -813,7 +813,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -825,7 +825,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -838,7 +838,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the integer unit.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -853,7 +853,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -865,7 +865,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the long.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -876,7 +876,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the long unit.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -889,7 +889,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -901,7 +901,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the float.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -912,7 +912,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the float unit.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -926,7 +926,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Inits the color.
-     * 
+     *
      * @param key the key
      * @param val the val
      * @param descr the descr
@@ -940,27 +940,27 @@ public abstract class VSPrefs implements Serializable {
      * Fill default strings.
      */
     public void fillDefaultStrings() {}
-    
+
     /**
      * Fill default integers.
      */
     public void fillDefaultIntegers() {}
-    
+
     /**
      * Fill default floats.
      */
     public void fillDefaultFloats() {}
-    
+
     /**
      * Fill default colors.
      */
     public void fillDefaultColors() {}
-    
+
     /**
      * Fill default booleans.
      */
     public void fillDefaultBooleans() {}
-    
+
     /**
      * Fill with defaults.
      */
@@ -968,9 +968,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Write object.
-     * 
+     *
      * @param objectOutputStream the object output stream
-     * 
+     *
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public synchronized void writeObject(ObjectOutputStream objectOutputStream)
@@ -986,9 +986,9 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Read object.
-     * 
+     *
      * @param objectInputStream the object input stream
-     * 
+     *
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws ClassNotFoundException the class not found exception
      */
@@ -1042,7 +1042,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Copy integers.
-     * 
+     *
      * @param copyInto the copy into
      * @param keys the keys
      */
@@ -1054,7 +1054,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Copy longs.
-     * 
+     *
      * @param copyInto the copy into
      * @param keys the keys
      */
@@ -1065,7 +1065,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Copy floats.
-     * 
+     *
      * @param copyInto the copy into
      * @param keys the keys
      */
@@ -1076,7 +1076,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Copy strings.
-     * 
+     *
      * @param copyInto the copy into
      * @param keys the keys
      */
@@ -1087,7 +1087,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Copy colors.
-     * 
+     *
      * @param copyInto the copy into
      * @param keys the keys
      */
@@ -1147,7 +1147,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Gets the iD.
-     * 
+     *
      * @return the iD
      */
     public long getID() {
@@ -1156,7 +1156,7 @@ public abstract class VSPrefs implements Serializable {
 
     /**
      * Checks if is empty.
-     * 
+     *
      * @return true, if is empty
      */
     public boolean isEmpty() {

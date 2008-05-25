@@ -15,22 +15,22 @@ import prefs.*;
  * The Class VSSimulatorEditor.
  */
 public class VSSimulatorEditor extends VSBetterEditor {
-    
+
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
-    
+
     /** The simulation. */
     private VSSimulator simulation;
-    
+
     /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
-    
+
     /** The dont start new simulation. */
     private boolean dontStartNewSimulation;
 
     /**
      * Instantiates a new vS simulator editor.
-     * 
+     *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
      * @param simulation the simulation
@@ -45,7 +45,7 @@ public class VSSimulatorEditor extends VSBetterEditor {
 
     /**
      * Instantiates a new vS simulator editor.
-     * 
+     *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
      */

@@ -13,23 +13,23 @@ import javax.swing.JFrame;
  * The Class VSFrame.
  */
 public class VSFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /** The Constant X_LOCATION_OFFSET. */
     private final static int X_LOCATION_OFFSET = 40;
-    
+
     /** The Constant Y_LOCATION_OFFSET. */
     private final static int Y_LOCATION_OFFSET = 80;
-    
+
     /** The parent. */
     private Component parent;
-    
+
     /** The dispose. */
     private boolean dispose;
 
     /**
      * Instantiates a new vS frame.
-     * 
+     *
      * @param title the title
      * @param parent the parent
      */
@@ -40,7 +40,7 @@ public class VSFrame extends JFrame {
 
     /**
      * Instantiates a new vS frame.
-     * 
+     *
      * @param title the title
      */
     public VSFrame(String title) {
@@ -50,7 +50,7 @@ public class VSFrame extends JFrame {
 
     /**
      * Inits the.
-     * 
+     *
      * @param parent the parent
      */
     private void init(Component parent) {

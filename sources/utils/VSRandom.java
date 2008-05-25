@@ -11,11 +11,11 @@ import java.util.Random;
  * The Class VSRandom.
  */
 public final class VSRandom extends Random {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /**
      * Instantiates a new vS random.
-     * 
+     *
      * @param seedAdd the seed add
      */
     public VSRandom(long seedAdd) {
@@ -31,9 +31,9 @@ public final class VSRandom extends Random {
 
     /**
      * Next long.
-     * 
+     *
      * @param mod the mod
-     * 
+     *
      * @return the long
      */
     public long nextLong(long mod) {

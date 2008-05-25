@@ -15,23 +15,23 @@ import prefs.VSPrefs;
  * The Class VSColorChooser.
  */
 public class VSColorChooser extends JPanel implements ChangeListener {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /** The color chooser. */
     protected JColorChooser colorChooser;
-    
+
     /** The color. */
     private Color color;
-    
+
     /** The val field. */
     private JTextField valField;
-    
+
     /** The prefs. */
-   //private VSPrefs prefs;
+    //private VSPrefs prefs;
 
     /**
      * Instantiates a new vS color chooser.
-     * 
+     *
      * @param prefs the prefs
      * @param valField the val field
      */

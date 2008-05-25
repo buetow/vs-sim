@@ -18,16 +18,16 @@ import prefs.VSPrefs;
  * The Class VSProcessEditor.
  */
 public class VSProcessEditor extends VSBetterEditor {
-    
+
     /** The process. */
     private VSProcess process;
-    
+
     /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
-    
+
     /**
      * Instantiates a new vS process editor.
-     * 
+     *
      * @param prefs the prefs
      * @param process the process
      */

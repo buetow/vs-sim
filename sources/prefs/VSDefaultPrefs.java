@@ -12,11 +12,11 @@ import java.awt.event.KeyEvent;
  * The Class VSDefaultPrefs.
  */
 public class VSDefaultPrefs extends VSPrefs {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /**
      * Inits the.
-     * 
+     *
      * @return the vS prefs
      */
     public static VSPrefs init() {
@@ -25,9 +25,9 @@ public class VSDefaultPrefs extends VSPrefs {
 
     /**
      * Inits the.
-     * 
+     *
      * @param fileName the file name
-     * 
+     *
      * @return the vS prefs
      */
     public static VSPrefs init(String fileName) {

@@ -18,17 +18,17 @@ import prefs.*;
  * The Class VSEditorTable.
  */
 public class VSEditorTable extends JTable {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /** The Constant MIN_ROWS. */
     private static final int MIN_ROWS = 20;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
-    
+
     /** The nodes. */
     private ArrayList<VSNode> nodes;
-    
+
     /** The model. */
     private VSEditorTableModel model;
 
@@ -36,16 +36,16 @@ public class VSEditorTable extends JTable {
      * The Class VSNode.
      */
     private class VSNode {
-        
+
         /** The key. */
         private String key;
-        
+
         /** The comp. */
         private Component comp;
 
         /**
          * Instantiates a new vS node.
-         * 
+         *
          * @param key the key
          */
         public VSNode(String key) {
@@ -54,7 +54,7 @@ public class VSEditorTable extends JTable {
 
         /**
          * Instantiates a new vS node.
-         * 
+         *
          * @param key the key
          * @param comp the comp
          */
@@ -65,7 +65,7 @@ public class VSEditorTable extends JTable {
 
         /**
          * Gets the key.
-         * 
+         *
          * @return the key
          */
         public String getKey() {
@@ -74,7 +74,7 @@ public class VSEditorTable extends JTable {
 
         /**
          * Gets the component.
-         * 
+         *
          * @return the component
          */
         public Component getComponent() {
@@ -83,7 +83,7 @@ public class VSEditorTable extends JTable {
 
         /**
          * Gets the renderer component.
-         * 
+         *
          * @return the renderer component
          */
         public Component getRendererComponent() {
@@ -92,7 +92,7 @@ public class VSEditorTable extends JTable {
 
         /**
          * Checks if is separator.
-         * 
+         *
          * @return true, if is separator
          */
         public boolean isSeparator() {
@@ -104,8 +104,8 @@ public class VSEditorTable extends JTable {
      * The Class VSEditorTableModel.
      */
     private class VSEditorTableModel extends AbstractTableModel implements TableCellRenderer {
-    	private static final long serialVersionUID = 1L;
-    	
+        private static final long serialVersionUID = 1L;
+
         /**
          * Instantiates a new vS editor table model.
          */
@@ -207,8 +207,8 @@ public class VSEditorTable extends JTable {
      * The Class VSTableCellEditor.
      */
     private class VSTableCellEditor extends AbstractCellEditor implements TableCellEditor  {
-    	private static final long serialVersionUID = 1L;
-    	
+        private static final long serialVersionUID = 1L;
+
         /* (non-Javadoc)
          * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
          */
@@ -227,7 +227,7 @@ public class VSEditorTable extends JTable {
 
     /**
      * Instantiates a new vS editor table.
-     * 
+     *
      * @param prefs the prefs
      */
     public VSEditorTable(VSPrefs prefs) {
@@ -252,7 +252,7 @@ public class VSEditorTable extends JTable {
 
     /**
      * Adds the variable.
-     * 
+     *
      * @param key the key
      * @param comp the comp
      */
@@ -262,7 +262,7 @@ public class VSEditorTable extends JTable {
 
     /**
      * Adds the separator.
-     * 
+     *
      * @param text the text
      */
     public void addSeparator(String text) {

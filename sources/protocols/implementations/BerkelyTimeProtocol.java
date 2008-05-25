@@ -92,7 +92,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
 
     /**
      * Calculate the new average time.
-     * 
+     *
      * @return the long
      */
     private long calculateAverageTime() {
@@ -112,7 +112,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
 
     /**
      * Sends to all clients a value to justify their local clocks.
-     * 
+     *
      * @param avgTime the avg time
      */
     private void sendJustifyRequests(long avgTime) {

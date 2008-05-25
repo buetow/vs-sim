@@ -16,10 +16,10 @@ import prefs.editors.*;
  * The Class VSMain.
  */
 public class VSMain {
-    
+
     /**
      * Instantiates a new vS main.
-     * 
+     *
      * @param prefs the prefs
      */
     public VSMain(VSPrefs prefs) {
@@ -28,7 +28,7 @@ public class VSMain {
 
     /**
      * Instantiates a new vS main.
-     * 
+     *
      * @param prefs the prefs
      * @param relativeTo the relative to
      */
@@ -38,7 +38,7 @@ public class VSMain {
 
     /**
      * Inits the.
-     * 
+     *
      * @param prefs the prefs
      * @param relativeTo the relative to
      */
@@ -49,7 +49,7 @@ public class VSMain {
 
     /**
      * The main method.
-     * 
+     *
      * @param args the arguments
      */
     public static void main(String[] args) {

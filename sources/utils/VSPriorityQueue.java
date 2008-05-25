@@ -11,13 +11,13 @@ import java.util.PriorityQueue;
  * The Class VSPriorityQueue.
  */
 public final class VSPriorityQueue<T> extends PriorityQueue<T> {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /**
      * Gets the.
-     * 
+     *
      * @param index the index
-     * 
+     *
      * @return the t
      */
     public T get(int index) {

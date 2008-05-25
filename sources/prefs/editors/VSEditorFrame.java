@@ -16,16 +16,16 @@ import utils.*;
  * The Class VSEditorFrame.
  */
 public class VSEditorFrame extends VSFrame implements ActionListener {
-    
+
     /** The editor. */
     private VSBetterEditor editor;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
 
     /**
      * Instantiates a new vS editor frame.
-     * 
+     *
      * @param prefs the prefs
      * @param relativeTo the relative to
      * @param editor the editor
@@ -53,7 +53,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
 
     /**
      * Fill button panel.
-     * 
+     *
      * @param buttonPanel the button panel
      */
     private void fillButtonPanel(JPanel buttonPanel) {

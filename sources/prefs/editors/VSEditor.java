@@ -17,82 +17,82 @@ import prefs.VSPrefs;
  * The Class VSEditor.
  */
 public abstract class VSEditor implements ActionListener {
-    
+
     /** The boolean keys. */
     private ArrayList<String> booleanKeys;
-    
+
     /** The color keys. */
     private ArrayList<String> colorKeys;
-    
+
     /** The float keys. */
     private ArrayList<String> floatKeys;
-    
+
     /** The integer keys. */
     private ArrayList<String> integerKeys;
-    
+
     /** The long keys. */
     private ArrayList<String> longKeys;
-    
+
     /** The string keys. */
     private ArrayList<String> stringKeys;
-    
+
     /** The boolean fields. */
     private HashMap<String,JCheckBox> booleanFields;
-    
+
     /** The integer fields. */
     private HashMap<String,JComboBox> integerFields;
-    
+
     /** The color fields. */
     private HashMap<String,JTextField> colorFields;
-    
+
     /** The float fields. */
     private HashMap<String,JTextField> floatFields;
-    
+
     /** The long fields. */
     private HashMap<String,JTextField> longFields;
-    
+
     /** The string fields. */
     private HashMap<String,JTextField> stringFields;
-    
+
     /** The prefs to edit map. */
     private HashMap<String,VSPrefs> prefsToEditMap;
-    
+
     /** The button panel. */
     private JPanel buttonPanel;
-    
+
     /** The edit panel. */
     private JPanel editPanel;
-    
+
     /** The edit table. */
     private VSEditorTable editTable;
-    
+
     /** The frame. */
     private VSFrame frame;
-    
+
     /** The expert mode changed. */
     private boolean expertModeChanged;
-    
+
     /** The prefs. */
     protected VSPrefs prefs;
-    
+
     /** The prefs to edit. */
     protected VSPrefs prefsToEdit;
-    
+
     /** The Constant MIN_UNIT_LENGTH. */
     protected static final int MIN_UNIT_LENGTH = 5;
-    
+
     /** The Constant VALUE_FIELD_COLS. */
     protected static final int VALUE_FIELD_COLS = 9;
-    
+
     /** The Constant ALL_PREFERENCES. */
     public static final int ALL_PREFERENCES = 0;
-    
+
     /** The Constant SIMULATION_PREFERENCES. */
     public static final int SIMULATION_PREFERENCES = 1;
 
     /**
      * Instantiates a new vS editor.
-     * 
+     *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
      */
@@ -102,18 +102,18 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Adds the to button panel front.
-     * 
+     *
      * @param buttonPanel the button panel
      */
     abstract protected void addToButtonPanelFront(JPanel buttonPanel);
-    
+
     /**
      * Adds the to button panel last.
-     * 
+     *
      * @param buttonPanel the button panel
      */
     abstract protected void addToButtonPanelLast(JPanel buttonPanel);
-    
+
     /**
      * Adds the to edit table last.
      */
@@ -121,7 +121,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Sets the prefs.
-     * 
+     *
      * @param prefs the new prefs
      */
     public void setPrefs(VSPrefs prefs) {
@@ -130,7 +130,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Sets the prefs to edit.
-     * 
+     *
      * @param prefsToEdit the new prefs to edit
      */
     public void setPrefsToEdit(VSPrefs prefsToEdit) {
@@ -139,7 +139,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Sets the frame.
-     * 
+     *
      * @param frame the new frame
      */
     public void setFrame(VSFrame frame) {
@@ -148,7 +148,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Gets the frame.
-     * 
+     *
      * @return the frame
      */
     public VSFrame getFrame() {
@@ -173,7 +173,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Inits the.
-     * 
+     *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
      */
@@ -205,9 +205,9 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Filter keys.
-     * 
+     *
      * @param set the set
-     * 
+     *
      * @return the array list< string>
      */
     private ArrayList<String> filterKeys(Set<String> set) {
@@ -228,7 +228,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the button panel.
-     * 
+     *
      * @return the j panel
      */
     private JPanel createButtonPanel() {
@@ -249,10 +249,10 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the unit panel.
-     * 
+     *
      * @param comp the comp
      * @param key the key
-     * 
+     *
      * @return the j panel
      */
     private JPanel createUnitPanel(Component comp, String key) {
@@ -278,7 +278,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the edit panel.
-     * 
+     *
      * @return the j panel
      */
     private JPanel createEditPanel() {
@@ -295,11 +295,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the integer component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j combo box>
      */
     protected VSTupel<String,Component,JComboBox> createIntegerComponent(String fullKey, String key, VSPrefs prefsToEdit) {
@@ -331,11 +331,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the boolean component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j check box>
      */
     protected VSTupel<String,Component,JCheckBox> createBooleanComponent(String fullKey, String key, VSPrefs prefsToEdit) {
@@ -350,11 +350,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the long component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createLongComponent(String fullKey, String key, VSPrefs prefsToEdit) {
@@ -375,11 +375,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the float component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createFloatComponent(String fullKey, String key, VSPrefs prefsToEdit) {
@@ -400,11 +400,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the color component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createColorComponent(String fullKey, String key, final VSPrefs prefsToEdit) {
@@ -441,11 +441,11 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Creates the string component.
-     * 
+     *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     * 
+     *
      * @return the vS tupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createStringComponent(String fullKey, String key, VSPrefs prefsToEdit) {
@@ -466,7 +466,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Fill edit panel.
-     * 
+     *
      * @param prefsToEdit the prefs to edit
      */
     private void fillEditPanel(VSPrefs prefsToEdit) {
@@ -593,7 +593,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Adds the to editor.
-     * 
+     *
      * @param label the label
      * @param prefsKey the prefs key
      * @param prefsToAdd the prefs to add
@@ -661,7 +661,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Adds the separator.
-     * 
+     *
      * @param label the label
      */
     private void addSeparator(String label) {
@@ -670,7 +670,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Adds the variable.
-     * 
+     *
      * @param label the label
      * @param component the component
      * @param prefs the prefs
@@ -681,7 +681,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Adds the variable.
-     * 
+     *
      * @param prefsKey the prefs key
      * @param label the label
      * @param component the component
@@ -734,9 +734,9 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Gets the keys.
-     * 
+     *
      * @param key the key
-     * 
+     *
      * @return [0] := key, [1] := prefsKey
      */
     private String[] getKeys(String key) {
@@ -817,7 +817,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Expert mode changed.
-     * 
+     *
      * @return true, if successful
      */
     public boolean expertModeChanged() {
@@ -845,7 +845,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Gets the edits the panel.
-     * 
+     *
      * @return the edits the panel
      */
     public JPanel getEditPanel() {
@@ -854,7 +854,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Gets the edits the table.
-     * 
+     *
      * @return the edits the table
      */
     public VSEditorTable getEditTable() {
@@ -863,7 +863,7 @@ public abstract class VSEditor implements ActionListener {
 
     /**
      * Gets the button panel.
-     * 
+     *
      * @return the button panel
      */
     public JPanel getButtonPanel() {

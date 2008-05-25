@@ -20,59 +20,59 @@ import utils.*;
  * The Class VSSimulatorFrame.
  */
 public class VSSimulatorFrame extends VSFrame implements ActionListener {
-    
+
     /** The pause item. */
     private JMenuItem pauseItem;
-    
+
     /** The replay item. */
     private JMenuItem replayItem;
-    
+
     /** The reset item. */
     private JMenuItem resetItem;
-    
+
     /** The start item. */
     private JMenuItem startItem;
-    
+
     /** The pause button. */
     private JButton pauseButton;
-    
+
     /** The replay button. */
     private JButton replayButton;
-    
+
     /** The reset button. */
     private JButton resetButton;
-    
+
     /** The start button. */
     private JButton startButton;
-    
+
     /** The menu edit. */
     private JMenu menuEdit;
-    
+
     /** The menu file. */
     private JMenu menuFile;
-    
+
     /** The menu simulation. */
     private JMenu menuSimulation;
-    
+
     /** The tool bar. */
     private JToolBar toolBar;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
-    
+
     /** The simulations. */
     private Vector<VSSimulator> simulations;
-    
+
     /** The current simulation. */
     private VSSimulator currentSimulation;
-    
+
     /** The tabbed pane. */
     private JTabbedPane tabbedPane;
     //private JSlider speedSlider;
 
     /**
      * Instantiates a new vS simulator frame.
-     * 
+     *
      * @param prefs the prefs
      * @param relativeTo the relative to
      */
@@ -102,7 +102,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Creates the menu bar.
-     * 
+     *
      * @return the j menu bar
      */
     private JMenuBar createMenuBar() {
@@ -214,7 +214,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Creates the content pane.
-     * 
+     *
      * @return the container
      */
     private Container createContentPane() {
@@ -380,7 +380,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Adds the simulation.
-     * 
+     *
      * @param simulation the simulation
      */
     public void addSimulation(VSSimulator simulation) {
@@ -402,7 +402,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Removes the simulation.
-     * 
+     *
      * @param simulationToRemove the simulation to remove
      */
     public void removeSimulation(VSSimulator simulationToRemove) {
@@ -425,7 +425,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Gets the current simulation.
-     * 
+     *
      * @return the current simulation
      */
     public VSSimulator getCurrentSimulation() {
@@ -434,10 +434,10 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /**
      * Gets the image icon.
-     * 
+     *
      * @param name the name
      * @param descr the descr
-     * 
+     *
      * @return the image icon
      */
     private ImageIcon getImageIcon(String name, String descr) {

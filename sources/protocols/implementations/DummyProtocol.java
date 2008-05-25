@@ -12,7 +12,7 @@ import core.VSMessage;
  * The Class DummyProtocol.
  */
 public class DummyProtocol extends VSProtocol {
-    
+
     /**
      * Instantiates a new dummy protocol.
      */

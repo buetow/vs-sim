@@ -17,40 +17,40 @@ import protocols.VSProtocol;
  * Global timed tasks are being fullfilled if the simulation's time is reached.
  */
 public class VSTask implements Comparable {
-    
+
     /** The Constant LOCAL. Used for the constructor if it's a local timed task. */
     public final static boolean LOCAL = true;
-    
+
     /** The Constant GLOBAL. Used for the constructor if it's a global timed task. */
     public final static boolean GLOBAL = false;
-    
+
     /** The task time. */
     private long taskTime;
-    
+
     /** The event. */
     private VSEvent event;
-    
+
     /** The process. */
     private VSProcess process;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
-    
+
     /** The task is programmed. The task will be still in the task manager after reset. */
     private boolean isProgrammed;
-    
+
     /** The task is global timed. If set to true, its local timed. */
     private boolean isGlobalTimed;
-    
+
     /** The task counter. Needed for the unique task numbers. */
     private static int taskCounter;
-    
+
     /** The task number. */
     private int taskNum;
 
     /**
      * Instantiates a new task.
-     * 
+     *
      * @param taskTime the task time
      * @param process the process
      * @param event the event
@@ -67,7 +67,7 @@ public class VSTask implements Comparable {
 
     /**
      * Gets the task num.
-     * 
+     *
      * @return the task num
      */
     public int getTaskNum() {
@@ -76,7 +76,7 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if is programmed.
-     * 
+     *
      * @param isProgrammed the task is programmed
      */
     public void isProgrammed(boolean isProgrammed) {
@@ -85,7 +85,7 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task is programmed.
-     * 
+     *
      * @return true, if the task is programmed
      */
     public boolean isProgrammed() {
@@ -94,7 +94,7 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task is a message receive event.
-     * 
+     *
      * @return true, if it is a message receive event
      */
     public boolean isMessageReceiveEvent() {
@@ -103,7 +103,7 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task is a process recover event.
-     * 
+     *
      * @return true, if it is a process recover event
      */
     public boolean isProcessRecoverEvent() {
@@ -112,9 +112,9 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task belongs to the specified protocol object.
-     * 
+     *
      * @param protocol the protocol object to check against.
-     * 
+     *
      * @return true, if it's a task using the protocol object.
      */
     public boolean isProtocol(VSProtocol protocol) {
@@ -126,7 +126,7 @@ public class VSTask implements Comparable {
 
     /**
      * Time over. The task's time is over.
-     * 
+     *
      * @return true, if it's over
      */
     public boolean timeOver() {
@@ -138,9 +138,9 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task equals to another task.
-     * 
+     *
      * @param task the task to compare to
-     * 
+     *
      * @return true, if equal
      */
     public boolean equals(VSTask task) {
@@ -149,9 +149,9 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the event belongs to the specified process.
-     * 
+     *
      * @param process the process to check against
-     * 
+     *
      * @return true, if the event is using the process
      */
     public boolean isProcess(VSProcess process) {
@@ -160,7 +160,7 @@ public class VSTask implements Comparable {
 
     /**
      * Checks if the task is global timed.
-     * 
+     *
      * @return true, if the taks is global timed
      */
     public boolean isGlobalTimed() {
@@ -169,7 +169,7 @@ public class VSTask implements Comparable {
 
     /**
      * Gets the process.
-     * 
+     *
      * @return the process of the event
      */
     public VSProcess getProcess() {
@@ -187,7 +187,7 @@ public class VSTask implements Comparable {
 
     /**
      * Gets the task time.
-     * 
+     *
      * @return the task time
      */
     public long getTaskTime() {
@@ -196,7 +196,7 @@ public class VSTask implements Comparable {
 
     /**
      * Gets the event.
-     * 
+     *
      * @return the event
      */
     public VSEvent getEvent() {
@@ -205,7 +205,7 @@ public class VSTask implements Comparable {
 
     /**
      * Logg a message.
-     * 
+     *
      * @param message the message to logg
      */
     private void logg(String message) {

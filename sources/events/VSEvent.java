@@ -12,22 +12,22 @@ import prefs.VSPrefs;
  * The Class VSEvent.
  */
 abstract public class VSEvent extends VSPrefs {
-    
+
     /** The prefs. */
     protected VSPrefs prefs;
-    
+
     /** The process. */
     protected VSProcess process;
-    
+
     /** The event shortname. */
     private String eventShortname;
-    
+
     /** The event classname. */
     private String eventClassname;
 
     /**
      * Inits the.
-     * 
+     *
      * @param process the process
      */
     public void init(VSProcess process) {
@@ -39,7 +39,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Sets the classname.
-     * 
+     *
      * @param eventClassname the new classname
      */
     protected final void setClassname(String eventClassname) {
@@ -51,7 +51,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Gets the classname.
-     * 
+     *
      * @return the classname
      */
     public String getClassname() {
@@ -60,7 +60,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Gets the name.
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -69,7 +69,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Sets the shortname.
-     * 
+     *
      * @param eventShortname the new shortname
      */
     public void setShortname(String eventShortname) {
@@ -78,7 +78,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Gets the shortname.
-     * 
+     *
      * @return the shortname
      */
     public String getShortname() {
@@ -90,7 +90,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Gets the process.
-     * 
+     *
      * @return the process
      */
     public VSProcess getProcess() {
@@ -99,7 +99,7 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Logg.
-     * 
+     *
      * @param message the message
      */
     public void logg(String message) {
@@ -108,9 +108,9 @@ abstract public class VSEvent extends VSPrefs {
 
     /**
      * Equals.
-     * 
+     *
      * @param event the event
-     * 
+     *
      * @return true, if successful
      */
     public boolean equals(VSEvent event) {
@@ -121,7 +121,7 @@ abstract public class VSEvent extends VSPrefs {
      * On init.
      */
     abstract protected void onInit();
-    
+
     /**
      * On start.
      */

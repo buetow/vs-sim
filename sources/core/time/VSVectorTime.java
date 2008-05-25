@@ -11,14 +11,14 @@ import java.util.ArrayList;
  * The Class VSVectorTime.
  */
 public class VSVectorTime extends ArrayList<Long> implements VSTime {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /** The global time. */
     private long globalTime;
 
     /**
      * Instantiates a new vector time.
-     * 
+     *
      * @param globalTime the global time
      */
     public VSVectorTime(long globalTime) {
@@ -27,7 +27,7 @@ public class VSVectorTime extends ArrayList<Long> implements VSTime {
 
     /**
      * To long array.
-     * 
+     *
      * @return the long[]
      */
     public long[] toLongArray() {
@@ -42,7 +42,7 @@ public class VSVectorTime extends ArrayList<Long> implements VSTime {
 
     /**
      * Sets the global time.
-     * 
+     *
      * @param globalTime the new global time
      */
     public void setGlobalTime(long globalTime) {
@@ -58,7 +58,7 @@ public class VSVectorTime extends ArrayList<Long> implements VSTime {
 
     /**
      * Gets the copy.
-     * 
+     *
      * @return the copy
      */
     public VSVectorTime getCopy() {

@@ -9,19 +9,19 @@ package utils;
  * The Class VSTupel.
  */
 public final class VSTupel<A,B,C> {
-    
+
     /** The a. */
     private A a;
-    
+
     /** The b. */
     private B b;
-    
+
     /** The c. */
     private C c;
 
     /**
      * Instantiates a new vS tupel.
-     * 
+     *
      * @param a the a
      * @param b the b
      * @param c the c
@@ -34,7 +34,7 @@ public final class VSTupel<A,B,C> {
 
     /**
      * Gets the a.
-     * 
+     *
      * @return the a
      */
     public A getA() {
@@ -43,7 +43,7 @@ public final class VSTupel<A,B,C> {
 
     /**
      * Gets the b.
-     * 
+     *
      * @return the b
      */
     public B getB() {
@@ -52,7 +52,7 @@ public final class VSTupel<A,B,C> {
 
     /**
      * Gets the c.
-     * 
+     *
      * @return the c
      */
     public C getC() {

@@ -23,211 +23,211 @@ import prefs.editors.*;
  * The Class VSSimulatorCanvas.
  */
 public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /** The highlighted process. */
     private VSProcess highlightedProcess;
-    
+
     /** The simulation. */
     private VSSimulator simulation;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
-    
+
     /** The logging. */
     private VSLogging logging;
-    
+
     /** The num processes. */
     private volatile int numProcesses;
-    
+
     /** The seconds spaceing. */
     private int secondsSpaceing;
-    
+
     /** The thread sleep. */
     private int threadSleep;
-    
+
     /** The until time. */
     private long untilTime;
-    
+
     /** The is paused. */
     private volatile boolean isPaused = true;
-    
+
     /** The is thread stopped. */
     private volatile boolean isThreadStopped = false;
-    
+
     /** The is finished. */
     private volatile boolean isFinished = false;
-    
+
     /** The is resetted. */
     private volatile boolean isResetted = false;
-    
+
     /** The is anti aliased. */
     private volatile boolean isAntiAliased = false;
-    
+
     /** The is anti aliased changed. */
     private volatile boolean isAntiAliasedChanged = false;
-    
+
     /** The show lamport. */
     private volatile boolean showLamport = false;
-    
+
     /** The show vector time. */
     private volatile boolean showVectorTime = false;
-    
+
     /** The pause time. */
     private volatile long pauseTime;
-    
+
     /** The start time. */
     private volatile long startTime;
-    
+
     /** The time. */
     private volatile long time;
-    
+
     /** The last time. */
     private volatile long lastTime;
-    
+
     /** The task manager. */
     private VSTaskManager taskManager;
-    
+
     /** The message lines. */
     private LinkedList<VSMessageLine> messageLines;
-    
+
     /** The processes. */
     private Vector<VSProcess> processes;
-    
+
     /** The clock speed. */
     private double clockSpeed;
-    
+
     /** The clock offset. */
     private double clockOffset;
-    
+
     /** The simulation time. */
     private long simulationTime;
 
     /* GFX buffering */
     /** The strategy. */
     private BufferStrategy strategy;
-    
+
     /** The g. */
     private Graphics2D g;
 
     /* Static constats */
     /** The Constant LINE_WIDTH. */
     private static final int LINE_WIDTH = 5;
-    
+
     /** The Constant SEPLINE_WIDTH. */
     private static final int SEPLINE_WIDTH = 2;
-    
+
     /** The Constant XOFFSET. */
     private static final int XOFFSET = 50;
-    
+
     /** The Constant YOFFSET. */
     private static final int YOFFSET = 30;
-    
+
     /** The Constant YOUTER_SPACEING. */
     private static final int YOUTER_SPACEING = 15;
-    
+
     /** The Constant YSEPLINE_SPACEING. */
     private static final int YSEPLINE_SPACEING = 20;
-    
+
     /** The Constant TEXT_SPACEING. */
     private static final int TEXT_SPACEING = 10;
-    
+
     /** The Constant ROW_HEIGHT. */
     private static final int ROW_HEIGHT = 14;
 
     /* Constats, which have to get calculated once after start */
     /** The processline color. */
     private Color processlineColor;
-    
+
     /** The process secondline color. */
     private Color processSecondlineColor;
-    
+
     /** The process sepline color. */
     private Color processSeplineColor;
-    
+
     /** The message arrived color. */
     private Color messageArrivedColor;
-    
+
     /** The message sending color. */
     private Color messageSendingColor;
-    
+
     /** The message lost color. */
     private Color messageLostColor;
-    
+
     /** The background color. */
     private Color backgroundColor;
 
     /** The message line counter. */
     private long messageLineCounter;
-    
+
     /**
      * The Class VSMessageLine.
      */
     private class VSMessageLine {
-        
+
         /** The receiver process. */
         private VSProcess receiverProcess;
-        
+
         /** The color. */
         private Color color;
-        
+
         /** The send time. */
         private long sendTime;
-        
+
         /** The recv time. */
         private long recvTime;
-        
+
         /** The sender num. */
         private int senderNum;
-        
+
         /** The receiver num. */
         private int receiverNum;
-        
+
         /** The offset1. */
         private int offset1;
-        
+
         /** The offset2. */
         private int offset2;
-        
+
         /** The is arrived. */
         private boolean isArrived;
-        
+
         /** The is lost. */
         private boolean isLost;
-        
+
         /** The x1. */
         private double x1;
-        
+
         /** The y1. */
         private double y1;
-        
+
         /** The x2. */
         private double x2;
-        
+
         /** The y2. */
         private double y2;
-        
+
         /** The x. */
         private double x;
-        
+
         /** The y. */
         private double y;
-        
+
         /** The outage time. */
         private long outageTime;
-        
+
         /** The z. */
         private long z;
-        
+
         /** The message line num. */
         private long messageLineNum;
-        
+
         /** The task. */
         private VSTask task;
 
         /**
          * Instantiates a new vS message line.
-         * 
+         *
          * @param receiverProcess the receiver process
          * @param sendTime the send time
          * @param recvTime the recv time
@@ -282,7 +282,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         /**
          * Draw.
-         * 
+         *
          * @param g the g
          * @param globalTime the global time
          */
@@ -318,9 +318,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         /**
          * Removes the process at index.
-         * 
+         *
          * @param index the index
-         * 
+         *
          * @return true, if successful
          */
         public boolean removeProcessAtIndex(int index) {
@@ -340,7 +340,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         /**
          * Gets the message line num.
-         * 
+         *
          * @return the message line num
          */
         public long getMessageLineNum() {
@@ -349,9 +349,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         /**
          * Equals.
-         * 
+         *
          * @param line the line
-         * 
+         *
          * @return true, if successful
          */
         public boolean equals(VSMessageLine line) {
@@ -360,7 +360,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         /**
          * Gets the task.
-         * 
+         *
          * @return the task
          */
         public VSTask getTask() {
@@ -370,7 +370,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Instantiates a new vS simulator canvas.
-     * 
+     *
      * @param prefs the prefs
      * @param simulation the simulation
      * @param logging the logging
@@ -397,37 +397,37 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /** The x paint size. */
     double xPaintSize;
-    
+
     /** The paint size. */
     double paintSize;
-    
+
     /** The y distance. */
     double yDistance;
-    
+
     /** The global time x position. */
     double globalTimeXPosition;
 
     /** The xoffset_plus_xpaintsize. */
     int xoffset_plus_xpaintsize;
-    
+
     /** The xpaintsize_dividedby_untiltime. */
     double xpaintsize_dividedby_untiltime;
-    
+
     /** The paint processes offset. */
     int paintProcessesOffset;
 
     /** The paint secondlines seconds. */
     int paintSecondlinesSeconds;
-    
+
     /** The paint secondlines line. */
     int paintSecondlinesLine[] = new int[4];
-    
+
     /** The paint secondlines y string pos1. */
     int paintSecondlinesYStringPos1;
-    
+
     /** The paint secondlines y string pos2. */
     int paintSecondlinesYStringPos2;
-    
+
     /** The paint global time y position. */
     int paintGlobalTimeYPosition;
 
@@ -488,7 +488,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Update simulation.
-     * 
+     *
      * @param globalTime the global time
      * @param lastGlobalTime the last global time
      */
@@ -564,7 +564,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Paint processes.
-     * 
+     *
      * @param g the g
      * @param globalTime the global time
      */
@@ -629,7 +629,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Paint time.
-     * 
+     *
      * @param g the g
      * @param times the times
      * @param process the process
@@ -677,7 +677,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Paint secondlines.
-     * 
+     *
      * @param g the g
      */
     private void paintSecondlines(Graphics2D g) {
@@ -702,7 +702,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Paint global time.
-     * 
+     *
      * @param g the g
      * @param globalTime the global time
      */
@@ -720,9 +720,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the process at y pos.
-     * 
+     *
      * @param yPos the y pos
-     * 
+     *
      * @return the process at y pos
      */
     private VSProcess getProcessAtYPos(int yPos) {
@@ -745,9 +745,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the time x position.
-     * 
+     *
      * @param time the time
-     * 
+     *
      * @return the time x position
      */
     private double getTimeXPosition(long time) {
@@ -756,9 +756,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the process y position.
-     * 
+     *
      * @param i the i
-     * 
+     *
      * @return the process y position
      */
     private int getProcessYPosition(int i) {
@@ -776,7 +776,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the time.
-     * 
+     *
      * @return the time
      */
     public long getTime() {
@@ -785,7 +785,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the until time.
-     * 
+     *
      * @return the until time
      */
     public long getUntilTime() {
@@ -794,7 +794,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the start time.
-     * 
+     *
      * @return the start time
      */
     public long getStartTime() {
@@ -803,7 +803,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the task manager.
-     * 
+     *
      * @return the task manager
      */
     public VSTaskManager getTaskManager() {
@@ -812,7 +812,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the num processes.
-     * 
+     *
      * @return the num processes
      */
     public int getNumProcesses() {
@@ -821,9 +821,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the process.
-     * 
+     *
      * @param processNum the process num
-     * 
+     *
      * @return the process
      */
     public VSProcess getProcess(int processNum) {
@@ -985,7 +985,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Checks if is thread stopped.
-     * 
+     *
      * @return true, if is thread stopped
      */
     public boolean isThreadStopped() {
@@ -994,7 +994,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Show lamport.
-     * 
+     *
      * @param showLamport the show lamport
      */
     public void showLamport(boolean showLamport) {
@@ -1005,7 +1005,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Show vector time.
-     * 
+     *
      * @param showVectorTime the show vector time
      */
     public void showVectorTime(boolean showVectorTime) {
@@ -1016,7 +1016,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Checks if is anti aliased.
-     * 
+     *
      * @param isAntiAliased the is anti aliased
      */
     public void isAntiAliased(boolean isAntiAliased) {
@@ -1028,7 +1028,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Send message.
-     * 
+     *
      * @param message the message
      */
     public void sendMessage(VSMessage message) {
@@ -1147,7 +1147,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Edits the process.
-     * 
+     *
      * @param processNum the process num
      */
     public void editProcess(int processNum) {
@@ -1157,7 +1157,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Edits the process.
-     * 
+     *
      * @param process the process
      */
     public void editProcess(VSProcess process) {
@@ -1249,7 +1249,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Gets the processes array.
-     * 
+     *
      * @return the processes array
      */
     public ArrayList<VSProcess> getProcessesArray() {
@@ -1283,7 +1283,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Removes the process.
-     * 
+     *
      * @param process the process
      */
     private void removeProcess(VSProcess process) {
@@ -1320,9 +1320,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
     /**
      * Creates the process.
-     * 
+     *
      * @param processNum the process num
-     * 
+     *
      * @return the vS process
      */
     private VSProcess createProcess(int processNum) {

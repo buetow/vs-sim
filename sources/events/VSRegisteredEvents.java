@@ -15,25 +15,25 @@ import utils.*;
  * The Class VSRegisteredEvents.
  */
 public final class VSRegisteredEvents {
-    
+
     /** The event classnames. */
     private static HashMap<String,String> eventClassnames;
-    
+
     /** The event shortnames. */
     private static HashMap<String,String> eventShortnames;
-    
+
     /** The event names. */
     private static HashMap<String,String> eventNames;
-    
+
     /** The editable protocols classnames. */
     private static ArrayList<String> editableProtocolsClassnames;
-    
+
     /** The prefs. */
     private static VSPrefs prefs;
 
     /**
      * Inits the.
-     * 
+     *
      * @param prefs_ the prefs_
      */
     public static void init(VSPrefs prefs_) {
@@ -67,7 +67,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the editable protocols classnames.
-     * 
+     *
      * @return the editable protocols classnames
      */
     public static ArrayList<String> getEditableProtocolsClassnames() {
@@ -76,7 +76,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the protocol names.
-     * 
+     *
      * @return the protocol names
      */
     public static Vector<String> getProtocolNames() {
@@ -94,7 +94,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the protocol classnames.
-     * 
+     *
      * @return the protocol classnames
      */
     public static Vector<String> getProtocolClassnames() {
@@ -112,7 +112,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the non protocol names.
-     * 
+     *
      * @return the non protocol names
      */
     public static Vector<String> getNonProtocolNames() {
@@ -130,7 +130,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the non protocol classnames.
-     * 
+     *
      * @return the non protocol classnames
      */
     public static Vector<String> getNonProtocolClassnames() {
@@ -148,9 +148,9 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the classname.
-     * 
+     *
      * @param eventName the event name
-     * 
+     *
      * @return the classname
      */
     public static String getClassname(String eventName) {
@@ -159,9 +159,9 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the name.
-     * 
+     *
      * @param eventClassname the event classname
-     * 
+     *
      * @return the name
      */
     public static String getName(String eventClassname) {
@@ -170,9 +170,9 @@ public final class VSRegisteredEvents {
 
     /**
      * Gets the shortname.
-     * 
+     *
      * @param eventClassname the event classname
-     * 
+     *
      * @return the shortname
      */
     public static String getShortname(String eventClassname) {
@@ -181,10 +181,10 @@ public final class VSRegisteredEvents {
 
     /**
      * Creates the event instance by classname.
-     * 
+     *
      * @param eventClassname the event classname
      * @param process the process
-     * 
+     *
      * @return the vS event
      */
     public static VSEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
@@ -201,10 +201,10 @@ public final class VSRegisteredEvents {
 
     /**
      * Creates the event instance by name.
-     * 
+     *
      * @param eventName the event name
      * @param process the process
-     * 
+     *
      * @return the vS event
      */
     public static VSEvent createEventInstanceByName(String eventName, VSProcess process) {
@@ -213,7 +213,7 @@ public final class VSRegisteredEvents {
 
     /**
      * Register event.
-     * 
+     *
      * @param eventClassname the event classname
      * @param eventName the event name
      * @param eventShortname the event shortname

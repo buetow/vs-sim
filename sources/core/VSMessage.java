@@ -12,31 +12,31 @@ import prefs.VSPrefs;
  * This class represents a message which is send from one process to another process in the simulation.
  */
 public class VSMessage extends VSPrefs {
-    
+
     /** Each message belongs to a specific protocol. This variable defined the class name of the protocol being used. */
     private String protocolClassname;
-    
+
     /** The default application preferences. */
     private VSPrefs prefs;
-    
+
     /** A reference to the process who sent this message. */
     private VSProcess sendingProcess;
-    
+
     /** The vector time of the sending process after sending. The receiver process will use this vector time in order to update the local vector time. */
     private VSVectorTime vectorTime;
-    
+
     /** The lamport time of the sending process after sending. The receiver process will use this lamport time in order to update the local vector time. */
     private long lamportTime;
-    
+
     /** Each message has its own unique ID. The ID will show up in the logging window of the simulator as well. */
     private long messageID;
-    
+
     /** This counter is used in order to generate unique message ID's. */
     private static long messageCounter;
 
     /**
      * The constructor of the message.
-     * 
+     *
      * @param protocolClassname The classname of the protocol this message
      * belongs to.
      */
@@ -47,7 +47,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Initialized the message.
-     * 
+     *
      * @param process The sending process of this message.
      */
     public void init(VSProcess process) {
@@ -59,7 +59,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The protocol name of the message.
      */
     public String getName() {
@@ -68,7 +68,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The protocol classname of the message.
      */
     public String getProtocolClassname() {
@@ -77,7 +77,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The ID of the message.
      */
     public long getMessageID() {
@@ -86,7 +86,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The process which sent this message.
      */
     public VSProcess getSendingProcess() {
@@ -95,7 +95,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The lamport time of the sending process.
      */
     public long getLamportTime() {
@@ -104,7 +104,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Getter method.
-     * 
+     *
      * @return The vector time of the sending process.
      */
     public VSVectorTime getVectorTime() {
@@ -113,7 +113,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * String representation of the message object.
-     * 
+     *
      * @return String representation of the message object.
      */
     public String toString() {
@@ -131,7 +131,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Extended string representation of the message object.
-     * 
+     *
      * @return Extended string representation of the message object.
      */
     public String toStringFull() {
@@ -140,9 +140,9 @@ public class VSMessage extends VSPrefs {
 
     /**
      * Compares two messages.
-     * 
+     *
      * @param message The message to compare with.
-     * 
+     *
      * @return true, if the messages have the same ID. Otherwise false.
      */
     public boolean equals(VSMessage message) {
@@ -151,7 +151,7 @@ public class VSMessage extends VSPrefs {
 
     /**
      * For logging in the simulator's logging window!.
-     * 
+     *
      * @param message The message to logg.
      */
     public void logg(String message) { }

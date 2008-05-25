@@ -11,12 +11,12 @@ package utils;
  * The Class VSClassLoader.
  */
 public class VSClassLoader extends ClassLoader {
-    
+
     /**
      * New instance.
-     * 
+     *
      * @param classname the classname
-     * 
+     *
      * @return the object
      */
     public Object newInstance(String classname) {

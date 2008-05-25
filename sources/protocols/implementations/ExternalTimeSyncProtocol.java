@@ -12,10 +12,10 @@ import protocols.VSProtocol;
  * The Class ExternalTimeSyncProtocol.
  */
 public class ExternalTimeSyncProtocol extends VSProtocol {
-    
+
     /** The request time. */
     private long requestTime;
-    
+
     /** The waiting for response. */
     private boolean waitingForResponse;
 

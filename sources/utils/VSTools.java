@@ -10,12 +10,12 @@ package utils;
  * The Class VSTools.
  */
 public final class VSTools {
-    
+
     /**
      * Gets the time string.
-     * 
+     *
      * @param time the time
-     * 
+     *
      * @return the time string
      */
     public static String getTimeString(long time) {
@@ -26,12 +26,12 @@ public final class VSTools {
 
         return ret + "ms";
     }
-    
+
     /**
      * Gets the string time.
-     * 
+     *
      * @param string the string
-     * 
+     *
      * @return the string time
      */
     public static long getStringTime(String string) {

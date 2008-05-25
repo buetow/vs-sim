@@ -13,13 +13,13 @@ import protocols.VSProtocol;
  * The Class MessageReceiveEvent.
  */
 public class MessageReceiveEvent extends VSEvent {
-    
+
     /** The message. */
     private VSMessage message;
 
     /**
      * Instantiates a new message receive event.
-     * 
+     *
      * @param message the message
      */
     public MessageReceiveEvent(VSMessage message) {

@@ -13,8 +13,8 @@ import javax.swing.border.*;
  * The Class VSInfoArea.
  */
 public class VSInfoArea extends JTextPane {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     /**
      * Instantiates a new vS info area.
      */
@@ -24,7 +24,7 @@ public class VSInfoArea extends JTextPane {
 
     /**
      * Instantiates a new vS info area.
-     * 
+     *
      * @param text the text
      */
     public VSInfoArea(String text) {

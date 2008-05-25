@@ -16,13 +16,13 @@ import utils.*;
  * The Class VSAbout.
  */
 public class VSAbout extends VSFrame implements ActionListener {
-    
+
     /** The prefs. */
     private VSPrefs prefs;
 
     /**
      * Instantiates a new vS about.
-     * 
+     *
      * @param prefs the prefs
      * @param relativeTo the relative to
      */
@@ -41,7 +41,7 @@ public class VSAbout extends VSFrame implements ActionListener {
 
     /**
      * Creates the content pane.
-     * 
+     *
      * @return the container
      */
     public Container createContentPane() {
@@ -59,7 +59,7 @@ public class VSAbout extends VSFrame implements ActionListener {
 
     /**
      * Creates the button pane.
-     * 
+     *
      * @return the j panel
      */
     public JPanel createButtonPane() {

@@ -12,7 +12,7 @@ import protocols.VSProtocol;
  * The Class InternalTimeSyncProtocol.
  */
 public class InternalTimeSyncProtocol extends VSProtocol {
-    
+
     /** The waiting for response. */
     private boolean waitingForResponse;
 

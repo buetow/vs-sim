@@ -11,7 +11,7 @@ import events.VSEvent;
  * The Class ProcessRecoverEvent.
  */
 public class ProcessRecoverEvent extends VSEvent {
-    
+
     /* (non-Javadoc)
      * @see events.VSEvent#onInit()
      */

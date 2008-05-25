@@ -13,28 +13,28 @@ import utils.*;
  * The Class VSTaskManager.
  */
 public class VSTaskManager {
-    
+
     /** The tasks. */
     private PriorityQueue<VSTask> tasks;
-    
+
     /** The global tasks. */
     private PriorityQueue<VSTask> globalTasks;
-    
+
     /** The fullfilled programmed tasks. */
     private LinkedList<VSTask> fullfilledProgrammedTasks;
-    
+
     /** The Constant PROGRAMMED. */
     public final static boolean PROGRAMMED = true;
-    
+
     /** The Constant ONLY_ONCE. */
     public final static boolean ONLY_ONCE = false;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
 
     /**
      * Instantiates a new vS task manager.
-     * 
+     *
      * @param prefs the prefs
      */
     public VSTaskManager(VSPrefs prefs) {
@@ -46,7 +46,7 @@ public class VSTaskManager {
 
     /**
      * Run tasks.
-     * 
+     *
      * @param step the step
      * @param offset the offset
      * @param lastGlobalTime the last global time
@@ -201,7 +201,7 @@ public class VSTaskManager {
 
     /**
      * Inserts a task. Only for internal usage. Use the add methods instead.
-     * 
+     *
      * @param task the task to insert
      */
     private void insert(VSTask task) {
@@ -217,7 +217,7 @@ public class VSTaskManager {
 
     /**
      * Adds a task.
-     * 
+     *
      * @param task the task to add
      */
     public void addTask(VSTask task) {
@@ -226,7 +226,7 @@ public class VSTaskManager {
 
     /**
      * Adds a task.
-     * 
+     *
      * @param task the task to add
      * @param isProgrammed the task is programmed
      */
@@ -237,9 +237,9 @@ public class VSTaskManager {
 
     /**
      * Removes a task.
-     * 
+     *
      * @param task the task to remove
-     * 
+     *
      * @return true, if successful
      */
     public synchronized boolean removeTask(VSTask task) {
@@ -257,7 +257,7 @@ public class VSTaskManager {
 
     /**
      * Removes the tasks of the specified process.
-     * 
+     *
      * @param process the process to remove the tasks of
      */
     public synchronized void removeTasksOf(VSProcess process) {
@@ -285,7 +285,7 @@ public class VSTaskManager {
 
     /**
      * Gets the local tasks.
-     * 
+     *
      * @return the local tasks
      */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
@@ -304,7 +304,7 @@ public class VSTaskManager {
 
     /**
      * Gets the global tasks.
-     * 
+     *
      * @return the global tasks
      */
     public synchronized VSPriorityQueue<VSTask> getGlobalTasks() {
@@ -323,9 +323,9 @@ public class VSTaskManager {
 
     /**
      * Gets the process local tasks.
-     * 
+     *
      * @param process the process
-     * 
+     *
      * @return the process local tasks
      */
     public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(VSProcess process) {
@@ -344,9 +344,9 @@ public class VSTaskManager {
 
     /**
      * Gets the process global tasks.
-     * 
+     *
      * @param process the process
-     * 
+     *
      * @return the process global tasks
      */
     public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(VSProcess process) {

@@ -14,10 +14,10 @@ import protocols.VSProtocol;
  * The Class BroadcastSturmProtocol.
  */
 public class BroadcastSturmProtocol extends VSProtocol {
-    
+
     /** The sent messages. */
     private ArrayList<VSMessage> sentMessages;
-    
+
     /** The broadcast count. */
     private static int broadcastCount;
 

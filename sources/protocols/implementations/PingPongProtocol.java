@@ -12,10 +12,10 @@ import protocols.VSProtocol;
  * The Class PingPongProtocol.
  */
 public class PingPongProtocol extends VSProtocol {
-    
+
     /** The client counter. */
     private int clientCounter;
-    
+
     /** The server counter. */
     private int serverCounter;
 

@@ -15,28 +15,28 @@ import utils.*;
  * The Class VSLogging.
  */
 public class VSLogging {
-    
+
     /** The logging area. */
     private JTextArea loggingArea;
-    
+
     /** The filter text. */
     private String filterText;
-    
+
     /** The pause lines. */
     private ArrayList<StringBuffer> pauseLines;
-    
+
     /** The logging lines. */
     private ArrayList<StringBuffer> loggingLines;
-    
+
     /** The simulation canvas. */
     private VSSimulatorCanvas simulationCanvas;
-    
+
     /** The is filtered. */
     private boolean isFiltered;
-    
+
     /** The is paused. */
     private boolean isPaused;
-    
+
     /** The filter pattern. */
     private Pattern filterPattern;
 
@@ -55,7 +55,7 @@ public class VSLogging {
 
     /**
      * Sets the simulation canvas.
-     * 
+     *
      * @param simulationCanvas the new simulation canvas
      */
     public void setSimulationCanvas(VSSimulatorCanvas simulationCanvas) {
@@ -64,7 +64,7 @@ public class VSLogging {
 
     /**
      * Gets the logging area.
-     * 
+     *
      * @return the logging area
      */
     public JTextArea getLoggingArea() {
@@ -73,7 +73,7 @@ public class VSLogging {
 
     /**
      * Logg.
-     * 
+     *
      * @param message the message
      */
     public void logg(String message) {
@@ -85,7 +85,7 @@ public class VSLogging {
 
     /**
      * Logg.
-     * 
+     *
      * @param message the message
      * @param time the time
      */
@@ -103,7 +103,7 @@ public class VSLogging {
 
     /**
      * Checks if is paused.
-     * 
+     *
      * @param isPaused the is paused
      */
     public synchronized void isPaused(boolean isPaused) {
@@ -119,7 +119,7 @@ public class VSLogging {
 
     /**
      * Logg filtered.
-     * 
+     *
      * @param buffer the buffer
      */
     private void loggFiltered(StringBuffer buffer) {
@@ -136,7 +136,7 @@ public class VSLogging {
 
     /**
      * Checks if is filtered.
-     * 
+     *
      * @param isFiltered the is filtered
      */
     public synchronized void isFiltered(boolean isFiltered) {
@@ -150,7 +150,7 @@ public class VSLogging {
 
     /**
      * Sets the filter text.
-     * 
+     *
      * @param filterText the new filter text
      */
     public synchronized void setFilterText(String filterText) {

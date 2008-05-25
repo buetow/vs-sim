@@ -12,13 +12,13 @@ import protocols.VSProtocol;
  * The Class ProtocolEvent.
  */
 public class ProtocolEvent extends VSEvent {
-    
+
     /** The protocol classname. */
     private String protocolClassname;
-    
+
     /** The is client protocol. */
     private boolean isClientProtocol; /* true = client, false = server */
-    
+
     /** The is protocol activation. */
     private boolean isProtocolActivation; /* true = activate, false = deactivate */
 
@@ -31,7 +31,7 @@ public class ProtocolEvent extends VSEvent {
 
     /**
      * Checks if is client protocol.
-     * 
+     *
      * @param isClientProtocol the is client protocol
      */
     public void isClientProtocol(boolean isClientProtocol) {
@@ -40,7 +40,7 @@ public class ProtocolEvent extends VSEvent {
 
     /**
      * Checks if is client protocol.
-     * 
+     *
      * @return true, if is client protocol
      */
     public boolean isClientProtocol() {
@@ -49,7 +49,7 @@ public class ProtocolEvent extends VSEvent {
 
     /**
      * Checks if is protocol activation.
-     * 
+     *
      * @param isProtocolActivation the is protocol activation
      */
     public void isProtocolActivation(boolean isProtocolActivation) {
@@ -58,7 +58,7 @@ public class ProtocolEvent extends VSEvent {
 
     /**
      * Checks if is protocol activation.
-     * 
+     *
      * @return true, if is protocol activation
      */
     public boolean isProtocolActivation() {
@@ -67,7 +67,7 @@ public class ProtocolEvent extends VSEvent {
 
     /**
      * Sets the protocol classname.
-     * 
+     *
      * @param protocolClassname the new protocol classname
      */
     public void setProtocolClassname(String protocolClassname) {

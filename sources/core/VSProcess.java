@@ -19,85 +19,85 @@ import utils.*;
  * The Class VSProcess. A object of this class represents a process of a simulation.
  */
 public class VSProcess extends VSPrefs {
-    
+
     /** The protocols to reset if the simulation is over or the reset button has been pressed. */
     private ArrayList<VSProtocol> protocolsToReset;
-    
+
     /** The crash history. represents all crashes of the process using the global simulation time. */
     private ArrayList<Long> crashHistory;
-    
+
     /** The lamport time history. */
     private ArrayList<VSLamportTime> lamportTimeHistory;
-    
+
     /** The vector time history. */
     private ArrayList<VSVectorTime> vectorTimeHistory;
-    
+
     /** The crashed color. */
     private Color crashedColor;;
-    
+
     /** The current color. */
     private Color currentColor;
-    
+
     /** The tmp color. For internal usage. */
     private Color tmpColor;
-    
+
     /** The logging object. */
     private VSLogging logging;
-    
+
     /** The simulation's default prefs. */
     private VSPrefs prefs;
-    
+
     /** The random generator of the process. */
     private VSRandom random;
-    
+
     /** The simulation canvas. */
     private VSSimulatorCanvas simulationCanvas;
-    
+
     /** The random crash task. May be null if there is no such random task. */
     private VSTask randomCrashTask;
-    
+
     /** The vector time. */
     private VSVectorTime vectorTime;
-    
+
     /** The process has crashed. But may be working again. */
     private boolean hasCrashed;
-    
+
     /** The process has started. But may be paused or crashed.. */
     private boolean hasStarted;
-    
+
     /** The process is crashed. */
     private boolean isCrashed;
-    
+
     /** The process is highlighted. */
     private boolean isHighlighted;
-    
+
     /** The process is paused. */
     private boolean isPaused;
-    
+
     /** The time has been modified in a task. Needed by the task manager to calculate correct offsets. */
     private boolean timeModified;
-    
+
     /** The clock offset. Used by the task manager and also by the process' clock variance. */
     private double clockOffset;
-    
+
     /** The clock variance. */
     private float clockVariance;
-    
+
     /** The process id. */
     private int processID; // Represents the PID of a process
-    
+
     /** The process num. It is different to the process id. It represents the array index of the process. */
     private int processNum; // Represents the array index of the process, for internal usage
-    
+
     /** The global time. */
     private long globalTime;
-    
+
     /** The lamport time. */
     private long lamportTime;
-    
+
     /** The local time. */
     private long localTime;
-    
+
     /** The process counter. Needed for the unique process id's. */
     private static int processCounter;
 
@@ -153,7 +153,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Instantiates a new process.
-     * 
+     *
      * @param prefs the simulation's default prefs
      * @param processNum the process num
      * @param simulationCanvas the simulation canvas
@@ -240,7 +240,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sync time. Using the clockOffset and clockVariance.
-     * 
+     *
      * @param globalTime the global time
      */
     public synchronized void syncTime(final long globalTime) {
@@ -266,7 +266,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the current color.
-     * 
+     *
      * @param newColor the new current color
      */
     private void setCurrentColor(Color newColor) {
@@ -340,7 +340,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Adds the clock offset. This method is used by the task manager.
-     * 
+     *
      * @param add the clock offset to add.
      */
     public synchronized void addClockOffset(long add) {
@@ -373,7 +373,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the process id.
-     * 
+     *
      * @return the process id
      */
     public synchronized int getProcessID() {
@@ -382,7 +382,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the process num.
-     * 
+     *
      * @return the process num
      */
     public synchronized int getProcessNum() {
@@ -391,7 +391,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the process id.
-     * 
+     *
      * @param processID the new process id
      */
     public synchronized void setProcessID(int processID) {
@@ -400,7 +400,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the current process' color.
-     * 
+     *
      * @return the current color of the process.
      */
     public synchronized Color getColor() {
@@ -409,7 +409,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the local time.
-     * 
+     *
      * @param localTime the new local time.
      */
     public synchronized void setLocalTime(final long localTime) {
@@ -421,7 +421,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the process' local time.
-     * 
+     *
      * @return the process' local time
      */
     public synchronized long getTime() {
@@ -430,7 +430,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the process' local time.
-     * 
+     *
      * @param time the new local time of the process.
      */
     public synchronized void setTime(final long time) {
@@ -444,7 +444,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Checks if the process is crashed.
-     * 
+     *
      * @return true, if is crashed
      */
     public synchronized boolean isCrashed() {
@@ -452,8 +452,8 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Sets if the process is crashed. 
-     * 
+     * Sets if the process is crashed.
+     *
      * @param isCrashed true if the process is crashed.
      */
     public synchronized void isCrashed(boolean isCrashed) {
@@ -466,7 +466,7 @@ public class VSProcess extends VSPrefs {
     /**
      * Checks if the process has crashed at least once during the current
      * simulation.
-     * 
+     *
      * @return true, if yes
      */
     public synchronized boolean hasCrashed() {
@@ -475,7 +475,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the crashed color.
-     * 
+     *
      * @return the crashed color
      */
     public synchronized Color getCrashedColor() {
@@ -483,9 +483,9 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Checks if the time has been modified. by a task. 
+     * Checks if the time has been modified. by a task.
      * This mehod is needed by the task manager.
-     * 
+     *
      * @return true, if yes
      */
     public synchronized boolean timeModified() {
@@ -494,7 +494,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets if the time has been modified by a task.
-     * 
+     *
      * @param timeModified true, if it has been modified.
      */
     public synchronized void timeModified(boolean timeModified) {
@@ -503,7 +503,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the global time.
-     * 
+     *
      * @return the global time
      */
     public synchronized long getGlobalTime() {
@@ -512,7 +512,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the global time.
-     * 
+     *
      * @param globalTime the new global time
      */
     public synchronized void setGlobalTime(final long globalTime) {
@@ -521,7 +521,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the clock variance.
-     * 
+     *
      * @return the clock variance
      */
     public synchronized float getClockVariance() {
@@ -530,7 +530,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the clock variance.
-     * 
+     *
      * @param clockVariance the new clock variance
      */
     public synchronized void setClockVariance(float clockVariance) {
@@ -548,7 +548,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the duration time.
-     * 
+     *
      * @return the duration time
      */
     public synchronized long getDurationTime() {
@@ -569,9 +569,9 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the a random message outage time.
-     * 
+     *
      * @param durationTime the duration time
-     * 
+     *
      * @return the a random message outage time
      */
     public synchronized long getARandomMessageOutageTime(final long durationTime) {
@@ -588,7 +588,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the a random crash time.
-     * 
+     *
      * @return the a random crash time
      */
     private long getARandomCrashTime() {
@@ -605,7 +605,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the random crash task.
-     * 
+     *
      * @return the random crash task
      */
     public synchronized VSTask getCrashTask() {
@@ -614,7 +614,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Checks if is paused.
-     * 
+     *
      * @return true, if is paused
      */
     public synchronized boolean isPaused() {
@@ -630,7 +630,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Updates the lamport time.
-     * 
+     *
      * @param time the lamport time
      */
     public void updateLamportTime(long time) {
@@ -644,7 +644,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the lamport time.
-     * 
+     *
      * @return the lamport time.
      */
     public synchronized long getLamportTime() {
@@ -653,7 +653,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Sets the lamport time.
-     * 
+     *
      * @param lamportTime the new lamport time
      */
     public synchronized void setLamportTime(long lamportTime) {
@@ -663,7 +663,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the lamport time history as an array.
-     * 
+     *
      * @return the lamport time history array
      */
     public synchronized VSTime[] getLamportTimeArray() {
@@ -687,7 +687,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Updates the vector time.
-     * 
+     *
      * @param vectorTimeUpdate the vector time of the other process to use for the update
      */
     public synchronized void updateVectorTime(VSVectorTime vectorTimeUpdate) {
@@ -706,7 +706,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the vector time.
-     * 
+     *
      * @return the vector time
      */
     public synchronized VSVectorTime getVectorTime() {
@@ -715,7 +715,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the vector time history as an array.
-     * 
+     *
      * @return the vector time history array
      */
     public synchronized VSTime[] getVectorTimeArray() {
@@ -730,7 +730,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the crash history array.
-     * 
+     *
      * @return the crash history array
      */
     public synchronized Long[] getCrashHistoryArray() {
@@ -745,7 +745,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Called by a task if the process sends a message.
-     * 
+     *
      * @param message the message to send.
      */
     public void sendMessage(VSMessage message) {
@@ -759,7 +759,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Logg a message to the logging area.
-     * 
+     *
      * @param message the message to logg
      */
     public void logg(String message) {
@@ -802,7 +802,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * The extended string representation of the process object.
-     * 
+     *
      * @return the extended string representation
      */
     public String toStringFull() {
@@ -819,9 +819,9 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Equals. Checks, if both processes have the same process id.
-     * 
+     *
      * @param process the process to compare to
-     * 
+     *
      * @return true, if both processes are the same.
      */
     public boolean equals(VSProcess process) {
@@ -830,7 +830,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the simulation canvas.
-     * 
+     *
      * @return the simulation canvas
      */
     public VSSimulatorCanvas getSimulationCanvas() {
@@ -839,7 +839,7 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the simulation's default prefs.
-     * 
+     *
      * @return the default prefs
      */
     public VSPrefs getPrefs() {
@@ -856,7 +856,7 @@ public class VSProcess extends VSPrefs {
     /**
      * Removes the process at the specified index.
      * Needed in order to update the vector time and the local processNum.
-     * 
+     *
      * @param index the index the process has to get removed.
      */
     public void removeProcessAtIndex(int index) {
@@ -879,9 +879,9 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Gets the protocol object.
-     * 
+     *
      * @param protocolClassname the protocol classname
-     * 
+     *
      * @return the protocol object
      */
     public VSProtocol getProtocolObject(String protocolClassname) {

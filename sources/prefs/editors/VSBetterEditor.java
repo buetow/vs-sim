@@ -16,19 +16,19 @@ import utils.*;
  * The Class VSBetterEditor.
  */
 public abstract class VSBetterEditor extends VSEditor {
-    
+
     /** The content pane. */
     private Container contentPane;
-    
+
     /** The info area. */
     private VSInfoArea infoArea;
-    
+
     /** The title. */
     private String title;
 
     /**
      * Instantiates a new vS better editor.
-     * 
+     *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
      * @param title the title
@@ -41,7 +41,7 @@ public abstract class VSBetterEditor extends VSEditor {
 
     /**
      * Gets the title.
-     * 
+     *
      * @return the title
      */
     public String getTitle() {
@@ -50,7 +50,7 @@ public abstract class VSBetterEditor extends VSEditor {
 
     /**
      * Gets the content pane.
-     * 
+     *
      * @return the content pane
      */
     public Container getContentPane() {
@@ -60,7 +60,7 @@ public abstract class VSBetterEditor extends VSEditor {
 
     /**
      * Creates the content pane.
-     * 
+     *
      * @return the j panel
      */
     private JPanel createContentPane() {
@@ -83,12 +83,12 @@ public abstract class VSBetterEditor extends VSEditor {
      * @see prefs.editors.VSEditor#addToButtonPanelFront(javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) { }
-    
+
     /* (non-Javadoc)
      * @see prefs.editors.VSEditor#addToButtonPanelLast(javax.swing.JPanel)
      */
     protected void addToButtonPanelLast(JPanel buttonPanel) { }
-    
+
     /* (non-Javadoc)
      * @see prefs.editors.VSEditor#addToEditTableLast()
      */
@@ -106,7 +106,7 @@ public abstract class VSBetterEditor extends VSEditor {
 
     /**
      * Gets the info area.
-     * 
+     *
      * @return the info area
      */
     protected VSInfoArea getInfoArea() {

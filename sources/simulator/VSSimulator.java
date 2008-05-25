@@ -23,109 +23,109 @@ import utils.*;
  * The Class VSSimulator.
  */
 public class VSSimulator extends JPanel {
-    
+
     /** The global text fields. */
     private ArrayList<String> globalTextFields;
-    
+
     /** The local text fields. */
     private ArrayList<String> localTextFields;
-    
+
     /** The create tasks. */
     private ArrayList<VSCreateTask> createTasks;
-    
+
     /** The filter active check box. */
     private JCheckBox filterActiveCheckBox;
-    
+
     /** The lamport active check box. */
     private JCheckBox lamportActiveCheckBox;
-    
+
     /** The vector time active check box. */
     private JCheckBox vectorTimeActiveCheckBox;
-    
+
     /** The global pid combo box. */
     private JComboBox globalPIDComboBox;
-    
+
     /** The local pid combo box. */
     private JComboBox localPIDComboBox;
-    
+
     /** The processes combo box. */
     private JComboBox processesComboBox;
-    
+
     /** The global add panel. */
     private JPanel globalAddPanel;
-    
+
     /** The local add panel. */
     private JPanel localAddPanel;
-    
+
     /** The local panel. */
     private JPanel localPanel;
-    
+
     /** The logging panel. */
     private JPanel loggingPanel;
-    
+
     /** The tools panel. */
     private JPanel toolsPanel;
-    
+
     /** The split pane1. */
     private JSplitPane splitPane1;
-    
+
     /** The split pane h. */
     private JSplitPane splitPaneH;
-    
+
     /** The split pane v. */
     private JSplitPane splitPaneV;
-    
+
     /** The tabbed pane. */
     private JTabbedPane tabbedPane;
-    
+
     /** The logging area. */
     private JTextArea loggingArea;
-    
+
     /** The filter text field. */
     private JTextField filterTextField;
-    
+
     /** The global text field. */
     private JTextField globalTextField;
-    
+
     /** The local text field. */
     private JTextField localTextField;
-    
+
     /** The thread. */
     private Thread thread;
-    
+
     /** The logging. */
     private VSLogging logging;
-    
+
     /** The menu item states. */
     private VSMenuItemStates menuItemStates;
-    
+
     /** The prefs. */
     private VSPrefs prefs;
-    
+
     /** The simulation canvas. */
     private VSSimulatorCanvas simulationCanvas;
-    
+
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
-    
+
     /** The task manager. */
     private VSTaskManager taskManager;
-    
+
     /** The task manager global model. */
     private VSTaskManagerTableModel taskManagerGlobalModel;
-    
+
     /** The task manager local model. */
     private VSTaskManagerTableModel taskManagerLocalModel;
-    
+
     /** The has started. */
     private boolean hasStarted = false;
-    
+
     /** The last selected process num. */
     private int lastSelectedProcessNum;
-    
+
     /** The simulation counter. */
     private static int simulationCounter;
-    
+
     /** The simulation num. */
     private static int simulationNum;
 
@@ -133,22 +133,22 @@ public class VSSimulator extends JPanel {
      * The Class VSMenuItemStates.
      */
     public class VSMenuItemStates {
-        
+
         /** The pause. */
         private volatile boolean pause;
-        
+
         /** The replay. */
         private volatile boolean replay;
-        
+
         /** The reset. */
         private volatile boolean reset;
-        
+
         /** The start. */
         private volatile boolean start;
 
         /**
          * Instantiates a new vS menu item states.
-         * 
+         *
          * @param pause the pause
          * @param replay the replay
          * @param reset the reset
@@ -163,7 +163,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the pause.
-         * 
+         *
          * @param pause the new pause
          */
         public void setPause(boolean pause) {
@@ -172,7 +172,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the replay.
-         * 
+         *
          * @param replay the new replay
          */
         public void setReplay(boolean replay) {
@@ -181,7 +181,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the reset.
-         * 
+         *
          * @param reset the new reset
          */
         public void setReset(boolean reset) {
@@ -190,7 +190,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the start.
-         * 
+         *
          * @param start the new start
          */
         public void setStart(boolean start) {
@@ -199,7 +199,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Gets the pause.
-         * 
+         *
          * @return the pause
          */
         public boolean getPause() {
@@ -208,7 +208,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Gets the replay.
-         * 
+         *
          * @return the replay
          */
         public boolean getReplay() {
@@ -217,7 +217,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Gets the reset.
-         * 
+         *
          * @return the reset
          */
         public boolean getReset() {
@@ -226,7 +226,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Gets the start.
-         * 
+         *
          * @return the start
          */
         public boolean getStart() {
@@ -236,7 +236,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Instantiates a new vS simulator.
-     * 
+     *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
      */
@@ -315,10 +315,10 @@ public class VSSimulator extends JPanel {
 
     /** The last expert state. */
     private boolean lastExpertState;
-    
+
     /**
      * Creates the tools panel.
-     * 
+     *
      * @return the j panel
      */
     private JPanel createToolsPanel() {
@@ -440,7 +440,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Creates the process pane.
-     * 
+     *
      * @return the j panel
      */
     private JPanel createProcessPane() {
@@ -526,9 +526,9 @@ public class VSSimulator extends JPanel {
 
     /**
      * Creates the label panel.
-     * 
+     *
      * @param text the text
-     * 
+     *
      * @return the j panel
      */
     private JPanel createLabelPanel(String text) {
@@ -541,9 +541,9 @@ public class VSSimulator extends JPanel {
 
     /**
      * Creates the task label.
-     * 
+     *
      * @param localTasks the local tasks
-     * 
+     *
      * @return the j panel
      */
     private JPanel createTaskLabel(boolean localTasks) {
@@ -570,23 +570,23 @@ public class VSSimulator extends JPanel {
      * The Class VSCreateTask.
      */
     private class VSCreateTask {
-        
+
         /** The event classname. */
         private String eventClassname;
-        
+
         /** The protocol classname. */
         private String protocolClassname;
-        
+
         /** The shortname. */
         private String shortname;
 
         /* Those 3 values are for ProtocolEvent events */
         /** The is protocol activation. */
         private boolean isProtocolActivation;
-        
+
         /** The is protocol deactivation. */
         private boolean isProtocolDeactivation;
-        
+
         /** The is client protocol. */
         private boolean isClientProtocol;
 
@@ -596,7 +596,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Instantiates a new vS create task.
-         * 
+         *
          * @param eventClassname the event classname
          */
         public VSCreateTask(String eventClassname) {
@@ -605,7 +605,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Checks if is protocol activation.
-         * 
+         *
          * @param isProtocolActivation the is protocol activation
          */
         public void isProtocolActivation(boolean isProtocolActivation) {
@@ -617,7 +617,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Checks if is protocol deactivation.
-         * 
+         *
          * @param isProtocolDeactivation the is protocol deactivation
          */
         public void isProtocolDeactivation(boolean isProtocolDeactivation) {
@@ -629,7 +629,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Checks if is client protocol.
-         * 
+         *
          * @param isClientProtocol the is client protocol
          */
         public void isClientProtocol(boolean isClientProtocol) {
@@ -638,7 +638,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Checks if is client request.
-         * 
+         *
          * @param isClientRequest the is client request
          */
         public void isClientRequest(boolean isClientRequest) {
@@ -647,7 +647,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the protocol classname.
-         * 
+         *
          * @param protocolClassname the new protocol classname
          */
         public void setProtocolClassname(String protocolClassname) {
@@ -656,7 +656,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the shortname.
-         * 
+         *
          * @param shortname the new shortname
          */
         public void setShortname(String shortname) {
@@ -665,11 +665,11 @@ public class VSSimulator extends JPanel {
 
         /**
          * Creates the task.
-         * 
+         *
          * @param process the process
          * @param time the time
          * @param localTimedTask the local timed task
-         * 
+         *
          * @return the vS task
          */
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
@@ -701,37 +701,37 @@ public class VSSimulator extends JPanel {
      * The Class VSTaskManagerTableModel.
      */
     private class VSTaskManagerTableModel extends AbstractTableModel implements MouseListener {
-        
+
         /** The Constant LOCAL. */
         public static final boolean LOCAL = true;
-        
+
         /** The Constant GLOBAL. */
         public static final boolean GLOBAL = false;
-        
+
         /** The Constant ALL_PROCESSES. */
         public static final boolean ALL_PROCESSES = true;
-        
+
         /** The Constant ONE_PROCESS. */
         public static final boolean ONE_PROCESS = false;
-        
+
         /** The all processes. */
         public boolean allProcesses;
-        
+
         /** The tasks. */
         private VSPriorityQueue<VSTask> tasks;
-        
+
         /** The column names. */
         private String columnNames[];
-        
+
         /** The num columns. */
         private int numColumns;
-        
+
         /** The table. */
         private JTable table;
 
         /**
          * Instantiates a new vS task manager table model.
-         * 
+         *
          * @param process the process
          * @param localTask the local task
          */
@@ -746,7 +746,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the table.
-         * 
+         *
          * @param table the new table
          */
         public void setTable(JTable table) {
@@ -755,7 +755,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Sets the.
-         * 
+         *
          * @param process the process
          * @param localTasks the local tasks
          * @param allProcesses the all processes
@@ -829,7 +829,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Adds the task.
-         * 
+         *
          * @param task the task
          */
         public void addTask(VSTask task) {
@@ -839,7 +839,7 @@ public class VSSimulator extends JPanel {
 
         /**
          * Removes the task at row.
-         * 
+         *
          * @param row the row
          */
         private void removeTaskAtRow(int row) {
@@ -880,17 +880,17 @@ public class VSSimulator extends JPanel {
          * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
          */
         public void mouseEntered(MouseEvent me) { }
-        
+
         /* (non-Javadoc)
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         public void mouseExited(MouseEvent me) { }
-        
+
         /* (non-Javadoc)
          * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
          */
         public void mousePressed(MouseEvent me) { }
-        
+
         /* (non-Javadoc)
          * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
          */
@@ -899,9 +899,9 @@ public class VSSimulator extends JPanel {
 
     /**
      * Creates the task table.
-     * 
+     *
      * @param localTasks the local tasks
-     * 
+     *
      * @return the j table
      */
     private JTable createTaskTable(boolean localTasks) {
@@ -934,10 +934,10 @@ public class VSSimulator extends JPanel {
 
     /**
      * Inits the add panel.
-     * 
+     *
      * @param panel the panel
      * @param localTasks the local tasks
-     * 
+     *
      * @return the j panel
      */
     private JPanel initAddPanel(JPanel panel, final boolean localTasks) {
@@ -1143,7 +1143,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the split size.
-     * 
+     *
      * @return the split size
      */
     public int getSplitSize() {
@@ -1152,7 +1152,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the paint size.
-     * 
+     *
      * @return the paint size
      */
     public int getPaintSize() {
@@ -1161,7 +1161,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the selected process num.
-     * 
+     *
      * @return the selected process num
      */
     private int getSelectedProcessNum() {
@@ -1170,7 +1170,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the selected process.
-     * 
+     *
      * @return the selected process
      */
     private VSProcess getSelectedProcess() {
@@ -1180,9 +1180,9 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the concerned processes.
-     * 
+     *
      * @param localTasks the local tasks
-     * 
+     *
      * @return the concerned processes
      */
     private ArrayList<VSProcess> getConcernedProcesses(boolean localTasks) {
@@ -1222,7 +1222,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the simulation num.
-     * 
+     *
      * @return the simulation num
      */
     public int getSimulationNum() {
@@ -1231,7 +1231,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the menu item states.
-     * 
+     *
      * @return the menu item states
      */
     public VSSimulator.VSMenuItemStates getMenuItemStates() {
@@ -1240,7 +1240,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the simulation canvas.
-     * 
+     *
      * @return the simulation canvas
      */
     public VSSimulatorCanvas getSimulationCanvas() {
@@ -1249,7 +1249,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the simulator frame.
-     * 
+     *
      * @return the simulator frame
      */
     public VSSimulatorFrame getSimulatorFrame() {
@@ -1266,7 +1266,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Removes the process at index.
-     * 
+     *
      * @param index the index
      */
     public void removeProcessAtIndex(int index) {
@@ -1287,7 +1287,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Adds the process at index.
-     * 
+     *
      * @param index the index
      */
     public void addProcessAtIndex(int index) {
@@ -1347,7 +1347,7 @@ public class VSSimulator extends JPanel {
 
     /**
      * Gets the prefs.
-     * 
+     *
      * @return the prefs
      */
     public VSPrefs getPrefs() {

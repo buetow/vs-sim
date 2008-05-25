@@ -12,19 +12,19 @@ import core.*;
  * The Class VSProtocol.
  */
 abstract public class VSProtocol extends VSEvent {
-    
+
     /** The is server. */
     private boolean isServer;
-    
+
     /** The is client. */
     private boolean isClient;
-    
+
     /** The current context is server. */
     private boolean currentContextIsServer;
 
     /**
      * Send message.
-     * 
+     *
      * @param message the message
      */
     protected void sendMessage(VSMessage message) {
@@ -39,9 +39,9 @@ abstract public class VSProtocol extends VSEvent {
 
     /**
      * Checks if is incorrect protocol.
-     * 
+     *
      * @param message the message
-     * 
+     *
      * @return true, if is incorrect protocol
      */
     private final boolean isIncorrectProtocol(VSMessage message) {
@@ -60,7 +60,7 @@ abstract public class VSProtocol extends VSEvent {
 
     /**
      * On message recv.
-     * 
+     *
      * @param message the message
      */
     public final void onMessageRecv(VSMessage message) {
@@ -80,7 +80,7 @@ abstract public class VSProtocol extends VSEvent {
 
     /**
      * Checks if is server.
-     * 
+     *
      * @param isServer the is server
      */
     public final void isServer(boolean isServer) {
@@ -89,7 +89,7 @@ abstract public class VSProtocol extends VSEvent {
 
     /**
      * Checks if is client.
-     * 
+     *
      * @param isClient the is client
      */
     public final void isClient(boolean isClient) {
@@ -117,34 +117,34 @@ abstract public class VSProtocol extends VSEvent {
      * On client start.
      */
     abstract protected void onClientStart();
-    
+
     /**
      * On client reset.
      */
     abstract protected void onClientReset();
-    
+
     /**
      * On client recv.
-     * 
+     *
      * @param message the message
      */
     abstract protected void onClientRecv(VSMessage message);
-    
+
     /**
      * On server reset.
      */
     abstract protected void onServerReset();
-    
+
     /**
      * On server recv.
-     * 
+     *
      * @param message the message
      */
     abstract protected void onServerRecv(VSMessage message);
 
     /**
      * Gets the num processes.
-     * 
+     *
      * @return the num processes
      */
     protected int getNumProcesses() {
