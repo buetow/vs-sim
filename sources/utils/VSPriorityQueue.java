@@ -11,7 +11,8 @@ import java.util.PriorityQueue;
  * The Class VSPriorityQueue.
  */
 public final class VSPriorityQueue<T> extends PriorityQueue<T> {
-    
+	private static final long serialVersionUID = 1L;
+	
     /**
      * Gets the.
      * 

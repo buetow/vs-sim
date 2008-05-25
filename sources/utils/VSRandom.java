@@ -11,7 +11,8 @@ import java.util.Random;
  * The Class VSRandom.
  */
 public final class VSRandom extends Random {
-    
+	private static final long serialVersionUID = 1L;
+	
     /**
      * Instantiates a new vS random.
      * 

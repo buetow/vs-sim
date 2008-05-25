@@ -12,7 +12,8 @@ import java.awt.event.KeyEvent;
  * The Class VSDefaultPrefs.
  */
 public class VSDefaultPrefs extends VSPrefs {
-    
+	private static final long serialVersionUID = 1L;
+	
     /**
      * Inits the.
      * 

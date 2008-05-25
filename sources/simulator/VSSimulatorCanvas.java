@@ -23,7 +23,8 @@ import prefs.editors.*;
  * The Class VSSimulatorCanvas.
  */
 public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
-    
+	private static final long serialVersionUID = 1L;
+	
     /** The highlighted process. */
     private VSProcess highlightedProcess;
     

@@ -13,7 +13,8 @@ import javax.swing.JFrame;
  * The Class VSFrame.
  */
 public class VSFrame extends JFrame {
-    
+	private static final long serialVersionUID = 1L;
+	
     /** The Constant X_LOCATION_OFFSET. */
     private final static int X_LOCATION_OFFSET = 40;
     

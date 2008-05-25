@@ -78,13 +78,14 @@ public abstract class VSPrefs implements Serializable {
      * The Class SettingRestriction.
      */
     public class SettingRestriction implements Serializable {
+    	private static final long serialVersionUID = 1L;
     }
 
     /**
      * The Class IntegerSettingRestriction.
      */
     public class IntegerSettingRestriction extends SettingRestriction {
-        
+    	private static final long serialVersionUID = 1L;
         /** The min value. */
         private int minValue;
         
@@ -125,7 +126,8 @@ public abstract class VSPrefs implements Serializable {
      * The Class StringSettingRestriction.
      */
     public class StringSettingRestriction extends SettingRestriction {
-        
+    	private static final long serialVersionUID = 1L;
+    	
         /** The possible selections. */
         Vector<String> possibleSelections;
 

@@ -18,7 +18,8 @@ import prefs.*;
  * The Class VSEditorTable.
  */
 public class VSEditorTable extends JTable {
-    
+	private static final long serialVersionUID = 1L;
+	
     /** The Constant MIN_ROWS. */
     private static final int MIN_ROWS = 20;
     
@@ -103,7 +104,8 @@ public class VSEditorTable extends JTable {
      * The Class VSEditorTableModel.
      */
     private class VSEditorTableModel extends AbstractTableModel implements TableCellRenderer {
-        
+    	private static final long serialVersionUID = 1L;
+    	
         /**
          * Instantiates a new vS editor table model.
          */
@@ -205,7 +207,8 @@ public class VSEditorTable extends JTable {
      * The Class VSTableCellEditor.
      */
     private class VSTableCellEditor extends AbstractCellEditor implements TableCellEditor  {
-
+    	private static final long serialVersionUID = 1L;
+    	
         /* (non-Javadoc)
          * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
          */

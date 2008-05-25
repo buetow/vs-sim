@@ -11,12 +11,13 @@ import java.util.ArrayList;
  * The Class VSVectorTime.
  */
 public class VSVectorTime extends ArrayList<Long> implements VSTime {
-    
+	private static final long serialVersionUID = 1L;
+	
     /** The global time. */
     private long globalTime;
 
     /**
-     * Instantiates a new vS vector time.
+     * Instantiates a new vector time.
      * 
      * @param globalTime the global time
      */
