@@ -4,7 +4,6 @@
  */
 package utils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSTupel.
  */
@@ -20,7 +19,7 @@ public final class VSTupel<A,B,C> {
     private C c;
 
     /**
-     * Instantiates a new vS tupel.
+     * Instantiates a new lang.process.removetupel.
      *
      * @param a the a
      * @param b the b

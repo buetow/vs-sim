@@ -226,7 +226,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         private VSTask task;
 
         /**
-         * Instantiates a new vS message line.
+         * Instantiates a new lang.process.removemessage line.
          *
          * @param receiverProcess the receiver process
          * @param sendTime the send time
@@ -369,7 +369,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
     }
 
     /**
-     * Instantiates a new vS simulator canvas.
+     * Instantiates a new lang.process.removesimulator canvas.
      *
      * @param prefs the prefs
      * @param simulation the simulation
@@ -1323,7 +1323,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
      *
      * @param processNum the process num
      *
-     * @return the vS process
+     * @return the lang.process.removeprocess
      */
     private VSProcess createProcess(int processNum) {
         VSProcess process = new VSProcess(prefs, processNum, this, logging);

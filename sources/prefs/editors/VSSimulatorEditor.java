@@ -29,7 +29,7 @@ public class VSSimulatorEditor extends VSBetterEditor {
     private boolean dontStartNewSimulation;
 
     /**
-     * Instantiates a new vS simulator editor.
+     * Instantiates a new lang.process.removesimulator editor.
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
@@ -44,7 +44,7 @@ public class VSSimulatorEditor extends VSBetterEditor {
     }
 
     /**
-     * Instantiates a new vS simulator editor.
+     * Instantiates a new lang.process.removesimulator editor.
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame

@@ -8,7 +8,6 @@ import core.VSMessage;
 import events.VSEvent;
 import protocols.VSProtocol;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MessageReceiveEvent.
  */

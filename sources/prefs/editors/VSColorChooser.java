@@ -30,7 +30,7 @@ public class VSColorChooser extends JPanel implements ChangeListener {
     //private VSPrefs prefs;
 
     /**
-     * Instantiates a new vS color chooser.
+     * Instantiates a new lang.process.removecolor chooser.
      *
      * @param prefs the prefs
      * @param valField the val field

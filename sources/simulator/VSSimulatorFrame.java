@@ -71,7 +71,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     //private JSlider speedSlider;
 
     /**
-     * Instantiates a new vS simulator frame.
+     * Instantiates a new lang.process.removesimulator frame.
      *
      * @param prefs the prefs
      * @param relativeTo the relative to

@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.io.*;
 import java.util.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSPrefs.
  */
@@ -154,7 +153,7 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
-     * Instantiates a new vS prefs.
+     * Instantiates a new lang.process.removeprefs.
      */
     public VSPrefs() {
         colorPrefs = new HashMap<String,Color>();

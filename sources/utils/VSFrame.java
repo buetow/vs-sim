@@ -28,7 +28,7 @@ public class VSFrame extends JFrame {
     private boolean dispose;
 
     /**
-     * Instantiates a new vS frame.
+     * Instantiates a new lang.process.removeframe.
      *
      * @param title the title
      * @param parent the parent
@@ -39,7 +39,7 @@ public class VSFrame extends JFrame {
     }
 
     /**
-     * Instantiates a new vS frame.
+     * Instantiates a new lang.process.removeframe.
      *
      * @param title the title
      */

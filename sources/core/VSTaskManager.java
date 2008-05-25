@@ -33,7 +33,7 @@ public class VSTaskManager {
     private VSPrefs prefs;
 
     /**
-     * Instantiates a new vS task manager.
+     * Instantiates a new lang.process.removetask manager.
      *
      * @param prefs the prefs
      */

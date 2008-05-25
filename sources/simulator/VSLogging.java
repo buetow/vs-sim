@@ -41,7 +41,7 @@ public class VSLogging {
     private Pattern filterPattern;
 
     /**
-     * Instantiates a new vS logging.
+     * Instantiates a new lang.process.removelogging.
      */
     public VSLogging() {
         loggingArea = new JTextArea(0, 0);

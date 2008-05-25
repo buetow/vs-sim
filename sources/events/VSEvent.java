@@ -7,12 +7,10 @@ package events;
 import core.VSProcess;
 import prefs.VSPrefs;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSEvent.
  */
 abstract public class VSEvent extends VSPrefs {
-
     /** The prefs. */
     protected VSPrefs prefs;
 

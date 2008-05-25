@@ -44,7 +44,7 @@ public class VSEditorTable extends JTable {
         private Component comp;
 
         /**
-         * Instantiates a new vS node.
+         * Instantiates a new lang.process.removenode.
          *
          * @param key the key
          */
@@ -53,7 +53,7 @@ public class VSEditorTable extends JTable {
         }
 
         /**
-         * Instantiates a new vS node.
+         * Instantiates a new lang.process.removenode.
          *
          * @param key the key
          * @param comp the comp
@@ -107,7 +107,7 @@ public class VSEditorTable extends JTable {
         private static final long serialVersionUID = 1L;
 
         /**
-         * Instantiates a new vS editor table model.
+         * Instantiates a new lang.process.removeeditor table model.
          */
         public VSEditorTableModel() {
         }
@@ -226,7 +226,7 @@ public class VSEditorTable extends JTable {
     }
 
     /**
-     * Instantiates a new vS editor table.
+     * Instantiates a new lang.process.removeeditor table.
      *
      * @param prefs the prefs
      */

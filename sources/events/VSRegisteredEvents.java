@@ -10,12 +10,10 @@ import prefs.*;
 import core.*;
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSRegisteredEvents.
  */
 public final class VSRegisteredEvents {
-
     /** The event classnames. */
     private static HashMap<String,String> eventClassnames;
 
@@ -185,7 +183,7 @@ public final class VSRegisteredEvents {
      * @param eventClassname the event classname
      * @param process the process
      *
-     * @return the vS event
+     * @return the lang.process.removeevent
      */
     public static VSEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
         final Object protocolObj = new VSClassLoader().newInstance(eventClassname);
@@ -205,7 +203,7 @@ public final class VSRegisteredEvents {
      * @param eventName the event name
      * @param process the process
      *
-     * @return the vS event
+     * @return the lang.process.removeevent
      */
     public static VSEvent createEventInstanceByName(String eventName, VSProcess process) {
         return createEventInstanceByClassname(eventClassnames.get(eventName), process);
@@ -222,7 +220,6 @@ public final class VSRegisteredEvents {
         if (eventShortname == null)
             eventShortname = eventName;
 
-        //System.out.println(eventClassname);
         eventNames.put(eventClassname, eventName);
         eventShortnames.put(eventClassname, eventShortname);
         eventClassnames.put(eventName, eventClassname);

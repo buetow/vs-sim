@@ -18,7 +18,7 @@ import prefs.editors.*;
 public class VSMain {
 
     /**
-     * Instantiates a new vS main.
+     * Instantiates a new lang.process.removemain.
      *
      * @param prefs the prefs
      */
@@ -27,7 +27,7 @@ public class VSMain {
     }
 
     /**
-     * Instantiates a new vS main.
+     * Instantiates a new lang.process.removemain.
      *
      * @param prefs the prefs
      * @param relativeTo the relative to

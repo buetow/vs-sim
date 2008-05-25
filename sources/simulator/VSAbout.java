@@ -21,7 +21,7 @@ public class VSAbout extends VSFrame implements ActionListener {
     private VSPrefs prefs;
 
     /**
-     * Instantiates a new vS about.
+     * Instantiates a new lang.process.removeabout.
      *
      * @param prefs the prefs
      * @param relativeTo the relative to

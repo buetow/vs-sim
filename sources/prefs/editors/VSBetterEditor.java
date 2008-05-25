@@ -27,7 +27,7 @@ public abstract class VSBetterEditor extends VSEditor {
     private String title;
 
     /**
-     * Instantiates a new vS better editor.
+     * Instantiates a new lang.process.removebetter editor.
      *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit

@@ -24,7 +24,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     private VSPrefs prefs;
 
     /**
-     * Instantiates a new vS editor frame.
+     * Instantiates a new lang.process.removeeditor frame.
      *
      * @param prefs the prefs
      * @param relativeTo the relative to

@@ -6,7 +6,6 @@ package events.implementations;
 
 import events.VSEvent;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ProcessCrashEvent.
  */

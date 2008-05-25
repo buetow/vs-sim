@@ -26,7 +26,7 @@ public class VSProcessEditor extends VSBetterEditor {
     public static boolean TAKEOVER_BUTTON;
 
     /**
-     * Instantiates a new vS process editor.
+     * Instantiates a new lang.process.removeprocess editor.
      *
      * @param prefs the prefs
      * @param process the process

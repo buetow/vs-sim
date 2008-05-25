@@ -7,7 +7,6 @@ package events.internal;
 import events.*;
 import protocols.VSProtocol;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ProtocolEvent.
  */

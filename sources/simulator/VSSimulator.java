@@ -147,7 +147,7 @@ public class VSSimulator extends JPanel {
         private volatile boolean start;
 
         /**
-         * Instantiates a new vS menu item states.
+         * Instantiates a new lang.process.removemenu item states.
          *
          * @param pause the pause
          * @param replay the replay
@@ -235,7 +235,7 @@ public class VSSimulator extends JPanel {
     }
 
     /**
-     * Instantiates a new vS simulator.
+     * Instantiates a new lang.process.removesimulator.
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
@@ -595,7 +595,7 @@ public class VSSimulator extends JPanel {
         private boolean isClientRequest;
 
         /**
-         * Instantiates a new vS create task.
+         * Instantiates a new lang.process.removecreate task.
          *
          * @param eventClassname the event classname
          */
@@ -670,7 +670,7 @@ public class VSSimulator extends JPanel {
          * @param time the time
          * @param localTimedTask the local timed task
          *
-         * @return the vS task
+         * @return the lang.process.removetask
          */
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
             VSEvent event = null;
@@ -730,7 +730,7 @@ public class VSSimulator extends JPanel {
         private JTable table;
 
         /**
-         * Instantiates a new vS task manager table model.
+         * Instantiates a new lang.process.removetask manager table model.
          *
          * @param process the process
          * @param localTask the local task

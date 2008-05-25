@@ -7,7 +7,6 @@ package prefs;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSDefaultPrefs.
  */
@@ -15,22 +14,11 @@ public class VSDefaultPrefs extends VSPrefs {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Inits the.
+     * Inits a prefs object with default values.
      *
-     * @return the vS prefs
+     * @return the lang.process.removeprefs
      */
     public static VSPrefs init() {
-        return init(VSPrefs.PREFERENCES_FILENAME);
-    }
-
-    /**
-     * Inits the.
-     *
-     * @param fileName the file name
-     *
-     * @return the vS prefs
-     */
-    public static VSPrefs init(String fileName) {
         VSPrefs prefs = new VSDefaultPrefs();
         prefs.fillWithDefaults();
         return prefs;

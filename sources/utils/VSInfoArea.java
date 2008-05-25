@@ -16,14 +16,14 @@ public class VSInfoArea extends JTextPane {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new vS info area.
+     * Instantiates a new lang.process.removeinfo area.
      */
     public VSInfoArea() {
         init();
     }
 
     /**
-     * Instantiates a new vS info area.
+     * Instantiates a new lang.process.removeinfo area.
      *
      * @param text the text
      */

@@ -14,7 +14,7 @@ public final class VSRandom extends Random {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new vS random.
+     * Instantiates a new lang.process.removerandom.
      *
      * @param seedAdd the seed add
      */

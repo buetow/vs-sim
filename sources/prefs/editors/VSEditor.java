@@ -91,7 +91,7 @@ public abstract class VSEditor implements ActionListener {
     public static final int SIMULATION_PREFERENCES = 1;
 
     /**
-     * Instantiates a new vS editor.
+     * Instantiates a new lang.process.removeeditor.
      *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
@@ -300,7 +300,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j combo box>
+     * @return the lang.process.removetupel< string, component, j combo box>
      */
     protected VSTupel<String,Component,JComboBox> createIntegerComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
@@ -336,7 +336,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j check box>
+     * @return the lang.process.removetupel< string, component, j check box>
      */
     protected VSTupel<String,Component,JCheckBox> createBooleanComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         final String activated = prefs.getString("lang.activated");
@@ -355,7 +355,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j text field>
+     * @return the lang.process.removetupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createLongComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
@@ -380,7 +380,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j text field>
+     * @return the lang.process.removetupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createFloatComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
@@ -405,7 +405,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j text field>
+     * @return the lang.process.removetupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createColorComponent(String fullKey, String key, final VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
@@ -446,7 +446,7 @@ public abstract class VSEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the vS tupel< string, component, j text field>
+     * @return the lang.process.removetupel< string, component, j text field>
      */
     protected VSTupel<String,Component,JTextField> createStringComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);

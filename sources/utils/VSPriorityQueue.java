@@ -6,7 +6,6 @@ package utils;
 
 import java.util.PriorityQueue;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSPriorityQueue.
  */
@@ -14,11 +13,11 @@ public final class VSPriorityQueue<T> extends PriorityQueue<T> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Gets the.
+     * Gets the element.
      *
      * @param index the index
      *
-     * @return the t
+     * @return the element.
      */
     public T get(int index) {
         int i = 0;
