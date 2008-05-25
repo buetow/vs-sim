@@ -438,8 +438,7 @@ public abstract class VSPrefs implements Serializable {
         objectOutputStream.writeObject(units);
     }
 
-    @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    @SuppressWarnings("unchecked") public synchronized void readObject(ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
         colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
