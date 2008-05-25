@@ -52,4 +52,17 @@
   <target name="testdist" depends="dist,rundist" />
 
   <target name="test" depends="compile,run" />
+
+    <target name="javadoc" description="Generate Javadocs">
+        <mkdir dir="${basedir}/javadoc/"/>
+        <javadoc 
+            destdir="${basedir}/javadoc/"
+            additionalparam="-J-Dorg.apache.commons.attributes.javadoc.CATaglet.sources=${basedir}">
+            <taglet
+                name="org.apache.commons.attributes.javadoc.CATaglet"
+                path="${ant.home}/lib/commons-attributes-compiler-2.2.jar"
+             />
+            <fileset dir="${basedir}/" includes="**/*.java" />
+        </javadoc>
+    </target>
 </project>
