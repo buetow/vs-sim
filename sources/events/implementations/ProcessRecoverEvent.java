@@ -1,6 +1,5 @@
 package events.implementations;
 
-import core.VSProcess;
 import events.VSEvent;
 
 public class ProcessRecoverEvent extends VSEvent {

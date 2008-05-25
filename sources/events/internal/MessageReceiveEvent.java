@@ -1,7 +1,6 @@
 package events.internal;
 
 import core.VSMessage;
-import core.VSProcess;
 import events.VSEvent;
 import protocols.VSProtocol;
 

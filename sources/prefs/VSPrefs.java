@@ -1,7 +1,6 @@
 package prefs;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.*;
 

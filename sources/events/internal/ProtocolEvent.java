@@ -1,6 +1,5 @@
 package events.internal;
 
-import core.VSProcess;
 import events.*;
 import protocols.VSProtocol;
 

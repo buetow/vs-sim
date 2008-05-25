@@ -1,10 +1,6 @@
 package utils;
 
-import java.util.*;
-import java.lang.reflect.*;
 
-import prefs.*;
-import core.*;
 
 public class VSClassLoader extends ClassLoader {
     public Object newInstance(String classname) {

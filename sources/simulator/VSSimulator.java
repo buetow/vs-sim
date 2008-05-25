@@ -4,17 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
 import core.*;
 import events.*;
-import events.implementations.*;
 import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
-import protocols.*;
 import utils.*;
 
 public class VSSimulator extends JPanel {

@@ -1,6 +1,5 @@
 package protocols;
 
-import prefs.VSPrefs;
 import events.*;
 import core.*;
 

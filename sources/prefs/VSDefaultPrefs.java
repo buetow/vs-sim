@@ -2,7 +2,6 @@ package prefs;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.io.*;
 
 public class VSDefaultPrefs extends VSPrefs {
     public static VSPrefs init() {

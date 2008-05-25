@@ -1,7 +1,6 @@
 package protocols.implementations;
 
 import protocols.VSProtocol;
-import prefs.VSPrefs;
 import core.VSMessage;
 
 import java.util.HashMap;

@@ -1,16 +1,9 @@
 package prefs.editors;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
-import javax.swing.filechooser.*;
 import java.util.*;
-import java.io.File;
 
-import simulator.*;
-import utils.*;
 import core.*;
 import protocols.*;
 import events.*;

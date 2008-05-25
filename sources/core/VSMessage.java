@@ -3,7 +3,6 @@ package core;
 import core.time.*;
 import events.*;
 import prefs.VSPrefs;
-import protocols.*;
 
 public class VSMessage extends VSPrefs {
     private String protocolClassname;

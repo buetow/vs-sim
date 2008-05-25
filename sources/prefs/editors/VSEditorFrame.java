@@ -3,13 +3,8 @@ package prefs.editors;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.filechooser.*;
-import java.util.*;
-import java.io.File;
 
 import prefs.*;
-import simulator.*;
 import utils.*;
 
 public class VSEditorFrame extends VSFrame implements ActionListener {

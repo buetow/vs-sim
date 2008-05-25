@@ -2,7 +2,6 @@ package simulator;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.awt.image.*;
 import java.util.*;
 import javax.swing.*;
@@ -14,7 +13,6 @@ import events.implementations.*;
 import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
-import utils.*;
 
 public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
     private VSProcess highlightedProcess;

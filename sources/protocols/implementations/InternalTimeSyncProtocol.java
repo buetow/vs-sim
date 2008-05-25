@@ -1,7 +1,6 @@
 package protocols.implementations;
 
 import core.VSMessage;
-import prefs.VSPrefs;
 import protocols.VSProtocol;
 
 public class InternalTimeSyncProtocol extends VSProtocol {

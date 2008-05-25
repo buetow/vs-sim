@@ -3,7 +3,6 @@ package protocols.implementations;
 import java.util.ArrayList;
 
 import core.VSMessage;
-import prefs.VSPrefs;
 import protocols.VSProtocol;
 
 public class BroadcastSturmProtocol extends VSProtocol {

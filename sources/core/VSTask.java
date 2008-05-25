@@ -5,7 +5,6 @@ import events.implementations.*;
 import events.internal.*;
 import prefs.VSPrefs;
 import protocols.VSProtocol;
-import simulator.*;
 
 public class VSTask implements Comparable {
     public final static boolean LOCAL = true;
