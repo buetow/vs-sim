@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package prefs.editors;
 
 import java.awt.event.*;
@@ -9,9 +13,24 @@ import protocols.*;
 import events.*;
 import prefs.VSPrefs;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSProcessEditor.
+ */
 public class VSProcessEditor extends VSBetterEditor {
+    
+    /** The process. */
     private VSProcess process;
+    
+    /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
+    
+    /**
+     * Instantiates a new vS process editor.
+     * 
+     * @param prefs the prefs
+     * @param process the process
+     */
     public VSProcessEditor(VSPrefs prefs, VSProcess process) {
         super(prefs, process, prefs.getString("lang.name") + " - " + prefs.getString("lang.prefs.process"));;
         this.process = process;
@@ -19,6 +38,9 @@ public class VSProcessEditor extends VSBetterEditor {
         makeProtocolVariablesEditable();
     }
 
+    /* (non-Javadoc)
+     * @see prefs.editors.VSBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         JButton takeoverButton = new JButton(
             prefs.getString("lang.takeover"));
@@ -27,6 +49,9 @@ public class VSProcessEditor extends VSBetterEditor {
         buttonPanel.add(takeoverButton);
     }
 
+    /**
+     * Make protocol variables editable.
+     */
     protected void makeProtocolVariablesEditable() {
         ArrayList<String> editableProtocolsClassnames =
             VSRegisteredEvents.getEditableProtocolsClassnames();
@@ -39,6 +64,9 @@ public class VSProcessEditor extends VSBetterEditor {
         }
     }
 
+    /* (non-Javadoc)
+     * @see prefs.editors.VSBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 

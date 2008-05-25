@@ -1,8 +1,24 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package utils;
 
 import java.util.PriorityQueue;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSPriorityQueue.
+ */
 public final class VSPriorityQueue<T> extends PriorityQueue<T> {
+    
+    /**
+     * Gets the.
+     * 
+     * @param index the index
+     * 
+     * @return the t
+     */
     public T get(int index) {
         int i = 0;
 

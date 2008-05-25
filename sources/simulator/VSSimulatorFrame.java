@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package simulator;
 
 import java.awt.*;
@@ -11,25 +15,67 @@ import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSSimulatorFrame.
+ */
 public class VSSimulatorFrame extends VSFrame implements ActionListener {
+    
+    /** The pause item. */
     private JMenuItem pauseItem;
+    
+    /** The replay item. */
     private JMenuItem replayItem;
+    
+    /** The reset item. */
     private JMenuItem resetItem;
+    
+    /** The start item. */
     private JMenuItem startItem;
+    
+    /** The pause button. */
     private JButton pauseButton;
+    
+    /** The replay button. */
     private JButton replayButton;
+    
+    /** The reset button. */
     private JButton resetButton;
+    
+    /** The start button. */
     private JButton startButton;
+    
+    /** The menu edit. */
     private JMenu menuEdit;
+    
+    /** The menu file. */
     private JMenu menuFile;
+    
+    /** The menu simulation. */
     private JMenu menuSimulation;
+    
+    /** The tool bar. */
     private JToolBar toolBar;
+    
+    /** The prefs. */
     private VSPrefs prefs;
+    
+    /** The simulations. */
     private Vector<VSSimulator> simulations;
+    
+    /** The current simulation. */
     private VSSimulator currentSimulation;
+    
+    /** The tabbed pane. */
     private JTabbedPane tabbedPane;
     //private JSlider speedSlider;
 
+    /**
+     * Instantiates a new vS simulator frame.
+     * 
+     * @param prefs the prefs
+     * @param relativeTo the relative to
+     */
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("lang.name"), relativeTo);
         this.prefs = prefs;
@@ -54,6 +100,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         menuSimulation.setEnabled(false);
     }
 
+    /**
+     * Creates the menu bar.
+     * 
+     * @return the j menu bar
+     */
     private JMenuBar createMenuBar() {
         /* File menu */
         menuFile = new JMenu(prefs.getString("lang.file"));
@@ -161,6 +212,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         return mainMenuBar;
     }
 
+    /**
+     * Creates the content pane.
+     * 
+     * @return the container
+     */
     private Container createContentPane() {
         Container pane = getContentPane();
         tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM, JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -180,6 +236,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         return pane;
     }
 
+    /**
+     * Update edit menu.
+     */
     public void updateEditMenu() {
         menuEdit.removeAll();
 
@@ -221,6 +280,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     }
 
     /* updateSimulationMenu can be called from concurrent threads */
+    /**
+     * Update simulation menu.
+     */
     public synchronized void updateSimulationMenu() {
         VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
 
@@ -235,6 +297,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         startButton.setEnabled(menuItemState.getStart());
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.Window#dispose()
+     */
     public void dispose() {
         synchronized (simulations) {
             for (VSSimulator simulation : simulations)
@@ -243,6 +308,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         super.dispose();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         String sourceText = null;
@@ -310,6 +378,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         }
     }
 
+    /**
+     * Adds the simulation.
+     * 
+     * @param simulation the simulation
+     */
     public void addSimulation(VSSimulator simulation) {
         simulation.setLayout(new GridLayout(1, 1, 3, 3));
         simulation.setMinimumSize(new Dimension(0, 0));
@@ -327,6 +400,11 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         }
     }
 
+    /**
+     * Removes the simulation.
+     * 
+     * @param simulationToRemove the simulation to remove
+     */
     public void removeSimulation(VSSimulator simulationToRemove) {
         if (simulations.size() == 1) {
             dispose();
@@ -338,14 +416,30 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         }
     }
 
+    /**
+     * Removes the current simulation.
+     */
     private void removeCurrentSimulation() {
         removeSimulation(currentSimulation);
     }
 
+    /**
+     * Gets the current simulation.
+     * 
+     * @return the current simulation
+     */
     public VSSimulator getCurrentSimulation() {
         return currentSimulation;
     }
 
+    /**
+     * Gets the image icon.
+     * 
+     * @param name the name
+     * @param descr the descr
+     * 
+     * @return the image icon
+     */
     private ImageIcon getImageIcon(String name, String descr) {
         java.net.URL imageURL = getClass().getResource("/icons/"+name);
 

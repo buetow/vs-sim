@@ -1,19 +1,43 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package prefs;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSDefaultPrefs.
+ */
 public class VSDefaultPrefs extends VSPrefs {
+    
+    /**
+     * Inits the.
+     * 
+     * @return the vS prefs
+     */
     public static VSPrefs init() {
         return init(VSPrefs.PREFERENCES_FILENAME);
     }
 
+    /**
+     * Inits the.
+     * 
+     * @param fileName the file name
+     * 
+     * @return the vS prefs
+     */
     public static VSPrefs init(String fileName) {
         VSPrefs prefs = new VSDefaultPrefs();
         prefs.fillWithDefaults();
         return prefs;
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillWithDefaults()
+     */
     public void fillWithDefaults() {
         super.clear();
         fillDefaultBooleans();
@@ -24,6 +48,9 @@ public class VSDefaultPrefs extends VSPrefs {
         fillDefaultStrings();
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillDefaultStrings()
+     */
     public void fillDefaultStrings() {
         initString("lang.about", "About");
         initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulation verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
@@ -129,6 +156,9 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.window.new", "Neues Fenster");
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillDefaultIntegers()
+     */
     public void fillDefaultIntegers() {
         /* Simulation prefs */
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
@@ -168,18 +198,27 @@ public class VSDefaultPrefs extends VSPrefs {
         initIntegerUnit("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillDefaultFloats()
+     */
     public void fillDefaultFloats() {
         /* Simulation prefs */
         initFloat("process.clock.variance", 0, "Uhrabweichung");
         initFloat("sim.clock.speed", 0.5f, "Simulationsgeschwindigkeit");
     }
 
+    /**
+     * Fill default longs.
+     */
     public void fillDefaultLongs() {
         /* Simulation prefs */
         initLongUnit("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
         initLongUnit("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillDefaultColors()
+     */
     public void fillDefaultColors() {
         /* Internal prefs */
         initColor("col.background", new Color(0xFF, 0xFF, 0xFF));
@@ -196,6 +235,9 @@ public class VSDefaultPrefs extends VSPrefs {
         initColor("col.message.lost", new Color(0xFF, 0x00, 0x00));
     }
 
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#fillDefaultBooleans()
+     */
     public void fillDefaultBooleans() {
         //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");

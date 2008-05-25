@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package protocols.implementations;
 
 import protocols.VSProtocol;
@@ -5,18 +9,29 @@ import core.VSMessage;
 
 import java.util.HashMap;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BerkelyTimeProtocol.
+ */
 public class BerkelyTimeProtocol extends VSProtocol {
     /* Berkely Server variables */
 
     /* Integer: Process ID, Long: Local time of the process */
+    /** The process times. */
     private HashMap<Integer,Long> processTimes = new HashMap<Integer,Long>();
     /* Integer: Process ID, Long: Time of receiving the response from the process */
+    /** The recv times. */
     private HashMap<Integer,Long> recvTimes = new HashMap<Integer,Long>();
     /* Integer: Process ID, Long: Calculated process times (using the RTT) */
+    /** The real times rtt. */
     private HashMap<Integer,Long> realTimesRTT = new HashMap<Integer,Long>();
     /* Time the request/response has started */
+    /** The request time. */
     private long requestTime;
 
+    /**
+     * Instantiates a new berkely time protocol.
+     */
     public BerkelyTimeProtocol() {
         setClassname(getClass().toString());
 
@@ -24,15 +39,24 @@ public class BerkelyTimeProtocol extends VSProtocol {
         setInteger("numProcesses", 0);
     }
 
+    /* (non-Javadoc)
+     * @see events.VSEvent#onInit()
+     */
     protected void onInit() {
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#onClientReset()
+     */
     protected void onClientReset() {
         processTimes.clear();
         recvTimes.clear();
         realTimesRTT.clear();
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#onClientStart()
+     */
     protected void onClientStart() {
         requestTime = process.getTime();
         VSMessage message = new VSMessage(getClassname());
@@ -40,6 +64,9 @@ public class BerkelyTimeProtocol extends VSProtocol {
         sendMessage(message);
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     */
     protected void onClientRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a response message, e.g. itself */
         if (!recvMessage.getBoolean("isResponse"))
@@ -64,7 +91,9 @@ public class BerkelyTimeProtocol extends VSProtocol {
     }
 
     /**
-     * Calculate the new average time
+     * Calculate the new average time.
+     * 
+     * @return the long
      */
     private long calculateAverageTime() {
         long sum = 0;
@@ -82,7 +111,9 @@ public class BerkelyTimeProtocol extends VSProtocol {
     }
 
     /**
-     * Sends to all clients a value to justify their local clocks
+     * Sends to all clients a value to justify their local clocks.
+     * 
+     * @param avgTime the avg time
      */
     private void sendJustifyRequests(long avgTime) {
         for (Integer processID : processTimes.keySet()) {
@@ -96,9 +127,15 @@ public class BerkelyTimeProtocol extends VSProtocol {
         }
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#onServerReset()
+     */
     protected void onServerReset() {
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     */
     protected void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isRequest")) {
             VSMessage message = new VSMessage(getClassname());
@@ -121,6 +158,9 @@ public class BerkelyTimeProtocol extends VSProtocol {
         }
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSProtocol#toString()
+     */
     public String toString() {
         return super.toString();
     }

@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package prefs.editors;
 
 import java.awt.*;
@@ -6,12 +10,30 @@ import javax.swing.event.*;
 
 import prefs.VSPrefs;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSColorChooser.
+ */
 public class VSColorChooser extends JPanel implements ChangeListener {
+    
+    /** The color chooser. */
     protected JColorChooser colorChooser;
+    
+    /** The color. */
     private Color color;
+    
+    /** The val field. */
     private JTextField valField;
+    
+    /** The prefs. */
     private VSPrefs prefs;
 
+    /**
+     * Instantiates a new vS color chooser.
+     * 
+     * @param prefs the prefs
+     * @param valField the val field
+     */
     public VSColorChooser(VSPrefs prefs, JTextField valField) {
         super(new BorderLayout());
         this.prefs = prefs;
@@ -26,6 +48,9 @@ public class VSColorChooser extends JPanel implements ChangeListener {
         add(colorChooser, BorderLayout.CENTER);
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+     */
     public void stateChanged(ChangeEvent e) {
         Color newColor = colorChooser.getColor();
         valField.setBackground(newColor);

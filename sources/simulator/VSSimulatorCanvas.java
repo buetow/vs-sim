@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package simulator;
 
 import java.awt.*;
@@ -14,80 +18,223 @@ import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSSimulatorCanvas.
+ */
 public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionListener, MouseListener, HierarchyBoundsListener  {
+    
+    /** The highlighted process. */
     private VSProcess highlightedProcess;
+    
+    /** The simulation. */
     private VSSimulator simulation;
+    
+    /** The prefs. */
     private VSPrefs prefs;
+    
+    /** The logging. */
     private VSLogging logging;
+    
+    /** The num processes. */
     private volatile int numProcesses;
+    
+    /** The seconds spaceing. */
     private int secondsSpaceing;
+    
+    /** The thread sleep. */
     private int threadSleep;
+    
+    /** The until time. */
     private long untilTime;
+    
+    /** The is paused. */
     private volatile boolean isPaused = true;
+    
+    /** The is thread stopped. */
     private volatile boolean isThreadStopped = false;
+    
+    /** The is finished. */
     private volatile boolean isFinished = false;
+    
+    /** The is resetted. */
     private volatile boolean isResetted = false;
+    
+    /** The is anti aliased. */
     private volatile boolean isAntiAliased = false;
+    
+    /** The is anti aliased changed. */
     private volatile boolean isAntiAliasedChanged = false;
+    
+    /** The show lamport. */
     private volatile boolean showLamport = false;
+    
+    /** The show vector time. */
     private volatile boolean showVectorTime = false;
+    
+    /** The pause time. */
     private volatile long pauseTime;
+    
+    /** The start time. */
     private volatile long startTime;
+    
+    /** The time. */
     private volatile long time;
+    
+    /** The last time. */
     private volatile long lastTime;
+    
+    /** The task manager. */
     private VSTaskManager taskManager;
+    
+    /** The message lines. */
     private LinkedList<VSMessageLine> messageLines;
+    
+    /** The processes. */
     private Vector<VSProcess> processes;
+    
+    /** The clock speed. */
     private double clockSpeed;
+    
+    /** The clock offset. */
     private double clockOffset;
+    
+    /** The simulation time. */
     private long simulationTime;
 
     /* GFX buffering */
+    /** The strategy. */
     private BufferStrategy strategy;
+    
+    /** The g. */
     private Graphics2D g;
 
     /* Static constats */
+    /** The Constant LINE_WIDTH. */
     private static final int LINE_WIDTH = 5;
+    
+    /** The Constant SEPLINE_WIDTH. */
     private static final int SEPLINE_WIDTH = 2;
+    
+    /** The Constant XOFFSET. */
     private static final int XOFFSET = 50;
+    
+    /** The Constant YOFFSET. */
     private static final int YOFFSET = 30;
+    
+    /** The Constant YOUTER_SPACEING. */
     private static final int YOUTER_SPACEING = 15;
+    
+    /** The Constant YSEPLINE_SPACEING. */
     private static final int YSEPLINE_SPACEING = 20;
+    
+    /** The Constant TEXT_SPACEING. */
     private static final int TEXT_SPACEING = 10;
+    
+    /** The Constant ROW_HEIGHT. */
     private static final int ROW_HEIGHT = 14;
 
     /* Constats, which have to get calculated once after start */
+    /** The processline color. */
     private Color processlineColor;
+    
+    /** The process secondline color. */
     private Color processSecondlineColor;
+    
+    /** The process sepline color. */
     private Color processSeplineColor;
+    
+    /** The message arrived color. */
     private Color messageArrivedColor;
+    
+    /** The message sending color. */
     private Color messageSendingColor;
+    
+    /** The message lost color. */
     private Color messageLostColor;
+    
+    /** The background color. */
     private Color backgroundColor;
 
+    /** The message line counter. */
     private long messageLineCounter;
+    
+    /**
+     * The Class VSMessageLine.
+     */
     private class VSMessageLine {
+        
+        /** The receiver process. */
         private VSProcess receiverProcess;
+        
+        /** The color. */
         private Color color;
+        
+        /** The send time. */
         private long sendTime;
+        
+        /** The recv time. */
         private long recvTime;
+        
+        /** The sender num. */
         private int senderNum;
+        
+        /** The receiver num. */
         private int receiverNum;
+        
+        /** The offset1. */
         private int offset1;
+        
+        /** The offset2. */
         private int offset2;
+        
+        /** The is arrived. */
         private boolean isArrived;
+        
+        /** The is lost. */
         private boolean isLost;
+        
+        /** The x1. */
         private double x1;
+        
+        /** The y1. */
         private double y1;
+        
+        /** The x2. */
         private double x2;
+        
+        /** The y2. */
         private double y2;
+        
+        /** The x. */
         private double x;
+        
+        /** The y. */
         private double y;
+        
+        /** The outage time. */
         private long outageTime;
+        
+        /** The z. */
         private long z;
+        
+        /** The message line num. */
         private long messageLineNum;
+        
+        /** The task. */
         private VSTask task;
 
+        /**
+         * Instantiates a new vS message line.
+         * 
+         * @param receiverProcess the receiver process
+         * @param sendTime the send time
+         * @param recvTime the recv time
+         * @param outageTime the outage time
+         * @param senderNum the sender num
+         * @param receiverNum the receiver num
+         * @param task the task
+         */
         public VSMessageLine(VSProcess receiverProcess, long sendTime, long recvTime, long outageTime, int senderNum , int receiverNum, VSTask task) {
             this.receiverProcess = receiverProcess;
             this.sendTime = sendTime;
@@ -116,6 +263,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             paint();
         }
 
+        /**
+         * Recalc on change.
+         */
         public void recalcOnChange() {
             x1 = getTimeXPosition(sendTime);
             y1 = getProcessYPosition(senderNum+1) + offset1;
@@ -129,6 +279,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
         }
 
+        /**
+         * Draw.
+         * 
+         * @param g the g
+         * @param globalTime the global time
+         */
         public void draw(final Graphics2D g, final long globalTime) {
             if (isArrived) {
                 g.setColor(color);
@@ -159,6 +315,13 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             }
         }
 
+        /**
+         * Removes the process at index.
+         * 
+         * @param index the index
+         * 
+         * @return true, if successful
+         */
         public boolean removeProcessAtIndex(int index) {
             if (index == receiverNum || index == senderNum)
                 return true;
@@ -174,19 +337,43 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             return false;
         }
 
+        /**
+         * Gets the message line num.
+         * 
+         * @return the message line num
+         */
         public long getMessageLineNum() {
             return messageLineNum;
         }
 
+        /**
+         * Equals.
+         * 
+         * @param line the line
+         * 
+         * @return true, if successful
+         */
         public boolean equals(VSMessageLine line) {
             return messageLineNum == line.getMessageLineNum();
         }
 
+        /**
+         * Gets the task.
+         * 
+         * @return the task
+         */
         public VSTask getTask() {
             return task;
         }
     }
 
+    /**
+     * Instantiates a new vS simulator canvas.
+     * 
+     * @param prefs the prefs
+     * @param simulation the simulation
+     * @param logging the logging
+     */
     public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulation, VSLogging logging) {
         this.prefs = prefs;
         this.simulation = simulation;
@@ -207,22 +394,46 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         addHierarchyBoundsListener(this);
     }
 
+    /** The x paint size. */
     double xPaintSize;
+    
+    /** The paint size. */
     double paintSize;
+    
+    /** The y distance. */
     double yDistance;
+    
+    /** The global time x position. */
     double globalTimeXPosition;
 
+    /** The xoffset_plus_xpaintsize. */
     int xoffset_plus_xpaintsize;
+    
+    /** The xpaintsize_dividedby_untiltime. */
     double xpaintsize_dividedby_untiltime;
+    
+    /** The paint processes offset. */
     int paintProcessesOffset;
 
+    /** The paint secondlines seconds. */
     int paintSecondlinesSeconds;
+    
+    /** The paint secondlines line. */
     int paintSecondlinesLine[] = new int[4];
+    
+    /** The paint secondlines y string pos1. */
     int paintSecondlinesYStringPos1;
+    
+    /** The paint secondlines y string pos2. */
     int paintSecondlinesYStringPos2;
+    
+    /** The paint global time y position. */
     int paintGlobalTimeYPosition;
 
     /* This method contains very ugly code. But this has to be in order to gain performance! */
+    /**
+     * Recalc on change.
+     */
     private void recalcOnChange() {
         processlineColor = prefs.getColor("col.process.line");
         processSecondlineColor = prefs.getColor("col.process.secondline");
@@ -274,6 +485,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Update simulation.
+     * 
+     * @param globalTime the global time
+     * @param lastGlobalTime the last global time
+     */
     private void updateSimulation(final long globalTime, final long lastGlobalTime) {
         if (isPaused || isFinished)
             return;
@@ -302,6 +519,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Paint.
+     */
     public void paint() {
         while (getBufferStrategy() == null) {
             createBufferStrategy(3);
@@ -341,6 +561,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Paint processes.
+     * 
+     * @param g the g
+     * @param globalTime the global time
+     */
     private void paintProcesses(Graphics2D g, long globalTime) {
         /* First paint the horizontal process timelines
          * Second paint the processes
@@ -400,6 +626,15 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Paint time.
+     * 
+     * @param g the g
+     * @param times the times
+     * @param process the process
+     * @param yStart the y start
+     * @param distance the distance
+     */
     private void paintTime(final Graphics2D g, final VSTime times[], final VSProcess process,
                            final int yStart, final int distance) {
 
@@ -439,6 +674,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Paint secondlines.
+     * 
+     * @param g the g
+     */
     private void paintSecondlines(Graphics2D g) {
         g.setColor(processSecondlineColor);
 
@@ -459,6 +699,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Paint global time.
+     * 
+     * @param g the g
+     * @param globalTime the global time
+     */
     private void paintGlobalTime(Graphics2D g, long globalTime) {
         g.setColor(processSeplineColor);
         final int xOffset = (int) globalTimeXPosition;
@@ -471,6 +717,13 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         g.drawString(globalTime+"ms", xPoints[1]+1, yPoints[0]+TEXT_SPACEING);
     }
 
+    /**
+     * Gets the process at y pos.
+     * 
+     * @param yPos the y pos
+     * 
+     * @return the process at y pos
+     */
     private VSProcess getProcessAtYPos(int yPos) {
         final int reachDistance = (int) (yDistance/3);
         int y = YOFFSET + YOUTER_SPACEING + YSEPLINE_SPACEING;
@@ -489,10 +742,24 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         return null;
     }
 
+    /**
+     * Gets the time x position.
+     * 
+     * @param time the time
+     * 
+     * @return the time x position
+     */
     private double getTimeXPosition(long time) {
         return XOFFSET + xpaintsize_dividedby_untiltime * time;
     }
 
+    /**
+     * Gets the process y position.
+     * 
+     * @param i the i
+     * 
+     * @return the process y position
+     */
     private int getProcessYPosition(int i) {
         int y;
 
@@ -506,26 +773,58 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         return y * (i - 1) + YOFFSET + YOUTER_SPACEING + YSEPLINE_SPACEING;
     }
 
+    /**
+     * Gets the time.
+     * 
+     * @return the time
+     */
     public long getTime() {
         return simulationTime;
     }
 
+    /**
+     * Gets the until time.
+     * 
+     * @return the until time
+     */
     public long getUntilTime() {
         return untilTime;
     }
 
+    /**
+     * Gets the start time.
+     * 
+     * @return the start time
+     */
     public long getStartTime() {
         return startTime;
     }
 
+    /**
+     * Gets the task manager.
+     * 
+     * @return the task manager
+     */
     public VSTaskManager getTaskManager() {
         return taskManager;
     }
 
+    /**
+     * Gets the num processes.
+     * 
+     * @return the num processes
+     */
     public int getNumProcesses() {
         return numProcesses;
     }
 
+    /**
+     * Gets the process.
+     * 
+     * @param processNum the process num
+     * 
+     * @return the process
+     */
     public VSProcess getProcess(int processNum) {
         if (processNum >= processes.size())
             return null;
@@ -533,6 +832,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         return processes.get(processNum);
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Runnable#run()
+     */
     public void run() {
         while (true) {
             while (!isThreadStopped && (isPaused || isFinished || isResetted)) {
@@ -572,6 +874,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Play.
+     */
     public void play() {
         logging.logg(prefs.getString("lang.simulation.started"));
         final long currentTime = System.currentTimeMillis();
@@ -600,6 +905,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         paint();
     }
 
+    /**
+     * Finish.
+     */
     public void finish() {
         synchronized (processes) {
             for (VSProcess p : processes)
@@ -613,6 +921,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         paint();
     }
 
+    /**
+     * Pause.
+     */
     public void pause() {
         isPaused = true;
         synchronized (processes) {
@@ -626,6 +937,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         paint();
     }
 
+    /**
+     * Reset.
+     */
     public void reset() {
         if (!isResetted) {
             logging.logg(prefs.getString("lang.simulation.resetted"));
@@ -661,26 +975,49 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Stop thread.
+     */
     public void stopThread() {
         isThreadStopped = true;
     }
 
+    /**
+     * Checks if is thread stopped.
+     * 
+     * @return true, if is thread stopped
+     */
     public boolean isThreadStopped() {
         return isThreadStopped;
     }
 
+    /**
+     * Show lamport.
+     * 
+     * @param showLamport the show lamport
+     */
     public void showLamport(boolean showLamport) {
         this.showLamport = showLamport;
         if (isPaused)
             paint();
     }
 
+    /**
+     * Show vector time.
+     * 
+     * @param showVectorTime the show vector time
+     */
     public void showVectorTime(boolean showVectorTime) {
         this.showVectorTime = showVectorTime;
         if (isPaused)
             paint();
     }
 
+    /**
+     * Checks if is anti aliased.
+     * 
+     * @param isAntiAliased the is anti aliased
+     */
     public void isAntiAliased(boolean isAntiAliased) {
         this.isAntiAliased = isAntiAliased;
         this.isAntiAliasedChanged = true;
@@ -688,6 +1025,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             paint();
     }
 
+    /**
+     * Send message.
+     * 
+     * @param message the message
+     */
     public void sendMessage(VSMessage message) {
         VSTask task = null;
         VSEvent messageReceiveEvent = null;
@@ -728,6 +1070,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+     */
     public void mouseClicked(MouseEvent me) {
         final VSProcess process = getProcessAtYPos(me.getY());
 
@@ -799,11 +1144,21 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Edits the process.
+     * 
+     * @param processNum the process num
+     */
     public void editProcess(int processNum) {
         VSProcess process = processes.get(processNum);
         editProcess(process);
     }
 
+    /**
+     * Edits the process.
+     * 
+     * @param process the process
+     */
     public void editProcess(VSProcess process) {
         if (process != null) {
             process.updatePrefs();
@@ -812,8 +1167,14 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+     */
     public void mouseEntered(MouseEvent e) { }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+     */
     public void mouseExited(MouseEvent e) {
         if (highlightedProcess != null) {
             highlightedProcess.highlightOff();
@@ -822,15 +1183,27 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
     public void mousePressed(MouseEvent e) {
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+     */
     public void mouseReleased(MouseEvent e) {
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+     */
     public void mouseDragged(MouseEvent e) {
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+     */
     public void mouseMoved(MouseEvent e) {
         VSProcess p = getProcessAtYPos(e.getY());
 
@@ -861,12 +1234,23 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             paint();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.HierarchyBoundsListener#ancestorMoved(java.awt.event.HierarchyEvent)
+     */
     public void ancestorMoved(HierarchyEvent e) { }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.HierarchyBoundsListener#ancestorResized(java.awt.event.HierarchyEvent)
+     */
     public void ancestorResized(HierarchyEvent e) {
         recalcOnChange();
     }
 
+    /**
+     * Gets the processes array.
+     * 
+     * @return the processes array
+     */
     public ArrayList<VSProcess> getProcessesArray() {
         ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
 
@@ -878,6 +1262,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         return arr;
     }
 
+    /**
+     * Update from prefs.
+     */
     public void updateFromPrefs() {
         untilTime = prefs.getInteger("sim.seconds") * 1000;
         clockSpeed = prefs.getFloat("sim.clock.speed");
@@ -893,6 +1280,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         recalcOnChange();
     }
 
+    /**
+     * Removes the process.
+     * 
+     * @param process the process
+     */
     private void removeProcess(VSProcess process) {
         if (numProcesses == 1) {
             simulation.getSimulatorFrame().removeSimulation(simulation);
@@ -925,12 +1317,22 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         }
     }
 
+    /**
+     * Creates the process.
+     * 
+     * @param processNum the process num
+     * 
+     * @return the vS process
+     */
     private VSProcess createProcess(int processNum) {
         VSProcess process = new VSProcess(prefs, processNum, this, logging);
         logging.logg(prefs.getString("lang.process.new") + "; " + process);
         return process;
     }
 
+    /**
+     * Adds the process.
+     */
     private void addProcess() {
         numProcesses = processes.size() + 1;
         VSProcess newProcess = createProcess(processes.size());

@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package simulator;
 
 import java.awt.*;
@@ -7,9 +11,21 @@ import javax.swing.*;
 import prefs.*;
 import utils.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSAbout.
+ */
 public class VSAbout extends VSFrame implements ActionListener {
+    
+    /** The prefs. */
     private VSPrefs prefs;
 
+    /**
+     * Instantiates a new vS about.
+     * 
+     * @param prefs the prefs
+     * @param relativeTo the relative to
+     */
     public VSAbout(VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("lang.name") + " - "
               + prefs.getString("lang.about"), relativeTo);
@@ -23,6 +39,11 @@ public class VSAbout extends VSFrame implements ActionListener {
     }
 
 
+    /**
+     * Creates the content pane.
+     * 
+     * @return the container
+     */
     public Container createContentPane() {
         Container contentPane = getContentPane();
 
@@ -36,6 +57,11 @@ public class VSAbout extends VSFrame implements ActionListener {
         return contentPane;
     }
 
+    /**
+     * Creates the button pane.
+     * 
+     * @return the j panel
+     */
     public JPanel createButtonPane() {
         JPanel buttonPane = new JPanel();
         buttonPane.setBackground(Color.WHITE);
@@ -50,6 +76,9 @@ public class VSAbout extends VSFrame implements ActionListener {
     }
 
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 

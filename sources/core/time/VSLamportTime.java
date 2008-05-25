@@ -1,16 +1,23 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package core.time;
 
-/** This class defined how the lamport timestamps are represented.
+// TODO: Auto-generated Javadoc
+/**
+ * This class defined how the lamport timestamps are represented.
  */
 public class VSLamportTime implements VSTime {
-    /** Specified the global time of the lamport timestamp. It's used for correct painting in the simulator paint area.
-     */
+    
+    /** Specified the global time of the lamport timestamp. It's used for correct painting in the simulator paint area. */
     private long globalTime;
-    /** Specified the process' local lamport time.
-     */
+    
+    /** Specified the process' local lamport time. */
     private long lamportTime;
 
-    /** A simple constructor.
+    /**
+     * A simple constructor.
      * 
      * @param globalTime The global time.
      * @param lamportTime The local lamport time.
@@ -20,7 +27,8 @@ public class VSLamportTime implements VSTime {
         this.lamportTime = lamportTime;
     }
 
-    /** Getter method.
+    /**
+     * Getter method.
      * 
      * @return The global time.
      */
@@ -28,7 +36,8 @@ public class VSLamportTime implements VSTime {
         return globalTime;
     }
 
-    /** Getter method.
+    /**
+     * Getter method.
      * 
      * @return The process' local lamport time.
      */
@@ -36,7 +45,8 @@ public class VSLamportTime implements VSTime {
         return lamportTime;
     }
 
-    /** String representation.
+    /**
+     * String representation.
      * 
      * @return The string representation of the lamport time.
      */

@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package prefs.editors;
 
 import java.awt.event.*;
@@ -6,12 +10,31 @@ import javax.swing.*;
 import simulator.*;
 import prefs.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSSimulatorEditor.
+ */
 public class VSSimulatorEditor extends VSBetterEditor {
+    
+    /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
+    
+    /** The simulation. */
     private VSSimulator simulation;
+    
+    /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
+    
+    /** The dont start new simulation. */
     private boolean dontStartNewSimulation;
 
+    /**
+     * Instantiates a new vS simulator editor.
+     * 
+     * @param prefs the prefs
+     * @param simulatorFrame the simulator frame
+     * @param simulation the simulation
+     */
     public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame, VSSimulator simulation) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
@@ -20,12 +43,21 @@ public class VSSimulatorEditor extends VSBetterEditor {
         this.simulation = simulation;
     }
 
+    /**
+     * Instantiates a new vS simulator editor.
+     * 
+     * @param prefs the prefs
+     * @param simulatorFrame the simulator frame
+     */
     public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
     }
 
+    /* (non-Javadoc)
+     * @see prefs.editors.VSBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         if (TAKEOVER_BUTTON) {
             TAKEOVER_BUTTON = false;
@@ -37,6 +69,9 @@ public class VSSimulatorEditor extends VSBetterEditor {
         }
     }
 
+    /* (non-Javadoc)
+     * @see prefs.editors.VSBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 

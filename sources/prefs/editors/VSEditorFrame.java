@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package prefs.editors;
 
 import java.awt.*;
@@ -7,10 +11,25 @@ import javax.swing.*;
 import prefs.*;
 import utils.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSEditorFrame.
+ */
 public class VSEditorFrame extends VSFrame implements ActionListener {
+    
+    /** The editor. */
     private VSBetterEditor editor;
+    
+    /** The prefs. */
     private VSPrefs prefs;
 
+    /**
+     * Instantiates a new vS editor frame.
+     * 
+     * @param prefs the prefs
+     * @param relativeTo the relative to
+     * @param editor the editor
+     */
     public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSBetterEditor editor) {
         super(editor.getTitle(), relativeTo);
         this.prefs = prefs;
@@ -18,6 +37,9 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
         init();
     }
 
+    /**
+     * Inits the.
+     */
     private void init() {
         editor.setFrame(this);
         fillButtonPanel(editor.getButtonPanel());
@@ -29,6 +51,11 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Fill button panel.
+     * 
+     * @param buttonPanel the button panel
+     */
     private void fillButtonPanel(JPanel buttonPanel) {
         JButton okButton = new JButton(
             prefs.getString("lang.ok"));
@@ -44,6 +71,9 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
         buttonPanel.repaint();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 

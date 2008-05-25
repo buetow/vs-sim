@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package core;
 
 import java.util.*;
@@ -5,14 +9,35 @@ import java.util.*;
 import prefs.*;
 import utils.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSTaskManager.
+ */
 public class VSTaskManager {
+    
+    /** The tasks. */
     private PriorityQueue<VSTask> tasks;
+    
+    /** The global tasks. */
     private PriorityQueue<VSTask> globalTasks;
+    
+    /** The fullfilled programmed tasks. */
     private LinkedList<VSTask> fullfilledProgrammedTasks;
+    
+    /** The Constant PROGRAMMED. */
     public final static boolean PROGRAMMED = true;
+    
+    /** The Constant ONLY_ONCE. */
     public final static boolean ONLY_ONCE = false;
+    
+    /** The prefs. */
     private VSPrefs prefs;
 
+    /**
+     * Instantiates a new vS task manager.
+     * 
+     * @param prefs the prefs
+     */
     public VSTaskManager(VSPrefs prefs) {
         this.prefs = prefs;
         this.tasks = new PriorityQueue<VSTask>();//100, comparator);
@@ -20,6 +45,13 @@ public class VSTaskManager {
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
 
+    /**
+     * Run tasks.
+     * 
+     * @param step the step
+     * @param offset the offset
+     * @param lastGlobalTime the last global time
+     */
     public synchronized void runTasks(final long step, final long offset, final long lastGlobalTime) {
         VSTask task = null;
         VSProcess process = null;
@@ -140,6 +172,9 @@ public class VSTaskManager {
         } while (redo);
     }
 
+    /**
+     * Reset.
+     */
     public synchronized void reset() {
         PriorityQueue<VSTask> tmp = tasks;
         PriorityQueue<VSTask> tmp2 = globalTasks;
@@ -165,6 +200,11 @@ public class VSTaskManager {
         }
     }
 
+    /**
+     * Insert.
+     * 
+     * @param task the task
+     */
     private void insert(VSTask task) {
         if (task.timeOver())
             fullfilledProgrammedTasks.addLast(task);
@@ -176,15 +216,33 @@ public class VSTaskManager {
             tasks.add(task);
     }
 
+    /**
+     * Adds the task.
+     * 
+     * @param task the task
+     */
     public void addTask(VSTask task) {
         addTask(task, VSTaskManager.ONLY_ONCE);
     }
 
+    /**
+     * Adds the task.
+     * 
+     * @param task the task
+     * @param isProgrammed the is programmed
+     */
     public synchronized void addTask(VSTask task, boolean isProgrammed) {
         task.isProgrammed(isProgrammed);
         insert(task);
     }
 
+    /**
+     * Removes the task.
+     * 
+     * @param task the task
+     * 
+     * @return true, if successful
+     */
     public synchronized boolean removeTask(VSTask task) {
         if (fullfilledProgrammedTasks.remove(task))
             return true;
@@ -198,6 +256,11 @@ public class VSTaskManager {
         return false;
     }
 
+    /**
+     * Removes the tasks of.
+     * 
+     * @param process the process
+     */
     public synchronized void removeTasksOf(VSProcess process) {
         ArrayList<VSTask> removeThose = new ArrayList<VSTask>();
         for (VSTask task : fullfilledProgrammedTasks)
@@ -221,6 +284,11 @@ public class VSTaskManager {
             tasks.remove(task);
     }
 
+    /**
+     * Gets the local tasks.
+     * 
+     * @return the local tasks
+     */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
@@ -235,6 +303,11 @@ public class VSTaskManager {
         return processTasks;
     }
 
+    /**
+     * Gets the global tasks.
+     * 
+     * @return the global tasks
+     */
     public synchronized VSPriorityQueue<VSTask> getGlobalTasks() {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
@@ -249,6 +322,13 @@ public class VSTaskManager {
         return processTasks;
     }
 
+    /**
+     * Gets the process local tasks.
+     * 
+     * @param process the process
+     * 
+     * @return the process local tasks
+     */
     public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(VSProcess process) {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
@@ -263,6 +343,13 @@ public class VSTaskManager {
         return processTasks;
     }
 
+    /**
+     * Gets the process global tasks.
+     * 
+     * @param process the process
+     * 
+     * @return the process global tasks
+     */
     public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(VSProcess process) {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
@@ -277,6 +364,9 @@ public class VSTaskManager {
         return processTasks;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     public String toString() {
         StringBuffer buffer = new StringBuffer();
 

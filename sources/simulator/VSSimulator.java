@@ -1,3 +1,7 @@
+/*
+ * VS is (c) 2008 by Paul C. Buetow
+ * vs@dev.buetow.org
+ */
 package simulator;
 
 import java.awt.*;
@@ -14,49 +18,142 @@ import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VSSimulator.
+ */
 public class VSSimulator extends JPanel {
+    
+    /** The global text fields. */
     private ArrayList<String> globalTextFields;
+    
+    /** The local text fields. */
     private ArrayList<String> localTextFields;
+    
+    /** The create tasks. */
     private ArrayList<VSCreateTask> createTasks;
+    
+    /** The filter active check box. */
     private JCheckBox filterActiveCheckBox;
+    
+    /** The lamport active check box. */
     private JCheckBox lamportActiveCheckBox;
+    
+    /** The vector time active check box. */
     private JCheckBox vectorTimeActiveCheckBox;
+    
+    /** The global pid combo box. */
     private JComboBox globalPIDComboBox;
+    
+    /** The local pid combo box. */
     private JComboBox localPIDComboBox;
+    
+    /** The processes combo box. */
     private JComboBox processesComboBox;
+    
+    /** The global add panel. */
     private JPanel globalAddPanel;
+    
+    /** The local add panel. */
     private JPanel localAddPanel;
+    
+    /** The local panel. */
     private JPanel localPanel;
+    
+    /** The logging panel. */
     private JPanel loggingPanel;
+    
+    /** The tools panel. */
     private JPanel toolsPanel;
+    
+    /** The split pane1. */
     private JSplitPane splitPane1;
+    
+    /** The split pane h. */
     private JSplitPane splitPaneH;
+    
+    /** The split pane v. */
     private JSplitPane splitPaneV;
+    
+    /** The tabbed pane. */
     private JTabbedPane tabbedPane;
+    
+    /** The logging area. */
     private JTextArea loggingArea;
+    
+    /** The filter text field. */
     private JTextField filterTextField;
+    
+    /** The global text field. */
     private JTextField globalTextField;
+    
+    /** The local text field. */
     private JTextField localTextField;
+    
+    /** The thread. */
     private Thread thread;
+    
+    /** The logging. */
     private VSLogging logging;
+    
+    /** The menu item states. */
     private VSMenuItemStates menuItemStates;
+    
+    /** The prefs. */
     private VSPrefs prefs;
+    
+    /** The simulation canvas. */
     private VSSimulatorCanvas simulationCanvas;
+    
+    /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
+    
+    /** The task manager. */
     private VSTaskManager taskManager;
+    
+    /** The task manager global model. */
     private VSTaskManagerTableModel taskManagerGlobalModel;
+    
+    /** The task manager local model. */
     private VSTaskManagerTableModel taskManagerLocalModel;
+    
+    /** The has started. */
     private boolean hasStarted = false;
+    
+    /** The last selected process num. */
     private int lastSelectedProcessNum;
+    
+    /** The simulation counter. */
     private static int simulationCounter;
+    
+    /** The simulation num. */
     private static int simulationNum;
 
+    /**
+     * The Class VSMenuItemStates.
+     */
     public class VSMenuItemStates {
+        
+        /** The pause. */
         private volatile boolean pause;
+        
+        /** The replay. */
         private volatile boolean replay;
+        
+        /** The reset. */
         private volatile boolean reset;
+        
+        /** The start. */
         private volatile boolean start;
 
+        /**
+         * Instantiates a new vS menu item states.
+         * 
+         * @param pause the pause
+         * @param replay the replay
+         * @param reset the reset
+         * @param start the start
+         */
         public VSMenuItemStates(boolean pause, boolean replay, boolean reset, boolean start) {
             this.pause = pause;
             this.replay = replay;
@@ -64,39 +161,85 @@ public class VSSimulator extends JPanel {
             this.start = start;
         }
 
+        /**
+         * Sets the pause.
+         * 
+         * @param pause the new pause
+         */
         public void setPause(boolean pause) {
             this.pause = pause;
         }
 
+        /**
+         * Sets the replay.
+         * 
+         * @param replay the new replay
+         */
         public void setReplay(boolean replay) {
             this.replay = replay;
         }
 
+        /**
+         * Sets the reset.
+         * 
+         * @param reset the new reset
+         */
         public void setReset(boolean reset) {
             this.reset = reset;
         }
 
+        /**
+         * Sets the start.
+         * 
+         * @param start the new start
+         */
         public void setStart(boolean start) {
             this.start = start;
         }
 
+        /**
+         * Gets the pause.
+         * 
+         * @return the pause
+         */
         public boolean getPause() {
             return pause;
         }
 
+        /**
+         * Gets the replay.
+         * 
+         * @return the replay
+         */
         public boolean getReplay() {
             return replay;
         }
 
+        /**
+         * Gets the reset.
+         * 
+         * @return the reset
+         */
         public boolean getReset() {
             return reset;
         }
 
+        /**
+         * Gets the start.
+         * 
+         * @return the start
+         */
         public boolean getStart() {
             return start;
         }
     }
 
+    /**
+     * Instantiates a new vS simulator.
+     * 
+     * @param prefs the prefs
+     * @param simulatorFrame the simulator frame
+     */
     public VSSimulator(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         this.prefs = prefs;
         this.simulatorFrame = simulatorFrame;
@@ -132,6 +275,9 @@ public class VSSimulator extends JPanel {
         thread.start();
     }
 
+    /**
+     * Fill content pane.
+     */
     private void fillContentPane() {
         loggingArea = logging.getLoggingArea();
 
@@ -167,7 +313,14 @@ public class VSSimulator extends JPanel {
         this.add(splitPaneV);
     }
 
+    /** The last expert state. */
     private boolean lastExpertState;
+    
+    /**
+     * Creates the tools panel.
+     * 
+     * @return the j panel
+     */
     private JPanel createToolsPanel() {
         JPanel toolsPanel = new JPanel();
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
@@ -285,6 +438,11 @@ public class VSSimulator extends JPanel {
         return toolsPanel;
     }
 
+    /**
+     * Creates the process pane.
+     * 
+     * @return the j panel
+     */
     private JPanel createProcessPane() {
         JPanel editPanel = new JPanel(new GridBagLayout());
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
@@ -366,6 +524,13 @@ public class VSSimulator extends JPanel {
         return editPanel;
     }
 
+    /**
+     * Creates the label panel.
+     * 
+     * @param text the text
+     * 
+     * @return the j panel
+     */
     private JPanel createLabelPanel(String text) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(text);
@@ -374,6 +539,13 @@ public class VSSimulator extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates the task label.
+     * 
+     * @param localTasks the local tasks
+     * 
+     * @return the j panel
+     */
     private JPanel createTaskLabel(boolean localTasks) {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -394,23 +566,48 @@ public class VSSimulator extends JPanel {
         return panel;
     }
 
+    /**
+     * The Class VSCreateTask.
+     */
     private class VSCreateTask {
+        
+        /** The event classname. */
         private String eventClassname;
+        
+        /** The protocol classname. */
         private String protocolClassname;
+        
+        /** The shortname. */
         private String shortname;
 
         /* Those 3 values are for ProtocolEvent events */
+        /** The is protocol activation. */
         private boolean isProtocolActivation;
+        
+        /** The is protocol deactivation. */
         private boolean isProtocolDeactivation;
+        
+        /** The is client protocol. */
         private boolean isClientProtocol;
 
         /* Those values are for ProtocolClient onStart events */
+        /** The is client request. */
         private boolean isClientRequest;
 
+        /**
+         * Instantiates a new vS create task.
+         * 
+         * @param eventClassname the event classname
+         */
         public VSCreateTask(String eventClassname) {
             this.eventClassname = eventClassname;
         }
 
+        /**
+         * Checks if is protocol activation.
+         * 
+         * @param isProtocolActivation the is protocol activation
+         */
         public void isProtocolActivation(boolean isProtocolActivation) {
             this.isProtocolActivation = isProtocolActivation;
 
@@ -418,6 +615,11 @@ public class VSSimulator extends JPanel {
                 isProtocolDeactivation(false);
         }
 
+        /**
+         * Checks if is protocol deactivation.
+         * 
+         * @param isProtocolDeactivation the is protocol deactivation
+         */
         public void isProtocolDeactivation(boolean isProtocolDeactivation) {
             this.isProtocolDeactivation = isProtocolDeactivation;
 
@@ -425,22 +627,51 @@ public class VSSimulator extends JPanel {
                 isProtocolActivation(false);
         }
 
+        /**
+         * Checks if is client protocol.
+         * 
+         * @param isClientProtocol the is client protocol
+         */
         public void isClientProtocol(boolean isClientProtocol) {
             this.isClientProtocol = isClientProtocol;
         }
 
+        /**
+         * Checks if is client request.
+         * 
+         * @param isClientRequest the is client request
+         */
         public void isClientRequest(boolean isClientRequest) {
             this.isClientRequest = isClientRequest;
         }
 
+        /**
+         * Sets the protocol classname.
+         * 
+         * @param protocolClassname the new protocol classname
+         */
         public void setProtocolClassname(String protocolClassname) {
             this.protocolClassname = protocolClassname;
         }
 
+        /**
+         * Sets the shortname.
+         * 
+         * @param shortname the new shortname
+         */
         public void setShortname(String shortname) {
             this.shortname = shortname;
         }
 
+        /**
+         * Creates the task.
+         * 
+         * @param process the process
+         * @param time the time
+         * @param localTimedTask the local timed task
+         * 
+         * @return the vS task
+         */
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
             VSEvent event = null;
 
@@ -466,17 +697,44 @@ public class VSSimulator extends JPanel {
         }
     }
 
+    /**
+     * The Class VSTaskManagerTableModel.
+     */
     private class VSTaskManagerTableModel extends AbstractTableModel implements MouseListener {
+        
+        /** The Constant LOCAL. */
         public static final boolean LOCAL = true;
+        
+        /** The Constant GLOBAL. */
         public static final boolean GLOBAL = false;
+        
+        /** The Constant ALL_PROCESSES. */
         public static final boolean ALL_PROCESSES = true;
+        
+        /** The Constant ONE_PROCESS. */
         public static final boolean ONE_PROCESS = false;
+        
+        /** The all processes. */
         public boolean allProcesses;
+        
+        /** The tasks. */
         private VSPriorityQueue<VSTask> tasks;
+        
+        /** The column names. */
         private String columnNames[];
+        
+        /** The num columns. */
         private int numColumns;
+        
+        /** The table. */
         private JTable table;
 
+        /**
+         * Instantiates a new vS task manager table model.
+         * 
+         * @param process the process
+         * @param localTask the local task
+         */
         public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
             set(process, localTask, ONE_PROCESS);
             columnNames = new String[3];
@@ -486,10 +744,22 @@ public class VSSimulator extends JPanel {
             numColumns = 3;
         }
 
+        /**
+         * Sets the table.
+         * 
+         * @param table the new table
+         */
         public void setTable(JTable table) {
             this.table = table;
         }
 
+        /**
+         * Sets the.
+         * 
+         * @param process the process
+         * @param localTasks the local tasks
+         * @param allProcesses the all processes
+         */
         public void set(VSProcess process, boolean localTasks, boolean allProcesses) {
             this.allProcesses = allProcesses;
 
@@ -506,18 +776,30 @@ public class VSSimulator extends JPanel {
             fireTableDataChanged();
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+         */
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.TableModel#getRowCount()
+         */
         public int getRowCount() {
             return tasks == null ? 0 : tasks.size();
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.TableModel#getColumnCount()
+         */
         public int getColumnCount() {
             return numColumns;
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.TableModel#getValueAt(int, int)
+         */
         public Object getValueAt(int row, int col) {
             VSTask task = tasks.get(row);
 
@@ -531,19 +813,35 @@ public class VSSimulator extends JPanel {
             return task.getEvent().getShortname();
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+         */
         public boolean isCellEditable(int row, int col) {
             return false;
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+         */
         public void setValueAt(Object value, int row, int col) {
             fireTableDataChanged();
         }
 
+        /**
+         * Adds the task.
+         * 
+         * @param task the task
+         */
         public void addTask(VSTask task) {
             tasks.add(task);
             fireTableDataChanged();
         }
 
+        /**
+         * Removes the task at row.
+         * 
+         * @param row the row
+         */
         private void removeTaskAtRow(int row) {
             VSTask task = tasks.get(row);
             tasks.remove(task);
@@ -551,6 +849,9 @@ public class VSSimulator extends JPanel {
             fireTableDataChanged();
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+         */
         public void mouseClicked(MouseEvent me) {
             JTable source = (JTable) me.getSource();
             final int row = source.rowAtPoint(me.getPoint());
@@ -575,12 +876,34 @@ public class VSSimulator extends JPanel {
             }
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+         */
         public void mouseEntered(MouseEvent me) { }
+        
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+         */
         public void mouseExited(MouseEvent me) { }
+        
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+         */
         public void mousePressed(MouseEvent me) { }
+        
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+         */
         public void mouseReleased(MouseEvent me) { }
     }
 
+    /**
+     * Creates the task table.
+     * 
+     * @param localTasks the local tasks
+     * 
+     * @return the j table
+     */
     private JTable createTaskTable(boolean localTasks) {
         VSProcess process = getSelectedProcess();
         VSTaskManagerTableModel model = new VSTaskManagerTableModel(process, localTasks);
@@ -609,6 +932,14 @@ public class VSSimulator extends JPanel {
         return table;
     }
 
+    /**
+     * Inits the add panel.
+     * 
+     * @param panel the panel
+     * @param localTasks the local tasks
+     * 
+     * @return the j panel
+     */
     private JPanel initAddPanel(JPanel panel, final boolean localTasks) {
         JPanel addPanel = new JPanel();
         addPanel.setLayout(new BoxLayout(addPanel, BoxLayout.X_AXIS));
@@ -810,23 +1141,50 @@ public class VSSimulator extends JPanel {
         return addPanel;
     }
 
+    /**
+     * Gets the split size.
+     * 
+     * @return the split size
+     */
     public int getSplitSize() {
         return splitPaneH.getDividerLocation();
     }
 
+    /**
+     * Gets the paint size.
+     * 
+     * @return the paint size
+     */
     public int getPaintSize() {
         return splitPaneV.getDividerLocation();
     }
 
+    /**
+     * Gets the selected process num.
+     * 
+     * @return the selected process num
+     */
     private int getSelectedProcessNum() {
         return processesComboBox.getSelectedIndex();
     }
 
+    /**
+     * Gets the selected process.
+     * 
+     * @return the selected process
+     */
     private VSProcess getSelectedProcess() {
         int processNum = getSelectedProcessNum();
         return simulationCanvas.getProcess(processNum);
     }
 
+    /**
+     * Gets the concerned processes.
+     * 
+     * @param localTasks the local tasks
+     * 
+     * @return the concerned processes
+     */
     private ArrayList<VSProcess> getConcernedProcesses(boolean localTasks) {
         int processNum = localTasks
                          ? localPIDComboBox.getSelectedIndex()
@@ -841,6 +1199,9 @@ public class VSSimulator extends JPanel {
         return arr;
     }
 
+    /**
+     * Update task manager table.
+     */
     public void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
         boolean allProcesses = process == null;
@@ -848,6 +1209,9 @@ public class VSSimulator extends JPanel {
         taskManagerGlobalModel.set(process, VSTaskManagerTableModel.GLOBAL, allProcesses);
     }
 
+    /**
+     * Finish.
+     */
     public void finish() {
         menuItemStates.setStart(false);
         menuItemStates.setPause(false);
@@ -856,27 +1220,55 @@ public class VSSimulator extends JPanel {
         simulatorFrame.updateSimulationMenu();
     }
 
+    /**
+     * Gets the simulation num.
+     * 
+     * @return the simulation num
+     */
     public int getSimulationNum() {
         return simulationNum;
     }
 
+    /**
+     * Gets the menu item states.
+     * 
+     * @return the menu item states
+     */
     public VSSimulator.VSMenuItemStates getMenuItemStates() {
         return menuItemStates;
     }
 
+    /**
+     * Gets the simulation canvas.
+     * 
+     * @return the simulation canvas
+     */
     public VSSimulatorCanvas getSimulationCanvas() {
         return simulationCanvas;
     }
 
+    /**
+     * Gets the simulator frame.
+     * 
+     * @return the simulator frame
+     */
     public VSSimulatorFrame getSimulatorFrame() {
         return simulatorFrame;
     }
 
+    /**
+     * Update from prefs.
+     */
     public void updateFromPrefs() {
         simulationCanvas.setBackground(prefs.getColor("col.background"));
         simulationCanvas.updateFromPrefs();
     }
 
+    /**
+     * Removes the process at index.
+     * 
+     * @param index the index
+     */
     public void removeProcessAtIndex(int index) {
         if (lastSelectedProcessNum > index)
             --lastSelectedProcessNum;
@@ -893,6 +1285,11 @@ public class VSSimulator extends JPanel {
         updateTaskManagerTable();
     }
 
+    /**
+     * Adds the process at index.
+     * 
+     * @param index the index
+     */
     public void addProcessAtIndex(int index) {
         int processID = simulationCanvas.getProcess(index).getProcessID();
         String processString = prefs.getString("lang.process");
@@ -907,6 +1304,9 @@ public class VSSimulator extends JPanel {
         simulatorFrame.updateEditMenu();
     }
 
+    /**
+     * Fire expert mode changed.
+     */
     public void fireExpertModeChanged() {
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
@@ -945,6 +1345,11 @@ public class VSSimulator extends JPanel {
         updateUI();
     }
 
+    /**
+     * Gets the prefs.
+     * 
+     * @return the prefs
+     */
     public VSPrefs getPrefs() {
         return prefs;
     }
