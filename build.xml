@@ -55,13 +55,7 @@
 
     <target name="javadoc" description="Generate Javadocs">
         <mkdir dir="${basedir}/javadoc/"/>
-        <javadoc 
-            destdir="${basedir}/javadoc/"
-            additionalparam="-J-Dorg.apache.commons.attributes.javadoc.CATaglet.sources=${basedir}">
-            <taglet
-                name="org.apache.commons.attributes.javadoc.CATaglet"
-                path="${ant.home}/lib/commons-attributes-compiler-2.2.jar"
-             />
+        <javadoc destdir="${basedir}/javadoc/">
             <fileset dir="${basedir}/" includes="**/*.java" />
         </javadoc>
     </target>

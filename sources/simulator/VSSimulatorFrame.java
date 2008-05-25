@@ -284,7 +284,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
      * Update simulation menu.
      */
     public synchronized void updateSimulationMenu() {
-        VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+        VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
 
         pauseItem.setEnabled(menuItemState.getPause());
         replayItem.setEnabled(menuItemState.getReplay());
@@ -340,7 +340,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             System.exit(0);
 
         } else if (sourceText.equals(prefs.getString("lang.start"))) {
-            VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
             menuItemState.setStart(false);
             menuItemState.setPause(true);
             menuItemState.setReset(false);
@@ -349,7 +349,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             updateSimulationMenu();
 
         } else if (sourceText.equals(prefs.getString("lang.pause"))) {
-            VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
             menuItemState.setStart(true);
             menuItemState.setPause(false);
             menuItemState.setReset(true);
@@ -358,7 +358,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             updateSimulationMenu();
 
         } else if (sourceText.equals(prefs.getString("lang.reset"))) {
-            VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
             menuItemState.setStart(true);
             menuItemState.setPause(false);
             menuItemState.setReset(false);
@@ -367,7 +367,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             updateSimulationMenu();
 
         } else if (sourceText.equals(prefs.getString("lang.replay"))) {
-            VSSimulator.VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
+            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
             menuItemState.setStart(false);
             menuItemState.setPause(true);
             menuItemState.setReset(false);
