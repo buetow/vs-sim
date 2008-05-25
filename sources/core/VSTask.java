@@ -10,16 +10,18 @@ import events.internal.*;
 import prefs.VSPrefs;
 import protocols.VSProtocol;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSTask.
+ * The Class VSTask. An object of this class represents a task to do or done.
+ * All tasks are managed by the task manager. There are local and global timed tasks.
+ * Local timed tasks are being fullfilled if the process' local time is reached.
+ * Global timed tasks are being fullfilled if the simulation's time is reached.
  */
 public class VSTask implements Comparable {
     
-    /** The Constant LOCAL. */
+    /** The Constant LOCAL. Used for the constructor if it's a local timed task. */
     public final static boolean LOCAL = true;
     
-    /** The Constant GLOBAL. */
+    /** The Constant GLOBAL. Used for the constructor if it's a global timed task. */
     public final static boolean GLOBAL = false;
     
     /** The task time. */
@@ -34,25 +36,25 @@ public class VSTask implements Comparable {
     /** The prefs. */
     private VSPrefs prefs;
     
-    /** The is programmed. */
+    /** The task is programmed. The task will be still in the task manager after reset. */
     private boolean isProgrammed;
     
-    /** The is global timed. */
+    /** The task is global timed. If set to true, its local timed. */
     private boolean isGlobalTimed;
     
-    /** The task counter. */
+    /** The task counter. Needed for the unique task numbers. */
     private static int taskCounter;
     
-    /** The task num. */
+    /** The task number. */
     private int taskNum;
 
     /**
-     * Instantiates a new vS task.
+     * Instantiates a new task.
      * 
      * @param taskTime the task time
      * @param process the process
      * @param event the event
-     * @param isLocal the is local
+     * @param isLocal the taks is local timed
      */
     public VSTask(long taskTime, VSProcess process, VSEvent event, boolean isLocal) {
         this.process = process;
@@ -75,45 +77,45 @@ public class VSTask implements Comparable {
     /**
      * Checks if is programmed.
      * 
-     * @param isProgrammed the is programmed
+     * @param isProgrammed the task is programmed
      */
     public void isProgrammed(boolean isProgrammed) {
         this.isProgrammed = isProgrammed;
     }
 
     /**
-     * Checks if is programmed.
+     * Checks if the task is programmed.
      * 
-     * @return true, if is programmed
+     * @return true, if the task is programmed
      */
     public boolean isProgrammed() {
         return isProgrammed;
     }
 
     /**
-     * Checks if is message receive event.
+     * Checks if the task is a message receive event.
      * 
-     * @return true, if is message receive event
+     * @return true, if it is a message receive event
      */
     public boolean isMessageReceiveEvent() {
         return event instanceof MessageReceiveEvent;
     }
 
     /**
-     * Checks if is process recover event.
+     * Checks if the task is a process recover event.
      * 
-     * @return true, if is process recover event
+     * @return true, if it is a process recover event
      */
     public boolean isProcessRecoverEvent() {
         return event instanceof ProcessRecoverEvent;
     }
 
     /**
-     * Checks if is protocol.
+     * Checks if the task belongs to the specified protocol object.
      * 
-     * @param protocol the protocol
+     * @param protocol the protocol object to check against.
      * 
-     * @return true, if is protocol
+     * @return true, if it's a task using the protocol object.
      */
     public boolean isProtocol(VSProtocol protocol) {
         if (event instanceof VSProtocol)
@@ -123,9 +125,9 @@ public class VSTask implements Comparable {
     }
 
     /**
-     * Time over.
+     * Time over. The task's time is over.
      * 
-     * @return true, if successful
+     * @return true, if it's over
      */
     public boolean timeOver() {
         if (isGlobalTimed)
@@ -135,37 +137,31 @@ public class VSTask implements Comparable {
     }
 
     /**
-     * Equals.
+     * Checks if the task equals to another task.
      * 
-     * @param task the task
+     * @param task the task to compare to
      * 
-     * @return true, if successful
+     * @return true, if equal
      */
     public boolean equals(VSTask task) {
         return taskNum == task.getTaskNum();
-        /*
-        return event.equals(task.getEvent())
-               && taskTime == task.getTaskTime()
-               && isGlobalTimed == task.isGlobalTimed()
-               && isProgrammed == task.isProgrammed;
-        	   */
     }
 
     /**
-     * Checks if is process.
+     * Checks if the event belongs to the specified process.
      * 
-     * @param process the process
+     * @param process the process to check against
      * 
-     * @return true, if is process
+     * @return true, if the event is using the process
      */
     public boolean isProcess(VSProcess process) {
         return this.process.equals(process);
     }
 
     /**
-     * Checks if is global timed.
+     * Checks if the task is global timed.
      * 
-     * @return true, if is global timed
+     * @return true, if the taks is global timed
      */
     public boolean isGlobalTimed() {
         return isGlobalTimed;
@@ -174,14 +170,14 @@ public class VSTask implements Comparable {
     /**
      * Gets the process.
      * 
-     * @return the process
+     * @return the process of the event
      */
     public VSProcess getProcess() {
         return process;
     }
 
     /**
-     * Run.
+     * Runs the task.
      */
     public void run() {
         if (event.getProcess() == null)
@@ -208,9 +204,9 @@ public class VSTask implements Comparable {
     }
 
     /**
-     * Logg.
+     * Logg a message.
      * 
-     * @param message the message
+     * @param message the message to logg
      */
     private void logg(String message) {
         process.logg(message);

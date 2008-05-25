@@ -9,7 +9,6 @@ import java.util.*;
 import prefs.*;
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSTaskManager.
  */
@@ -173,7 +172,7 @@ public class VSTaskManager {
     }
 
     /**
-     * Reset.
+     * Resets the task manager.
      */
     public synchronized void reset() {
         PriorityQueue<VSTask> tmp = tasks;
@@ -201,9 +200,9 @@ public class VSTaskManager {
     }
 
     /**
-     * Insert.
+     * Inserts a task. Only for internal usage. Use the add methods instead.
      * 
-     * @param task the task
+     * @param task the task to insert
      */
     private void insert(VSTask task) {
         if (task.timeOver())
@@ -217,19 +216,19 @@ public class VSTaskManager {
     }
 
     /**
-     * Adds the task.
+     * Adds a task.
      * 
-     * @param task the task
+     * @param task the task to add
      */
     public void addTask(VSTask task) {
         addTask(task, VSTaskManager.ONLY_ONCE);
     }
 
     /**
-     * Adds the task.
+     * Adds a task.
      * 
-     * @param task the task
-     * @param isProgrammed the is programmed
+     * @param task the task to add
+     * @param isProgrammed the task is programmed
      */
     public synchronized void addTask(VSTask task, boolean isProgrammed) {
         task.isProgrammed(isProgrammed);
@@ -237,9 +236,9 @@ public class VSTaskManager {
     }
 
     /**
-     * Removes the task.
+     * Removes a task.
      * 
-     * @param task the task
+     * @param task the task to remove
      * 
      * @return true, if successful
      */
@@ -257,9 +256,9 @@ public class VSTaskManager {
     }
 
     /**
-     * Removes the tasks of.
+     * Removes the tasks of the specified process.
      * 
-     * @param process the process
+     * @param process the process to remove the tasks of
      */
     public synchronized void removeTasksOf(VSProcess process) {
         ArrayList<VSTask> removeThose = new ArrayList<VSTask>();

@@ -8,7 +8,6 @@ import core.time.*;
 import events.*;
 import prefs.VSPrefs;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class represents a message which is send from one process to another process in the simulation.
  */
