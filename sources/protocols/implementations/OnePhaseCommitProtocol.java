@@ -52,7 +52,7 @@ public class OnePhaseCommitProtocol extends VSProtocol {
      */
     protected void onClientStart() {
         int numProcesses = getInteger("numProcesses");
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setBoolean("wantAck", true);
         sendMessage(message);
     }

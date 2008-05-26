@@ -47,7 +47,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
         waitingForResponse = true;
 
         /* Multicast message to all processes */
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setBoolean("isClientRequest", true);
         sendMessage(message);
     }
@@ -92,7 +92,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
             return;
 
         /* Multicast message to all processes */
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setLong("time", process.getTime());
         message.setBoolean("isServerResponse", true);
         sendMessage(message);

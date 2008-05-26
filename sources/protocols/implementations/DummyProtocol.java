@@ -40,7 +40,7 @@ public class DummyProtocol extends VSProtocol {
     protected void onClientStart() {
         logg("onClientStart()");
 
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setString("Greeting", "Hello World!");
         message.setInteger("A number", 1);
         message.setBoolean("A boolean", true);

@@ -46,7 +46,7 @@ public class BroadcastSturmProtocol extends VSProtocol {
      * @see protocols.VSProtocol#onClientStart()
      */
     protected void onClientStart() {
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setInteger("Broadcast", broadcastCount++);
         sentMessages.add(message);
         sendMessage(message);
@@ -70,7 +70,7 @@ public class BroadcastSturmProtocol extends VSProtocol {
      */
     protected void onServerRecv(VSMessage recvMessage) {
         if (!sentMessages.contains(recvMessage)) {
-            VSMessage message = new VSMessage(getClassname());
+            VSMessage message = new VSMessage();
             message.setInteger("Broadcast", recvMessage.getInteger("Broadcast"));
 
             sentMessages.add(message);

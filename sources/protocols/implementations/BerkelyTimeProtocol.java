@@ -70,7 +70,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
         peers = new ArrayList<Integer>();
         peers.addAll(getVector("processPIDs"));
         requestTime = process.getTime();
-        VSMessage message = new VSMessage(getClassname());
+        VSMessage message = new VSMessage();
         message.setBoolean("isRequest", true);
         sendMessage(message);
     }
@@ -136,7 +136,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
         for (Integer processID : processTimes.keySet()) {
             long realProcessTime = realTimesRTT.get(processID).longValue();
             long diff = avgTime - realProcessTime;
-            VSMessage message = new VSMessage(getClassname());
+            VSMessage message = new VSMessage();
             message.setBoolean("isJustify", true);
             message.setLong("timeDiff", diff);
             message.setInteger("receiverProcessID", processID);
@@ -155,7 +155,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
      */
     protected void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isRequest")) {
-            VSMessage message = new VSMessage(getClassname());
+            VSMessage message = new VSMessage();
             message.setInteger("processID", process.getProcessID());
             message.setLong("time", process.getTime());
             message.setBoolean("isResponse", true);

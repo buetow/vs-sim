@@ -34,7 +34,7 @@ abstract public class VSProtocol extends VSEvent {
 
         process.increaseLamportTime();
         process.increaseVectorTime();
-        message.init(process);
+        message.init(process, getClassname());
         process.sendMessage(message);
     }
 

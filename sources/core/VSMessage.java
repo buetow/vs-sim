@@ -37,12 +37,8 @@ public class VSMessage extends VSPrefs {
 
     /**
      * The constructor of the message.
-     *
-     * @param protocolClassname The classname of the protocol this message
-     * belongs to.
      */
-    public VSMessage(String protocolClassname) {
-        this.protocolClassname = protocolClassname;
+    public VSMessage() {
         this.messageID = ++messageCounter;
     }
 
@@ -50,9 +46,11 @@ public class VSMessage extends VSPrefs {
      * Initialized the message.
      *
      * @param process The sending process of this message.
+     * @param protocolClassname The classname of the protocol this message
      */
-    public void init(VSProcess process) {
+    public void init(VSProcess process, String protocolClassname) {
         this.sendingProcess = process;
+        this.protocolClassname = protocolClassname;
         this.prefs = process.getPrefs();
         lamportTime = sendingProcess.getLamportTime();
         vectorTime = sendingProcess.getVectorTime().getCopy();
