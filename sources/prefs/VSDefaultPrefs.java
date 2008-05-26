@@ -193,7 +193,7 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultFloats() {
         /* Simulation prefs */
         initFloat("process.clock.variance", 0, "Uhrabweichung");
-        initFloat("sim.clock.speed", 0.5f, "Simulationsgeschwindigkeit");
+        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulation");
     }
 
     /**
@@ -230,6 +230,7 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultBooleans() {
         //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
-        initBoolean("sim.message.own.recv", false, "Eigene Nachrichten empfangen");
+        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eig. Nachrichten");
+        initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtausfallw'k. bilden");
     }
 }

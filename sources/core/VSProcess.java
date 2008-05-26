@@ -584,9 +584,11 @@ public class VSProcess extends VSPrefs {
      *
      * @return the a random message outage time
      */
-    public synchronized long getARandomMessageOutageTime(final long durationTime) {
+    public synchronized long getARandomMessageOutageTime(final long durationTime, VSProcess receiverProcess) {
+		int percentage = (int) ((getInteger("message.prob.outage") + 
+				receiverProcess.getInteger("message.prob.outage")) / 2);
         /* Check if the message will have an outage or not */
-        if (random.nextInt(100) < getInteger("message.prob.outage")) {
+        if (getRandomPercentage() <= percentage) {
             /* Calculate the random outage time! */
             final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
             return outageTime;

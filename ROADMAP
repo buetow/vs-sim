@@ -1,7 +1,9 @@
+TODO:
 Server vs Clientvariablen? -> onClientInit und onServerInit -> VSPrefs Objekte Pruefen
 Nicht nur Clientanfragen, auch Serveranfragen erlauben. 
 Im pull down menue die protokolle komplett ordnen, alles was zu einem Protokoll zu tun hat zusammenlegen
-Server und Client anders benennen?
+VSSimulatorEditor: DEFAULT Prozesseinsgellungen, DEFAULT Nachrichteneinstellungen
+
 Periodische Tasks anlegen koennen
 Ganze simulationseinstellungen abspeichern/laden koennen
 	TaskManager + Tasks serialisierbar machen
@@ -19,7 +21,6 @@ Protocols:
 	Namensdienste
 Evtl:
 	Local deliver max/min time
-	Sender <-> Receiver specific deliver time calc
 	Systemschnitte?
 	Middleware-Schicht?
 	Ereignisse, die Prozessvariablen aendern
