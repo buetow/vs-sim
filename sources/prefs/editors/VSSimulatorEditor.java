@@ -14,7 +14,7 @@ import prefs.*;
 /**
  * The Class VSSimulatorEditor.
  */
-public class VSSimulatorEditor extends VSBetterEditor {
+public class VSSimulatorEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;
 
     /** The simulator frame. */
@@ -57,7 +57,7 @@ public class VSSimulatorEditor extends VSBetterEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         if (TAKEOVER_BUTTON) {
@@ -71,7 +71,7 @@ public class VSSimulatorEditor extends VSBetterEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();

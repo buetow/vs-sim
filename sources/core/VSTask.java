@@ -8,7 +8,7 @@ import events.*;
 import events.implementations.*;
 import events.internal.*;
 import prefs.VSPrefs;
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 
 /**
  * The Class VSTask. An object of this class represents a task to do or done.
@@ -29,7 +29,7 @@ public class VSTask implements Comparable {
     private long taskTime;
 
     /** The event. */
-    private VSEvent event;
+    private VSAbstractEvent event;
 
     /** The process. */
     private VSProcess process;
@@ -57,7 +57,7 @@ public class VSTask implements Comparable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    public VSTask(long taskTime, VSProcess process, VSEvent event, boolean isLocal) {
+    public VSTask(long taskTime, VSProcess process, VSAbstractEvent event, boolean isLocal) {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
         this.event = event;
@@ -118,9 +118,9 @@ public class VSTask implements Comparable {
      *
      * @return true, if it's a task using the protocol object.
      */
-    public boolean isProtocol(VSProtocol protocol) {
-        if (event instanceof VSProtocol)
-            return ((VSProtocol) event).equals(protocol);
+    public boolean isProtocol(VSAbstractProtocol protocol) {
+        if (event instanceof VSAbstractProtocol)
+            return ((VSAbstractProtocol) event).equals(protocol);
 
         return false;
     }
@@ -200,7 +200,7 @@ public class VSTask implements Comparable {
      *
      * @return the event
      */
-    public VSEvent getEvent() {
+    public VSAbstractEvent getEvent() {
         return event;
     }
 

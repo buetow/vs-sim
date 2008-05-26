@@ -8,9 +8,9 @@ import core.VSProcess;
 import prefs.VSPrefs;
 
 /**
- * The Class VSEvent.
+ * The Class VSAbstractEvent.
  */
-abstract public class VSEvent extends VSPrefs {
+abstract public class VSAbstractEvent extends VSPrefs {
     private static final long serialVersionUID = 1L;
 
     /** The prefs. */
@@ -113,7 +113,7 @@ abstract public class VSEvent extends VSPrefs {
      *
      * @return true, if successful
      */
-    public boolean equals(VSEvent event) {
+    public boolean equals(VSAbstractEvent event) {
         return super.getID() == event.getID();
     }
 

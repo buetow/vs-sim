@@ -17,7 +17,7 @@ import prefs.VSPrefs;
 /**
  * The Class VSProcessEditor.
  */
-public class VSProcessEditor extends VSBetterEditor {
+public class VSProcessEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;
 
     /** The process. */
@@ -40,7 +40,7 @@ public class VSProcessEditor extends VSBetterEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         JButton takeoverButton = new JButton(
@@ -60,13 +60,13 @@ public class VSProcessEditor extends VSBetterEditor {
         String protocolString = " " + prefs.getString("lang.protocol");
         for (String protocolClassname : editableProtocolsClassnames) {
             String protocolShortname = VSRegisteredEvents.getShortname(protocolClassname);
-            VSProtocol protocol = process.getProtocolObject(protocolClassname);
+            VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
             addToEditor(protocolShortname + protocolString, protocolShortname, protocol);
         }
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();

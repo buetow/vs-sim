@@ -22,7 +22,7 @@ public class VSProcess extends VSPrefs {
     private static final long serialVersionUID = 1L;
 
     /** The protocols to reset if the simulation is over or the reset button has been pressed. */
-    private ArrayList<VSProtocol> protocolsToReset;
+    private ArrayList<VSAbstractProtocol> protocolsToReset;
 
     /** The crash history. represents all crashes of the process using the global simulation time. */
     private ArrayList<Long> crashHistory;
@@ -161,7 +161,7 @@ public class VSProcess extends VSPrefs {
      * @param logging the logging object
      */
     public VSProcess(VSPrefs prefs, int processNum, VSSimulatorCanvas simulationCanvas, VSLogging logging) {
-        this.protocolsToReset = new ArrayList<VSProtocol>();
+        this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
         this.processNum = processNum;
         this.prefs = prefs;
         this.simulationCanvas = simulationCanvas;
@@ -305,7 +305,7 @@ public class VSProcess extends VSPrefs {
         globalTime = 0;
         clockOffset = 0;
 
-        for (VSProtocol protocol : protocolsToReset)
+        for (VSAbstractProtocol protocol : protocolsToReset)
             protocol.reset();
 
         setCurrentColor(getColor("col.process.default"));
@@ -328,7 +328,7 @@ public class VSProcess extends VSPrefs {
 
 
             if (crashTime >= getGlobalTime())  {
-                VSEvent event = new ProcessCrashEvent();
+                VSAbstractEvent event = new ProcessCrashEvent();
                 //event.init(this);
                 randomCrashTask = new VSTask(crashTime, this, event, VSTask.GLOBAL);
                 taskManager.addTask(randomCrashTask);
@@ -885,17 +885,17 @@ public class VSProcess extends VSPrefs {
      *
      * @return the protocol object
      */
-    public VSProtocol getProtocolObject(String protocolClassname) {
-        VSProtocol protocol = null;
+    public VSAbstractProtocol getProtocolObject(String protocolClassname) {
+        VSAbstractProtocol protocol = null;
 
         if (!objectExists(protocolClassname)) {
-            protocol = (VSProtocol)
+            protocol = (VSAbstractProtocol)
                        VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, this);
             setObject(protocolClassname, protocol);
             protocolsToReset.add(protocol);
 
         } else {
-            protocol = (VSProtocol) getObject(protocolClassname);
+            protocol = (VSAbstractProtocol) getObject(protocolClassname);
         }
 
         return protocol;

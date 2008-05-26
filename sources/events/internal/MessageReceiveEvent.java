@@ -5,13 +5,13 @@
 package events.internal;
 
 import core.VSMessage;
-import events.VSEvent;
-import protocols.VSProtocol;
+import events.VSAbstractEvent;
+import protocols.VSAbstractProtocol;
 
 /**
  * The Class MessageReceiveEvent.
  */
-public class MessageReceiveEvent extends VSEvent {
+public class MessageReceiveEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /** The message. */
@@ -27,14 +27,14 @@ public class MessageReceiveEvent extends VSEvent {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
         setClassname(getClass().toString());
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onStart()
+     * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
         String eventName = message.getName();
@@ -57,7 +57,7 @@ public class MessageReceiveEvent extends VSEvent {
             logg(buffer.toString());
 
         } else {
-            final VSProtocol protocol = (VSProtocol) protocolObj;
+            final VSAbstractProtocol protocol = (VSAbstractProtocol) protocolObj;
             logg(buffer.toString());
             protocol.onMessageRecv(message);
         }

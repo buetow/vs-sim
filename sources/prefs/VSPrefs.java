@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * The Class VSPrefs.
  */
-public abstract class VSPrefs implements Serializable {
+public class VSPrefs implements Serializable {
 
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";

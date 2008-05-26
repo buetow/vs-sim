@@ -5,13 +5,13 @@
 package protocols.implementations;
 
 import core.VSMessage;
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ExternalTimeSyncProtocol.
  */
-public class ExternalTimeSyncProtocol extends VSProtocol {
+public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The request time. */
@@ -28,19 +28,19 @@ public class ExternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
         requestTime = process.getTime();
@@ -53,7 +53,7 @@ public class ExternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     protected void onClientRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("isServerResponse"))
@@ -74,13 +74,13 @@ public class ExternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("isClientRequest"))
@@ -94,7 +94,7 @@ public class ExternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#toString()
+     * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
         return super.toString(); //+ "; " + prefs.getString("lang.requesttime") + ": " + requestTime;

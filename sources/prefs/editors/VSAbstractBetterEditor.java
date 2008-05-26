@@ -13,9 +13,9 @@ import utils.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSBetterEditor.
+ * The Class VSAbstractBetterEditor.
  */
-public abstract class VSBetterEditor extends VSEditor {
+public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     private static final long serialVersionUID = 1L;
 
     /** The content pane. */
@@ -34,7 +34,7 @@ public abstract class VSBetterEditor extends VSEditor {
      * @param prefsToEdit the prefs to edit
      * @param title the title
      */
-    public VSBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit, String title) {
+    public VSAbstractBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit, String title) {
         super(prefs, prefsToEdit);
         this.title = title;
         this.contentPane = createContentPane();
@@ -81,22 +81,22 @@ public abstract class VSBetterEditor extends VSEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractEditor#addToButtonPanelFront(javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) { }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSEditor#addToButtonPanelLast(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractEditor#addToButtonPanelLast(javax.swing.JPanel)
      */
     protected void addToButtonPanelLast(JPanel buttonPanel) { }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSEditor#addToEditTableLast()
+     * @see prefs.editors.VSAbstractEditor#addToEditTableLast()
      */
     protected void addToEditTableLast() { }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractEditor#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         //String actionCommand = e.getActionCommand();

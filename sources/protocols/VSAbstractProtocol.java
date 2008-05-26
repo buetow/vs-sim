@@ -7,26 +7,25 @@ package protocols;
 import events.*;
 import core.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSProtocol.
+ * The Class VSAbstractProtocol.
  */
-abstract public class VSProtocol extends VSEvent {
+abstract public class VSAbstractProtocol extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
-    /** The is server. */
+    /** The protocol object is a server. */
     private boolean isServer;
 
-    /** The is client. */
+    /** The protocol object is a client. */
     private boolean isClient;
 
-    /** The current context is server. */
+    /** The current protocol object's context is a server. */
     private boolean currentContextIsServer;
 
     /**
-     * Send message.
+     * Send a message.
      *
-     * @param message the message
+     * @param message the message to send
      */
     protected void sendMessage(VSMessage message) {
         if (process == null)
@@ -39,9 +38,9 @@ abstract public class VSProtocol extends VSEvent {
     }
 
     /**
-     * Checks if is incorrect protocol.
+     * Checks if it's the incorrect protocol
      *
-     * @param message the message
+     * @param message the message to check against
      *
      * @return true, if is incorrect protocol
      */
@@ -50,7 +49,7 @@ abstract public class VSProtocol extends VSEvent {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onStart()
+     * @see events.VSAbstractEvent#onStart()
      */
     public final void onStart() {
         if (isClient) {

@@ -4,23 +4,23 @@
  */
 package events.implementations;
 
-import events.VSEvent;
+import events.VSAbstractEvent;
 
 /**
  * The Class ProcessRecoverEvent.
  */
-public class ProcessRecoverEvent extends VSEvent {
+public class ProcessRecoverEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
         setClassname(getClass().toString());
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onStart()
+     * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
         if (process.isCrashed()) {

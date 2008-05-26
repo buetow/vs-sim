@@ -5,12 +5,12 @@
 package events.internal;
 
 import events.*;
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 
 /**
  * The Class ProtocolEvent.
  */
-public class ProtocolEvent extends VSEvent {
+public class ProtocolEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /** The protocol classname. */
@@ -23,7 +23,7 @@ public class ProtocolEvent extends VSEvent {
     private boolean isProtocolActivation; /* true = activate, false = deactivate */
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
         setClassname(getClass().toString());
@@ -75,10 +75,10 @@ public class ProtocolEvent extends VSEvent {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onStart()
+     * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
-        VSProtocol protocol = process.getProtocolObject(protocolClassname);
+        VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
 
         if (isClientProtocol)
             protocol.isClient(isProtocolActivation);

@@ -59,8 +59,8 @@ public final class VSRegisteredEvents {
         VSClassLoader classLoader = new VSClassLoader();
         for (String protocolClassname : protocolClassnames) {
             Object object = classLoader.newInstance(protocolClassname);
-            if (object instanceof protocols.VSProtocol) {
-                protocols.VSProtocol protocol = (protocols.VSProtocol) object;
+            if (object instanceof protocols.VSAbstractProtocol) {
+                protocols.VSAbstractProtocol protocol = (protocols.VSAbstractProtocol) object;
                 if (!protocol.isEmpty())
                     editableProtocolsClassnames.add(protocolClassname);
             }
@@ -191,11 +191,11 @@ public final class VSRegisteredEvents {
      *
      * @return the lang.process.removeevent
      */
-    public static VSEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
+    public static VSAbstractEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
         final Object protocolObj = new VSClassLoader().newInstance(eventClassname);
 
-        if (protocolObj instanceof VSEvent) {
-            VSEvent event = (VSEvent) protocolObj;
+        if (protocolObj instanceof VSAbstractEvent) {
+            VSAbstractEvent event = (VSAbstractEvent) protocolObj;
             event.init(process);
             return event;
         }
@@ -211,7 +211,7 @@ public final class VSRegisteredEvents {
      *
      * @return the lang.process.removeevent
      */
-    public static VSEvent createEventInstanceByName(String eventName, VSProcess process) {
+    public static VSAbstractEvent createEventInstanceByName(String eventName, VSProcess process) {
         return createEventInstanceByClassname(eventClassnames.get(eventName), process);
     }
 

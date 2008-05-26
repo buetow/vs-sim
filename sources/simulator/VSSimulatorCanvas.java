@@ -1033,7 +1033,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
      */
     public void sendMessage(VSMessage message) {
         VSTask task = null;
-        VSEvent messageReceiveEvent = null;
+        VSAbstractEvent messageReceiveEvent = null;
         VSProcess sendingProcess = message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
@@ -1085,11 +1085,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                         editProcess(process);
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.crash"))) {
-                        VSEvent event = new ProcessCrashEvent();
+                        VSAbstractEvent event = new ProcessCrashEvent();
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.recover"))) {
-                        VSEvent event = new ProcessRecoverEvent();
+                        VSAbstractEvent event = new ProcessRecoverEvent();
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.remove"))) {

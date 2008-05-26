@@ -6,18 +6,18 @@ package protocols.implementations;
 
 import java.util.Vector;
 
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
  * The Class OnePhaseCommitProtocol.
  */
-public class OnePhaseCommitProtocol extends VSProtocol {
+public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /* Client variables, coordinator */
 
-    /* Server variables, peers */
+    /* Client variables */
     private boolean ackSent;
 
     /**
@@ -36,19 +36,19 @@ public class OnePhaseCommitProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
         int numProcesses = getInteger("numProcesses");
@@ -58,27 +58,27 @@ public class OnePhaseCommitProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     protected void onClientRecv(VSMessage recvMessage) {
 
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
         ackSent = false;
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#toString()
+     * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
         return super.toString();

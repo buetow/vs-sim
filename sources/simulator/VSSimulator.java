@@ -568,7 +568,7 @@ public class VSSimulator extends JPanel {
          * @return the lang.process.removetask
          */
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
-            VSEvent event = null;
+            VSAbstractEvent event = null;
 
             if (isClientRequest) {
                 event = process.getProtocolObject(eventClassname);

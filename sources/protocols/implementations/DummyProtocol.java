@@ -4,14 +4,14 @@
  */
 package protocols.implementations;
 
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class DummyProtocol.
  */
-public class DummyProtocol extends VSProtocol {
+public class DummyProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -22,20 +22,20 @@ public class DummyProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
         logg("onClientReset()");
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
         logg("onClientStart()");
@@ -49,7 +49,7 @@ public class DummyProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     protected void onClientRecv(VSMessage recvMessage) {
         logg("onClientRecv("+recvMessage+")");
@@ -61,21 +61,21 @@ public class DummyProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
         logg("onClientReset()");
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
         logg("onServerRecv("+recvMessage+")");
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#toString()
+     * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
         return super.toString() + "; Dummy Test";

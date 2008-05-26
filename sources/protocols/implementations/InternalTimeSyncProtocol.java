@@ -5,13 +5,13 @@
 package protocols.implementations;
 
 import core.VSMessage;
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class InternalTimeSyncProtocol.
  */
-public class InternalTimeSyncProtocol extends VSProtocol {
+public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The waiting for response. */
@@ -23,25 +23,25 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     public InternalTimeSyncProtocol() {
         setClassname(getClass().toString());
 
-        /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
+        /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. t_min and t_max in milliseconds  */
         initLong("t_min", 500, "Max. Übetragungszeit", "ms");
         initLong("t_max", 2000, "Min. Übertragungszeit", "ms");
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
         waitingForResponse = true;
@@ -53,7 +53,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     protected void onClientRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a response message, e.g. itself */
@@ -78,13 +78,13 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a request message, e.g. itself */
@@ -99,7 +99,7 @@ public class InternalTimeSyncProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#toString()
+     * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
         return super.toString();

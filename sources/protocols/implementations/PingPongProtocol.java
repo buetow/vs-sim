@@ -5,13 +5,13 @@
 package protocols.implementations;
 
 import core.VSMessage;
-import protocols.VSProtocol;
+import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PingPongProtocol.
  */
-public class PingPongProtocol extends VSProtocol {
+public class PingPongProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The client counter. */
@@ -28,20 +28,20 @@ public class PingPongProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSEvent#onInit()
+     * @see events.VSAbstractEvent#onInit()
      */
     protected void onInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
         clientCounter = 0;
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
         VSMessage message = new VSMessage();
@@ -51,7 +51,7 @@ public class PingPongProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     protected void onClientRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("fromServer"))
@@ -66,14 +66,14 @@ public class PingPongProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
         serverCounter = 0;
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("fromClient"))
@@ -88,7 +88,7 @@ public class PingPongProtocol extends VSProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSProtocol#toString()
+     * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
         return super.toString();

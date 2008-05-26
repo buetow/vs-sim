@@ -19,7 +19,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     /** The editor. */
-    private VSBetterEditor editor;
+    private VSAbstractBetterEditor editor;
 
     /** The prefs. */
     private VSPrefs prefs;
@@ -31,7 +31,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
      * @param relativeTo the relative to
      * @param editor the editor
      */
-    public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSBetterEditor editor) {
+    public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSAbstractBetterEditor editor) {
         super(editor.getTitle(), relativeTo);
         this.prefs = prefs;
         this.editor = editor;

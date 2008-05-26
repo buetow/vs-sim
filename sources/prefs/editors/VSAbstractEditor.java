@@ -14,9 +14,9 @@ import prefs.VSPrefs;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSEditor.
+ * The Class VSAbstractEditor.
  */
-public abstract class VSEditor implements ActionListener {
+public abstract class VSAbstractEditor implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     /** The boolean keys. */
@@ -103,7 +103,7 @@ public abstract class VSEditor implements ActionListener {
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
      */
-    public VSEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
+    public VSAbstractEditor(VSPrefs prefs, VSPrefs prefsToEdit) {
         init(prefs, prefsToEdit);
     }
 
