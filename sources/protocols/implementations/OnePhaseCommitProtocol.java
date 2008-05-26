@@ -4,7 +4,7 @@
  */
 package protocols.implementations;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import protocols.VSProtocol;
 import core.VSMessage;
@@ -16,7 +16,6 @@ public class OnePhaseCommitProtocol extends VSProtocol {
     private static final long serialVersionUID = 1L;
 
     /* Client variables, coordinator */
-    private ArrayList<Integer> peerPids;
 
     /* Server variables, peers */
     private boolean ackSent;
@@ -26,7 +25,14 @@ public class OnePhaseCommitProtocol extends VSProtocol {
      */
     public OnePhaseCommitProtocol() {
         setClassname(getClass().toString());
-        initInteger("numProcesses", 0, "Anzahl beteilitger Prozesse");
+
+        /* Can be changed via GUI variables editor of each process */
+        Vector<Integer> vec = new Vector<Integer>();
+        vec.add(2);
+        vec.add(3);
+        vec.add(4);
+
+        initVector("pids", vec, "PIDs beteilitger Prozesse");
     }
 
     /* (non-Javadoc)

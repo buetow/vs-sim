@@ -25,6 +25,9 @@ public abstract class VSPrefs implements Serializable {
     /** The Constant INTEGER_PREFIX. */
     public static final String INTEGER_PREFIX = "Integer: ";
 
+    /** The Constant VECTOR_PREFIX. */
+    public static final String VECTOR_PREFIX = "Vector: ";
+
     /** The Constant LONG_PREFIX. */
     public static final String LONG_PREFIX = "Long: ";
 
@@ -39,6 +42,9 @@ public abstract class VSPrefs implements Serializable {
 
     /** The integer prefs. */
     private HashMap<String,Integer> integerPrefs;
+
+    /** The integer vector prefs. */
+    private HashMap<String,Vector<Integer>> vectorPrefs;
 
     /** The long prefs. */
     private HashMap<String,Long> longPrefs;
@@ -160,6 +166,7 @@ public abstract class VSPrefs implements Serializable {
         descriptionPrefs = new HashMap<String,String>();
         floatPrefs = new HashMap<String,Float>();
         integerPrefs = new HashMap<String,Integer>();
+        vectorPrefs = new HashMap<String,Vector<Integer>>();
         longPrefs = new HashMap<String,Long>();
         restrictions = new HashMap<String,VSPrefRestriction>();
         stringPrefs = new HashMap<String,String>();
@@ -176,6 +183,7 @@ public abstract class VSPrefs implements Serializable {
         colorPrefs.clear();
         floatPrefs.clear();
         integerPrefs.clear();
+        vectorPrefs.clear();
         longPrefs.clear();
         stringPrefs.clear();
         booleanPrefs.clear();
@@ -707,6 +715,81 @@ public abstract class VSPrefs implements Serializable {
         setInteger(key, new Integer(val));
     }
 
+    /* Integer vector methods */
+
+    /**
+     * Gets the integer key set.
+     *
+     * @return the integer key set
+     */
+    public synchronized Set<String> getVectorKeySet() {
+        return vectorPrefs.keySet();
+    }
+
+    /**
+     * Gets the integer obj.
+     *
+     * @param key the key
+     *
+     * @return the integer obj
+     */
+    public synchronized Vector<Integer> getVector(String key) {
+        Vector<Integer> val = vectorPrefs.get(key);
+
+        if (val == null) {
+            System.err.println("Fatal: No such integer config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return val;
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void initVector(String key, Vector<Integer> val) {
+        if (!vectorPrefs.containsKey(key))
+            setVector(key, val);
+    }
+
+    /**
+     * Inits the integer vector.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     */
+    public void initVector(String key, Vector<Integer> val, String descr) {
+        initVector(key, val);
+        initDescription(VECTOR_PREFIX + key, descr);
+    }
+
+    /**
+     * Inits the integer vector plus unit.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     */
+    public void initVector(String key, Vector<Integer> val, String descr, String unit) {
+        initVector(key, val, descr);
+        initUnit(VECTOR_PREFIX + key, unit);
+    }
+
+    /**
+     * Sets the integer vector.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setVector(String key, Vector<Integer> val) {
+        vectorPrefs.put(key, val);
+    }
+
     /* Long methods */
 
     /**
@@ -921,6 +1004,7 @@ public abstract class VSPrefs implements Serializable {
         objectOutputStream.writeObject(colorPrefs);
         objectOutputStream.writeObject(floatPrefs);
         objectOutputStream.writeObject(integerPrefs);
+        objectOutputStream.writeObject(vectorPrefs);
         objectOutputStream.writeObject(longPrefs);
         objectOutputStream.writeObject(stringPrefs);
         objectOutputStream.writeObject(units);
@@ -941,6 +1025,7 @@ public abstract class VSPrefs implements Serializable {
         descriptionPrefs = new HashMap<String,String>();
         floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
         integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
+        vectorPrefs = (HashMap<String,Vector<Integer>>) objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
         restrictions = new HashMap<String,VSPrefRestriction>();
         stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
@@ -1071,6 +1156,13 @@ public abstract class VSPrefs implements Serializable {
                 descr += key + "=" + getInteger(key) + "; ";
         }
 
+        set = getVectorKeySet();
+        if (set.size() > 0) {
+            descr += VECTOR_PREFIX;
+            for (String key : set)
+                descr += key + "=" + getVector(key) + "; ";
+        }
+
         set = getLongKeySet();
         if (set.size() > 0) {
             descr += LONG_PREFIX;
@@ -1127,6 +1219,9 @@ public abstract class VSPrefs implements Serializable {
             return false;
 
         if (!integerPrefs.isEmpty())
+            return false;
+
+        if (!vectorPrefs.isEmpty())
             return false;
 
         if (!longPrefs.isEmpty())

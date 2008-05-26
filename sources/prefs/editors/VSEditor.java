@@ -31,6 +31,9 @@ public abstract class VSEditor implements ActionListener {
     /** The integer keys. */
     private ArrayList<String> integerKeys;
 
+    /** The vector keys. */
+    private ArrayList<String> vectorKeys;
+
     /** The long keys. */
     private ArrayList<String> longKeys;
 
@@ -42,6 +45,9 @@ public abstract class VSEditor implements ActionListener {
 
     /** The integer fields. */
     private HashMap<String,JComboBox> integerFields;
+
+    /** The vector fields. */
+    private HashMap<String,JTextField> vectorFields;
 
     /** The color fields. */
     private HashMap<String,JTextField> colorFields;
@@ -190,6 +196,7 @@ public abstract class VSEditor implements ActionListener {
         colorFields = new HashMap<String,JTextField>();
         floatFields = new HashMap<String,JTextField>();
         integerFields = new HashMap<String,JComboBox>();
+        vectorFields = new HashMap<String,JTextField>();
         longFields = new HashMap<String,JTextField>();
         booleanFields = new HashMap<String,JCheckBox>();
         stringFields = new HashMap<String,JTextField>();
@@ -197,6 +204,7 @@ public abstract class VSEditor implements ActionListener {
         colorKeys = filterKeys(prefsToEdit.getColorKeySet());
         floatKeys = filterKeys(prefsToEdit.getFloatKeySet());
         integerKeys = filterKeys(prefsToEdit.getIntegerKeySet());
+        vectorKeys = filterKeys(prefsToEdit.getVectorKeySet());
         longKeys = filterKeys(prefsToEdit.getLongKeySet());
         booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
         stringKeys = filterKeys(prefsToEdit.getStringKeySet());
@@ -332,13 +340,45 @@ public abstract class VSEditor implements ActionListener {
     }
 
     /**
+     * Creates the vector component.
+     *
+     * @param fullKey the full key
+     * @param key the key
+     * @param prefsToEdit the prefs to edit
+     */
+    protected VSTupel<String,Component,JTextField> createVectorComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+        String descr = prefsToEdit.getDescription(fullKey);
+        String label = descr == null ? fullKey : descr;
+        Vector<Integer> vec = prefsToEdit.getVector(key);
+
+        JTextField valField = new JTextField();
+        valField.setBorder(null);
+
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("[");
+
+        synchronized (vec) {
+            for (Integer integer : vec) {
+                buffer.append(integer + ",");
+            }
+        }
+
+        try {
+            valField.setText(buffer.toString().substring(0, buffer.length()-1)+"]");
+        } catch (StringIndexOutOfBoundsException e) {
+            valField.setText("[]");
+        }
+
+        return new VSTupel<String,Component,JTextField>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
+    }
+
+    /**
      * Creates the boolean component.
      *
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
-     *
-     * @return the lang.process.removetupel< string, component, j check box>
      */
     protected VSTupel<String,Component,JCheckBox> createBooleanComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         final String activated = prefs.getString("lang.activated");
@@ -482,10 +522,20 @@ public abstract class VSEditor implements ActionListener {
 
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
-            VSTupel<String,Component,JComboBox> tupel = createIntegerComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JComboBox> tupel =
+                createIntegerComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             integerFields.put(key, tupel.getC());
+        }
+
+        for (String key : vectorKeys) {
+            String fullKey = VSPrefs.VECTOR_PREFIX + key;
+            VSTupel<String,Component,JTextField> tupel =
+                createVectorComponent(fullKey, key, prefsToEdit);
+            labels.put(fullKey, tupel.getA());
+            components.put(fullKey, tupel.getB());
+            vectorFields.put(key, tupel.getC());
         }
 
         for (String key : booleanKeys) {
@@ -612,12 +662,14 @@ public abstract class VSEditor implements ActionListener {
         ArrayList<String> fullKeys = new ArrayList<String>();
 
         Set<String> integerKeys = prefsToAdd.getIntegerKeySet();
+        Set<String> vectorKeys = prefsToAdd.getVectorKeySet();
         Set<String> floatKeys = prefsToAdd.getFloatKeySet();
         Set<String> longKeys = prefsToAdd.getLongKeySet();
         Set<String> booleanKeys = prefsToAdd.getBooleanKeySet();
         Set<String> stringKeys = prefsToAdd.getStringKeySet();
 
         for (String key : integerKeys) fullKeys.add(VSPrefs.INTEGER_PREFIX + key);
+        for (String key : vectorKeys) fullKeys.add(VSPrefs.VECTOR_PREFIX + key);
         for (String key : floatKeys) fullKeys.add(VSPrefs.FLOAT_PREFIX + key);
         for (String key : longKeys) fullKeys.add(VSPrefs.LONG_PREFIX + key);
         for (String key : booleanKeys) fullKeys.add(VSPrefs.BOOLEAN_PREFIX + key);
@@ -632,6 +684,13 @@ public abstract class VSEditor implements ActionListener {
                     createIntegerComponent(fullKey, key, prefsToAdd);
                 this.integerKeys.add(prefsKey+key);
                 this.integerFields.put(prefsKey+key, tupel.getC());
+                addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
+
+            } else if (fullKey.startsWith(VSPrefs.VECTOR_PREFIX)) {
+                VSTupel<String,Component,JTextField> tupel =
+                    createVectorComponent(fullKey, key, prefsToAdd);
+                this.vectorKeys.add(prefsKey+key);
+                this.vectorFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.BOOLEAN_PREFIX)) {
@@ -702,7 +761,7 @@ public abstract class VSEditor implements ActionListener {
     /**
      * Reset edit panel.
      */
-    protected void resetEditPanel() {
+    protected void resetPrefs() {
         for (String key : integerKeys) {
             JComboBox valComboBox = integerFields.get(key);
             valComboBox.setSelectedIndex(0);
@@ -712,6 +771,12 @@ public abstract class VSEditor implements ActionListener {
             String keys[] = getKeys(key);
             JCheckBox valField = booleanFields.get(key);
             valField.setSelected(prefsToEditMap.get(keys[1]).getBoolean(keys[0]));
+        }
+
+        for (String key : vectorKeys) {
+            String keys[] = getKeys(key);
+            JTextField valField = vectorFields.get(key);
+            valField.setText(""+prefsToEditMap.get(keys[1]).getVector(keys[0]));
         }
 
         for (String key : floatKeys) {
@@ -765,14 +830,26 @@ public abstract class VSEditor implements ActionListener {
 
         for (String key : integerKeys) {
             String keys[] = getKeys(key);
-            //String fullKey = VSPrefs.INTEGER_PREFIX + keys[0];
             JComboBox valComboBox = integerFields.get(key);
             prefsToEditMap.get(keys[1]).setInteger(keys[0], (Integer) valComboBox.getSelectedItem());
         }
 
+        for (String key : vectorKeys) {
+            String keys[] = getKeys(key);
+            JTextField valField = vectorFields.get(key);
+
+            try {
+                String val = valField.getText();
+                Vector<Integer> vec = utils.VSTools.parseIntegerVector(val);
+                prefsToEditMap.get(keys[1]).setVector(keys[0], vec);
+            } catch (exceptions.ParseIntegerVectorException e) {
+            }
+
+            valField.setText(""+prefsToEditMap.get(keys[1]).getVector(keys[0]));
+        }
+
         for (String key : booleanKeys) {
             String keys[] = getKeys(key);
-            //String fullKey = VSPrefs.BOOLEAN_PREFIX + keys[0];
             JCheckBox valField = booleanFields.get(key);
             prefsToEditMap.get(keys[1]).setBoolean(keys[0], valField.isSelected());
         }
@@ -782,12 +859,11 @@ public abstract class VSEditor implements ActionListener {
             JTextField valField = floatFields.get(key);
 
             try {
-                //String fullKey = VSPrefs.FLOAT_PREFIX + keys[0];
                 Float val = Float.valueOf(valField.getText());
                 prefsToEditMap.get(keys[1]).setFloat(keys[0], val);
 
             } catch (NumberFormatException e) {
-                valField.setText("0.0");
+                valField.setText(""+prefsToEditMap.get(keys[1]).getFloat(keys[0]));
             }
         }
 
@@ -796,25 +872,22 @@ public abstract class VSEditor implements ActionListener {
             JTextField valField = longFields.get(key);
 
             try {
-                //String fullKey = VSPrefs.LONG_PREFIX + keys[0];
                 Long val = Long.valueOf(valField.getText());
                 prefsToEditMap.get(keys[1]).setLong(keys[0], val);
 
             } catch (NumberFormatException e) {
-                valField.setText("0");
+                valField.setText(""+prefsToEditMap.get(keys[1]).getLong(keys[0]));
             }
         }
 
         for (String key : colorKeys) {
             String keys[] = getKeys(key);
-            //String fullKey = VSPrefs.COLOR_PREFIX + keys[0];
             JTextField valField = colorFields.get(key);
             prefsToEditMap.get(keys[1]).setColor(keys[0], valField.getBackground());
         }
 
         for (String key : stringKeys) {
             String keys[] = getKeys(key);
-            //String fullKey = VSPrefs.STRING_PREFIX + keys[0];
             JTextField valField = stringFields.get(key);
             prefsToEditMap.get(keys[1]).setString(keys[0], valField.getText());
         }
@@ -846,7 +919,7 @@ public abstract class VSEditor implements ActionListener {
             savePrefs();
 
         } else if (actionCommand.equals(prefs.getString("lang.reset"))) {
-            resetEditPanel();
+            resetPrefs();
         }
     }
 

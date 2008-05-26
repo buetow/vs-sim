@@ -4,8 +4,8 @@
  */
 package utils;
 
+import java.util.Vector;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSTools.
  */
@@ -44,5 +44,52 @@ public final class VSTools {
         }
 
         return 0;
+    }
+
+    /**
+     * Gets the integer vector represented by a string comma separated.
+     *
+     * @param string the string
+     *
+     * @return the parsed vector
+     */
+    public static Vector<Integer> parseIntegerVector(String string)
+    throws exceptions.ParseIntegerVectorException {
+        System.out.println("parse " + string);
+        Vector<Integer> vec = new Vector<Integer>();
+
+        int index = string.indexOf('[');
+        if (index == -1)
+            throw new exceptions.ParseIntegerVectorException();
+
+        string = string.substring(index+1);
+
+        index = string.indexOf(']');
+        if (index == -1)
+            throw new exceptions.ParseIntegerVectorException();
+
+        string = string.substring(0, index);
+
+        try {
+            while ( (index = string.indexOf(',')) != -1 ) {
+                String substring = string.substring(0, index);
+
+                /* Remove leading whitespaces */
+                while (substring.charAt(0) == ' ')
+                    substring = substring.substring(1);
+
+                vec.add(Integer.parseInt(substring));
+                string = string.substring(index+1);
+            }
+            /* Remove leading whitespaces */
+            while (string.charAt(0) == ' ')
+                string = string.substring(1);
+            vec.add(Integer.parseInt(string));
+
+        } catch (StringIndexOutOfBoundsException e) {
+        } catch (NumberFormatException e) {
+        }
+
+        return vec;
     }
 }
