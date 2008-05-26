@@ -44,7 +44,7 @@ public abstract class VSPrefs implements Serializable {
     private HashMap<String,Long> longPrefs;
 
     /** The setting restriction prefs. */
-    private HashMap<String,SettingRestriction> settingRestrictionPrefs;
+    private HashMap<String,VSPrefRestriction> restrictions;
 
     /** The description prefs. */
     private HashMap<String,String> descriptionPrefs;
@@ -74,16 +74,16 @@ public abstract class VSPrefs implements Serializable {
     protected long id;
 
     /**
-     * The Class SettingRestriction.
+     * The Class VSPrefRestriction.
      */
-    public class SettingRestriction implements Serializable {
+    public class VSPrefRestriction implements Serializable {
         private static final long serialVersionUID = 1L;
     }
 
     /**
-     * The Class IntegerSettingRestriction.
+     * The Class VSIntegerPrefRestriction.
      */
-    public class IntegerSettingRestriction extends SettingRestriction {
+    public class VSIntegerPrefRestriction extends VSPrefRestriction {
         private static final long serialVersionUID = 1L;
         /** The min value. */
         private int minValue;
@@ -97,7 +97,7 @@ public abstract class VSPrefs implements Serializable {
          * @param minValue the min value
          * @param maxValue the max value
          */
-        public IntegerSettingRestriction(int minValue, int maxValue) {
+        public VSIntegerPrefRestriction(int minValue, int maxValue) {
             this.minValue = minValue;
             this.maxValue = maxValue;
         }
@@ -122,9 +122,9 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
-     * The Class StringSettingRestriction.
+     * The Class StringVSPrefRestriction.
      */
-    public class StringSettingRestriction extends SettingRestriction {
+    public class StringVSPrefRestriction extends VSPrefRestriction {
         private static final long serialVersionUID = 1L;
 
         /** The possible selections. */
@@ -135,7 +135,7 @@ public abstract class VSPrefs implements Serializable {
          *
          * @param possibleSelections the possible selections
          */
-        public StringSettingRestriction(String [] possibleSelections) {
+        public StringVSPrefRestriction(String [] possibleSelections) {
             this.possibleSelections = new Vector<String>();
 
             for (String elem : possibleSelections)
@@ -161,7 +161,7 @@ public abstract class VSPrefs implements Serializable {
         floatPrefs = new HashMap<String,Float>();
         integerPrefs = new HashMap<String,Integer>();
         longPrefs = new HashMap<String,Long>();
-        settingRestrictionPrefs = new HashMap<String,SettingRestriction>();
+        restrictions = new HashMap<String,VSPrefRestriction>();
         stringPrefs = new HashMap<String,String>();
         booleanPrefs = new HashMap<String,Boolean>();
         objectPrefs = new HashMap<String,Object>();
@@ -181,7 +181,92 @@ public abstract class VSPrefs implements Serializable {
         booleanPrefs.clear();
         objectPrefs.clear();
         descriptionPrefs.clear();
-        settingRestrictionPrefs.clear();
+        restrictions.clear();
+    }
+
+    /* Unit methods */
+
+    /**
+     * Gets the unit.
+     *
+     * @param key the key
+     *
+     * @return the unit
+     */
+    public synchronized String getUnit(String fullKey) {
+        return units.get(fullKey);
+    }
+
+    /**
+     * Sets the unit.
+     *
+     * @param key the key
+     * @param unit the unit
+     */
+    public synchronized void initUnit(String key, String unit) {
+        if (unit == null || units.containsKey(key))
+            return;
+        units.put(key, unit);
+    }
+
+    /* Description methods */
+    /**
+     * Sets the description if unset.
+     *
+     * @param key the key
+     * @param descr the descr
+     */
+    public synchronized void initDescription(String key, String descr) {
+        if (descr == null || descriptionPrefs.containsKey(key))
+            return;
+        descriptionPrefs.put(key, descr);
+    }
+
+    /**
+     * Gets the description.
+     *
+     * @param key the key
+     *
+     * @return the description
+     */
+    public synchronized String getDescription(String fullKey) {
+        return descriptionPrefs.get(fullKey);
+    }
+
+    /* Restriction methods */
+
+    /**
+     * Gets the restriction.
+     *
+     * @param key the key
+     *
+     * @return the restriction
+     */
+    public synchronized VSPrefRestriction getRestriction(String fullKey) {
+        return restrictions.get(fullKey);
+    }
+
+    /**
+     * Sets the restriction.
+     *
+     * @param key the key
+     * @param settingRestriction the setting restriction
+     */
+    public synchronized void initRestriction(String key, VSPrefRestriction settingRestriction) {
+        restrictions.put(key, settingRestriction);
+    }
+
+    /* Object methods */
+
+    /**
+     * Object exists.
+     *
+     * @param key the key
+     *
+     * @return true, if successful
+     */
+    public synchronized boolean objectExists(String key) {
+        return null != objectPrefs.get(key);
     }
 
     /**
@@ -213,123 +298,35 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
-     * Object exists.
+     * Sets the object.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setObject(String key, Object val) {
+        objectPrefs.put(key, val);
+    }
+
+    /* Boolean methods */
+
+    /**
+     * Gets the boolean.
      *
      * @param key the key
      *
-     * @return true, if successful
+     * @return the boolean
      */
-    public synchronized boolean objectExists(String key) {
-        return null != objectPrefs.get(key);
+    public boolean getBoolean(String key) {
+        return getBooleanObj(key).booleanValue();
     }
 
     /**
-     * Gets the string.
+     * Gets the boolean key set.
      *
-     * @param key the key
-     *
-     * @return the string
+     * @return the boolean key set
      */
-    public synchronized String getString(String key) {
-        String val = stringPrefs.get(key);
-
-        if (val == null) {
-            System.err.println("Fatal: No such string config value \""
-                               + key + "\"");
-            System.exit(1);
-        }
-
-        return val;
-    }
-
-    /**
-     * Gets the integer obj.
-     *
-     * @param key the key
-     *
-     * @return the integer obj
-     */
-    public synchronized Integer getIntegerObj(String key) {
-        Integer val = integerPrefs.get(key);
-
-        if (val == null) {
-            System.err.println("Fatal: No such integer config value \""
-                               + key + "\"");
-            System.exit(1);
-        }
-
-        return val;
-    }
-
-    /**
-     * Gets the integer.
-     *
-     * @param key the key
-     *
-     * @return the integer
-     */
-    public int getInteger(String key) {
-        return getIntegerObj(key).intValue();
-    }
-
-    /**
-     * Gets the float obj.
-     *
-     * @param key the key
-     *
-     * @return the float obj
-     */
-    public synchronized Float getFloatObj(String key) {
-        Float val = floatPrefs.get(key);
-
-        if (val == null) {
-            System.err.println("Fatal: No such float config value \""
-                               + key + "\"");
-            System.exit(1);
-        }
-
-        return val;
-    }
-
-    /**
-     * Gets the float.
-     *
-     * @param key the key
-     *
-     * @return the float
-     */
-    public float getFloat(String key) {
-        return getFloatObj(key).floatValue();
-    }
-
-    /**
-     * Gets the long obj.
-     *
-     * @param key the key
-     *
-     * @return the long obj
-     */
-    public synchronized Long getLongObj(String key) {
-        Long val = longPrefs.get(key);
-
-        if (val == null) {
-            System.err.println("Fatal: No such long config value \""
-                               + key + "\"");
-            System.exit(1);
-        }
-
-        return val;
-    }
-
-    /**
-     * Gets the long.
-     *
-     * @param key the key
-     *
-     * @return the long
-     */
-    public long getLong(String key) {
-        return getLongObj(key).longValue();
+    public synchronized Set<String> getBooleanKeySet() {
+        return booleanPrefs.keySet();
     }
 
     /**
@@ -346,297 +343,6 @@ public abstract class VSPrefs implements Serializable {
             return new Boolean(false);
 
         return val;
-    }
-
-    /**
-     * Gets the boolean.
-     *
-     * @param key the key
-     *
-     * @return the boolean
-     */
-    public boolean getBoolean(String key) {
-        return getBooleanObj(key).booleanValue();
-    }
-
-    /**
-     * Gets the color.
-     *
-     * @param key the key
-     *
-     * @return the color
-     */
-    public synchronized Color getColor(String key) {
-        Color color = colorPrefs.get(key);
-
-        if (color == null) {
-            System.err.println("Fatal: No such color config value \""
-                               + key + "\"");
-            System.exit(1);
-        }
-
-        return color;
-    }
-
-    /**
-     * Gets the description.
-     *
-     * @param key the key
-     *
-     * @return the description
-     */
-    public synchronized String getDescription(String key) {
-        return descriptionPrefs.get(key);
-    }
-
-    /**
-     * Gets the unit.
-     *
-     * @param key the key
-     *
-     * @return the unit
-     */
-    public synchronized String getUnit(String key) {
-        return units.get(key);
-    }
-
-    /**
-     * Gets the restriction.
-     *
-     * @param key the key
-     *
-     * @return the restriction
-     */
-    public synchronized SettingRestriction getRestriction(String key) {
-        return settingRestrictionPrefs.get(key);
-    }
-
-    /**
-     * Gets the string key set.
-     *
-     * @return the string key set
-     */
-    public synchronized Set<String> getStringKeySet() {
-        return stringPrefs.keySet();
-    }
-
-    /**
-     * Gets the integer key set.
-     *
-     * @return the integer key set
-     */
-    public synchronized Set<String> getIntegerKeySet() {
-        return integerPrefs.keySet();
-    }
-
-    /**
-     * Gets the float key set.
-     *
-     * @return the float key set
-     */
-    public synchronized Set<String> getFloatKeySet() {
-        return floatPrefs.keySet();
-    }
-
-    /**
-     * Gets the long key set.
-     *
-     * @return the long key set
-     */
-    public synchronized Set<String> getLongKeySet() {
-        return longPrefs.keySet();
-    }
-
-    /**
-     * Gets the boolean key set.
-     *
-     * @return the boolean key set
-     */
-    public synchronized Set<String> getBooleanKeySet() {
-        return booleanPrefs.keySet();
-    }
-
-    /**
-     * Gets the color key set.
-     *
-     * @return the color key set
-     */
-    public synchronized Set<String> getColorKeySet() {
-        return colorPrefs.keySet();
-    }
-
-    /**
-     * Sets the object.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setObject(String key, Object val) {
-        objectPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the string.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setString(String key, String val) {
-        stringPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the integer.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setInteger(String key, Integer val) {
-        integerPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the color.
-     *
-     * @param key the key
-     * @param color the color
-     */
-    public synchronized void setColor(String key, Color color) {
-        colorPrefs.put(key, color);
-    }
-
-    /**
-     * Sets the int.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setInt(String key, int val) {
-        integerPrefs.put(key, new Integer(val));
-    }
-
-    /**
-     * Sets the float.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setFloat(String key, float val) {
-        floatPrefs.put(key, new Float(val));
-    }
-
-    /**
-     * Sets the float.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setFloat(String key, Float val) {
-        floatPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the long.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setLong(String key, long val) {
-        longPrefs.put(key, new Long(val));
-    }
-
-    /**
-     * Sets the long.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setLong(String key, Long val) {
-        longPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the boolean.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setBoolean(String key, boolean val) {
-        booleanPrefs.put(key, new Boolean(val));
-    }
-
-    /**
-     * Sets the boolean.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void setBoolean(String key, Boolean val) {
-        booleanPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the string.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void initString(String key, String val) {
-        if (!stringPrefs.containsKey(key))
-            stringPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void initLong(String key, Integer val) {
-        if (!integerPrefs.containsKey(key))
-            integerPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the long.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void initLong(String key, Long val) {
-        if (!longPrefs.containsKey(key))
-            longPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the float.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public synchronized void initFloat(String key, Float val) {
-        if (!floatPrefs.containsKey(key))
-            floatPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the float.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public void initFloat(String key, float val) {
-        initFloat(key, new Float(val));
-    }
-
-    /**
-     * Sets the long if unset.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public void initLong(String key, long val) {
-        initLong(key, new Long(val));
     }
 
     /**
@@ -661,6 +367,68 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
+     * Inits the boolean.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     */
+    public void initBoolean(String key, boolean val, String descr) {
+        initBoolean(key, val);
+        initDescription(BOOLEAN_PREFIX + key, descr);
+    }
+
+    /**
+     * Sets the boolean.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setBoolean(String key, Boolean val) {
+        booleanPrefs.put(key, val);
+    }
+
+    /**
+     * Sets the boolean.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void setBoolean(String key, boolean val) {
+        setBoolean(key, new Boolean(val));
+    }
+
+    /* Color methods */
+
+    /**
+     * Gets the color.
+     *
+     * @param key the key
+     *
+     * @return the color
+     */
+    public synchronized Color getColor(String key) {
+        Color color = colorPrefs.get(key);
+
+        if (color == null) {
+            System.err.println("Fatal: No such color config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return color;
+    }
+
+    /**
+     * Gets the color key set.
+     *
+     * @return the color key set
+     */
+    public synchronized Set<String> getColorKeySet() {
+        return colorPrefs.keySet();
+    }
+
+    /**
      * Inits the color.
      *
      * @param key the key
@@ -672,35 +440,420 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
-     * Sets the description if unset.
+     * Inits the color.
      *
      * @param key the key
+     * @param val the val
      * @param descr the descr
      */
-    public synchronized void initDescription(String key, String descr) {
-        if (descr == null || descriptionPrefs.containsKey(key))
-            return;
-        descriptionPrefs.put(key, descr);
+    public void initColor(String key, Color val, String descr) {
+        initColor(key, val);
+        initDescription(COLOR_PREFIX + key, descr);
     }
 
     /**
-     * Sets the restriction.
+     * Sets the color.
      *
      * @param key the key
-     * @param settingRestriction the setting restriction
+     * @param color the color
      */
-    public synchronized void setRestriction(String key, SettingRestriction settingRestriction) {
-        settingRestrictionPrefs.put(key, settingRestriction);
+    public synchronized void setColor(String key, Color color) {
+        colorPrefs.put(key, color);
+    }
+
+    /* Float methods */
+
+    /**
+     * Gets the float.
+     *
+     * @param key the key
+     *
+     * @return the float
+     */
+    public float getFloat(String key) {
+        return getFloatObj(key).floatValue();
     }
 
     /**
-     * Sets the unit.
+     * Gets the float key set.
+     *
+     * @return the float key set
+     */
+    public synchronized Set<String> getFloatKeySet() {
+        return floatPrefs.keySet();
+    }
+
+    /**
+     * Gets the float obj.
      *
      * @param key the key
+     *
+     * @return the float obj
+     */
+    public synchronized Float getFloatObj(String key) {
+        Float val = floatPrefs.get(key);
+
+        if (val == null) {
+            System.err.println("Fatal: No such float config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return val;
+    }
+
+    /**
+     * Inits the float.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void initFloat(String key, Float val) {
+        if (!floatPrefs.containsKey(key))
+            floatPrefs.put(key, val);
+    }
+
+    /**
+     * Inits the float.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void initFloat(String key, float val) {
+        initFloat(key, new Float(val));
+    }
+
+    /**
+     * Inits the float.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
      * @param unit the unit
      */
-    public synchronized void setUnit(String key, String unit) {
-        units.put(key, unit);
+    public void initFloat(String key, float val, String descr) {
+        initFloat(key, val);
+        initDescription(FLOAT_PREFIX + key, descr);
+    }
+
+    /**
+     * Inits the float plus unit.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param unit the unit
+     */
+    public void initFloat(String key, float val, String descr, String unit) {
+        initFloat(key, val, descr);
+        initUnit(FLOAT_PREFIX + key, unit);
+    }
+
+    /**
+     * Sets the float.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setFloat(String key, Float val) {
+        floatPrefs.put(key, val);
+    }
+
+    /**
+     * Sets the float.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void setFloat(String key, float val) {
+        setFloat(key, new Float(val));
+    }
+
+    /* Integer methods */
+
+    /**
+     * Gets the integer.
+     *
+     * @param key the key
+     *
+     * @return the integer
+     */
+    public int getInteger(String key) {
+        return getIntegerObj(key).intValue();
+    }
+
+    /**
+     * Gets the integer key set.
+     *
+     * @return the integer key set
+     */
+    public synchronized Set<String> getIntegerKeySet() {
+        return integerPrefs.keySet();
+    }
+
+    /**
+     * Gets the integer obj.
+     *
+     * @param key the key
+     *
+     * @return the integer obj
+     */
+    public synchronized Integer getIntegerObj(String key) {
+        Integer val = integerPrefs.get(key);
+
+        if (val == null) {
+            System.err.println("Fatal: No such integer config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return val;
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void initInteger(String key, int val) {
+        if (!integerPrefs.containsKey(key))
+            setInteger(key, new Integer(val));
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     */
+    public void initInteger(String key, int val, String descr) {
+        initInteger(key, val);
+        initDescription(INTEGER_PREFIX + key, descr);
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param r the restriction
+     */
+    public void initInteger(String key, int val, String descr, VSIntegerPrefRestriction r) {
+        initInteger(key, val, descr);
+        initRestriction(INTEGER_PREFIX + key, r);
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param r the restriction
+     */
+    public void initInteger(String key, int val, String descr, VSIntegerPrefRestriction r, String unit) {
+        initInteger(key, val, descr, r);
+        initUnit(INTEGER_PREFIX + key, unit);
+    }
+
+    /**
+     * Inits the integer.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param minValue the min value
+     * @param maxValue the max value
+     */
+    public void initInteger(String key, int val, String descr, int minValue, int maxValue) {
+        initInteger(key, val, descr, new VSIntegerPrefRestriction(minValue, maxValue));
+    }
+
+    /**
+     * Inits the integer plus unit.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param minValue the min value
+     * @param maxValue the max value
+     * @param unit the unit
+     */
+    public void initInteger(String key, int val, String descr, int minValue, int maxValue, String unit) {
+        initInteger(key, val, descr, minValue, maxValue);
+        initUnit(INTEGER_PREFIX + key, unit);
+    }
+
+    /**
+     * Sets the integer.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setInteger(String key, Integer val) {
+        integerPrefs.put(key, val);
+    }
+
+    /**
+     * Sets the integer.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void setInteger(String key, int val) {
+        setInteger(key, new Integer(val));
+    }
+
+    /* Long methods */
+
+    /**
+     * Gets the long.
+     *
+     * @param key the key
+     *
+     * @return the long
+     */
+    public long getLong(String key) {
+        return getLongObj(key).longValue();
+    }
+
+    /**
+     * Gets the long key set.
+     *
+     * @return the long key set
+     */
+    public synchronized Set<String> getLongKeySet() {
+        return longPrefs.keySet();
+    }
+
+    /**
+     * Gets the long obj.
+     *
+     * @param key the key
+     *
+     * @return the long obj
+     */
+    public synchronized Long getLongObj(String key) {
+        Long val = longPrefs.get(key);
+
+        if (val == null) {
+            System.err.println("Fatal: No such long config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return val;
+    }
+
+    /**
+     * Inits the long.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void initLong(String key, Long val) {
+        if (!longPrefs.containsKey(key))
+            longPrefs.put(key, val);
+    }
+
+    /**
+     * Sets the long if unset.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void initLong(String key, long val) {
+        initLong(key, new Long(val));
+    }
+
+    /**
+     * Inits the long.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     */
+    public void initLong(String key, long val, String descr) {
+        initLong(key, val);
+        initDescription(LONG_PREFIX + key, descr);
+    }
+
+    /**
+     * Inits the long unit.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param unit the unit
+     */
+    public void initLong(String key, long val, String descr, String unit) {
+        initLong(key, val, descr);
+        initUnit(LONG_PREFIX + key, unit);
+    }
+
+
+    /**
+     * Sets the long.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void setLong(String key, Long val) {
+        longPrefs.put(key, val);
+    }
+
+    /**
+     * Sets the long.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public void setLong(String key, long val) {
+        setLong(key, new Long(val));
+    }
+
+    /* String methods */
+
+    /**
+     * Gets the string.
+     *
+     * @param key the key
+     *
+     * @return the string
+     */
+    public synchronized String getString(String key) {
+        String val = stringPrefs.get(key);
+
+        if (val == null) {
+            System.err.println("Fatal: No such string config value \""
+                               + key + "\"");
+            System.exit(1);
+        }
+
+        return val;
+    }
+
+    /**
+     * Gets the string key set.
+     *
+     * @return the string key set
+     */
+    public synchronized Set<String> getStringKeySet() {
+        return stringPrefs.keySet();
+    }
+
+    /**
+     * Inits the string.
+     *
+     * @param key the key
+     * @param val the val
+     */
+    public synchronized void initString(String key, String val) {
+        if (!stringPrefs.containsKey(key))
+            stringPrefs.put(key, val);
     }
 
     /**
@@ -716,195 +869,13 @@ public abstract class VSPrefs implements Serializable {
     }
 
     /**
-     * Inits the boolean.
+     * Sets the string.
      *
      * @param key the key
      * @param val the val
-     * @param descr the descr
      */
-    public void initBoolean(String key, boolean val, String descr) {
-        initBoolean(key, val);
-        initDescription(BOOLEAN_PREFIX + key, descr);
-    }
-
-    /**
-     * Inits the boolean unit.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param unit the unit
-     */
-    public void initBooleanInteger(String key, boolean val, String descr, String unit) {
-        initBoolean(key, val, descr);
-        setUnit(BOOLEAN_PREFIX + key, unit);
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param r the r
-     */
-    public void initLong(String key, Integer val, String descr, IntegerSettingRestriction r) {
-        initLong(key, val);
-        initDescription(INTEGER_PREFIX + key, descr);
-        setRestriction(INTEGER_PREFIX + key, r);
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param minValue the min value
-     * @param maxValue the max value
-     */
-    public void initLong(String key, Integer val, String descr, int minValue, int maxValue) {
-        initLong(key, val, descr, new IntegerSettingRestriction(minValue, maxValue));
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param r the r
-     */
-    public void initLong(String key, int val, String descr, IntegerSettingRestriction r) {
-        initLong(key, new Integer(val), descr, r);
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param minValue the min value
-     * @param maxValue the max value
-     */
-    public void initLong(String key, int val, String descr, int minValue, int maxValue) {
-        initLong(key, new Integer(val), descr, minValue, maxValue);
-    }
-
-    /**
-     * Inits the integer unit.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param minValue the min value
-     * @param maxValue the max value
-     * @param unit the unit
-     */
-    public void initLong(String key, int val, String descr, int minValue, int maxValue, String unit) {
-        initLong(key, new Integer(val), descr, minValue, maxValue);
-        setUnit(INTEGER_PREFIX + key, unit);
-    }
-
-    /**
-     * Inits the integer unit.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param minValue the min value
-     * @param maxValue the max value
-     * @param unit the unit
-     */
-    public void initLong(String key, int val, String descr, IntegerSettingRestriction sr, String unit) {
-        initLong(key, new Integer(val), descr, sr);
-        setUnit(INTEGER_PREFIX + key, unit);
-    }
-
-    /**
-     * Inits the long.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void initLong(String key, Long val, String descr) {
-        initLong(key, val);
-        initDescription(LONG_PREFIX + key, descr);
-    }
-
-    /**
-     * Inits the long.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void initLong(String key, long val, String descr) {
-        initLong(key, new Long(val), descr);
-    }
-
-    /**
-     * Inits the long unit.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param unit the unit
-     */
-    public void initLong(String key, long val, String descr, String unit) {
-        initLong(key, new Long(val), descr);
-        setUnit(LONG_PREFIX + key, unit);
-    }
-
-    /**
-     * Inits the float.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void initFloat(String key, Float val, String descr) {
-        initFloat(key, val);
-        initDescription(FLOAT_PREFIX + key, descr);
-    }
-
-    /**
-     * Inits the float.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void initFloat(String key, float val, String descr) {
-        initFloat(key, new Float(val), descr);
-    }
-
-    /**
-     * Inits the float unit.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     * @param unit the unit
-     */
-    public void initFloatInteger(String key, float val, String descr, String unit) {
-        initFloat(key, new Float(val), descr);
-        setUnit(FLOAT_PREFIX + key, unit);
-    }
-
-
-    /**
-     * Inits the color.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void initColor(String key, Color val, String descr) {
-        initColor(key, val);
-        initDescription(COLOR_PREFIX + key, descr);
+    public synchronized void setString(String key, String val) {
+        stringPrefs.put(key, val);
     }
 
     /**
@@ -971,7 +942,7 @@ public abstract class VSPrefs implements Serializable {
         floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
         integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
-        settingRestrictionPrefs = new HashMap<String,SettingRestriction>();
+        restrictions = new HashMap<String,VSPrefRestriction>();
         stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
         units = (HashMap<String,String>) objectInputStream.readObject();
     }
@@ -1019,10 +990,10 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyIntegers(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initLong(key,
-                              getInteger(key), getDescription(INTEGER_PREFIX + key),
-                              (IntegerSettingRestriction) getRestriction(INTEGER_PREFIX + key),
-                              getUnit(INTEGER_PREFIX + key));
+            copyInto.initInteger(key,
+                                 getInteger(key), getDescription(INTEGER_PREFIX + key),
+                                 (VSIntegerPrefRestriction) getRestriction(INTEGER_PREFIX + key),
+                                 getUnit(INTEGER_PREFIX + key));
     }
 
     /**
@@ -1046,9 +1017,9 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyFloats(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initFloatInteger(key, getFloat(key),
-                                      getDescription(FLOAT_PREFIX + key),
-                                      getUnit(FLOAT_PREFIX + key));
+            copyInto.initFloat(key, getFloat(key),
+                               getDescription(FLOAT_PREFIX + key),
+                               getUnit(FLOAT_PREFIX + key));
     }
 
     /**

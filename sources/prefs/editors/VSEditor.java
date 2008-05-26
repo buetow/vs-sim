@@ -309,14 +309,14 @@ public abstract class VSEditor implements ActionListener {
         Integer integer = prefsToEdit.getInteger(key);
         Integer initialSelection[] = { integer };
         JComboBox valComboBox = new JComboBox(initialSelection);
-        VSPrefs.SettingRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
+        VSPrefs.VSPrefRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
 
         int minValue, maxValue;
         if (settingRestriction != null) {
-            VSPrefs.IntegerSettingRestriction integerSettingRestriction =
-                (VSPrefs.IntegerSettingRestriction) settingRestriction;
-            minValue = integerSettingRestriction.getMinValue();
-            maxValue = integerSettingRestriction.getMaxValue();
+            VSPrefs.VSIntegerPrefRestriction integerVSPrefRestriction =
+                (VSPrefs.VSIntegerPrefRestriction) settingRestriction;
+            minValue = integerVSPrefRestriction.getMinValue();
+            maxValue = integerVSPrefRestriction.getMaxValue();
 
         } else {
             minValue = 0;

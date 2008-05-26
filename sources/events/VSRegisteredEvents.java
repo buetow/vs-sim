@@ -51,6 +51,8 @@ public final class VSRegisteredEvents {
         registerEvent("protocols.implementations.ExternalTimeSyncProtocol", "Christians Methode zur externen Sync.", "Christians");
         registerEvent("protocols.implementations.InternalTimeSyncProtocol", "Interne Synchronisation", "Interne Sync.");
         registerEvent("protocols.implementations.PingPongProtocol", "Ping Pong", null);
+        registerEvent("protocols.implementations.OnePhaseCommitProtocol", "Ein-Phasen Commit", "1-Phasen Commit");
+        registerEvent("protocols.implementations.TwoPhaseCommitProtocol", "Zwei-Phasen Commit", "2-Phasen Commit");
 
         /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
         Vector<String> protocolClassnames = getProtocolClassnames();
@@ -63,6 +65,8 @@ public final class VSRegisteredEvents {
                     editableProtocolsClassnames.add(protocolClassname);
             }
         }
+
+        //Collections.sort(editableProtocolsClassnames);
     }
 
     /**
