@@ -16,10 +16,10 @@ public class ProtocolEvent extends VSAbstractEvent {
     /** The protocol classname. */
     private String protocolClassname;
 
-    /** The is client protocol. */
+    /** The event is a client protocol. */
     private boolean isClientProtocol; /* true = client, false = server */
 
-    /** The is protocol activation. */
+    /** The event is a protocol activation. */
     private boolean isProtocolActivation; /* true = activate, false = deactivate */
 
     /* (non-Javadoc)
