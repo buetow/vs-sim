@@ -349,26 +349,11 @@ public abstract class VSEditor implements ActionListener {
     protected VSTupel<String,Component,JTextField> createVectorComponent(String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
-        Vector<Integer> vec = prefsToEdit.getVector(key);
 
+        Vector<Integer> vec = prefsToEdit.getVector(key);
         JTextField valField = new JTextField();
         valField.setBorder(null);
-
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("[");
-
-        synchronized (vec) {
-            for (Integer integer : vec) {
-                buffer.append(integer + ",");
-            }
-        }
-
-        try {
-            valField.setText(vec.toString());
-            //valField.setText(buffer.toString().substring(0, buffer.length()-1)+"]");
-        } catch (StringIndexOutOfBoundsException e) {
-            valField.setText("[]");
-        }
+        valField.setText(vec.toString());
 
         return new VSTupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);

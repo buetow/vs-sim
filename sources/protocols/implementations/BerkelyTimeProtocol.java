@@ -7,9 +7,10 @@ package protocols.implementations;
 import protocols.VSProtocol;
 import core.VSMessage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BerkelyTimeProtocol.
  */
@@ -18,17 +19,18 @@ public class BerkelyTimeProtocol extends VSProtocol {
 
     /* Berkely Server variables */
 
-    /* Integer: Process ID, Long: Local time of the process */
-    /** The process times. */
+    /** Integer: Process ID, Long: Local time of the process */
     private HashMap<Integer,Long> processTimes = new HashMap<Integer,Long>();
-    /* Integer: Process ID, Long: Time of receiving the response from the process */
-    /** The recv times. */
+
+    /** Integer: Process ID, Long: Time of receiving the response from the process */
     private HashMap<Integer,Long> recvTimes = new HashMap<Integer,Long>();
-    /* Integer: Process ID, Long: Calculated process times (using the RTT) */
-    /** The real times rtt. */
+
+    /** Integer: Process ID, Long: Calculated process times (using the RTT) */
     private HashMap<Integer,Long> realTimesRTT = new HashMap<Integer,Long>();
-    /* Time the request/response has started */
-    /** The request time. */
+
+    /** Contains all process IDs of processes which want to justify their time */
+    private ArrayList<Integer> peers;
+    /** Time the request/response has started */
     private long requestTime;
 
     /**
@@ -37,8 +39,11 @@ public class BerkelyTimeProtocol extends VSProtocol {
     public BerkelyTimeProtocol() {
         setClassname(getClass().toString());
 
-        /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
-        initLong("numProcesses", 0, "Anzahl beteilitger Prozesse");
+        /* Those prefs are editable through the VSProtocol VSEditor GUI. */
+        Vector<Integer> vec = new Vector<Integer>();
+        vec.add(2);
+        vec.add(3);
+        initVector("processPIDs", vec, "PIDs beteiliger Prozesse");
     }
 
     /* (non-Javadoc)
@@ -54,12 +59,16 @@ public class BerkelyTimeProtocol extends VSProtocol {
         processTimes.clear();
         recvTimes.clear();
         realTimesRTT.clear();
+        peers.clear();
+        peers.addAll(getVector("processPIDs"));
     }
 
     /* (non-Javadoc)
      * @see protocols.VSProtocol#onClientStart()
      */
     protected void onClientStart() {
+        peers = new ArrayList<Integer>();
+        peers.addAll(getVector("processPIDs"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage(getClassname());
         message.setBoolean("isRequest", true);
@@ -75,13 +84,19 @@ public class BerkelyTimeProtocol extends VSProtocol {
             return;
 
         Integer processID = new Integer(recvMessage.getInteger("processID"));
+
+        if (peers.contains(processID))
+            peers.remove(processID);
+        else
+            return; /* Process has been handled already or is not listed */
+
         Long time = new Long(recvMessage.getLong("time"));
 
         processTimes.put(processID, time);
         recvTimes.put(processID, new Long(process.getTime()));
 
-        /* All processes have comitted the response */
-        if (processTimes.size() == getInteger("numProcesses")) {
+        /* All peers have told their times */
+        if (peers.size() == 0) {
             long avgTime = calculateAverageTime();
             /* Set the local's process time to the new avg reference time */
             process.setTime(avgTime);
@@ -109,7 +124,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
         }
         /* Include the time of the local process */
         sum += process.getTime();
-        return (long) sum / (1 + getInteger("numProcesses"));
+        return (long) sum / (getVector("processPIDs").size() + 1);
     }
 
     /**
