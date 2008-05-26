@@ -55,7 +55,6 @@ public final class VSTools {
      */
     public static Vector<Integer> parseIntegerVector(String string)
     throws exceptions.ParseIntegerVectorException {
-        System.out.println("parse " + string);
         Vector<Integer> vec = new Vector<Integer>();
 
         int index = string.indexOf('[');

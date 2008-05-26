@@ -364,7 +364,8 @@ public abstract class VSEditor implements ActionListener {
         }
 
         try {
-            valField.setText(buffer.toString().substring(0, buffer.length()-1)+"]");
+            valField.setText(vec.toString());
+            //valField.setText(buffer.toString().substring(0, buffer.length()-1)+"]");
         } catch (StringIndexOutOfBoundsException e) {
             valField.setText("[]");
         }
