@@ -47,8 +47,10 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
     protected void onClientReset() {
-        pids.clear();
-        pids.addAll(getVector("pids"));
+        if (pids != null) {
+            pids.clear();
+            pids.addAll(getVector("pids"));
+        }
     }
 
     /* (non-Javadoc)
@@ -58,7 +60,6 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
         if (pids == null) {
             pids = new ArrayList<Integer>();
             pids.addAll(getVector("pids"));
-
         }
 
         if (pids.size() != 0) {
@@ -82,6 +83,8 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
             Integer pid = recvMessage.getIntegerObj("pid");
             if (pids.contains(pid))
                 pids.remove(pid);
+            else
+                return;
 
             logg("ACK von Prozess " + pid + " erhalten!");
 

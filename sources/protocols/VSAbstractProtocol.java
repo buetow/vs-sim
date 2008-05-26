@@ -4,6 +4,8 @@
  */
 package protocols;
 
+import java.util.ArrayList;
+
 import events.internal.*;
 import events.*;
 import core.*;
@@ -22,6 +24,12 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
 
     /** The current protocol object's context is a server. */
     private boolean currentContextIsServer;
+
+    /** The protocol's server schedules */
+    private ArrayList<VSTask> serverSchedules = new ArrayList<VSTask>();
+
+    /** The protocol's client schedules */
+    private ArrayList<VSTask> clientSchedules = new ArrayList<VSTask>();
 
     /**
      * Send a message.
@@ -139,28 +147,47 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * Reset.
      */
     public void reset() {
-        if (isServer) {
-            currentContextIsServer = true;
-            isServer = false;
-            onServerReset();
-        }
+        //if (isServer) {
+        currentContextIsServer = true;
+        isServer = false;
+        onServerReset();
+        serverSchedules.clear();
+        //}
 
-        if (isClient) {
-            currentContextIsServer = false;
-            isClient = false;
-            onClientReset();
-        }
+        //if (isClient) {
+        currentContextIsServer = false;
+        isClient = false;
+        onClientReset();
+        clientSchedules.clear();
+        //}
     }
 
     /**
      * Reschedules the protocol for a new time and runs onClientSchedule or onServerSchedule
      *
-     * @param isClient the is client
+     * @param time The process' local time to run the schedule at.
      */
     protected final void scheduleAt(long time) {
         VSAbstractEvent scheduleEvent = new ProtocolScheduleEvent(this, currentContextIsServer);
         VSTask scheduleTask = new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
+        if (currentContextIsServer)
+            serverSchedules.add(scheduleTask);
+        else
+            clientSchedules.add(scheduleTask);
         process.getSimulationCanvas().getTaskManager().addTask(scheduleTask);
+    }
+
+    /**
+     * Removes all schedules of the protocol (server or client)
+     */
+    protected final void removeSchedules() {
+        if (currentContextIsServer) {
+            process.getSimulationCanvas().getTaskManager().removeAllTasks(serverSchedules);
+            serverSchedules.clear();
+        } else {
+            process.getSimulationCanvas().getTaskManager().removeAllTasks(clientSchedules);
+            clientSchedules.clear();
+        }
     }
 
     /**

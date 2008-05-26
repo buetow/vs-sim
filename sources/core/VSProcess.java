@@ -340,6 +340,15 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
+     * Creates a random percentage 0..100
+     *
+     * @return A random percentage 0..100
+     */
+    public synchronized int getRandomPercentage() {
+        return random.nextInt() % 101;
+    }
+
+    /**
      * Adds the clock offset. This method is used by the task manager.
      *
      * @param add the clock offset to add.

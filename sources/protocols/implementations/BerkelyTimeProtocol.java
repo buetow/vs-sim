@@ -44,7 +44,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
         vec.add(3);
-        initVector("processPIDs", vec, "PIDs beteiliger Prozesse");
+        initVector("pids", vec, "PIDs beteiliger Prozesse");
     }
 
     /* (non-Javadoc)
@@ -61,14 +61,14 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
         recvTimes.clear();
         realTimesRTT.clear();
         peers.clear();
-        peers.addAll(getVector("processPIDs"));
+        peers.addAll(getVector("pids"));
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
     protected void onClientStart() {
-        peers.addAll(getVector("processPIDs"));
+        peers.addAll(getVector("pids"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage();
         message.setBoolean("isRequest", true);
@@ -130,7 +130,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
         }
         /* Include the time of the local process */
         sum += process.getTime();
-        return (long) sum / (getVector("processPIDs").size() + 1);
+        return (long) sum / (getVector("pids").size() + 1);
     }
 
     /**

@@ -257,6 +257,16 @@ public class VSTaskManager {
     }
 
     /**
+     * Removes several tasks
+     *
+     * @param tasks the tasks to remove
+     */
+    public void removeAllTasks(ArrayList<VSTask> tasks) {
+        for (VSTask task : tasks)
+            removeTask(task);
+    }
+
+    /**
      * Removes the tasks of the specified process.
      *
      * @param process the process to remove the tasks of
