@@ -61,6 +61,12 @@ public class DummyProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
@@ -72,6 +78,12 @@ public class DummyProtocol extends VSAbstractProtocol {
      */
     protected void onServerRecv(VSMessage recvMessage) {
         logg("onServerRecv("+recvMessage+")");
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)

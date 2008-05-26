@@ -53,8 +53,28 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void onStart() {
         if (isClient) {
-            onClientStart();
             currentContextIsServer = false;
+            onClientStart();
+        }
+    }
+
+    /**
+     * Runs a client schedule
+     */
+    public final void onClientScheduleStart() {
+        if (isClient) {
+            currentContextIsServer = false;
+            onClientSchedule();
+        }
+    }
+
+    /**
+     * Runs a server schedule
+     */
+    public final void onServerScheduleStart() {
+        if (isServer) {
+            currentContextIsServer = true;
+            onServerSchedule();
         }
     }
 
@@ -79,7 +99,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     }
 
     /**
-     * Checks if is server.
+     * Sets if is server.
      *
      * @param isServer the is server
      */
@@ -88,12 +108,30 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     }
 
     /**
-     * Checks if is client.
+     * Checks if is server.
+     *
+     * @param isServer the is server
+     */
+    public final boolean isServer() {
+        return isServer;
+    }
+
+    /**
+     * Sets if is client.
      *
      * @param isClient the is client
      */
     public final void isClient(boolean isClient) {
         this.isClient = isClient;
+    }
+
+    /**
+     * Checks if is client.
+     *
+     * @param isClient the is client
+     */
+    public final boolean isClient() {
+        return isClient;
     }
 
     /**
@@ -124,6 +162,11 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     abstract protected void onClientReset();
 
     /**
+     * On client schedule.
+     */
+    abstract protected void onClientSchedule();
+
+    /**
      * On client recv.
      *
      * @param message the message
@@ -141,6 +184,11 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * @param message the message
      */
     abstract protected void onServerRecv(VSMessage message);
+
+    /**
+     * On server schedule.
+     */
+    abstract protected void onServerSchedule();
 
     /**
      * Gets the num processes.

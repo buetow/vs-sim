@@ -66,6 +66,12 @@ public class PingPongProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
@@ -85,6 +91,12 @@ public class PingPongProtocol extends VSAbstractProtocol {
         message.setBoolean("fromServer", true);
         message.setInteger("counter", ++serverCounter);
         sendMessage(message);
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)

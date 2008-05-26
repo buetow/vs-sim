@@ -59,10 +59,22 @@ public class BroadcastSturmProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
         sentMessages.clear();
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)

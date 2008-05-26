@@ -107,6 +107,12 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
         }
     }
 
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
     /**
      * Calculate the new average time.
      *
@@ -173,6 +179,12 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
 
             process.setTime(newTime);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)

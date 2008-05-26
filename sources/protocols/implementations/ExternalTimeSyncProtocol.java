@@ -74,6 +74,12 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
@@ -91,6 +97,12 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
         message.setLong("time", process.getTime());
         message.setBoolean("isServerResponse", true);
         sendMessage(message);
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)

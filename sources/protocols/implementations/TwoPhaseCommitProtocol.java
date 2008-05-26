@@ -45,6 +45,12 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     */
+    protected void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     protected void onServerReset() {
@@ -54,6 +60,12 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     protected void onServerRecv(VSMessage recvMessage) {
+    }
+
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    protected void onServerSchedule() {
     }
 
     /* (non-Javadoc)
