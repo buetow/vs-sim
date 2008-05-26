@@ -29,7 +29,8 @@ public class BerkelyTimeProtocol extends VSProtocol {
     private HashMap<Integer,Long> realTimesRTT = new HashMap<Integer,Long>();
 
     /** Contains all process IDs of processes which want to justify their time */
-    private ArrayList<Integer> peers;
+    private ArrayList<Integer> peers = new ArrayList<Integer>();
+
     /** Time the request/response has started */
     private long requestTime;
 
@@ -67,7 +68,6 @@ public class BerkelyTimeProtocol extends VSProtocol {
      * @see protocols.VSProtocol#onClientStart()
      */
     protected void onClientStart() {
-        peers = new ArrayList<Integer>();
         peers.addAll(getVector("processPIDs"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage();
