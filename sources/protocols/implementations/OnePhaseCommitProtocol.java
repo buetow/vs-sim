@@ -34,7 +34,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
         vec.add(3);
 
         initVector("pids", vec, "PIDs beteilitger Prozesse");
-        initLong("timeout", 5000, "Zeit bis erneuerter Anfrage", "ms");
+        initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
     }
 
     /* (non-Javadoc)

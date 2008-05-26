@@ -38,10 +38,10 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
 
         /* Server */
         initVector("pids", vec, "PIDs beteilitger Prozesse");
-        initLong("timeout", 5000, "Zeit bis erneuerter Anfrage", "ms");
+        initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
 
         /* Client */
-        initInteger("ackProb", 100, "Festschreibw'keit", 0, 100, "%");
+        initInteger("ackProb", 50, "Festschreibw'keit", 0, 100, "%");
     }
 
     /* (non-Javadoc)

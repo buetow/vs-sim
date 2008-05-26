@@ -24,8 +24,8 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
         setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. t_min and t_max in milliseconds  */
-        initLong("t_min", 500, "Max. Übetragungszeit", "ms");
-        initLong("t_max", 2000, "Min. Übertragungszeit", "ms");
+        initLong("t_min", 2000, "Max. Übetragungszeit", "ms");
+        initLong("t_max", 500, "Min. Übertragungszeit", "ms");
     }
 
     /* (non-Javadoc)
