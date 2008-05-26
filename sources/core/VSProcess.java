@@ -181,7 +181,7 @@ public class VSProcess extends VSPrefs {
         currentColor = getColor("col.process.default");
 
         /* Make additional process settings editable through GUI */
-        initLongUnit("process.localtime", localTime, prefs.getString("lang.process.time.local"), "ms");
+        initLong("process.localtime", localTime, prefs.getString("lang.process.time.local"), "ms");
 
         crashedColor = getColor("col.process.crashed");
         createRandomCrashTask();

@@ -256,12 +256,12 @@ public abstract class VSEditor implements ActionListener {
      *
      * @return the j panel
      */
-    private JPanel createUnitPanel(Component comp, String key) {
+    private JPanel createUnitPanel(VSPrefs prefsToEdit, Component comp, String fullKey) {
         JPanel unitPanel = new JPanel(new GridBagLayout());
         unitPanel.setBackground(Color.WHITE);
         unitPanel.setBorder(null);
 
-        String unitText = prefs.getUnit(key);
+        String unitText = prefsToEdit.getUnit(fullKey);
         if (unitText == null)
             unitText = "";
 
@@ -327,7 +327,8 @@ public abstract class VSEditor implements ActionListener {
             valComboBox.addItem(new Integer(i));
         valComboBox.setBorder(null);
 
-        return new VSTupel<String,Component,JComboBox>(label, createUnitPanel(valComboBox, fullKey), valComboBox);
+        return new VSTupel<String,Component,JComboBox>(label,
+                createUnitPanel(prefsToEdit, valComboBox, fullKey), valComboBox);
     }
 
     /**
@@ -346,7 +347,8 @@ public abstract class VSEditor implements ActionListener {
         JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
         valField.setBackground(Color.WHITE);
         valField.setBorder(null);
-        return new VSTupel<String,Component,JCheckBox>(label, createUnitPanel(valField, fullKey), valField);
+        return new VSTupel<String,Component,JCheckBox>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
     /**
@@ -371,7 +373,8 @@ public abstract class VSEditor implements ActionListener {
         });
         valField.setText(""+prefsToEdit.getLong(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+        return new VSTupel<String,Component,JTextField>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
     /**
@@ -396,7 +399,8 @@ public abstract class VSEditor implements ActionListener {
         });
         valField.setText(""+prefsToEdit.getFloat(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+        return new VSTupel<String,Component,JTextField>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
     /**
@@ -437,7 +441,8 @@ public abstract class VSEditor implements ActionListener {
             }
         });
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+        return new VSTupel<String,Component,JTextField>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
     /**
@@ -462,7 +467,8 @@ public abstract class VSEditor implements ActionListener {
         });
         valField.setText(prefsToEdit.getString(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label, createUnitPanel(valField, fullKey), valField);
+        return new VSTupel<String,Component,JTextField>(label,
+                createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
     /**

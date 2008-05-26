@@ -592,19 +592,9 @@ public abstract class VSPrefs implements Serializable {
      * @param key the key
      * @param val the val
      */
-    public synchronized void initInteger(String key, Integer val) {
+    public synchronized void initLong(String key, Integer val) {
         if (!integerPrefs.containsKey(key))
             integerPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the integer.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public void initInteger(String key, int val) {
-        initInteger(key, new Integer(val));
     }
 
     /**
@@ -616,16 +606,6 @@ public abstract class VSPrefs implements Serializable {
     public synchronized void initLong(String key, Long val) {
         if (!longPrefs.containsKey(key))
             longPrefs.put(key, val);
-    }
-
-    /**
-     * Inits the long.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public void initLong(String key, int val) {
-        initLong(key, new Long(val));
     }
 
     /**
@@ -655,19 +635,8 @@ public abstract class VSPrefs implements Serializable {
      * @param key the key
      * @param val the val
      */
-    public synchronized void setLongIfUnset(String key, Long val) {
-        if (!longPrefs.containsKey(key))
-            longPrefs.put(key, val);
-    }
-
-    /**
-     * Sets the long if unset.
-     *
-     * @param key the key
-     * @param val the val
-     */
-    public void setLongIfUnset(String key, long val) {
-        setLongIfUnset(key, new Long(val));
+    public void initLong(String key, long val) {
+        initLong(key, new Long(val));
     }
 
     /**
@@ -708,7 +677,7 @@ public abstract class VSPrefs implements Serializable {
      * @param key the key
      * @param descr the descr
      */
-    public synchronized void setDescriptionIfUnset(String key, String descr) {
+    public synchronized void initDescription(String key, String descr) {
         if (descr == null || descriptionPrefs.containsKey(key))
             return;
         descriptionPrefs.put(key, descr);
@@ -743,19 +712,7 @@ public abstract class VSPrefs implements Serializable {
      */
     public void initString(String key, String val, String descr) {
         initString(key, val);
-        setDescriptionIfUnset(STRING_PREFIX + key, descr);
-    }
-
-    /**
-     * Sets the long if unset.
-     *
-     * @param key the key
-     * @param val the val
-     * @param descr the descr
-     */
-    public void setLongIfUnset(String key, long val, String descr) {
-        setLongIfUnset(key, val);
-        setDescriptionIfUnset(LONG_PREFIX + key, descr);
+        initDescription(STRING_PREFIX + key, descr);
     }
 
     /**
@@ -767,7 +724,7 @@ public abstract class VSPrefs implements Serializable {
      */
     public void initBoolean(String key, boolean val, String descr) {
         initBoolean(key, val);
-        setDescriptionIfUnset(BOOLEAN_PREFIX + key, descr);
+        initDescription(BOOLEAN_PREFIX + key, descr);
     }
 
     /**
@@ -778,7 +735,7 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param unit the unit
      */
-    public void initBooleanUnit(String key, boolean val, String descr, String unit) {
+    public void initBooleanInteger(String key, boolean val, String descr, String unit) {
         initBoolean(key, val, descr);
         setUnit(BOOLEAN_PREFIX + key, unit);
     }
@@ -791,9 +748,9 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param r the r
      */
-    public void initInteger(String key, Integer val, String descr, IntegerSettingRestriction r) {
-        initInteger(key, val);
-        setDescriptionIfUnset(INTEGER_PREFIX + key, descr);
+    public void initLong(String key, Integer val, String descr, IntegerSettingRestriction r) {
+        initLong(key, val);
+        initDescription(INTEGER_PREFIX + key, descr);
         setRestriction(INTEGER_PREFIX + key, r);
     }
 
@@ -806,8 +763,8 @@ public abstract class VSPrefs implements Serializable {
      * @param minValue the min value
      * @param maxValue the max value
      */
-    public void initInteger(String key, Integer val, String descr, int minValue, int maxValue) {
-        initInteger(key, val, descr, new IntegerSettingRestriction(minValue, maxValue));
+    public void initLong(String key, Integer val, String descr, int minValue, int maxValue) {
+        initLong(key, val, descr, new IntegerSettingRestriction(minValue, maxValue));
     }
 
     /**
@@ -818,8 +775,8 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param r the r
      */
-    public void initInteger(String key, int val, String descr, IntegerSettingRestriction r) {
-        initInteger(key, new Integer(val), descr, r);
+    public void initLong(String key, int val, String descr, IntegerSettingRestriction r) {
+        initLong(key, new Integer(val), descr, r);
     }
 
     /**
@@ -831,8 +788,8 @@ public abstract class VSPrefs implements Serializable {
      * @param minValue the min value
      * @param maxValue the max value
      */
-    public void initInteger(String key, int val, String descr, int minValue, int maxValue) {
-        initInteger(key, new Integer(val), descr, minValue, maxValue);
+    public void initLong(String key, int val, String descr, int minValue, int maxValue) {
+        initLong(key, new Integer(val), descr, minValue, maxValue);
     }
 
     /**
@@ -845,8 +802,23 @@ public abstract class VSPrefs implements Serializable {
      * @param maxValue the max value
      * @param unit the unit
      */
-    public void initIntegerUnit(String key, int val, String descr, int minValue, int maxValue, String unit) {
-        initInteger(key, new Integer(val), descr, minValue, maxValue);
+    public void initLong(String key, int val, String descr, int minValue, int maxValue, String unit) {
+        initLong(key, new Integer(val), descr, minValue, maxValue);
+        setUnit(INTEGER_PREFIX + key, unit);
+    }
+
+    /**
+     * Inits the integer unit.
+     *
+     * @param key the key
+     * @param val the val
+     * @param descr the descr
+     * @param minValue the min value
+     * @param maxValue the max value
+     * @param unit the unit
+     */
+    public void initLong(String key, int val, String descr, IntegerSettingRestriction sr, String unit) {
+        initLong(key, new Integer(val), descr, sr);
         setUnit(INTEGER_PREFIX + key, unit);
     }
 
@@ -859,7 +831,7 @@ public abstract class VSPrefs implements Serializable {
      */
     public void initLong(String key, Long val, String descr) {
         initLong(key, val);
-        setDescriptionIfUnset(LONG_PREFIX + key, descr);
+        initDescription(LONG_PREFIX + key, descr);
     }
 
     /**
@@ -869,7 +841,7 @@ public abstract class VSPrefs implements Serializable {
      * @param val the val
      * @param descr the descr
      */
-    public void initLong(String key, int val, String descr) {
+    public void initLong(String key, long val, String descr) {
         initLong(key, new Long(val), descr);
     }
 
@@ -881,7 +853,7 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param unit the unit
      */
-    public void initLongUnit(String key, long val, String descr, String unit) {
+    public void initLong(String key, long val, String descr, String unit) {
         initLong(key, new Long(val), descr);
         setUnit(LONG_PREFIX + key, unit);
     }
@@ -895,7 +867,7 @@ public abstract class VSPrefs implements Serializable {
      */
     public void initFloat(String key, Float val, String descr) {
         initFloat(key, val);
-        setDescriptionIfUnset(FLOAT_PREFIX + key, descr);
+        initDescription(FLOAT_PREFIX + key, descr);
     }
 
     /**
@@ -917,7 +889,7 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param unit the unit
      */
-    public void initFloatUnit(String key, float val, String descr, String unit) {
+    public void initFloatInteger(String key, float val, String descr, String unit) {
         initFloat(key, new Float(val), descr);
         setUnit(FLOAT_PREFIX + key, unit);
     }
@@ -932,7 +904,7 @@ public abstract class VSPrefs implements Serializable {
      */
     public void initColor(String key, Color val, String descr) {
         initColor(key, val);
-        setDescriptionIfUnset(COLOR_PREFIX + key, descr);
+        initDescription(COLOR_PREFIX + key, descr);
     }
 
     /**
@@ -1047,8 +1019,10 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyIntegers(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initInteger(key, getInteger(key), getDescription(INTEGER_PREFIX + key),
-                                 (IntegerSettingRestriction) getRestriction(INTEGER_PREFIX + key));
+            copyInto.initLong(key,
+                              getInteger(key), getDescription(INTEGER_PREFIX + key),
+                              (IntegerSettingRestriction) getRestriction(INTEGER_PREFIX + key),
+                              getUnit(INTEGER_PREFIX + key));
     }
 
     /**
@@ -1059,7 +1033,9 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyLongs(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initLong(key, getLong(key), getDescription(LONG_PREFIX + key));
+            copyInto.initLong(key, getLong(key),
+                              getDescription(LONG_PREFIX + key),
+                              getUnit(LONG_PREFIX + key));
     }
 
     /**
@@ -1070,7 +1046,9 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyFloats(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initFloat(key, getFloat(key), getDescription(FLOAT_PREFIX + key));
+            copyInto.initFloatInteger(key, getFloat(key),
+                                      getDescription(FLOAT_PREFIX + key),
+                                      getUnit(FLOAT_PREFIX + key));
     }
 
     /**
@@ -1081,7 +1059,8 @@ public abstract class VSPrefs implements Serializable {
      */
     public void copyStrings(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initString(key, getString(key), getDescription(STRING_PREFIX + key));
+            copyInto.initString(key, getString(key),
+                                getDescription(STRING_PREFIX + key));
     }
 
     /**
@@ -1093,6 +1072,17 @@ public abstract class VSPrefs implements Serializable {
     public void copyColors(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
             copyInto.initColor(key, getColor(key), getDescription(COLOR_PREFIX + key));
+    }
+
+    /**
+     * Copy colors.
+     *
+     * @param copyInto the copy into
+     * @param keys the keys
+     */
+    public void copyBooleans(VSPrefs copyInto, String[] keys) {
+        for (String key : keys)
+            copyInto.initBoolean(key, getBoolean(key), getDescription(BOOLEAN_PREFIX + key));
     }
 
     /* (non-Javadoc)

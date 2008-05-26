@@ -38,7 +38,7 @@ public class BerkelyTimeProtocol extends VSProtocol {
         setClassname(getClass().toString());
 
         /* Those prefs are editable through the VSProtocol VSEditor GUI. t_min and t_max in milliseconds  */
-        setInteger("numProcesses", 0);
+        initLong("numProcesses", 0, "Anzahl beteilitger Prozesse");
     }
 
     /* (non-Javadoc)

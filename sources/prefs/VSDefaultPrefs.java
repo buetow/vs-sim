@@ -150,41 +150,41 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillDefaultIntegers() {
         /* Simulation prefs */
-        initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
-        initIntegerUnit("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
-        initIntegerUnit("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
-        initIntegerUnit("sim.seconds", 15, "Simulationsdauer", 5, 120, "s");
+        initLong("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
+        initLong("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
+        initLong("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
+        initLong("sim.seconds", 15, "Simulationsdauer", 5, 120, "s");
 
         /* Internal prefs */
-        initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);
-        initInteger("keyevent.cancel", KeyEvent.VK_N, null, 0, 100);
-        initInteger("keyevent.close", KeyEvent.VK_C, null, 0, 100);
-        initInteger("keyevent.default", KeyEvent.VK_F, null, 0, 100);
-        initInteger("keyevent.edit", KeyEvent.VK_E, null, 0, 100);
-        initInteger("keyevent.file", KeyEvent.VK_D, null, 0, 100);
-        initInteger("keyevent.new", KeyEvent.VK_N, null, 0, 100);
-        initInteger("keyevent.actualize", KeyEvent.VK_A, null, 0, 100);
-        initInteger("keyevent.takeover", KeyEvent.VK_B, null, 0, 100);
-        initInteger("keyevent.ok", KeyEvent.VK_O, null, 0, 100);
-        initInteger("keyevent.open", KeyEvent.VK_O, null, 0, 100);
-        initInteger("keyevent.pause", KeyEvent.VK_P, null, 0, 100);
-        initInteger("keyevent.prefs", KeyEvent.VK_P, null, 0, 100);
-        initInteger("keyevent.prefs.ext", KeyEvent.VK_E, null, 0, 100);
-        initInteger("keyevent.quit", KeyEvent.VK_B, null, 0, 100);
-        initInteger("keyevent.replay", KeyEvent.VK_R, null, 0, 100);
-        initInteger("keyevent.reset", KeyEvent.VK_R, null, 0, 100);
-        initInteger("keyevent.save", KeyEvent.VK_S, null, 0, 100);
-        initInteger("keyevent.saveas", KeyEvent.VK_V, null, 0, 100);
-        initInteger("keyevent.simulation", KeyEvent.VK_S, null, 0, 100);
-        initInteger("keyevent.start", KeyEvent.VK_S, null, 0, 100);
-        initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
+        initLong("keyevent.about", KeyEvent.VK_A, null, 0, 100);
+        initLong("keyevent.cancel", KeyEvent.VK_N, null, 0, 100);
+        initLong("keyevent.close", KeyEvent.VK_C, null, 0, 100);
+        initLong("keyevent.default", KeyEvent.VK_F, null, 0, 100);
+        initLong("keyevent.edit", KeyEvent.VK_E, null, 0, 100);
+        initLong("keyevent.file", KeyEvent.VK_D, null, 0, 100);
+        initLong("keyevent.new", KeyEvent.VK_N, null, 0, 100);
+        initLong("keyevent.actualize", KeyEvent.VK_A, null, 0, 100);
+        initLong("keyevent.takeover", KeyEvent.VK_B, null, 0, 100);
+        initLong("keyevent.ok", KeyEvent.VK_O, null, 0, 100);
+        initLong("keyevent.open", KeyEvent.VK_O, null, 0, 100);
+        initLong("keyevent.pause", KeyEvent.VK_P, null, 0, 100);
+        initLong("keyevent.prefs", KeyEvent.VK_P, null, 0, 100);
+        initLong("keyevent.prefs.ext", KeyEvent.VK_E, null, 0, 100);
+        initLong("keyevent.quit", KeyEvent.VK_B, null, 0, 100);
+        initLong("keyevent.replay", KeyEvent.VK_R, null, 0, 100);
+        initLong("keyevent.reset", KeyEvent.VK_R, null, 0, 100);
+        initLong("keyevent.save", KeyEvent.VK_S, null, 0, 100);
+        initLong("keyevent.saveas", KeyEvent.VK_V, null, 0, 100);
+        initLong("keyevent.simulation", KeyEvent.VK_S, null, 0, 100);
+        initLong("keyevent.start", KeyEvent.VK_S, null, 0, 100);
+        initLong("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
-        initIntegerUnit("div.window.prefs.xsize", 400, "Einstellungsfenster X-Achse", 550, 3200, "px");
-        initIntegerUnit("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
-        initIntegerUnit("div.window.loggsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
-        initIntegerUnit("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
-        initIntegerUnit("div.window.xsize", 1024, "Hauptfenster X-Achse", 800, 3200, "px");
-        initIntegerUnit("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
+        initLong("div.window.prefs.xsize", 400, "Einstellungsfenster X-Achse", 550, 3200, "px");
+        initLong("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
+        initLong("div.window.loggsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
+        initLong("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
+        initLong("div.window.xsize", 1024, "Hauptfenster X-Achse", 800, 3200, "px");
+        initLong("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
     }
 
     /* (non-Javadoc)
@@ -201,8 +201,8 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillDefaultLongs() {
         /* Simulation prefs */
-        initLongUnit("message.sendingtime.min", 500l, "Minimale Übertragungszeit", "ms");
-        initLongUnit("message.sendingtime.max", 2000l, "Maximale Übertragungszeit", "ms");
+        initLong("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
+        initLong("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
     }
 
     /* (non-Javadoc)
