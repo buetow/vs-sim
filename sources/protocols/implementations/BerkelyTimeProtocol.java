@@ -83,7 +83,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
         if (!recvMessage.getBoolean("isResponse"))
             return;
 
-        Integer processID = new Integer(recvMessage.getInteger("processID"));
+        Integer processID = recvMessage.getIntegerObj("processID");
 
         if (peers.contains(processID))
             peers.remove(processID);

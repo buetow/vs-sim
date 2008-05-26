@@ -13,11 +13,22 @@ import protocols.VSAbstractProtocol;
 public class ProtocolScheduleEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
-    /** The event is a client protocol schedule. */
-    private boolean isClientSchedule; /* true = client, false = server */
+    /** The event is a server protocol schedule. */
+    private boolean isServerSchedule; /* true = server, false = client */
 
     /** The reference to the protocol object to schedule. */
     private VSAbstractProtocol protocol;
+
+    /**
+     * Create a ProtocolScheduleEvent object
+     *
+     * @param protocol the protocol
+     * @param isServerSchedule the event is a client protocol schedule if false, else server schedule
+     */
+    public ProtocolScheduleEvent(VSAbstractProtocol protocol, boolean isServerSchedule) {
+        this.protocol = protocol;
+        this.isServerSchedule = isServerSchedule;
+    }
 
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()
@@ -29,19 +40,19 @@ public class ProtocolScheduleEvent extends VSAbstractEvent {
     /**
      * Checks if is client protocol schedule.
      *
-     * @param isClientSchedule the event is a client protocol schedule if true, else server schedule
+     * @param isServerSchedule the event is a client protocol schedule if false, else server schedule
      */
-    public void isClientSchedule(boolean isClientSchedule) {
-        this.isClientSchedule = isClientSchedule;
+    public void isServerSchedule(boolean isServerSchedule) {
+        this.isServerSchedule = isServerSchedule;
     }
 
     /**
      * Checks if is client protocol.
      *
-     * @return true, if is client protocol schedule, else server protocol schedule
+     * @return false, if is client protocol schedule, else server protocol schedule
      */
-    public boolean isClientSchedule() {
-        return isClientSchedule;
+    public boolean isServerSchedule() {
+        return isServerSchedule;
     }
 
     /**
@@ -66,9 +77,9 @@ public class ProtocolScheduleEvent extends VSAbstractEvent {
      * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
-        if (isClientSchedule)
-            protocol.onClientScheduleStart();
-        else
+        if (isServerSchedule)
             protocol.onServerScheduleStart();
+        else
+            protocol.onClientScheduleStart();
     }
 }

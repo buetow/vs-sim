@@ -59,7 +59,7 @@ public class MessageReceiveEvent extends VSAbstractEvent {
         } else {
             final VSAbstractProtocol protocol = (VSAbstractProtocol) protocolObj;
             logg(buffer.toString());
-            protocol.onMessageRecv(message);
+            protocol.onMessageRecvStart(message);
         }
 
     }

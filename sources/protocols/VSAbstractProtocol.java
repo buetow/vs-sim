@@ -4,6 +4,7 @@
  */
 package protocols;
 
+import events.internal.*;
 import events.*;
 import core.*;
 
@@ -83,7 +84,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      *
      * @param message the message
      */
-    public final void onMessageRecv(VSMessage message) {
+    public final void onMessageRecvStart(VSMessage message) {
         if (isIncorrectProtocol(message))
             return;
 
@@ -149,6 +150,17 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             isClient = false;
             onClientReset();
         }
+    }
+
+    /**
+     * Reschedules the protocol for a new time and runs onClientSchedule or onServerSchedule
+     *
+     * @param isClient the is client
+     */
+    protected final void scheduleAt(long time) {
+        VSAbstractEvent scheduleEvent = new ProtocolScheduleEvent(this, currentContextIsServer);
+        VSTask scheduleTask = new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
+        process.getSimulationCanvas().getTaskManager().addTask(scheduleTask);
     }
 
     /**
