@@ -86,7 +86,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
             logg("ACK von Prozess " + pid + " erhalten!");
 
             if (pids.size() == 0)
-                logg("ACKs von allen beteiligten Prozessen erhalten!");
+                logg("ACKs von allen beteiligten Prozessen erhalten! Festgeschrieben!");
         }
     }
 
@@ -116,6 +116,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
         message.setInteger("pid", process.getProcessID());
         sendMessage(message);
         ackSent = true;
+        logg("Festgeschrieben");
     }
 
     /* (non-Javadoc)
