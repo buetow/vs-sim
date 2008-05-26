@@ -201,8 +201,8 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillDefaultLongs() {
         /* Simulation prefs */
-        initLongUnit("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
-        initLongUnit("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
+        initLongUnit("message.sendingtime.min", 500l, "Minimale Übertragungszeit", "ms");
+        initLongUnit("message.sendingtime.max", 2000l, "Maximale Übertragungszeit", "ms");
     }
 
     /* (non-Javadoc)

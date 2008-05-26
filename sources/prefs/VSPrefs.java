@@ -881,7 +881,7 @@ public abstract class VSPrefs implements Serializable {
      * @param descr the descr
      * @param unit the unit
      */
-    public void initLongUnit(String key, int val, String descr, String unit) {
+    public void initLongUnit(String key, long val, String descr, String unit) {
         initLong(key, new Long(val), descr);
         setUnit(LONG_PREFIX + key, unit);
     }
