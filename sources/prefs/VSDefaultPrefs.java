@@ -64,7 +64,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.event", "Ereignis");
         initString("lang.events", "Ereignisse");
         initString("lang.events.process", "Prozessereignisse");
-        initString("lang.events.protocol", "Protokollereignisse");
+        //initString("lang.events.protocol", "Protokollereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
         initString("lang.logging.active", "Logging");

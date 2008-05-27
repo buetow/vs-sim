@@ -939,8 +939,8 @@ public class VSSimulator extends JPanel {
 
         Vector<String> eventClassnames = VSRegisteredEvents.getNonProtocolClassnames();
 
-        comboBox.setMaximumRowCount(15);
-        comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
+        comboBox.setMaximumRowCount(20);
+        comboBox.addItem("----- " + prefs.getString("lang.events.process") + " -----");
         if (createTaskFlag)
             createTasks.add(null);
 
@@ -951,17 +951,13 @@ public class VSSimulator extends JPanel {
                 createTasks.add(new VSCreateTask(eventClassname));
         }
 
-
-        comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
-        if (createTaskFlag)
-            createTasks.add(null);
-
         String activate = prefs.getString("lang.activate");
         String client = prefs.getString("lang.client");
         String clientRequest = prefs.getString("lang.clientrequest.start");
         String deactivate = prefs.getString("lang.deactivate");
         String server = prefs.getString("lang.server");
         String serverRequest = prefs.getString("lang.serverrequest.start");
+        String protocol = prefs.getString("lang.protocol");
 
         String protocolEventClassname = "events.internal.ProtocolEvent";
         eventClassnames = VSRegisteredEvents.getProtocolClassnames();
@@ -969,6 +965,11 @@ public class VSSimulator extends JPanel {
         for (String eventClassname : eventClassnames) {
             String eventShortname_ = VSRegisteredEvents.getShortnameByClassname(eventClassname);
             String eventShortname = null;
+
+            comboBox.addItem("----- " + eventShortname_ + " " + protocol + " -----");
+            if (createTaskFlag)
+                createTasks.add(null);
+
 
             if (VSRegisteredEvents.isOnServerStartProtocol(eventClassname))
                 eventShortname = eventShortname_ + " " + serverRequest;
