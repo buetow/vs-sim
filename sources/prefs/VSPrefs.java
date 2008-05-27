@@ -49,7 +49,7 @@ public class VSPrefs implements Serializable {
     private HashMap<String,Long> longPrefs;
 
     /** The setting restriction prefs. */
-    private HashMap<String,VSPrefRestriction> restrictions;
+    private HashMap<String,VSPrefsRestriction> restrictions;
 
     /** The description prefs. */
     private HashMap<String,String> descriptionPrefs;
@@ -79,85 +79,6 @@ public class VSPrefs implements Serializable {
     protected long id;
 
     /**
-     * The Class VSPrefRestriction.
-     */
-    public class VSPrefRestriction implements Serializable {
-        private static final long serialVersionUID = 1L;
-    }
-
-    /**
-     * The Class VSIntegerPrefRestriction.
-     */
-    public class VSIntegerPrefRestriction extends VSPrefRestriction {
-        private static final long serialVersionUID = 1L;
-        /** The min value. */
-        private int minValue;
-
-        /** The max value. */
-        private int maxValue;
-
-        /**
-         * Instantiates a new integer setting restriction.
-         *
-         * @param minValue the min value
-         * @param maxValue the max value
-         */
-        public VSIntegerPrefRestriction(int minValue, int maxValue) {
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-        }
-
-        /**
-         * Gets the min value.
-         *
-         * @return the min value
-         */
-        public int getMinValue() {
-            return minValue;
-        }
-
-        /**
-         * Gets the max value.
-         *
-         * @return the max value
-         */
-        public int getMaxValue() {
-            return maxValue;
-        }
-    }
-
-    /**
-     * The Class StringVSPrefRestriction.
-     */
-    public class StringVSPrefRestriction extends VSPrefRestriction {
-        private static final long serialVersionUID = 1L;
-
-        /** The possible selections. */
-        Vector<String> possibleSelections;
-
-        /**
-         * Instantiates a new string setting restriction.
-         *
-         * @param possibleSelections the possible selections
-         */
-        public StringVSPrefRestriction(String [] possibleSelections) {
-            this.possibleSelections = new Vector<String>();
-
-            for (String elem : possibleSelections)
-                this.possibleSelections.add(elem);
-        }
-
-        /**
-         * Gets the possible selections.
-         *
-         * @return the possible selections
-         */
-        public Vector<String> getPossibleSelections() {
-            return possibleSelections;
-        }
-    }
-
-    /**
      * Instantiates a new lang.process.removeprefs.
      */
     public VSPrefs() {
@@ -167,7 +88,7 @@ public class VSPrefs implements Serializable {
         integerPrefs = new HashMap<String,Integer>();
         vectorPrefs = new HashMap<String,Vector<Integer>>();
         longPrefs = new HashMap<String,Long>();
-        restrictions = new HashMap<String,VSPrefRestriction>();
+        restrictions = new HashMap<String,VSPrefsRestriction>();
         stringPrefs = new HashMap<String,String>();
         booleanPrefs = new HashMap<String,Boolean>();
         objectPrefs = new HashMap<String,Object>();
@@ -249,7 +170,7 @@ public class VSPrefs implements Serializable {
      *
      * @return the restriction
      */
-    public synchronized VSPrefRestriction getRestriction(String fullKey) {
+    public synchronized VSPrefsRestriction getRestriction(String fullKey) {
         return restrictions.get(fullKey);
     }
 
@@ -259,7 +180,7 @@ public class VSPrefs implements Serializable {
      * @param key the key
      * @param settingRestriction the setting restriction
      */
-    public synchronized void initRestriction(String key, VSPrefRestriction settingRestriction) {
+    public synchronized void initRestriction(String key, VSPrefsRestriction settingRestriction) {
         restrictions.put(key, settingRestriction);
     }
 
@@ -648,7 +569,7 @@ public class VSPrefs implements Serializable {
      * @param descr the descr
      * @param r the restriction
      */
-    public void initInteger(String key, int val, String descr, VSIntegerPrefRestriction r) {
+    public void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefRestriction r) {
         initInteger(key, val, descr);
         initRestriction(INTEGER_PREFIX + key, r);
     }
@@ -661,7 +582,7 @@ public class VSPrefs implements Serializable {
      * @param descr the descr
      * @param r the restriction
      */
-    public void initInteger(String key, int val, String descr, VSIntegerPrefRestriction r, String unit) {
+    public void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefRestriction r, String unit) {
         initInteger(key, val, descr, r);
         initUnit(INTEGER_PREFIX + key, unit);
     }
@@ -676,7 +597,8 @@ public class VSPrefs implements Serializable {
      * @param maxValue the max value
      */
     public void initInteger(String key, int val, String descr, int minValue, int maxValue) {
-        initInteger(key, val, descr, new VSIntegerPrefRestriction(minValue, maxValue));
+        initInteger(key, val, descr,
+                    new VSPrefsRestriction.VSIntegerPrefRestriction(minValue, maxValue));
     }
 
     /**
@@ -1026,7 +948,7 @@ public class VSPrefs implements Serializable {
         integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
         vectorPrefs = (HashMap<String,Vector<Integer>>) objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
-        restrictions = new HashMap<String,VSPrefRestriction>();
+        restrictions = new HashMap<String,VSPrefsRestriction>();
         stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
         units = (HashMap<String,String>) objectInputStream.readObject();
     }
@@ -1076,7 +998,7 @@ public class VSPrefs implements Serializable {
         for (String key : keys)
             copyInto.initInteger(key,
                                  getInteger(key), getDescription(INTEGER_PREFIX + key),
-                                 (VSIntegerPrefRestriction) getRestriction(INTEGER_PREFIX + key),
+                                 (VSPrefsRestriction.VSIntegerPrefRestriction) getRestriction(INTEGER_PREFIX + key),
                                  getUnit(INTEGER_PREFIX + key));
     }
 

@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.util.*;
 
 import utils.*;
-import prefs.VSPrefs;
+import prefs.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -317,14 +317,14 @@ public abstract class VSAbstractEditor implements ActionListener {
         Integer integer = prefsToEdit.getInteger(key);
         Integer initialSelection[] = { integer };
         JComboBox valComboBox = new JComboBox(initialSelection);
-        VSPrefs.VSPrefRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
+        VSPrefsRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
 
         int minValue, maxValue;
         if (settingRestriction != null) {
-            VSPrefs.VSIntegerPrefRestriction integerVSPrefRestriction =
-                (VSPrefs.VSIntegerPrefRestriction) settingRestriction;
-            minValue = integerVSPrefRestriction.getMinValue();
-            maxValue = integerVSPrefRestriction.getMaxValue();
+            VSPrefsRestriction.VSIntegerPrefRestriction integerVSPrefsRestriction =
+                (VSPrefsRestriction.VSIntegerPrefRestriction) settingRestriction;
+            minValue = integerVSPrefsRestriction.getMinValue();
+            maxValue = integerVSPrefsRestriction.getMaxValue();
 
         } else {
             minValue = 0;
