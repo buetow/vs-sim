@@ -72,7 +72,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      * @return the name
      */
     public String getName() {
-        return VSRegisteredEvents.getName(eventClassname);
+        return VSRegisteredEvents.getNameByClassname(eventClassname);
     }
 
     /**
@@ -91,7 +91,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      */
     public String getShortname() {
         if (eventShortname == null)
-            return VSRegisteredEvents.getShortname(eventClassname);
+            return VSRegisteredEvents.getShortnameByClassname(eventClassname);
 
         return eventShortname;
     }

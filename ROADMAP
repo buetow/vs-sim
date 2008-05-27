@@ -1,5 +1,4 @@
 TODO:
-Server vs Clientvariablen? -> onClientInit und onServerInit -> VSPrefs Objekte Pruefen
 Nicht nur Clientanfragen, auch Serveranfragen erlauben. 
 Im pull down menue die protokolle komplett ordnen, alles was zu einem Protokoll zu tun hat zusammenlegen
 VSSimulatorEditor: DEFAULT Prozesseinsgellungen, DEFAULT Nachrichteneinstellungen

@@ -934,60 +934,52 @@ public class VSSimulator extends JPanel {
 
         addPanel.add(takeoverButton);
 
-        boolean flag = createTasks == null;
-        if (flag) createTasks = new ArrayList<VSCreateTask>();
+        boolean createTaskFlag = createTasks == null;
+        if (createTaskFlag) createTasks = new ArrayList<VSCreateTask>();
 
         Vector<String> eventClassnames = VSRegisteredEvents.getNonProtocolClassnames();
 
         comboBox.setMaximumRowCount(15);
         comboBox.addItem("-- " + prefs.getString("lang.events.process") + " --");
-        if (flag)
+        if (createTaskFlag)
             createTasks.add(null);
 
         for (String eventClassname : eventClassnames) {
-            String eventShortname = VSRegisteredEvents.getShortname(eventClassname);
+            String eventShortname = VSRegisteredEvents.getShortnameByClassname(eventClassname);
             comboBox.addItem(eventShortname);
-            if (flag)
+            if (createTaskFlag)
                 createTasks.add(new VSCreateTask(eventClassname));
         }
 
-        comboBox.addItem("-- " + prefs.getString("lang.requests") + " --");
-        if (flag)
+
+        comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
+        if (createTaskFlag)
             createTasks.add(null);
+
+        String activate = prefs.getString("lang.activate");
+        String client = prefs.getString("lang.client");
         String clientrequest = prefs.getString("lang.clientrequest.start");
+        String deactivate = prefs.getString("lang.deactivate");
+        String protocolEventClassname = "events.internal.ProtocolEvent";
+        String server = prefs.getString("lang.server");
 
         eventClassnames = VSRegisteredEvents.getProtocolClassnames();
+
         for (String eventClassname : eventClassnames) {
-            String eventShortname = VSRegisteredEvents.getShortname(eventClassname)
-                                    + " " + clientrequest;
+            String eventShortname_ = VSRegisteredEvents.getShortnameByClassname(eventClassname);
 
+            String eventShortname = eventShortname_ + " " + clientrequest;
             comboBox.addItem(eventShortname);
-
-            if (flag) {
+            if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(eventClassname);
                 createTask.setShortname(eventShortname);
                 createTask.isClientRequest(true);
                 createTasks.add(createTask);
             }
-        }
 
-        comboBox.addItem("-- " + prefs.getString("lang.events.protocol") + " --");
-        if (flag)
-            createTasks.add(null);
-
-        eventClassnames = VSRegisteredEvents.getProtocolClassnames();
-        String activate = prefs.getString("lang.activate");
-        String deactivate = prefs.getString("lang.deactivate");
-        String client = prefs.getString("lang.client");
-        String server = prefs.getString("lang.server");
-        String protocolEventClassname = "events.internal.ProtocolEvent";
-
-        for (String eventClassname : eventClassnames) {
-            String eventShortname_ = VSRegisteredEvents.getShortname(eventClassname);
-
-            String eventShortname = eventShortname_ + " " + client + " " + activate;
+            eventShortname = eventShortname_ + " " + client + " " + activate;
             comboBox.addItem(eventShortname);
-            if (flag) {
+            if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(true);
@@ -998,7 +990,7 @@ public class VSSimulator extends JPanel {
 
             eventShortname = eventShortname_ + " " + client + " " + deactivate;
             comboBox.addItem(eventShortname);
-            if (flag) {
+            if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(true);
@@ -1009,7 +1001,7 @@ public class VSSimulator extends JPanel {
 
             eventShortname = eventShortname_ + " " + server + " " + activate;
             comboBox.addItem(eventShortname);
-            if (flag) {
+            if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(false);
@@ -1020,7 +1012,7 @@ public class VSSimulator extends JPanel {
 
             eventShortname = eventShortname_ + " " + server + " " + deactivate;
             comboBox.addItem(eventShortname);
-            if (flag) {
+            if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(false);

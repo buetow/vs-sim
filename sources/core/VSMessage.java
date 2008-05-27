@@ -62,7 +62,7 @@ public class VSMessage extends VSPrefs {
      * @return The protocol name of the message.
      */
     public String getName() {
-        return VSRegisteredEvents.getName(getProtocolClassname());
+        return VSRegisteredEvents.getNameByClassname(getProtocolClassname());
     }
 
     /**
@@ -123,7 +123,7 @@ public class VSMessage extends VSPrefs {
         buffer.append("; ");
         buffer.append(prefs.getString("lang.protocol"));
         buffer.append(": ");
-        buffer.append(VSRegisteredEvents.getShortname(getProtocolClassname()));
+        buffer.append(VSRegisteredEvents.getShortnameByClassname(getProtocolClassname()));
 
         return buffer.toString();
     }

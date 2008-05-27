@@ -110,7 +110,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.recovered", "Wiederbelebt");
         initString("lang.remove", "Entfernen");
         initString("lang.replay", "Wiederholen");
-        initString("lang.requests", "Anfragen");
+        //initString("lang.requests", "Anfragen");
         initString("lang.reset", "Reset");
         initString("lang.save", "Speichern");
         initString("lang.saveas", "Speichern unter");

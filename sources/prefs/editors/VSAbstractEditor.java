@@ -667,14 +667,6 @@ public abstract class VSAbstractEditor implements ActionListener {
         fullKeys.addAll(filterOut(prefsToAdd.getBooleanKeySet(), addOnlyThisVariables, VSPrefs.BOOLEAN_PREFIX));
         fullKeys.addAll(filterOut(prefsToAdd.getStringKeySet(), addOnlyThisVariables, VSPrefs.STRING_PREFIX));
 
-        /*
-            for (String key : integerKeys) fullKeys.add(VSPrefs.INTEGER_PREFIX + key);
-            for (String key : vectorKeys) fullKeys.add(VSPrefs.VECTOR_PREFIX + key);
-            for (String key : floatKeys) fullKeys.add(VSPrefs.FLOAT_PREFIX + key);
-            for (String key : longKeys) fullKeys.add(VSPrefs.LONG_PREFIX + key);
-            for (String key : booleanKeys) fullKeys.add(VSPrefs.BOOLEAN_PREFIX + key);
-            for (String key : stringKeys) fullKeys.add(VSPrefs.STRING_PREFIX + key);
-        */
         Collections.sort(fullKeys);
 
         for (String fullKey : fullKeys) {

@@ -87,7 +87,7 @@ public class ProtocolEvent extends VSAbstractEvent {
             protocol.isServer(isProtocolActivation);
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append(VSRegisteredEvents.getShortname(protocolClassname));
+        buffer.append(VSRegisteredEvents.getShortnameByClassname(protocolClassname));
         buffer.append(" ");
         buffer.append(isClientProtocol
                       ? prefs.getString("lang.client") : prefs.getString("lang.server"));

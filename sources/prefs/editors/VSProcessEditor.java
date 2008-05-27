@@ -61,7 +61,7 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
         String serverString = " " + prefs.getString("lang.server");
 
         for (String protocolClassname : editableProtocolsClassnames) {
-            String protocolShortname = VSRegisteredEvents.getShortname(protocolClassname);
+            String protocolShortname = VSRegisteredEvents.getShortnameByClassname(protocolClassname);
             VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
             protocol.onClientInit();
             protocol.onServerInit();

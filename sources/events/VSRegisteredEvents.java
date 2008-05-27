@@ -16,16 +16,20 @@ import utils.*;
 public final class VSRegisteredEvents {
     private static final long serialVersionUID = 1L;
 
-    /** The event classnames. */
-    private static HashMap<String,String> eventClassnames =
+    /** The event classnames by eventnames. */
+    private static HashMap<String,String> eventClassnamesByNames =
         new HashMap<String,String>();
 
-    /** The event shortnames. */
-    private static HashMap<String,String> eventShortnames =
+    /** The event shortnames by classnames. */
+    private static HashMap<String,String> eventShortnamesByClassnames =
         new HashMap<String,String>();
 
-    /** The event names. */
-    private static HashMap<String,String> eventNames =
+    /** The event names by classnames. */
+    private static HashMap<String,String> eventNamesByClassnames =
+        new HashMap<String,String>();
+
+    /** The event classnames by shortnames. */
+    private static HashMap<String,String> eventClassnamesByShortnames =
         new HashMap<String,String>();
 
     /** The editable protocols classnames. */
@@ -128,11 +132,11 @@ public final class VSRegisteredEvents {
      * @return the protocol names
      */
     public static Vector<String> getProtocolNames() {
-        Set<String> set =  eventClassnames.keySet();
+        Set<String> set =  eventClassnamesByNames.keySet();
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassname(eventName).startsWith("protocols.implementations"))
+            if (getClassnameByEventname(eventName).startsWith("protocols.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -146,14 +150,16 @@ public final class VSRegisteredEvents {
      * @return the protocol classnames
      */
     public static Vector<String> getProtocolClassnames() {
-        Set<String> set =  eventNames.keySet();
+        ArrayList<String> shortnames = new ArrayList<String>();
+        shortnames.addAll(eventClassnamesByShortnames.keySet());
+        Collections.sort(shortnames);
         Vector<String> vector = new Vector<String>();
 
-        for (String eventClassname : set)
+        for (String eventShortname : shortnames) {
+            String eventClassname = getClassnameByShortname(eventShortname);
             if (eventClassname.startsWith("protocols.implementations"))
                 vector.add(eventClassname);
-
-        Collections.sort(vector);
+        }
 
         return vector;
     }
@@ -164,11 +170,11 @@ public final class VSRegisteredEvents {
      * @return the non protocol names
      */
     public static Vector<String> getNonProtocolNames() {
-        Set<String> set =  eventClassnames.keySet();
+        Set<String> set =  eventClassnamesByNames.keySet();
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassname(eventName).startsWith("events.implementations"))
+            if (getClassnameByEventname(eventName).startsWith("events.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -182,7 +188,7 @@ public final class VSRegisteredEvents {
      * @return the non protocol classnames
      */
     public static Vector<String> getNonProtocolClassnames() {
-        Set<String> set =  eventNames.keySet();
+        Set<String> set =  eventNamesByClassnames.keySet();
         Vector<String> vector = new Vector<String>();
 
         for (String eventClassname : set)
@@ -201,8 +207,8 @@ public final class VSRegisteredEvents {
      *
      * @return the classname
      */
-    public static String getClassname(String eventName) {
-        return eventClassnames.get(eventName);
+    public static String getClassnameByEventname(String eventName) {
+        return eventClassnamesByNames.get(eventName);
     }
 
     /**
@@ -212,8 +218,8 @@ public final class VSRegisteredEvents {
      *
      * @return the name
      */
-    public static String getName(String eventClassname) {
-        return eventNames.get(eventClassname);
+    public static String getNameByClassname(String eventClassname) {
+        return eventNamesByClassnames.get(eventClassname);
     }
 
     /**
@@ -223,8 +229,19 @@ public final class VSRegisteredEvents {
      *
      * @return the shortname
      */
-    public static String getShortname(String eventClassname) {
-        return eventShortnames.get(eventClassname);
+    public static String getShortnameByClassname(String eventClassname) {
+        return eventShortnamesByClassnames.get(eventClassname);
+    }
+
+    /**
+     * Gets the classname.
+     *
+     * @param eventShortname the event shortname
+     *
+     * @return the shortname
+     */
+    public static String getClassnameByShortname(String eventShortname) {
+        return eventClassnamesByShortnames.get(eventShortname);
     }
 
     /**
@@ -256,7 +273,7 @@ public final class VSRegisteredEvents {
      * @return the lang.process.removeevent
      */
     public static VSAbstractEvent createEventInstanceByName(String eventName, VSProcess process) {
-        return createEventInstanceByClassname(eventClassnames.get(eventName), process);
+        return createEventInstanceByClassname(eventClassnamesByNames.get(eventName), process);
     }
 
     /**
@@ -270,8 +287,9 @@ public final class VSRegisteredEvents {
         if (eventShortname == null)
             eventShortname = eventName;
 
-        eventNames.put(eventClassname, eventName);
-        eventShortnames.put(eventClassname, eventShortname);
-        eventClassnames.put(eventName, eventClassname);
+        eventNamesByClassnames.put(eventClassname, eventName);
+        eventShortnamesByClassnames.put(eventClassname, eventShortname);
+        eventClassnamesByNames.put(eventName, eventClassname);
+        eventClassnamesByShortnames.put(eventShortname, eventClassname);
     }
 }
