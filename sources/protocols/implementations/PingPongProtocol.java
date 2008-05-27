@@ -24,6 +24,7 @@ public class PingPongProtocol extends VSAbstractProtocol {
      * Instantiates a new ping pong protocol.
      */
     public PingPongProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }
 

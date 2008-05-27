@@ -21,6 +21,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
      * Instantiates a new berkely time protocol.
      */
     public BerkelyTimeProtocol() {
+        super(VSAbstractProtocol.HAS_ON_SERVER_START);
         setClassname(getClass().toString());
     }
 
@@ -39,11 +40,10 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /** Time the request/response has started */
     private long requestTime;
 
-
     /* (non-Javadoc)
-     * @see events.VSAbstractProtocol#onClientInit()
+     * @see events.VSAbstractProtocol#onServerInit()
      */
-    public void onClientInit() {
+    public void onServerInit() {
         /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. */
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
@@ -52,9 +52,9 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onClientReset()
+     * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    public void onClientReset() {
+    public void onServerReset() {
         processTimes.clear();
         recvTimes.clear();
         realTimesRTT.clear();
@@ -63,9 +63,9 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onClientStart()
+     * @see protocols.VSAbstractProtocol#onServerStart()
      */
-    public void onClientStart() {
+    public void onServerStart() {
         peers.addAll(getVector("pids"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage();
@@ -74,9 +74,9 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    public void onClientRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a response message, e.g. itself */
         if (!recvMessage.getBoolean("isResponse"))
             return;
@@ -101,14 +101,14 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
             /* Tell all other processes what to do in order to justify their times */
             sendJustifyRequests(avgTime);
             /* Start "clean" next time */
-            onClientReset();
+            onServerReset();
         }
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onClientSchedule()
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    public void onClientSchedule() {
+    public void onServerSchedule() {
     }
 
     /**
@@ -149,21 +149,21 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractProtocol#onServerInit()
+     * @see events.VSAbstractProtocol#onClientInit()
      */
-    public void onServerInit() {
+    public void onClientInit() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onServerReset()
+     * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    public void onServerReset() {
+    public void onClientReset() {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
+     * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    public void onServerRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isRequest")) {
             VSMessage message = new VSMessage();
             message.setInteger("processID", process.getProcessID());
@@ -186,9 +186,9 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    public void onServerSchedule() {
+    public void onClientSchedule() {
     }
 
     /* (non-Javadoc)

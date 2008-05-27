@@ -17,6 +17,7 @@ public class DummyProtocol extends VSAbstractProtocol {
      * Instantiates a new dummy protocol.
      */
     public DummyProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }
 

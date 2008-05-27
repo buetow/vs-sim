@@ -487,7 +487,7 @@ public class VSSimulator extends JPanel {
 
         /* Those values are for ProtocolClient onStart events */
         /** The is client request. */
-        private boolean isClientRequest;
+        private boolean isRequest;
 
         /**
          * Instantiates a new lang.process.removecreate task.
@@ -534,10 +534,10 @@ public class VSSimulator extends JPanel {
         /**
          * Checks if is client request.
          *
-         * @param isClientRequest the is client request
+         * @param isRequest the is client request
          */
-        public void isClientRequest(boolean isClientRequest) {
-            this.isClientRequest = isClientRequest;
+        public void isRequest(boolean isRequest) {
+            this.isRequest = isRequest;
         }
 
         /**
@@ -570,7 +570,7 @@ public class VSSimulator extends JPanel {
         public VSTask createTask(VSProcess process, long time, boolean localTimedTask) {
             VSAbstractEvent event = null;
 
-            if (isClientRequest) {
+            if (isRequest) {
                 event = process.getProtocolObject(eventClassname);
 
             } else {
@@ -958,22 +958,28 @@ public class VSSimulator extends JPanel {
 
         String activate = prefs.getString("lang.activate");
         String client = prefs.getString("lang.client");
-        String clientrequest = prefs.getString("lang.clientrequest.start");
+        String clientRequest = prefs.getString("lang.clientrequest.start");
         String deactivate = prefs.getString("lang.deactivate");
-        String protocolEventClassname = "events.internal.ProtocolEvent";
         String server = prefs.getString("lang.server");
+        String serverRequest = prefs.getString("lang.serverrequest.start");
 
+        String protocolEventClassname = "events.internal.ProtocolEvent";
         eventClassnames = VSRegisteredEvents.getProtocolClassnames();
 
         for (String eventClassname : eventClassnames) {
             String eventShortname_ = VSRegisteredEvents.getShortnameByClassname(eventClassname);
+            String eventShortname = null;
 
-            String eventShortname = eventShortname_ + " " + clientrequest;
+            if (VSRegisteredEvents.isOnServerStartProtocol(eventClassname))
+                eventShortname = eventShortname_ + " " + serverRequest;
+            else
+                eventShortname = eventShortname_ + " " + clientRequest;
+
             comboBox.addItem(eventShortname);
             if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(eventClassname);
                 createTask.setShortname(eventShortname);
-                createTask.isClientRequest(true);
+                createTask.isRequest(true);
                 createTasks.add(createTask);
             }
 

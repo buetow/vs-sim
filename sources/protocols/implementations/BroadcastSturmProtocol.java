@@ -26,6 +26,7 @@ public class BroadcastSturmProtocol extends VSAbstractProtocol {
      * Instantiates a new broadcast sturm protocol.
      */
     public BroadcastSturmProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
         sentMessages = new ArrayList<VSMessage>();
     }

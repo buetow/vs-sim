@@ -24,6 +24,7 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
      * Instantiates a new external time sync protocol.
      */
     public ExternalTimeSyncProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }
 

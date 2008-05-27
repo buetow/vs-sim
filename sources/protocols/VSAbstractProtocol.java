@@ -15,6 +15,11 @@ import core.*;
  */
 abstract public class VSAbstractProtocol extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
+    protected static final boolean HAS_ON_SERVER_START = true;
+    protected static final boolean HAS_ON_CLIENT_START = false;
+
+    /** True, if onServerStart is used, false if onClientStart is used */
+    private boolean hasOnServerStart;
 
     /** The protocol object is a server. */
     private boolean isServer;
@@ -31,7 +36,8 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /** The protocol's client schedules */
     private ArrayList<VSTask> clientSchedules = new ArrayList<VSTask>();
 
-    public VSAbstractProtocol() {
+    public VSAbstractProtocol(boolean hasOnServerStart) {
+        this.hasOnServerStart = hasOnServerStart;
     }
 
     /**
@@ -64,9 +70,16 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * @see events.VSAbstractEvent#onStart()
      */
     public final void onStart() {
-        if (isClient) {
-            currentContextIsServer(false);
-            onClientStart();
+        if (hasOnServerStart) {
+            if (isServer) {
+                currentContextIsServer(true);
+                onServerStart();
+            }
+        } else {
+            if (isClient) {
+                currentContextIsServer(false);
+                onClientStart();
+            }
         }
     }
 
@@ -133,6 +146,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void currentContextIsServer(boolean currentContextIsServer) {
         this.currentContextIsServer = currentContextIsServer;
+    }
+
+    /**
+     * Checks how the protocol will start
+     *
+     * @return true, if this protocol uses onServerStart instead of onClientStart
+     */
+    public final boolean hasOnServerStart() {
+        return hasOnServerStart;
     }
 
     /**
@@ -226,7 +248,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /**
      * On client start.
      */
-    abstract public void onClientStart();
+    public void onClientStart() { };
 
     /**
      * On client reset.
@@ -249,6 +271,11 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * On server init.
      */
     abstract public void onServerInit();
+
+    /**
+     * On server start.
+     */
+    public void onServerStart() { };
 
     /**
      * On server reset.

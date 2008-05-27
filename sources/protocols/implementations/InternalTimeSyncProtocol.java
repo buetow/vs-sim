@@ -21,8 +21,8 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
      * Instantiates a new internal time sync protocol.
      */
     public InternalTimeSyncProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
-
     }
 
     /* (non-Javadoc)

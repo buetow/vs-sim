@@ -42,6 +42,9 @@ public final class VSRegisteredEvents {
     private static HashMap<String,ArrayList<String>> serverVariables =
         new HashMap<String,ArrayList<String>>();
 
+    private static HashMap<String,Boolean> isOnServerStartProtocol =
+        new HashMap<String,Boolean>();
+
     /** The prefs. */
     private static VSPrefs prefs;
 
@@ -95,6 +98,9 @@ public final class VSRegisteredEvents {
                     variables.addAll(clientProtocol.getAllFullKeys());
                     clientVariables.put(protocolClassname, variables);
                 }
+
+                if (serverProtocol.hasOnServerStart())
+                    isOnServerStartProtocol.put(protocolClassname, new Boolean(true));
             }
         }
     }
@@ -242,6 +248,20 @@ public final class VSRegisteredEvents {
      */
     public static String getClassnameByShortname(String eventShortname) {
         return eventClassnamesByShortnames.get(eventShortname);
+    }
+
+    /**
+     * Checks if the protocol uses onServerStart or onClientStart
+     *
+     * @param protocolClassname the protocol's classname
+     *
+     * @return true if onServerStart, false if onClientStart
+     */
+    public static boolean isOnServerStartProtocol(String protocolClassname) {
+        if (isOnServerStartProtocol.containsKey(protocolClassname))
+            return isOnServerStartProtocol.get(protocolClassname).booleanValue();
+
+        return false;
     }
 
     /**

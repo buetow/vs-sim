@@ -1,7 +1,7 @@
 TODO:
-Nicht nur Clientanfragen, auch Serveranfragen erlauben. 
 VSSimulatorEditor: DEFAULT Prozesseinsgellungen, DEFAULT Nachrichteneinstellungen
 
+Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
 Periodische Tasks anlegen koennen
 Ganze simulationseinstellungen abspeichern/laden koennen
 	TaskManager + Tasks serialisierbar machen

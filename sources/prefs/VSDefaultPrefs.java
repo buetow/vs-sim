@@ -51,6 +51,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.cancel", "Abbrechen");
         initString("lang.client", "Client");
         initString("lang.clientrequest.start", "Clientanfrage starten");
+        initString("lang.serverrequest.start", "Serveranfrage starten");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
