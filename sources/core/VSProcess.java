@@ -326,7 +326,6 @@ public class VSProcess extends VSPrefs {
             if (randomCrashTask != null)
                 taskManager.removeTask(randomCrashTask);
 
-
             if (crashTime >= getGlobalTime())  {
                 VSAbstractEvent event = new ProcessCrashEvent();
                 //event.init(this);
@@ -588,7 +587,7 @@ public class VSProcess extends VSPrefs {
         int percentage = (int) ((getInteger("message.prob.outage") +
                                  receiverProcess.getInteger("message.prob.outage")) / 2);
         /* Check if the message will have an outage or not */
-        if (getRandomPercentage() <= percentage) {
+        if (getRandomPercentage() < percentage) {
             /* Calculate the random outage time! */
             final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
             return outageTime;
@@ -605,7 +604,7 @@ public class VSProcess extends VSPrefs {
      */
     private long getARandomCrashTime() {
         /* Check if the process will crash or not */
-        if (random.nextInt(100) <= getInteger("process.prob.crash")) {
+        if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
             final long crashTime =  random.nextLong(simulationCanvas.getUntilTime()+1) % simulationCanvas.getUntilTime();
             return crashTime;
