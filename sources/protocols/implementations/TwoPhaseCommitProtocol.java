@@ -30,30 +30,24 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
      */
     public TwoPhaseCommitProtocol() {
         setClassname(getClass().toString());
+    }
 
-        /* Can be changed via GUI variables editor of each process */
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onClientInit()
+     */
+    public void onClientInit() {
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
         vec.add(3);
 
-        /* Server */
         initVector("pids", vec, "PIDs beteilitger Prozesse");
         initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
-
-        /* Client */
-        initInteger("ackProb", 50, "Festschreibw'keit", 0, 100, "%");
-    }
-
-    /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
-     */
-    protected void onInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
         if (votePids != null) {
             voteResult = true;
             votePids.clear();
@@ -66,7 +60,7 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         if (votePids == null) {
             voteResult = true;
             votePids = new ArrayList<Integer>();
@@ -97,7 +91,7 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         if (votePids.size() != 0 && recvMessage.getBoolean("isVote")) {
             Integer pid = recvMessage.getIntegerObj("pid");
             if (votePids.contains(pid))
@@ -136,7 +130,7 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
         onClientStart();
     }
 
@@ -145,16 +139,23 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     private boolean myVote;
 
     /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
+        initInteger("ackProb", 50, "Festschreibw'keit", 0, 100, "%");
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
         voteSent = false;
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("wantVote")) {
             if (!voteSent) {
                 voteSent = true;
@@ -183,6 +184,6 @@ public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 }

@@ -28,21 +28,21 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
+     * @see events.VSAbstractProtocol#onClientInit()
      */
-    protected void onInit() {
+    public void onClientInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         requestTime = process.getTime();
         waitingForResponse = true;
 
@@ -55,7 +55,7 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("isServerResponse"))
             return;
 
@@ -76,19 +76,25 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         if (!recvMessage.getBoolean("isClientRequest"))
             return;
 
@@ -102,7 +108,7 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)

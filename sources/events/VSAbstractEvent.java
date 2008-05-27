@@ -14,10 +14,10 @@ abstract public class VSAbstractEvent extends VSPrefs {
     private static final long serialVersionUID = 1L;
 
     /** The prefs. */
-    protected VSPrefs prefs;
+    public VSPrefs prefs;
 
     /** The process. */
-    protected VSProcess process;
+    public VSProcess process;
 
     /** The event shortname. */
     private String eventShortname;
@@ -26,7 +26,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     private String eventClassname;
 
     /**
-     * Inits the.
+     * Inits the event.
      *
      * @param process the process
      */
@@ -34,6 +34,14 @@ abstract public class VSAbstractEvent extends VSPrefs {
         this.process = process;
         this.prefs = process.getPrefs();
 
+        init();
+    }
+
+    /**
+     * Inits the event.
+     *
+     */
+    public void init() {
         onInit();
     }
 
@@ -42,7 +50,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      *
      * @param eventClassname the new classname
      */
-    protected final void setClassname(String eventClassname) {
+    public final void setClassname(String eventClassname) {
         if (eventClassname.startsWith("class "))
             eventClassname = eventClassname.substring(6);
 
@@ -120,7 +128,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     /**
      * On init.
      */
-    abstract protected void onInit();
+    abstract public void onInit();
 
     /**
      * On start.

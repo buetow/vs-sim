@@ -634,33 +634,47 @@ public abstract class VSAbstractEditor implements ActionListener {
         editTable.fireTableDataChanged();
     }
 
+    private ArrayList<String> filterOut(Set<String> set, ArrayList<String> filter, String prefix) {
+        ArrayList<String> ret = new ArrayList<String>();
+
+        for (String key : set) {
+            String fullKey = prefix + key;
+            if (filter.contains(fullKey))
+                ret.add(fullKey);
+        }
+
+        return ret;
+    }
+
     /**
      * Adds the to editor.
      *
      * @param label the label
      * @param prefsKey the prefs key
      * @param prefsToAdd the prefs to add
+     * @param addOnlyThisVariables only add variables which are in this list
      */
-    protected void addToEditor(String label, String prefsKey, VSPrefs prefsToAdd) {
+    protected void addToEditor(String label, String prefsKey, VSPrefs prefsToAdd, ArrayList<String> addOnlyThisVariables) {
         addSeparator(label);
         prefsKey = "(" + prefsKey + ")";
 
         ArrayList<String> fullKeys = new ArrayList<String>();
 
-        Set<String> integerKeys = prefsToAdd.getIntegerKeySet();
-        Set<String> vectorKeys = prefsToAdd.getVectorKeySet();
-        Set<String> floatKeys = prefsToAdd.getFloatKeySet();
-        Set<String> longKeys = prefsToAdd.getLongKeySet();
-        Set<String> booleanKeys = prefsToAdd.getBooleanKeySet();
-        Set<String> stringKeys = prefsToAdd.getStringKeySet();
+        fullKeys.addAll(filterOut(prefsToAdd.getIntegerKeySet(), addOnlyThisVariables, VSPrefs.INTEGER_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getVectorKeySet(), addOnlyThisVariables, VSPrefs.VECTOR_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getFloatKeySet(), addOnlyThisVariables, VSPrefs.FLOAT_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getLongKeySet(), addOnlyThisVariables, VSPrefs.LONG_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getBooleanKeySet(), addOnlyThisVariables, VSPrefs.BOOLEAN_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getStringKeySet(), addOnlyThisVariables, VSPrefs.STRING_PREFIX));
 
-        for (String key : integerKeys) fullKeys.add(VSPrefs.INTEGER_PREFIX + key);
-        for (String key : vectorKeys) fullKeys.add(VSPrefs.VECTOR_PREFIX + key);
-        for (String key : floatKeys) fullKeys.add(VSPrefs.FLOAT_PREFIX + key);
-        for (String key : longKeys) fullKeys.add(VSPrefs.LONG_PREFIX + key);
-        for (String key : booleanKeys) fullKeys.add(VSPrefs.BOOLEAN_PREFIX + key);
-        for (String key : stringKeys) fullKeys.add(VSPrefs.STRING_PREFIX + key);
-
+        /*
+            for (String key : integerKeys) fullKeys.add(VSPrefs.INTEGER_PREFIX + key);
+            for (String key : vectorKeys) fullKeys.add(VSPrefs.VECTOR_PREFIX + key);
+            for (String key : floatKeys) fullKeys.add(VSPrefs.FLOAT_PREFIX + key);
+            for (String key : longKeys) fullKeys.add(VSPrefs.LONG_PREFIX + key);
+            for (String key : booleanKeys) fullKeys.add(VSPrefs.BOOLEAN_PREFIX + key);
+            for (String key : stringKeys) fullKeys.add(VSPrefs.STRING_PREFIX + key);
+        */
         Collections.sort(fullKeys);
 
         for (String fullKey : fullKeys) {

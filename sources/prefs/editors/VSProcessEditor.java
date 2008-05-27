@@ -13,7 +13,6 @@ import protocols.*;
 import events.*;
 import prefs.VSPrefs;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VSProcessEditor.
  */
@@ -57,11 +56,23 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
         ArrayList<String> editableProtocolsClassnames =
             VSRegisteredEvents.getEditableProtocolsClassnames();
 
-        String protocolString = " " + prefs.getString("lang.protocol");
+        //String protocolString = " " + prefs.getString("lang.protocol");
+        String clientString = " " + prefs.getString("lang.client");
+        String serverString = " " + prefs.getString("lang.server");
+
         for (String protocolClassname : editableProtocolsClassnames) {
             String protocolShortname = VSRegisteredEvents.getShortname(protocolClassname);
             VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
-            addToEditor(protocolShortname + protocolString, protocolShortname, protocol);
+            protocol.onClientInit();
+            protocol.onServerInit();
+
+            ArrayList<String> clientVariables = VSRegisteredEvents.getProtocolClientVariables(protocolClassname);
+            if (clientVariables != null)
+                addToEditor(protocolShortname + clientString, protocolShortname, protocol, clientVariables);
+
+            ArrayList<String> serverVariables = VSRegisteredEvents.getProtocolServerVariables(protocolClassname);
+            if (serverVariables != null)
+                addToEditor(protocolShortname + serverString, protocolShortname, protocol, serverVariables);
         }
     }
 

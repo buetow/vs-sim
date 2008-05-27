@@ -17,7 +17,12 @@ import java.util.Vector;
 public class BerkelyTimeProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
-    /* Berkely Server variables */
+    /**
+     * Instantiates a new berkely time protocol.
+     */
+    public BerkelyTimeProtocol() {
+        setClassname(getClass().toString());
+    }
 
     /** Integer: Process ID, Long: Local time of the process */
     private HashMap<Integer,Long> processTimes = new HashMap<Integer,Long>();
@@ -34,12 +39,11 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /** Time the request/response has started */
     private long requestTime;
 
-    /**
-     * Instantiates a new berkely time protocol.
-     */
-    public BerkelyTimeProtocol() {
-        setClassname(getClass().toString());
 
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onClientInit()
+     */
+    public void onClientInit() {
         /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. */
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
@@ -48,15 +52,9 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
-     */
-    protected void onInit() {
-    }
-
-    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
         processTimes.clear();
         recvTimes.clear();
         realTimesRTT.clear();
@@ -67,7 +65,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         peers.addAll(getVector("pids"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage();
@@ -78,7 +76,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a response message, e.g. itself */
         if (!recvMessage.getBoolean("isResponse"))
             return;
@@ -110,7 +108,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
     }
 
     /**
@@ -151,15 +149,21 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
+    }
+
+    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isRequest")) {
             VSMessage message = new VSMessage();
             message.setInteger("processID", process.getProcessID());
@@ -184,7 +188,7 @@ public class BerkelyTimeProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)

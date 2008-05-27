@@ -23,27 +23,27 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     public InternalTimeSyncProtocol() {
         setClassname(getClass().toString());
 
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onClientInit()
+     */
+    public void onClientInit() {
         /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. t_min and t_max in milliseconds  */
         initLong("t_min", 2000, "Max. Übetragungszeit", "ms");
         initLong("t_max", 500, "Min. Übertragungszeit", "ms");
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
-     */
-    protected void onInit() {
-    }
-
-    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         waitingForResponse = true;
 
         /* Multicast message to all processes */
@@ -55,7 +55,7 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a response message, e.g. itself */
         if (!recvMessage.getBoolean("isServerResponse"))
             return;
@@ -80,19 +80,25 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         /* Ignore all protocol messages which are not a request message, e.g. itself */
         if (!recvMessage.getBoolean("isClientRequest"))
             return;
@@ -107,7 +113,7 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)

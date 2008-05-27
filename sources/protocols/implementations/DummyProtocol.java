@@ -7,7 +7,6 @@ package protocols.implementations;
 import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DummyProtocol.
  */
@@ -22,22 +21,22 @@ public class DummyProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
+     * @see events.VSAbstractProtocol#onClientInit()
      */
-    protected void onInit() {
+    public void onClientInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
         logg("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         logg("onClientStart()");
 
         VSMessage message = new VSMessage();
@@ -51,7 +50,7 @@ public class DummyProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         logg("onClientRecv("+recvMessage+")");
 
         String s = recvMessage.getString("Greeting");
@@ -63,27 +62,33 @@ public class DummyProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
         logg("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         logg("onServerRecv("+recvMessage+")");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)

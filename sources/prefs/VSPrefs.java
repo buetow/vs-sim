@@ -12,7 +12,6 @@ import java.util.*;
  * The Class VSPrefs.
  */
 public class VSPrefs implements Serializable {
-
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";
 
@@ -1234,5 +1233,44 @@ public class VSPrefs implements Serializable {
             return false;
 
         return true;
+    }
+
+    /**
+     * Return all full keys
+     *
+     * @return Allf ull keys
+     */
+    public ArrayList<String> getAllFullKeys() {
+        ArrayList<String> allKeys = new ArrayList<String>();
+
+        Set<String> set = null;
+
+        set = getIntegerKeySet();
+        for (String key : set)
+            allKeys.add(INTEGER_PREFIX + key);
+
+        set = getVectorKeySet();
+        for (String key : set)
+            allKeys.add(VECTOR_PREFIX + key);
+
+        set = getLongKeySet();
+        for (String key : set)
+            allKeys.add(LONG_PREFIX + key);
+
+        set = getFloatKeySet();
+        for (String key : set)
+            allKeys.add(FLOAT_PREFIX + key);
+
+        set = getBooleanKeySet();
+        for (String key : set)
+            allKeys.add(BOOLEAN_PREFIX + key);
+
+        set = getStringKeySet();
+        for (String key : set)
+            allKeys.add(STRING_PREFIX + key);
+
+        Collections.sort(allKeys);
+
+        return allKeys;
     }
 }

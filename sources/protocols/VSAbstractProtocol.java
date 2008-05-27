@@ -31,12 +31,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /** The protocol's client schedules */
     private ArrayList<VSTask> clientSchedules = new ArrayList<VSTask>();
 
+    public VSAbstractProtocol() {
+    }
+
     /**
      * Send a message.
      *
      * @param message the message to send
      */
-    protected void sendMessage(VSMessage message) {
+    public void sendMessage(VSMessage message) {
         if (process == null)
             return;
 
@@ -62,8 +65,23 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void onStart() {
         if (isClient) {
-            currentContextIsServer = false;
+            currentContextIsServer(false);
             onClientStart();
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractEvent#onInit()
+     */
+    public final void onInit() {
+        if (isClient) {
+            currentContextIsServer(false);
+            onClientInit();
+        }
+
+        if (isServer) {
+            currentContextIsServer(true);
+            onServerInit();
         }
     }
 
@@ -72,17 +90,18 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void onClientScheduleStart() {
         if (isClient) {
-            currentContextIsServer = false;
+            currentContextIsServer(false);
             onClientSchedule();
         }
     }
+
 
     /**
      * Runs a server schedule
      */
     public final void onServerScheduleStart() {
         if (isServer) {
-            currentContextIsServer = true;
+            currentContextIsServer(true);
             onServerSchedule();
         }
     }
@@ -97,14 +116,23 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             return;
 
         if (isServer) {
-            currentContextIsServer = true;
+            currentContextIsServer(true);
             onServerRecv(message);
         }
 
         if (isClient) {
-            currentContextIsServer = false;
+            currentContextIsServer(false);
             onClientRecv(message);
         }
+    }
+
+    /**
+     * Sets if the current context is server.
+     *
+     * @param currentContextIsServer the context.
+     */
+    public final void currentContextIsServer(boolean currentContextIsServer) {
+        this.currentContextIsServer = currentContextIsServer;
     }
 
     /**
@@ -148,14 +176,14 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public void reset() {
         //if (isServer) {
-        currentContextIsServer = true;
+        currentContextIsServer(true);
         isServer = false;
         onServerReset();
         serverSchedules.clear();
         //}
 
         //if (isClient) {
-        currentContextIsServer = false;
+        currentContextIsServer(false);
         isClient = false;
         onClientReset();
         clientSchedules.clear();
@@ -167,7 +195,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      *
      * @param time The process' local time to run the schedule at.
      */
-    protected final void scheduleAt(long time) {
+    public final void scheduleAt(long time) {
         VSAbstractEvent scheduleEvent = new ProtocolScheduleEvent(this, currentContextIsServer);
         VSTask scheduleTask = new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
         if (currentContextIsServer)
@@ -180,7 +208,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /**
      * Removes all schedules of the protocol (server or client)
      */
-    protected final void removeSchedules() {
+    public final void removeSchedules() {
         if (currentContextIsServer) {
             process.getSimulationCanvas().getTaskManager().removeAllTasks(serverSchedules);
             serverSchedules.clear();
@@ -191,50 +219,60 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     }
 
     /**
+     * On client init.
+     */
+    abstract public void onClientInit();
+
+    /**
      * On client start.
      */
-    abstract protected void onClientStart();
+    abstract public void onClientStart();
 
     /**
      * On client reset.
      */
-    abstract protected void onClientReset();
+    abstract public void onClientReset();
 
     /**
      * On client schedule.
      */
-    abstract protected void onClientSchedule();
+    abstract public void onClientSchedule();
 
     /**
      * On client recv.
      *
      * @param message the message
      */
-    abstract protected void onClientRecv(VSMessage message);
+    abstract public void onClientRecv(VSMessage message);
+
+    /**
+     * On server init.
+     */
+    abstract public void onServerInit();
 
     /**
      * On server reset.
      */
-    abstract protected void onServerReset();
+    abstract public void onServerReset();
 
     /**
      * On server recv.
      *
      * @param message the message
      */
-    abstract protected void onServerRecv(VSMessage message);
+    abstract public void onServerRecv(VSMessage message);
 
     /**
      * On server schedule.
      */
-    abstract protected void onServerSchedule();
+    abstract public void onServerSchedule();
 
     /**
      * Gets the num processes.
      *
      * @return the num processes
      */
-    protected int getNumProcesses() {
+    public int getNumProcesses() {
         if (process == null)
             return 0;
 

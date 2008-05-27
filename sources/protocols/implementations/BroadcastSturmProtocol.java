@@ -31,21 +31,21 @@ public class BroadcastSturmProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
+     * @see events.VSAbstractProtocol#onClientInit()
      */
-    protected void onInit() {
+    public void onClientInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         VSMessage message = new VSMessage();
         message.setInteger("Broadcast", broadcastCount++);
         sentMessages.add(message);
@@ -55,32 +55,38 @@ public class BroadcastSturmProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
         sentMessages.clear();
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         if (!sentMessages.contains(recvMessage)) {
             VSMessage message = new VSMessage();
             message.setInteger("Broadcast", recvMessage.getInteger("Broadcast"));

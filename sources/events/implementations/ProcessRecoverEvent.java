@@ -15,7 +15,7 @@ public class ProcessRecoverEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()
      */
-    protected void onInit() {
+    public void onInit() {
         setClassname(getClass().toString());
     }
 

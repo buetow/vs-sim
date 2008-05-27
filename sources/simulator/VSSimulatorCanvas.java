@@ -1052,12 +1052,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                     durationTime = sendingProcess.getDurationTime();
                     deliverTime = sendingProcess.getGlobalTime() + durationTime;
 
-					if (prefs.getBoolean("sim.message.prob.mean")) 
-                    	outageTime = sendingProcess.getARandomMessageOutageTime(
-								durationTime, receiverProcess);
-					else
-                    	outageTime = sendingProcess.getARandomMessageOutageTime(
-								durationTime, null);
+                    if (prefs.getBoolean("sim.message.prob.mean"))
+                        outageTime = sendingProcess.getARandomMessageOutageTime(
+                                         durationTime, receiverProcess);
+                    else
+                        outageTime = sendingProcess.getARandomMessageOutageTime(
+                                         durationTime, null);
 
                     /* Only add a 'receiving message' task if the message will not get lost! */
                     if (outageTime == -1) {

@@ -17,16 +17,26 @@ public final class VSRegisteredEvents {
     private static final long serialVersionUID = 1L;
 
     /** The event classnames. */
-    private static HashMap<String,String> eventClassnames;
+    private static HashMap<String,String> eventClassnames =
+        new HashMap<String,String>();
 
     /** The event shortnames. */
-    private static HashMap<String,String> eventShortnames;
+    private static HashMap<String,String> eventShortnames =
+        new HashMap<String,String>();
 
     /** The event names. */
-    private static HashMap<String,String> eventNames;
+    private static HashMap<String,String> eventNames =
+        new HashMap<String,String>();
 
     /** The editable protocols classnames. */
-    private static ArrayList<String> editableProtocolsClassnames;
+    private static ArrayList<String> editableProtocolsClassnames =
+        new ArrayList<String>();
+
+    private static HashMap<String,ArrayList<String>> clientVariables =
+        new HashMap<String,ArrayList<String>>();
+
+    private static HashMap<String,ArrayList<String>> serverVariables =
+        new HashMap<String,ArrayList<String>>();
 
     /** The prefs. */
     private static VSPrefs prefs;
@@ -38,10 +48,6 @@ public final class VSRegisteredEvents {
      */
     public static void init(VSPrefs prefs_) {
         prefs = prefs_;
-        eventNames = new HashMap<String, String>();
-        eventShortnames = new HashMap<String, String>();
-        eventClassnames = new HashMap<String, String>();
-        editableProtocolsClassnames = new ArrayList<String>();
 
         registerEvent("events.implementations.ProcessCrashEvent", "Prozessabsturz", null);
         registerEvent("events.implementations.ProcessRecoverEvent", "Prozesswiederbelebung", null);
@@ -57,16 +63,36 @@ public final class VSRegisteredEvents {
         /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
         Vector<String> protocolClassnames = getProtocolClassnames();
         VSClassLoader classLoader = new VSClassLoader();
+
         for (String protocolClassname : protocolClassnames) {
-            Object object = classLoader.newInstance(protocolClassname);
-            if (object instanceof protocols.VSAbstractProtocol) {
-                protocols.VSAbstractProtocol protocol = (protocols.VSAbstractProtocol) object;
-                if (!protocol.isEmpty())
+            Object serverObject = classLoader.newInstance(protocolClassname);
+            Object clientObject = classLoader.newInstance(protocolClassname);
+
+            if (clientObject instanceof protocols.VSAbstractProtocol &&
+                    serverObject instanceof protocols.VSAbstractProtocol) {
+
+                protocols.VSAbstractProtocol serverProtocol = (protocols.VSAbstractProtocol) serverObject;
+                protocols.VSAbstractProtocol clientProtocol = (protocols.VSAbstractProtocol) clientObject;
+
+                serverProtocol.onServerInit();
+                clientProtocol.onClientInit();
+
+                if (!serverProtocol.isEmpty() || !clientProtocol.isEmpty())
                     editableProtocolsClassnames.add(protocolClassname);
+
+                if (!serverProtocol.isEmpty()) {
+                    ArrayList<String> variables = new ArrayList<String>();
+                    variables.addAll(serverProtocol.getAllFullKeys());
+                    serverVariables.put(protocolClassname, variables);
+                }
+
+                if (!clientProtocol.isEmpty()) {
+                    ArrayList<String> variables = new ArrayList<String>();
+                    variables.addAll(clientProtocol.getAllFullKeys());
+                    clientVariables.put(protocolClassname, variables);
+                }
             }
         }
-
-        //Collections.sort(editableProtocolsClassnames);
     }
 
     /**
@@ -76,6 +102,24 @@ public final class VSRegisteredEvents {
      */
     public static ArrayList<String> getEditableProtocolsClassnames() {
         return editableProtocolsClassnames;
+    }
+
+    /**
+     * Gets the protocols server variable names
+     *
+     * @return The variable names
+     */
+    public static ArrayList<String> getProtocolServerVariables(String protocolClassname) {
+        return serverVariables.get(protocolClassname);
+    }
+
+    /**
+     * Gets the protocols server variable names
+     *
+     * @return The variable names
+     */
+    public static ArrayList<String> getProtocolClientVariables(String protocolClassname) {
+        return clientVariables.get(protocolClassname);
     }
 
     /**

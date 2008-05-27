@@ -27,7 +27,12 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
      */
     public OnePhaseCommitProtocol() {
         setClassname(getClass().toString());
+    }
 
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onClientInit()
+     */
+    public void onClientInit() {
         /* Can be changed via GUI variables editor of each process */
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
@@ -38,15 +43,9 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     }
 
     /* (non-Javadoc)
-     * @see events.VSAbstractEvent#onInit()
-     */
-    protected void onInit() {
-    }
-
-    /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
-    protected void onClientReset() {
+    public void onClientReset() {
         if (pids != null) {
             pids.clear();
             pids.addAll(getVector("pids"));
@@ -56,7 +55,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
-    protected void onClientStart() {
+    public void onClientStart() {
         if (pids == null) {
             pids = new ArrayList<Integer>();
             pids.addAll(getVector("pids"));
@@ -75,7 +74,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
-    protected void onClientRecv(VSMessage recvMessage) {
+    public void onClientRecv(VSMessage recvMessage) {
         if (pids.size() == 0)
             return;
 
@@ -96,21 +95,27 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientSchedule()
      */
-    protected void onClientSchedule() {
+    public void onClientSchedule() {
         onClientStart();
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractProtocol#onServerInit()
+     */
+    public void onServerInit() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
-    protected void onServerReset() {
+    public void onServerReset() {
         ackSent = false;
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
-    protected void onServerRecv(VSMessage recvMessage) {
+    public void onServerRecv(VSMessage recvMessage) {
         if (ackSent)
             return;
 
@@ -125,7 +130,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerSchedule()
      */
-    protected void onServerSchedule() {
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)
