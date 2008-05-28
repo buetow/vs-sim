@@ -73,7 +73,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.mode.expert", "Expertenmodus");
-        initString("lang.name", "VS-Simulator v0.2-devel");
+        initString("lang.name", "VS-Simulator v0.2");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
@@ -233,7 +233,7 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultBooleans() {
         //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
-        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eig. Nachrichten");
+        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtausfallw'k. bilden");
     }
 }
