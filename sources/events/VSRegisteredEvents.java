@@ -56,8 +56,8 @@ public final class VSRegisteredEvents {
     public static void init(VSPrefs prefs_) {
         prefs = prefs_;
 
-        registerEvent("events.implementations.ProcessCrashEvent", "Prozessabsturz", null);
-        registerEvent("events.implementations.ProcessRecoverEvent", "Prozesswiederbelebung", null);
+        registerEvent("events.implementations.VSProcessCrashEvent", "Prozessabsturz", null);
+        registerEvent("events.implementations.VSProcessRecoverEvent", "Prozesswiederbelebung", null);
         registerEvent("protocols.implementations.BerkelyTimeProtocol", "Berkeley Algorithmus zur internen Sync.", "Berkeley");
         registerEvent("protocols.implementations.BroadcastSturmProtocol", "Broadcaststurm", null);
         registerEvent("protocols.implementations.DummyProtocol", "Beispiel/Dummy", null);

@@ -1043,7 +1043,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                 if (receiverProcess.equals(sendingProcess)) {
                     if (recvOwn) {
                         deliverTime = sendingProcess.getGlobalTime();
-                        messageReceiveEvent = new MessageReceiveEvent(message);
+                        messageReceiveEvent = new VSMessageReceiveEvent(message);
                         task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
                         taskManager.addTask(task);
                     }
@@ -1061,7 +1061,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
 
                     /* Only add a 'receiving message' task if the message will not get lost! */
                     if (outageTime == -1) {
-                        messageReceiveEvent = new MessageReceiveEvent(message);
+                        messageReceiveEvent = new VSMessageReceiveEvent(message);
                         task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
                         taskManager.addTask(task);
                     }
@@ -1091,11 +1091,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                         editProcess(process);
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.crash"))) {
-                        VSAbstractEvent event = new ProcessCrashEvent();
+                        VSAbstractEvent event = new VSProcessCrashEvent();
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.recover"))) {
-                        VSAbstractEvent event = new ProcessRecoverEvent();
+                        VSAbstractEvent event = new VSProcessRecoverEvent();
                         taskManager.addTask(new VSTask(process.getGlobalTime(), process, event, VSTask.GLOBAL));
 
                     } else if (actionCommand.equals(prefs.getString("lang.process.remove"))) {

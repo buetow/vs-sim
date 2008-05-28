@@ -7,9 +7,9 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class ProcessCrashEvent.
+ * The Class VSProcessCrashEvent.
  */
-public class ProcessCrashEvent extends VSAbstractEvent {
+public class VSProcessCrashEvent extends VSAbstractEvent {
 
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()

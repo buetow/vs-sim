@@ -9,9 +9,9 @@ import events.VSAbstractEvent;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class MessageReceiveEvent.
+ * The Class VSMessageReceiveEvent.
  */
-public class MessageReceiveEvent extends VSAbstractEvent {
+public class VSMessageReceiveEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /** The message. */
@@ -22,7 +22,7 @@ public class MessageReceiveEvent extends VSAbstractEvent {
      *
      * @param message the message
      */
-    public MessageReceiveEvent(VSMessage message) {
+    public VSMessageReceiveEvent(VSMessage message) {
         this.message = message;
     }
 

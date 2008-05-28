@@ -350,7 +350,7 @@ public class VSProcess extends VSPrefs {
                 taskManager.removeTask(randomCrashTask);
 
             if (crashTime >= getGlobalTime())  {
-                VSAbstractEvent event = new ProcessCrashEvent();
+                VSAbstractEvent event = new VSProcessCrashEvent();
                 randomCrashTask = new VSTask(crashTime, this, event,
                                              VSTask.GLOBAL);
                 taskManager.addTask(randomCrashTask);

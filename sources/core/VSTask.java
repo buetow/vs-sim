@@ -109,8 +109,8 @@ public class VSTask implements Comparable {
      *
      * @return true, if it is a message receive event
      */
-    public boolean isMessageReceiveEvent() {
-        return event instanceof MessageReceiveEvent;
+    public boolean isVSMessageReceiveEvent() {
+        return event instanceof VSMessageReceiveEvent;
     }
 
     /**
@@ -118,8 +118,8 @@ public class VSTask implements Comparable {
      *
      * @return true, if it is a process recover event
      */
-    public boolean isProcessRecoverEvent() {
-        return event instanceof ProcessRecoverEvent;
+    public boolean isVSProcessRecoverEvent() {
+        return event instanceof VSProcessRecoverEvent;
     }
 
     /**
@@ -252,8 +252,8 @@ public class VSTask implements Comparable {
                 return 1;
 
             /* If it's a ProtocolRecover, it should get handled very first */
-            boolean a = event instanceof ProcessRecoverEvent;
-            boolean b = task.getEvent() instanceof ProcessRecoverEvent;
+            boolean a = event instanceof VSProcessRecoverEvent;
+            boolean b = task.getEvent() instanceof VSProcessRecoverEvent;
 
             if (a && b)
                 return 0;
@@ -264,9 +264,9 @@ public class VSTask implements Comparable {
             if (b)
                 return 1;
 
-            /* If it's a ProtocolEvent, it should get handled first */
-            a = event instanceof ProtocolEvent;
-            b = task.getEvent() instanceof ProtocolEvent;
+            /* If it's a VSProtocolEvent, it should get handled first */
+            a = event instanceof VSProtocolEvent;
+            b = task.getEvent() instanceof VSProtocolEvent;
 
             if (a && b)
                 return 0;

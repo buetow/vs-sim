@@ -8,9 +8,9 @@ import events.*;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class ProtocolEvent.
+ * The Class VSProtocolEvent.
  */
-public class ProtocolEvent extends VSAbstractEvent {
+public class VSProtocolEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /** The protocol classname. */

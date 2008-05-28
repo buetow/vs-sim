@@ -218,7 +218,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * @param time The process' local time to run the schedule at.
      */
     public final void scheduleAt(long time) {
-        VSAbstractEvent scheduleEvent = new ProtocolScheduleEvent(this, currentContextIsServer);
+        VSAbstractEvent scheduleEvent = new VSProtocolScheduleEvent(this, currentContextIsServer);
         VSTask scheduleTask = new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
         if (currentContextIsServer)
             serverSchedules.add(scheduleTask);

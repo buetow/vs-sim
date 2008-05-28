@@ -8,9 +8,9 @@ import events.*;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class ProtocolScheduleEvent.
+ * The Class VSProtocolScheduleEvent.
  */
-public class ProtocolScheduleEvent extends VSAbstractEvent {
+public class VSProtocolScheduleEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /** The event is a server protocol schedule. */
@@ -20,12 +20,12 @@ public class ProtocolScheduleEvent extends VSAbstractEvent {
     private VSAbstractProtocol protocol;
 
     /**
-     * Create a ProtocolScheduleEvent object
+     * Create a VSProtocolScheduleEvent object
      *
      * @param protocol the protocol
      * @param isServerSchedule the event is a client protocol schedule if false, else server schedule
      */
-    public ProtocolScheduleEvent(VSAbstractProtocol protocol, boolean isServerSchedule) {
+    public VSProtocolScheduleEvent(VSAbstractProtocol protocol, boolean isServerSchedule) {
         this.protocol = protocol;
         this.isServerSchedule = isServerSchedule;
     }

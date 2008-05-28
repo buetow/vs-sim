@@ -7,9 +7,9 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class ProcessRecoverEvent.
+ * The Class VSProcessRecoverEvent.
  */
-public class ProcessRecoverEvent extends VSAbstractEvent {
+public class VSProcessRecoverEvent extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)

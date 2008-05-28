@@ -475,7 +475,7 @@ public class VSSimulator extends JPanel {
         /** The shortname. */
         private String shortname;
 
-        /* Those 3 values are for ProtocolEvent events */
+        /* Those 3 values are for VSProtocolEvent events */
         /** The is protocol activation. */
         private boolean isProtocolActivation;
 
@@ -582,7 +582,7 @@ public class VSSimulator extends JPanel {
                 event.setShortname(shortname);
 
             if (isProtocolActivation || isProtocolDeactivation) {
-                ProtocolEvent protocolEvent = (ProtocolEvent) event;
+                VSProtocolEvent protocolEvent = (VSProtocolEvent) event;
                 protocolEvent.setProtocolClassname(protocolClassname);
                 protocolEvent.isProtocolActivation(isProtocolActivation);
                 protocolEvent.isClientProtocol(isClientProtocol);
@@ -959,7 +959,7 @@ public class VSSimulator extends JPanel {
         String serverRequest = prefs.getString("lang.serverrequest.start");
         String protocol = prefs.getString("lang.protocol");
 
-        String protocolEventClassname = "events.internal.ProtocolEvent";
+        String protocolEventClassname = "events.internal.VSProtocolEvent";
         eventClassnames = VSRegisteredEvents.getProtocolClassnames();
 
         for (String eventClassname : eventClassnames) {
