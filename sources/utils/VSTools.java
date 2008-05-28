@@ -54,18 +54,18 @@ public final class VSTools {
      * @return the parsed vector
      */
     public static Vector<Integer> parseIntegerVector(String string)
-    throws exceptions.ParseIntegerVectorException {
+    throws exceptions.VSParseIntegerVectorException {
         Vector<Integer> vec = new Vector<Integer>();
 
         int index = string.indexOf('[');
         if (index == -1)
-            throw new exceptions.ParseIntegerVectorException();
+            throw new exceptions.VSParseIntegerVectorException();
 
         string = string.substring(index+1);
 
         index = string.indexOf(']');
         if (index == -1)
-            throw new exceptions.ParseIntegerVectorException();
+            throw new exceptions.VSParseIntegerVectorException();
 
         string = string.substring(0, index);
 

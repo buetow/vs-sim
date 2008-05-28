@@ -840,7 +840,7 @@ public abstract class VSAbstractEditor implements ActionListener {
                 String val = valField.getText();
                 Vector<Integer> vec = utils.VSTools.parseIntegerVector(val);
                 prefsToEditMap.get(keys[1]).setVector(keys[0], vec);
-            } catch (exceptions.ParseIntegerVectorException e) {
+            } catch (exceptions.VSParseIntegerVectorException e) {
             }
 
             valField.setText(""+prefsToEditMap.get(keys[1]).getVector(keys[0]));
