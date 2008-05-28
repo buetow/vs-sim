@@ -233,7 +233,7 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultBooleans() {
         //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
-        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eig. Nachrichten");
+        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtausfallw'k. bilden");
     }
 }

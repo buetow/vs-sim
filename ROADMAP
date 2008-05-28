@@ -1,5 +1,7 @@
 TODO:
-VSSimulatorEditor: DEFAULT Prozesseinsgellungen, DEFAULT Nachrichteneinstellungen
+Basic Multicast
+Reliable Multicast
+Non-Multicast Nachrichten
 
 Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
 Periodische Tasks anlegen koennen
@@ -9,7 +11,6 @@ Ganze simulationseinstellungen abspeichern/laden koennen
 	Tasks anhand der Tasknummern den richtigen Prozessen zuordnen
 	Jedes Eventobjekte den Tasks und der Prozesse anhand der IDs zuordnen
 "Himmelobjekt"?
-Non-Broadcast Nachrichten
 Protocols:
 	ReliableMulticast
 	Waehlermengen nach Maekawa
