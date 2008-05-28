@@ -4,22 +4,23 @@
  */
 package core.time;
 
-// TODO: Auto-generated Javadoc
 /**
  * This interface is a guidline for general time format classes.
+ *
+ * @author Paul C. Buetow
  */
 public interface VSTime {
     /**
-     * Getter method.
+     * Gets the global time.
      *
-     * @return The global time.
+     * @return The global time
      */
     public long getGlobalTime();
 
     /**
-     * String representation.
+     * Returns a string representation.
      *
-     * @return The representation of the implementing object as a string.
+     * @return The representation of the implementing object as a string
      */
     public String toString();
 }

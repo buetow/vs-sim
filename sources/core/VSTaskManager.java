@@ -10,9 +10,15 @@ import prefs.*;
 import utils.*;
 
 /**
- * The Class VSTaskManager.
+ * The Class VSTaskManager. The task manager is responsible that all tasks
+ * will get fullfilled in the correct order. Please also read the javadoc
+ * of the VSTask class. It describes the difference between local and global
+ * timed tasks.
+ *
+ * @author Paul C. Buetow
  */
 public class VSTaskManager {
+    /** The seriao version uid */
     private static final long serialVersionUID = 1L;
 
     /** The tasks. */
@@ -30,29 +36,31 @@ public class VSTaskManager {
     /** The Constant ONLY_ONCE. */
     public final static boolean ONLY_ONCE = false;
 
-    /** The prefs. */
+    /** The simulator's default prefs. */
     private VSPrefs prefs;
 
     /**
      * Instantiates a new lang.process.removetask manager.
      *
-     * @param prefs the prefs
+     * @param prefs the simulator's default prefs
      */
     public VSTaskManager(VSPrefs prefs) {
         this.prefs = prefs;
-        this.tasks = new PriorityQueue<VSTask>();//100, comparator);
-        this.globalTasks = new PriorityQueue<VSTask>();//(100, comparator);
+        this.tasks = new PriorityQueue<VSTask>();
+        this.globalTasks = new PriorityQueue<VSTask>();
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
 
     /**
-     * Run tasks.
+     * Run tasks. This method gets called by the simulation canvas repeatedly.
+     * Almost all simulation actions take place in this method.
      *
      * @param step the step
      * @param offset the offset
      * @param lastGlobalTime the last global time
      */
-    public synchronized void runTasks(final long step, final long offset, final long lastGlobalTime) {
+    public synchronized void runTasks(long step, long offset,
+                                      long lastGlobalTime) {
         VSTask task = null;
         VSProcess process = null;
         long localTime;
@@ -111,7 +119,8 @@ public class VSTaskManager {
                     if (process.isCrashed())
                         process.addClockOffset(step);
                     if (process.timeModified())
-                        process.addClockOffset(process.getTime()-(offsetTime-diff));
+                        process.addClockOffset(process.getTime()-
+                                               (offsetTime-diff));
                     process.setLocalTime(localTime);
                 }
 
@@ -161,7 +170,8 @@ public class VSTaskManager {
                     task.run();
                     process.setGlobalTime(globalTime);
                     if (process.timeModified())
-                        process.addClockOffset(process.getTime()-(offsetTime-diff));
+                        process.addClockOffset(process.getTime()-
+                                               (offsetTime-diff));
                     process.setLocalTime(localTime);
                 }
 
@@ -202,6 +212,8 @@ public class VSTaskManager {
 
     /**
      * Inserts a task. Only for internal usage. Use the add methods instead.
+     * This method checks if the task to insert is a global or a local timed
+     * task. And it also checks if the task's time is over already.
      *
      * @param task the task to insert
      */
@@ -229,7 +241,7 @@ public class VSTaskManager {
      * Adds a task.
      *
      * @param task the task to add
-     * @param isProgrammed the task is programmed
+     * @param isProgrammed true, if the task is programmed
      */
     public synchronized void addTask(VSTask task, boolean isProgrammed) {
         task.isProgrammed(isProgrammed);
@@ -241,7 +253,7 @@ public class VSTaskManager {
      *
      * @param task the task to remove
      *
-     * @return true, if successful
+     * @return true, if the task has been removed with success
      */
     public synchronized boolean removeTask(VSTask task) {
         if (fullfilledProgrammedTasks.remove(task))
@@ -257,7 +269,7 @@ public class VSTaskManager {
     }
 
     /**
-     * Removes several tasks
+     * Removes several tasks.
      *
      * @param tasks the tasks to remove
      */
@@ -273,77 +285,85 @@ public class VSTaskManager {
      */
     public synchronized void removeTasksOf(VSProcess process) {
         ArrayList<VSTask> removeThose = new ArrayList<VSTask>();
+
         for (VSTask task : fullfilledProgrammedTasks)
             if (task.isProcess(process))
                 removeThose.add(task);
+
         for (VSTask task : removeThose)
             fullfilledProgrammedTasks.remove(task);
 
         removeThose.clear();
+
         for (VSTask task : globalTasks)
             if (task.isProcess(process))
                 removeThose.add(task);
+
         for (VSTask task : removeThose)
             globalTasks.remove(task);
 
         removeThose.clear();
+
         for (VSTask task : tasks)
             if (task.isProcess(process))
                 removeThose.add(task);
+
         for (VSTask task : removeThose)
             tasks.remove(task);
     }
 
     /**
-     * Gets the local tasks.
+     * Gets the local timed tasks.
      *
-     * @return the local tasks
+     * @return the local timed tasks
      */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
-        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+        VSPriorityQueue<VSTask> localTasks = new VSPriorityQueue<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (!task.isGlobalTimed() && task.isProgrammed())
-                processTasks.add(task);
+                localTasks.add(task);
 
         for (VSTask task : tasks)
             if (task.isProgrammed())
-                processTasks.add(task);
+                localTasks.add(task);
 
-        return processTasks;
+        return localTasks;
     }
 
     /**
-     * Gets the global tasks.
+     * Gets the global timed tasks.
      *
-     * @return the global tasks
+     * @return the global timed tasks
      */
     public synchronized VSPriorityQueue<VSTask> getGlobalTasks() {
-        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+        VSPriorityQueue<VSTask> globalTasks = new VSPriorityQueue<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (task.isGlobalTimed() && task.isProgrammed())
-                processTasks.add(task);
+                globalTasks.add(task);
 
         for (VSTask task : globalTasks)
             if (task.isProgrammed())
-                processTasks.add(task);
+                globalTasks.add(task);
 
-        return processTasks;
+        return globalTasks;
     }
 
     /**
-     * Gets the process local tasks.
+     * Gets the local timed tasks of a specific process.
      *
-     * @param process the process
+     * @param process the process to get the local timed tasks of
      *
-     * @return the process local tasks
+     * @return the local tasks of the specified process
      */
-    public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(VSProcess process) {
+    public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(
+        VSProcess process) {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
-            if (!task.isGlobalTimed() && task.isProcess(process) && task.isProgrammed())
+            if (!task.isGlobalTimed() && task.isProcess(process) &&
+                    task.isProgrammed())
                 processTasks.add(task);
 
         for (VSTask task : tasks)
@@ -354,17 +374,19 @@ public class VSTaskManager {
     }
 
     /**
-     * Gets the process global tasks.
+     * Gets the global timed tasks of a specific process.
      *
-     * @param process the process
+     * @param process the process to get the local timed tasks of
      *
-     * @return the process global tasks
+     * @return the global timed tasks of the specified process
      */
-    public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(VSProcess process) {
+    public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(
+        VSProcess process) {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
-            if (task.isGlobalTimed() && task.isProcess(process) && task.isProgrammed())
+            if (task.isGlobalTimed() && task.isProcess(process) &&
+                    task.isProgrammed())
                 processTasks.add(task);
 
         for (VSTask task : globalTasks)

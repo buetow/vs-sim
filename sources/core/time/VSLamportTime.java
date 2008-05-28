@@ -4,14 +4,19 @@
  */
 package core.time;
 
-// TODO: Auto-generated Javadoc
 /**
- * This class defined how the lamport timestamps are represented.
+ * The Class VSLamportTime. This class defined how the lamport
+ * timestamps are represented.
+ *
+ * @author Paul C. Buetow
  */
 public class VSLamportTime implements VSTime {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** Specified the global time of the lamport timestamp. It's used for correct painting in the simulator paint area. */
+    /** Specified the global time of the lamport timestamp. It's used for
+     * correct painting position in the simulator canvas paint area.
+     */
     private long globalTime;
 
     /** Specified the process' local lamport time. */
@@ -28,28 +33,24 @@ public class VSLamportTime implements VSTime {
         this.lamportTime = lamportTime;
     }
 
-    /**
-     * Getter method.
-     *
-     * @return The global time.
+    /* (non-Javadoc)
+     * @see core.time.VSTime#getGlobalTime()
      */
     public long getGlobalTime() {
         return globalTime;
     }
 
     /**
-     * Getter method.
+     * Gets the lamport time.
      *
-     * @return The process' local lamport time.
+     * @return The process' local lamport time
      */
     public long getLamportTime() {
         return lamportTime;
     }
 
-    /**
-     * String representation.
-     *
-     * @return The string representation of the lamport time.
+    /* (non-Javadoc)
+     * @see core.time.VSTime#toString()
      */
     public String toString() {
         return "(" + lamportTime + ")";

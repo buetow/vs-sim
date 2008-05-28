@@ -12,32 +12,42 @@ import protocols.VSAbstractProtocol;
 
 /**
  * The Class VSTask. An object of this class represents a task to do or done.
- * All tasks are managed by the task manager. There are local and global timed tasks.
- * Local timed tasks are being fullfilled if the process' local time is reached.
- * Global timed tasks are being fullfilled if the simulation's time is reached.
+ * All tasks are managed by the task manager. There are local and global timed
+ * tasks. Local timed tasks are being fullfilled if the process' local time is
+ * reached. Global timed tasks are being fullfilled if the simulation's time is
+ * reached.
+ *
+ * @author Paul C. Buetow
  */
 public class VSTask implements Comparable {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** The Constant LOCAL. Used for the constructor if it's a local timed task. */
+    /** The Constant LOCAL. Used for the constructor if it's a local timed
+     * task.
+     */
     public final static boolean LOCAL = true;
 
-    /** The Constant GLOBAL. Used for the constructor if it's a global timed task. */
+    /** The Constant GLOBAL. Used for the constructor if it's a global timed
+     * task.
+     */
     public final static boolean GLOBAL = false;
 
     /** The task time. */
     private long taskTime;
 
-    /** The event. */
+    /** The event which takes plase if the task time matches. */
     private VSAbstractEvent event;
 
-    /** The process. */
+    /** The process to run the task at. */
     private VSProcess process;
 
-    /** The prefs. */
+    /** The simulation's default prefs. */
     private VSPrefs prefs;
 
-    /** The task is programmed. The task will be still in the task manager after reset. */
+    /** The task is programmed. The task will be still in the task manager
+     * after reset.
+     */
     private boolean isProgrammed;
 
     /** The task is global timed. If set to true, its local timed. */
@@ -57,7 +67,8 @@ public class VSTask implements Comparable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    public VSTask(long taskTime, VSProcess process, VSAbstractEvent event, boolean isLocal) {
+    public VSTask(long taskTime, VSProcess process, VSAbstractEvent event,
+                  boolean isLocal) {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
         this.event = event;
@@ -76,9 +87,9 @@ public class VSTask implements Comparable {
     }
 
     /**
-     * Checks if is programmed.
+     * Sets if the task is programmed.
      *
-     * @param isProgrammed the task is programmed
+     * @param isProgrammed true, if the task is programmed
      */
     public void isProgrammed(boolean isProgrammed) {
         this.isProgrammed = isProgrammed;
@@ -126,7 +137,7 @@ public class VSTask implements Comparable {
     }
 
     /**
-     * Time over. The task's time is over.
+     * Checks if the task's time is over.
      *
      * @return true, if it's over
      */
@@ -142,18 +153,18 @@ public class VSTask implements Comparable {
      *
      * @param task the task to compare to
      *
-     * @return true, if equal
+     * @return true, if equal (the task nums equal)
      */
     public boolean equals(VSTask task) {
         return taskNum == task.getTaskNum();
     }
 
     /**
-     * Checks if the event belongs to the specified process.
+     * Checks if the task belongs to the specified process.
      *
      * @param process the process to check against
      *
-     * @return true, if the event is using the process
+     * @return true, if the task is using the process
      */
     public boolean isProcess(VSProcess process) {
         return this.process.equals(process);
@@ -252,7 +263,6 @@ public class VSTask implements Comparable {
 
             if (b)
                 return 1;
-
 
             /* If it's a ProtocolEvent, it should get handled first */
             a = event instanceof ProtocolEvent;

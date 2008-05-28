@@ -9,12 +9,18 @@ import events.*;
 import prefs.VSPrefs;
 
 /**
- * This class represents a message which is send from one process to another process in the simulation.
+ * This class represents a message which is send from one process to another
+ * process in the simulation.
+ *
+ * @author Paul C. Buetow
  */
 public class VSMessage extends VSPrefs {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** Each message belongs to a specific protocol. This variable defined the class name of the protocol being used. */
+    /** Each message belongs to a specific protocol. This variable defined the
+     * class name of the protocol being used.
+     */
     private String protocolClassname;
 
     /** The default application preferences. */
@@ -23,41 +29,50 @@ public class VSMessage extends VSPrefs {
     /** A reference to the process who sent this message. */
     private VSProcess sendingProcess;
 
-    /** The vector time of the sending process after sending. The receiver process will use this vector time in order to update the local vector time. */
+    /** The vector time of the sending process after sending. The receiver
+     * process will use this vector time in order to update the local vector
+     * time.
+     */
     private VSVectorTime vectorTime;
 
-    /** The lamport time of the sending process after sending. The receiver process will use this lamport time in order to update the local vector time. */
+    /** The lamport time of the sending process after sending. The receiver
+     * process will use this lamport time in order to update the local vector
+     * time.
+     */
     private long lamportTime;
 
-    /** Each message has its own unique ID. The ID will show up in the logging window of the simulator as well. */
+    /** Each message has its own unique ID. The ID will show up in the logging
+     * window of the simulator
+     */
     private long messageID;
 
     /** This counter is used in order to generate unique message ID's. */
     private static long messageCounter;
 
     /**
-     * The constructor of the message.
+     * The constructor of the message. Creates a new message object.
      */
     public VSMessage() {
         this.messageID = ++messageCounter;
     }
 
     /**
-     * Initialized the message.
+     * Initializes the message.
      *
      * @param process The sending process of this message.
-     * @param protocolClassname The classname of the protocol this message
+     * @param protocolClassname The classname of the protocol this message.
      */
     public void init(VSProcess process, String protocolClassname) {
         this.sendingProcess = process;
         this.protocolClassname = protocolClassname;
         this.prefs = process.getPrefs();
+
         lamportTime = sendingProcess.getLamportTime();
         vectorTime = sendingProcess.getVectorTime().getCopy();
     }
 
     /**
-     * Getter method.
+     * Gets the protocol name of the message.
      *
      * @return The protocol name of the message.
      */
@@ -66,7 +81,7 @@ public class VSMessage extends VSPrefs {
     }
 
     /**
-     * Getter method.
+     * Gets the protocol classname.
      *
      * @return The protocol classname of the message.
      */
@@ -75,16 +90,16 @@ public class VSMessage extends VSPrefs {
     }
 
     /**
-     * Getter method.
+     * Gets the message id.
      *
-     * @return The ID of the message.
+     * @return The id of the message.
      */
     public long getMessageID() {
         return messageID;
     }
 
     /**
-     * Getter method.
+     * Gets a reference of the sending process.
      *
      * @return The process which sent this message.
      */
@@ -93,7 +108,7 @@ public class VSMessage extends VSPrefs {
     }
 
     /**
-     * Getter method.
+     * Gets the lamport time.
      *
      * @return The lamport time of the sending process.
      */
@@ -102,7 +117,7 @@ public class VSMessage extends VSPrefs {
     }
 
     /**
-     * Getter method.
+     * Gets the vector time.
      *
      * @return The vector time of the sending process.
      */
@@ -110,10 +125,8 @@ public class VSMessage extends VSPrefs {
         return vectorTime;
     }
 
-    /**
-     * String representation of the message object.
-     *
-     * @return String representation of the message object.
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#toString()
      */
     public String toString() {
         StringBuffer buffer = new StringBuffer();
@@ -123,7 +136,8 @@ public class VSMessage extends VSPrefs {
         buffer.append("; ");
         buffer.append(prefs.getString("lang.protocol"));
         buffer.append(": ");
-        buffer.append(VSRegisteredEvents.getShortnameByClassname(getProtocolClassname()));
+        buffer.append(VSRegisteredEvents.getShortnameByClassname(
+                          getProtocolClassname()));
 
         return buffer.toString();
     }
@@ -142,17 +156,10 @@ public class VSMessage extends VSPrefs {
      *
      * @param message The message to compare with.
      *
-     * @return true, if the messages have the same ID. Otherwise false.
+     * @return true, if the messages have the same id. Otherwise false.
      */
     public boolean equals(VSMessage message) {
         return messageID == message.getMessageID();
     }
-
-    /**
-     * For logging in the simulator's logging window!.
-     *
-     * @param message The message to logg.
-     */
-    public void logg(String message) { }
 }
 

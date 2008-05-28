@@ -6,11 +6,14 @@ package core.time;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSVectorTime.
+ * The Class VSVectorTime. This class defined how the vector
+ * timestamps are represented.
+ *
+ * @author Paul C. Buetow
  */
 public class VSVectorTime extends ArrayList<Long> implements VSTime {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The global time. */
