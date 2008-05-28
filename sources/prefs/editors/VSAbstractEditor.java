@@ -588,7 +588,10 @@ public abstract class VSAbstractEditor implements ActionListener {
             if (key.startsWith("process.")) {
                 if (!flag) {
                     flag = true;
-                    addSeparator(prefs.getString("lang.prefs.process"));
+                    if (this instanceof VSProcessEditor)
+                        addSeparator(prefs.getString("lang.prefs.process"));
+                    else
+                        addSeparator(prefs.getString("lang.prefs.process.defaults"));
                 }
                 addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }
@@ -600,7 +603,10 @@ public abstract class VSAbstractEditor implements ActionListener {
             if (key.startsWith("message.")) {
                 if (!flag) {
                     flag = true;
-                    addSeparator(prefs.getString("lang.prefs.message"));
+                    if (this instanceof VSProcessEditor)
+                        addSeparator(prefs.getString("lang.prefs.message"));
+                    else
+                        addSeparator(prefs.getString("lang.prefs.message.defaults"));
                 }
                 addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }

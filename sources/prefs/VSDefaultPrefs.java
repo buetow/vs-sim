@@ -83,6 +83,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
         initString("lang.prefs.info!", "Prozessvariablen können für jeden Prozess einzelnd eingestellt werden. Die hier gezeigen Prozessvariablen sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
         initString("lang.prefs.message", "Nachrichteneinstellungen");
+        initString("lang.prefs.message.defaults", "Nachrichteneinstellungen für neue Prozesse");
+        initString("lang.prefs.process.defaults", "Prozesseinstellungen für neue Prozesse");
         initString("lang.prefs.more", "Mehr Einstellungen");
         initString("lang.prefs.process", "Prozesseinstellungen");
         initString("lang.prefs.process", "Prozessstandardeinstellungen");
