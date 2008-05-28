@@ -16,15 +16,23 @@ import simulator.*;
 import utils.*;
 
 /**
- * The Class VSProcess. A object of this class represents a process of a simulation.
+ * The Class VSProcess. A object of this class represents a process of a
+ * simulation.
+ *
+ * @author Paul C. Buetow
  */
 public class VSProcess extends VSPrefs {
+    /** The data serialization id. */
     private static final long serialVersionUID = 1L;
 
-    /** The protocols to reset if the simulation is over or the reset button has been pressed. */
+    /** The protocols to reset if the simulation is over or the reset
+     * button has been pressed.
+     */
     private ArrayList<VSAbstractProtocol> protocolsToReset;
 
-    /** The crash history. represents all crashes of the process using the global simulation time. */
+    /** The crash history. represents all crashes of the process using the
+     * global simulation time.
+     */
     private ArrayList<Long> crashHistory;
 
     /** The lamport time history. */
@@ -33,13 +41,13 @@ public class VSProcess extends VSPrefs {
     /** The vector time history. */
     private ArrayList<VSVectorTime> vectorTimeHistory;
 
-    /** The crashed color. */
+    /** The color used if the process has crashed. */
     private Color crashedColor;;
 
-    /** The current color. */
+    /** The process' current color. */
     private Color currentColor;
 
-    /** The tmp color. For internal usage. */
+    /** A temp. color. For internal usage. */
     private Color tmpColor;
 
     /** The logging object. */
@@ -75,20 +83,26 @@ public class VSProcess extends VSPrefs {
     /** The process is paused. */
     private boolean isPaused;
 
-    /** The time has been modified in a task. Needed by the task manager to calculate correct offsets. */
+    /** The time has been modified in a task. Needed by the task manager to
+     * calculate correct offsets.
+     */
     private boolean timeModified;
 
-    /** The clock offset. Used by the task manager and also by the process' clock variance. */
+    /** The clock offset. Used by the task manager and also by the process'
+     * clock variance.
+     */
     private double clockOffset;
 
     /** The clock variance. */
     private float clockVariance;
 
     /** The process id. */
-    private int processID; // Represents the PID of a process
+    private int processID;
 
-    /** The process num. It is different to the process id. It represents the array index of the process. */
-    private int processNum; // Represents the array index of the process, for internal usage
+    /** The process num. It is different to the process id. It represents the
+     * array index of there the process is stored at.
+      */
+    private int processNum;
 
     /** The global time. */
     private long globalTime;
@@ -102,28 +116,28 @@ public class VSProcess extends VSPrefs {
     /** The process counter. Needed for the unique process id's. */
     private static int processCounter;
 
-    /* This array contains all Integer prefs of the process which should show
+    /** The Constant DEFAULT_INTEGER_VALUE_KEYS.
+     * This array contains all Integer prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    /** The Constant DEFAULT_INTEGER_VALUE_KEYS. */
     private static final String DEFAULT_INTEGER_VALUE_KEYS[] = {
         "process.prob.crash",
         "message.prob.outage",
     };
 
-    /* This array contains all Long prefs of the process which should show
+    /** The Constant DEFAULT_LONG_VALUE_KEYS.
+     * This array contains all Long prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    /** The Constant DEFAULT_LONG_VALUE_KEYS. */
     private static final String DEFAULT_LONG_VALUE_KEYS[] = {
         "message.sendingtime.min",
         "message.sendingtime.max",
     };
 
-    /** The Constant DEFAULT_FLOAT_VALUE_KEYS. */
-    /** This array contains all Float prefs of the process which should show
+    /** The Constant DEFAULT_FLOAT_VALUE_KEYS.
+     * This array contains all Float prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
@@ -131,8 +145,8 @@ public class VSProcess extends VSPrefs {
         "process.clock.variance",
     };
 
-    /** The Constant DEFAULT_COLOR_VALUE_KEYS. */
-    /** This array contains all Color prefs of the process which should show
+    /** The Constant DEFAULT_COLOR_VALUE_KEYS.
+     * This array contains all Color prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
@@ -144,8 +158,8 @@ public class VSProcess extends VSPrefs {
         "col.process.crashed",
     };
 
-    /** The Constant DEFAULT_STRING_VALUE_KEYS. */
-    /** This array contains all String prefs of the process which should show
+    /** The Constant DEFAULT_STRING_VALUE_KEYS.
+     * This array contains all String prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
@@ -160,7 +174,8 @@ public class VSProcess extends VSPrefs {
      * @param simulationCanvas the simulation canvas
      * @param logging the logging object
      */
-    public VSProcess(VSPrefs prefs, int processNum, VSSimulatorCanvas simulationCanvas, VSLogging logging) {
+    public VSProcess(VSPrefs prefs, int processNum,
+                     VSSimulatorCanvas simulationCanvas, VSLogging logging) {
         this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
         this.processNum = processNum;
         this.prefs = prefs;
@@ -179,16 +194,17 @@ public class VSProcess extends VSPrefs {
         /* Make local copys in order to have more performance */
         clockVariance = getFloat("process.clock.variance");
         currentColor = getColor("col.process.default");
+        crashedColor = getColor("col.process.crashed");
 
         /* Make additional process settings editable through GUI */
-        initLong("process.localtime", localTime, prefs.getString("lang.process.time.local"), "ms");
+        initLong("process.localtime", localTime,
+                 prefs.getString("lang.process.time.local"), "ms");
 
-        crashedColor = getColor("col.process.crashed");
         createRandomCrashTask();
     }
 
     /**
-     * Inits the time formats.
+     * Inits the time formats. E.g. lamport and vector time stamps.
      */
     private void initTimeFormats() {
         lamportTime = 0;
@@ -204,7 +220,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Reset time formats.
+     * Reset time formats. E.g. lamport and vector time stamps.
      */
     private void resetTimeFormats() {
         lamportTime = 0;
@@ -219,20 +235,20 @@ public class VSProcess extends VSPrefs {
             vectorTime.add(new Long(0));
     }
 
-
     /**
-     * Called from the VSProcessEditor, after finishing editing!.
+     * Called from the VSProcessEditor, after finishing editing! This makes
+     * sure that the VSProcess object is using the up to date prefs!
      */
     public synchronized void updateFromVSPrefs() {
         setClockVariance(getFloat("process.clock.variance"));
         setLocalTime(getLong("process.localtime"));
         crashedColor = getColor("col.process.crashed");
-        //simulationCanvas.repaint();
         createRandomCrashTask();
     }
 
     /**
-     * Called from the VSProcessEditor, before starting editing!.
+     * Called from the VSProcessEditor, before starting editing! This makes
+     * sure that the editor edits the up to date prefs of the process!
      */
     public synchronized void updatePrefs() {
         setFloat("process.clock.variance", getClockVariance());
@@ -240,9 +256,12 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Sync time. Using the clockOffset and clockVariance.
+     * Syncs the process' time. This method is using the clockOffset and
+     * clockVariance variables. This method is called repeatedly from the
+     * VSSimulationCanvas in order to update the process' local and global
+     * time values.
      *
-     * @param globalTime the global time
+     * @param globalTime the global time.
      */
     public synchronized void syncTime(final long globalTime) {
         final long currentGlobalTimestep = globalTime - this.globalTime;
@@ -261,6 +280,7 @@ public class VSProcess extends VSPrefs {
             --localTime;
         }
 
+        /* We do not want a negative time */
         if (localTime < 0)
             localTime = 0;
     }
@@ -313,7 +333,10 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Creates the random crash task.
+     * Creates the random crash task. The crash task will be created only if
+     * the process is not crashed atm. and if VSProcess.getARandomCrashTime()
+     * returns a non-negative value. The random crash task uses the simulaion's
+     * global time for its scheduling.
      */
     public void createRandomCrashTask() {
         if (!isCrashed) {
@@ -328,8 +351,8 @@ public class VSProcess extends VSPrefs {
 
             if (crashTime >= getGlobalTime())  {
                 VSAbstractEvent event = new ProcessCrashEvent();
-                //event.init(this);
-                randomCrashTask = new VSTask(crashTime, this, event, VSTask.GLOBAL);
+                randomCrashTask = new VSTask(crashTime, this, event,
+                                             VSTask.GLOBAL);
                 taskManager.addTask(randomCrashTask);
 
             } else {
@@ -339,16 +362,19 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Creates a random percentage 0..100
+     * Creates a random percentage 0..100 using the process' own pseudo
+     * random number generator object of the VSRandom class.
      *
-     * @return A random percentage 0..100
+     * @return A random percentage 0..100.
      */
     public synchronized int getRandomPercentage() {
         return random.nextInt() % 101;
     }
 
     /**
-     * Adds the clock offset. This method is used by the task manager.
+     * Adds the clock offset. This method is used by the task manager. The
+     * clock offset identifies if the local time of the process has changed and
+     * how much..
      *
      * @param add the clock offset to add.
      */
@@ -357,7 +383,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Play. Called by the simulation canvas.
+     * The process' state is 'play'. Called by the simulation canvas.
      */
     public synchronized void play() {
         isPaused = false;
@@ -365,7 +391,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Pause. Called by the simulation canvas.
+     * The process' state is 'pause'. Called by the simulation canvas.
      */
     public synchronized void pause() {
         isPaused = true;
@@ -373,7 +399,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Finish. Called by the simulation canvas.
+     * The process' state is 'Finish'. Called by the simulation canvas.
      */
     public synchronized void finish() {
         isPaused = true;
@@ -390,7 +416,8 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Gets the process num.
+     * Gets the process num.  The num is different to the process id. It
+     * represents the array index of there the process is stored at.
      *
      * @return the process num
      */
@@ -473,8 +500,10 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Checks if the process has crashed at least once during the current
-     * simulation.
+     * Checks if the process has crashed. The difference to isCrashed is,
+     * that the process may be fully functional again after crashing. This
+     * method is needed by the simulation canvas in order to see if it should
+     * paint 'crashed areas' using the crash history of this process.
      *
      * @return true, if yes
      */
@@ -483,7 +512,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Gets the crashed color.
+     * Gets the color of this process if it's crashed.
      *
      * @return the crashed color
      */
@@ -493,7 +522,8 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Checks if the time has been modified. by a task.
-     * This mehod is needed by the task manager.
+     * This mehod is needed by the task manager in order to add a clock offset
+     * to the process object.
      *
      * @return true, if yes
      */
@@ -556,7 +586,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Gets the duration time.
+     * Gets the duration time of a message to send.
      *
      * @return the duration time
      */
@@ -581,15 +611,22 @@ public class VSProcess extends VSPrefs {
      *
      * @param durationTime the duration time
      *
-     * @return the a random message outage time
+     * @return the a random message outage time. It will be -1 if the message
+     *	will not get lost at all.
      */
-    public synchronized long getARandomMessageOutageTime(final long durationTime, VSProcess receiverProcess) {
+    public synchronized long getARandomMessageOutageTime(long durationTime,
+            VSProcess receiverProcess) {
         int percentage = (int) ((getInteger("message.prob.outage") +
-                                 receiverProcess.getInteger("message.prob.outage")) / 2);
+                                 receiverProcess.getInteger(
+                                     "message.prob.outage")) / 2);
+
         /* Check if the message will have an outage or not */
         if (getRandomPercentage() < percentage) {
+
             /* Calculate the random outage time! */
-            final long outageTime = globalTime + random.nextLong(durationTime+1) % simulationCanvas.getUntilTime();
+            long outageTime = globalTime + random.nextLong(durationTime+1) %
+                              simulationCanvas.getUntilTime();
+
             return outageTime;
         }
 
@@ -600,13 +637,16 @@ public class VSProcess extends VSPrefs {
     /**
      * Gets the a random crash time.
      *
-     * @return the a random crash time
+     * @return the a random crash time. It will be -1 if the process will not
+     *	crash at all randomly!
      */
     private long getARandomCrashTime() {
         /* Check if the process will crash or not */
         if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
-            final long crashTime =  random.nextLong(simulationCanvas.getUntilTime()+1) % simulationCanvas.getUntilTime();
+            final long crashTime =  random.nextLong(
+                                        simulationCanvas.getUntilTime()+1) %
+                                    simulationCanvas.getUntilTime();
             return crashTime;
         }
 
@@ -624,7 +664,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Checks if is paused.
+     * Checks if the process is paused.
      *
      * @return true, if is paused
      */
@@ -633,16 +673,16 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Increases the lamport time.
+     * Increases the process' lamport time.
      */
     public void increaseLamportTime() {
         setLamportTime(getLamportTime()+1);
     }
 
     /**
-     * Updates the lamport time.
+     * Updates the process' lamport time.
      *
-     * @param time the lamport time
+     * @param time the lamport time to use as its update reference.
      */
     public void updateLamportTime(long time) {
         final long lamportTime = getLamportTime() + 1;
@@ -691,7 +731,8 @@ public class VSProcess extends VSPrefs {
      * Increases the vector time.
      */
     public synchronized void increaseVectorTime() {
-        vectorTime.set(processNum, new Long(vectorTime.get(processNum).longValue()+1));
+        vectorTime.set(processNum,
+                       new Long(vectorTime.get(processNum).longValue()+1));
         vectorTime.setGlobalTime(globalTime);
         vectorTimeHistory.add(vectorTime.getCopy());
     }
@@ -699,7 +740,8 @@ public class VSProcess extends VSPrefs {
     /**
      * Updates the vector time.
      *
-     * @param vectorTimeUpdate the vector time of the other process to use for the update
+     * @param vectorTimeUpdate the vector time of the other process to use for
+     *	the update
      */
     public synchronized void updateVectorTime(VSVectorTime vectorTimeUpdate) {
         final int size = vectorTime.size();
@@ -829,14 +871,14 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Equals. Checks, if both processes have the same process id.
+     * Equals. Checks, if both processes have the same process num.
      *
      * @param process the process to compare to
      *
-     * @return true, if both processes are the same.
+     * @return true, if both processes are the same (same processNum).
      */
     public boolean equals(VSProcess process) {
-        return process.getProcessID() == processID;
+        return process.getProcessNum() == processNum;
     }
 
     /**
@@ -858,15 +900,18 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Resets the process counter.
+     * Resets the process counter. The next newly created process will have
+     * "0" as its process num. This static method is used by the simulator
+     * canvas if it opens a new simulation.
      */
     public static void resetProcessCounter() {
         processCounter = 0;
     }
 
     /**
-     * Removes the process at the specified index.
-     * Needed in order to update the vector time and the local processNum.
+     * Removes the process at the specified index. Called by the simulation
+     * canvas if a process has been removed from the simulation. Needed in
+     * order to update the vector time and the local processNum.
      *
      * @param index the index the process has to get removed.
      */
@@ -881,6 +926,8 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Added a process. Needed in order to update the vector time's size.
+     * Called by the simulation canvas if a process has been added to the
+     * simulation.
      */
     public void addedAProcess() {
         vectorTime.add(new Long(0));
@@ -900,7 +947,9 @@ public class VSProcess extends VSPrefs {
 
         if (!objectExists(protocolClassname)) {
             protocol = (VSAbstractProtocol)
-                       VSRegisteredEvents.createEventInstanceByClassname(protocolClassname, this);
+                       VSRegisteredEvents.createEventInstanceByClassname(
+                           protocolClassname, this);
+
             setObject(protocolClassname, protocol);
             protocolsToReset.add(protocol);
 

@@ -98,7 +98,7 @@ public class VSTaskManager {
                         process.addClockOffset(process.getTime()-offsetTime);
                     process.setLocalTime(localTime);
 
-                } else /* if (globalOffsetTime > taskTime) */ {
+                } else { /* if (globalOffsetTime > taskTime) */
                     final long diff = globalOffsetTime - taskTime;
                     if (globalOffsetTime - diff < lastGlobalTime)
                         process.setGlobalTime(lastGlobalTime);
@@ -150,7 +150,7 @@ public class VSTaskManager {
                         process.addClockOffset(process.getTime()-offsetTime);
                     process.setLocalTime(localTime);
 
-                } else /* if (offsetTime > taskTime) */ {
+                } else { /* if (offsetTime > taskTime) */
                     final long diff = offsetTime - taskTime;
                     if (globalOffsetTime - diff < lastGlobalTime)
                         process.setGlobalTime(lastGlobalTime);

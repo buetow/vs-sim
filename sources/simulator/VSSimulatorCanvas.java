@@ -303,7 +303,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                     color = messageArrivedColor;
                 draw(g, globalTime);
 
-            } else if (outageTime >= 0 && outageTime <= globalTime){
+            } else if (outageTime >= 0 && outageTime <= globalTime) {
                 isLost = true;
                 draw(g, globalTime);;
 

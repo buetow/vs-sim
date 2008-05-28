@@ -2,24 +2,21 @@ TODO:
 Basic Multicast
 Reliable Multicast
 Non-Multicast Nachrichten
+VSSimulationCanvas calls VSProcess.resetProcessCounter Bugfix!
 
 Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
-Periodische Tasks anlegen koennen
 Ganze simulationseinstellungen abspeichern/laden koennen
 	TaskManager + Tasks serialisierbar machen
 	VSPrefsRestriction serialisierbar machen
 	Tasks anhand der Tasknummern den richtigen Prozessen zuordnen
 	Jedes Eventobjekte den Tasks und der Prozesse anhand der IDs zuordnen
+Periodische Tasks anlegen koennen
 "Himmelobjekt"?
+Evtl:
 Protocols:
-	ReliableMulticast
-	Waehlermengen nach Maekawa
-	RPC?
+	Waehlermengen nach Maekawa?
 	NFS
 	AFS
-	Replikation
-	Namensdienste
-Evtl:
 	Local deliver max/min time
 	Systemschnitte?
 	Middleware-Schicht?
