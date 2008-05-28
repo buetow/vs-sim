@@ -11,15 +11,15 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class TwoPhaseCommitProtocol.
+ * The Class VSTwoPhaseCommitProtocol.
  */
-public class TwoPhaseCommitProtocol extends VSAbstractProtocol {
+public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /**
      * Instantiates a one phase commit protocol.
      */
-    public TwoPhaseCommitProtocol() {
+    public VSTwoPhaseCommitProtocol() {
         super(VSAbstractProtocol.HAS_ON_SERVER_START);
         setClassname(getClass().toString());
     }

@@ -4,26 +4,19 @@
  */
 package protocols.implementations;
 
-import core.VSMessage;
 import protocols.VSAbstractProtocol;
+import core.VSMessage;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class PingPongProtocol.
+ * The Class VSDummyProtocol.
  */
-public class PingPongProtocol extends VSAbstractProtocol {
+public class VSDummyProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
-    /** The client counter. */
-    private int clientCounter;
-
-    /** The server counter. */
-    private int serverCounter;
-
     /**
-     * Instantiates a new ping pong protocol.
+     * Instantiates a new dummy protocol.
      */
-    public PingPongProtocol() {
+    public VSDummyProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }
@@ -38,16 +31,20 @@ public class PingPongProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
     public void onClientReset() {
-        clientCounter = 0;
+        logg("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
     public void onClientStart() {
+        logg("onClientStart()");
+
         VSMessage message = new VSMessage();
-        message.setBoolean("fromClient", true);
-        message.setInteger("counter", ++clientCounter);
+        message.setString("Greeting", "Hello World!");
+        message.setInteger("A number", 1);
+        message.setBoolean("A boolean", true);
+        message.setFloat("A float", 1.2f);
         sendMessage(message);
     }
 
@@ -55,15 +52,12 @@ public class PingPongProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     public void onClientRecv(VSMessage recvMessage) {
-        if (!recvMessage.getBoolean("fromServer"))
-            return;
+        logg("onClientRecv("+recvMessage+")");
 
-        logg("message: " + recvMessage.getInteger("counter"));
-
-        VSMessage message = new VSMessage();
-        message.setBoolean("fromClient", true);
-        message.setInteger("counter", ++clientCounter);
-        sendMessage(message);
+        String s = recvMessage.getString("Greeting");
+        int n = recvMessage.getInteger("A number");
+        boolean b = recvMessage.getBoolean("A boolean");
+        float f = recvMessage.getFloat("A float");
     }
 
     /* (non-Javadoc)
@@ -82,22 +76,14 @@ public class PingPongProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     public void onServerReset() {
-        serverCounter = 0;
+        logg("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
-        if (!recvMessage.getBoolean("fromClient"))
-            return;
-
-        logg("message: " + recvMessage.getInteger("counter"));
-
-        VSMessage message = new VSMessage();
-        message.setBoolean("fromServer", true);
-        message.setInteger("counter", ++serverCounter);
-        sendMessage(message);
+        logg("onServerRecv("+recvMessage+")");
     }
 
     /* (non-Javadoc)
@@ -110,6 +96,6 @@ public class PingPongProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
-        return super.toString();
+        return super.toString() + "; Dummy Test";
     }
 }

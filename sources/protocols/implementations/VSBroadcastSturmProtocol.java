@@ -11,9 +11,9 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class BroadcastSturmProtocol.
+ * The Class VSBroadcastSturmProtocol.
  */
-public class BroadcastSturmProtocol extends VSAbstractProtocol {
+public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The sent messages. */
@@ -25,7 +25,7 @@ public class BroadcastSturmProtocol extends VSAbstractProtocol {
     /**
      * Instantiates a new broadcast sturm protocol.
      */
-    public BroadcastSturmProtocol() {
+    public VSBroadcastSturmProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
         sentMessages = new ArrayList<VSMessage>();

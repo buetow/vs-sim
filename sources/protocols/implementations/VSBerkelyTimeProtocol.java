@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * The Class BerkelyTimeProtocol.
+ * The Class VSBerkelyTimeProtocol.
  */
-public class BerkelyTimeProtocol extends VSAbstractProtocol {
+public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /**
      * Instantiates a new berkely time protocol.
      */
-    public BerkelyTimeProtocol() {
+    public VSBerkelyTimeProtocol() {
         super(VSAbstractProtocol.HAS_ON_SERVER_START);
         setClassname(getClass().toString());
     }

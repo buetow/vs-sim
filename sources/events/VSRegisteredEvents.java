@@ -58,14 +58,14 @@ public final class VSRegisteredEvents {
 
         registerEvent("events.implementations.VSProcessCrashEvent", "Prozessabsturz", null);
         registerEvent("events.implementations.VSProcessRecoverEvent", "Prozesswiederbelebung", null);
-        registerEvent("protocols.implementations.BerkelyTimeProtocol", "Berkeley Algorithmus zur internen Sync.", "Berkeley");
-        registerEvent("protocols.implementations.BroadcastSturmProtocol", "Broadcaststurm", null);
-        registerEvent("protocols.implementations.DummyProtocol", "Beispiel/Dummy", null);
-        registerEvent("protocols.implementations.ExternalTimeSyncProtocol", "Christians Methode zur externen Sync.", "Christians");
-        registerEvent("protocols.implementations.InternalTimeSyncProtocol", "Interne Synchronisation", "Interne Sync.");
-        registerEvent("protocols.implementations.PingPongProtocol", "Ping Pong", null);
-        registerEvent("protocols.implementations.OnePhaseCommitProtocol", "Ein-Phasen Commit", "1-Phasen Commit");
-        registerEvent("protocols.implementations.TwoPhaseCommitProtocol", "Zwei-Phasen Commit", "2-Phasen Commit");
+        registerEvent("protocols.implementations.VSBerkelyTimeProtocol", "Berkeley Algorithmus zur internen Sync.", "Berkeley");
+        registerEvent("protocols.implementations.VSBroadcastSturmProtocol", "Broadcaststurm", null);
+        registerEvent("protocols.implementations.VSDummyProtocol", "Beispiel/Dummy", null);
+        registerEvent("protocols.implementations.VSExternalTimeSyncProtocol", "Christians Methode zur externen Sync.", "Christians");
+        registerEvent("protocols.implementations.VSInternalTimeSyncProtocol", "Interne Synchronisation", "Interne Sync.");
+        registerEvent("protocols.implementations.VSPingPongProtocol", "Ping Pong", null);
+        registerEvent("protocols.implementations.VSOnePhaseCommitProtocol", "Ein-Phasen Commit", "1-Phasen Commit");
+        registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol", "Zwei-Phasen Commit", "2-Phasen Commit");
 
         /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
         Vector<String> protocolClassnames = getProtocolClassnames();

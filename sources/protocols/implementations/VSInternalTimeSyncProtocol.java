@@ -9,9 +9,9 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class InternalTimeSyncProtocol.
+ * The Class VSInternalTimeSyncProtocol.
  */
-public class InternalTimeSyncProtocol extends VSAbstractProtocol {
+public class VSInternalTimeSyncProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The waiting for response. */
@@ -20,7 +20,7 @@ public class InternalTimeSyncProtocol extends VSAbstractProtocol {
     /**
      * Instantiates a new internal time sync protocol.
      */
-    public InternalTimeSyncProtocol() {
+    public VSInternalTimeSyncProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }

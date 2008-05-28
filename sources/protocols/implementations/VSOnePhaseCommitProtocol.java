@@ -11,9 +11,9 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class OnePhaseCommitProtocol.
+ * The Class VSOnePhaseCommitProtocol.
  */
-public class OnePhaseCommitProtocol extends VSAbstractProtocol {
+public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /* Client variables, coordinator */
@@ -25,7 +25,7 @@ public class OnePhaseCommitProtocol extends VSAbstractProtocol {
     /**
      * Instantiates a one phase commit protocol.
      */
-    public OnePhaseCommitProtocol() {
+    public VSOnePhaseCommitProtocol() {
         super(VSAbstractProtocol.HAS_ON_SERVER_START);
         setClassname(getClass().toString());
     }

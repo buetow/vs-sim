@@ -9,9 +9,9 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ExternalTimeSyncProtocol.
+ * The Class VSExternalTimeSyncProtocol.
  */
-public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
+public class VSExternalTimeSyncProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The request time. */
@@ -23,7 +23,7 @@ public class ExternalTimeSyncProtocol extends VSAbstractProtocol {
     /**
      * Instantiates a new external time sync protocol.
      */
-    public ExternalTimeSyncProtocol() {
+    public VSExternalTimeSyncProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }
