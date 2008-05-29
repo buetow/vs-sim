@@ -2,7 +2,7 @@
  * VS is (c) 2008 by Paul C. Buetow
  * vs@dev.buetow.org
  */
-package simulator;
+package utils;
 
 import java.awt.*;
 import java.awt.event.*;
