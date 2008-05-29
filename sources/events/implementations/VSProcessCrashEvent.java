@@ -7,9 +7,13 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class VSProcessCrashEvent.
+ * The Class VSProcessCrashEvent. This event makes a process to crash.
+ *
+ * @author Paul C. Buetow
  */
 public class VSProcessCrashEvent extends VSAbstractEvent {
+    /** The serial version uid */
+    private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()

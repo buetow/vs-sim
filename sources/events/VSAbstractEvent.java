@@ -8,9 +8,14 @@ import core.VSProcess;
 import prefs.VSPrefs;
 
 /**
- * The Class VSAbstractEvent.
+ * The Class VSAbstractEvent. This abstract class defines the basic framework
+ * of each event. an event is used to fullfill a specific task. An event object
+ * will get stored in a VSTask object.
+ *
+ * @author Paul C. Buetow
  */
 abstract public class VSAbstractEvent extends VSPrefs {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The prefs. */
@@ -38,8 +43,8 @@ abstract public class VSAbstractEvent extends VSPrefs {
     }
 
     /**
-     * Inits the event.
-     *
+     * Inits the event without setting the processes and prefs variables
+     * of the object.
      */
     public void init() {
         onInit();
@@ -106,32 +111,33 @@ abstract public class VSAbstractEvent extends VSPrefs {
     }
 
     /**
-     * Logg.
+     * Logg a specific message.
      *
-     * @param message the message
+     * @param message the logging message
      */
     public void logg(String message) {
         process.logg(/*toString() + "; " + */message);
     }
 
     /**
-     * Equals.
+     * Checks if the event equals to another event..
      *
-     * @param event the event
+     * @param event the event to compare against.
      *
-     * @return true, if successful
+     * @return true, if the events are the same (have the same event id)
      */
     public boolean equals(VSAbstractEvent event) {
         return super.getID() == event.getID();
     }
 
     /**
-     * On init.
+     * Every event has its own initialize method.
      */
     abstract public void onInit();
 
     /**
-     * On start.
+     * Every event can get started. This method get's executed if the event
+     * takes place.
      *
      * @return false, if a message has been delivered but is not relevant and
      *	can get removed from the simulator canvas paint area. true otherwise.

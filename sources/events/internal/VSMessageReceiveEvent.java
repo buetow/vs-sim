@@ -9,9 +9,13 @@ import events.VSAbstractEvent;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSMessageReceiveEvent.
+ * The Class VSMessageReceiveEvent. This event is used if a process receives
+ * a message.
+ *
+ * @author Paul C. Buetow
  */
 public class VSMessageReceiveEvent extends VSAbstractEvent {
+    /** The serioal version uid */
     private static final long serialVersionUID = 1L;
 
     /** The message. */
@@ -38,8 +42,8 @@ public class VSMessageReceiveEvent extends VSAbstractEvent {
      */
     public boolean onStart() {
         boolean returnValue = true;
-        boolean onlyRelevantMessages = process.getPrefs().
-                                       getBoolean("sim.messages.relevant");
+        boolean onlyRelevantMessages = process.getPrefs().getBoolean(
+                                           "sim.messages.relevant");
 
         String eventName = message.getName();
         String protocolClassname = message.getProtocolClassname();

@@ -7,9 +7,13 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class VSProcessRecoverEvent.
+ * The Class VSProcessRecoverEvent. This event makes a process to recover if
+ * it is crashed.
+ *
+ * @author Paul C. Buetow
  */
 public class VSProcessRecoverEvent extends VSAbstractEvent {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)

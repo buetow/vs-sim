@@ -8,9 +8,14 @@ import events.*;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSProtocolScheduleEvent.
+ * The Class VSProtocolScheduleEvent. This event is used if a protocol (which
+ * is a subclass of VSAbstractProtocol) reschedules itself to run again on a
+ * specific time.
+ *
+ * @author Paul C. Buetow
  */
 public class VSProtocolScheduleEvent extends VSAbstractEvent {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The event is a server protocol schedule. */
@@ -23,9 +28,11 @@ public class VSProtocolScheduleEvent extends VSAbstractEvent {
      * Create a VSProtocolScheduleEvent object
      *
      * @param protocol the protocol
-     * @param isServerSchedule the event is a client protocol schedule if false, else server schedule
+     * @param isServerSchedule the event is a client protocol schedule if
+     *	false, else server schedule
      */
-    public VSProtocolScheduleEvent(VSAbstractProtocol protocol, boolean isServerSchedule) {
+    public VSProtocolScheduleEvent(VSAbstractProtocol protocol,
+                                   boolean isServerSchedule) {
         this.protocol = protocol;
         this.isServerSchedule = isServerSchedule;
     }
@@ -38,25 +45,27 @@ public class VSProtocolScheduleEvent extends VSAbstractEvent {
     }
 
     /**
-     * Checks if is client protocol schedule.
+     * Sets if it is client protocol schedule.
      *
-     * @param isServerSchedule the event is a client protocol schedule if false, else server schedule
+     * @param isServerSchedule false, if the event is a client protocol
+     * schedule. true, if server.
      */
     public void isServerSchedule(boolean isServerSchedule) {
         this.isServerSchedule = isServerSchedule;
     }
 
     /**
-     * Checks if is client protocol.
+     * Sets if it is client protocol schedule.
      *
-     * @return false, if is client protocol schedule, else server protocol schedule
+     * @return false, if the event is a client protocol schedule. true, if
+     *	server.
      */
     public boolean isServerSchedule() {
         return isServerSchedule;
     }
 
     /**
-     * Sets the protocol
+     * Sets the protocol.
      *
      * @param protocol the protocol
      */
@@ -65,7 +74,7 @@ public class VSProtocolScheduleEvent extends VSAbstractEvent {
     }
 
     /**
-     * Gets the protocol
+     * Gets the protocol.
      *
      * @return the protocol
      */

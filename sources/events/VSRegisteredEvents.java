@@ -11,9 +11,15 @@ import core.*;
 import utils.*;
 
 /**
- * The Class VSRegisteredEvents.
+ * The Class VSRegisteredEvents. This class is responsible to manage all
+ * events. It manages the event classnames, the event shortnames and the event
+ * names. It also checks if a protocol (which is an event as well) has
+ * variables which are editable through the GUI of the simulator.
+ *
+ * @author Paul C. Buetow
  */
 public final class VSRegisteredEvents {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The event classnames by eventnames. */
@@ -56,20 +62,33 @@ public final class VSRegisteredEvents {
     public static void init(VSPrefs prefs_) {
         prefs = prefs_;
 
-        registerEvent("events.implementations.VSProcessCrashEvent", "Prozessabsturz", null);
-        registerEvent("events.implementations.VSProcessRecoverEvent", "Prozesswiederbelebung", null);
-        registerEvent("protocols.implementations.VSBerkelyTimeProtocol", "Berkeley Algorithmus zur internen Sync.", "Berkeley");
-        registerEvent("protocols.implementations.VSBroadcastSturmProtocol", "Broadcaststurm", null);
-        registerEvent("protocols.implementations.VSDummyProtocol", "Beispiel/Dummy", null);
-        registerEvent("protocols.implementations.VSExternalTimeSyncProtocol", "Christians Methode zur externen Sync.", "Christians");
-        registerEvent("protocols.implementations.VSInternalTimeSyncProtocol", "Interne Synchronisation", "Interne Sync.");
-        registerEvent("protocols.implementations.VSPingPongProtocol", "Ping Pong", null);
-        registerEvent("protocols.implementations.VSOnePhaseCommitProtocol", "Ein-Phasen Commit", "1-Phasen Commit");
-        registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol", "Zwei-Phasen Commit", "2-Phasen Commit");
-        registerEvent("protocols.implementations.VSBasicMulticastProtocol", "Basic Multicast", "Basic Multicast");
-        registerEvent("protocols.implementations.VSReliableMulticastProtocol", "Reliable Multicast", "Reliable Multicast");
+        registerEvent("events.implementations.VSProcessCrashEvent",
+                      "Prozessabsturz", null);
+        registerEvent("events.implementations.VSProcessRecoverEvent",
+                      "Prozesswiederbelebung", null);
+        registerEvent("protocols.implementations.VSBasicMulticastProtocol",
+                      "Basic Multicast", "Basic Multicast");
+        registerEvent("protocols.implementations.VSBerkelyTimeProtocol",
+                      "Berkeley Algorithmus zur internen Sync.", "Berkeley");
+        registerEvent("protocols.implementations.VSBroadcastSturmProtocol",
+                      "Broadcaststurm", null);
+        registerEvent("protocols.implementations.VSDummyProtocol",
+                      "Beispiel/Dummy", null);
+        registerEvent("protocols.implementations.VSExternalTimeSyncProtocol",
+                      "Christians Methode zur externen Sync.", "Christians");
+        registerEvent("protocols.implementations.VSInternalTimeSyncProtocol",
+                      "Interne Synchronisation", "Interne Sync.");
+        registerEvent("protocols.implementations.VSOnePhaseCommitProtocol",
+                      "Ein-Phasen Commit", "1-Phasen Commit");
+        registerEvent("protocols.implementations.VSPingPongProtocol",
+                      "Ping Pong", null);
+        registerEvent("protocols.implementations.VSReliableMulticastProtocol",
+                      "Reliable Multicast", "Reliable Multicast");
+        registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol",
+                      "Zwei-Phasen Commit", "2-Phasen Commit");
 
-        /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
+        /* Make dummy objects of each protocol, to see if they contain VSPrefs
+           values to edit */
         Vector<String> protocolClassnames = getProtocolClassnames();
         VSClassLoader classLoader = new VSClassLoader();
 
@@ -80,8 +99,10 @@ public final class VSRegisteredEvents {
             if (clientObject instanceof protocols.VSAbstractProtocol &&
                     serverObject instanceof protocols.VSAbstractProtocol) {
 
-                protocols.VSAbstractProtocol serverProtocol = (protocols.VSAbstractProtocol) serverObject;
-                protocols.VSAbstractProtocol clientProtocol = (protocols.VSAbstractProtocol) clientObject;
+                protocols.VSAbstractProtocol serverProtocol =
+                    (protocols.VSAbstractProtocol) serverObject;
+                protocols.VSAbstractProtocol clientProtocol =
+                    (protocols.VSAbstractProtocol) clientObject;
 
                 serverProtocol.onServerInit();
                 clientProtocol.onClientInit();
@@ -102,7 +123,8 @@ public final class VSRegisteredEvents {
                 }
 
                 if (serverProtocol.hasOnServerStart())
-                    isOnServerStartProtocol.put(protocolClassname, new Boolean(true));
+                    isOnServerStartProtocol.put(protocolClassname,
+                                                new Boolean(true));
             }
         }
     }
@@ -117,20 +139,22 @@ public final class VSRegisteredEvents {
     }
 
     /**
-     * Gets the protocols server variable names
+     * Gets the protocols server variable names.
      *
      * @return The variable names
      */
-    public static ArrayList<String> getProtocolServerVariables(String protocolClassname) {
+    public static ArrayList<String> getProtocolServerVariables(
+        String protocolClassname) {
         return serverVariables.get(protocolClassname);
     }
 
     /**
-     * Gets the protocols server variable names
+     * Gets the protocols server variable names.
      *
      * @return The variable names
      */
-    public static ArrayList<String> getProtocolClientVariables(String protocolClassname) {
+    public static ArrayList<String> getProtocolClientVariables(
+        String protocolClassname) {
         return clientVariables.get(protocolClassname);
     }
 
@@ -144,7 +168,8 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassnameByEventname(eventName).startsWith("protocols.implementations"))
+            if (getClassnameByEventname(eventName).startsWith(
+                        "protocols.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -182,7 +207,8 @@ public final class VSRegisteredEvents {
         Vector<String> vector = new Vector<String>();
 
         for (String eventName : set)
-            if (getClassnameByEventname(eventName).startsWith("events.implementations"))
+            if (getClassnameByEventname(eventName).startsWith(
+                        "events.implementations"))
                 vector.add(eventName);
 
         Collections.sort(vector);
@@ -260,8 +286,10 @@ public final class VSRegisteredEvents {
      * @return true if onServerStart, false if onClientStart
      */
     public static boolean isOnServerStartProtocol(String protocolClassname) {
-        if (isOnServerStartProtocol.containsKey(protocolClassname))
-            return isOnServerStartProtocol.get(protocolClassname).booleanValue();
+        if (isOnServerStartProtocol.containsKey(protocolClassname)) {
+            Boolean bool = isOnServerStartProtocol.get(protocolClassname);
+            return bool.booleanValue();
+        }
 
         return false;
     }
@@ -272,10 +300,11 @@ public final class VSRegisteredEvents {
      * @param eventClassname the event classname
      * @param process the process
      *
-     * @return the lang.process.removeevent
+     * @return An instance of the event classname, if exists. Else null.
      */
-    public static VSAbstractEvent createEventInstanceByClassname(String eventClassname, VSProcess process) {
-        final Object protocolObj = new VSClassLoader().newInstance(eventClassname);
+    public static VSAbstractEvent createEventInstanceByClassname(
+        String eventClassname, VSProcess process) {
+        Object protocolObj = new VSClassLoader().newInstance(eventClassname);
 
         if (protocolObj instanceof VSAbstractEvent) {
             VSAbstractEvent event = (VSAbstractEvent) protocolObj;
@@ -292,20 +321,23 @@ public final class VSRegisteredEvents {
      * @param eventName the event name
      * @param process the process
      *
-     * @return the lang.process.removeevent
+     * @return An instance of the event, if exists. Else null.
      */
-    public static VSAbstractEvent createEventInstanceByName(String eventName, VSProcess process) {
-        return createEventInstanceByClassname(eventClassnamesByNames.get(eventName), process);
+    public static VSAbstractEvent createEventInstanceByName(String eventName,
+            VSProcess process) {
+        return createEventInstanceByClassname(
+                   eventClassnamesByNames.get(eventName), process);
     }
 
     /**
-     * Register event.
+     * Registers an event.
      *
      * @param eventClassname the event classname
      * @param eventName the event name
      * @param eventShortname the event shortname
      */
-    private static void registerEvent(String eventClassname, String eventName, String eventShortname) {
+    private static void registerEvent(String eventClassname, String eventName,
+                                      String eventShortname) {
         if (eventShortname == null)
             eventShortname = eventName;
 
