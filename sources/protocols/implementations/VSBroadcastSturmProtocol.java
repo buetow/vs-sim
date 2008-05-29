@@ -57,6 +57,7 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     public void onClientRecv(VSMessage recvMessage) {
+		onServerRecv(recvMessage);
     }
 
     /* (non-Javadoc)
