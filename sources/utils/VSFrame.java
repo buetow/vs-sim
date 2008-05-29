@@ -8,11 +8,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JFrame;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSFrame.
+ * The Class VSFrame. All frames of the simulator extend this VSFrame class.
+ * This class makes sure that all 'subwindows' get closed if its parent gets
+ * closed. And it also makes sure to open new windows relative to its parent.
+ *
+ * @author Paul C. Buetow
  */
 public class VSFrame extends JFrame {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The Constant X_LOCATION_OFFSET. */
@@ -21,14 +25,14 @@ public class VSFrame extends JFrame {
     /** The Constant Y_LOCATION_OFFSET. */
     private final static int Y_LOCATION_OFFSET = 80;
 
-    /** The parent. */
+    /** The parent window/component. */
     private Component parent;
 
-    /** The dispose. */
+    /** True, if the current window will get disposed with its parent.  */
     private boolean dispose;
 
     /**
-     * Instantiates a new lang.process.removeframe.
+     * Instantiates a VSFrame object.
      *
      * @param title the title
      * @param parent the parent
@@ -39,7 +43,7 @@ public class VSFrame extends JFrame {
     }
 
     /**
-     * Instantiates a new lang.process.removeframe.
+     * Instantiates a new VSFrame object.
      *
      * @param title the title
      */
@@ -49,7 +53,7 @@ public class VSFrame extends JFrame {
     }
 
     /**
-     * Inits the.
+     * Inits the VSFrame.
      *
      * @param parent the parent
      */
@@ -59,7 +63,7 @@ public class VSFrame extends JFrame {
     }
 
     /**
-     * Dispose with parent.
+     * Dispose with its parent.
      */
     public void disposeWithParent() {
         if (!dispose && parent != null && parent instanceof Window) {
@@ -74,11 +78,12 @@ public class VSFrame extends JFrame {
     }
 
     /**
-     * Sets the correct location.
+     * Sets the correct location of the window.
      */
     private void setCorrectLocation() {
         int x = 0, y = 0;
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension screenSize =
+            Toolkit.getDefaultToolkit().getScreenSize();
 
         if (parent == null) {
             x = (int) (screenSize.width - getWidth()) / 2;

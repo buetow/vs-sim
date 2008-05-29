@@ -8,24 +8,27 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSInfoArea.
+ * The Class VSInfoArea. An object of this class is used for some information
+ *areas. E.g. in the VSAbout class.
+ *
+ * @author Paul C. Buetow
  */
 public class VSInfoArea extends JTextPane {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new lang.process.removeinfo area.
+     * Instantiates a new VSInfoArea.
      */
     public VSInfoArea() {
         init();
     }
 
     /**
-     * Instantiates a new lang.process.removeinfo area.
+     * Instantiates a new VSInfoArea.
      *
-     * @param text the text
+     * @param text the text to display
      */
     public VSInfoArea(String text) {
         setText(text);
@@ -33,7 +36,7 @@ public class VSInfoArea extends JTextPane {
     }
 
     /**
-     * Inits the.
+     * Inits the info area.
      */
     private void init() {
         setOpaque(false);

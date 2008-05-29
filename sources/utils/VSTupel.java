@@ -5,9 +5,13 @@
 package utils;
 
 /**
- * The Class VSTupel.
+ * The Class VSTupel. An object of this class represents a 3-Tupel of objects.
+ * Each object can have its own type.
+ *
+ * @author Paul C. Buetow
  */
 public final class VSTupel<A,B,C> {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The a. */
@@ -20,7 +24,7 @@ public final class VSTupel<A,B,C> {
     private C c;
 
     /**
-     * Instantiates a new lang.process.removetupel.
+     * Instantiates a new tupel.
      *
      * @param a the a
      * @param b the b

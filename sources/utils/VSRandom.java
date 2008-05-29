@@ -6,17 +6,19 @@ package utils;
 
 import java.util.Random;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSRandom.
+ * The Class VSRandom. Some customization of the standard Random class of Java.
+ *
+ * @author Paul C. Buetow
  */
 public final class VSRandom extends Random {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new lang.process.removerandom.
+     * Instantiates a new VSrandom object.
      *
-     * @param seedAdd the seed add
+     * @param seedAdd the seed to add.
      */
     public VSRandom(long seedAdd) {
         super(seedAdd*System.currentTimeMillis()+seedAdd);
@@ -34,7 +36,7 @@ public final class VSRandom extends Random {
      *
      * @param mod the mod
      *
-     * @return the long
+     * @return the random long
      */
     public long nextLong(long mod) {
         return Math.abs((super.nextLong() + System.currentTimeMillis()) % mod);

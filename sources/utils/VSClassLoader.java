@@ -4,17 +4,18 @@
  */
 package utils;
 
-
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSClassLoader.
+ * The Class VSClassLoader. This class is used in order to create new objects
+ * by its classnames.
+ *
+ * @author Paul C. Buetow
  */
 public class VSClassLoader extends ClassLoader {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
-     * New instance.
+     * Creates a new instance of the given classname.
      *
      * @param classname the classname
      *
