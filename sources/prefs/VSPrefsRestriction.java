@@ -55,9 +55,9 @@ public class VSPrefsRestriction implements Serializable {
     }
 
     /**
-     * The Class StringVSPrefsRestriction.
+     * The Class VSStringPrefsRestriction.
      */
-    public static class StringVSPrefsRestriction extends VSPrefsRestriction {
+    public static class VSStringPrefsRestriction extends VSPrefsRestriction {
         private static final long serialVersionUID = 1L;
 
         /** The possible selections. */
@@ -68,7 +68,7 @@ public class VSPrefsRestriction implements Serializable {
          *
          * @param possibleSelections the possible selections
          */
-        public StringVSPrefsRestriction(String [] possibleSelections) {
+        public VSStringPrefsRestriction(String [] possibleSelections) {
             this.possibleSelections = new Vector<String>();
 
             for (String elem : possibleSelections)

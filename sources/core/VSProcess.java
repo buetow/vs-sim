@@ -886,7 +886,7 @@ public class VSProcess extends VSPrefs {
      *
      * @return the simulation canvas
      */
-    public VSSimulatorCanvas getSimulationCanvas() {
+    public VSSimulatorCanvas getSimulatorCanvas() {
         return simulationCanvas;
     }
 
@@ -915,7 +915,7 @@ public class VSProcess extends VSPrefs {
      *
      * @param index the index the process has to get removed.
      */
-    public void removeProcessAtIndex(int index) {
+    public void removedAProcessAtIndex(int index) {
         if (index < processNum)
             --processNum;
 

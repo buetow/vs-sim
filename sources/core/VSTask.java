@@ -45,6 +45,12 @@ public class VSTask implements Comparable {
     /** The simulation's default prefs. */
     private VSPrefs prefs;
 
+    /** The message line, which gets drawn by the simulation canvas. this
+     * reference is needed here in order to remove the message line from
+     * the painting area if the message is not relevant
+     */
+    private simulator.VSSimulatorCanvas.VSMessageLine messageLine;
+
     /** The task is programmed. The task will be still in the task manager
      * after reset.
      */
@@ -189,12 +195,30 @@ public class VSTask implements Comparable {
     }
 
     /**
+     * Sets the message line.
+     *
+     * @messageLine the message line
+     */
+    public void setMessageLine(simulator.VSSimulatorCanvas.VSMessageLine
+                               messageLine) {
+        this.messageLine = messageLine;
+    }
+
+    /**
      * Runs the task.
      */
     public void run() {
         if (event.getProcess() == null)
             event.init(process);
-        event.onStart();
+
+        if (messageLine != null) {
+            System.out.println("FO");
+            if (!event.onStart())
+                process.getSimulatorCanvas().removeMessageLine(messageLine);
+        } else {
+            System.out.println("BA");
+            event.onStart();
+        }
     }
 
     /**

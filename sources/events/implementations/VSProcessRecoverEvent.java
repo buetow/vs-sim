@@ -22,10 +22,12 @@ public class VSProcessRecoverEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public void onStart() {
+    public boolean onStart() {
         if (process.isCrashed()) {
             process.isCrashed(false);
             logg(prefs.getString("lang.recovered"));
         }
+
+        return true;
     }
 }

@@ -51,7 +51,12 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
 
         process.increaseLamportTime();
         process.increaseVectorTime();
-        message.init(process, getClassname());
+
+        if (currentContextIsServer)
+            message.init(process, getClassname(), VSMessage.IS_SERVER_MESSAGE);
+        else
+            message.init(process, getClassname(), VSMessage.IS_CLIENT_MESSAGE);
+
         process.sendMessage(message);
     }
 
@@ -69,7 +74,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public final void onStart() {
+    public final boolean onStart() {
         if (hasOnServerStart) {
             if (isServer) {
                 currentContextIsServer(true);
@@ -81,6 +86,8 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
                 onClientStart();
             }
         }
+
+        return true;
     }
 
     /* (non-Javadoc)
@@ -107,7 +114,6 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             onClientSchedule();
         }
     }
-
 
     /**
      * Runs a server schedule
@@ -137,6 +143,31 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             currentContextIsServer(false);
             onClientRecv(message);
         }
+    }
+
+    /**
+     * Check's if its a relevant message.
+     *
+     * @param message the message to check
+     *
+     * @return true, if it's a relevant meessage. false if the protocol
+     *	is wrong or if the server recv a server message/the client recv a
+     * 	client message. Clients should only recv server messages and servers
+     *	should only recv client messages.
+     */
+    public final boolean isRelevantMessage(VSMessage message) {
+        if (isIncorrectProtocol(message))
+            return false;
+
+        if (message.isServerMessage()) {
+            if (isServer)
+                return false;
+        } else {
+            if (isClient)
+                return false;
+        }
+
+        return true;
     }
 
     /**
@@ -224,7 +255,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             serverSchedules.add(scheduleTask);
         else
             clientSchedules.add(scheduleTask);
-        process.getSimulationCanvas().getTaskManager().addTask(scheduleTask);
+        process.getSimulatorCanvas().getTaskManager().addTask(scheduleTask);
     }
 
     /**
@@ -232,10 +263,10 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void removeSchedules() {
         if (currentContextIsServer) {
-            process.getSimulationCanvas().getTaskManager().removeAllTasks(serverSchedules);
+            process.getSimulatorCanvas().getTaskManager().removeAllTasks(serverSchedules);
             serverSchedules.clear();
         } else {
-            process.getSimulationCanvas().getTaskManager().removeAllTasks(clientSchedules);
+            process.getSimulatorCanvas().getTaskManager().removeAllTasks(clientSchedules);
             clientSchedules.clear();
         }
     }
@@ -303,7 +334,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (process == null)
             return 0;
 
-        return process.getSimulationCanvas().getNumProcesses();
+        return process.getSimulatorCanvas().getNumProcesses();
     }
 
     /* (non-Javadoc)

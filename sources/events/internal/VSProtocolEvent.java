@@ -77,8 +77,9 @@ public class VSProtocolEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public void onStart() {
-        VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
+    public boolean onStart() {
+        VSAbstractProtocol protocol = process.getProtocolObject(
+                                          protocolClassname);
 
         if (isClientProtocol)
             protocol.isClient(isProtocolActivation);
@@ -87,13 +88,21 @@ public class VSProtocolEvent extends VSAbstractEvent {
             protocol.isServer(isProtocolActivation);
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append(VSRegisteredEvents.getShortnameByClassname(protocolClassname));
+        buffer.append(VSRegisteredEvents.getShortnameByClassname(
+                          protocolClassname));
+
         buffer.append(" ");
         buffer.append(isClientProtocol
-                      ? prefs.getString("lang.client") : prefs.getString("lang.server"));
+                      ? prefs.getString("lang.client")
+                      : prefs.getString("lang.server"));
+
         buffer.append(" ");
         buffer.append(isProtocolActivation
-                      ? prefs.getString("lang.activated") : prefs.getString("lang.deactivated"));
+                      ? prefs.getString("lang.activated")
+                      : prefs.getString("lang.deactivated"));
+
         logg(buffer.toString());
+
+        return true;
     }
 }

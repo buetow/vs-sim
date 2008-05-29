@@ -132,6 +132,9 @@ abstract public class VSAbstractEvent extends VSPrefs {
 
     /**
      * On start.
+     *
+     * @return false, if a message has been delivered but is not relevant and
+     *	can get removed from the simulator canvas paint area. true otherwise.
      */
-    abstract public void onStart();
+    abstract public boolean onStart();
 }

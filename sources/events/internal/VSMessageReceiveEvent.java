@@ -36,31 +36,39 @@ public class VSMessageReceiveEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public void onStart() {
+    public boolean onStart() {
+        boolean returnValue = true;
+        boolean onlyRelevantMessages = process.getPrefs().
+                                       getBoolean("sim.messages.relevant");
+
         String eventName = message.getName();
         String protocolClassname = message.getProtocolClassname();
-
-        process.updateLamportTime(message.getLamportTime()+1);
-        process.updateVectorTime(message.getVectorTime());
 
         Object protocolObj = null;
 
         if (process.objectExists(protocolClassname))
             protocolObj = process.getObject(protocolClassname);
 
+        if (onlyRelevantMessages) {
+            if (protocolObj == null)
+                return false;
+
+            if (!((VSAbstractProtocol) protocolObj).isRelevantMessage(message))
+                return false;
+        }
+
+        process.updateLamportTime(message.getLamportTime()+1);
+        process.updateVectorTime(message.getVectorTime());
+
         StringBuffer buffer = new StringBuffer();
         buffer.append(prefs.getString("lang.message.recv"));
         buffer.append("; ");
         buffer.append(message);;
+        logg(buffer.toString());
 
-        if (protocolObj == null) {
-            logg(buffer.toString());
+        if (protocolObj != null)
+            ((VSAbstractProtocol) protocolObj).onMessageRecvStart(message);
 
-        } else {
-            final VSAbstractProtocol protocol = (VSAbstractProtocol) protocolObj;
-            logg(buffer.toString());
-            protocol.onMessageRecvStart(message);
-        }
-
+        return true;
     }
 }

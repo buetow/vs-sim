@@ -18,6 +18,17 @@ public class VSMessage extends VSPrefs {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
+    /** The constant IS_SERVER_MESSAGE. */
+    public static final boolean IS_SERVER_MESSAGE = true;
+
+    /** The constant IS_CLIENT_MESSAGE. */
+    public static final boolean IS_CLIENT_MESSAGE = false;
+
+    /** true, if the message has been sent from a server. false, if the message
+     * has been sent from a client.
+     */
+    private boolean isServerMessage;
+
     /** Each message belongs to a specific protocol. This variable defined the
      * class name of the protocol being used.
      */
@@ -61,10 +72,13 @@ public class VSMessage extends VSPrefs {
      *
      * @param process The sending process of this message.
      * @param protocolClassname The classname of the protocol this message.
+     * @param isServerMessage Sets if the message has been sent by a server.
      */
-    public void init(VSProcess process, String protocolClassname) {
+    public void init(VSProcess process, String protocolClassname,
+                     boolean isServerMessage) {
         this.sendingProcess = process;
         this.protocolClassname = protocolClassname;
+        this.isServerMessage = isServerMessage;
         this.prefs = process.getPrefs();
 
         lamportTime = sendingProcess.getLamportTime();
@@ -123,6 +137,16 @@ public class VSMessage extends VSPrefs {
      */
     public VSVectorTime getVectorTime() {
         return vectorTime;
+    }
+
+    /**
+     * Checks if the message has been sent by a server or a client.
+     *
+     * @return true, if the message has been sent by a server. false, if the
+     *	message has been sent by a clien.
+     */
+    public boolean isServerMessage() {
+        return isServerMessage;
     }
 
     /* (non-Javadoc)

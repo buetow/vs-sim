@@ -1,7 +1,6 @@
 TODO:
 Basic Multicast
 Reliable Multicast
-Non-Multicast Nachrichten
 VSSimulationCanvas calls VSProcess.resetProcessCounter Bugfix!
 
 Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen

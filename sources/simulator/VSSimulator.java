@@ -1137,7 +1137,7 @@ public class VSSimulator extends JPanel {
      *
      * @return the simulation canvas
      */
-    public VSSimulatorCanvas getSimulationCanvas() {
+    public VSSimulatorCanvas getSimulatorCanvas() {
         return simulationCanvas;
     }
 
@@ -1163,7 +1163,7 @@ public class VSSimulator extends JPanel {
      *
      * @param index the index
      */
-    public void removeProcessAtIndex(int index) {
+    public void removedAProcessAtIndex(int index) {
         if (lastSelectedProcessNum > index)
             --lastSelectedProcessNum;
 

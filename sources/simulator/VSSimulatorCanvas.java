@@ -163,7 +163,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
     /**
      * The Class VSMessageLine.
      */
-    private class VSMessageLine {
+    public class VSMessageLine {
 
         /** The receiver process. */
         private VSProcess receiverProcess;
@@ -236,7 +236,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
          * @param receiverNum the receiver num
          * @param task the task
          */
-        public VSMessageLine(VSProcess receiverProcess, long sendTime, long recvTime, long outageTime, int senderNum , int receiverNum, VSTask task) {
+        public VSMessageLine(VSProcess receiverProcess, long sendTime,
+                             long recvTime, long outageTime, int senderNum ,
+                             int receiverNum, VSTask task) {
             this.receiverProcess = receiverProcess;
             this.sendTime = sendTime;
             this.recvTime = recvTime;
@@ -247,6 +249,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
             this.isLost = false;
             this.messageLineNum = ++messageLineCounter;
             this.task = task;
+            task.setMessageLine(this);
 
             if (senderNum > receiverNum) {
                 //offset1 = 1;
@@ -323,7 +326,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
          *
          * @return true, if successful
          */
-        public boolean removeProcessAtIndex(int index) {
+        public boolean removedAProcessAtIndex(int index) {
             if (index == receiverNum || index == senderNum)
                 return true;
 
@@ -1033,7 +1036,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
      */
     public void sendMessage(VSMessage message) {
         VSTask task = null;
-        VSAbstractEvent messageReceiveEvent = null;
+        VSAbstractEvent receiveEvent = null;
         VSProcess sendingProcess = message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
@@ -1043,8 +1046,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                 if (receiverProcess.equals(sendingProcess)) {
                     if (recvOwn) {
                         deliverTime = sendingProcess.getGlobalTime();
-                        messageReceiveEvent = new VSMessageReceiveEvent(message);
-                        task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
+                        receiveEvent = new VSMessageReceiveEvent(message);
+                        task = new VSTask(deliverTime, receiverProcess,
+                                          receiveEvent, VSTask.GLOBAL);
                         taskManager.addTask(task);
                     }
 
@@ -1059,18 +1063,23 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
                         outageTime = sendingProcess.getARandomMessageOutageTime(
                                          durationTime, null);
 
-                    /* Only add a 'receiving message' task if the message will not get lost! */
+                    /* Only add a 'receiving message' task if the message will
+                       not get lost! */
                     if (outageTime == -1) {
-                        messageReceiveEvent = new VSMessageReceiveEvent(message);
-                        task = new VSTask(deliverTime, receiverProcess, messageReceiveEvent, VSTask.GLOBAL);
+                        receiveEvent = new VSMessageReceiveEvent(message);
+                        task = new VSTask(deliverTime, receiverProcess,
+                                          receiveEvent, VSTask.GLOBAL);
                         taskManager.addTask(task);
                     }
 
                     synchronized (messageLines) {
                         messageLines.add(
-                            new VSMessageLine(receiverProcess, sendingProcess.getGlobalTime(),
-                                              deliverTime, outageTime, sendingProcess.getProcessNum(),
-                                              receiverProcess.getProcessNum(), task));
+                            new VSMessageLine(receiverProcess,
+                                              sendingProcess.getGlobalTime(),
+                                              deliverTime, outageTime,
+                                              sendingProcess.getProcessNum(),
+                                              receiverProcess.getProcessNum(),
+                                              task));
                     }
                 }
             }
@@ -1288,6 +1297,17 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
     }
 
     /**
+     * Removes the message line.
+     *
+     * @param messageLine the message line to remove
+     */
+    public void removeMessageLine(VSMessageLine messageLine) {
+        synchronized (messageLines) {
+            messageLines.remove(messageLine);
+        }
+    }
+
+    /**
      * Removes the process.
      *
      * @param process the process
@@ -1299,25 +1319,32 @@ public class VSSimulatorCanvas extends Canvas implements Runnable, MouseMotionLi
         } else {
             int index = processes.indexOf(process);
             processes.remove(index);
+
             synchronized (processes) {
                 for (VSProcess p : processes) {
-                    p.removeProcessAtIndex(index);
+                    p.removedAProcessAtIndex(index);
                 }
             }
+
             numProcesses = processes.size();
             taskManager.removeTasksOf(process);
-            simulation.removeProcessAtIndex(index);
+            simulation.removedAProcessAtIndex(index);
             recalcOnChange();
 
-            ArrayList<VSMessageLine> removeThose = new ArrayList<VSMessageLine>();
+            ArrayList<VSMessageLine> removeThose =
+                new ArrayList<VSMessageLine>();
+
             synchronized (messageLines) {
                 for (VSMessageLine line : messageLines)
-                    if (line.removeProcessAtIndex(index))
+                    if (line.removedAProcessAtIndex(index))
                         removeThose.add(line);
+
                 for (VSMessageLine line : removeThose) {
                     VSTask deliverTask = line.getTask();
+
                     if (deliverTask != null)
                         taskManager.removeTask(deliverTask);
+
                     messageLines.remove(line);
                 }
             }

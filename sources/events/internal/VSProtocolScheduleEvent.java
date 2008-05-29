@@ -76,10 +76,12 @@ public class VSProtocolScheduleEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public void onStart() {
+    public boolean onStart() {
         if (isServerSchedule)
             protocol.onServerScheduleStart();
         else
             protocol.onClientScheduleStart();
+
+        return true;
     }
 }
