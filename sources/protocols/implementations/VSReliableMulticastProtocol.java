@@ -8,16 +8,16 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class VSBasicMulticastProtocol.
+ * The Class VSReliableMulticastProtocol.
  */
-public class VSBasicMulticastProtocol extends VSAbstractProtocol {
-	/** The serial version uid */
+public class VSReliableMulticastProtocol extends VSAbstractProtocol {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
      * Instantiates a new dummy protocol.
      */
-    public VSBasicMulticastProtocol() {
+    public VSReliableMulticastProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
     }

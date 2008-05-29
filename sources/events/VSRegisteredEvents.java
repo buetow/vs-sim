@@ -66,6 +66,8 @@ public final class VSRegisteredEvents {
         registerEvent("protocols.implementations.VSPingPongProtocol", "Ping Pong", null);
         registerEvent("protocols.implementations.VSOnePhaseCommitProtocol", "Ein-Phasen Commit", "1-Phasen Commit");
         registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol", "Zwei-Phasen Commit", "2-Phasen Commit");
+        registerEvent("protocols.implementations.VSBasicMulticastProtocol", "Basic Multicast", "Basic Multicast");
+        registerEvent("protocols.implementations.VSReliableMulticastProtocol", "Reliable Multicast", "Reliable Multicast");
 
         /* Make dummy objects of each protocol, to see if they contain VSPrefs values to edit */
         Vector<String> protocolClassnames = getProtocolClassnames();

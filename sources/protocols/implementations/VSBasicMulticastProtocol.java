@@ -4,31 +4,22 @@
  */
 package protocols.implementations;
 
-import java.util.ArrayList;
-
-import core.VSMessage;
 import protocols.VSAbstractProtocol;
+import core.VSMessage;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSBroadcastSturmProtocol.
+ * The Class VSBasicMulticastProtocol.
  */
-public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
+public class VSBasicMulticastProtocol extends VSAbstractProtocol {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** The sent messages. */
-    private ArrayList<VSMessage> sentMessages;
-
-    /** The broadcast count. */
-    private static int broadcastCount;
-
     /**
-     * Instantiates a new broadcast sturm protocol.
+     * Instantiates a new dummy protocol.
      */
-    public VSBroadcastSturmProtocol() {
+    public VSBasicMulticastProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
-        sentMessages = new ArrayList<VSMessage>();
     }
 
     /* (non-Javadoc)
@@ -47,17 +38,12 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
     public void onClientStart() {
-        VSMessage message = new VSMessage();
-        message.setInteger("Broadcast", broadcastCount++);
-        sentMessages.add(message);
-        sendMessage(message);
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     public void onClientRecv(VSMessage recvMessage) {
-        onServerRecv(recvMessage);
     }
 
     /* (non-Javadoc)
@@ -76,26 +62,18 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     public void onServerReset() {
-        sentMessages.clear();
-    }
-
-    /* (non-Javadoc)
-     * @see protocols.VSAbstractProtocol#onServerSchedule()
-     */
-    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
-        if (!sentMessages.contains(recvMessage)) {
-            VSMessage message = new VSMessage();
-            message.setInteger("Broadcast", recvMessage.getInteger("Broadcast"));
+    }
 
-            sentMessages.add(message);
-            sendMessage(message);
-        }
+    /* (non-Javadoc)
+     * @see protocols.VSAbstractProtocol#onServerSchedule()
+     */
+    public void onServerSchedule() {
     }
 
     /* (non-Javadoc)
