@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- * 
- * All icons of the icons/ folder are 	under a Creative Commons 
- * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa. 
- * 
+ *
+ * All icons of the icons/ folder are 	under a Creative Commons
+ * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa.
+ *
  * The icon's homepage is http://code.google.com/p/ultimate-gnome/
  */
 
@@ -31,7 +31,10 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * The class VSBerkelyTimeProtocol.
+ * The class VSBerkelyTimeProtocol, an implementation of the berkely time
+ * protocol.
+ *
+ * @author Paul C. Buetow
  */
 public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
@@ -47,13 +50,17 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
     /** Integer: Process ID, Long: Local time of the process */
     private HashMap<Integer,Long> processTimes = new HashMap<Integer,Long>();
 
-    /** Integer: Process ID, Long: Time of receiving the response from the process */
+    /** Integer: Process ID, Long: Time of receiving the response from the
+     * process
+     */
     private HashMap<Integer,Long> recvTimes = new HashMap<Integer,Long>();
 
     /** Integer: Process ID, Long: Calculated process times (using the RTT) */
     private HashMap<Integer,Long> realTimesRTT = new HashMap<Integer,Long>();
 
-    /** Contains all process IDs of processes which want to justify their time */
+    /** Contains all process IDs of processes which want to justify their
+     * time
+     */
     private ArrayList<Integer> peers = new ArrayList<Integer>();
 
     /** Time the request/response has started */
@@ -63,7 +70,6 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
      * @see events.VSAbstractProtocol#onServerInit()
      */
     public void onServerInit() {
-        /* Those prefs are editable through the VSAbstractProtocol VSAbstractEditor GUI. */
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(2);
         vec.add(3);
@@ -96,7 +102,8 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
-        /* Ignore all protocol messages which are not a response message, e.g. itself */
+        /* Ignore all protocol messages which are not a response message,
+           e.g. itself */
         if (!recvMessage.getBoolean("isResponse"))
             return;
 
@@ -117,7 +124,8 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
             long avgTime = calculateAverageTime();
             /* Set the local's process time to the new avg reference time */
             process.setTime(avgTime);
-            /* Tell all other processes what to do in order to justify their times */
+            /* Tell all other processes what to do in order to justify their
+               times */
             sendJustifyRequests(avgTime);
             /* Start "clean" next time */
             onServerReset();
@@ -192,7 +200,8 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
 
         } else if (recvMessage.getBoolean("isJustify")) {
             /* Check if it's "my" justify message */
-            if (recvMessage.getInteger("receiverProcessID") != process.getProcessID())
+            if (recvMessage.getInteger("receiverProcessID") !=
+                    process.getProcessID())
                 return;
 
             long timeDiff = recvMessage.getLong("timeDiff");

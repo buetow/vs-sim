@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- * 
- * All icons of the icons/ folder are 	under a Creative Commons 
- * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa. 
- * 
+ *
+ * All icons of the icons/ folder are 	under a Creative Commons
+ * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa.
+ *
  * The icon's homepage is http://code.google.com/p/ultimate-gnome/
  */
 
@@ -30,13 +30,17 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The class VSTwoPhaseCommitProtocol.
+ * The class VSTwoPhaseCommitProtocol, an implementation of the two phase
+ * commit protocol.
+ *
+ * @author Paul C. Buetow
  */
 public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a one phase commit protocol.
+     * Instantiates a one phase commit protocol object.
      */
     public VSTwoPhaseCommitProtocol() {
         super(VSAbstractProtocol.HAS_ON_SERVER_START);
@@ -46,7 +50,9 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
     /** PIDs of all processes which still have to vote */
     private ArrayList<Integer> votePids;
 
-    /** PIDs of all processes which have to acknowledge that they recv the global vote result */
+    /** PIDs of all processes which have to acknowledge that they recv the
+     * global vote result
+     */
     private ArrayList<Integer> ackPids;
 
     /** The gloal vote result */
@@ -91,7 +97,8 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
 
         if (votePids.size() != 0) {
             long timeout = getLong("timeout") + process.getTime();
-            scheduleAt(timeout); /* Will run onServerSchedule() at the specified local time */
+            /* Will run onServerSchedule() at the specified local time */
+            scheduleAt(timeout);
 
             VSMessage message = new VSMessage();
             message.setBoolean("wantVote", true);
@@ -99,7 +106,8 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
 
         } else if (ackPids.size() != 0) {
             long timeout = getLong("timeout") + process.getTime();
-            scheduleAt(timeout); /* Will run onServerSchedule() at the specified local time */
+            /* Will run onServerSchedule() at the specified local time */
+            scheduleAt(timeout);
 
             VSMessage message = new VSMessage();
             message.setBoolean("isVoteResult", true);
@@ -120,18 +128,23 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
                 return;
 
             boolean vote = recvMessage.getBoolean("vote");
-            logg("Abstimmung von Prozess " + pid + " erhalten! Ergebnis: " + vote);
+            logg("Abstimmung von Prozess " + pid +
+                 " erhalten! Ergebnis: " + vote);
 
             if (!vote)
                 voteResult = false;
 
             if (votePids.size() == 0) {
-                logg("Abstimmungen von allen beteiligten Prozessen erhalten! Globales Ergebnis: " + voteResult);
-                /* Remove the active schedule which has been created in the onServerStart method */
+                logg("Abstimmungen von allen beteiligten Prozessen " +
+                     "erhalten! Globales Ergebnis: " + voteResult);
+
+                /* Remove the active schedule which has been created in the
+                   onServerStart method */
                 removeSchedules();
                 /* Create a new schedule and send the vote result */
                 onServerStart();
             }
+
         } else if (ackPids.size() != 0 && recvMessage.getBoolean("isAck")) {
             Integer pid = recvMessage.getIntegerObj("pid");
             if (ackPids.contains(pid))
@@ -140,7 +153,8 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
                 return;
 
             if (ackPids.size() == 0) {
-                /* Remove the active schedule which has been created in the onServerStart method */
+                /* Remove the active schedule which has been created in the
+                   onServerStart method */
                 removeSchedules();
                 logg("Alle Teilnehmer haben die Abstimmung erhalten");
             }
@@ -192,7 +206,8 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
 
         } else if (recvMessage.getBoolean("isVoteResult")) {
             boolean voteResult = recvMessage.getBoolean("voteResult");
-            logg("Globales Abstimmungsergebnis erhalten. Ergebnis: " + voteResult);
+            logg("Globales Abstimmungsergebnis erhalten. Ergebnis: " +
+                 voteResult);
 
             VSMessage message = new VSMessage();
             message.setBoolean("isAck", true);

@@ -1,23 +1,23 @@
 /*
  * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- * 
- * All icons of the icons/ folder are 	under a Creative Commons 
- * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa. 
- * 
+ *
+ * All icons of the icons/ folder are 	under a Creative Commons
+ * Attribution-Noncommercial-Share Alike License a CC-by-nc-sa.
+ *
  * The icon's homepage is http://code.google.com/p/ultimate-gnome/
  */
 
@@ -26,21 +26,24 @@ package protocols.implementations;
 import core.VSMessage;
 import protocols.VSAbstractProtocol;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSExternalTimeSyncProtocol.
+ * The class VSExternalTimeSyncProtocol, an implementation of the external
+ * time synchronisation protocol.
+ *
+ * @author Paul C. Buetow
  */
 public class VSExternalTimeSyncProtocol extends VSAbstractProtocol {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The request time. */
     private long requestTime;
 
-    /** The waiting for response. */
+    /** The server is waiting for response, if true. */
     private boolean waitingForResponse;
 
     /**
-     * Instantiates a new external time sync protocol.
+     * Instantiates a new external time sync protocol object.
      */
     public VSExternalTimeSyncProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
@@ -89,7 +92,9 @@ public class VSExternalTimeSyncProtocol extends VSAbstractProtocol {
         long serverTime = recvMessage.getLong("time");
         long newTime = serverTime + (long) (roundTripTime / 2);
 
-        logg("Server Zeit: " + serverTime + "; RTT: " + roundTripTime + "; Alte Zeit: " + recvTime + "; Neue Zeit: " + newTime + "; Offset: " + (newTime - recvTime));
+        logg("Server Zeit: " + serverTime + "; RTT: " + roundTripTime +
+             "; Alte Zeit: " + recvTime + "; Neue Zeit: " + newTime +
+             "; Offset: " + (newTime - recvTime));
         process.setTime(newTime);
     }
 
@@ -135,6 +140,6 @@ public class VSExternalTimeSyncProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
-        return super.toString(); //+ "; " + prefs.getString("lang.requesttime") + ": " + requestTime;
+        return super.toString();
     }
 }
