@@ -7,7 +7,7 @@ package utils;
 import java.util.Random;
 
 /**
- * The Class VSRandom. Some customization of the standard Random class of Java.
+ * The class VSRandom. Some customization of the standard Random class of Java.
  *
  * @author Paul C. Buetow
  */

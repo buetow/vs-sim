@@ -13,7 +13,7 @@ import utils.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSAbstractBetterEditor.
+ * The class VSAbstractBetterEditor.
  */
 public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * The Class VSPrefs.
+ * The class VSPrefs.
  */
 public class VSPrefs implements Serializable {
     /** The Constant BOOLEAN_PREFIX. */

@@ -14,7 +14,7 @@ import events.*;
 import prefs.VSPrefs;
 
 /**
- * The Class VSProcessEditor.
+ * The class VSProcessEditor.
  */
 public class VSProcessEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;

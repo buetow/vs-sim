@@ -16,7 +16,7 @@ import simulator.*;
 import utils.*;
 
 /**
- * The Class VSProcess. A object of this class represents a process of a
+ * The class VSProcess, an object of this class represents a process of a
  * simulation.
  *
  * @author Paul C. Buetow

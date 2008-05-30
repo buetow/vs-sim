@@ -8,7 +8,7 @@ import core.VSProcess;
 import prefs.VSPrefs;
 
 /**
- * The Class VSAbstractEvent. This abstract class defines the basic framework
+ * The class VSAbstractEvent. This abstract class defines the basic framework
  * of each event. an event is used to fullfill a specific task. An event object
  * will get stored in a VSTask object.
  *

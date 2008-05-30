@@ -19,7 +19,7 @@ import prefs.*;
 import prefs.editors.*;
 
 /**
- * The Class VSSimulatorCanvas. An instance of this object represents the
+ * The class VSSimulatorCanvas. An instance of this object represents the
  * graphical paint area of a simulation. It contains all graphic calculations.
  * Also the simulation thread takes place in this class in a loop! This class
  * is probably the most cryptic of the whole simulator source code. This is
@@ -202,7 +202,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     private long messageLineCounter;
 
     /**
-     * The Class VSMessageLine. An object of this class represents a message
+     * The class VSMessageLine, an object of this class represents a message
      * line drawn into the painting area.
      *
      * @author Paul C. Buetow

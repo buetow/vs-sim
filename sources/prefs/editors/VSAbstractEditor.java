@@ -14,7 +14,7 @@ import prefs.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSAbstractEditor.
+ * The class VSAbstractEditor.
  */
 public abstract class VSAbstractEditor implements ActionListener {
     private static final long serialVersionUID = 1L;

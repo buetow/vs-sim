@@ -7,7 +7,7 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class VSProcessCrashEvent. This event makes a process to crash.
+ * The class VSProcessCrashEvent. This event makes a process to crash.
  *
  * @author Paul C. Buetow
  */

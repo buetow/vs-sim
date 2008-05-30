@@ -8,8 +8,8 @@ import events.*;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSProtocolEvent. This event is used if a protocol (server or
- * client part) of a process gets enabled or disabled. An object of this class
+ * The class VSProtocolEvent. This event is used if a protocol (server or
+ * client part) of a process gets enabled or disabled, an object of this class
  * can be for 4 different purporses! Activation of the client protocol,
  * deactivation of the client protocol, activation of the server protocol,
  * deactivation of the server protocol.

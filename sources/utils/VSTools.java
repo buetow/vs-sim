@@ -7,7 +7,7 @@ package utils;
 import java.util.Vector;
 
 /**
- * The Class VSTools. This class contains only static methods. Those methods
+ * The class VSTools. This class contains only static methods. Those methods
  * are for general usage and don't fit into other classes.
  *
  * @author Paul C. Buetow

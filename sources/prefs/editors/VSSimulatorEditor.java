@@ -12,7 +12,7 @@ import prefs.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSSimulatorEditor.
+ * The class VSSimulatorEditor.
  */
 public class VSSimulatorEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;

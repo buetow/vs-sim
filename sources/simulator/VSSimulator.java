@@ -19,7 +19,7 @@ import prefs.editors.*;
 import utils.*;
 
 /**
- * The Class VSSimulator. An object of this class represents a whole simulation.
+ * The class VSSimulator, an object of this class represents a whole simulation.
  * It may be, that several parallel simulations exist. They are independent
  * fron each other.
  *
@@ -138,7 +138,7 @@ public class VSSimulator extends JPanel {
     private static int simulationNum;
 
     /**
-     * The Class VSTaskManagerTableModel. An object of this class handles
+     * The class VSTaskManagerTableModel, an object of this class handles
      * the task manager's JTable.
      */
     private class VSTaskManagerTableModel extends AbstractTableModel

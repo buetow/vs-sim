@@ -5,7 +5,7 @@
 package utils;
 
 /**
- * The Class VSTupel. An object of this class represents a 3-Tupel of objects.
+ * The class VSTupel, an object of this class represents a 3-Tupel of objects.
  * Each object can have its own type.
  *
  * @author Paul C. Buetow

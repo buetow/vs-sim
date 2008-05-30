@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.Vector;
 
 /**
- * The Class VSPrefsRestriction.
+ * The class VSPrefsRestriction.
  */
 public class VSPrefsRestriction implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The Class VSIntegerPrefRestriction.
+     * The class VSIntegerPrefRestriction.
      */
     public static class VSIntegerPrefRestriction extends VSPrefsRestriction {
         private static final long serialVersionUID = 1L;
@@ -55,7 +55,7 @@ public class VSPrefsRestriction implements Serializable {
     }
 
     /**
-     * The Class VSStringPrefsRestriction.
+     * The class VSStringPrefsRestriction.
      */
     public static class VSStringPrefsRestriction extends VSPrefsRestriction {
         private static final long serialVersionUID = 1L;

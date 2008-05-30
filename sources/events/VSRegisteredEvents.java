@@ -11,7 +11,7 @@ import core.*;
 import utils.*;
 
 /**
- * The Class VSRegisteredEvents. This class is responsible to manage all
+ * The class VSRegisteredEvents. This class is responsible to manage all
  * events. It manages the event classnames, the event shortnames and the event
  * names. It also checks if a protocol (which is an event as well) has
  * variables which are editable through the GUI of the simulator.

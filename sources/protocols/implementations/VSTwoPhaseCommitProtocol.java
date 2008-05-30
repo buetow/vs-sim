@@ -11,7 +11,7 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class VSTwoPhaseCommitProtocol.
+ * The class VSTwoPhaseCommitProtocol.
  */
 public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

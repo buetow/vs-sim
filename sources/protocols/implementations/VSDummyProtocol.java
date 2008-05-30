@@ -8,7 +8,7 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class VSDummyProtocol.
+ * The class VSDummyProtocol.
  */
 public class VSDummyProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

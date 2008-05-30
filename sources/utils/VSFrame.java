@@ -9,7 +9,7 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 
 /**
- * The Class VSFrame. All frames of the simulator extend this VSFrame class.
+ * The class VSFrame. All frames of the simulator extend this VSFrame class.
  * This class makes sure that all 'subwindows' get closed if its parent gets
  * closed. And it also makes sure to open new windows relative to its parent.
  *

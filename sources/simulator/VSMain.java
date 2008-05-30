@@ -12,7 +12,7 @@ import prefs.*;
 import prefs.editors.*;
 
 /**
- * The Class VSMain. This class contains the static main method. The simulator
+ * The class VSMain. This class contains the static main method. The simulator
  * starts here!
  *
  * @author Paul C. Buetow

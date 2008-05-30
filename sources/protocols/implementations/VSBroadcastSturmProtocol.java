@@ -11,7 +11,7 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSBroadcastSturmProtocol.
+ * The class VSBroadcastSturmProtocol.
  */
 public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

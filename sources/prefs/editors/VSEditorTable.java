@@ -15,7 +15,7 @@ import prefs.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSEditorTable.
+ * The class VSEditorTable.
  */
 public class VSEditorTable extends JTable {
     private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class VSEditorTable extends JTable {
     private VSEditorTableModel model;
 
     /**
-     * The Class VSNode.
+     * The class VSNode.
      */
     private class VSNode {
 
@@ -101,7 +101,7 @@ public class VSEditorTable extends JTable {
     }
 
     /**
-     * The Class VSEditorTableModel.
+     * The class VSEditorTableModel.
      */
     private class VSEditorTableModel extends AbstractTableModel implements TableCellRenderer {
         private static final long serialVersionUID = 1L;
@@ -204,7 +204,7 @@ public class VSEditorTable extends JTable {
     }
 
     /**
-     * The Class VSTableCellEditor.
+     * The class VSTableCellEditor.
      */
     private class VSTableCellEditor extends AbstractCellEditor implements TableCellEditor  {
         private static final long serialVersionUID = 1L;

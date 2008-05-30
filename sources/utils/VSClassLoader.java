@@ -5,7 +5,7 @@
 package utils;
 
 /**
- * The Class VSClassLoader. This class is used in order to create new objects
+ * The class VSClassLoader. This class is used in order to create new objects
  * by its classnames.
  *
  * @author Paul C. Buetow

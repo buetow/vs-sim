@@ -11,7 +11,7 @@ import events.*;
 import core.*;
 
 /**
- * The Class VSAbstractProtocol.
+ * The class VSAbstractProtocol.
  */
 abstract public class VSAbstractProtocol extends VSAbstractEvent {
     private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import events.*;
 import events.internal.*;
 
 /**
- * The Class VSCreateTask. An object of this class represents how new
+ * The class VSCreateTask, an object of this class represents how new
  * VSTask objects are to be created using JComboBox selections of the
  * GUI editor..
  *

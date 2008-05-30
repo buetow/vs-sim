@@ -10,7 +10,7 @@ import prefs.*;
 import utils.*;
 
 /**
- * The Class VSTaskManager. The task manager is responsible that all tasks
+ * The class VSTaskManager. The task manager is responsible that all tasks
  * will get fullfilled in the correct order. Please also read the javadoc
  * of the VSTask class. It describes the difference between local and global
  * timed tasks.

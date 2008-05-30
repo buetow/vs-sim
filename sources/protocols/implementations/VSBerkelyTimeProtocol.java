@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * The Class VSBerkelyTimeProtocol.
+ * The class VSBerkelyTimeProtocol.
  */
 public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

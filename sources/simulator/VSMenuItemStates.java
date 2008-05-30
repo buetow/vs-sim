@@ -5,7 +5,7 @@
 package simulator;
 
 /**
- * The Class VSMenuItemStates. Used by the VSSimulation to update the
+ * The class VSMenuItemStates. Used by the VSSimulation to update the
  * "simulation" bar of the VSSimulationFrame.
  *
  * @author Paul C. Buetow

@@ -9,7 +9,7 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSExternalTimeSyncProtocol.
+ * The class VSExternalTimeSyncProtocol.
  */
 public class VSExternalTimeSyncProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

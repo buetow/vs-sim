@@ -12,7 +12,7 @@ import prefs.VSPrefs;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSColorChooser.
+ * The class VSColorChooser.
  */
 public class VSColorChooser extends JPanel implements ChangeListener {
     private static final long serialVersionUID = 1L;

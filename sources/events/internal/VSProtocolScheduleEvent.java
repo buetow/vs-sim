@@ -8,7 +8,7 @@ import events.*;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSProtocolScheduleEvent. This event is used if a protocol (which
+ * The class VSProtocolScheduleEvent. This event is used if a protocol (which
  * is a subclass of VSAbstractProtocol) reschedules itself to run again on a
  * specific time.
  *

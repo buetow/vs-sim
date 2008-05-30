@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 /**
- * The Class VSDefaultPrefs.
+ * The class VSDefaultPrefs.
  */
 public class VSDefaultPrefs extends VSPrefs {
     private static final long serialVersionUID = 1L;

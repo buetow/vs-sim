@@ -7,7 +7,7 @@ package events.implementations;
 import events.VSAbstractEvent;
 
 /**
- * The Class VSProcessRecoverEvent. This event makes a process to recover if
+ * The class VSProcessRecoverEvent. This event makes a process to recover if
  * it is crashed.
  *
  * @author Paul C. Buetow

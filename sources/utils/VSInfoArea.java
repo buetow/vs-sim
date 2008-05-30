@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 /**
- * The Class VSInfoArea. An object of this class is used for some information
+ * The class VSInfoArea, an object of this class is used for some information
  *areas. E.g. in the VSAbout class.
  *
  * @author Paul C. Buetow

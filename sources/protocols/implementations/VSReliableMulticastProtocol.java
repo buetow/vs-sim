@@ -8,7 +8,7 @@ import protocols.VSAbstractProtocol;
 import core.VSMessage;
 
 /**
- * The Class VSReliableMulticastProtocol.
+ * The class VSReliableMulticastProtocol.
  */
 public class VSReliableMulticastProtocol extends VSAbstractProtocol {
     /** The serial version uid */

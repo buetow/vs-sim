@@ -11,7 +11,7 @@ import prefs.VSPrefs;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSTask. An object of this class represents a task to do or done.
+ * The class VSTask, an object of this class represents a task to do or done.
  * All tasks are managed by the task manager. There are local and global timed
  * tasks. Local timed tasks are being fullfilled if the process' local time is
  * reached. Global timed tasks are being fullfilled if the simulation's time is

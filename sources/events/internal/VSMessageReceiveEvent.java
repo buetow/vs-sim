@@ -9,7 +9,7 @@ import events.VSAbstractEvent;
 import protocols.VSAbstractProtocol;
 
 /**
- * The Class VSMessageReceiveEvent. This event is used if a process receives
+ * The class VSMessageReceiveEvent. This event is used if a process receives
  * a message.
  *
  * @author Paul C. Buetow

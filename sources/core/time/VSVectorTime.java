@@ -7,7 +7,7 @@ package core.time;
 import java.util.ArrayList;
 
 /**
- * The Class VSVectorTime. This class defined how the vector
+ * The class VSVectorTime. This class defined how the vector
  * timestamps are represented.
  *
  * @author Paul C. Buetow

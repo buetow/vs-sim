@@ -13,7 +13,7 @@ import utils.*;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSEditorFrame.
+ * The class VSEditorFrame.
  */
 public class VSEditorFrame extends VSFrame implements ActionListener {
     private static final long serialVersionUID = 1L;

@@ -12,7 +12,7 @@ import prefs.*;
 import utils.*;
 
 /**
- * The Class VSAbout. This class is only for the about window which shows up
+ * The class VSAbout. This class is only for the about window which shows up
  * if selected in the GUI.
  *
  * @author Paul C. Buetow

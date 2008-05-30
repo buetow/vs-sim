@@ -11,7 +11,7 @@ import javax.swing.*;
 import utils.*;
 
 /**
- * The Class VSLogging. An object of this class is responsible for the logging
+ * The class VSLogging, an object of this class is responsible for the logging
  * of text messages into the simulator's logging window.
  *
  * @author Paul C. Buetow

@@ -9,7 +9,7 @@ import protocols.VSAbstractProtocol;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class VSPingPongProtocol.
+ * The class VSPingPongProtocol.
  */
 public class VSPingPongProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;

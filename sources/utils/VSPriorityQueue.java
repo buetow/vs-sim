@@ -7,7 +7,7 @@ package utils;
 import java.util.PriorityQueue;
 
 /**
- * The Class VSPriorityQueue. This class is the same like the standard
+ * The class VSPriorityQueue. This class is the same like the standard
  * VSPriorityQueue of the Java API. It only overrides the get(int) method.
  *
  * @author Paul C. Buetow

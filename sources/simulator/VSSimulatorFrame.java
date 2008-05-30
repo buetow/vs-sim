@@ -16,7 +16,7 @@ import prefs.editors.*;
 import utils.*;
 
 /**
- * The Class VSSimulatorFrame. An object of this class represents a window
+ * The class VSSimulatorFrame, an object of this class represents a window
  * of the simulator. The window can have several tabs. Each tab contains
  * an independent simulation.
  *
