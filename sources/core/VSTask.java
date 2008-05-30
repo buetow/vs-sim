@@ -212,11 +212,9 @@ public class VSTask implements Comparable {
             event.init(process);
 
         if (messageLine != null) {
-            System.out.println("FO");
             if (!event.onStart())
                 process.getSimulatorCanvas().removeMessageLine(messageLine);
         } else {
-            System.out.println("BA");
             event.onStart();
         }
     }

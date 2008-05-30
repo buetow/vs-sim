@@ -7,8 +7,11 @@ package simulator;
 /**
  * The Class VSMenuItemStates. Used by the VSSimulation to update the
  * "simulation" bar of the VSSimulationFrame.
+ *
+ * @author Paul C. Buetow
  */
 public class VSMenuItemStates {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The pause state. */
@@ -24,14 +27,15 @@ public class VSMenuItemStates {
     private volatile boolean start;
 
     /**
-     * Instantiates a new lang.process.removemenu item states.
+     * Instantiates a new VSMenuItemStates object.
      *
      * @param pause the pause state
      * @param replay the replay state
      * @param reset the reset state
      * @param start the start state
      */
-    public VSMenuItemStates(boolean pause, boolean replay, boolean reset, boolean start) {
+    public VSMenuItemStates(boolean pause, boolean replay, boolean reset,
+                            boolean start) {
         this.pause = pause;
         this.replay = replay;
         this.reset = reset;

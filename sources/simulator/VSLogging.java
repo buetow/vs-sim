@@ -10,11 +10,14 @@ import javax.swing.*;
 
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSLogging.
+ * The Class VSLogging. An object of this class is responsible for the logging
+ * of text messages into the simulator's logging window.
+ *
+ * @author Paul C. Buetow
  */
 public class VSLogging {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The logging area. */
@@ -23,7 +26,9 @@ public class VSLogging {
     /** The filter text. */
     private String filterText;
 
-    /** The pause lines. */
+    /** The pause lines. Used for cacheing the logging if the logging is
+     * deactivated for a while
+     */
     private ArrayList<StringBuffer> pauseLines;
 
     /** The logging lines. */
@@ -32,17 +37,17 @@ public class VSLogging {
     /** The simulation canvas. */
     private VSSimulatorCanvas simulationCanvas;
 
-    /** The is filtered. */
+    /** The logging messages are filtered. */
     private boolean isFiltered;
 
-    /** The is paused. */
+    /** The logging is paused. */
     private boolean isPaused;
 
     /** The filter pattern. */
     private Pattern filterPattern;
 
     /**
-     * Instantiates a new lang.process.removelogging.
+     * Instantiates a new VSLogging object.
      */
     public VSLogging() {
         loggingArea = new JTextArea(0, 0);
@@ -57,7 +62,7 @@ public class VSLogging {
     /**
      * Sets the simulation canvas.
      *
-     * @param simulationCanvas the new simulation canvas
+     * @param simulationCanvas the simulation canvas
      */
     public void setSimulationCanvas(VSSimulatorCanvas simulationCanvas) {
         this.simulationCanvas = simulationCanvas;
@@ -73,7 +78,7 @@ public class VSLogging {
     }
 
     /**
-     * Logg.
+     * Loggs a message using the global time.
      *
      * @param message the message
      */
@@ -85,7 +90,7 @@ public class VSLogging {
     }
 
     /**
-     * Logg.
+     * Loggs a message using the specified time.
      *
      * @param message the message
      * @param time the time
@@ -103,9 +108,9 @@ public class VSLogging {
     }
 
     /**
-     * Checks if is paused.
+     * Sets if the logging is paused.
      *
-     * @param isPaused the is paused
+     * @param isPaused true, if the logging is paused
      */
     public synchronized void isPaused(boolean isPaused) {
         this.isPaused = isPaused;
@@ -119,26 +124,29 @@ public class VSLogging {
     }
 
     /**
-     * Logg filtered.
+     * If the logging is filtered, it's using the pattern matching.
      *
-     * @param buffer the buffer
+     * @param buffer the logging buffer to filter
      */
     private void loggFiltered(StringBuffer buffer) {
         loggingLines.add(buffer);
         if (!isFiltered) {
             loggingArea.append(buffer.toString()+"\n");
-            loggingArea.setCaretPosition(loggingArea.getDocument().getLength());
+            loggingArea.setCaretPosition(
+                loggingArea.getDocument().getLength());
 
-        } else if (filterPattern != null && filterPattern.matcher(buffer).find()) {
+        } else if (filterPattern != null &&
+                   filterPattern.matcher(buffer).find()) {
             loggingArea.append(buffer.toString()+"\n");
-            loggingArea.setCaretPosition(loggingArea.getDocument().getLength());
+            loggingArea.setCaretPosition(
+                loggingArea.getDocument().getLength());
         }
     }
 
     /**
-     * Checks if is filtered.
+     * Checks if the logging is filtered.
      *
-     * @param isFiltered the is filtered
+     * @param isFiltered true, if the logging is filtered
      */
     public synchronized void isFiltered(boolean isFiltered) {
         this.isFiltered = isFiltered;
@@ -160,7 +168,7 @@ public class VSLogging {
     }
 
     /**
-     * Clear.
+     * Clears the logging.
      */
     public synchronized void clear() {
         loggingLines.clear();
@@ -169,7 +177,7 @@ public class VSLogging {
     }
 
     /**
-     * Filter.
+     * Filters the logging.
      */
     private void filter() {
         try {

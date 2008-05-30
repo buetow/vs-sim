@@ -15,11 +15,15 @@ import prefs.*;
 import prefs.editors.*;
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSSimulatorFrame.
+ * The Class VSSimulatorFrame. An object of this class represents a window
+ * of the simulator. The window can have several tabs. Each tab contains
+ * an independent simulation.
+ *
+ * @author Paul C. Buetow
  */
-public class VSSimulatorFrame extends VSFrame implements ActionListener {
+public class VSSimulatorFrame extends VSFrame {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The pause item. */
@@ -69,18 +73,109 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
     /** The tabbed pane. */
     private JTabbedPane tabbedPane;
-    //private JSlider speedSlider;
+
+    /** The action listener */
+    private ActionListener actionListener;
 
     /**
-     * Instantiates a new lang.process.removesimulator frame.
+     * Instantiates a new VSSimulatorFrame object.
      *
      * @param prefs the prefs
-     * @param relativeTo the relative to
+     * @param relativeTo the component to open the window relative to
      */
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
         super(prefs.getString("lang.name"), relativeTo);
         this.prefs = prefs;
         this.simulations = new Vector<VSSimulator>();
+
+        final VSPrefs finalPrefs = this.prefs;
+        actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+                String sourceText = null;
+
+                if (source instanceof JMenuItem)
+                    sourceText = ((JMenuItem) source).getText();
+                else
+                    sourceText = ((ImageIcon) ((JButton) source).getIcon()).
+                                 getDescription();
+
+                if (sourceText.equals(
+                finalPrefs.getString("lang.simulation.close"))) {
+                    removeCurrentSimulation();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.simulation.new"))) {
+                    VSPrefs newPrefs = VSDefaultPrefs.init();
+                    VSSimulatorEditor simulatorEditor =
+                        new VSSimulatorEditor(newPrefs, VSSimulatorFrame.this);
+                    new VSEditorFrame(newPrefs, VSSimulatorFrame.this,
+                                      simulatorEditor);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.window.new"))) {
+                    new VSMain(VSDefaultPrefs.init(),
+                               VSSimulatorFrame.this);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.window.close"))) {
+                    dispose();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.about"))) {
+                    new VSAbout(finalPrefs, VSSimulatorFrame.this);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.quit"))) {
+                    System.exit(0);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.start"))) {
+                    VSMenuItemStates menuItemState =
+                        currentSimulation.getMenuItemStates();
+                    menuItemState.setStart(false);
+                    menuItemState.setPause(true);
+                    menuItemState.setReset(false);
+                    menuItemState.setReplay(true);
+                    currentSimulation.getSimulatorCanvas().play();
+                    updateSimulationMenu();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.pause"))) {
+                    VSMenuItemStates menuItemState =
+                        currentSimulation.getMenuItemStates();
+                    menuItemState.setStart(true);
+                    menuItemState.setPause(false);
+                    menuItemState.setReset(true);
+                    menuItemState.setReplay(true);
+                    currentSimulation.getSimulatorCanvas().pause();
+                    updateSimulationMenu();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.reset"))) {
+                    VSMenuItemStates menuItemState =
+                        currentSimulation.getMenuItemStates();
+                    menuItemState.setStart(true);
+                    menuItemState.setPause(false);
+                    menuItemState.setReset(false);
+                    menuItemState.setReplay(false);
+                    currentSimulation.getSimulatorCanvas().reset();
+                    updateSimulationMenu();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.replay"))) {
+                    VSMenuItemStates menuItemState =
+                        currentSimulation.getMenuItemStates();
+                    menuItemState.setStart(false);
+                    menuItemState.setPause(true);
+                    menuItemState.setReset(false);
+                    menuItemState.setReplay(true);
+                    currentSimulation.getSimulatorCanvas().reset();
+                    currentSimulation.getSimulatorCanvas().play();
+                    updateSimulationMenu();
+                }
+            }
+        };
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -116,7 +211,7 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.new"),
                                     ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         menuItem = new JMenuItem(
@@ -124,28 +219,28 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.close"),
                                     ActionEvent.ALT_MASK));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         menuFile.addSeparator();
 
         menuItem = new JMenuItem(prefs.getString("lang.window.new"));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         menuItem = new JMenuItem(prefs.getString("lang.window.close"));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
 
         menuFile.addSeparator();
 
         menuItem = new JMenuItem(prefs.getString("lang.about"));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         menuItem = new JMenuItem(prefs.getString("lang.quit"));
-        menuItem.addActionListener(this);
+        menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         /* Edit menu */
@@ -164,11 +259,12 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         resetItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.reset"),
                                      ActionEvent.ALT_MASK));
-        resetItem.addActionListener(this);
+        resetItem.addActionListener(actionListener);
         resetItem.setEnabled(false);
         menuSimulation.add(resetItem);
-        resetButton = new JButton(getImageIcon("reset.png", prefs.getString("lang.reset")));
-        resetButton.addActionListener(this);
+        resetButton = new JButton(getImageIcon("reset.png",
+                                               prefs.getString("lang.reset")));
+        resetButton.addActionListener(actionListener);
         toolBar.add(resetButton);
 
         replayItem = new JMenuItem(
@@ -176,32 +272,35 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
         replayItem.setAccelerator(KeyStroke.getKeyStroke(
                                       prefs.getInteger("keyevent.replay"),
                                       ActionEvent.ALT_MASK));
-        replayItem.addActionListener(this);
+        replayItem.addActionListener(actionListener);
         replayItem.setEnabled(false);
         menuSimulation.add(replayItem);
-        replayButton = new JButton(getImageIcon("replay.png", prefs.getString("lang.replay")));
-        replayButton.addActionListener(this);
+        replayButton = new JButton(
+            getImageIcon("replay.png", prefs.getString("lang.replay")));
+        replayButton.addActionListener(actionListener);
         toolBar.add(replayButton);
 
         pauseItem = new JMenuItem(prefs.getString("lang.pause"));
         pauseItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.pause"),
                                      ActionEvent.ALT_MASK));
-        pauseItem.addActionListener(this);
+        pauseItem.addActionListener(actionListener);
         menuSimulation.add(pauseItem);
         pauseItem.setEnabled(false);
-        pauseButton = new JButton(getImageIcon("pause.png", prefs.getString("lang.pause")));
-        pauseButton.addActionListener(this);
+        pauseButton = new JButton(getImageIcon("pause.png",
+                                               prefs.getString("lang.pause")));
+        pauseButton.addActionListener(actionListener);
         toolBar.add(pauseButton);
 
         startItem = new JMenuItem(prefs.getString("lang.start"));
         startItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.start"),
                                      ActionEvent.ALT_MASK));
-        startItem.addActionListener(this);
+        startItem.addActionListener(actionListener);
         menuSimulation.add(startItem);
-        startButton = new JButton(getImageIcon("start.png", prefs.getString("lang.start")));
-        startButton.addActionListener(this);
+        startButton = new JButton(getImageIcon("start.png",
+                                               prefs.getString("lang.start")));
+        startButton.addActionListener(actionListener);
         toolBar.add(startButton);
 
 
@@ -220,7 +319,9 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
      */
     private Container createContentPane() {
         Container pane = getContentPane();
-        tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM, JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM,
+                                     JTabbedPane.SCROLL_TAB_LAYOUT);
+
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
@@ -238,19 +339,22 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
     }
 
     /**
-     * Update edit menu.
+     * Updates the edit menu. Called if another simulator tab has been selected
+     * or if processes have been added or removed.
      */
     public void updateEditMenu() {
         menuEdit.removeAll();
 
-        JMenuItem globalPrefsItem = new JMenuItem(prefs.getString("lang.prefs"));
+        JMenuItem globalPrefsItem = new JMenuItem(
+            prefs.getString("lang.prefs"));
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 VSPrefs simulationPrefs = currentSimulation.getPrefs();
                 VSSimulatorEditor.TAKEOVER_BUTTON = true;
                 VSSimulatorEditor simulationEditor = new VSSimulatorEditor(
                     simulationPrefs, VSSimulatorFrame.this, currentSimulation);
-                new VSEditorFrame(prefs, VSSimulatorFrame.this, simulationEditor);
+                new VSEditorFrame(prefs, VSSimulatorFrame.this,
+                                  simulationEditor);
             }
         });
         menuEdit.add(globalPrefsItem);
@@ -260,29 +364,33 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
             return;
 
         final String processString = prefs.getString("lang.process");
-        final ArrayList<VSProcess> arr = currentSimulation.getSimulatorCanvas().getProcessesArray();
+        final ArrayList<VSProcess> arr =
+            currentSimulation.getSimulatorCanvas().getProcessesArray();
         final int numProcesses = arr.size();
 
         int processNum = 0;
         for (VSProcess process : arr) {
             int processID = process.getProcessID();
-            JMenuItem processItem = new JMenuItem(processString + " " + processID);
+            JMenuItem processItem = new JMenuItem(processString + " " +
+                                                  processID);
             if (processNum < 10)
-                processItem.setAccelerator(KeyStroke.getKeyStroke(0x31+processNum,
+                processItem.setAccelerator(
+                    KeyStroke.getKeyStroke(0x31+processNum,
                                            ActionEvent.ALT_MASK));
             final int finalProcessNum = processNum++;
             processItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-                    currentSimulation.getSimulatorCanvas().editProcess(finalProcessNum);
+                    currentSimulation.getSimulatorCanvas().editProcess(
+                        finalProcessNum);
                 }
             });
             menuEdit.add(processItem);
         }
     }
 
-    /* updateSimulationMenu can be called from concurrent threads */
     /**
-     * Update simulation menu.
+     * Updates the simulation menu. Called if the simulator state has changed
+     * (e.g. start/play/stop/replay etc)
      */
     public synchronized void updateSimulationMenu() {
         VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
@@ -307,76 +415,6 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
                 simulation.getSimulatorCanvas().stopThread();
         }
         super.dispose();
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        String sourceText = null;
-
-        if (source instanceof JMenuItem)
-            sourceText = ((JMenuItem) source).getText();
-        else
-            sourceText = ((ImageIcon) ((JButton) source).getIcon()).getDescription();
-
-        if (sourceText.equals(prefs.getString("lang.simulation.close"))) {
-            removeCurrentSimulation();
-
-        } else if (sourceText.equals(prefs.getString("lang.simulation.new"))) {
-            VSPrefs newPrefs = VSDefaultPrefs.init();
-            new VSEditorFrame(newPrefs, this, new VSSimulatorEditor(newPrefs, this));
-
-        } else if (sourceText.equals(prefs.getString("lang.window.new"))) {
-            new VSMain(VSDefaultPrefs.init(), this);
-
-        } else if (sourceText.equals(prefs.getString("lang.window.close"))) {
-            dispose();
-
-        } else if (sourceText.equals(prefs.getString("lang.about"))) {
-            new VSAbout(prefs, this);
-
-        } else if (sourceText.equals(prefs.getString("lang.quit"))) {
-            System.exit(0);
-
-        } else if (sourceText.equals(prefs.getString("lang.start"))) {
-            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
-            menuItemState.setStart(false);
-            menuItemState.setPause(true);
-            menuItemState.setReset(false);
-            menuItemState.setReplay(true);
-            currentSimulation.getSimulatorCanvas().play();
-            updateSimulationMenu();
-
-        } else if (sourceText.equals(prefs.getString("lang.pause"))) {
-            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
-            menuItemState.setStart(true);
-            menuItemState.setPause(false);
-            menuItemState.setReset(true);
-            menuItemState.setReplay(true);
-            currentSimulation.getSimulatorCanvas().pause();
-            updateSimulationMenu();
-
-        } else if (sourceText.equals(prefs.getString("lang.reset"))) {
-            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
-            menuItemState.setStart(true);
-            menuItemState.setPause(false);
-            menuItemState.setReset(false);
-            menuItemState.setReplay(false);
-            currentSimulation.getSimulatorCanvas().reset();
-            updateSimulationMenu();
-
-        } else if (sourceText.equals(prefs.getString("lang.replay"))) {
-            VSMenuItemStates menuItemState = currentSimulation.getMenuItemStates();
-            menuItemState.setStart(false);
-            menuItemState.setPause(true);
-            menuItemState.setReset(false);
-            menuItemState.setReplay(true);
-            currentSimulation.getSimulatorCanvas().reset();
-            currentSimulation.getSimulatorCanvas().play();
-            updateSimulationMenu();
-        }
     }
 
     /**
@@ -450,5 +488,4 @@ public class VSSimulatorFrame extends VSFrame implements ActionListener {
 
         return new ImageIcon(imageURL, descr);
     }
-
 }

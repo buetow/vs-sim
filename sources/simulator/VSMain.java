@@ -11,15 +11,18 @@ import events.*;
 import prefs.*;
 import prefs.editors.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class VSMain.
+ * The Class VSMain. This class contains the static main method. The simulator
+ * starts here!
+ *
+ * @author Paul C. Buetow
  */
 public class VSMain {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new lang.process.removemain.
+     * Instantiates a new VSMain object.
      *
      * @param prefs the prefs
      */
@@ -28,24 +31,27 @@ public class VSMain {
     }
 
     /**
-     * Instantiates a new lang.process.removemain.
+     * Instantiates a new VSMain object
      *
      * @param prefs the prefs
-     * @param relativeTo the relative to
+     * @param relativeTo the component to open the window relative to
      */
     public VSMain(VSPrefs prefs, Component relativeTo) {
         init(prefs, relativeTo);
     }
 
     /**
-     * Inits the.
+     * Inits the VSMain object.
      *
      * @param prefs the prefs
-     * @param relativeTo the relative to
+     * @param relativeTo the component to open the window relative to
      */
     private void init(VSPrefs prefs, Component relativeTo) {
-        VSSimulatorFrame simulatorFrame = new VSSimulatorFrame(prefs, relativeTo);
-        new VSEditorFrame(prefs, relativeTo, new VSSimulatorEditor(prefs, simulatorFrame));
+        VSSimulatorFrame simulatorFrame =
+            new VSSimulatorFrame(prefs, relativeTo);
+
+        new VSEditorFrame(prefs, relativeTo,
+                          new VSSimulatorEditor(prefs, simulatorFrame));
     }
 
     /**
