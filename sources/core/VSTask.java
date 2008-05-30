@@ -197,7 +197,7 @@ public class VSTask implements Comparable {
     /**
      * Sets the message line.
      *
-     * @messageLine the message line
+     * @param messageLine the message line
      */
     public void setMessageLine(simulator.VSSimulatorCanvas.VSMessageLine
                                messageLine) {

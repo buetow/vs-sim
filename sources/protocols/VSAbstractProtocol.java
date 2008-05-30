@@ -200,7 +200,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /**
      * Checks if is server.
      *
-     * @param isServer the is server
+     * @return true, if the protocol has activated the server part
      */
     public final boolean isServer() {
         return isServer;
@@ -218,7 +218,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /**
      * Checks if is client.
      *
-     * @param isClient the is client
+     * @return true, if the protocol has activated the client part
      */
     public final boolean isClient() {
         return isClient;

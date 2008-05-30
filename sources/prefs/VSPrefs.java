@@ -117,7 +117,7 @@ public class VSPrefs implements Serializable {
     /**
      * Gets the unit.
      *
-     * @param key the key
+     * @param fullKey the full key
      *
      * @return the unit
      */
@@ -153,7 +153,7 @@ public class VSPrefs implements Serializable {
     /**
      * Gets the description.
      *
-     * @param key the key
+     * @param fullKey the full key
      *
      * @return the description
      */
@@ -166,7 +166,7 @@ public class VSPrefs implements Serializable {
     /**
      * Gets the restriction.
      *
-     * @param key the key
+     * @param fullKey the full key
      *
      * @return the restriction
      */
@@ -457,7 +457,6 @@ public class VSPrefs implements Serializable {
      * @param key the key
      * @param val the val
      * @param descr the descr
-     * @param unit the unit
      */
     public void initFloat(String key, float val, String descr) {
         initFloat(key, val);
