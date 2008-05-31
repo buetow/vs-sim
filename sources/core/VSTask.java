@@ -249,12 +249,14 @@ public class VSTask implements Comparable {
      */
     public String toString() {
         StringBuffer buffer = new StringBuffer();
+
         buffer.append(prefs.getString("lang.task"));
         buffer.append(" ");
         buffer.append(getTaskTime());
         buffer.append(event.toString());
         buffer.append("; PID: ");
         buffer.append(process.getProcessID());
+
         return buffer.toString();
     }
 
@@ -271,7 +273,7 @@ public class VSTask implements Comparable {
             else if (taskTime > task.getTaskTime())
                 return 1;
 
-            /* If it's a ProtocolRecover, it should get handled very first */
+            /* If it's a recovering, it should get handled very first */
             boolean a = event instanceof VSProcessRecoverEvent;
             boolean b = task.getEvent() instanceof VSProcessRecoverEvent;
 
@@ -284,7 +286,20 @@ public class VSTask implements Comparable {
             if (b)
                 return 1;
 
-            /* If it's a VSProtocolEvent, it should get handled first */
+            /* If it's a crash, it should get handled second first */
+            a = event instanceof VSProcessCrashEvent;
+            b = task.getEvent() instanceof VSProcessCrashEvent;
+
+            if (a && b)
+                return 0;
+
+            if (a)
+                return -1;
+
+            if (b)
+                return 1;
+
+            /* If it's a VSProtocolEvent, it should get handled third  */
             a = event instanceof VSProtocolEvent;
             b = task.getEvent() instanceof VSProtocolEvent;
 

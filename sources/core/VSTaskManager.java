@@ -26,6 +26,7 @@ package core;
 import java.util.*;
 
 import prefs.*;
+import simulator.*;
 import utils.*;
 
 /**
@@ -40,8 +41,8 @@ public class VSTaskManager {
     /** The seriao version uid */
     private static final long serialVersionUID = 1L;
 
-    /** The tasks. */
-    private PriorityQueue<VSTask> tasks;
+    /** The simulator canvas. */
+    private VSSimulatorCanvas simulatorCanvas;
 
     /** The global tasks. */
     private PriorityQueue<VSTask> globalTasks;
@@ -63,9 +64,9 @@ public class VSTaskManager {
      *
      * @param prefs the simulator's default prefs
      */
-    public VSTaskManager(VSPrefs prefs) {
+    public VSTaskManager(VSPrefs prefs, VSSimulatorCanvas simulatorCanvas) {
         this.prefs = prefs;
-        this.tasks = new PriorityQueue<VSTask>();
+        this.simulatorCanvas = simulatorCanvas;
         this.globalTasks = new PriorityQueue<VSTask>();
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
@@ -81,13 +82,13 @@ public class VSTaskManager {
     public synchronized void runTasks(long step, long offset,
                                       long lastGlobalTime) {
         VSTask task = null;
-        VSProcess process = null;
         long localTime;
         long offsetTime;
         long taskTime;
         long globalTime;
         final long globalOffsetTime = lastGlobalTime + step;
         boolean redo;
+        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
 
         do {
             redo = false;
@@ -95,7 +96,7 @@ public class VSTaskManager {
             /* Run tasks which have for its schedule the global time */
             while (globalTasks.size() != 0) {
                 task = globalTasks.peek();
-                process = task.getProcess();
+                VSProcess process = task.getProcess();
                 localTime = process.getTime();
                 offsetTime = localTime + step;
                 taskTime = task.getTaskTime();
@@ -147,55 +148,65 @@ public class VSTaskManager {
                     fullfilledProgrammedTasks.add(task);
             }
 
-            /* Run tasks which have for its schedule the local process times */
-            while (tasks.size() != 0) {
-                task = tasks.peek();
-                process = task.getProcess();
-                localTime = process.getTime();
-                offsetTime = localTime + step;
-                taskTime = task.getTaskTime();
-                globalTime = process.getGlobalTime();
+            synchronized (processes) {
+                for (VSProcess process : processes) {
+                    PriorityQueue<VSTask> tasks = process.getTasks();
 
-                if (offsetTime < taskTime)
-                    break;
+                    /* Run tasks which have for its schedule the local
+                       process times */
+                    while (tasks.size() != 0) {
+                        task = tasks.peek();
+                        process = task.getProcess();
+                        localTime = process.getTime();
+                        offsetTime = localTime + step;
+                        taskTime = task.getTaskTime();
+                        globalTime = process.getGlobalTime();
 
-                tasks.poll();
-                redo = true;
+                        if (offsetTime < taskTime)
+                            break;
 
-                if (process.isCrashed() && !task.isVSProcessRecoverEvent()) {
-                    if (task.isProgrammed())
-                        fullfilledProgrammedTasks.add(task);
-                    continue;
+                        tasks.poll();
+                        redo = true;
+
+                        if (process.isCrashed() &&
+                                !task.isVSProcessRecoverEvent()) {
+                            if (task.isProgrammed())
+                                fullfilledProgrammedTasks.add(task);
+                            continue;
+                        }
+
+                        if (offsetTime == taskTime) {
+                            process.setGlobalTime(globalOffsetTime);
+                            process.setLocalTime(offsetTime);
+                            process.timeModified(false);
+                            task.run();
+                            process.setGlobalTime(globalTime);
+                            if (process.timeModified())
+                                process.addClockOffset(process.getTime()-
+                                                       offsetTime);
+                            process.setLocalTime(localTime);
+
+                        } else { /* if (offsetTime > taskTime) */
+                            final long diff = offsetTime - taskTime;
+                            if (globalOffsetTime - diff < lastGlobalTime)
+                                process.setGlobalTime(lastGlobalTime);
+                            else
+                                process.setGlobalTime(globalOffsetTime-
+                                                      diff);
+                            process.setLocalTime(offsetTime - diff);
+                            process.timeModified(false);
+                            task.run();
+                            process.setGlobalTime(globalTime);
+                            if (process.timeModified())
+                                process.addClockOffset(process.getTime()-
+                                                       (offsetTime-diff));
+                            process.setLocalTime(localTime);
+                        }
+
+                        if (task.isProgrammed())
+                            fullfilledProgrammedTasks.add(task);
+                    }
                 }
-
-                if (offsetTime == taskTime) {
-                    process.setGlobalTime(globalOffsetTime);
-                    process.setLocalTime(offsetTime);
-                    process.timeModified(false);
-                    task.run();
-                    process.setGlobalTime(globalTime);
-                    if (process.timeModified())
-                        process.addClockOffset(process.getTime()-offsetTime);
-                    process.setLocalTime(localTime);
-
-                } else { /* if (offsetTime > taskTime) */
-                    final long diff = offsetTime - taskTime;
-                    if (globalOffsetTime - diff < lastGlobalTime)
-                        process.setGlobalTime(lastGlobalTime);
-                    else
-                        process.setGlobalTime(globalOffsetTime - diff);
-                    process.setLocalTime(offsetTime - diff);
-                    process.timeModified(false);
-                    task.run();
-                    process.setGlobalTime(globalTime);
-                    if (process.timeModified())
-                        process.addClockOffset(process.getTime()-
-                                               (offsetTime-diff));
-                    process.setLocalTime(localTime);
-                }
-
-                if (task.isProgrammed())
-                    fullfilledProgrammedTasks.add(task);
             }
 
         } while (redo);
@@ -205,25 +216,29 @@ public class VSTaskManager {
      * Resets the task manager.
      */
     public synchronized void reset() {
-        PriorityQueue<VSTask> tmp = tasks;
-        PriorityQueue<VSTask> tmp2 = globalTasks;
-        tasks = new PriorityQueue<VSTask>();
+        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        PriorityQueue<VSTask> tmp = null;
+
+        synchronized (processes) {
+            for (VSProcess process : processes) {
+                tmp = process.getTasks();
+                process.setTasks(new VSPriorityQueue<VSTask>());
+
+                for (VSTask task : tmp) {
+                    if (task.isProgrammed())
+                        insert(task);
+                }
+            }
+        }
+
+        tmp = globalTasks;
         globalTasks = new PriorityQueue<VSTask>();
 
-        while (fullfilledProgrammedTasks.size() != 0) {
-            VSTask task = fullfilledProgrammedTasks.removeFirst();
-            if (task.isProgrammed())
-                insert(task);
-        }
+        while (fullfilledProgrammedTasks.size() != 0)
+            insert(fullfilledProgrammedTasks.removeFirst());
 
         while (tmp.size() != 0) {
             VSTask task = tmp.poll();
-            if (task.isProgrammed())
-                insert(task);
-        }
-
-        while (tmp2.size() != 0) {
-            VSTask task = tmp2.poll();
             if (task.isProgrammed())
                 insert(task);
         }
@@ -237,14 +252,16 @@ public class VSTaskManager {
      * @param task the task to insert
      */
     private void insert(VSTask task) {
-        if (task.timeOver())
-            fullfilledProgrammedTasks.addLast(task);
+        if (task.timeOver()) {
+            if (task.isProgrammed())
+                fullfilledProgrammedTasks.addLast(task);
 
-        else if (task.isGlobalTimed())
+        } else if (task.isGlobalTimed()) {
             globalTasks.add(task);
 
-        else
-            tasks.add(task);
+        } else {
+            task.getProcess().getTasks().add(task);
+        }
     }
 
     /**
@@ -275,14 +292,16 @@ public class VSTaskManager {
      * @return true, if the task has been removed with success
      */
     public synchronized boolean removeTask(VSTask task) {
-        if (fullfilledProgrammedTasks.remove(task))
+        if (fullfilledProgrammedTasks.remove(task)) {
             return true;
 
-        else if (task.isGlobalTimed() && globalTasks.remove(task))
+        } else if (task.isGlobalTimed() && globalTasks.remove(task)) {
             return true;
 
-        else if (!task.isGlobalTimed() && tasks.remove(task))
-            return true;
+        } else if (!task.isGlobalTimed()) {
+            if (task.getProcess().getTasks().remove(task))
+                return true;
+        }
 
         return false;
     }
@@ -321,14 +340,7 @@ public class VSTaskManager {
         for (VSTask task : removeThose)
             globalTasks.remove(task);
 
-        removeThose.clear();
-
-        for (VSTask task : tasks)
-            if (task.isProcess(process))
-                removeThose.add(task);
-
-        for (VSTask task : removeThose)
-            tasks.remove(task);
+        process.getTasks().clear();
     }
 
     /**
@@ -338,14 +350,19 @@ public class VSTaskManager {
      */
     public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
         VSPriorityQueue<VSTask> localTasks = new VSPriorityQueue<VSTask>();
+        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
 
         for (VSTask task : fullfilledProgrammedTasks)
-            if (!task.isGlobalTimed() && task.isProgrammed())
+            if (!task.isGlobalTimed())
                 localTasks.add(task);
 
-        for (VSTask task : tasks)
-            if (task.isProgrammed())
-                localTasks.add(task);
+        synchronized (processes) {
+            for (VSProcess process : processes) {
+                VSPriorityQueue<VSTask> tasks = process.getTasks();
+                for (VSTask task : tasks)
+                    localTasks.add(task);
+            }
+        }
 
         return localTasks;
     }
@@ -359,7 +376,7 @@ public class VSTaskManager {
         VSPriorityQueue<VSTask> globalTasks = new VSPriorityQueue<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
-            if (task.isGlobalTimed() && task.isProgrammed())
+            if (task.isGlobalTimed())
                 globalTasks.add(task);
 
         for (VSTask task : globalTasks)
@@ -379,6 +396,7 @@ public class VSTaskManager {
     public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(
         VSProcess process) {
         VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+        VSPriorityQueue<VSTask> tasks = process.getTasks();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (!task.isGlobalTimed() && task.isProcess(process) &&
@@ -386,7 +404,7 @@ public class VSTaskManager {
                 processTasks.add(task);
 
         for (VSTask task : tasks)
-            if (task.isProcess(process) && task.isProgrammed())
+            if (task.isProgrammed())
                 processTasks.add(task);
 
         return processTasks;
@@ -440,9 +458,15 @@ public class VSTaskManager {
 
         buffer.append(prefs.getString("lang.tasks.local"));
 
-        for (VSTask task : tasks) {
-            buffer.append(task);
-            buffer.append("; ");
+        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        synchronized (processes) {
+            for (VSProcess process : processes) {
+                VSPriorityQueue<VSTask> tasks = process.getTasks();
+                for (VSTask task : tasks) {
+                    buffer.append(task);
+                    buffer.append("; ");
+                }
+            }
         }
 
         String descr = buffer.toString();

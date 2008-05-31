@@ -87,6 +87,9 @@ public class VSProcess extends VSPrefs {
     /** The vector time. */
     private VSVectorTime vectorTime;
 
+    /** The tasks of the process. */
+    private VSPriorityQueue<VSTask> tasks;
+
     /** The process has crashed. But may be working again. */
     private boolean hasCrashed;
 
@@ -198,6 +201,7 @@ public class VSProcess extends VSPrefs {
         this.simulatorCanvas = simulatorCanvas;
         this.logging = logging;
 
+        tasks = new VSPriorityQueue<VSTask>();
         processID = simulatorCanvas.processIDCount();
         random = new VSRandom(processID*processNum+processID+processNum);
 
@@ -941,6 +945,24 @@ public class VSProcess extends VSPrefs {
         vectorTime.add(new Long(0));
         for (VSVectorTime vectorTime : vectorTimeHistory)
             vectorTime.add(new Long(0));
+    }
+
+    /**
+     * Gets the tasks of the process.
+     *
+     * @return The tasks
+     */
+    public VSPriorityQueue<VSTask> getTasks() {
+        return tasks;
+    }
+
+    /**
+     * Sets the tasks of the process.
+     *
+     * @tasks The tasks
+     */
+    public void setTasks(VSPriorityQueue<VSTask> tasks) {
+        this.tasks = tasks;
     }
 
     /**

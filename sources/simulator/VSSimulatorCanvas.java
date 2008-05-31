@@ -467,7 +467,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         this.prefs = prefs;
         this.simulation = simulation;
         this.logging = logging;
-        this.taskManager = new VSTaskManager(prefs);
+        this.taskManager = new VSTaskManager(prefs, this);
         this.messageLines = new LinkedList<VSMessageLine>();
         this.messageLinesToRemove = new LinkedList<VSMessageLine>();
         this.processes = new Vector<VSProcess>();
@@ -1390,6 +1390,15 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         }
 
         return arr;
+    }
+
+    /**
+     * Gets the processes.
+     *
+     * @return the processes
+     */
+    public Vector<VSProcess> getProcesses() {
+        return processes;
     }
 
     /**
