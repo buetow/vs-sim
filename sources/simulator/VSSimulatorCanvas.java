@@ -1515,9 +1515,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             for (VSProcess process : processes)
                 if (!process.equals(newProcess))
                     process.addedAProcess();
-        }
 
-        recalcOnChange();
-        simulator.addProcessAtIndex(processes.size()-1);
+        	recalcOnChange();
+        	simulator.addProcessAtIndex(processes.size()-1);
+        }
     }
 }
