@@ -36,6 +36,10 @@ import prefs.*;
 public class VSSimulatorEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;
 
+    public static final boolean OPENED_NEW_WINDOW = true;
+
+    public static final boolean OPENED_NEW_TAB = false;
+
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
 
@@ -48,6 +52,9 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     /** The dont start new simulation. */
     private boolean dontStartNewSimulation;
 
+    /** Open a new simulator window. */
+    private boolean openedNewWindow;
+
     /**
      * Instantiates a new lang.process.removesimulator editor.
      *
@@ -55,7 +62,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
      * @param simulatorFrame the simulator frame
      * @param simulation the simulation
      */
-    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame, VSSimulator simulation) {
+    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame,
+                             VSSimulator simulation) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.dontStartNewSimulation = true;//simulation != null;
@@ -69,10 +77,12 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
      */
-    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
+    public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame,
+                             boolean openedNewWindow) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
         this.simulatorFrame = simulatorFrame;
+        this.openedNewWindow = openedNewWindow;
     }
 
     /* (non-Javadoc)
@@ -105,7 +115,7 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
             }
 
         } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
-            if (!dontStartNewSimulation)
+            if (!dontStartNewSimulation && openedNewWindow)
                 simulatorFrame.dispose();
 
         } else if (actionCommand.equals(prefs.getString("lang.ok"))) {

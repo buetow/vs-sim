@@ -127,7 +127,8 @@ public class VSSimulatorFrame extends VSFrame {
                 finalPrefs.getString("lang.simulation.new"))) {
                     VSPrefs newPrefs = VSDefaultPrefs.init();
                     VSSimulatorEditor simulatorEditor =
-                        new VSSimulatorEditor(newPrefs, VSSimulatorFrame.this);
+                        new VSSimulatorEditor(newPrefs, VSSimulatorFrame.this,
+                                              VSSimulatorEditor.OPENED_NEW_TAB);
                     new VSEditorFrame(newPrefs, VSSimulatorFrame.this,
                                       simulatorEditor);
 

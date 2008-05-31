@@ -70,7 +70,8 @@ public class VSMain {
             new VSSimulatorFrame(prefs, relativeTo);
 
         new VSEditorFrame(prefs, relativeTo,
-                          new VSSimulatorEditor(prefs, simulatorFrame));
+                          new VSSimulatorEditor(prefs, simulatorFrame,
+                                                VSSimulatorEditor.OPENED_NEW_WINDOW));
     }
 
     /**
