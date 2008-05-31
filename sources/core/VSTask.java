@@ -137,7 +137,7 @@ public class VSTask implements Comparable {
      *
      * @return true, if it is a process recover event
      */
-    public boolean isVSProcessRecoverEvent() {
+    public boolean isProcessRecoverEvent() {
         return event instanceof VSProcessRecoverEvent;
     }
 
