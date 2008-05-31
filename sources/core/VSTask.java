@@ -33,7 +33,7 @@ import protocols.VSAbstractProtocol;
  * The class VSTask, an object of this class represents a task to do or done.
  * All tasks are managed by the task manager. There are local and global timed
  * tasks. Local timed tasks are being fullfilled if the process' local time is
- * reached. Global timed tasks are being fullfilled if the simulation's time is
+ * reached. Global timed tasks are being fullfilled if the simulator's time is
  * reached.
  *
  * @author Paul C. Buetow
@@ -61,7 +61,7 @@ public class VSTask implements Comparable {
     /** The process to run the task at. */
     private VSProcess process;
 
-    /** The simulation's default prefs. */
+    /** The simulator's default prefs. */
     private VSPrefs prefs;
 
     /** The task is programmed. The task will be still in the task manager

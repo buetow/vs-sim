@@ -43,14 +43,14 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
 
-    /** The simulation. */
-    private VSSimulator simulation;
+    /** The simulator. */
+    private VSSimulator simulator;
 
     /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
 
-    /** The dont start new simulation. */
-    private boolean dontStartNewSimulation;
+    /** The dont start new simulator. */
+    private boolean dontStartNewSimulator;
 
     /** Open a new simulator window. */
     private boolean openedNewWindow;
@@ -60,15 +60,15 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
-     * @param simulation the simulation
+     * @param simulator the simulator
      */
     public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame,
-                             VSSimulator simulation) {
+                             VSSimulator simulator) {
         super(prefs, prefs, prefs.getString("lang.name")
               + " - " + prefs.getString("lang.prefs"));
-        this.dontStartNewSimulation = true;//simulation != null;
+        this.dontStartNewSimulator = true;//simulator != null;
         this.simulatorFrame = simulatorFrame;
-        this.simulation = simulation;
+        this.simulator = simulator;
     }
 
     /**
@@ -108,26 +108,26 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
         if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
 
-            if (simulation != null) {
+            if (simulator != null) {
                 if (expertModeChanged())
-                    simulation.fireExpertModeChanged();
-                simulation.updateFromPrefs();
+                    simulator.fireExpertModeChanged();
+                simulator.updateFromPrefs();
             }
 
         } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
-            if (!dontStartNewSimulation && openedNewWindow)
+            if (!dontStartNewSimulator && openedNewWindow)
                 simulatorFrame.dispose();
 
         } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
             if (expertModeChanged()) {
-                if (simulation != null)
-                    simulation.fireExpertModeChanged();
+                if (simulator != null)
+                    simulator.fireExpertModeChanged();
             }
-            if (!dontStartNewSimulation)
-                simulatorFrame.addSimulation(new VSSimulator(prefsToEdit, simulatorFrame));
-            else if (simulation != null)
-                simulation.updateFromPrefs();
+            if (!dontStartNewSimulator)
+                simulatorFrame.addSimulator(new VSSimulator(prefsToEdit, simulatorFrame));
+            else if (simulator != null)
+                simulator.updateFromPrefs();
 
         } else {
             super.actionPerformed(e);

@@ -38,8 +38,8 @@ import prefs.editors.*;
 import utils.*;
 
 /**
- * The class VSSimulator, an object of this class represents a whole simulation.
- * It may be, that several parallel simulations exist. They are independent
+ * The class VSSimulator, an object of this class represents a whole simulator.
+ * It may be, that several parallel simulators exist. They are independent
  * fron each other.
  *
  * @author Paul C. Buetow
@@ -126,7 +126,7 @@ public class VSSimulator extends JPanel {
     /** The prefs. */
     private VSPrefs prefs;
 
-    /** The simulation canvas. */
+    /** The simulator canvas. */
     private VSSimulatorCanvas simulatorCanvas;
 
     /** The simulator frame. */
@@ -141,7 +141,7 @@ public class VSSimulator extends JPanel {
     /** The task manager local model. */
     private VSTaskManagerTableModel taskManagerLocalModel;
 
-    /** The simulation has started. */
+    /** The simulator has started. */
     private boolean hasStarted = false;
 
     /** The last selected process num. */
@@ -150,11 +150,11 @@ public class VSSimulator extends JPanel {
     /** The last expert state. */
     private boolean lastExpertState;
 
-    /** The simulation counter. */
-    private static int simulationCounter;
+    /** The simulator counter. */
+    private static int simulatorCounter;
 
-    /** The simulation num. */
-    private static int simulationNum;
+    /** The simulator num. */
+    private static int simulatorNum;
 
     /**
      * The class VSTaskManagerTableModel, an object of this class handles
@@ -385,12 +385,12 @@ public class VSSimulator extends JPanel {
         this.prefs = prefs;
         this.simulatorFrame = simulatorFrame;
         this.logging = new VSLogging();
-        this.simulationNum = ++simulationCounter;
+        this.simulatorNum = ++simulatorCounter;
         this.menuItemStates = new VSMenuItemStates(false, false, false, true);
         this.localTextFields = new ArrayList<String>();
         this.globalTextFields = new ArrayList<String>();
 
-        logging.logg(prefs.getString("lang.simulation.new"));
+        logging.logg(prefs.getString("lang.simulator.new"));
         fillContentPane();
         updateFromPrefs();
         splitPaneH.setDividerLocation(
@@ -427,7 +427,7 @@ public class VSSimulator extends JPanel {
 
         simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
         taskManager = simulatorCanvas.getTaskManager();
-        logging.setSimulationCanvas(simulatorCanvas);
+        logging.setSimulatorCanvas(simulatorCanvas);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
@@ -1051,23 +1051,23 @@ public class VSSimulator extends JPanel {
     }
 
     /**
-     * The simulation has finished.
+     * The simulator has finished.
      */
     public void finish() {
         menuItemStates.setStart(false);
         menuItemStates.setPause(false);
         menuItemStates.setReset(true);
         menuItemStates.setReplay(true);
-        simulatorFrame.updateSimulationMenu();
+        simulatorFrame.updateSimulatorMenu();
     }
 
     /**
-     * Gets the simulation num.
+     * Gets the simulator num.
      *
-     * @return the simulation num
+     * @return the simulator num
      */
-    public int getSimulationNum() {
-        return simulationNum;
+    public int getSimulatorNum() {
+        return simulatorNum;
     }
 
     /**
@@ -1080,9 +1080,9 @@ public class VSSimulator extends JPanel {
     }
 
     /**
-     * Gets the simulation canvas.
+     * Gets the simulator canvas.
      *
-     * @return the simulation canvas
+     * @return the simulator canvas
      */
     public VSSimulatorCanvas getSimulatorCanvas() {
         return simulatorCanvas;

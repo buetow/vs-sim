@@ -29,7 +29,7 @@ import prefs.VSPrefs;
 
 /**
  * This class represents a message which is send from one process to another
- * process in the simulation.
+ * process in the simulator.
  *
  * @author Paul C. Buetow
  */

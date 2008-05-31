@@ -61,7 +61,7 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillDefaultStrings() {
         initString("lang.about", "About");
-        initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulation verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann als 1. Prüfer sowie Betreuer und Prof. Dr. rer. nat. Fassbender als 2. Prüfer erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
+        initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulator verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann als 1. Prüfer sowie Betreuer und Prof. Dr. rer. nat. Fassbender als 2. Prüfer erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
         initString("lang.activated", "aktiviert");
         initString("lang.actualize", "Aktualisieren");
@@ -110,7 +110,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
         initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" Knopfes übernommen!");
         initString("lang.prefs.protocols", "Protokolleinstellungen");
-        initString("lang.prefs.simulation", "Simulationseinstellungen");
+        initString("lang.prefs.simulator", "Simulatorseinstellungen");
         initString("lang.process", "Prozess");
         initString("lang.process.add.new", "Neuen Prozess hinzufügen");
         initString("lang.process.crash", "Prozess abstürzen");
@@ -137,14 +137,14 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.save", "Speichern");
         initString("lang.saveas", "Speichern unter");
         initString("lang.server", "Server");
-        initString("lang.simulation", "Simulation");
-        initString("lang.simulation.close", "Simulation schliessen");
-        initString("lang.simulation.finished", "Simulation beendet");
-        initString("lang.simulation.new", "Neue Simulation");
-        initString("lang.simulation.new", "Neue Simulation");
-        initString("lang.simulation.paused", "Simulation pausiert");
-        initString("lang.simulation.resetted", "Simulation zurückgesetzt");
-        initString("lang.simulation.started", "Simulation gestartet");
+        initString("lang.simulator", "Simulator");
+        initString("lang.simulator.close", "Simulator schliessen");
+        initString("lang.simulator.finished", "Simulator beendet");
+        initString("lang.simulator.new", "Neue Simulator");
+        initString("lang.simulator.new", "Neue Simulator");
+        initString("lang.simulator.paused", "Simulator pausiert");
+        initString("lang.simulator.resetted", "Simulator zurückgesetzt");
+        initString("lang.simulator.started", "Simulator gestartet");
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
@@ -171,11 +171,11 @@ public class VSDefaultPrefs extends VSPrefs {
      * @see prefs.VSPrefs#fillDefaultIntegers()
      */
     public void fillDefaultIntegers() {
-        /* Simulation prefs */
+        /* Simulator prefs */
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
         initInteger("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
         initInteger("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
-        initInteger("sim.seconds", 15, "Simulationsdauer", 5, 120, "s");
+        initInteger("sim.seconds", 15, "Simulatorsdauer", 5, 120, "s");
 
         /* Internal prefs */
         initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);
@@ -197,7 +197,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("keyevent.reset", KeyEvent.VK_R, null, 0, 100);
         initInteger("keyevent.save", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.saveas", KeyEvent.VK_V, null, 0, 100);
-        initInteger("keyevent.simulation", KeyEvent.VK_S, null, 0, 100);
+        initInteger("keyevent.simulator", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.start", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
@@ -213,16 +213,16 @@ public class VSDefaultPrefs extends VSPrefs {
      * @see prefs.VSPrefs#fillDefaultFloats()
      */
     public void fillDefaultFloats() {
-        /* Simulation prefs */
+        /* Simulator prefs */
         initFloat("process.clock.variance", 0, "Uhrabweichung");
-        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulation");
+        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulator");
     }
 
     /**
      * Fill default longs.
      */
     public void fillDefaultLongs() {
-        /* Simulation prefs */
+        /* Simulator prefs */
         initLong("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
         initLong("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
     }

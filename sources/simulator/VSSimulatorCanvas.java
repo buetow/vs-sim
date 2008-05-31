@@ -39,8 +39,8 @@ import prefs.editors.*;
 
 /**
  * The class VSSimulatorCanvas. An instance of this object represents the
- * graphical paint area of a simulation. It contains all graphic calculations.
- * Also the simulation thread takes place in this class in a loop! This class
+ * graphical paint area of a simulator. It contains all graphic calculations.
+ * Also the simulator thread takes place in this class in a loop! This class
  * is probably the most cryptic of the whole simulator source code. This is
  * this way in order to gain more performance of the painting area!
  *
@@ -53,8 +53,8 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     /** The highlighted process. */
     private VSProcess highlightedProcess;
 
-    /** The simulation. */
-    private VSSimulator simulation;
+    /** The simulator. */
+    private VSSimulator simulator;
 
     /** The prefs. */
     private VSPrefs prefs;
@@ -71,31 +71,31 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     /** The thread sleep. */
     private int threadSleep;
 
-    /** The until time. Until then goes the simulation? */
+    /** The until time. Until then goes the simulator? */
     private long untilTime;
 
-    /** The simulation is paused. */
+    /** The simulator is paused. */
     private volatile boolean isPaused = true;
 
-    /** The simulation thread is stopped. */
+    /** The simulator thread is stopped. */
     private volatile boolean hasThreadStopped = false;
 
-    /** The simulation is finished. */
+    /** The simulator is finished. */
     private volatile boolean isFinished = false;
 
-    /** The simulation is resetted. */
+    /** The simulator is resetted. */
     private volatile boolean isResetted = false;
 
-    /** The simulation is anti aliased. */
+    /** The simulator is anti aliased. */
     private volatile boolean isAntiAliased = false;
 
-    /** The simulation's anti aliasing has changed. */
+    /** The simulator's anti aliasing has changed. */
     private volatile boolean isAntiAliasedChanged = false;
 
-    /** The simulation shows the lamport time. */
+    /** The simulator shows the lamport time. */
     private volatile boolean showLamport = false;
 
-    /** The simulation shows the vector time. */
+    /** The simulator shows the vector time. */
     private volatile boolean showVectorTime = false;
 
     /** The pause time. */
@@ -128,8 +128,8 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     /** The clock offset. */
     private double clockOffset;
 
-    /** The simulation time. */
-    private long simulationTime;
+    /** The simulator time. */
+    private long simulatorTime;
 
     /** The x paint size. */
     double xPaintSize;
@@ -401,13 +401,13 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         }
 
         /**
-         * Called if a process within the simulation has been removed at a
+         * Called if a process within the simulator has been removed at a
          * specified index.
          *
          * @param index the index
          *
          * @return true, if the sender or the receiver of the message has been
-         *	removed from the simulation. Else false is returned.
+         *	removed from the simulator. Else false is returned.
          */
         public boolean removedAProcessAtIndex(int index) {
             if (index == receiverNum || index == senderNum)
@@ -459,13 +459,13 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      * Instantiates a new VSSimulatorCanvas object.
      *
      * @param prefs the prefs
-     * @param simulation the simulation
+     * @param simulator the simulator
      * @param logging the logging
      */
-    public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulation,
+    public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulator,
                              VSLogging logging) {
         this.prefs = prefs;
-        this.simulation = simulation;
+        this.simulator = simulator;
         this.logging = logging;
         this.taskManager = new VSTaskManager(prefs, this);
         this.messageLines = new LinkedList<VSMessageLine>();
@@ -649,10 +649,10 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         messageLostColor = prefs.getColor("col.message.lost");
         backgroundColor = prefs.getColor("col.background");
 
-        paintSize = simulation.getPaintSize();
-        xPaintSize = simulation.getWidth() -
-                     (3 * XOFFSET + simulation.getSplitSize());
-        yDistance = (simulation.getPaintSize() -
+        paintSize = simulator.getPaintSize();
+        xPaintSize = simulator.getWidth() -
+                     (3 * XOFFSET + simulator.getSplitSize());
+        yDistance = (simulator.getPaintSize() -
                      2 * (YOFFSET + YOUTER_SPACEING))/ numProcesses;
         xpaintsize_dividedby_untiltime = xPaintSize / (double) untilTime;
 
@@ -705,41 +705,41 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Updates the simulation.
+     * Updates the simulator.
      *
      * @param globalTime the global time
      * @param lastGlobalTime the last global time
      */
-    private void updateSimulation(long globalTime, long lastGlobalTime) {
+    private void updateSimulator(long globalTime, long lastGlobalTime) {
         if (isPaused || isFinished)
             return;
 
-        long lastSimulationTime = simulationTime;
+        long lastSimulatorTime = simulatorTime;
         long offset = globalTime - lastGlobalTime;
 
         clockOffset += offset * clockSpeed;
 
         while (clockOffset >= 1) {
             --clockOffset;
-            ++simulationTime;
+            ++simulatorTime;
         }
 
-        if (simulationTime > untilTime)
-            simulationTime = untilTime;
+        if (simulatorTime > untilTime)
+            simulatorTime = untilTime;
 
-        offset = simulationTime - lastSimulationTime;
+        offset = simulatorTime - lastSimulatorTime;
 
         for (long l = 0; l < offset; ++l)
-            taskManager.runTasks(l, offset, lastSimulationTime);
+            taskManager.runTasks(l, offset, lastSimulatorTime);
 
         synchronized (processes) {
             for (VSProcess process : processes)
-                process.syncTime(simulationTime);
+                process.syncTime(simulatorTime);
         }
     }
 
     /**
-     * Paints the simulation.
+     * Paints the simulator.
      */
     public void paint() {
         while (getBufferStrategy() == null) {
@@ -764,7 +764,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             }
 
             g.fillRect(0, 0, getWidth(), getHeight());
-            long globalTime = simulationTime;
+            long globalTime = simulatorTime;
 
             globalTimeXPosition = getTimeXPosition(globalTime);
             paintSecondlines(g);
@@ -1034,7 +1034,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      * @return the time
      */
     public long getTime() {
-        return simulationTime;
+        return simulatorTime;
     }
 
     /**
@@ -1122,9 +1122,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                     System.out.println(e);
                 }
 
-                updateSimulation(time, lastTime);
+                updateSimulator(time, lastTime);
 
-                if (simulationTime == untilTime) {
+                if (simulatorTime == untilTime) {
                     finish();
                     break;
                 }
@@ -1134,16 +1134,16 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 time = System.currentTimeMillis() - startTime;
             }
 
-            updateSimulation(time, lastTime);
+            updateSimulator(time, lastTime);
             paint();
         }
     }
 
     /**
-     * Starts/plays the simulation.
+     * Starts/plays the simulator.
      */
     public void play() {
-        logging.logg(prefs.getString("lang.simulation.started"));
+        logging.logg(prefs.getString("lang.simulator.started"));
         final long currentTime = System.currentTimeMillis();
 
         synchronized (processes) {
@@ -1171,7 +1171,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Called if the simulation has finished.
+     * Called if the simulator has finished.
      */
     public void finish() {
         synchronized (processes) {
@@ -1179,14 +1179,14 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 p.finish();
         }
 
-        simulation.finish();
+        simulator.finish();
         isFinished = true;
-        logging.logg(prefs.getString("lang.simulation.finished"));
+        logging.logg(prefs.getString("lang.simulator.finished"));
         paint();
     }
 
     /**
-     * Call this, in order to pause the simulation.
+     * Call this, in order to pause the simulator.
      */
     public void pause() {
         isPaused = true;
@@ -1196,16 +1196,16 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         }
 
         pauseTime = System.currentTimeMillis();
-        logging.logg(prefs.getString("lang.simulation.paused"));
+        logging.logg(prefs.getString("lang.simulator.paused"));
         paint();
     }
 
     /**
-     * Call this, in order to reset the simulation.
+     * Call this, in order to reset the simulator.
      */
     public void reset() {
         if (!isResetted) {
-            logging.logg(prefs.getString("lang.simulation.resetted"));
+            logging.logg(prefs.getString("lang.simulator.resetted"));
 
             isResetted = true;
             isPaused = false;
@@ -1214,7 +1214,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             time = 0;
             lastTime = 0;
             clockOffset = 0;
-            simulationTime = 0;
+            simulatorTime = 0;
 
             synchronized (processes) {
                 for (VSProcess process : processes)
@@ -1244,7 +1244,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Stops the thread of the simulation.
+     * Stops the thread of the simulator.
      */
     public void stopThread() {
         hasThreadStopped = true;
@@ -1284,9 +1284,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Sets if the simulation graphics are anti aliased.
+     * Sets if the simulator graphics are anti aliased.
      *
-     * @param isAntiAliased true, if the simulation is anti aliased
+     * @param isAntiAliased true, if the simulator is anti aliased
      */
     public void isAntiAliased(boolean isAntiAliased) {
         this.isAntiAliased = isAntiAliased;
@@ -1371,7 +1371,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     public void editProcess(VSProcess process) {
         if (process != null) {
             process.updatePrefs();
-            new VSEditorFrame(prefs, simulation.getSimulatorFrame(),
+            new VSEditorFrame(prefs, simulator.getSimulatorFrame(),
                               new VSProcessEditor(prefs, process));
         }
     }
@@ -1432,13 +1432,13 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Removes a process from the simulation.
+     * Removes a process from the simulator.
      *
      * @param process the process
      */
     private void removeProcess(VSProcess process) {
         if (numProcesses == 1) {
-            simulation.getSimulatorFrame().removeSimulation(simulation);
+            simulator.getSimulatorFrame().removeSimulator(simulator);
 
         } else {
             int index = processes.indexOf(process);
@@ -1452,7 +1452,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
 
             numProcesses = processes.size();
             taskManager.removeTasksOf(process);
-            simulation.removedAProcessAtIndex(index);
+            simulator.removedAProcessAtIndex(index);
             recalcOnChange();
 
             ArrayList<VSMessageLine> removeThose =
@@ -1489,7 +1489,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     }
 
     /**
-     * Adds a new process to the simulation.
+     * Adds a new process to the simulator.
      */
     private void addProcess() {
         numProcesses = processes.size() + 1;
@@ -1501,6 +1501,6 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                     process.addedAProcess();
         }
         recalcOnChange();
-        simulation.addProcessAtIndex(processes.size()-1);
+        simulator.addProcessAtIndex(processes.size()-1);
     }
 }

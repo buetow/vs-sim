@@ -595,7 +595,7 @@ public abstract class VSAbstractEditor implements ActionListener {
             if (key.startsWith("sim.")) {
                 if (!flag) {
                     flag = true;
-                    addSeparator(prefs.getString("lang.prefs.simulation"));
+                    addSeparator(prefs.getString("lang.prefs.simulator"));
                 }
                 addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
             }

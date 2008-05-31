@@ -72,8 +72,8 @@ public class VSTaskManager {
     }
 
     /**
-     * Run tasks. This method gets called by the simulation canvas repeatedly.
-     * Almost all simulation actions take place in this method.
+     * Run tasks. This method gets called by the simulator canvas repeatedly.
+     * Almost all simulator actions take place in this method.
      *
      * @param step the step
      * @param offset the offset

@@ -36,7 +36,7 @@ import utils.*;
 
 /**
  * The class VSProcess, an object of this class represents a process of a
- * simulation.
+ * simulator.
  *
  * @author Paul C. Buetow
  */
@@ -44,13 +44,13 @@ public class VSProcess extends VSPrefs {
     /** The data serialization id. */
     private static final long serialVersionUID = 1L;
 
-    /** The protocols to reset if the simulation is over or the reset
+    /** The protocols to reset if the simulator is over or the reset
      * button has been pressed.
      */
     private ArrayList<VSAbstractProtocol> protocolsToReset;
 
     /** The crash history. represents all crashes of the process using the
-     * global simulation time.
+     * global simulator time.
      */
     private ArrayList<Long> crashHistory;
 
@@ -72,13 +72,13 @@ public class VSProcess extends VSPrefs {
     /** The logging object. */
     private VSLogging logging;
 
-    /** The simulation's default prefs. */
+    /** The simulator's default prefs. */
     private VSPrefs prefs;
 
     /** The random generator of the process. */
     private VSRandom random;
 
-    /** The simulation canvas. */
+    /** The simulator canvas. */
     private VSSimulatorCanvas simulatorCanvas;
 
     /** The random crash task. May be null if there is no such random task. */
@@ -191,9 +191,9 @@ public class VSProcess extends VSPrefs {
     /**
      * Instantiates a new process.
      *
-     * @param prefs the simulation's default prefs
+     * @param prefs the simulator's default prefs
      * @param processNum the process num
-     * @param simulatorCanvas the simulation canvas
+     * @param simulatorCanvas the simulator canvas
      * @param logging the logging object
      */
     public VSProcess(VSPrefs prefs, int processNum,
@@ -282,7 +282,7 @@ public class VSProcess extends VSPrefs {
     /**
      * Syncs the process' time. This method is using the clockOffset and
      * clockVariance variables. This method is called repeatedly from the
-     * VSSimulationCanvas in order to update the process' local and global
+     * VSSimulatorCanvas in order to update the process' local and global
      * time values.
      *
      * @param globalTime the global time.
@@ -407,7 +407,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * The process' state is 'play'. Called by the simulation canvas.
+     * The process' state is 'play'. Called by the simulator canvas.
      */
     public synchronized void play() {
         isPaused = false;
@@ -415,7 +415,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * The process' state is 'pause'. Called by the simulation canvas.
+     * The process' state is 'pause'. Called by the simulator canvas.
      */
     public synchronized void pause() {
         isPaused = true;
@@ -423,7 +423,7 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * The process' state is 'Finish'. Called by the simulation canvas.
+     * The process' state is 'Finish'. Called by the simulator canvas.
      */
     public synchronized void finish() {
         isPaused = true;
@@ -526,7 +526,7 @@ public class VSProcess extends VSPrefs {
     /**
      * Checks if the process has crashed. The difference to isCrashed is,
      * that the process may be fully functional again after crashing. This
-     * method is needed by the simulation canvas in order to see if it should
+     * method is needed by the simulator canvas in order to see if it should
      * paint 'crashed areas' using the crash history of this process.
      *
      * @return true, if yes
@@ -906,16 +906,16 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Gets the simulation canvas.
+     * Gets the simulator canvas.
      *
-     * @return the simulation canvas
+     * @return the simulator canvas
      */
     public VSSimulatorCanvas getSimulatorCanvas() {
         return simulatorCanvas;
     }
 
     /**
-     * Gets the simulation's default prefs.
+     * Gets the simulator's default prefs.
      *
      * @return the default prefs
      */
@@ -924,8 +924,8 @@ public class VSProcess extends VSPrefs {
     }
 
     /**
-     * Removes the process at the specified index. Called by the simulation
-     * canvas if a process has been removed from the simulation. Needed in
+     * Removes the process at the specified index. Called by the simulator
+     * canvas if a process has been removed from the simulator. Needed in
      * order to update the vector time and the local processNum.
      *
      * @param index the index the process has to get removed.
@@ -941,8 +941,8 @@ public class VSProcess extends VSPrefs {
 
     /**
      * Added a process. Needed in order to update the vector time's size.
-     * Called by the simulation canvas if a process has been added to the
-     * simulation.
+     * Called by the simulator canvas if a process has been added to the
+     * simulator.
      */
     public void addedAProcess() {
         vectorTime.add(new Long(0));

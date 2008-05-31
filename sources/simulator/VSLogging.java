@@ -53,7 +53,7 @@ public class VSLogging {
     /** The logging lines. */
     private ArrayList<StringBuffer> loggingLines;
 
-    /** The simulation canvas. */
+    /** The simulator canvas. */
     private VSSimulatorCanvas simulatorCanvas;
 
     /** The logging messages are filtered. */
@@ -79,11 +79,11 @@ public class VSLogging {
     }
 
     /**
-     * Sets the simulation canvas.
+     * Sets the simulator canvas.
      *
-     * @param simulatorCanvas the simulation canvas
+     * @param simulatorCanvas the simulator canvas
      */
-    public void setSimulationCanvas(VSSimulatorCanvas simulatorCanvas) {
+    public void setSimulatorCanvas(VSSimulatorCanvas simulatorCanvas) {
         this.simulatorCanvas = simulatorCanvas;
     }
 
