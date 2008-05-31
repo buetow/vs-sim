@@ -88,9 +88,9 @@ public class VSProcess extends VSPrefs {
     private VSVectorTime vectorTime;
 
     /** The tasks of the process. DO ONLY MANIPULATE THIS OBJECT WITHIN THE
-	 * VSTaskManager CLASS! OTHERWISE THE SYNCHRONIZATION IS WRONG! Use the
-	 * VSProcess.getTasks() method to get a reference to this object within the
-	 * VSTaskManager! */
+     * VSTaskManager CLASS! OTHERWISE THE SYNCHRONIZATION IS WRONG! Use the
+     * VSProcess.getTasks() method to get a reference to this object within the
+     * VSTaskManager! */
     private VSPriorityQueue<VSTask> tasks;
 
     /** The process has crashed. But may be working again. */

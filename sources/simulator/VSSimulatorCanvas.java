@@ -369,15 +369,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 g.drawLine((int) x1, (int) y1, (int) x, (int) y);
 
             } else if (globalTime >= recvTime) {
-                if (prefs.getBoolean("sim.messages.relevant")) {
-                    VSMessageReceiveEvent event =
-                        (VSMessageReceiveEvent) task.getEvent();
-
-                    event.init(receiverProcess);
-                    if (!event.isRelevantMessage())
-                        removeMessageLine(this);
-                }
-
+                checkIfMessageIsRelevant();
                 isArrived = true;
 
                 if (receiverProcess.isCrashed())
@@ -388,6 +380,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 draw(g, globalTime);
 
             } else if (outageTime >= 0 && outageTime <= globalTime) {
+                checkIfMessageIsRelevant();
                 isLost = true;
                 draw(g, globalTime);;
 
@@ -397,6 +390,20 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 y = y1 + ( ( (y2-y1) / (x2-x1)) * (x-x1));
                 g.setColor(messageSendingColor);
                 g.drawLine((int) x1, (int) y1, (int) x, (int) y);
+            }
+        }
+
+        /**
+         * Checks if the message is relevant. If it's not relevant, then it will
+         * get removed.
+         */
+        private void checkIfMessageIsRelevant() {
+            if (prefs.getBoolean("sim.messages.relevant")) {
+                VSMessageReceiveEvent event =
+                    (VSMessageReceiveEvent) task.getEvent();
+                event.init(receiverProcess);
+                if (!event.isRelevantMessage())
+                    removeMessageLine(this);
             }
         }
 
@@ -1330,14 +1337,14 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                         outageTime = sendingProcess.getARandomMessageOutageTime(
                                          durationTime, null);
 
+                    receiveEvent = new VSMessageReceiveEvent(message);
+                    task = new VSTask(deliverTime, receiverProcess,
+                                      receiveEvent, VSTask.GLOBAL);
+
                     /* Only add a 'receiving message' task if the message will
                        not get lost! */
-                    if (outageTime == -1) {
-                        receiveEvent = new VSMessageReceiveEvent(message);
-                        task = new VSTask(deliverTime, receiverProcess,
-                                          receiveEvent, VSTask.GLOBAL);
+                    if (outageTime == -1)
                         taskManager.addTask(task);
-                    }
 
                     synchronized (messageLines) {
                         messageLines.add(
