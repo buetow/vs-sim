@@ -60,6 +60,9 @@ public class VSBasicMulticastProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
     public void onClientStart() {
+        VSMessage message = new VSMessage();
+        message.setBoolean("isMulticast", true);
+        sendMessage(message);
     }
 
     /* (non-Javadoc)
@@ -90,6 +93,8 @@ public class VSBasicMulticastProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
+        if (recvMessage.getBoolean("isMulticast"))
+            logg("Multicast erhalten");
     }
 
     /* (non-Javadoc)

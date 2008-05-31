@@ -1,7 +1,7 @@
 Must do:
-	Basic Multicast
 	Reliable Multicast
 	Ganze simulationseinstellungen abspeichern/laden koennen
+		Events serialisierbar machen
 		TaskManager + Tasks serialisierbar machen
 		VSPrefsRestriction serialisierbar machen
 		Tasks anhand der Tasknummern den richtigen Prozessen zuordnen
