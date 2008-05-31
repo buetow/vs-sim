@@ -88,7 +88,7 @@ public class VSTaskManager {
         long globalTime;
         final long globalOffsetTime = lastGlobalTime + step;
         boolean redo;
-        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
 
         do {
             redo = false;
@@ -216,7 +216,7 @@ public class VSTaskManager {
      * Resets the task manager.
      */
     public synchronized void reset() {
-        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
         PriorityQueue<VSTask> tmp = null;
 
         synchronized (processes) {
@@ -350,7 +350,7 @@ public class VSTaskManager {
      */
     public synchronized ArrayList<VSTask> getLocalTasks() {
         ArrayList<VSTask> localTasks = new ArrayList<VSTask>();
-        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (!task.isGlobalTimed())
@@ -458,7 +458,7 @@ public class VSTaskManager {
 
         buffer.append(prefs.getString("lang.tasks.local"));
 
-        Vector<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
         synchronized (processes) {
             for (VSProcess process : processes) {
                 VSPriorityQueue<VSTask> tasks = process.getTasks();

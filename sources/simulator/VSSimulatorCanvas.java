@@ -120,7 +120,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     private LinkedList<VSMessageLine> messageLinesToRemove;
 
     /** The processes. */
-    private Vector<VSProcess> processes;
+    private ArrayList<VSProcess> processes;
 
     /** The clock speed. */
     private double clockSpeed;
@@ -477,7 +477,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         this.taskManager = new VSTaskManager(prefs, this);
         this.messageLines = new LinkedList<VSMessageLine>();
         this.messageLinesToRemove = new LinkedList<VSMessageLine>();
-        this.processes = new Vector<VSProcess>();
+        this.processes = new ArrayList<VSProcess>();
 
         numProcesses = prefs.getInteger("sim.process.num");
         updateFromPrefs();
@@ -996,7 +996,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         for (int i = 0; i < numProcesses; ++i) {
             if (yPos < y + reachDistance && yPos > y - reachDistance -
                     LINE_WIDTH)
-                return processes.get(i);
+                synchronized (processes) {
+                    return processes.get(i);
+                }
             y += yOffset;
         }
 
@@ -1097,10 +1099,12 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      * @return the process
      */
     public VSProcess getProcess(int processNum) {
-        if (processNum >= processes.size())
-            return null;
+        synchronized (processes) {
+            if (processNum >= processes.size())
+                return null;
 
-        return processes.get(processNum);
+            return processes.get(processNum);
+        }
     }
 
     /* (non-Javadoc)
@@ -1366,8 +1370,10 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      * @param processNum the process num
      */
     public void editProcess(int processNum) {
-        VSProcess process = processes.get(processNum);
-        editProcess(process);
+        synchronized (processes) {
+            VSProcess process = processes.get(processNum);
+            editProcess(process);
+        }
     }
 
     /**
@@ -1404,7 +1410,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      *
      * @return the processes
      */
-    public Vector<VSProcess> getProcesses() {
+    public ArrayList<VSProcess> getProcesses() {
         return processes;
     }
 
@@ -1448,16 +1454,18 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             simulator.getSimulatorFrame().removeSimulator(simulator);
 
         } else {
-            int index = processes.indexOf(process);
-            processes.remove(index);
-
+            int index = 0;
             synchronized (processes) {
+                index = processes.indexOf(process);
+                processes.remove(index);
+
                 for (VSProcess p : processes) {
                     p.removedAProcessAtIndex(index);
                 }
+
+                numProcesses = processes.size();
             }
 
-            numProcesses = processes.size();
             taskManager.removeTasksOf(process);
             simulator.removedAProcessAtIndex(index);
             recalcOnChange();
@@ -1499,14 +1507,16 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      * Adds a new process to the simulator.
      */
     private void addProcess() {
-        numProcesses = processes.size() + 1;
-        VSProcess newProcess = createProcess(processes.size());
-        processes.add(newProcess);
         synchronized (processes) {
+            numProcesses = processes.size() + 1;
+            VSProcess newProcess = createProcess(processes.size());
+            processes.add(newProcess);
+
             for (VSProcess process : processes)
                 if (!process.equals(newProcess))
                     process.addedAProcess();
         }
+
         recalcOnChange();
         simulator.addProcessAtIndex(processes.size()-1);
     }
