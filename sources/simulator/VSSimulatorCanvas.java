@@ -220,6 +220,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     /** The message line counter. */
     private long messageLineCounter;
 
+    /** The process counter. Needed for the unique process id's. */
+    private int processCounter;
+
     /**
      * The class VSMessageLine, an object of this class represents a message
      * line drawn into the painting area.
@@ -458,7 +461,6 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         numProcesses = prefs.getInteger("sim.process.num");
         updateFromPrefs();
 
-        VSProcess.resetProcessCounter();
         for (int i = 0; i < numProcesses; ++i)
             processes.add(createProcess(i));
 
@@ -1026,6 +1028,15 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      */
     public long getStartTime() {
         return startTime;
+    }
+
+    /**
+     * Gets the next process id.
+     *
+     * @return the next process id
+     */
+    public int processIDCount() {
+        return ++processCounter;
     }
 
     /**

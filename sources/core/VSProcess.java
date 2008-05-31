@@ -79,7 +79,7 @@ public class VSProcess extends VSPrefs {
     private VSRandom random;
 
     /** The simulation canvas. */
-    private VSSimulatorCanvas simulationCanvas;
+    private VSSimulatorCanvas simulatorCanvas;
 
     /** The random crash task. May be null if there is no such random task. */
     private VSTask randomCrashTask;
@@ -131,9 +131,6 @@ public class VSProcess extends VSPrefs {
 
     /** The local time. */
     private long localTime;
-
-    /** The process counter. Needed for the unique process id's. */
-    private static int processCounter;
 
     /** The Constant DEFAULT_INTEGER_VALUE_KEYS.
      * This array contains all Integer prefs of the process which should show
@@ -190,22 +187,23 @@ public class VSProcess extends VSPrefs {
      *
      * @param prefs the simulation's default prefs
      * @param processNum the process num
-     * @param simulationCanvas the simulation canvas
+     * @param simulatorCanvas the simulation canvas
      * @param logging the logging object
      */
     public VSProcess(VSPrefs prefs, int processNum,
-                     VSSimulatorCanvas simulationCanvas, VSLogging logging) {
+                     VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
         this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
         this.processNum = processNum;
         this.prefs = prefs;
-        this.simulationCanvas = simulationCanvas;
+        this.simulatorCanvas = simulatorCanvas;
         this.logging = logging;
-        random = new VSRandom(processID+processCounter);
+
+        processID = simulatorCanvas.processIDCount();
+        random = new VSRandom(processID*processNum+processID+processNum);
 
         initTimeFormats();
 
         isPaused = true;
-        processID = ++processCounter;
 
         /* Create the super.VSPrefs with it's default prefs */
         fillWithDefaults();
@@ -233,7 +231,7 @@ public class VSProcess extends VSPrefs {
         vectorTimeHistory = new ArrayList<VSVectorTime>();
         crashHistory = new ArrayList<Long>();
 
-        final int numProcesses = simulationCanvas.getNumProcesses();
+        final int numProcesses = simulatorCanvas.getNumProcesses();
         for (int i = 0; i < numProcesses; ++i)
             vectorTime.add(new Long(0));
     }
@@ -249,7 +247,7 @@ public class VSProcess extends VSPrefs {
         vectorTimeHistory.clear();
         crashHistory.clear();
 
-        final int numProcesses = simulationCanvas.getNumProcesses();
+        final int numProcesses = simulatorCanvas.getNumProcesses();
         for (int i = numProcesses; i > 0; --i)
             vectorTime.add(new Long(0));
     }
@@ -359,7 +357,7 @@ public class VSProcess extends VSPrefs {
      */
     public void createRandomCrashTask() {
         if (!isCrashed) {
-            VSTaskManager taskManager = simulationCanvas.getTaskManager();
+            VSTaskManager taskManager = simulatorCanvas.getTaskManager();
             long crashTime = getARandomCrashTime();
 
             if (crashTime < 0)
@@ -644,7 +642,7 @@ public class VSProcess extends VSPrefs {
 
             /* Calculate the random outage time! */
             long outageTime = globalTime + random.nextLong(durationTime+1) %
-                              simulationCanvas.getUntilTime();
+                              simulatorCanvas.getUntilTime();
 
             return outageTime;
         }
@@ -664,8 +662,8 @@ public class VSProcess extends VSPrefs {
         if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
             final long crashTime =  random.nextLong(
-                                        simulationCanvas.getUntilTime()+1) %
-                                    simulationCanvas.getUntilTime();
+                                        simulatorCanvas.getUntilTime()+1) %
+                                    simulatorCanvas.getUntilTime();
             return crashTime;
         }
 
@@ -826,7 +824,7 @@ public class VSProcess extends VSPrefs {
         buffer.append("; ");
         buffer.append(message.toStringFull());
         logg(buffer.toString());
-        simulationCanvas.sendMessage(message);
+        simulatorCanvas.sendMessage(message);
     }
 
     /**
@@ -906,7 +904,7 @@ public class VSProcess extends VSPrefs {
      * @return the simulation canvas
      */
     public VSSimulatorCanvas getSimulatorCanvas() {
-        return simulationCanvas;
+        return simulatorCanvas;
     }
 
     /**
@@ -916,15 +914,6 @@ public class VSProcess extends VSPrefs {
      */
     public VSPrefs getPrefs() {
         return prefs;
-    }
-
-    /**
-     * Resets the process counter. The next newly created process will have
-     * "0" as its process num. This static method is used by the simulator
-     * canvas if it opens a new simulation.
-     */
-    public static void resetProcessCounter() {
-        processCounter = 0;
     }
 
     /**

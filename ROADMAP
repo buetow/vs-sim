@@ -1,7 +1,6 @@
 Must do:
 	Basic Multicast
 	Reliable Multicast
-	VSSimulationCanvas calls VSProcess.resetProcessCounter Bugfix!
 	Ganze simulationseinstellungen abspeichern/laden koennen
 		TaskManager + Tasks serialisierbar machen
 		VSPrefsRestriction serialisierbar machen

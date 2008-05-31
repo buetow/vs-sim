@@ -127,7 +127,7 @@ public class VSSimulator extends JPanel {
     private VSPrefs prefs;
 
     /** The simulation canvas. */
-    private VSSimulatorCanvas simulationCanvas;
+    private VSSimulatorCanvas simulatorCanvas;
 
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
@@ -398,7 +398,7 @@ public class VSSimulator extends JPanel {
 
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
-        int numProcesses = simulationCanvas.getNumProcesses();
+        int numProcesses = simulatorCanvas.getNumProcesses();
         for (int i = 0; i <= numProcesses; ++i) {
             localTextFields.add("0000");
             globalTextFields.add("0000");
@@ -408,7 +408,7 @@ public class VSSimulator extends JPanel {
         localPIDComboBox.setSelectedIndex(0);
         globalPIDComboBox.setSelectedIndex(0);
 
-        thread = new Thread(simulationCanvas);
+        thread = new Thread(simulatorCanvas);
         thread.start();
     }
 
@@ -421,13 +421,13 @@ public class VSSimulator extends JPanel {
         splitPaneH = new JSplitPane();
         splitPaneV = new JSplitPane();
 
-        simulationCanvas = new VSSimulatorCanvas(prefs, this, logging);
-        taskManager = simulationCanvas.getTaskManager();
-        logging.setSimulationCanvas(simulationCanvas);
+        simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
+        taskManager = simulatorCanvas.getTaskManager();
+        logging.setSimulationCanvas(simulatorCanvas);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
-        canvasPanel.add(simulationCanvas);
+        canvasPanel.add(simulatorCanvas);
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
@@ -488,7 +488,7 @@ public class VSSimulator extends JPanel {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulationCanvas.showLamport(buttonModel.isSelected());
+                    simulatorCanvas.showLamport(buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         vectorTimeActiveCheckBox.setSelected(false);
                 }
@@ -503,7 +503,7 @@ public class VSSimulator extends JPanel {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulationCanvas.showVectorTime(buttonModel.isSelected());
+                    simulatorCanvas.showVectorTime(buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         lamportActiveCheckBox.setSelected(false);
                 }
@@ -518,7 +518,7 @@ public class VSSimulator extends JPanel {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulationCanvas.isAntiAliased(buttonModel.isSelected());
+                    simulatorCanvas.isAntiAliased(buttonModel.isSelected());
                 }
             });
             toolsPanel.add(antiAliasing);
@@ -600,11 +600,11 @@ public class VSSimulator extends JPanel {
         globalPIDComboBox = new JComboBox();
 
         lastSelectedProcessNum = 0;
-        int numProcesses = simulationCanvas.getNumProcesses();
+        int numProcesses = simulatorCanvas.getNumProcesses();
         String processString = prefs.getString("lang.process");
 
         for (int i = 0; i < numProcesses; ++i) {
-            int pid = simulationCanvas.getProcess(i).getProcessID();
+            int pid = simulatorCanvas.getProcess(i).getProcessID();
             processesComboBox.addItem(processString + " " + pid);
             localPIDComboBox.addItem("PID: " + pid);
             globalPIDComboBox.addItem("PID: " + pid);
@@ -649,7 +649,7 @@ public class VSSimulator extends JPanel {
                 localPIDComboBox.setSelectedIndex(processNum);
                 globalPIDComboBox.setSelectedIndex(processNum);
 
-                if (processNum == simulationCanvas.getNumProcesses()) {
+                if (processNum == simulatorCanvas.getNumProcesses()) {
                     tabbedPane.setEnabledAt(1, false);
                     if (tabbedPane.getSelectedIndex() == 1)
                         tabbedPane.setSelectedIndex(0);
@@ -658,7 +658,7 @@ public class VSSimulator extends JPanel {
                     tabbedPane.setEnabledAt(1, true);
                 }
 
-                if (processNum != simulationCanvas.getNumProcesses()) {
+                if (processNum != simulatorCanvas.getNumProcesses()) {
                     VSProcess process = getSelectedProcess();
                     VSProcessEditor processEditor =
                         new VSProcessEditor(prefs, process);
@@ -1009,7 +1009,7 @@ public class VSSimulator extends JPanel {
      */
     private VSProcess getSelectedProcess() {
         int processNum = getSelectedProcessNum();
-        return simulationCanvas.getProcess(processNum);
+        return simulatorCanvas.getProcess(processNum);
     }
 
     /**
@@ -1025,11 +1025,11 @@ public class VSSimulator extends JPanel {
                          ? localPIDComboBox.getSelectedIndex()
                          : globalPIDComboBox.getSelectedIndex();
 
-        if (processNum == simulationCanvas.getNumProcesses())
-            return simulationCanvas.getProcessesArray();
+        if (processNum == simulatorCanvas.getNumProcesses())
+            return simulatorCanvas.getProcessesArray();
 
         ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
-        arr.add(simulationCanvas.getProcess(processNum));
+        arr.add(simulatorCanvas.getProcess(processNum));
 
         return arr;
     }
@@ -1081,7 +1081,7 @@ public class VSSimulator extends JPanel {
      * @return the simulation canvas
      */
     public VSSimulatorCanvas getSimulatorCanvas() {
-        return simulationCanvas;
+        return simulatorCanvas;
     }
 
     /**
@@ -1097,8 +1097,8 @@ public class VSSimulator extends JPanel {
      * Update from prefs.
      */
     public void updateFromPrefs() {
-        simulationCanvas.setBackground(prefs.getColor("col.background"));
-        simulationCanvas.updateFromPrefs();
+        simulatorCanvas.setBackground(prefs.getColor("col.background"));
+        simulatorCanvas.updateFromPrefs();
     }
 
     /**
@@ -1128,7 +1128,7 @@ public class VSSimulator extends JPanel {
      * @param index the index
      */
     public void addProcessAtIndex(int index) {
-        int processID = simulationCanvas.getProcess(index).getProcessID();
+        int processID = simulatorCanvas.getProcess(index).getProcessID();
         String processString = prefs.getString("lang.process");
 
         localTextFields.add(index, "0000");
@@ -1172,7 +1172,7 @@ public class VSSimulator extends JPanel {
         tabbedPane.setSelectedIndex(selectedIndex);
 
         /* Update the 'Variables tab' */
-        if (getSelectedProcessNum() != simulationCanvas.getNumProcesses()) {
+        if (getSelectedProcessNum() != simulatorCanvas.getNumProcesses()) {
             VSProcess process = getSelectedProcess();
             VSProcessEditor editor = new VSProcessEditor(prefs, process);
             tabbedPane.setComponentAt(1, editor.getContentPane());
