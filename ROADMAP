@@ -1,4 +1,5 @@
 Must do:
+	Bugfix: Local Tasks of the Processes
 	Reliable Multicast
 	Ganze simulationseinstellungen abspeichern/laden koennen
 		Events serialisierbar machen
