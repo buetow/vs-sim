@@ -957,7 +957,8 @@ public class VSPrefs implements Serializable {
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws ClassNotFoundException the class not found exception
      */
-    @SuppressWarnings("unchecked") public synchronized void readObject(ObjectInputStream objectInputStream)
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
         colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();

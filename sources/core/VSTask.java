@@ -273,9 +273,11 @@ public class VSTask implements Comparable {
             else if (taskTime > task.getTaskTime())
                 return 1;
 
+            VSAbstractEvent event2 = task.getEvent();
+
             /* If it's a recovering, it should get handled very first */
             boolean a = event instanceof VSProcessRecoverEvent;
-            boolean b = task.getEvent() instanceof VSProcessRecoverEvent;
+            boolean b = event2 instanceof VSProcessRecoverEvent;
 
             if (a && b)
                 return 0;
@@ -288,7 +290,7 @@ public class VSTask implements Comparable {
 
             /* If it's a crash, it should get handled second first */
             a = event instanceof VSProcessCrashEvent;
-            b = task.getEvent() instanceof VSProcessCrashEvent;
+            b = event2 instanceof VSProcessCrashEvent;
 
             if (a && b)
                 return 0;
@@ -301,7 +303,7 @@ public class VSTask implements Comparable {
 
             /* If it's a VSProtocolEvent, it should get handled third  */
             a = event instanceof VSProtocolEvent;
-            b = task.getEvent() instanceof VSProtocolEvent;
+            b = event2 instanceof VSProtocolEvent;
 
             if (a && b)
                 return 0;
@@ -312,6 +314,7 @@ public class VSTask implements Comparable {
             if (b)
                 return 1;
 
+            return event.getShortname().compareTo(event2.getShortname());
         }
 
         return 0;

@@ -160,6 +160,7 @@ public class VSSimulator extends JPanel {
      * The class VSTaskManagerTableModel, an object of this class handles
      * the task manager's JTable.
      */
+    @SuppressWarnings("unchecked")
     private class VSTaskManagerTableModel extends AbstractTableModel
                 implements MouseListener {
         /** the serial version uid */
@@ -181,7 +182,7 @@ public class VSSimulator extends JPanel {
         public boolean allProcesses;
 
         /** The tasks. */
-        private VSPriorityQueue<VSTask> tasks;
+        private ArrayList<VSTask> tasks;
 
         /** The column names. */
         private String columnNames[];
@@ -200,6 +201,7 @@ public class VSSimulator extends JPanel {
          *	if this table manages the global tasks.
          */
         public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
+            tasks = new ArrayList<VSTask>();
             set(process, localTask, ONE_PROCESS);
             columnNames = new String[3];
             columnNames[0]= prefs.getString("lang.time") + " (ms)";
@@ -240,6 +242,7 @@ public class VSSimulator extends JPanel {
                              :  taskManager.getProcessGlobalTasks(process);
             }
 
+            Collections.sort(tasks);
             fireTableDataChanged();
         }
 
@@ -302,6 +305,7 @@ public class VSSimulator extends JPanel {
          */
         public void addTask(VSTask task) {
             tasks.add(task);
+            Collections.sort(tasks);
             fireTableDataChanged();
         }
 

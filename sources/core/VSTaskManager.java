@@ -348,8 +348,8 @@ public class VSTaskManager {
      *
      * @return the local timed tasks
      */
-    public synchronized VSPriorityQueue<VSTask> getLocalTasks() {
-        VSPriorityQueue<VSTask> localTasks = new VSPriorityQueue<VSTask>();
+    public synchronized ArrayList<VSTask> getLocalTasks() {
+        ArrayList<VSTask> localTasks = new ArrayList<VSTask>();
         Vector<VSProcess> processes = simulatorCanvas.getProcesses();
 
         for (VSTask task : fullfilledProgrammedTasks)
@@ -372,8 +372,8 @@ public class VSTaskManager {
      *
      * @return the global timed tasks
      */
-    public synchronized VSPriorityQueue<VSTask> getGlobalTasks() {
-        VSPriorityQueue<VSTask> globalTasks = new VSPriorityQueue<VSTask>();
+    public synchronized ArrayList<VSTask> getGlobalTasks() {
+        ArrayList<VSTask> globalTasks = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (task.isGlobalTimed())
@@ -393,9 +393,9 @@ public class VSTaskManager {
      *
      * @return the local tasks of the specified process
      */
-    public synchronized VSPriorityQueue<VSTask> getProcessLocalTasks(
+    public synchronized ArrayList<VSTask> getProcessLocalTasks(
         VSProcess process) {
-        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+        ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
         VSPriorityQueue<VSTask> tasks = process.getTasks();
 
         for (VSTask task : fullfilledProgrammedTasks)
@@ -417,9 +417,9 @@ public class VSTaskManager {
      *
      * @return the global timed tasks of the specified process
      */
-    public synchronized VSPriorityQueue<VSTask> getProcessGlobalTasks(
+    public synchronized ArrayList<VSTask> getProcessGlobalTasks(
         VSProcess process) {
-        VSPriorityQueue<VSTask> processTasks = new VSPriorityQueue<VSTask>();
+        ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (task.isGlobalTimed() && task.isProcess(process) &&
