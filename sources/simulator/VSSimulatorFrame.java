@@ -505,7 +505,6 @@ public class VSSimulatorFrame extends VSFrame {
         if (imageURL == null)
             return new ImageIcon("icons/"+name, descr);
 
-
         return new ImageIcon(imageURL, descr);
     }
 }
