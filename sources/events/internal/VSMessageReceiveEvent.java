@@ -59,26 +59,20 @@ public class VSMessageReceiveEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public boolean onStart() {
-        boolean returnValue = true;
+    public void onStart() {
         boolean onlyRelevantMessages = process.getPrefs().getBoolean(
                                            "sim.messages.relevant");
 
         String eventName = message.getName();
         String protocolClassname = message.getProtocolClassname();
 
+        if (onlyRelevantMessages && !isRelevantMessage())
+            return;
+
         Object protocolObj = null;
 
         if (process.objectExists(protocolClassname))
             protocolObj = process.getObject(protocolClassname);
-
-        if (onlyRelevantMessages) {
-            if (protocolObj == null)
-                return false;
-
-            if (!((VSAbstractProtocol) protocolObj).isRelevantMessage(message))
-                return false;
-        }
 
         process.updateLamportTime(message.getLamportTime()+1);
         process.updateVectorTime(message.getVectorTime());
@@ -91,6 +85,24 @@ public class VSMessageReceiveEvent extends VSAbstractEvent {
 
         if (protocolObj != null)
             ((VSAbstractProtocol) protocolObj).onMessageRecvStart(message);
+    }
+
+    /**
+     * Checks if the message delivering is relevant.
+     *
+     * @return true, if relevant
+     */
+    public boolean isRelevantMessage() {
+        String protocolClassname = message.getProtocolClassname();
+        Object protocolObj = null;
+
+        if (process.objectExists(protocolClassname))
+            protocolObj = process.getObject(protocolClassname);
+        else
+            return false;
+
+        if (!((VSAbstractProtocol) protocolObj).isRelevantMessage(message))
+            return false;
 
         return true;
     }

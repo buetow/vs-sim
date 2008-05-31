@@ -93,7 +93,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public final boolean onStart() {
+    public final void onStart() {
         if (hasOnServerStart) {
             if (isServer) {
                 currentContextIsServer(true);
@@ -105,8 +105,6 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
                 onClientStart();
             }
         }
-
-        return true;
     }
 
     /* (non-Javadoc)
@@ -179,10 +177,10 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             return false;
 
         if (message.isServerMessage()) {
-            if (isServer)
+            if (!isClient)
                 return false;
         } else {
-            if (isClient)
+            if (!isServer)
                 return false;
         }
 

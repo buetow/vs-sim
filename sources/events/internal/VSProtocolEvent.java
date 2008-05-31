@@ -107,7 +107,7 @@ public class VSProtocolEvent extends VSAbstractEvent {
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onStart()
      */
-    public boolean onStart() {
+    public void onStart() {
         VSAbstractProtocol protocol =
             process.getProtocolObject(protocolClassname);
 
@@ -131,7 +131,5 @@ public class VSProtocolEvent extends VSAbstractEvent {
                       : prefs.getString("lang.deactivated"));
 
         logg(buffer.toString());
-
-        return true;
     }
 }

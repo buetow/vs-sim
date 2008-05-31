@@ -55,10 +55,11 @@ abstract public class VSAbstractEvent extends VSPrefs {
      * @param process the process
      */
     public void init(VSProcess process) {
-        this.process = process;
-        this.prefs = process.getPrefs();
-
-        init();
+        if (this.process == null) {
+            this.process = process;
+            this.prefs = process.getPrefs();
+            init();
+        }
     }
 
     /**
@@ -157,9 +158,6 @@ abstract public class VSAbstractEvent extends VSPrefs {
     /**
      * Every event can get started. This method get's executed if the event
      * takes place.
-     *
-     * @return false, if a message has been delivered but is not relevant and
-     *	can get removed from the simulator canvas paint area. true otherwise.
      */
-    abstract public boolean onStart();
+    abstract public void onStart();
 }

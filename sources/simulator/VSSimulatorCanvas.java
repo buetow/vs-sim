@@ -116,6 +116,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
     /** The message lines. */
     private LinkedList<VSMessageLine> messageLines;
 
+    /** The message lines to remove. */
+    private LinkedList<VSMessageLine> messageLinesToRemove;
+
     /** The processes. */
     private Vector<VSProcess> processes;
 
@@ -317,7 +320,6 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             this.isLost = false;
             this.messageLineNum = ++messageLineCounter;
             this.task = task;
-            task.setMessageLine(this);
 
             if (senderNum > receiverNum) {
                 //offset1 = 1;
@@ -367,11 +369,22 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 g.drawLine((int) x1, (int) y1, (int) x, (int) y);
 
             } else if (globalTime >= recvTime) {
+                if (prefs.getBoolean("sim.messages.relevant")) {
+                    VSMessageReceiveEvent event =
+                        (VSMessageReceiveEvent) task.getEvent();
+
+                    event.init(receiverProcess);
+                    if (!event.isRelevantMessage())
+                        removeMessageLine(this);
+                }
+
                 isArrived = true;
+
                 if (receiverProcess.isCrashed())
                     color = messageLostColor;
                 else
                     color = messageArrivedColor;
+
                 draw(g, globalTime);
 
             } else if (outageTime >= 0 && outageTime <= globalTime) {
@@ -456,6 +469,7 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
         this.logging = logging;
         this.taskManager = new VSTaskManager(prefs);
         this.messageLines = new LinkedList<VSMessageLine>();
+        this.messageLinesToRemove = new LinkedList<VSMessageLine>();
         this.processes = new Vector<VSProcess>();
 
         numProcesses = prefs.getInteger("sim.process.num");
@@ -642,8 +656,11 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                      2 * (YOFFSET + YOUTER_SPACEING))/ numProcesses;
         xpaintsize_dividedby_untiltime = xPaintSize / (double) untilTime;
 
-        for (VSMessageLine messageLine : messageLines)
-            messageLine.recalcOnChange();
+
+        synchronized (messageLines) {
+            for (VSMessageLine messageLine : messageLines)
+                messageLine.recalcOnChange();
+        }
 
         /* paintProcesses optimization, precalc things */
         {
@@ -755,6 +772,14 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             paintGlobalTime(g, globalTime);
 
             synchronized (messageLines) {
+                synchronized (messageLinesToRemove) {
+                    if (messageLinesToRemove.size() > 0) {
+                        for (VSMessageLine removeThis : messageLinesToRemove)
+                            messageLines.remove(removeThis);
+                        messageLinesToRemove.clear();
+                    }
+                }
+
                 for (VSMessageLine line : messageLines)
                     line.draw(g, globalTime);
             }
@@ -1209,6 +1234,10 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
                 messageLines.clear();
             }
 
+            synchronized (messageLinesToRemove) {
+                messageLinesToRemove.clear();
+            }
+
             paint();
             logging.clear();
         }
@@ -1387,9 +1416,9 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      *
      * @param messageLine the message line to remove
      */
-    public void removeMessageLine(VSMessageLine messageLine) {
-        synchronized (messageLines) {
-            messageLines.remove(messageLine);
+    private void removeMessageLine(VSMessageLine messageLine) {
+        synchronized (messageLinesToRemove) {
+            messageLinesToRemove.add(messageLine);
         }
     }
 
