@@ -23,8 +23,11 @@
 
 package events;
 
+import java.io.*;
+
 import core.VSProcess;
 import prefs.VSPrefs;
+import utils.*;
 
 /**
  * The class VSAbstractEvent. This abstract class defines the basic framework
@@ -160,4 +163,36 @@ abstract public class VSAbstractEvent extends VSPrefs {
      * takes place.
      */
     abstract public void onStart();
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#writeObject()
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.writeObject(objectOutputStream);
+        objectOutputStream.writeObject(new Integer(super.getID()));
+        //objectOutputStream.writeObject(new Integer(process.getProcessNum()));
+        objectOutputStream.writeObject(eventShortname);
+        objectOutputStream.writeObject(eventClassname);
+    }
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#readObject()
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.readObject(objectInputStream);
+
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSAbstractEvent");
+
+        Integer id = (Integer) objectInputStream.readObject();
+        //Integer processNum = (Integer) objectInputStream.readObject();
+        this.eventShortname = (String) objectInputStream.readObject();
+        this.eventClassname = (String) objectInputStream.readObject();
+
+        VSDeserializationHelper.setObject(id.intValue(),
+                                          "event", this);
+    }
 }

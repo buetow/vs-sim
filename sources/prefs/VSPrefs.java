@@ -92,10 +92,10 @@ public class VSPrefs implements Serializable {
     protected final static String PREFERENCES_FILENAME = "vs.dat";
 
     /** The id counter. */
-    private static long idCounter;
+    private static int idCounter;
 
     /** The id. */
-    protected long id;
+    protected int id;
 
     /**
      * Instantiates a new lang.process.removeprefs.
@@ -1142,7 +1142,7 @@ public class VSPrefs implements Serializable {
      *
      * @return the iD
      */
-    public long getID() {
+    public int getID() {
         return id;
     }
 

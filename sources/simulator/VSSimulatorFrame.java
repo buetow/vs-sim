@@ -25,6 +25,7 @@ package simulator;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -41,7 +42,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulatorFrame extends VSFrame {
+public class VSSimulatorFrame extends VSFrame implements Serializable {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -506,5 +507,40 @@ public class VSSimulatorFrame extends VSFrame {
             return new ImageIcon("icons/"+name, descr);
 
         return new ImageIcon(imageURL, descr);
+    }
+
+    /**
+     * Write object.
+     *
+     * @param objectOutputStream the object output stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        objectOutputStream.writeObject(currentSimulator);
+    }
+
+    /**
+     * Read object.
+     *
+     * @param objectInputStream the object input stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ClassNotFoundException the class not found exception
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSSimulatorFrame");
+
+        VSDeserializationHelper.init();
+        VSDeserializationHelper.setObject("simulatorFrame", this);
+
+        currentSimulator = (VSSimulator) objectInputStream.readObject();
+
+        VSDeserializationHelper.destroy();
+        addSimulator(currentSimulator);
     }
 }

@@ -25,6 +25,7 @@ package simulator;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -44,7 +45,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulator extends JPanel {
+public class VSSimulator extends JPanel implements Serializable {
     /** the serial version uid */
     private static final long serialversionuid = 1l;
 
@@ -382,17 +383,32 @@ public class VSSimulator extends JPanel {
      * @param simulatorFrame the simulator frame
      */
     public VSSimulator(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
+        init(prefs, simulatorFrame);
+    }
+
+    /**
+     * inits the VSSimulator object.
+     *
+     * @param prefs the prefs
+     * @param simulatorFrame the simulator frame
+     */
+    private void init(VSPrefs prefs, VSSimulatorFrame simulatorFrame) {
         this.prefs = prefs;
         this.simulatorFrame = simulatorFrame;
-        this.logging = new VSLogging();
         this.simulatorNum = ++simulatorCounter;
         this.menuItemStates = new VSMenuItemStates(false, false, false, true);
         this.localTextFields = new ArrayList<String>();
         this.globalTextFields = new ArrayList<String>();
 
+        /* Not null if init has been called from the deserialization */
+        if (logging == null)
+            this.logging = new VSLogging();
+
         logging.logg(prefs.getString("lang.simulator.new"));
+
         fillContentPane();
         updateFromPrefs();
+
         splitPaneH.setDividerLocation(
             prefs.getInteger("div.window.splitsize"));
 
@@ -425,7 +441,10 @@ public class VSSimulator extends JPanel {
         splitPaneH = new JSplitPane();
         splitPaneV = new JSplitPane();
 
-        simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
+        /* Not null if init has been called from the deserialization */
+        if (simulatorCanvas == null)
+            simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
+
         taskManager = simulatorCanvas.getTaskManager();
         logging.setSimulatorCanvas(simulatorCanvas);
 
@@ -1195,5 +1214,52 @@ public class VSSimulator extends JPanel {
      */
     public VSPrefs getPrefs() {
         return prefs;
+    }
+
+    /**
+     * Write object.
+     *
+     * @param objectOutputStream the object output stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        objectOutputStream.writeObject(prefs);
+        objectOutputStream.writeObject(simulatorCanvas);
+    }
+
+    /**
+     * Read object.
+     *
+     * @param objectInputStream the object input stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ClassNotFoundException the class not found exception
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSSimulator");
+
+        VSDeserializationHelper.setObject("simulator", this);
+
+        VSSimulatorFrame simulatorFrame = (VSSimulatorFrame)
+                                          VSDeserializationHelper.getObject(
+                                              "simulatorFrame");
+
+        // TODO: Merge prefs!?!
+        VSPrefs prefs = (VSPrefs) objectInputStream.readObject();
+        VSDeserializationHelper.setObject("prefs", prefs);
+
+        this.logging = new VSLogging();
+        VSDeserializationHelper.setObject("logging", logging);
+
+        this.simulatorCanvas =
+            (VSSimulatorCanvas) objectInputStream.readObject();
+        VSDeserializationHelper.setObject("simulatorCanvas", simulatorCanvas);
+
+        init(prefs, simulatorFrame);
     }
 }

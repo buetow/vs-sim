@@ -26,6 +26,7 @@ package simulator;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -36,6 +37,7 @@ import events.implementations.*;
 import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
+import utils.*;
 
 /**
  * The class VSSimulatorCanvas. An instance of this object represents the
@@ -46,7 +48,9 @@ import prefs.editors.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulatorCanvas extends Canvas implements Runnable {
+public class VSSimulatorCanvas extends Canvas
+            implements Runnable, Serializable {
+
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -471,19 +475,39 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
      */
     public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulator,
                              VSLogging logging) {
+        init(prefs, simulator, logging);
+    }
+
+    /**
+     * Instantiates inits the VSSimulatorCanvas object.
+     *
+     * @param prefs the prefs
+     * @param simulator the simulator
+     * @param logging the logging
+     */
+    private void init(VSPrefs prefs, VSSimulator simulator,
+                      VSLogging logging) {
         this.prefs = prefs;
         this.simulator = simulator;
         this.logging = logging;
-        this.taskManager = new VSTaskManager(prefs, this);
         this.messageLines = new LinkedList<VSMessageLine>();
         this.messageLinesToRemove = new LinkedList<VSMessageLine>();
-        this.processes = new ArrayList<VSProcess>();
 
-        numProcesses = prefs.getInteger("sim.process.num");
+        /* May be not null if called from deserialization */
+        if (taskManager == null)
+            this.taskManager = new VSTaskManager(prefs, this);
+
+        /* May be not null if called from deserialization */
+        if (processes == null) {
+            this.processes = new ArrayList<VSProcess>();
+
+            numProcesses = prefs.getInteger("sim.process.num");
+
+            for (int i = 0; i < numProcesses; ++i)
+                processes.add(createProcess(i));
+        }
+
         updateFromPrefs();
-
-        for (int i = 0; i < numProcesses; ++i)
-            processes.add(createProcess(i));
 
         final VSPrefs finalPrefs = prefs;
         addMouseListener(new MouseListener() {
@@ -1519,5 +1543,49 @@ public class VSSimulatorCanvas extends Canvas implements Runnable {
             recalcOnChange();
             simulator.addProcessAtIndex(processes.size()-1);
         }
+    }
+
+    /**
+     * Write object.
+     *
+     * @param objectOutputStream the object output stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        synchronized (processes) {
+            objectOutputStream.writeObject(processes);
+        }
+        objectOutputStream.writeObject(taskManager);
+    }
+
+    /**
+     * Read object.
+     *
+     * @param objectInputStream the object input stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ClassNotFoundException the class not found exception
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSSimulatorCanvas");
+
+        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
+        VSSimulator simulator =
+            (VSSimulator) VSDeserializationHelper.getObject("simulator");
+        VSLogging logging =
+            (VSLogging) VSDeserializationHelper.getObject("logging");
+
+        this.processes = (ArrayList<VSProcess>) objectInputStream.readObject();
+        this.numProcesses = processes.size();
+
+        this.taskManager = (VSTaskManager) objectInputStream.readObject();
+        VSDeserializationHelper.setObject("taskManager", taskManager);
+
+        init(prefs, simulator, logging);
     }
 }

@@ -23,6 +23,7 @@
 
 package core;
 
+import java.io.*;
 import java.util.*;
 
 import prefs.*;
@@ -37,7 +38,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSTaskManager {
+public class VSTaskManager implements Serializable {
     /** The seriao version uid */
     private static final long serialVersionUID = 1L;
 
@@ -60,14 +61,29 @@ public class VSTaskManager {
     private VSPrefs prefs;
 
     /**
-     * Instantiates a new lang.process.removetask manager.
+     * Instantiates a new task manager object.
      *
      * @param prefs the simulator's default prefs
+     * @param simulatorCanvas the simulator canvas
      */
     public VSTaskManager(VSPrefs prefs, VSSimulatorCanvas simulatorCanvas) {
+        init(prefs, simulatorCanvas);
+    }
+
+    /**
+     * Inits the task manager.
+     *
+     * @param prefs the simulator's default prefs
+     * @param simulatorCanvas the simulator canvas
+     */
+    private void init(VSPrefs prefs, VSSimulatorCanvas simulatorCanvas) {
         this.prefs = prefs;
         this.simulatorCanvas = simulatorCanvas;
-        this.globalTasks = new PriorityQueue<VSTask>();
+
+        /* May be not null if called from deserialization */
+        if (globalTasks == null)
+            this.globalTasks = new PriorityQueue<VSTask>();
+
         this.fullfilledProgrammedTasks = new LinkedList<VSTask>();
     }
 
@@ -475,5 +491,82 @@ public class VSTaskManager {
             return descr.substring(0, descr.length()-2) + ")";
 
         return descr + ")";
+    }
+
+    /**
+     * Write object.
+     *
+     * @param objectOutputStream the object output stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        VSPriorityQueue<VSTask> temp = new VSPriorityQueue<VSTask>();
+
+        for (VSTask task : fullfilledProgrammedTasks)
+            if (task.isGlobalTimed())
+                temp.add(task);
+
+        for (VSTask task : globalTasks)
+            temp.add(task);
+
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+		HashMap<Integer, ArrayList<VSTask>> map =
+			new HashMap<Integer, ArrayList<VSTask>>();
+
+        synchronized (processes) {
+            for (VSProcess process : processes) {
+                VSPriorityQueue<VSTask> tasks = process.getTasks();
+				ArrayList<VSTask> tasks_ = new ArrayList<VSTask>();
+				for (VSTask task : tasks)
+					tasks_.add(task);
+				map.put(new Integer(process.getProcessNum()), tasks_);
+            }
+        }
+
+        objectOutputStream.writeObject(temp);
+        objectOutputStream.writeObject(map);
+    }
+
+    /**
+     * Read object.
+     *
+     * @param objectInputStream the object input stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ClassNotFoundException the class not found exception
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSTaskManager");
+
+        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
+        VSSimulatorCanvas simulatorCanvas = (VSSimulatorCanvas)
+                                            VSDeserializationHelper.getObject(
+											"prefs");
+        this.globalTasks = (PriorityQueue<VSTask>) 
+			objectInputStream.readObject();
+
+		HashMap<Integer, ArrayList<VSTask>> map = 
+			(HashMap<Integer, ArrayList<VSTask>>) 
+			objectInputStream.readObject();
+
+		Set<Integer> set = map.keySet();
+		for (Integer processNum : set) {
+			VSProcess process = (VSProcess) VSDeserializationHelper.getObject(
+					processNum.intValue(),
+					"process");
+
+			ArrayList<VSTask> tasks = (ArrayList<VSTask>) map.get(processNum);
+        	VSPriorityQueue<VSTask> tasks_ = process.getTasks();
+
+			for (VSTask task: tasks)
+				tasks_.add(task);
+		}
+
+        init(prefs, simulatorCanvas);
     }
 }

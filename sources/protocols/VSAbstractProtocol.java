@@ -23,18 +23,25 @@
 
 package protocols;
 
+import java.io.*;
 import java.util.ArrayList;
 
-import events.internal.*;
-import events.*;
 import core.*;
+import events.*;
+import events.internal.*;
+import utils.*;
 
 /**
  * The class VSAbstractProtocol.
  */
 abstract public class VSAbstractProtocol extends VSAbstractEvent {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
+
+    /** The protocol has an onServerStart method */
     protected static final boolean HAS_ON_SERVER_START = true;
+
+    /** The protocol has an onClientStart method */
     protected static final boolean HAS_ON_CLIENT_START = false;
 
     /** True, if onServerStart is used, false if onClientStart is used */
@@ -374,5 +381,29 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             buffer.append(prefs.getString("lang.client"));
 
         return buffer.toString();
+    }
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#writeObject()
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.writeObject(objectOutputStream);
+        objectOutputStream.writeObject(new Boolean(hasOnServerStart));
+    }
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#readObject()
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.readObject(objectInputStream);
+
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSAbstractProtocol");
+
+        this.hasOnServerStart = ((Boolean)
+                                objectInputStream.readObject()).booleanValue();
     }
 }

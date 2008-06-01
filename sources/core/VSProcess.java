@@ -24,6 +24,7 @@
 package core;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 
 import core.time.*;
@@ -40,7 +41,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSProcess extends VSPrefs {
+public class VSProcess extends VSPrefs implements Serializable {
     /** The data serialization id. */
     private static final long serialVersionUID = 1L;
 
@@ -198,7 +199,22 @@ public class VSProcess extends VSPrefs {
      */
     public VSProcess(VSPrefs prefs, int processNum,
                      VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
-        this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
+        init(prefs, processNum, simulatorCanvas, logging);
+    }
+
+    /**
+     * Inits a the process.
+     *
+     * @param prefs the simulator's default prefs
+     * @param processNum the process num
+     * @param simulatorCanvas the simulator canvas
+     * @param logging the logging object
+     */
+    private void init(VSPrefs prefs, int processNum,
+                      VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+        /* May be not null if called from deserialization */
+        if (protocolsToReset == null)
+            this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
         this.processNum = processNum;
         this.prefs = prefs;
         this.simulatorCanvas = simulatorCanvas;
@@ -991,5 +1007,45 @@ public class VSProcess extends VSPrefs {
         }
 
         return protocol;
+    }
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#writeObject()
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.writeObject(objectOutputStream);
+        objectOutputStream.writeObject(new Integer(processNum));
+        objectOutputStream.writeObject(protocolsToReset);
+    }
+
+    /* (non-Javadoc)
+     * @see prefs.VSPrefs#readObject()
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.readObject(objectInputStream);
+
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSProcess");
+
+        VSLogging logging = (VSLogging)
+                            VSDeserializationHelper.getObject("logging");
+        VSSimulatorCanvas simulatorCanvas = (VSSimulatorCanvas)
+                                            VSDeserializationHelper.getObject(
+                                                "simulatorCanvas");
+        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
+
+        Integer processNum = (Integer) objectInputStream.readObject();
+        this.protocolsToReset = (ArrayList<VSAbstractProtocol>)
+                                objectInputStream.readObject();
+
+        for (VSAbstractProtocol protocol : protocolsToReset)
+            setObject(protocol.getClassname(), protocol);
+
+        VSDeserializationHelper.setObject(processNum.intValue(),
+                                          "process", this);
+        init(prefs, processNum.intValue(), simulatorCanvas, logging);
     }
 }

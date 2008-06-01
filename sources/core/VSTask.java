@@ -23,11 +23,14 @@
 
 package core;
 
+import java.io.*;
+
 import events.*;
 import events.implementations.*;
 import events.internal.*;
 import prefs.VSPrefs;
 import protocols.VSAbstractProtocol;
+import utils.*;
 
 /**
  * The class VSTask, an object of this class represents a task to do or done.
@@ -38,7 +41,7 @@ import protocols.VSAbstractProtocol;
  *
  * @author Paul C. Buetow
  */
-public class VSTask implements Comparable {
+public class VSTask implements Comparable, Serializable {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -88,9 +91,24 @@ public class VSTask implements Comparable {
      */
     public VSTask(long taskTime, VSProcess process, VSAbstractEvent event,
                   boolean isLocal) {
+        init(taskTime, process, event, isLocal);
+    }
+
+    /**
+     * Inits the task
+     *
+     * @param taskTime the task time
+     * @param process the process
+     * @param event the event
+     * @param isLocal the taks is local timed
+     */
+    private void init(long taskTime, VSProcess process, VSAbstractEvent event,
+                      boolean isLocal) {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
-        this.event = event;
+        /* May be not null if called from deserialization */
+        if (event == null)
+            this.event = event;
         this.prefs = process.getPrefs();
         this.isGlobalTimed = !isLocal;
         this.taskNum = ++taskCounter;
@@ -318,6 +336,55 @@ public class VSTask implements Comparable {
         }
 
         return 0;
+    }
+
+    /**
+     * Write object.
+     *
+     * @param objectOutputStream the object output stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    throws IOException {
+        objectOutputStream.writeObject(event);
+        objectOutputStream.writeObject(new Integer(process.getProcessNum()));
+        objectOutputStream.writeObject(new Integer(taskNum));
+        objectOutputStream.writeObject(new Long(taskTime));
+        objectOutputStream.writeObject(new Boolean(isGlobalTimed));
+        objectOutputStream.writeObject(new Boolean(isProgrammed));
+    }
+
+    /**
+     * Read object.
+     *
+     * @param objectInputStream the object input stream
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws ClassNotFoundException the class not found exception
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        if (VSDeserializationHelper.DEBUG)
+            System.out.println("Deserializing: VSTask");
+
+        this.event = (VSAbstractEvent) objectInputStream.readObject();
+        Integer processNum = (Integer) objectInputStream.readObject();
+        Integer taskNum = (Integer) objectInputStream.readObject();
+        Long taskTime = (Long) objectInputStream.readObject();
+        Boolean isGlobalTimed = (Boolean) objectInputStream.readObject();
+        Boolean isProgrammed = (Boolean) objectInputStream.readObject();
+
+        VSDeserializationHelper.setObject(taskNum.intValue(), "task", this);
+
+        VSProcess process = (VSProcess) VSDeserializationHelper.getObject(
+                                processNum.intValue(), "process");
+
+        init(taskTime.longValue(), process, event,
+             !isGlobalTimed.booleanValue());
+
+        this.isProgrammed = isProgrammed.booleanValue();
     }
 }
 
