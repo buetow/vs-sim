@@ -23,36 +23,42 @@
 
 package utils;
 
+import java.io.*;
 import java.util.HashMap;
 
+import simulator.VSSimulator;
+
 /**
- * The class VSDeserializationHelper, this static class helps do deserialize
+ * The class VSSerialize, this static class helps do deserialize
  * a saved simulator!
  *
  * @author Paul C. Buetow
  */
-public final class VSDeserializationHelper {
+public final class VSSerialize {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** True if debugg mode of deserialization */
     public static final boolean DEBUG = true;
 
+    /** The standard filename to save simulators to */
+    public static final String STANDARD_FILENAME = "simulator.dat";
+
     /** For temp object storage */
     private static HashMap<String,Object> objects;
 
     /**
-     * Initializes the helper.
+     * Creates the VSSerialize object.
      */
-    public static void init() {
-        objects = new HashMap<String,Object>();
+    public VSSerialize() {
+		init();
     }
 
     /**
-     * Destroys the helper.
+     * Initializes the helper.
      */
-    public static void destroy() {
-        objects = null;
+    private void init() {
+        objects = new HashMap<String,Object>();
     }
 
     /**
@@ -61,7 +67,7 @@ public final class VSDeserializationHelper {
      * @param key The object key
      * @param object The object itself
      */
-    public static void setObject(String key, Object object) {
+    public void setObject(String key, Object object) {
         objects.put(key, object);
     }
 
@@ -72,7 +78,7 @@ public final class VSDeserializationHelper {
      * @param key The object key
      * @param object The object itself
      */
-    public static void setObject(int num, String key, Object object) {
+    public void setObject(int num, String key, Object object) {
         objects.put(key + ":" + num, object);
     }
 
@@ -84,7 +90,7 @@ public final class VSDeserializationHelper {
      *
      * @return The object itself
      */
-    public static Object getObject(int num, String key) {
+    public Object getObject(int num, String key) {
         Object object = objects.get(key + ":" + num);
 
         if (object == null) {
@@ -103,7 +109,7 @@ public final class VSDeserializationHelper {
      *
      * @return The object itself
      */
-    public static Object getObject(String key) {
+    public Object getObject(String key) {
         Object object = objects.get(key);
 
         if (object == null) {
@@ -112,5 +118,54 @@ public final class VSDeserializationHelper {
         }
 
         return object;
+    }
+
+	/**
+	 * Saves the given simulator to the given filename.
+	 *
+	 * @param filename The filename
+	 * @param simulator The simulator 
+	 */
+    public void saveSimulator(String filename, VSSimulator simulator) {
+        try {
+            FileOutputStream fileOutputStream = 
+				new FileOutputStream(filename);
+            ObjectOutputStream objectOutputStream = 
+				new ObjectOutputStream(fileOutputStream);
+
+			objectOutputStream.writeObject(simulator.getPrefs());
+			simulator.serialize(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+	/**
+	 * Opens a simulator from the given filename.
+	 *
+	 * @param filename The filename.
+	 * @param simulatorFrame The simulator frame
+	 *
+	 * @return The simulator object, and null if no success
+	 */
+    public VSSimulator openSimulator(String filename,
+			VSSimulatorFrame simulatorFrame) {
+
+        try {
+            FileInputStream fileInputStream = 
+				new FileInputStream(filename);
+            ObjectInputStream objectInputStream = 
+				new ObjectInputStream(fileInputStream);
+
+			VSPrefs prefs = (VSPrefs) objectInputStream.readObject();
+        	simulator = new VSSimulator(prefs, simulatorFrame);
+			simulator.deserialize(this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return simulator;
     }
 }
