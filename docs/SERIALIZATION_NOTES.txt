@@ -1,0 +1,36 @@
+TODO: RESET BEFORE DESERIALIZATION
+
+VSSerialize
+	prefs(=VSPrefs).serialize
+		writeObject(...)
+	simulator(=VSSimulator).serialize
+		simulatorCanvas(=VSSimulatorCanvas).serialize
+			writeObject(numProcesses)
+			for (porcess : processes) process(=VSProcess).serialize {
+				super(=VSPrefs).serialize	
+				writeObject(numProtocolsToReset)
+				for (protocol : protocolsToReset) {
+					writeObject(protocolClassname)
+					protocol(=VSAbstractProtocol).serialize
+						super(=VSAbstractEvent).serialize
+							super(=VSPrefs).serialize
+								s.o.
+							writeObject(id)
+							writeObject(eventShortname)
+							writeObject(eventClassname)
+						writeObject(hasOnServerStart)
+				}
+			}
+			taskManager(=VSTaskManager).serialize
+				writeObject(numTasks)
+				for (task : tasks) task(=VSTask).serialize
+					writeObject(eventClassname)
+					event(=VSAbstractEvent).serialize
+						s.o.
+					writeObject(eventID)
+					writeObject(processNum)
+					writeObject(taskNum)
+					writeObject(taskTime)
+					writeObject(isGlobalTimed)
+					writeObject(isProgrammed)
+	
