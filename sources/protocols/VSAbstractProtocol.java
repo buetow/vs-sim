@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import core.*;
 import events.*;
 import events.internal.*;
+import serialize.*;
 import utils.*;
 
 /**
@@ -384,26 +385,30 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     }
 
     /* (non-Javadoc)
-     * @see prefs.VSPrefs#writeObject()
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
-        super.writeObject(objectOutputStream);
+        super.serialize(serialize, objectOutputStream);
         objectOutputStream.writeObject(new Boolean(hasOnServerStart));
     }
 
     /* (non-Javadoc)
-     * @see prefs.VSPrefs#readObject()
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        super.readObject(objectInputStream);
+        super.deserialize(serialize, objectInputStream);
 
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSAbstractProtocol");
 
         this.hasOnServerStart = ((Boolean)
-                                objectInputStream.readObject()).booleanValue();
+                                 objectInputStream.readObject()).booleanValue();
     }
 }

@@ -30,6 +30,7 @@ import events.implementations.*;
 import events.internal.*;
 import prefs.VSPrefs;
 import protocols.VSAbstractProtocol;
+import serialize.*;
 import utils.*;
 
 /**
@@ -41,7 +42,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSTask implements Comparable, Serializable {
+public class VSTask implements Comparable, VSSerializable {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -92,6 +93,17 @@ public class VSTask implements Comparable, Serializable {
     public VSTask(long taskTime, VSProcess process, VSAbstractEvent event,
                   boolean isLocal) {
         init(taskTime, process, event, isLocal);
+    }
+
+    /**
+     * Instantiates a new task during a deserialization.
+     *
+     * @param serialize the serialize object
+     * @param process the object input stream
+     */
+    public VSTask(VSSerialize serialize, ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        deserialize(serialize, objectInputStream);
     }
 
     /**
@@ -338,51 +350,59 @@ public class VSTask implements Comparable, Serializable {
         return 0;
     }
 
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
-        objectOutputStream.writeObject(event);
         objectOutputStream.writeObject(new Integer(process.getProcessNum()));
+        objectOutputStream.writeObject(event.getClassname());
+        objectOutputStream.writeObject(new Integer(event.getID()));
+        event.serialize(serialize, objectOutputStream);
         objectOutputStream.writeObject(new Integer(taskNum));
         objectOutputStream.writeObject(new Long(taskTime));
         objectOutputStream.writeObject(new Boolean(isGlobalTimed));
         objectOutputStream.writeObject(new Boolean(isProgrammed));
     }
 
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSTask");
 
-        this.event = (VSAbstractEvent) objectInputStream.readObject();
-        Integer processNum = (Integer) objectInputStream.readObject();
-        Integer taskNum = (Integer) objectInputStream.readObject();
-        Long taskTime = (Long) objectInputStream.readObject();
+        int processNum = ((Integer) objectInputStream.readObject()).intValue();
+        VSProcess process = (VSProcess)
+                            serialize.getObject(processNum, "process");
+
+        String eventClassname = (String) objectInputStream.readObject();
+        int eventID = ((Integer) objectInputStream.readObject()).intValue();
+
+        VSAbstractEvent event = (VSAbstractEvent)
+                                serialize.getObject(eventID, "event");
+
+        if (event == null) {
+            event = VSRegisteredEvents.
+                    createEventInstanceByClassname(eventClassname, process);
+
+            serialize.setObject(eventID, "event", event);
+        }
+
+        int taskNum = ((Integer) objectInputStream.readObject()).intValue();
+        long taskTime = ((Long) objectInputStream.readObject()).longValue();
         Boolean isGlobalTimed = (Boolean) objectInputStream.readObject();
         Boolean isProgrammed = (Boolean) objectInputStream.readObject();
 
-        VSDeserializationHelper.setObject(taskNum.intValue(), "task", this);
+        serialize.setObject(taskNum, "task", this);
 
-        VSProcess process = (VSProcess) VSDeserializationHelper.getObject(
-                                processNum.intValue(), "process");
-
-        init(taskTime.longValue(), process, event,
-             !isGlobalTimed.booleanValue());
+        init(taskTime, process, event, !isGlobalTimed.booleanValue());
 
         this.isProgrammed = isProgrammed.booleanValue();
     }

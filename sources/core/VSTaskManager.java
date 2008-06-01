@@ -27,6 +27,7 @@ import java.io.*;
 import java.util.*;
 
 import prefs.*;
+import serialize.*;
 import simulator.*;
 import utils.*;
 
@@ -38,7 +39,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSTaskManager implements Serializable {
+public class VSTaskManager implements VSSerializable {
     /** The seriao version uid */
     private static final long serialVersionUID = 1L;
 
@@ -493,80 +494,59 @@ public class VSTaskManager implements Serializable {
         return descr + ")";
     }
 
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
-        VSPriorityQueue<VSTask> temp = new VSPriorityQueue<VSTask>();
+
+        ArrayList<VSTask> tasks = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
-            if (task.isGlobalTimed())
-                temp.add(task);
+            tasks.add(task);
 
-        for (VSTask task : globalTasks)
-            temp.add(task);
+        for (VSTask task : this.globalTasks)
+            tasks.add(task);
 
         ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
-		HashMap<Integer, ArrayList<VSTask>> map =
-			new HashMap<Integer, ArrayList<VSTask>>();
 
         synchronized (processes) {
             for (VSProcess process : processes) {
-                VSPriorityQueue<VSTask> tasks = process.getTasks();
-				ArrayList<VSTask> tasks_ = new ArrayList<VSTask>();
-				for (VSTask task : tasks)
-					tasks_.add(task);
-				map.put(new Integer(process.getProcessNum()), tasks_);
+                VSPriorityQueue<VSTask> localTasks = process.getTasks();
+                ArrayList<VSTask> tasks_ = new ArrayList<VSTask>();
+                for (VSTask task : localTasks)
+                    tasks.add(task);
             }
         }
 
-        objectOutputStream.writeObject(temp);
-        objectOutputStream.writeObject(map);
+        objectOutputStream.writeObject(new Integer(tasks.size()));
+        for (VSTask task : tasks)
+            task.serialize(serialize, objectOutputStream);
     }
 
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSTaskManager");
 
-        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
-        VSSimulatorCanvas simulatorCanvas = (VSSimulatorCanvas)
-                                            VSDeserializationHelper.getObject(
-											"prefs");
-        this.globalTasks = (PriorityQueue<VSTask>) 
-			objectInputStream.readObject();
+        int numTasks = ((Integer) objectInputStream.readObject()).intValue();
+        globalTasks.clear();
 
-		HashMap<Integer, ArrayList<VSTask>> map = 
-			(HashMap<Integer, ArrayList<VSTask>>) 
-			objectInputStream.readObject();
+        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        synchronized (processes) {
+            for (VSProcess process : processes)
+                process.getTasks().clear();
+        }
 
-		Set<Integer> set = map.keySet();
-		for (Integer processNum : set) {
-			VSProcess process = (VSProcess) VSDeserializationHelper.getObject(
-					processNum.intValue(),
-					"process");
-
-			ArrayList<VSTask> tasks = (ArrayList<VSTask>) map.get(processNum);
-        	VSPriorityQueue<VSTask> tasks_ = process.getTasks();
-
-			for (VSTask task: tasks)
-				tasks_.add(task);
-		}
-
-        init(prefs, simulatorCanvas);
+        for (int i = 0; i < numTasks; ++i)
+            addTask(new VSTask(serialize, objectInputStream));
     }
 }

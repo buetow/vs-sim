@@ -32,6 +32,7 @@ import events.*;
 import events.implementations.*;
 import prefs.*;
 import protocols.*;
+import serialize.*;
 import simulator.*;
 import utils.*;
 
@@ -41,7 +42,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSProcess extends VSPrefs implements Serializable {
+public class VSProcess extends VSPrefs implements VSSerializable {
     /** The data serialization id. */
     private static final long serialVersionUID = 1L;
 
@@ -378,7 +379,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      * returns a non-negative value. The random crash task uses the simulaion's
      * global time for its scheduling.
      */
-    public void createRandomCrashTask() {
+    public synchronized void createRandomCrashTask() {
         if (!isCrashed) {
             VSTaskManager taskManager = simulatorCanvas.getTaskManager();
             long crashTime = getARandomCrashTime();
@@ -715,7 +716,7 @@ public class VSProcess extends VSPrefs implements Serializable {
     /**
      * Increases the process' lamport time.
      */
-    public void increaseLamportTime() {
+    public synchronized void increaseLamportTime() {
         setLamportTime(getLamportTime()+1);
     }
 
@@ -724,7 +725,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      *
      * @param time the lamport time to use as its update reference.
      */
-    public void updateLamportTime(long time) {
+    public synchronized void updateLamportTime(long time) {
         final long lamportTime = getLamportTime() + 1;
 
         if (time > lamportTime)
@@ -841,7 +842,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      *
      * @param message the message to send.
      */
-    public void sendMessage(VSMessage message) {
+    public synchronized void sendMessage(VSMessage message) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(prefs.getString("lang.message.sent"));
         buffer.append("; ");
@@ -873,7 +874,7 @@ public class VSProcess extends VSPrefs implements Serializable {
     /* (non-Javadoc)
      * @see prefs.VSPrefs#toString()
      */
-    public String toString() {
+    public synchronized String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append(prefs.getString("lang.process.id"));
         buffer.append(": ");
@@ -898,7 +899,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      *
      * @return the extended string representation
      */
-    public String toStringFull() {
+    public synchronized String toStringFull() {
         StringBuffer buffer = new StringBuffer();
         buffer.append(toString());
         buffer.append("; paused: ");
@@ -946,7 +947,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      *
      * @param index the index the process has to get removed.
      */
-    public void removedAProcessAtIndex(int index) {
+    public synchronized void removedAProcessAtIndex(int index) {
         if (index < processNum)
             --processNum;
 
@@ -960,7 +961,7 @@ public class VSProcess extends VSPrefs implements Serializable {
      * Called by the simulator canvas if a process has been added to the
      * simulator.
      */
-    public void addedAProcess() {
+    public synchronized void addedAProcess() {
         vectorTime.add(new Long(0));
         for (VSVectorTime vectorTime : vectorTimeHistory)
             vectorTime.add(new Long(0));
@@ -991,7 +992,8 @@ public class VSProcess extends VSPrefs implements Serializable {
      *
      * @return the protocol object
      */
-    public VSAbstractProtocol getProtocolObject(String protocolClassname) {
+    public synchronized VSAbstractProtocol getProtocolObject(
+        String protocolClassname) {
         VSAbstractProtocol protocol = null;
 
         if (!objectExists(protocolClassname)) {
@@ -1010,42 +1012,42 @@ public class VSProcess extends VSPrefs implements Serializable {
     }
 
     /* (non-Javadoc)
-     * @see prefs.VSPrefs#writeObject()
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
-        super.writeObject(objectOutputStream);
-        objectOutputStream.writeObject(new Integer(processNum));
-        objectOutputStream.writeObject(protocolsToReset);
+        super.serialize(serialize, objectOutputStream);
+        objectOutputStream.writeObject(new Integer(protocolsToReset.size()));
+        for (VSAbstractProtocol protocol : protocolsToReset) {
+            objectOutputStream.writeObject(protocol.getClassname());
+            protocol.serialize(serialize, objectOutputStream);
+        }
     }
 
     /* (non-Javadoc)
-     * @see prefs.VSPrefs#readObject()
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        super.readObject(objectInputStream);
+        super.deserialize(serialize, objectInputStream);
 
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSProcess");
 
-        VSLogging logging = (VSLogging)
-                            VSDeserializationHelper.getObject("logging");
-        VSSimulatorCanvas simulatorCanvas = (VSSimulatorCanvas)
-                                            VSDeserializationHelper.getObject(
-                                                "simulatorCanvas");
-        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
+        int numProtocols = ((Integer)
+                            objectInputStream.readObject()).intValue();
 
-        Integer processNum = (Integer) objectInputStream.readObject();
-        this.protocolsToReset = (ArrayList<VSAbstractProtocol>)
-                                objectInputStream.readObject();
+        for (int i = 0; i < numProtocols; ++i) {
+            String protocolClassname = (String) objectInputStream.readObject();
+            VSAbstractProtocol protocol = getProtocolObject(protocolClassname);
+            protocol.deserialize(serialize, objectInputStream);
+        }
 
-        for (VSAbstractProtocol protocol : protocolsToReset)
-            setObject(protocol.getClassname(), protocol);
-
-        VSDeserializationHelper.setObject(processNum.intValue(),
-                                          "process", this);
-        init(prefs, processNum.intValue(), simulatorCanvas, logging);
+        serialize.setObject(processNum, "process", this);
     }
 }

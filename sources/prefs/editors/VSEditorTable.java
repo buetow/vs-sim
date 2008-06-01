@@ -26,6 +26,7 @@ package prefs.editors;
 import java.util.*;
 
 import java.awt.*;
+import java.io.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
@@ -36,7 +37,7 @@ import prefs.*;
 /**
  * The class VSEditorTable.
  */
-public class VSEditorTable extends JTable {
+public class VSEditorTable extends JTable { /* implements Serializable */
     private static final long serialVersionUID = 1L;
 
     /** The Constant MIN_ROWS. */
@@ -54,7 +55,7 @@ public class VSEditorTable extends JTable {
     /**
      * The class VSNode.
      */
-    private class VSNode {
+    private class VSNode implements Serializable {
 
         /** The key. */
         private String key;
@@ -116,6 +117,30 @@ public class VSEditorTable extends JTable {
          */
         public boolean isSeparator() {
             return comp == null;
+        }
+
+        /**
+         * Write object.
+         *
+         * @param objectOutputStream the object output stream
+         *
+         * @throws IOException Signals that an I/O exception has occurred.
+         */
+        public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+        throws IOException {
+        }
+
+        /**
+         * Read object.
+         *
+         * @param objectInputStream the object input stream
+         *
+         * @throws IOException Signals that an I/O exception has occurred.
+         * @throws ClassNotFoundException the class not found exception
+         */
+        @SuppressWarnings("unchecked")
+        public synchronized void readObject(ObjectInputStream objectInputStream)
+        throws IOException, ClassNotFoundException {
         }
     }
 

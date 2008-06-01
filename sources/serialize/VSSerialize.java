@@ -21,12 +21,13 @@
  * The icon's homepage is http://code.google.com/p/ultimate-gnome/
  */
 
-package utils;
+package serialize;
 
 import java.io.*;
 import java.util.HashMap;
 
-import simulator.VSSimulator;
+import prefs.*;
+import simulator.*;
 
 /**
  * The class VSSerialize, this static class helps do deserialize
@@ -47,18 +48,31 @@ public final class VSSerialize {
     /** For temp object storage */
     private static HashMap<String,Object> objects;
 
+    /** Holds the current VSSerialize object */
+    private static VSSerialize serialize;
+
     /**
      * Creates the VSSerialize object.
      */
     public VSSerialize() {
-		init();
+        init();
     }
 
     /**
      * Initializes the helper.
      */
     private void init() {
+        this.serialize = this;
         objects = new HashMap<String,Object>();
+    }
+
+    /**
+     * Gets the current VSSerialize object.
+     *
+     * @return The current serialize object
+     */
+    public static VSSerialize getSerialize() {
+        return serialize;
     }
 
     /**
@@ -120,47 +134,52 @@ public final class VSSerialize {
         return object;
     }
 
-	/**
-	 * Saves the given simulator to the given filename.
-	 *
-	 * @param filename The filename
-	 * @param simulator The simulator 
-	 */
+    /**
+     * Saves the given simulator to the given filename.
+     *
+     * @param filename The filename
+     * @param simulator The simulator
+     */
     public void saveSimulator(String filename, VSSimulator simulator) {
         try {
-            FileOutputStream fileOutputStream = 
-				new FileOutputStream(filename);
-            ObjectOutputStream objectOutputStream = 
-				new ObjectOutputStream(fileOutputStream);
+            FileOutputStream fileOutputStream =
+                new FileOutputStream(filename);
+            ObjectOutputStream objectOutputStream =
+                new ObjectOutputStream(fileOutputStream);
 
-			objectOutputStream.writeObject(simulator.getPrefs());
-			simulator.serialize(this);
+            VSPrefs prefs = simulator.getPrefs();
+            prefs.serialize(this, objectOutputStream);
+            simulator.serialize(this, objectOutputStream);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-	/**
-	 * Opens a simulator from the given filename.
-	 *
-	 * @param filename The filename.
-	 * @param simulatorFrame The simulator frame
-	 *
-	 * @return The simulator object, and null if no success
-	 */
+    /**
+     * Opens a simulator from the given filename.
+     *
+     * @param filename The filename.
+     * @param simulatorFrame The simulator frame
+     *
+     * @return The simulator object, and null if no success
+     */
     public VSSimulator openSimulator(String filename,
-			VSSimulatorFrame simulatorFrame) {
+                                     VSSimulatorFrame simulatorFrame) {
+        VSSimulator simulator = null;
 
         try {
-            FileInputStream fileInputStream = 
-				new FileInputStream(filename);
-            ObjectInputStream objectInputStream = 
-				new ObjectInputStream(fileInputStream);
+            FileInputStream fileInputStream =
+                new FileInputStream(filename);
+            ObjectInputStream objectInputStream =
+                new ObjectInputStream(fileInputStream);
 
-			VSPrefs prefs = (VSPrefs) objectInputStream.readObject();
-        	simulator = new VSSimulator(prefs, simulatorFrame);
-			simulator.deserialize(this);
+            VSPrefs prefs = new VSPrefs();
+            prefs.deserialize(this, objectInputStream);
+            this.setObject("prefs", prefs);
+
+            simulator = new VSSimulator(prefs, simulatorFrame);
+            simulator.deserialize(this, objectInputStream);
 
         } catch (Exception e) {
             e.printStackTrace();

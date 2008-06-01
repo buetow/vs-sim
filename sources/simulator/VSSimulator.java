@@ -36,6 +36,7 @@ import events.*;
 import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
+import serialize.*;
 import utils.*;
 
 /**
@@ -45,7 +46,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulator extends JPanel implements Serializable {
+public class VSSimulator extends JPanel implements VSSerializable {
     /** the serial version uid */
     private static final long serialversionuid = 1l;
 
@@ -1063,10 +1064,14 @@ public class VSSimulator extends JPanel implements Serializable {
     public void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
         boolean allProcesses = process == null;
+
         taskManagerLocalModel.set(process,
-                                  VSTaskManagerTableModel.LOCAL, allProcesses);
+                                  VSTaskManagerTableModel.LOCAL,
+                                  allProcesses);
+
         taskManagerGlobalModel.set(process,
-                                   VSTaskManagerTableModel.GLOBAL, allProcesses);
+                                   VSTaskManagerTableModel.GLOBAL,
+                                   allProcesses);
     }
 
     /**
@@ -1216,50 +1221,31 @@ public class VSSimulator extends JPanel implements Serializable {
         return prefs;
     }
 
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
-        objectOutputStream.writeObject(prefs);
-        objectOutputStream.writeObject(simulatorCanvas);
+        simulatorCanvas.serialize(serialize, objectOutputStream);
     }
 
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSSimulator");
 
-        VSDeserializationHelper.setObject("simulator", this);
+        serialize.setObject("simulator", this);
+        serialize.setObject("logging", logging);
+        simulatorCanvas.deserialize(serialize, objectInputStream);
 
-        VSSimulatorFrame simulatorFrame = (VSSimulatorFrame)
-                                          VSDeserializationHelper.getObject(
-                                              "simulatorFrame");
-
-        // TODO: Merge prefs!?!
-        VSPrefs prefs = (VSPrefs) objectInputStream.readObject();
-        VSDeserializationHelper.setObject("prefs", prefs);
-
-        this.logging = new VSLogging();
-        VSDeserializationHelper.setObject("logging", logging);
-
-        this.simulatorCanvas =
-            (VSSimulatorCanvas) objectInputStream.readObject();
-        VSDeserializationHelper.setObject("simulatorCanvas", simulatorCanvas);
-
-        init(prefs, simulatorFrame);
+        updateTaskManagerTable();
     }
 }

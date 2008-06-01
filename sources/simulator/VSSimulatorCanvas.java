@@ -37,6 +37,7 @@ import events.implementations.*;
 import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
+import serialize.*;
 import utils.*;
 
 /**
@@ -49,7 +50,7 @@ import utils.*;
  * @author Paul C. Buetow
  */
 public class VSSimulatorCanvas extends Canvas
-            implements Runnable, Serializable {
+            implements Runnable, VSSerializable {
 
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
@@ -1545,47 +1546,45 @@ public class VSSimulatorCanvas extends Canvas
         }
     }
 
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
         synchronized (processes) {
-            objectOutputStream.writeObject(processes);
+            objectOutputStream.writeObject(new Integer(numProcesses));
+            for (VSProcess process : processes)
+                process.serialize(serialize, objectOutputStream);
         }
-        objectOutputStream.writeObject(taskManager);
+
+        taskManager.serialize(serialize, objectOutputStream);
     }
 
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-        if (VSDeserializationHelper.DEBUG)
+        if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSSimulatorCanvas");
 
-        VSPrefs prefs = (VSPrefs) VSDeserializationHelper.getObject("prefs");
-        VSSimulator simulator =
-            (VSSimulator) VSDeserializationHelper.getObject("simulator");
-        VSLogging logging =
-            (VSLogging) VSDeserializationHelper.getObject("logging");
+        synchronized (processes) {
+            numProcesses = ((Integer)
+                            objectInputStream.readObject()).intValue();
 
-        this.processes = (ArrayList<VSProcess>) objectInputStream.readObject();
-        this.numProcesses = processes.size();
+            processes.clear();
+            for (int i = 0; i < numProcesses; ++i) {
+                VSProcess process = createProcess(i);
+                process.deserialize(serialize, objectInputStream);
+                processes.add(process);
+            }
+        }
 
-        this.taskManager = (VSTaskManager) objectInputStream.readObject();
-        VSDeserializationHelper.setObject("taskManager", taskManager);
-
-        init(prefs, simulator, logging);
+        taskManager.deserialize(serialize, objectInputStream);
     }
 }

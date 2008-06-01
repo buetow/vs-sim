@@ -33,6 +33,7 @@ import javax.swing.event.*;
 import core.*;
 import prefs.*;
 import prefs.editors.*;
+import serialize.*;
 import utils.*;
 
 /**
@@ -42,7 +43,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulatorFrame extends VSFrame implements Serializable {
+public class VSSimulatorFrame extends VSFrame {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -141,6 +142,22 @@ public class VSSimulatorFrame extends VSFrame implements Serializable {
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.window.close"))) {
                     dispose();
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.open"))) {
+
+                    VSSerialize serialize = new VSSerialize();
+                    VSSimulator simulator = serialize.openSimulator(
+                                                VSSerialize.STANDARD_FILENAME,
+                                                VSSimulatorFrame.this);
+                    addSimulator(simulator);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.save"))) {
+
+                    VSSerialize serialize = new VSSerialize();
+                    serialize.saveSimulator(VSSerialize.STANDARD_FILENAME,
+                                            currentSimulator);
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.about"))) {
@@ -253,6 +270,28 @@ public class VSSimulatorFrame extends VSFrame implements Serializable {
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
+        menuFile.addSeparator();
+
+        menuItem = new JMenuItem(prefs.getString("lang.open"));
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                                    prefs.getInteger("keyevent.open"),
+                                    ActionEvent.ALT_MASK));
+        menuItem.addActionListener(actionListener);
+        menuFile.add(menuItem);
+
+        menuItem = new JMenuItem(prefs.getString("lang.save"));
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                                    prefs.getInteger("keyevent.save"),
+                                    ActionEvent.ALT_MASK));
+        menuItem.addActionListener(actionListener);
+        menuFile.add(menuItem);
+
+        menuItem = new JMenuItem(prefs.getString("lang.saveas"));
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                                    prefs.getInteger("keyevent.saveas"),
+                                    ActionEvent.ALT_MASK));
+        menuItem.addActionListener(actionListener);
+        menuFile.add(menuItem);
 
         menuFile.addSeparator();
 
@@ -507,40 +546,5 @@ public class VSSimulatorFrame extends VSFrame implements Serializable {
             return new ImageIcon("icons/"+name, descr);
 
         return new ImageIcon(imageURL, descr);
-    }
-
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
-    throws IOException {
-        objectOutputStream.writeObject(currentSimulator);
-    }
-
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
-     */
-    @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
-    throws IOException, ClassNotFoundException {
-        if (VSDeserializationHelper.DEBUG)
-            System.out.println("Deserializing: VSSimulatorFrame");
-
-        VSDeserializationHelper.init();
-        VSDeserializationHelper.setObject("simulatorFrame", this);
-
-        currentSimulator = (VSSimulator) objectInputStream.readObject();
-
-        VSDeserializationHelper.destroy();
-        addSimulator(currentSimulator);
     }
 }

@@ -27,10 +27,12 @@ import java.awt.Color;
 import java.io.*;
 import java.util.*;
 
+import serialize.*;
+
 /**
  * The class VSPrefs.
  */
-public class VSPrefs implements Serializable {
+public class VSPrefs implements VSSerializable {
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";
 
@@ -930,14 +932,17 @@ public class VSPrefs implements Serializable {
      */
     public void fillWithDefaults() {}
 
-    /**
-     * Write object.
-     *
-     * @param objectOutputStream the object output stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
+    @SuppressWarnings("unchecked")
+    public synchronized void readObject(ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
      */
-    public synchronized void writeObject(ObjectOutputStream objectOutputStream)
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
     throws IOException {
         objectOutputStream.writeObject(booleanPrefs);
         objectOutputStream.writeObject(colorPrefs);
@@ -949,63 +954,27 @@ public class VSPrefs implements Serializable {
         objectOutputStream.writeObject(units);
     }
 
-    /**
-     * Read object.
-     *
-     * @param objectInputStream the object input stream
-     *
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws ClassNotFoundException the class not found exception
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
         colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
         descriptionPrefs = new HashMap<String,String>();
         floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
         integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
-        vectorPrefs = (HashMap<String,Vector<Integer>>) objectInputStream.readObject();
+        vectorPrefs = (HashMap<String,Vector<Integer>>)
+                      objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
         restrictions = new HashMap<String,VSPrefsRestriction>();
         stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
         units = (HashMap<String,String>) objectInputStream.readObject();
+        objectPrefs.clear();
     }
-
-    /*
-    public void saveFile(String filename) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(filename);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
-    /*
-    public static VSPrefs openFile(String filename) {
-        VSPrefs prefs = null;
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(filename);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            prefs = (VSPrefs) objectInputStream.readObject();
-
-            prefs.fillDefaultStrings();
-            prefs.fillDefaultIntegers();
-            prefs.fillDefaultFloats();
-            prefs.fillDefaultColors();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return prefs;
-    }
-    */
 
     /**
      * Copy integers.
@@ -1016,8 +985,10 @@ public class VSPrefs implements Serializable {
     public void copyIntegers(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
             copyInto.initInteger(key,
-                                 getInteger(key), getDescription(INTEGER_PREFIX + key),
-                                 (VSPrefsRestriction.VSIntegerPrefRestriction) getRestriction(INTEGER_PREFIX + key),
+                                 getInteger(key),
+                                 getDescription(INTEGER_PREFIX + key),
+                                 (VSPrefsRestriction.VSIntegerPrefRestriction)
+                                 getRestriction(INTEGER_PREFIX + key),
                                  getUnit(INTEGER_PREFIX + key));
     }
 
@@ -1067,7 +1038,8 @@ public class VSPrefs implements Serializable {
      */
     public void copyColors(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initColor(key, getColor(key), getDescription(COLOR_PREFIX + key));
+            copyInto.initColor(key, getColor(key),
+                               getDescription(COLOR_PREFIX + key));
     }
 
     /**
@@ -1078,7 +1050,8 @@ public class VSPrefs implements Serializable {
      */
     public void copyBooleans(VSPrefs copyInto, String[] keys) {
         for (String key : keys)
-            copyInto.initBoolean(key, getBoolean(key), getDescription(BOOLEAN_PREFIX + key));
+            copyInto.initBoolean(key, getBoolean(key),
+                                 getDescription(BOOLEAN_PREFIX + key));
     }
 
     /* (non-Javadoc)
