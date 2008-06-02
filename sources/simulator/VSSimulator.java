@@ -402,7 +402,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         this.globalTextFields = new ArrayList<String>();
 
         /* Not null if init has been called from the deserialization */
-        if (logging == null)
+        if (this.logging == null)
             this.logging = new VSLogging();
 
         logging.logg(prefs.getString("lang.simulator.new"));
@@ -443,7 +443,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         splitPaneV = new JSplitPane();
 
         /* Not null if init has been called from the deserialization */
-        if (simulatorCanvas == null)
+        if (this.simulatorCanvas == null)
             simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
 
         taskManager = simulatorCanvas.getTaskManager();
@@ -873,6 +873,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 for (VSProcess process : processes) {
                     VSTask task = createTask.createTask(process, time,
                                                         localTasks);
+                    System.out.println(task);
                     taskManager.addTask(task, VSTaskManager.PROGRAMMED);
 
                     if (selectedProcess == null ||

@@ -173,8 +173,11 @@ abstract public class VSAbstractEvent extends VSPrefs {
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
         super.serialize(serialize, objectOutputStream);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Serializing: VSAbstractEvent; id="+getID());
+
         objectOutputStream.writeObject(new Integer(super.getID()));
-        //objectOutputStream.writeObject(new Integer(process.getProcessNum()));
         objectOutputStream.writeObject(eventShortname);
         objectOutputStream.writeObject(eventClassname);
     }
@@ -190,12 +193,14 @@ abstract public class VSAbstractEvent extends VSPrefs {
         super.deserialize(serialize, objectInputStream);
 
         if (VSSerialize.DEBUG)
-            System.out.println("Deserializing: VSAbstractEvent");
+            System.out.print("Deserializing: VSAbstractEvent ");
 
         int id = ((Integer) objectInputStream.readObject()).intValue();
-        //Integer processNum = (Integer) objectInputStream.readObject();
         this.eventShortname = (String) objectInputStream.readObject();
         this.eventClassname = (String) objectInputStream.readObject();
+
+        if (VSSerialize.DEBUG)
+            System.out.println(eventClassname);
 
         serialize.setObject(id, "event", this);
     }

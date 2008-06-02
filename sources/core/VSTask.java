@@ -119,7 +119,7 @@ public class VSTask implements Comparable, VSSerializable {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
         /* May be not null if called from deserialization */
-        if (event == null)
+        if (this.event == null)
             this.event = event;
         this.prefs = process.getPrefs();
         this.isGlobalTimed = !isLocal;
@@ -286,6 +286,11 @@ public class VSTask implements Comparable, VSSerializable {
         buffer.append(event.toString());
         buffer.append("; PID: ");
         buffer.append(process.getProcessID());
+        /*
+        if (isProgrammed()) {
+        	buffer.append("; Programmed");
+        }
+        */
 
         return buffer.toString();
     }
@@ -385,15 +390,19 @@ public class VSTask implements Comparable, VSSerializable {
         String eventClassname = (String) objectInputStream.readObject();
         int eventID = ((Integer) objectInputStream.readObject()).intValue();
 
-        VSAbstractEvent event = (VSAbstractEvent)
-                                serialize.getObject(eventID, "event");
+        VSAbstractEvent event = null;
 
-        if (event == null) {
+        if (serialize.objectExists(eventID, "event")) {
+            event = (VSAbstractEvent) serialize.getObject(eventID, "event");
+
+        } else {
             event = VSRegisteredEvents.
                     createEventInstanceByClassname(eventClassname, process);
 
             serialize.setObject(eventID, "event", event);
         }
+
+        event.deserialize(serialize, objectInputStream);
 
         int taskNum = ((Integer) objectInputStream.readObject()).intValue();
         long taskTime = ((Long) objectInputStream.readObject()).longValue();
@@ -401,9 +410,7 @@ public class VSTask implements Comparable, VSSerializable {
         Boolean isProgrammed = (Boolean) objectInputStream.readObject();
 
         serialize.setObject(taskNum, "task", this);
-
         init(taskTime, process, event, !isGlobalTimed.booleanValue());
-
         this.isProgrammed = isProgrammed.booleanValue();
     }
 }

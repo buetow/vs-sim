@@ -23,8 +23,11 @@
 
 package events.internal;
 
+import java.io.*;
+
 import events.*;
 import protocols.VSAbstractProtocol;
+import serialize.*;
 
 /**
  * The class VSProtocolEvent. This event is used if a protocol (server or
@@ -131,5 +134,38 @@ public class VSProtocolEvent extends VSAbstractEvent {
                       : prefs.getString("lang.deactivated"));
 
         logg(buffer.toString());
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
+     */
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.serialize(serialize, objectOutputStream);
+        objectOutputStream.writeObject(protocolClassname);
+        objectOutputStream.writeObject(new Boolean(isClientProtocol));
+        objectOutputStream.writeObject(new Boolean(isProtocolActivation));
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.deserialize(serialize, objectInputStream);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Deserializing: VSProtocolEvent");
+
+        protocolClassname = (String) objectInputStream.readObject();
+        isClientProtocol = ((Boolean)
+                            objectInputStream.readObject()).booleanValue();;
+        isProtocolActivation = ((Boolean)
+                                objectInputStream.readObject()).booleanValue();;
     }
 }

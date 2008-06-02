@@ -33,4 +33,9 @@ VSSerialize
 					writeObject(taskTime)
 					writeObject(isGlobalTimed)
 					writeObject(isProgrammed)
-	
+
+VSProtocolEvent.serialize
+	super(=VSAbstractEvent).serialize
+	writeObject(protocolClassname)
+	writeObject(isClientProtocol)
+	writeObject(isProtocolActivation)

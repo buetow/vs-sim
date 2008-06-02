@@ -537,7 +537,6 @@ public class VSTaskManager implements VSSerializable {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSTaskManager");
 
-        int numTasks = ((Integer) objectInputStream.readObject()).intValue();
         globalTasks.clear();
 
         ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
@@ -546,7 +545,10 @@ public class VSTaskManager implements VSSerializable {
                 process.getTasks().clear();
         }
 
-        for (int i = 0; i < numTasks; ++i)
-            addTask(new VSTask(serialize, objectInputStream));
+        int numTasks = ((Integer) objectInputStream.readObject()).intValue();
+        for (int i = 0; i < numTasks; ++i) {
+            VSTask task = new VSTask(serialize, objectInputStream);
+            addTask(task, task.isProgrammed());
+        }
     }
 }

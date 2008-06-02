@@ -82,6 +82,9 @@ public final class VSSerialize {
      * @param object The object itself
      */
     public void setObject(String key, Object object) {
+        if (DEBUG)
+            System.out.println("setObject("+key+")");
+
         objects.put(key, object);
     }
 
@@ -93,7 +96,22 @@ public final class VSSerialize {
      * @param object The object itself
      */
     public void setObject(int num, String key, Object object) {
+        if (DEBUG)
+            System.out.println("setObject("+key+":"+num+")");
+
         objects.put(key + ":" + num, object);
+    }
+
+    /**
+     * Checks if an object exists.
+     *
+     * @param num The object number
+     * @param key The object key
+     *
+     * @return true, if the object exists. false, if the object does not exist
+     */
+    public boolean objectExists(int num, String key) {
+        return null != objects.get(key + ":" + num);
     }
 
     /**
@@ -153,6 +171,9 @@ public final class VSSerialize {
 
         } catch (IOException e) {
             e.printStackTrace();
+
+        } finally {
+            //objectOutputStream.close();
         }
     }
 
@@ -167,6 +188,7 @@ public final class VSSerialize {
     public VSSimulator openSimulator(String filename,
                                      VSSimulatorFrame simulatorFrame) {
         VSSimulator simulator = null;
+        simulatorFrame.resetCurrentSimulator();
 
         try {
             FileInputStream fileInputStream =
@@ -183,6 +205,9 @@ public final class VSSerialize {
 
         } catch (Exception e) {
             e.printStackTrace();
+
+        } finally {
+            //objectInputStream.close();
         }
 
         return simulator;

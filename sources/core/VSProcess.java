@@ -214,7 +214,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
     private void init(VSPrefs prefs, int processNum,
                       VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
         /* May be not null if called from deserialization */
-        if (protocolsToReset == null)
+        if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
         this.processNum = processNum;
         this.prefs = prefs;

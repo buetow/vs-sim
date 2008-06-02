@@ -495,11 +495,11 @@ public class VSSimulatorCanvas extends Canvas
         this.messageLinesToRemove = new LinkedList<VSMessageLine>();
 
         /* May be not null if called from deserialization */
-        if (taskManager == null)
+        if (this.taskManager == null)
             this.taskManager = new VSTaskManager(prefs, this);
 
         /* May be not null if called from deserialization */
-        if (processes == null) {
+        if (this.processes == null) {
             this.processes = new ArrayList<VSProcess>();
 
             numProcesses = prefs.getInteger("sim.process.num");
