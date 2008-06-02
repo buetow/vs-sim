@@ -280,7 +280,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * Called from the VSProcessEditor, after finishing editing! This makes
      * sure that the VSProcess object is using the up to date prefs!
      */
-    public synchronized void updateFromVSPrefs() {
+    public synchronized void updateFromPrefs() {
         setClockVariance(getFloat("process.clock.variance"));
         setLocalTime(getLong("process.localtime"));
         crashedColor = getColor("col.process.crashed");
@@ -1019,6 +1019,12 @@ public class VSProcess extends VSPrefs implements VSSerializable {
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
         super.serialize(serialize, objectOutputStream);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Serializing: VSProcess (num: " + processNum 
+					+ "; id: " + processID + ")");
+
+        objectOutputStream.writeObject(new Integer(processID));
         objectOutputStream.writeObject(new Integer(protocolsToReset.size()));
         for (VSAbstractProtocol protocol : protocolsToReset) {
             objectOutputStream.writeObject(protocol.getClassname());
@@ -1035,10 +1041,13 @@ public class VSProcess extends VSPrefs implements VSSerializable {
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         super.deserialize(serialize, objectInputStream);
+		updateFromPrefs();
 
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSProcess");
 
+        this.processID = ((Integer)
+                            objectInputStream.readObject()).intValue();
         int numProtocols = ((Integer)
                             objectInputStream.readObject()).intValue();
 

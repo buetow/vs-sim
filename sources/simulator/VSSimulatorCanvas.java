@@ -673,6 +673,11 @@ public class VSSimulatorCanvas extends Canvas
      * order to gain performance!
      */
     private void recalcOnChange() {
+		synchronized (processes) {
+			if (processes.size() == 0)
+				return;
+		}
+
         processlineColor = prefs.getColor("col.process.line");
         processSecondlineColor = prefs.getColor("col.process.secondline");
         processSeplineColor = prefs.getColor("col.process.sepline");
@@ -1484,16 +1489,15 @@ public class VSSimulatorCanvas extends Canvas
                 index = processes.indexOf(process);
                 processes.remove(index);
 
-                for (VSProcess p : processes) {
+                for (VSProcess p : processes) 
                     p.removedAProcessAtIndex(index);
-                }
 
                 numProcesses = processes.size();
             }
 
-            taskManager.removeTasksOf(process);
-            simulator.removedAProcessAtIndex(index);
-            recalcOnChange();
+           		taskManager.removeTasksOf(process);
+           		simulator.removedAProcessAtIndex(index);
+           		recalcOnChange();
 
             ArrayList<VSMessageLine> removeThose =
                 new ArrayList<VSMessageLine>();
@@ -1530,8 +1534,10 @@ public class VSSimulatorCanvas extends Canvas
 
     /**
      * Adds a new process to the simulator.
+	 *
+	 * @return The process which has been added
      */
-    private void addProcess() {
+    private VSProcess addProcess() {
         synchronized (processes) {
             numProcesses = processes.size() + 1;
             VSProcess newProcess = createProcess(processes.size());
@@ -1543,6 +1549,8 @@ public class VSSimulatorCanvas extends Canvas
 
             recalcOnChange();
             simulator.addProcessAtIndex(processes.size()-1);
+
+			return newProcess;
         }
     }
 
@@ -1573,16 +1581,25 @@ public class VSSimulatorCanvas extends Canvas
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSSimulatorCanvas");
 
-        synchronized (processes) {
-            numProcesses = ((Integer)
-                            objectInputStream.readObject()).intValue();
+        int num = ((Integer) objectInputStream.readObject()).intValue();
+		logging.clear();
 
-            processes.clear();
-            for (int i = 0; i < numProcesses; ++i) {
-                VSProcess process = createProcess(i);
-                process.deserialize(serialize, objectInputStream);
-                processes.add(process);
-            }
+		ArrayList<VSProcess> newProcesses = new ArrayList<VSProcess>();
+        for (int i = 0; i < num; ++i) {
+            VSProcess process = createProcess(i);
+            process.deserialize(serialize, objectInputStream);
+			newProcesses.add(process);
+        }
+
+        synchronized (processes) {
+			int diff = numProcesses - num;
+			if (diff > 0) 
+				for (int i = num; i < numProcesses; ++i) 
+					removeProcess(processes.get(num));
+
+			for (int i = 0; i < num; ++i) {
+
+			}
         }
 
         taskManager.deserialize(serialize, objectInputStream);

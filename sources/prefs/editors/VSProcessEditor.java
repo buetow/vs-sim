@@ -103,11 +103,11 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
 
         if (actionCommand.equals(prefs.getString("lang.ok"))) {
             savePrefs();
-            process.updateFromVSPrefs();
+            process.updateFromPrefs();
 
         } else if (actionCommand.equals(prefs.getString("lang.takeover"))) {
             savePrefs();
-            process.updateFromVSPrefs();
+            process.updateFromPrefs();
 
         } else {
             super.actionPerformed(e);

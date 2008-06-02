@@ -8,6 +8,7 @@ VSSerialize
 			writeObject(numProcesses)
 			for (porcess : processes) process(=VSProcess).serialize {
 				super(=VSPrefs).serialize	
+				writeObject(processID)
 				writeObject(numProtocolsToReset)
 				for (protocol : protocolsToReset) {
 					writeObject(protocolClassname)
