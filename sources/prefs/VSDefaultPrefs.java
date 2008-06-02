@@ -215,7 +215,7 @@ public class VSDefaultPrefs extends VSPrefs {
     public void fillDefaultFloats() {
         /* Simulator prefs */
         initFloat("process.clock.variance", 0, "Uhrabweichung");
-        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulator");
+        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulation");
     }
 
     /**

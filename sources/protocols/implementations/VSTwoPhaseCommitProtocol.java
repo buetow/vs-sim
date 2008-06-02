@@ -40,7 +40,7 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a one phase commit protocol object.
+     * Instantiates a two phase commit protocol object.
      */
     public VSTwoPhaseCommitProtocol() {
         super(VSAbstractProtocol.HAS_ON_SERVER_START);

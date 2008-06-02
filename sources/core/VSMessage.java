@@ -162,7 +162,7 @@ public class VSMessage extends VSPrefs {
      * Checks if the message has been sent by a server or a client.
      *
      * @return true, if the message has been sent by a server. false, if the
-     *	message has been sent by a clien.
+     *	message has been sent by a client.
      */
     public boolean isServerMessage() {
         return isServerMessage;

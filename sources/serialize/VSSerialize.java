@@ -30,8 +30,7 @@ import prefs.*;
 import simulator.*;
 
 /**
- * The class VSSerialize, this static class helps do deserialize
- * a saved simulator!
+ * The class VSSerialize, this class helps do deserialize a saved simulator!
  *
  * @author Paul C. Buetow
  */
