@@ -335,7 +335,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
             if (SwingUtilities.isRightMouseButton(me)) {
                 ActionListener actionListener = new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
-						System.out.println("BAZ");
+                        System.out.println("BAZ");
                         String command = ae.getActionCommand();
                         if (command.equals(prefs.getString("lang.remove"))) {
                             removeTaskAtRow(row);
@@ -597,7 +597,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 prefs.getString("lang.logging.clear"));
             clearButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-						System.out.println("BAY");
+                    System.out.println("BAY");
                     String command = ae.getActionCommand();
                     if (command.equals(
                     prefs.getString("lang.logging.clear"))) {
@@ -820,7 +820,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         takeoverButton.addActionListener(new ActionListener() {
             private boolean isRed;
             public void actionPerformed(ActionEvent ae) {
-			System.out.println("BAR");
+                System.out.println("BAR");
                 String textValue = textField.getText();
                 Long longValue = null;
 

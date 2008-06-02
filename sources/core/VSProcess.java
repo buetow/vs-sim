@@ -1021,8 +1021,8 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         super.serialize(serialize, objectOutputStream);
 
         if (VSSerialize.DEBUG)
-            System.out.println("Serializing: VSProcess (num: " + processNum 
-					+ "; id: " + processID + ")");
+            System.out.println("Serializing: VSProcess (num: " + processNum
+                               + "; id: " + processID + ")");
 
         objectOutputStream.writeObject(new Integer(processID));
         objectOutputStream.writeObject(new Integer(protocolsToReset.size()));
@@ -1041,13 +1041,13 @@ public class VSProcess extends VSPrefs implements VSSerializable {
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         super.deserialize(serialize, objectInputStream);
-		updateFromPrefs();
+        updateFromPrefs();
 
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSProcess");
 
         this.processID = ((Integer)
-                            objectInputStream.readObject()).intValue();
+                          objectInputStream.readObject()).intValue();
         int numProtocols = ((Integer)
                             objectInputStream.readObject()).intValue();
 

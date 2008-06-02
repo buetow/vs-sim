@@ -673,10 +673,10 @@ public class VSSimulatorCanvas extends Canvas
      * order to gain performance!
      */
     private void recalcOnChange() {
-		synchronized (processes) {
-			if (processes.size() == 0)
-				return;
-		}
+        synchronized (processes) {
+            if (processes.size() == 0)
+                return;
+        }
 
         processlineColor = prefs.getColor("col.process.line");
         processSecondlineColor = prefs.getColor("col.process.secondline");
@@ -1489,15 +1489,15 @@ public class VSSimulatorCanvas extends Canvas
                 index = processes.indexOf(process);
                 processes.remove(index);
 
-                for (VSProcess p : processes) 
+                for (VSProcess p : processes)
                     p.removedAProcessAtIndex(index);
 
                 numProcesses = processes.size();
             }
 
-           		taskManager.removeTasksOf(process);
-           		simulator.removedAProcessAtIndex(index);
-           		recalcOnChange();
+            taskManager.removeTasksOf(process);
+            simulator.removedAProcessAtIndex(index);
+            recalcOnChange();
 
             ArrayList<VSMessageLine> removeThose =
                 new ArrayList<VSMessageLine>();
@@ -1534,13 +1534,25 @@ public class VSSimulatorCanvas extends Canvas
 
     /**
      * Adds a new process to the simulator.
-	 *
-	 * @return The process which has been added
+     *
+     * @return The process which has been added
      */
     private VSProcess addProcess() {
         synchronized (processes) {
             numProcesses = processes.size() + 1;
             VSProcess newProcess = createProcess(processes.size());
+            addProcess(newProcess);
+            return newProcess;
+        }
+    }
+
+    /**
+     * Adds a the given process to the simulator.
+     *
+     * @newProcess The process to add
+     */
+    private void addProcess(VSProcess newProcess) {
+        synchronized (processes) {
             processes.add(newProcess);
 
             for (VSProcess process : processes)
@@ -1549,8 +1561,6 @@ public class VSSimulatorCanvas extends Canvas
 
             recalcOnChange();
             simulator.addProcessAtIndex(processes.size()-1);
-
-			return newProcess;
         }
     }
 
@@ -1582,25 +1592,19 @@ public class VSSimulatorCanvas extends Canvas
             System.out.println("Deserializing: VSSimulatorCanvas");
 
         int num = ((Integer) objectInputStream.readObject()).intValue();
-		logging.clear();
+        logging.clear();
 
-		ArrayList<VSProcess> newProcesses = new ArrayList<VSProcess>();
-        for (int i = 0; i < num; ++i) {
-            VSProcess process = createProcess(i);
-            process.deserialize(serialize, objectInputStream);
-			newProcesses.add(process);
+        if (num > numProcesses) {
+            for (int i = numProcesses; i < num; ++i)
+                addProcess();
+        } else {
+            int oldNum = numProcesses;
+            for (int i = num; i < oldNum; ++i)
+                removeProcess(getProcess(0));
         }
 
-        synchronized (processes) {
-			int diff = numProcesses - num;
-			if (diff > 0) 
-				for (int i = num; i < numProcesses; ++i) 
-					removeProcess(processes.get(num));
-
-			for (int i = 0; i < num; ++i) {
-
-			}
-        }
+        for (int i = 0; i < num; ++i)
+            processes.get(0).deserialize(serialize, objectInputStream);
 
         taskManager.deserialize(serialize, objectInputStream);
     }
