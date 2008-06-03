@@ -1,3 +1,6 @@
+Bugs:
+	prozess combo box muss PIDs anzeigen nicht process nums
+	serialize/deserialize mehrerer prozesse?!
 Must do:
 	Reliable Multicast
 	Ganze simulationseinstellungen abspeichern/laden koennen

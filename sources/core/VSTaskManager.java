@@ -268,7 +268,7 @@ public class VSTaskManager implements VSSerializable {
      *
      * @param task the task to insert
      */
-    private void insert(VSTask task) {
+    private synchronized void insert(VSTask task) {
         if (task.timeOver()) {
             if (task.isProgrammed())
                 fullfilledProgrammedTasks.addLast(task);
@@ -286,7 +286,7 @@ public class VSTaskManager implements VSSerializable {
      *
      * @param task the task to add
      */
-    public void addTask(VSTask task) {
+    public synchronized void addTask(VSTask task) {
         addTask(task, VSTaskManager.ONLY_ONCE);
     }
 
@@ -328,7 +328,7 @@ public class VSTaskManager implements VSSerializable {
      *
      * @param tasks the tasks to remove
      */
-    public void removeAllTasks(ArrayList<VSTask> tasks) {
+    public synchronized void removeAllTasks(ArrayList<VSTask> tasks) {
         for (VSTask task : tasks)
             removeTask(task);
     }
@@ -396,7 +396,7 @@ public class VSTaskManager implements VSSerializable {
             if (task.isGlobalTimed())
                 globalTasks.add(task);
 
-        for (VSTask task : globalTasks)
+        for (VSTask task : this.globalTasks)
             if (task.isProgrammed())
                 globalTasks.add(task);
 
@@ -453,7 +453,7 @@ public class VSTaskManager implements VSSerializable {
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    public String toString() {
+    public synchronized String toString() {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append(prefs.getString("lang.task.manager"));
@@ -467,6 +467,7 @@ public class VSTaskManager implements VSSerializable {
         }
 
         buffer.append(prefs.getString("lang.tasks.global"));
+        buffer.append(": ");
 
         for (VSTask task : globalTasks) {
             buffer.append(task);
@@ -474,6 +475,7 @@ public class VSTaskManager implements VSSerializable {
         }
 
         buffer.append(prefs.getString("lang.tasks.local"));
+        buffer.append(": ");
 
         ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
         synchronized (processes) {

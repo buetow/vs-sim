@@ -54,6 +54,12 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /** The protocol object is a client. */
     private boolean isClient;
 
+    /** The protocol object server is initialized. */
+    private boolean isServerInitialized;
+
+    /** The protocol object client is initialized. */
+    private boolean isClientInitialized;
+
     /** The current protocol object's context is a server. */
     private boolean currentContextIsServer;
 
@@ -105,11 +111,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (hasOnServerStart) {
             if (isServer) {
                 currentContextIsServer(true);
+				if (!isServerInitialized)
+					onInit();
                 onServerStart();
             }
         } else {
             if (isClient) {
                 currentContextIsServer(false);
+				if (!isClientInitialized)
+					onInit();
                 onClientStart();
             }
         }
@@ -122,11 +132,13 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (isClient) {
             currentContextIsServer(false);
             onClientInit();
+			isClientInitialized = true;
         }
 
         if (isServer) {
             currentContextIsServer(true);
             onServerInit();
+			isServerInitialized = true;
         }
     }
 
@@ -161,11 +173,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
 
         if (isServer) {
             currentContextIsServer(true);
+			if (!isServerInitialized)
+				onInit();
             onServerRecv(message);
         }
 
         if (isClient) {
             currentContextIsServer(false);
+			if (!isClientInitialized)
+				onInit();
             onClientRecv(message);
         }
     }
