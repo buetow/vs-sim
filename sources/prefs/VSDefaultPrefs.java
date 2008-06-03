@@ -70,6 +70,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.cancel", "Abbrechen");
         initString("lang.client", "Client");
         initString("lang.clientrequest.start", "Clientanfrage starten");
+        initString("lang.dat", "VS-Sim. Speicherung");
         initString("lang.serverrequest.start", "Serveranfrage starten");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");

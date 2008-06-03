@@ -25,6 +25,7 @@ package serialize;
 
 import java.io.*;
 import java.util.HashMap;
+import javax.swing.*;
 
 import prefs.*;
 import simulator.*;
@@ -41,8 +42,8 @@ public final class VSSerialize {
     /** True if debugg mode of deserialization */
     public static final boolean DEBUG = true;
 
-    /** The standard filename to save simulators to */
-    public static final String STANDARD_FILENAME = "simulator.dat";
+    /** The last filename used for saveing/opening*/
+    public static String LAST_FILENAME = null;
 
     /** For temp object storage */
     private static HashMap<String,Object> objects;
@@ -158,6 +159,13 @@ public final class VSSerialize {
      * @param simulator The simulator
      */
     public void saveSimulator(String filename, VSSimulator simulator) {
+		if (filename == null) {
+			saveSimulator(simulator);
+			return;
+		}
+
+		LAST_FILENAME = filename;
+
         try {
             FileOutputStream fileOutputStream =
                 new FileOutputStream(filename);
@@ -174,6 +182,25 @@ public final class VSSerialize {
         } finally {
             //objectOutputStream.close();
         }
+    }
+
+    /**
+     * Saves the given simulator to a file choosen by the file chooser.
+     *
+     * @param simulator The simulator
+     */
+    public void saveSimulator(VSSimulator simulator) {
+		VSPrefs prefs = simulator.getPrefs();
+		VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
+
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setMultiSelectionEnabled(false);
+		fileChooser.addChoosableFileFilter(createFileFilter(prefs));
+
+		if (fileChooser.showOpenDialog(simulatorFrame) ==
+				JFileChooser.APPROVE_OPTION) 
+			saveSimulator(fileChooser.getSelectedFile().getName(), 
+					simulator);
     }
 
     /**
@@ -211,4 +238,47 @@ public final class VSSerialize {
 
         return simulator;
     }
+
+    /**
+     * Opens a simulator from a file selected from a file chooser.
+     *
+     * @param simulatorFrame The simulator frame
+     *
+     * @return The simulator object, and null if no success
+     */
+    public VSSimulator openSimulator(VSSimulatorFrame simulatorFrame) {
+		VSPrefs prefs = simulatorFrame.getPrefs();
+
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setMultiSelectionEnabled(false);
+		fileChooser.addChoosableFileFilter(createFileFilter(prefs));
+
+		if (fileChooser.showOpenDialog(simulatorFrame) ==
+				JFileChooser.APPROVE_OPTION) 
+			return openSimulator(fileChooser.getSelectedFile().getName(),
+					simulatorFrame);
+
+        return null;
+    }
+
+    /**
+     * Creates a file filter for the file choosers
+	 *
+	 * @param prefs The default prefs
+     */
+    private javax.swing.filechooser.FileFilter createFileFilter(
+			final VSPrefs prefs) {
+		return new javax.swing.filechooser.FileFilter() {
+			public boolean accept(File file) {
+				if (file.isDirectory())
+					return true;
+				return file.getName().toLowerCase().endsWith(".dat");
+			}
+
+			public String getDescription() {
+				return prefs.getString("lang.dat");
+			}
+		};
+    }
+
 }

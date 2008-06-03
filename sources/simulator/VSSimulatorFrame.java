@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+/* * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -145,13 +144,13 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.open"))) {
-                    pauseCurrentSimulator();
-                    resetCurrentSimulator();
+                    //pauseCurrentSimulator();
+                    //resetCurrentSimulator();
                     VSSerialize serialize = new VSSerialize();
                     VSSimulator simulator = serialize.openSimulator(
-                                                VSSerialize.STANDARD_FILENAME,
                                                 VSSimulatorFrame.this);
-                    addSimulator(simulator);
+					if (simulator != null)
+                    	addSimulator(simulator);
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.save"))) {
@@ -159,8 +158,16 @@ public class VSSimulatorFrame extends VSFrame {
                     pauseCurrentSimulator();
                     resetCurrentSimulator();
                     VSSerialize serialize = new VSSerialize();
-                    serialize.saveSimulator(VSSerialize.STANDARD_FILENAME,
+                    serialize.saveSimulator(VSSerialize.LAST_FILENAME,
                                             currentSimulator);
+
+                } else if (sourceText.equals(
+                finalPrefs.getString("lang.saveas"))) {
+
+                    pauseCurrentSimulator();
+                    resetCurrentSimulator();
+                    VSSerialize serialize = new VSSerialize();
+                    serialize.saveSimulator(currentSimulator);
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.about"))) {
@@ -563,5 +570,14 @@ public class VSSimulatorFrame extends VSFrame {
             return new ImageIcon("icons/"+name, descr);
 
         return new ImageIcon(imageURL, descr);
+    }
+
+    /**
+     * Gets the prefs.
+     *
+     * @return the prefs
+     */
+    public VSPrefs getPrefs() {
+        return prefs;
     }
 }
