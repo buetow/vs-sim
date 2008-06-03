@@ -1,0 +1,52 @@
+%
+%	Diploma thesis template 2005
+%
+%       author: lukas.silberbauer(at)gmx.at
+%       based upon  "Diplomarbeit mit LaTeX" by Tobias Erbsland
+%
+%       published under the terms of
+%
+%  ----------------------------------------------------------------------------
+%  "THE BEER-WARE LICENSE":
+%  <lukas.silberbauer(at)gmx.at> wrote this file. As long as you retain this 
+%	notice you can do whatever you want with this stuff. If we meet some day, 
+%	and you thinkthis stuff is worth it, you can buy me a beer in return. 
+%  ----------------------------------------------------------------------------
+%
+
+\input{chapters/header}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% define variables used on titlepage
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maintitle {Diploma Thesis}
+\subtitle { T E M P L A T E }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% setup document structure
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\input{chapters/titlepage}
+\input{chapters/introduction}
+\input{chapters/conclusion}
+
+\appendix
+
+\input{chapters/appendix-a}
+\input{chapters/appendix-b}
+
+\bibliographystyle{alpha}
+\bibliography{bib/references}
+%\printindex
+\end{document}
+
+%
+% EOF
+%
+
