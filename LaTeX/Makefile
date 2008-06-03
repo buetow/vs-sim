@@ -6,3 +6,5 @@ clean:
 		grep -v .tcp | \
 		grep -v .tex | \
 		xargs rm 
+spell:
+	find ./chapters -name \*.tex -exec sh -c 'aspell -l de_DE -t -c {}' \;
