@@ -1008,7 +1008,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the split size
      */
-    public int getSplitSize() {
+    public synchronized int getSplitSize() {
         return splitPaneH.getDividerLocation();
     }
 
@@ -1017,7 +1017,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the paint size
      */
-    public int getPaintSize() {
+    public synchronized int getPaintSize() {
         return splitPaneV.getDividerLocation();
     }
 
@@ -1065,7 +1065,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /**
      * Update task manager table.
      */
-    public void updateTaskManagerTable() {
+    public synchronized void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
         boolean allProcesses = process == null;
 
@@ -1079,9 +1079,30 @@ public class VSSimulator extends JPanel implements VSSerializable {
     }
 
     /**
+     * Update the processes combo box
+     */
+    private void updateProcessesComboBox() {
+        int numProcesses = simulatorCanvas.getNumProcesses();
+
+        String processString = prefs.getString("lang.process");
+
+        for (int i = 0; i < numProcesses; ++i) {
+            int processID = simulatorCanvas.getProcess(i).getProcessID();
+
+            processesComboBox.removeItemAt(i);
+            localPIDComboBox.removeItemAt(i);
+            globalPIDComboBox.removeItemAt(i);
+
+            processesComboBox.insertItemAt(processString + " " + processID, i);
+            localPIDComboBox.insertItemAt("PID: " + processID, i);
+            globalPIDComboBox.insertItemAt("PID: " + processID, i);
+        }
+    }
+
+    /**
      * The simulator has finished.
      */
-    public void finish() {
+    public synchronized void finish() {
         menuItemStates.setStart(false);
         menuItemStates.setPause(false);
         menuItemStates.setReset(true);
@@ -1094,7 +1115,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the simulator num
      */
-    public int getSimulatorNum() {
+    public synchronized int getSimulatorNum() {
         return simulatorNum;
     }
 
@@ -1103,7 +1124,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the menu item states
      */
-    public VSMenuItemStates getMenuItemStates() {
+    public synchronized VSMenuItemStates getMenuItemStates() {
         return menuItemStates;
     }
 
@@ -1112,7 +1133,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the simulator canvas
      */
-    public VSSimulatorCanvas getSimulatorCanvas() {
+    public synchronized VSSimulatorCanvas getSimulatorCanvas() {
         return simulatorCanvas;
     }
 
@@ -1121,14 +1142,14 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the simulator frame
      */
-    public VSSimulatorFrame getSimulatorFrame() {
+    public synchronized VSSimulatorFrame getSimulatorFrame() {
         return simulatorFrame;
     }
 
     /**
      * Update from prefs.
      */
-    public void updateFromPrefs() {
+    public synchronized void updateFromPrefs() {
         simulatorCanvas.setBackground(prefs.getColor("col.background"));
         simulatorCanvas.updateFromPrefs();
     }
@@ -1138,7 +1159,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @param index the index
      */
-    public void removedAProcessAtIndex(int index) {
+    public synchronized void removedAProcessAtIndex(int index) {
         if (lastSelectedProcessNum > index)
             --lastSelectedProcessNum;
 
@@ -1159,7 +1180,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @param index the index
      */
-    public void addProcessAtIndex(int index) {
+    public synchronized void addProcessAtIndex(int index) {
         int processID = simulatorCanvas.getProcess(index).getProcessID();
         String processString = prefs.getString("lang.process");
 
@@ -1176,7 +1197,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /**
      * Fire expert mode changed. Tell, that the expert mode has changed.
      */
-    public void fireExpertModeChanged() {
+    public synchronized void fireExpertModeChanged() {
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
         /* Update the Task Manager GUI */
@@ -1221,7 +1242,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the prefs
      */
-    public VSPrefs getPrefs() {
+    public synchronized VSPrefs getPrefs() {
         return prefs;
     }
 
@@ -1266,5 +1287,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         updateFromPrefs();
         updateTaskManagerTable();
+        updateProcessesComboBox();
     }
 }

@@ -227,6 +227,7 @@ public final class VSSerialize {
             this.setObject("prefs", prefs);
 
             simulator = new VSSimulator(prefs, simulatorFrame);
+            simulatorFrame.addSimulator(simulator);
             simulator.deserialize(this, objectInputStream);
 
         } catch (Exception e) {

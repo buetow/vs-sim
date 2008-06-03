@@ -144,13 +144,8 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.open"))) {
-                    //pauseCurrentSimulator();
-                    //resetCurrentSimulator();
                     VSSerialize serialize = new VSSerialize();
-                    VSSimulator simulator = serialize.openSimulator(
-                                                VSSimulatorFrame.this);
-                    if (simulator != null)
-                        addSimulator(simulator);
+                    serialize.openSimulator(VSSimulatorFrame.this);
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.save"))) {
