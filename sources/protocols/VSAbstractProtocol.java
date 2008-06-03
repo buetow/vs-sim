@@ -111,15 +111,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (hasOnServerStart) {
             if (isServer) {
                 currentContextIsServer(true);
-				if (!isServerInitialized)
-					onInit();
+                if (!isServerInitialized)
+                    onInit();
                 onServerStart();
             }
         } else {
             if (isClient) {
                 currentContextIsServer(false);
-				if (!isClientInitialized)
-					onInit();
+                if (!isClientInitialized)
+                    onInit();
                 onClientStart();
             }
         }
@@ -132,13 +132,13 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (isClient) {
             currentContextIsServer(false);
             onClientInit();
-			isClientInitialized = true;
+            isClientInitialized = true;
         }
 
         if (isServer) {
             currentContextIsServer(true);
             onServerInit();
-			isServerInitialized = true;
+            isServerInitialized = true;
         }
     }
 
@@ -173,15 +173,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
 
         if (isServer) {
             currentContextIsServer(true);
-			if (!isServerInitialized)
-				onInit();
+            if (!isServerInitialized)
+                onInit();
             onServerRecv(message);
         }
 
         if (isClient) {
             currentContextIsServer(false);
-			if (!isClientInitialized)
-				onInit();
+            if (!isClientInitialized)
+                onInit();
             onClientRecv(message);
         }
     }
@@ -408,7 +408,14 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
         super.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(new Boolean(hasOnServerStart));
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -424,7 +431,13 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSAbstractProtocol");
 
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         this.hasOnServerStart = ((Boolean)
                                  objectInputStream.readObject()).booleanValue();
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }

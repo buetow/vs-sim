@@ -362,6 +362,9 @@ public class VSTask implements Comparable, VSSerializable {
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(new Integer(process.getProcessNum()));
         objectOutputStream.writeObject(event.getClassname());
         objectOutputStream.writeObject(new Integer(event.getID()));
@@ -370,6 +373,9 @@ public class VSTask implements Comparable, VSSerializable {
         objectOutputStream.writeObject(new Long(taskTime));
         objectOutputStream.writeObject(new Boolean(isGlobalTimed));
         objectOutputStream.writeObject(new Boolean(isProgrammed));
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -382,6 +388,9 @@ public class VSTask implements Comparable, VSSerializable {
     throws IOException, ClassNotFoundException {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSTask");
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
 
         int processNum = ((Integer) objectInputStream.readObject()).intValue();
         VSProcess process = (VSProcess)
@@ -412,6 +421,9 @@ public class VSTask implements Comparable, VSSerializable {
         serialize.setObject(taskNum, "task", this);
         init(taskTime, process, event, !isGlobalTimed.booleanValue());
         this.isProgrammed = isProgrammed.booleanValue();
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }
 

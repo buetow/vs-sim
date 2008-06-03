@@ -503,6 +503,8 @@ public class VSTaskManager implements VSSerializable {
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
 
         ArrayList<VSTask> tasks = new ArrayList<VSTask>();
 
@@ -526,6 +528,9 @@ public class VSTaskManager implements VSSerializable {
         objectOutputStream.writeObject(new Integer(tasks.size()));
         for (VSTask task : tasks)
             task.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -538,6 +543,9 @@ public class VSTaskManager implements VSSerializable {
     throws IOException, ClassNotFoundException {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSTaskManager");
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
 
         globalTasks.clear();
 
@@ -552,5 +560,8 @@ public class VSTaskManager implements VSSerializable {
             VSTask task = new VSTask(serialize, objectInputStream);
             addTask(task, task.isProgrammed());
         }
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }

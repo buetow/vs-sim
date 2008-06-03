@@ -23,8 +23,11 @@
 
 package events.internal;
 
+import java.io.*;
+
 import events.*;
 import protocols.VSAbstractProtocol;
+import serialize.VSSerialize;
 
 /**
  * The class VSProtocolScheduleEvent. This event is used if a protocol (which
@@ -109,5 +112,39 @@ public class VSProtocolScheduleEvent extends VSAbstractEvent {
             protocol.onServerScheduleStart();
         else
             protocol.onClientScheduleStart();
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
+     */
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.deserialize(serialize, objectInputStream);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Deserializing: VSProtocolEvent");
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
     }
 }

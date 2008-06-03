@@ -27,7 +27,7 @@ import java.io.*;
 
 import events.*;
 import protocols.VSAbstractProtocol;
-import serialize.*;
+import serialize.VSSerialize;
 
 /**
  * The class VSProtocolEvent. This event is used if a protocol (server or
@@ -144,9 +144,16 @@ public class VSProtocolEvent extends VSAbstractEvent {
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
         super.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(protocolClassname);
         objectOutputStream.writeObject(new Boolean(isClientProtocol));
         objectOutputStream.writeObject(new Boolean(isProtocolActivation));
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -162,10 +169,17 @@ public class VSProtocolEvent extends VSAbstractEvent {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSProtocolEvent");
 
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         protocolClassname = (String) objectInputStream.readObject();
         isClientProtocol = ((Boolean)
                             objectInputStream.readObject()).booleanValue();;
         isProtocolActivation = ((Boolean)
                                 objectInputStream.readObject()).booleanValue();;
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
     }
 }

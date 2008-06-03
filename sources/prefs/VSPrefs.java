@@ -944,14 +944,21 @@ public class VSPrefs implements VSSerializable {
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(booleanPrefs);
         objectOutputStream.writeObject(colorPrefs);
+        objectOutputStream.writeObject(descriptionPrefs);
         objectOutputStream.writeObject(floatPrefs);
         objectOutputStream.writeObject(integerPrefs);
-        objectOutputStream.writeObject(vectorPrefs);
         objectOutputStream.writeObject(longPrefs);
         objectOutputStream.writeObject(stringPrefs);
         objectOutputStream.writeObject(units);
+        objectOutputStream.writeObject(vectorPrefs);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -962,18 +969,26 @@ public class VSPrefs implements VSSerializable {
     public synchronized void deserialize(VSSerialize serialize,
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
+        objectPrefs.clear();
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
         colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
-        descriptionPrefs = new HashMap<String,String>();
+        descriptionPrefs = (HashMap<String,String>)
+                           objectInputStream.readObject();
         floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
         integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
-        vectorPrefs = (HashMap<String,Vector<Integer>>)
-                      objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
         restrictions = new HashMap<String,VSPrefsRestriction>();
         stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
         units = (HashMap<String,String>) objectInputStream.readObject();
-        objectPrefs.clear();
+        vectorPrefs = (HashMap<String,Vector<Integer>>)
+                      objectInputStream.readObject();
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 
     /**

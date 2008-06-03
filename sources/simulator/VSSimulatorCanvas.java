@@ -1571,6 +1571,9 @@ public class VSSimulatorCanvas extends Canvas
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         synchronized (processes) {
             objectOutputStream.writeObject(new Integer(numProcesses));
             for (VSProcess process : processes)
@@ -1578,6 +1581,9 @@ public class VSSimulatorCanvas extends Canvas
         }
 
         taskManager.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -1590,6 +1596,9 @@ public class VSSimulatorCanvas extends Canvas
     throws IOException, ClassNotFoundException {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSSimulatorCanvas");
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
 
         int num = ((Integer) objectInputStream.readObject()).intValue();
         logging.clear();
@@ -1604,8 +1613,11 @@ public class VSSimulatorCanvas extends Canvas
         }
 
         for (int i = 0; i < num; ++i)
-            processes.get(0).deserialize(serialize, objectInputStream);
+            processes.get(i).deserialize(serialize, objectInputStream);
 
         taskManager.deserialize(serialize, objectInputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }

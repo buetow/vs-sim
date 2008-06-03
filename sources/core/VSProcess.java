@@ -1024,12 +1024,18 @@ public class VSProcess extends VSPrefs implements VSSerializable {
             System.out.println("Serializing: VSProcess (num: " + processNum
                                + "; id: " + processID + ")");
 
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(new Integer(processID));
         objectOutputStream.writeObject(new Integer(protocolsToReset.size()));
         for (VSAbstractProtocol protocol : protocolsToReset) {
             objectOutputStream.writeObject(protocol.getClassname());
             protocol.serialize(serialize, objectOutputStream);
         }
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -1046,6 +1052,9 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         if (VSSerialize.DEBUG)
             System.out.println("Deserializing: VSProcess");
 
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         this.processID = ((Integer)
                           objectInputStream.readObject()).intValue();
         int numProtocols = ((Integer)
@@ -1056,6 +1065,9 @@ public class VSProcess extends VSPrefs implements VSSerializable {
             VSAbstractProtocol protocol = getProtocolObject(protocolClassname);
             protocol.deserialize(serialize, objectInputStream);
         }
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
 
         serialize.setObject(processNum, "process", this);
     }

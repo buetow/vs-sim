@@ -23,9 +23,12 @@
 
 package events.internal;
 
+import java.io.*;
+
 import core.VSMessage;
 import events.VSAbstractEvent;
 import protocols.VSAbstractProtocol;
+import serialize.VSSerialize;
 
 /**
  * The class VSMessageReceiveEvent. This event is used if a process receives
@@ -105,5 +108,42 @@ public class VSMessageReceiveEvent extends VSAbstractEvent {
             return false;
 
         return true;
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
+     *	java.io.ObjectOutputStream)
+     */
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream objectOutputStream)
+    throws IOException {
+        super.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+    }
+
+    /* (non-Javadoc)
+     * @see serialize.VSSerializable#deserialize(serialize.VSSerialize,
+     *	java.io.ObjectInputStream)
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized void deserialize(VSSerialize serialize,
+                                         ObjectInputStream objectInputStream)
+    throws IOException, ClassNotFoundException {
+        super.deserialize(serialize, objectInputStream);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Deserializing: VSProtocolEvent");
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
     }
 }

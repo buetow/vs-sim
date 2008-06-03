@@ -177,9 +177,15 @@ abstract public class VSAbstractEvent extends VSPrefs {
         if (VSSerialize.DEBUG)
             System.out.println("Serializing: VSAbstractEvent; id="+getID());
 
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         objectOutputStream.writeObject(new Integer(super.getID()));
         objectOutputStream.writeObject(eventShortname);
         objectOutputStream.writeObject(eventClassname);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
     }
 
     /* (non-Javadoc)
@@ -195,6 +201,9 @@ abstract public class VSAbstractEvent extends VSPrefs {
         if (VSSerialize.DEBUG)
             System.out.print("Deserializing: VSAbstractEvent ");
 
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         int id = ((Integer) objectInputStream.readObject()).intValue();
         this.eventShortname = (String) objectInputStream.readObject();
         this.eventClassname = (String) objectInputStream.readObject();
@@ -203,5 +212,8 @@ abstract public class VSAbstractEvent extends VSPrefs {
             System.out.println(eventClassname);
 
         serialize.setObject(id, "event", this);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }

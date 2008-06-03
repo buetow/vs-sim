@@ -1232,7 +1232,14 @@ public class VSSimulator extends JPanel implements VSSerializable {
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
         simulatorCanvas.serialize(serialize, objectOutputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectOutputStream.writeObject(new Boolean(false));
+
     }
 
     /* (non-Javadoc)
@@ -1248,7 +1255,14 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         serialize.setObject("simulator", this);
         serialize.setObject("logging", logging);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
+
         simulatorCanvas.deserialize(serialize, objectInputStream);
+
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
 
         updateFromPrefs();
         updateTaskManagerTable();

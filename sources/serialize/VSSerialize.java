@@ -159,12 +159,12 @@ public final class VSSerialize {
      * @param simulator The simulator
      */
     public void saveSimulator(String filename, VSSimulator simulator) {
-		if (filename == null) {
-			saveSimulator(simulator);
-			return;
-		}
+        if (filename == null) {
+            saveSimulator(simulator);
+            return;
+        }
 
-		LAST_FILENAME = filename;
+        LAST_FILENAME = filename;
 
         try {
             FileOutputStream fileOutputStream =
@@ -177,7 +177,7 @@ public final class VSSerialize {
             simulator.serialize(this, objectOutputStream);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
         } finally {
             //objectOutputStream.close();
@@ -190,17 +190,17 @@ public final class VSSerialize {
      * @param simulator The simulator
      */
     public void saveSimulator(VSSimulator simulator) {
-		VSPrefs prefs = simulator.getPrefs();
-		VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
+        VSPrefs prefs = simulator.getPrefs();
+        VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
 
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.addChoosableFileFilter(createFileFilter(prefs));
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.addChoosableFileFilter(createFileFilter(prefs));
 
-		if (fileChooser.showOpenDialog(simulatorFrame) ==
-				JFileChooser.APPROVE_OPTION) 
-			saveSimulator(fileChooser.getSelectedFile().getName(), 
-					simulator);
+        if (fileChooser.showOpenDialog(simulatorFrame) ==
+                JFileChooser.APPROVE_OPTION)
+            saveSimulator(fileChooser.getSelectedFile().getName(),
+                          simulator);
     }
 
     /**
@@ -230,7 +230,7 @@ public final class VSSerialize {
             simulator.deserialize(this, objectInputStream);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
         } finally {
             //objectInputStream.close();
@@ -247,38 +247,38 @@ public final class VSSerialize {
      * @return The simulator object, and null if no success
      */
     public VSSimulator openSimulator(VSSimulatorFrame simulatorFrame) {
-		VSPrefs prefs = simulatorFrame.getPrefs();
+        VSPrefs prefs = simulatorFrame.getPrefs();
 
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.addChoosableFileFilter(createFileFilter(prefs));
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.addChoosableFileFilter(createFileFilter(prefs));
 
-		if (fileChooser.showOpenDialog(simulatorFrame) ==
-				JFileChooser.APPROVE_OPTION) 
-			return openSimulator(fileChooser.getSelectedFile().getName(),
-					simulatorFrame);
+        if (fileChooser.showOpenDialog(simulatorFrame) ==
+                JFileChooser.APPROVE_OPTION)
+            return openSimulator(fileChooser.getSelectedFile().getName(),
+                                 simulatorFrame);
 
         return null;
     }
 
     /**
      * Creates a file filter for the file choosers
-	 *
-	 * @param prefs The default prefs
+     *
+     * @param prefs The default prefs
      */
     private javax.swing.filechooser.FileFilter createFileFilter(
-			final VSPrefs prefs) {
-		return new javax.swing.filechooser.FileFilter() {
-			public boolean accept(File file) {
-				if (file.isDirectory())
-					return true;
-				return file.getName().toLowerCase().endsWith(".dat");
-			}
+        final VSPrefs prefs) {
+        return new javax.swing.filechooser.FileFilter() {
+            public boolean accept(File file) {
+                if (file.isDirectory())
+                    return true;
+                return file.getName().toLowerCase().endsWith(".dat");
+            }
 
-			public String getDescription() {
-				return prefs.getString("lang.dat");
-			}
-		};
+            public String getDescription() {
+                return prefs.getString("lang.dat");
+            }
+        };
     }
 
 }
