@@ -61,10 +61,7 @@ Die Implementierung des Simulators
 	Serialisierungen von Simulationen
 		Rueckwaertkompatibel
 	Programmierrichtlinien
-	Entwicklungsumgebung
-		FreeBSD, GVim, Java SDK 1.6, astyle, Subversion + Backup, The GIMP, 
-		ImageMagick, Apache Ant, Dokumentation mittels Javadoc, Firefox
-		LaTeX (Rubber, pdflatex), aspell, pstricks
+	Entwicklungsumgebung (Siehe USED_SOFTWARE.txt)
 Ausblick
 Akronyme
 Literaturverzeichnis
