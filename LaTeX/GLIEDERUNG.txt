@@ -1,8 +1,16 @@
 Einleitung
+	Danksagung
+	Blabla
 	Motivation
-		Was ist ein Verteiltes System?
-		Warum Simulation?
-Funktionalitaet
+		Was ist ein verteiltes System? Warum Simulation?
+Grundkomponenten von verteilten Systemen
+	Client/Server-Modell
+	Globale/Lokale Zeit
+	Prozesse (Uhrabweichung, Ausfallw'keit, Zeit)
+	Nachrichten (Verlustwkeit, Max/Min Uebertragungszeit)
+	Ereignisse 
+	Protokolle
+Der Simulator
 	GUI
 		Start/Pause/Wiederholen/Zuruecksetzen
 		Visualisierung 
@@ -24,7 +32,6 @@ Funktionalitaet
 		Prozesswiederbelebung
 		Aktivierung/Deaktivierung von Protokollen
 		Protokollereignis	
-	Client/Server-Modell
 	Protokolle
 		Beispiel (Dummy) Protokoll
 		Ping-Pong Protokoll
@@ -34,6 +41,8 @@ Funktionalitaet
 		Berkeley Algorithmus zur internen Synchronisierung
 		Ein-Phasen Commit Protokoll
 		Zwei-Phasen Commit Protokoll
+		Ungenuegender (Basic) Multicast
+		Zuverlaessiger (Reliable) Multicast
 	Zeitformate
 		"Normale Zeit"
 		Logische Uhr von Lamport
@@ -42,8 +51,9 @@ Funktionalitaet
 		Simulationseinstellungen
 		Prozesseinstellungen
 		Protokolleinstellungen
-Implementierung
+Die Implementierung des Simulators
 	Gliederung der Pakete
+	Einstellungseditoren	
 	Ereignisse
 		Interne Ereignisse
 	Protokolle
@@ -52,12 +62,15 @@ Implementierung
 		Rueckwaertkompatibel
 	Programmierrichtlinien
 	Entwicklungsumgebung
-		FreeBSD, GVim, Java SDK 1.6, astyle, Subversion, The GIMP, 
-		ImageMagick, Apache Ant, Dokumentation mittels Javadoc
+		FreeBSD, GVim, Java SDK 1.6, astyle, Subversion + Backup, The GIMP, 
+		ImageMagick, Apache Ant, Dokumentation mittels Javadoc, Firefox
+		LaTeX (Rubber, pdflatex), aspell, pstricks
 Ausblick
 Akronyme
 Literaturverzeichnis
 
 BRAINSTORMING:
+	Implementierungssprache Java
+	Beliebig viele Prozesse und Protokolle auf einmal
 	Simulationsabspielgeschwindigkeit
 	Taskmanager
