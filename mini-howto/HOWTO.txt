@@ -1,0 +1,127 @@
+Mini-HOWTO für die Bedienung des VS-Simulators v0.1
+
+PING PONG (Siehe Screenshot pingpong.png):
+
+Das PingPong Protokoll tut nichts, ausser Nachrichten hin und her zu
+schicken!
+
+0. Den Simulator starten mit "java -jar VS-Sim-v0.1.jar"
+
+1. Ein Einstellungsfenster wird sichtbar. Dort lässt sich auch angeben, 
+wieviel Prozesse an der Simulation teilnehmen sollen. Alle anderen 
+Einstellungen stellen Defaultwerte dar, die sich später für jeden Prozess
+einzelnd einstellen lassen. Für das Ping-Pong beispiel sind "2 Prozesse" 
+auszuwählen. Alle anderen Einstellungen können so bleiben. Danach die
+Einstellungen mit "OK" bestätigen.
+
+2. Das Hauptsimulationsfenster wird sichtbar, wo sich auch das Loggfenster
+befindet. Die Checkbox "Logging" gibt an, ob während der Simulation die 
+Loggnachrichten im Loggfenster sofort erscheinen sollen. Für älteren Rechner
+ist es empfohlen das Logging zu deaktivieren, da die JCheckBox von Java die 
+Performance der Simulation erheblich beeinflussen kann. Nachdem die 
+Simulation beendet wurde, kann man das Logging reaktivieren. Alle Loggs
+werden dann nachträglich in das Loggfenster geschrieben.
+
+3. Wenn man mit der Maus über die schwarzen Prozesslinien fährt, werden
+sie "gehighlighted". Nach Betätigen des linken Mausknopfes erscheint der
+Prozesseditor. Mit Ihm lässt sich der jeweilige Prozess separat 
+konfigurieren. Öffnen Sie den Editor für den Prozess 1.
+
+4. Sie befinden sich nun im Prozesseditor. Ganz oben befindet sich die
+Auswahl zum Protokolleditor. Wählen Sie das Protokoll "PingPong" aus und
+klicken sie auf "Editieren".
+
+5. Sie befinden sich im PingPong Editor des Prozess' 1. Dort kann man 
+angeben, ob der jeweilige Prozess als PingPong Server und/oder als PingPong
+Client agieren soll. Aktivieren sie "Clientseite aktivieren". Darauf hin
+wird der darunterliegende Task-Manager aktiviert. Dort kann man angeben,
+wann der Prozess eine PingPong Clientanfrage starten soll. Übernehmen Sie 
+die Werte "0000" und "1000". D.h., der PingPong Client startet nach 0 und 
+nach 1 Sekunde/n der Simulation jeweils eine Anfrage. Übernehmen Sie alle 
+Änderungen indem sie "OK" klicken. Verlassen Sie den Prozesseditor 
+ebenfalls mit "OK".
+
+7. Konfigurieren sie nun das PingPong Protokoll des 2. Prozesses
+	- Prozess 2 "highlighten" und anklicken
+	- Im Prozesseditor wieder das Protokoll "PingPong" editieren
+Der 2. Prozess soll nun als PingPong Server agieren. Dabei aktivieren Sie
+lediglich die Checkbox "Serverseite aktivieren". Bestätigen Sie diese 
+Einstellung mit "OK". Schliessen sie den Prozesseditor auch wieder mit "OK".
+
+8. Nun haben Sie die Simulation fertigkonfiguriert und Sie können mit der
+Simulation fortfahren. Der rote Balken gibt die globale Systemzeit an. In
+dieser Simulation variieren sich die Prozesszeiten von der globalen 
+Systemzeit nicht. Um die Simulation zu starten wählen sie den Menüpunkt
+"Simulation -> Starten".
+
+9. Sie sehen, wie die Simulation abläuft. Bedeutungen der Farben:
+
+Nachrichtenlinien:
+	Grün: Nachricht befindet sich noch in der Auslieferung
+	Blau: Erfolgreich ausgelieferte Nachricht
+	Rot: Nachricht ging verloren (In dieser Simulation zu 5% der Fall)
+
+Prozesslinien:
+	Schwarz: Simulation läuft derzeit nicht
+	Grün: Jeweiliger Prozess läuft ohne Probleme
+	Rot: Jeweiliger Prozess ist abgestürzt (In dieser Sim. zu 5% der Fall)
+
+10. Wenn sie die Checkbox "Lamport" aktivieren, so sehen Sie in der Grafik
+zusätzlich die Lamportzeitstempel. Lamportzeitstempel kann man natürlich
+auch vor- oder während die Simulation läuft aktivieren/deaktivieren.
+
+11. Unter "Simulation -> Wiederholen" wird die Selbe Simulation, jedoch
+mit verschiedenen Zufallswerten (z.B. Ausfälle oder Übertragungszeiten)
+erneuert ausgeführt.
+
+
+INTERNE UND EXTERNE ZEITSYNCHRONISATION 
+
+Hier soll simuliert werden, welche Methode der Zeitsynchronisation nach 30
+Sekunden genauer ist. (Siehe timesync.png)
+
+Prozess 1 Soll der Zeitserver sein. Er bedient das "InternalTimeSync" sowie
+das "ExternalTimeSync" Protokoll. 
+
+Prozess 2 ist ein "ExternalTymeSync" Client
+
+Prozess 3 ist ein "InternalTymeSync" Client
+
+Gehen Sie also wie folgt vor:
+
+0. Öffnen Sie eine neue Simulation unter "Datei Neu". Wählen Sie dieses Mal
+3 Prozesse aus. Geben Sie ausserdem an, dass die Ausfallw'keit von 
+Prozessen und Nachrichten "0%" ist. Bestätigen sie mit "OK". 
+Anschliessend sehen Sie das neue Simulationsfenster. Das Fenster der 
+vorherigen Simulation können Sie bei Bedarf wieder schliessen.
+
+1. Nehmen Sie folgende Einstellungen vor:
+
+Prozess 1: 
+	-> ExternalTimeSync -> "Serverseite aktivieren"
+	-> InternalTimeSync -> "Serverseite aktivieren"
+
+Prozess 2:
+	Die Uhrabweichung ist auf "1" zu stellen. D.h. die lokale Prozessuhr 
+	geht doppelt so schnell wie die globale Systemzeit. Die Uhrabweichung
+	kann man im Prozesseditor konfigurieren.
+
+Das Clientprotokoll ist wie folgt einzustellen:
+		-> ExternalTimeSync -> "Clientseite aktivieren"
+		Es sollen alle 5 Sekunden Anfragen gestartet werden
+		(0ms, 5000ms, 10000ms, ..., 25000ms)
+
+Prozess 3:
+	Die Uhrabweichung ist wieder auf "1" zu stellen. 
+
+	Das Clientprotokoll ist wie folgt einzustellen:
+		-> InternalTimeSync -> "Clientseite aktivieren"
+		Es sollen alle 5 Sekunden Anfragen gestartet werden
+		(0ms, 5000ms, 10000ms, ..., 25000ms)
+
+2. Starten sie die Simulation. Am Ende der Simulation können Sie an den
+Prozessbalken ablesen, wie die letzten Prozesszeiten sind.
+
+
+
+
