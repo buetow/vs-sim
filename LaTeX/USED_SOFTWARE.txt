@@ -2,12 +2,11 @@ Fuer die Erstellung dieser Diplomarbeit wurde zu 100% Open Source Software
 eingesetzt!
 
 Apache Ant - Als Buildtool fuer den Javacode
-Apache HTTPD - Fuer Subversion Server via WebDAV
+Apache HTTPD (Hypertext Transfer Protocol Daemon) - Fuer Subversion Server via WebDAV (Web-based Distributed Authoring and Versioning)
 Dokumentation mittels Javadoc
 Eclipse, JAutoDoc Plugin, Subversion Plugin
-FTP Backup Server des Subversion Servers
 Firefox fuer das Betrachten von WebSVN und Javadoc, Internetrecherche
-FreeBSD als Entwicklungsplatform und Windows XP zum testen
+FreeBSD (Berkeley Software Distribution) als Entwicklungssystem und Windows XP als Testsystem
 GVim (Graphical Vi IMproved) - Als Java-IDE sowie LaTeX-Editor
 Java SDK (Software Developer Kit) 1.6
 LaTeX (pdflatex + pstricks) - Fuer das Erstellen von PDF Dateien
@@ -22,4 +21,8 @@ astyle - Fuer die automatische Formatierung von Javacode
 ding - Als Englisch - Deutsch, Deutsch - Englisch Woerterbuch
 xPDF - Fuer das Betrachten von PDF-Dateien
 zip - Fuer das Erstellen von VS-Sim. Distributionen
-Desktop: zsh - Als FreeBSD Unix Shell
+zsh - Als FreeBSD Unix Shell
+
+Noch fehlt:
+
+Ein gescheites Tool fuer die Erstellung von UML-Diagrammen.
