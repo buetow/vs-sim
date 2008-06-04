@@ -1,5 +1,17 @@
 Must do:
 	Reliable Multicast
+	Helper:
+		Print warning if not activated protocol while doing a protocol request
+	Task Manager right click:
+		Change PID
+		Change time
+		Copy event
+		Delete group of events
+		Copy group of events
+	Paint area right click:
+		Add local event
+		Add global event (in expert mode)
+	Splash screen
 Evtl.:
 	Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
 	Periodische Tasks anlegen koennen

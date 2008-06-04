@@ -2,8 +2,6 @@ Einleitung
 	Motivation
 		Was ist ein Verteiltes System?
 		Warum Simulation?
-	Voraussetzungen
-		Java JRE 6 (1.6)
 Funktionalitaet
 	GUI
 		Start/Pause/Wiederholen/Zuruecksetzen
@@ -25,6 +23,7 @@ Funktionalitaet
 		Prozessabsturz
 		Prozesswiederbelebung
 		Aktivierung/Deaktivierung von Protokollen
+		Protokollereignis	
 	Client/Server-Modell
 	Protokolle
 		Beispiel (Dummy) Protokoll

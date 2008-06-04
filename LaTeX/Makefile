@@ -1,6 +1,7 @@
 FILENAME=diplomarbeit
 all:
-	rubber -d $(FILENAME).tex
+	svn info | sed -n 4p | awk '{ print $$2 }' > VERSION
+	rubber -d $(FILENAME).tex 
 clean:
 	ls $(FILENAME).* | \
 		grep -v .tcp | \
