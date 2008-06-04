@@ -1,0 +1,64 @@
+Einleitung
+	Motivation
+		Was ist ein Verteiltes System?
+		Warum Simulation?
+	Voraussetzungen
+		Java JRE 6 (1.6)
+Funktionalitaet
+	GUI
+		Start/Pause/Wiederholen/Zuruecksetzen
+		Visualisierung 
+			Zeitachse
+			Prozesse 
+			Nachrichten
+			Farbliche Differenzierung
+		"Sidebar"
+			Ereignisse
+			Variablen
+		Loggfenster
+		Expertenmodus
+			Lamport/Vektorzeit aktivierung/deaktivierung
+			Anti-Aliasing
+			Loggfilter
+			Lokale und globale Ereignisse
+	Ereignisse
+		Prozessabsturz
+		Prozesswiederbelebung
+		Aktivierung/Deaktivierung von Protokollen
+	Client/Server-Modell
+	Protokolle
+		Beispiel (Dummy) Protokoll
+		Ping-Pong Protokoll
+		Broadcast-Sturm Protokoll
+		Interne Synchronisation in einem synchronen System
+		Christians Methode zur externen Synchronisierung
+		Berkeley Algorithmus zur internen Synchronisierung
+		Ein-Phasen Commit Protokoll
+		Zwei-Phasen Commit Protokoll
+	Zeitformate
+		"Normale Zeit"
+		Logische Uhr von Lamport
+		Vektor-Zeitstempel
+	Einstellungen
+		Simulationseinstellungen
+		Prozesseinstellungen
+		Protokolleinstellungen
+Implementierung
+	Gliederung der Pakete
+	Ereignisse
+		Interne Ereignisse
+	Protokolle
+	Protokoll-API
+	Serialisierungen von Simulationen
+		Rueckwaertkompatibel
+	Programmierrichtlinien
+	Entwicklungsumgebung
+		FreeBSD, GVim, Java SDK 1.6, astyle, Subversion, The GIMP, 
+		ImageMagick, Apache Ant, Dokumentation mittels Javadoc
+Ausblick
+Akronyme
+Literaturverzeichnis
+
+BRAINSTORMING:
+	Simulationsabspielgeschwindigkeit
+	Taskmanager
