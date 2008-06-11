@@ -1087,7 +1087,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         for (int i = 0; i < numProcesses; ++i) {
             int processID = simulatorCanvas.getProcess(i).getProcessID();
-            System.out.println("FOO " + processID + " index " + i);
 
             processesComboBox.removeItemAt(i);
             localPIDComboBox.removeItemAt(i);

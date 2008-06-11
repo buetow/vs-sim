@@ -173,6 +173,7 @@ public class VSProtocolEvent extends VSAbstractInternalEvent {
         objectInputStream.readObject();
 
         protocolClassname = (String) objectInputStream.readObject();
+
         isClientProtocol = ((Boolean)
                             objectInputStream.readObject()).booleanValue();;
         isProtocolActivation = ((Boolean)

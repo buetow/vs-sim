@@ -508,14 +508,14 @@ public class VSTaskManager implements VSSerializable {
         ArrayList<VSTask> serializeThoseTasks = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks) {
-			if (!task.hasNotSerializableEvent())
-            	serializeThoseTasks.add(task);
-		}
+            if (!task.hasNotSerializableEvent())
+                serializeThoseTasks.add(task);
+        }
 
         for (VSTask task : globalTasks) {
-			if (!task.hasNotSerializableEvent())
-            	serializeThoseTasks.add(task);
-		}
+            if (!task.hasNotSerializableEvent())
+                serializeThoseTasks.add(task);
+        }
 
         ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
 
@@ -523,16 +523,16 @@ public class VSTaskManager implements VSSerializable {
             for (VSProcess process : processes) {
                 VSPriorityQueue<VSTask> localTasks = process.getTasks();
                 for (VSTask task : localTasks) {
-					if (!task.hasNotSerializableEvent())
-                   		 serializeThoseTasks.add(task);
-				}
+                    if (!task.hasNotSerializableEvent())
+                        serializeThoseTasks.add(task);
+                }
             }
         }
 
         objectOutputStream.writeObject(
-				new Integer(serializeThoseTasks.size()));
+            new Integer(serializeThoseTasks.size()));
         for (VSTask task : serializeThoseTasks)
-			task.serialize(serialize, objectOutputStream);
+            task.serialize(serialize, objectOutputStream);
 
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
@@ -561,6 +561,10 @@ public class VSTaskManager implements VSSerializable {
         }
 
         int numTasks = ((Integer) objectInputStream.readObject()).intValue();
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Num of tasks: " + numTasks);
+
         for (int i = 0; i < numTasks; ++i) {
             VSTask task = new VSTask(serialize, objectInputStream);
             addTask(task, task.isProgrammed());

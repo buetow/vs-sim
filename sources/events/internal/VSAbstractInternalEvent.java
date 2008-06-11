@@ -70,5 +70,7 @@ abstract public class VSAbstractInternalEvent extends VSAbstractEvent {
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
 
+        /** For later backwards compatibility, to add more stuff */
+        objectInputStream.readObject();
     }
 }

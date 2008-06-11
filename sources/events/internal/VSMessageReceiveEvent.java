@@ -35,8 +35,8 @@ import serialize.VSNotSerializable;
  *
  * @author Paul C. Buetow
  */
-public class VSMessageReceiveEvent extends VSAbstractInternalEvent 
-implements VSNotSerializable {
+public class VSMessageReceiveEvent extends VSAbstractInternalEvent
+            implements VSNotSerializable {
     /** The serioal version uid */
     private static final long serialVersionUID = 1L;
 
