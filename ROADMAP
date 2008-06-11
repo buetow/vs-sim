@@ -1,5 +1,4 @@
 Must do:
-	Color copy constructor in prefs.VSPrefs.copyColors
 	Reliable Multicast
 	Helper:
 		Print warning if not activated protocol while doing a protocol request
