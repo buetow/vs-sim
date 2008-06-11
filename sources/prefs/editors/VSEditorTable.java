@@ -33,11 +33,14 @@ import javax.swing.text.*;
 
 import prefs.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSEditorTable.
+ * The class VSEditorTable, each VSAbstractEditor uses an object of this class
+ * for displaying all editable items!
+ *
+ * @author Paul C. Buetow
  */
-public class VSEditorTable extends JTable { /* implements Serializable */
+public class VSEditorTable extends JTable {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The Constant MIN_ROWS. */
@@ -55,7 +58,9 @@ public class VSEditorTable extends JTable { /* implements Serializable */
     /**
      * The class VSNode.
      */
-    private class VSNode implements Serializable {
+    private class VSNode {
+        /** The serial version uid */
+        private static final long serialVersionUID = 1L;
 
         /** The key. */
         private String key;
@@ -64,7 +69,7 @@ public class VSEditorTable extends JTable { /* implements Serializable */
         private Component comp;
 
         /**
-         * Instantiates a new lang.process.removenode.
+         * Instantiates a new VSNode object.
          *
          * @param key the key
          */
@@ -73,7 +78,7 @@ public class VSEditorTable extends JTable { /* implements Serializable */
         }
 
         /**
-         * Instantiates a new lang.process.removenode.
+         * Instantiates a new VSNode object.
          *
          * @param key the key
          * @param comp the comp
@@ -111,43 +116,21 @@ public class VSEditorTable extends JTable { /* implements Serializable */
         }
 
         /**
-         * Checks if is separator.
+         * Checks if it is a separator.
          *
          * @return true, if is separator
          */
         public boolean isSeparator() {
             return comp == null;
         }
-
-        /**
-         * Write object.
-         *
-         * @param objectOutputStream the object output stream
-         *
-         * @throws IOException Signals that an I/O exception has occurred.
-         */
-        public synchronized void writeObject(ObjectOutputStream objectOutputStream)
-        throws IOException {
-        }
-
-        /**
-         * Read object.
-         *
-         * @param objectInputStream the object input stream
-         *
-         * @throws IOException Signals that an I/O exception has occurred.
-         * @throws ClassNotFoundException the class not found exception
-         */
-        @SuppressWarnings("unchecked")
-        public synchronized void readObject(ObjectInputStream objectInputStream)
-        throws IOException, ClassNotFoundException {
-        }
     }
 
     /**
-     * The class VSEditorTableModel.
+     * The class VSEditorTableModel, it is the model of a VSEditorTable.
      */
-    private class VSEditorTableModel extends AbstractTableModel implements TableCellRenderer {
+    private class VSEditorTableModel extends AbstractTableModel
+                implements TableCellRenderer {
+        /** The serial version uid */
         private static final long serialVersionUID = 1L;
 
         /**
@@ -210,13 +193,16 @@ public class VSEditorTable extends JTable { /* implements Serializable */
         }
 
         /* (non-Javadoc)
-         * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+         * @see javax.swing.table.AbstractTableModel#setValueAt(
+         *	java.lang.Object, int, int)
          */
         public void setValueAt(Object value, int row, int col) {
         }
 
         /* (non-Javadoc)
-         * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+         * @see
+         *	javax.swing.table.TableCellRenderer#getTableCellRendererComponent(
+         *	javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
          */
         public Component getTableCellRendererComponent(JTable table,
                 Object object, boolean isSelected, boolean hasFocus, int
@@ -248,16 +234,22 @@ public class VSEditorTable extends JTable { /* implements Serializable */
     }
 
     /**
-     * The class VSTableCellEditor.
+     * The class VSTableCellEditor, is the editor of the VSEditorTable
      */
-    private class VSTableCellEditor extends AbstractCellEditor implements TableCellEditor  {
+    private class VSTableCellEditor extends AbstractCellEditor
+                implements TableCellEditor  {
+        /** The serial version uid */
         private static final long serialVersionUID = 1L;
 
         /* (non-Javadoc)
-         * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable, java.lang.Object, boolean, int, int)
+         * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(
+         *	javax.swing.JTable, java.lang.Object, boolean, int, int)
          */
-        public Component getTableCellEditorComponent(JTable table, Object object,
-                boolean isSelected, int row, int col) {
+        public Component getTableCellEditorComponent(JTable table,
+                Object object,
+                boolean isSelected,
+                int row,
+                int col) {
             return nodes.get(row).getComponent();
         }
 
@@ -270,7 +262,7 @@ public class VSEditorTable extends JTable { /* implements Serializable */
     }
 
     /**
-     * Instantiates a new lang.process.removeeditor table.
+     * Instantiates a new VSEditorTable object.
      *
      * @param prefs the prefs
      */
@@ -314,7 +306,7 @@ public class VSEditorTable extends JTable { /* implements Serializable */
     }
 
     /**
-     * Fire table data changed.
+     * Fires that the table data has changed.
      */
     public void fireTableDataChanged() {
         model.fireTableDataChanged();

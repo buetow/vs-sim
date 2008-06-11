@@ -27,16 +27,17 @@ import java.io.*;
 
 import events.*;
 import protocols.VSAbstractProtocol;
-import serialize.VSSerialize;
+import serialize.*;
 
 /**
- * The class VSProtocolScheduleEvent. This event is used if a protocol (which
+ * The class VSProtocolScheduleEvent, this event is used if a protocol (which
  * is a subclass of VSAbstractProtocol) reschedules itself to run again on a
  * specific time.
  *
  * @author Paul C. Buetow
  */
-public class VSProtocolScheduleEvent extends VSAbstractEvent {
+public class VSProtocolScheduleEvent extends VSAbstractInternalEvent 
+implements VSNotSerializable {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 

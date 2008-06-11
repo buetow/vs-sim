@@ -5,7 +5,6 @@
   <property name="sources" location="sources" />
   <property name="dist"  location="dist" />
   <property name="classes"  location="classes" />
-  <!-- <property name="contrib"  location="contrib" /> -->
 
   <target name="init">
     <tstamp />
@@ -52,7 +51,6 @@
   <target name="testdist" depends="dist,rundist" />
 
   <target name="test" depends="compile,run" />
-
     <target name="javadoc" description="Generate Javadocs">
         <mkdir dir="${basedir}/javadoc/"/>
         <javadoc destdir="${basedir}/javadoc/">

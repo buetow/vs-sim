@@ -99,7 +99,7 @@ public class VSTask implements Comparable, VSSerializable {
      * Instantiates a new task during a deserialization.
      *
      * @param serialize the serialize object
-     * @param process the object input stream
+     * @param objectInputStream The input stream
      */
     public VSTask(VSSerialize serialize, ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
@@ -154,11 +154,29 @@ public class VSTask implements Comparable, VSSerializable {
     }
 
     /**
+     * Checks if the task is using an "internal event".
+     *
+     * @return true, if the task is using an internal event
+     */
+    public boolean hasInternalEvent() {
+        return event instanceof VSAbstractInternalEvent;
+    }
+
+    /**
+     * Checks if the task should not get serialized.
+     *
+     * @return true, if the task should not get serialized
+     */
+    public boolean hasNotSerializableEvent() {
+        return event instanceof VSNotSerializable;
+    }
+
+    /**
      * Checks if the task is a message receive event.
      *
      * @return true, if it is a message receive event
      */
-    public boolean isVSMessageReceiveEvent() {
+    public boolean hasMessageReceiveEvent() {
         return event instanceof VSMessageReceiveEvent;
     }
 
@@ -167,7 +185,7 @@ public class VSTask implements Comparable, VSSerializable {
      *
      * @return true, if it is a process recover event
      */
-    public boolean isProcessRecoverEvent() {
+    public boolean hasProcessRecoverEvent() {
         return event instanceof VSProcessRecoverEvent;
     }
 
@@ -366,6 +384,13 @@ public class VSTask implements Comparable, VSSerializable {
         objectOutputStream.writeObject(new Boolean(false));
 
         objectOutputStream.writeObject(new Integer(process.getProcessNum()));
+
+        if (event.getClassname() == null)
+            event.init(process);
+
+        if (VSSerialize.DEBUG)
+            System.out.println("Serializing: " + event.getClassname());
+
         objectOutputStream.writeObject(event.getClassname());
         objectOutputStream.writeObject(new Integer(event.getID()));
         event.serialize(serialize, objectOutputStream);

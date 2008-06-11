@@ -33,9 +33,12 @@ import events.*;
 import prefs.VSPrefs;
 
 /**
- * The class VSProcessEditor.
+ * The class VSProcessEditor, is for editing a VSProcess object.
+ *
+ * @author Paul C. Buetow
  */
 public class VSProcessEditor extends VSAbstractBetterEditor {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The process. */
@@ -45,20 +48,22 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
     public static boolean TAKEOVER_BUTTON;
 
     /**
-     * Instantiates a new lang.process.removeprocess editor.
+     * Instantiates a new VSProcessEditor object.
      *
      * @param prefs the prefs
      * @param process the process
      */
     public VSProcessEditor(VSPrefs prefs, VSProcess process) {
-        super(prefs, process, prefs.getString("lang.name") + " - " + prefs.getString("lang.prefs.process"));;
+        super(prefs, process, prefs.getString("lang.name") + " - " +
+              prefs.getString("lang.prefs.process"));;
         this.process = process;
         disposeFrameWithParentIfExists();
         makeProtocolVariablesEditable();
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(
+     *	javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         JButton takeoverButton = new JButton(
@@ -80,23 +85,33 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
         String serverString = " " + prefs.getString("lang.server");
 
         for (String protocolClassname : editableProtocolsClassnames) {
-            String protocolShortname = VSRegisteredEvents.getShortnameByClassname(protocolClassname);
-            VSAbstractProtocol protocol = process.getProtocolObject(protocolClassname);
+            String protocolShortname =
+                VSRegisteredEvents.getShortnameByClassname(
+                    protocolClassname);
+            VSAbstractProtocol protocol =
+                process.getProtocolObject(protocolClassname);
             protocol.onClientInit();
             protocol.onServerInit();
 
-            ArrayList<String> clientVariables = VSRegisteredEvents.getProtocolClientVariables(protocolClassname);
+            ArrayList<String> clientVariables =
+                VSRegisteredEvents.getProtocolClientVariables(
+                    protocolClassname);
             if (clientVariables != null)
-                addToEditor(protocolShortname + clientString, protocolShortname, protocol, clientVariables);
+                addToEditor(protocolShortname + clientString,
+                            protocolShortname, protocol, clientVariables);
 
-            ArrayList<String> serverVariables = VSRegisteredEvents.getProtocolServerVariables(protocolClassname);
+            ArrayList<String> serverVariables =
+                VSRegisteredEvents.getProtocolServerVariables(
+                    protocolClassname);
             if (serverVariables != null)
-                addToEditor(protocolShortname + serverString, protocolShortname, protocol, serverVariables);
+                addToEditor(protocolShortname + serverString,
+                            protocolShortname, protocol, serverVariables);
         }
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(
+     *	java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();

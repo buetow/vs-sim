@@ -33,7 +33,10 @@ import serialize.*;
 import utils.*;
 
 /**
- * The class VSAbstractProtocol.
+ * The class VSAbstractProtocol, this class defined the basic framework of a
+ * protocol.
+ *
+ * @author Paul C. Buetow
  */
 abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /** The serial version uid */
@@ -69,12 +72,18 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /** The protocol's client schedules */
     private ArrayList<VSTask> clientSchedules = new ArrayList<VSTask>();
 
+    /**
+     * A simple constructor.
+     *
+     * @param hasOnServerStart true, if the protocol uses an onServerStart
+     *	method. false, if the protocol uses an onClientStart method instead.
+     */
     public VSAbstractProtocol(boolean hasOnServerStart) {
         this.hasOnServerStart = hasOnServerStart;
     }
 
     /**
-     * Send a message.
+     * Sends a message.
      *
      * @param message the message to send
      */
@@ -223,7 +232,8 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     /**
      * Checks how the protocol will start
      *
-     * @return true, if this protocol uses onServerStart instead of onClientStart
+     * @return true, if this protocol uses onServerStart instead of
+     *	onClientStart
      */
     public final boolean hasOnServerStart() {
         return hasOnServerStart;
@@ -266,32 +276,31 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
     }
 
     /**
-     * Reset.
+     * Resets the protocol.
      */
     public void reset() {
-        //if (isServer) {
         currentContextIsServer(true);
         isServer = false;
         onServerReset();
         serverSchedules.clear();
-        //}
 
-        //if (isClient) {
         currentContextIsServer(false);
         isClient = false;
         onClientReset();
         clientSchedules.clear();
-        //}
     }
 
     /**
-     * Reschedules the protocol for a new time and runs onClientSchedule or onServerSchedule
+     * Reschedules the protocol for a new time and runs onClientSchedule or
+     *	onServerSchedule
      *
      * @param time The process' local time to run the schedule at.
      */
     public final void scheduleAt(long time) {
-        VSAbstractEvent scheduleEvent = new VSProtocolScheduleEvent(this, currentContextIsServer);
-        VSTask scheduleTask = new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
+        VSAbstractEvent scheduleEvent =
+            new VSProtocolScheduleEvent(this, currentContextIsServer);
+        VSTask scheduleTask =
+            new VSTask(time, process, scheduleEvent, VSTask.LOCAL);
         if (currentContextIsServer)
             serverSchedules.add(scheduleTask);
         else
@@ -304,10 +313,12 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      */
     public final void removeSchedules() {
         if (currentContextIsServer) {
-            process.getSimulatorCanvas().getTaskManager().removeAllTasks(serverSchedules);
+            process.getSimulatorCanvas().
+            getTaskManager().removeAllTasks(serverSchedules);
             serverSchedules.clear();
         } else {
-            process.getSimulatorCanvas().getTaskManager().removeAllTasks(clientSchedules);
+            process.getSimulatorCanvas().
+            getTaskManager().removeAllTasks(clientSchedules);
             clientSchedules.clear();
         }
     }

@@ -86,7 +86,7 @@ public class VSSimulatorCanvas extends Canvas
     private volatile boolean hasThreadStopped = false;
 
     /** The simulator is finished. */
-    private volatile boolean isFinished = false;
+    private volatile boolean hasFinished = false;
 
     /** The simulator is resetted. */
     private volatile boolean isResetted = false;
@@ -567,7 +567,7 @@ public class VSSimulatorCanvas extends Canvas
                         finalPrefs.getString("lang.process.crash"));
 
                     if (process == null || process.isCrashed() || isPaused ||
-                            time == 0 || isFinished)
+                            time == 0 || hasFinished)
                         item.setEnabled(false);
                     else
                         item.addActionListener(actionListener);
@@ -577,7 +577,7 @@ public class VSSimulatorCanvas extends Canvas
                         finalPrefs.getString("lang.process.recover"));
 
                     if (process == null || !process.isCrashed() || isPaused ||
-                            time == 0 || isFinished)
+                            time == 0 || hasFinished)
                         item.setEnabled(false);
                     else
                         item.addActionListener(actionListener);
@@ -748,7 +748,7 @@ public class VSSimulatorCanvas extends Canvas
      * @param lastGlobalTime the last global time
      */
     private void updateSimulator(long globalTime, long lastGlobalTime) {
-        if (isPaused || isFinished)
+        if (isPaused || hasFinished)
             return;
 
         long lastSimulatorTime = simulatorTime;
@@ -1142,7 +1142,7 @@ public class VSSimulatorCanvas extends Canvas
      */
     public void run() {
         while (true) {
-            while (!hasThreadStopped && (isPaused || isFinished ||
+            while (!hasThreadStopped && (isPaused || hasFinished ||
                                          isResetted)) {
                 try {
                     Thread.sleep(100);
@@ -1195,8 +1195,8 @@ public class VSSimulatorCanvas extends Canvas
         if (isResetted)
             isResetted = false;
 
-        else if (isFinished)
-            isFinished = false;
+        else if (hasFinished)
+            hasFinished = false;
 
         if (isPaused) {
             isPaused = false;
@@ -1221,9 +1221,15 @@ public class VSSimulatorCanvas extends Canvas
         }
 
         simulator.finish();
-        isFinished = true;
+        hasFinished = true;
         logging.logg(prefs.getString("lang.simulator.finished"));
         paint();
+
+        if (prefs.getBoolean("sim.periodic")) {
+            VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
+            simulatorFrame.resetCurrentSimulator();
+            simulatorFrame.startCurrentSimulator();
+        }
     }
 
     /**
@@ -1250,7 +1256,7 @@ public class VSSimulatorCanvas extends Canvas
 
             isResetted = true;
             isPaused = false;
-            isFinished = false;
+            hasFinished = false;
             startTime = System.currentTimeMillis();
             time = 0;
             lastTime = 0;
@@ -1562,6 +1568,24 @@ public class VSSimulatorCanvas extends Canvas
             recalcOnChange();
             simulator.addProcessAtIndex(processes.size()-1);
         }
+    }
+
+    /**
+     * Checks if the simulation is paused.
+     *
+     * @return true, if the simulation is paused
+     */
+    boolean isPaused() {
+        return isPaused;
+    }
+
+    /**
+     * Checks if the simulation has finished
+     *
+     * @return true, if the simulation has finished
+     */
+    boolean hasFinished() {
+        return hasFinished;
     }
 
     /* (non-Javadoc)

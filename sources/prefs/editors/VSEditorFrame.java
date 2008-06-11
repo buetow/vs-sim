@@ -30,11 +30,14 @@ import javax.swing.*;
 import prefs.*;
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSEditorFrame.
+ * The class VSEditorFrame, this is a wrapper around an VSAbstractEditor
+ * object, which should be displayed in its own frame.
+ *
+ * @author Paul C. Buetow
  */
 public class VSEditorFrame extends VSFrame implements ActionListener {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The editor. */
@@ -44,13 +47,14 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     private VSPrefs prefs;
 
     /**
-     * Instantiates a new lang.process.removeeditor frame.
+     * Instantiates a new VSEditorFrame object.
      *
      * @param prefs the prefs
      * @param relativeTo the relative to
      * @param editor the editor
      */
-    public VSEditorFrame(VSPrefs prefs, Component relativeTo, VSAbstractBetterEditor editor) {
+    public VSEditorFrame(VSPrefs prefs, Component relativeTo,
+                         VSAbstractBetterEditor editor) {
         super(editor.getTitle(), relativeTo);
         this.prefs = prefs;
         this.editor = editor;
@@ -58,7 +62,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     }
 
     /**
-     * Inits the.
+     * Inits the VSEditorFrame object.
      */
     private void init() {
         editor.setFrame(this);
@@ -72,7 +76,7 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     }
 
     /**
-     * Fill button panel.
+     * Fills the button panel.
      *
      * @param buttonPanel the button panel
      */
@@ -92,7 +96,8 @@ public class VSEditorFrame extends VSFrame implements ActionListener {
     }
 
     /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @see java.awt.event.ActionListener#actionPerformed(
+     *	java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();

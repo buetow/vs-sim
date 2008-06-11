@@ -29,15 +29,19 @@ import javax.swing.*;
 import simulator.*;
 import prefs.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSSimulatorEditor.
+ * The class VSSimulatorEditor, is for editing a VSSimulator object.
+ *
+ * @author Paul C. Buetow
  */
 public class VSSimulatorEditor extends VSAbstractBetterEditor {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
+    /** The constant OPENED_NEW_WINDOW */
     public static final boolean OPENED_NEW_WINDOW = true;
 
+    /** The constant OPENED_NEW_TAB */
     public static final boolean OPENED_NEW_TAB = false;
 
     /** The simulator frame. */
@@ -56,7 +60,7 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     private boolean openedNewWindow;
 
     /**
-     * Instantiates a new lang.process.removesimulator editor.
+     * Instantiates a new VSSimulatorEditor object.
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
@@ -72,7 +76,7 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     }
 
     /**
-     * Instantiates a new lang.process.removesimulator editor.
+     * Instantiates a new VSSimulatorEditor object.
      *
      * @param prefs the prefs
      * @param simulatorFrame the simulator frame
@@ -86,7 +90,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractBetterEditor#addToButtonPanelFront(
+     *	javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         if (TAKEOVER_BUTTON) {
@@ -100,7 +105,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractBetterEditor#actionPerformed(
+     *	java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
@@ -125,7 +131,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
                     simulator.fireExpertModeChanged();
             }
             if (!dontStartNewSimulator)
-                simulatorFrame.addSimulator(new VSSimulator(prefsToEdit, simulatorFrame));
+                simulatorFrame.addSimulator(new VSSimulator(prefsToEdit,
+                                            simulatorFrame));
             else if (simulator != null)
                 simulator.updateFromPrefs();
 

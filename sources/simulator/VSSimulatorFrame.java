@@ -149,20 +149,34 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.save"))) {
+                    VSSimulatorCanvas simulatorCanvas =
+                        currentSimulator.getSimulatorCanvas();
+                    boolean flag = !simulatorCanvas.isPaused()
+                                   && !simulatorCanvas.hasFinished();
 
-                    pauseCurrentSimulator();
-                    resetCurrentSimulator();
+                    if (flag)
+                        pauseCurrentSimulator();
+
                     VSSerialize serialize = new VSSerialize();
                     serialize.saveSimulator(VSSerialize.LAST_FILENAME,
                                             currentSimulator);
+                    if (flag)
+                        startCurrentSimulator();
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.saveas"))) {
+                    VSSimulatorCanvas simulatorCanvas =
+                        currentSimulator.getSimulatorCanvas();
+                    boolean flag = !simulatorCanvas.isPaused()
+                                   && !simulatorCanvas.hasFinished();
+                    if (flag)
+                        pauseCurrentSimulator();
 
-                    pauseCurrentSimulator();
-                    resetCurrentSimulator();
                     VSSerialize serialize = new VSSerialize();
                     serialize.saveSimulator(currentSimulator);
+
+                    if (flag)
+                        startCurrentSimulator();
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.about"))) {
@@ -174,14 +188,7 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.start"))) {
-                    VSMenuItemStates menuItemState =
-                        currentSimulator.getMenuItemStates();
-                    menuItemState.setStart(false);
-                    menuItemState.setPause(true);
-                    menuItemState.setReset(false);
-                    menuItemState.setReplay(true);
-                    currentSimulator.getSimulatorCanvas().play();
-                    updateSimulatorMenu();
+                    startCurrentSimulator();
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.pause"))) {
@@ -533,6 +540,20 @@ public class VSSimulatorFrame extends VSFrame {
         menuItemState.setReset(false);
         menuItemState.setReplay(false);
         currentSimulator.getSimulatorCanvas().reset();
+        updateSimulatorMenu();
+    }
+
+    /**
+     * Starts the current simulator
+     */
+    public void startCurrentSimulator() {
+        VSMenuItemStates menuItemState =
+            currentSimulator.getMenuItemStates();
+        menuItemState.setStart(false);
+        menuItemState.setPause(true);
+        menuItemState.setReset(false);
+        menuItemState.setReplay(true);
+        currentSimulator.getSimulatorCanvas().play();
         updateSimulatorMenu();
     }
 

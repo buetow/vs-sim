@@ -69,9 +69,10 @@ public class VSMain {
         VSSimulatorFrame simulatorFrame =
             new VSSimulatorFrame(prefs, relativeTo);
 
-        new VSEditorFrame(prefs, relativeTo,
-                          new VSSimulatorEditor(prefs, simulatorFrame,
-                                                VSSimulatorEditor.OPENED_NEW_WINDOW));
+        VSSimulatorEditor editor =
+            new VSSimulatorEditor(prefs, simulatorFrame,
+                                  VSSimulatorEditor.OPENED_NEW_WINDOW);
+        new VSEditorFrame(prefs, relativeTo, editor);
     }
 
     /**

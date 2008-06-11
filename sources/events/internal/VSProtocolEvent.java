@@ -30,7 +30,7 @@ import protocols.VSAbstractProtocol;
 import serialize.VSSerialize;
 
 /**
- * The class VSProtocolEvent. This event is used if a protocol (server or
+ * The class VSProtocolEvent, this event is used if a protocol (server or
  * client part) of a process gets enabled or disabled, an object of this class
  * can be for 4 different purporses! Activation of the client protocol,
  * deactivation of the client protocol, activation of the server protocol,
@@ -38,7 +38,7 @@ import serialize.VSSerialize;
  *
  * @author Paul C. Buetow
  */
-public class VSProtocolEvent extends VSAbstractEvent {
+public class VSProtocolEvent extends VSAbstractInternalEvent {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 

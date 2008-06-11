@@ -31,7 +31,8 @@ import prefs.*;
 import simulator.*;
 
 /**
- * The class VSSerialize, this class helps do deserialize a saved simulator!
+ * The class VSSerialize, this class helps do serialize/deserialize a saved
+ * simulator!
  *
  * @author Paul C. Buetow
  */
@@ -39,7 +40,7 @@ public final class VSSerialize {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** True if debugg mode of deserialization */
+    /** True if debug mode of serialization/deserialization */
     public static final boolean DEBUG = true;
 
     /** The last filename used for saveing/opening*/

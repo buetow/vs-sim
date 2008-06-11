@@ -30,11 +30,13 @@ import javax.swing.*;
 import prefs.*;
 import utils.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSAbstractBetterEditor.
+ * The class VSAbstractBetterEditor, is an improved VSAbstractEditor.
+ *
+ * @author Paul C. Buetow
  */
 public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The content pane. */
@@ -47,13 +49,14 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     private String title;
 
     /**
-     * Instantiates a new lang.process.removebetter editor.
+     * An simple constructor.
      *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
      * @param title the title
      */
-    public VSAbstractBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit, String title) {
+    public VSAbstractBetterEditor(VSPrefs prefs, VSPrefs prefsToEdit,
+                                  String title) {
         super(prefs, prefsToEdit);
         this.title = title;
         this.contentPane = createContentPane();
@@ -100,12 +103,14 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractEditor#addToButtonPanelFront(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractEditor#addToButtonPanelFront(
+     *	javax.swing.JPanel)
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) { }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractEditor#addToButtonPanelLast(javax.swing.JPanel)
+     * @see prefs.editors.VSAbstractEditor#addToButtonPanelLast(
+     *	javax.swing.JPanel)
      */
     protected void addToButtonPanelLast(JPanel buttonPanel) { }
 
@@ -115,11 +120,11 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     protected void addToEditTableLast() { }
 
     /* (non-Javadoc)
-     * @see prefs.editors.VSAbstractEditor#actionPerformed(java.awt.event.ActionEvent)
+     * @see prefs.editors.VSAbstractEditor#actionPerformed(
+     *	java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         //String actionCommand = e.getActionCommand();
-
         /* More action in the super class!!! */
         super.actionPerformed(e);
     }

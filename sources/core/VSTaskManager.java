@@ -32,10 +32,9 @@ import simulator.*;
 import utils.*;
 
 /**
- * The class VSTaskManager. The task manager is responsible that all tasks
- * will get fullfilled in the correct order. Please also read the javadoc
- * of the VSTask class. It describes the difference between local and global
- * timed tasks.
+ * The class VSTaskManager, it is responsible that all tasks will get
+ * fullfilled in the correct order. Please also read the javadoc of the VSTask
+ * class. It describes the difference between local and global timed tasks.
  *
  * @author Paul C. Buetow
  */
@@ -125,7 +124,7 @@ public class VSTaskManager implements VSSerializable {
                 globalTasks.poll();
                 redo = true;
 
-                if (process.isCrashed() && !task.isProcessRecoverEvent()) {
+                if (process.isCrashed() && !task.hasProcessRecoverEvent()) {
                     if (task.isProgrammed())
                         fullfilledProgrammedTasks.add(task);
                     continue;
@@ -186,7 +185,7 @@ public class VSTaskManager implements VSSerializable {
                         redo = true;
 
                         if (process.isCrashed() &&
-                                !task.isProcessRecoverEvent()) {
+                                !task.hasProcessRecoverEvent()) {
                             if (task.isProgrammed())
                                 fullfilledProgrammedTasks.add(task);
                             continue;
@@ -506,28 +505,34 @@ public class VSTaskManager implements VSSerializable {
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
 
-        ArrayList<VSTask> tasks = new ArrayList<VSTask>();
+        ArrayList<VSTask> serializeThoseTasks = new ArrayList<VSTask>();
 
-        for (VSTask task : fullfilledProgrammedTasks)
-            tasks.add(task);
+        for (VSTask task : fullfilledProgrammedTasks) {
+			if (!task.hasNotSerializableEvent())
+            	serializeThoseTasks.add(task);
+		}
 
-        for (VSTask task : this.globalTasks)
-            tasks.add(task);
+        for (VSTask task : globalTasks) {
+			if (!task.hasNotSerializableEvent())
+            	serializeThoseTasks.add(task);
+		}
 
         ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
 
         synchronized (processes) {
             for (VSProcess process : processes) {
                 VSPriorityQueue<VSTask> localTasks = process.getTasks();
-                ArrayList<VSTask> tasks_ = new ArrayList<VSTask>();
-                for (VSTask task : localTasks)
-                    tasks.add(task);
+                for (VSTask task : localTasks) {
+					if (!task.hasNotSerializableEvent())
+                   		 serializeThoseTasks.add(task);
+				}
             }
         }
 
-        objectOutputStream.writeObject(new Integer(tasks.size()));
-        for (VSTask task : tasks)
-            task.serialize(serialize, objectOutputStream);
+        objectOutputStream.writeObject(
+				new Integer(serializeThoseTasks.size()));
+        for (VSTask task : serializeThoseTasks)
+			task.serialize(serialize, objectOutputStream);
 
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));

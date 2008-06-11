@@ -31,11 +31,14 @@ import java.util.*;
 import utils.*;
 import prefs.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSAbstractEditor.
+ * The class VSAbstractEditor, an object of this class is used in order to
+ * edit a VSPrefs object.
+ *
+ * @author Paul C. Buetow
  */
 public abstract class VSAbstractEditor implements ActionListener {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The boolean keys. */
@@ -117,7 +120,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     public static final int SIMULATION_PREFERENCES = 1;
 
     /**
-     * Instantiates a new lang.process.removeeditor.
+     * The standard constructor.
      *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
@@ -127,14 +130,14 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Adds the to button panel front.
+     * Adds components to the front of the button panel .
      *
      * @param buttonPanel the button panel
      */
     abstract protected void addToButtonPanelFront(JPanel buttonPanel);
 
     /**
-     * Adds the to button panel last.
+     * Adds components to last of the button panel.
      *
      * @param buttonPanel the button panel
      */
@@ -146,7 +149,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     abstract protected void addToEditTableLast();
 
     /**
-     * Sets the prefs.
+     * Sets the default prefs.
      *
      * @param prefs the new prefs
      */
@@ -164,7 +167,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Sets the frame.
+     * Sets the frame being used by the editor, if any.
      *
      * @param frame the new frame
      */
@@ -182,7 +185,8 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Dispose frame if exists.
+     * The given editors frame will get disposed if the "OK" button has been
+     * pressed. This can only happen if the editor has its own frame.
      */
     protected void disposeFrameIfExists() {
         if (frame != null)
@@ -190,7 +194,8 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Dispose frame with parent if exists.
+     * The given editors frame will get disposed if its parent component
+     * disposes. This can only happen if the editor has its own frame.
      */
     protected void disposeFrameWithParentIfExists() {
         if (frame != null)
@@ -198,7 +203,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Inits the.
+     * Inits the editor.
      *
      * @param prefs the prefs
      * @param prefsToEdit the prefs to edit
@@ -232,11 +237,11 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Filter keys.
+     * Filters out all keys to edit.
      *
-     * @param set the set
+     * @param set the set which contains all keys of a given hash
      *
-     * @return the array list< string>
+     * @return the filtered keys
      */
     private ArrayList<String> filterKeys(Set<String> set) {
         ArrayList<String> filtered = new ArrayList<String>();
@@ -257,7 +262,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     /**
      * Creates the button panel.
      *
-     * @return the j panel
+     * @return the panel
      */
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
@@ -281,9 +286,10 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param comp the comp
      * @param key the key
      *
-     * @return the j panel
+     * @return the panel
      */
-    private JPanel createUnitPanel(VSPrefs prefsToEdit, Component comp, String fullKey) {
+    private JPanel createUnitPanel(VSPrefs prefsToEdit, Component comp,
+                                   String fullKey) {
         JPanel unitPanel = new JPanel(new GridBagLayout());
         unitPanel.setBackground(Color.WHITE);
         unitPanel.setBorder(null);
@@ -307,7 +313,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     /**
      * Creates the edit panel.
      *
-     * @return the j panel
+     * @return the panel
      */
     private JPanel createEditPanel() {
         JPanel editPanel = new JPanel();
@@ -328,20 +334,24 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the lang.process.removetupel< string, component, j combo box>
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JComboBox> createIntegerComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JComboBox> createIntegerComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
         Integer integer = prefsToEdit.getInteger(key);
         Integer initialSelection[] = { integer };
         JComboBox valComboBox = new JComboBox(initialSelection);
-        VSPrefsRestriction settingRestriction = prefsToEdit.getRestriction(fullKey);
+        VSPrefsRestriction settingRestriction =
+            prefsToEdit.getRestriction(fullKey);
 
         int minValue, maxValue;
         if (settingRestriction != null) {
-            VSPrefsRestriction.VSIntegerPrefRestriction integerVSPrefsRestriction =
-                (VSPrefsRestriction.VSIntegerPrefRestriction) settingRestriction;
+            VSPrefsRestriction.VSIntegerPrefsRestriction
+            integerVSPrefsRestriction =
+                (VSPrefsRestriction.VSIntegerPrefsRestriction)
+                settingRestriction;
             minValue = integerVSPrefsRestriction.getMinValue();
             maxValue = integerVSPrefsRestriction.getMaxValue();
 
@@ -355,7 +365,8 @@ public abstract class VSAbstractEditor implements ActionListener {
         valComboBox.setBorder(null);
 
         return new VSTupel<String,Component,JComboBox>(label,
-                createUnitPanel(prefsToEdit, valComboBox, fullKey), valComboBox);
+                createUnitPanel(prefsToEdit, valComboBox, fullKey),
+                valComboBox);
     }
 
     /**
@@ -364,8 +375,11 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param fullKey the full key
      * @param key the key
      * @param prefsToEdit the prefs to edit
+     *
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createVectorComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JTextField> createVectorComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
 
@@ -385,11 +399,13 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      */
-    protected VSTupel<String,Component,JCheckBox> createBooleanComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JCheckBox> createBooleanComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         final String activated = prefs.getString("lang.activated");
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
-        JCheckBox valField = new JCheckBox(activated, prefsToEdit.getBoolean(key));
+        JCheckBox valField = new JCheckBox(activated,
+                                           prefsToEdit.getBoolean(key));
         valField.setBackground(Color.WHITE);
         valField.setBorder(null);
         return new VSTupel<String,Component,JCheckBox>(label,
@@ -403,9 +419,10 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the lang.process.removetupel< string, component, j text field>
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createLongComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JTextField> createLongComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
         JTextField valField = new JTextField(VALUE_FIELD_COLS);
@@ -429,9 +446,10 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the lang.process.removetupel< string, component, j text field>
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createFloatComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JTextField> createFloatComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
         JTextField valField = new JTextField(VALUE_FIELD_COLS);
@@ -455,9 +473,10 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the lang.process.removetupel< string, component, j text field>
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createColorComponent(String fullKey, String key, final VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JTextField> createColorComponent(
+        String fullKey, String key, final VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
         final JTextField valField = new JTextField(VALUE_FIELD_COLS);
@@ -477,7 +496,8 @@ public abstract class VSAbstractEditor implements ActionListener {
                         "lang.colorchooser"),parentFrame);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                JComponent colorChooserPane = new VSColorChooser(prefs, valField);
+                JComponent colorChooserPane = new VSColorChooser(prefs,
+                        valField);
                 colorChooserPane.setOpaque(true);
 
                 frame.setContentPane(colorChooserPane);
@@ -497,9 +517,10 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      *
-     * @return the lang.process.removetupel< string, component, j text field>
+     * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createStringComponent(String fullKey, String key, VSPrefs prefsToEdit) {
+    protected VSTupel<String,Component,JTextField> createStringComponent(
+        String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
         JTextField valField = new JTextField(VALUE_FIELD_COLS);
@@ -517,7 +538,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Fill edit panel.
+     * Fills the edit panel.
      *
      * @param prefsToEdit the prefs to edit
      */
@@ -545,7 +566,8 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : booleanKeys) {
             String fullKey = VSPrefs.BOOLEAN_PREFIX + key;
-            VSTupel<String,Component,JCheckBox> tupel = createBooleanComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JCheckBox> tupel =
+                createBooleanComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             booleanFields.put(key, tupel.getC());
@@ -553,7 +575,8 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : longKeys) {
             String fullKey = VSPrefs.LONG_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel = createLongComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JTextField> tupel =
+                createLongComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             longFields.put(key, tupel.getC());
@@ -562,7 +585,8 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : floatKeys) {
             String fullKey = VSPrefs.FLOAT_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel = createFloatComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JTextField> tupel =
+                createFloatComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             floatFields.put(key, tupel.getC());
@@ -571,7 +595,8 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : colorKeys) {
             String fullKey = VSPrefs.COLOR_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel = createColorComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JTextField> tupel =
+                createColorComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             colorFields.put(key, tupel.getC());
@@ -579,7 +604,8 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : stringKeys) {
             String fullKey = VSPrefs.STRING_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel = createStringComponent(fullKey, key, prefsToEdit);
+            VSTupel<String,Component,JTextField> tupel =
+                createStringComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
             stringFields.put(key, tupel.getC());
@@ -597,7 +623,8 @@ public abstract class VSAbstractEditor implements ActionListener {
                     flag = true;
                     addSeparator(prefs.getString("lang.prefs.simulator"));
                 }
-                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
+                addVariable(labels.get(fullKey), components.get(fullKey),
+                            prefsToEdit);
             }
         }
 
@@ -610,9 +637,11 @@ public abstract class VSAbstractEditor implements ActionListener {
                     if (this instanceof VSProcessEditor)
                         addSeparator(prefs.getString("lang.prefs.process"));
                     else
-                        addSeparator(prefs.getString("lang.prefs.process.defaults"));
+                        addSeparator(prefs.getString(
+                                         "lang.prefs.process.defaults"));
                 }
-                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
+                addVariable(labels.get(fullKey), components.get(fullKey),
+                            prefsToEdit);
             }
         }
 
@@ -623,11 +652,14 @@ public abstract class VSAbstractEditor implements ActionListener {
                 if (!flag) {
                     flag = true;
                     if (this instanceof VSProcessEditor)
-                        addSeparator(prefs.getString("lang.prefs.message"));
+                        addSeparator(prefs.getString(
+                                         "lang.prefs.message"));
                     else
-                        addSeparator(prefs.getString("lang.prefs.message.defaults"));
+                        addSeparator(prefs.getString(
+                                         "lang.prefs.message.defaults"));
                 }
-                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
+                addVariable(labels.get(fullKey), components.get(fullKey),
+                            prefsToEdit);
             }
         }
 
@@ -639,7 +671,8 @@ public abstract class VSAbstractEditor implements ActionListener {
                     flag = true;
                     addSeparator(prefs.getString("lang.prefs.color"));
                 }
-                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
+                addVariable(labels.get(fullKey), components.get(fullKey),
+                            prefsToEdit);
             }
         }
 
@@ -651,7 +684,8 @@ public abstract class VSAbstractEditor implements ActionListener {
                     flag = true;
                     addSeparator(prefs.getString("lang.prefs.diverse"));
                 }
-                addVariable(labels.get(fullKey), components.get(fullKey), prefsToEdit);
+                addVariable(labels.get(fullKey), components.get(fullKey),
+                            prefsToEdit);
             }
         }
 
@@ -659,7 +693,18 @@ public abstract class VSAbstractEditor implements ActionListener {
         editTable.fireTableDataChanged();
     }
 
-    private ArrayList<String> filterOut(Set<String> set, ArrayList<String> filter, String prefix) {
+    /**
+     * Filters out stuff.
+     *
+     * @param set The set to filter stuff out from
+     * @param filter Only return elemens of the filter which are in the set
+     * @param prefix The prefix to use
+     *
+     * @return The filtered keys
+     */
+    private ArrayList<String> filterOut(Set<String> set,
+                                        ArrayList<String> filter,
+                                        String prefix) {
         ArrayList<String> ret = new ArrayList<String>();
 
         for (String key : set) {
@@ -672,25 +717,39 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Adds the to editor.
+     * Adds the to editor more variables.
      *
      * @param label the label
      * @param prefsKey the prefs key
      * @param prefsToAdd the prefs to add
      * @param addOnlyThisVariables only add variables which are in this list
      */
-    protected void addToEditor(String label, String prefsKey, VSPrefs prefsToAdd, ArrayList<String> addOnlyThisVariables) {
+    protected void addToEditor(String label, String prefsKey,
+                               VSPrefs prefsToAdd,
+                               ArrayList<String> addOnlyThisVariables) {
         addSeparator(label);
         prefsKey = "(" + prefsKey + ")";
 
         ArrayList<String> fullKeys = new ArrayList<String>();
 
-        fullKeys.addAll(filterOut(prefsToAdd.getIntegerKeySet(), addOnlyThisVariables, VSPrefs.INTEGER_PREFIX));
-        fullKeys.addAll(filterOut(prefsToAdd.getVectorKeySet(), addOnlyThisVariables, VSPrefs.VECTOR_PREFIX));
-        fullKeys.addAll(filterOut(prefsToAdd.getFloatKeySet(), addOnlyThisVariables, VSPrefs.FLOAT_PREFIX));
-        fullKeys.addAll(filterOut(prefsToAdd.getLongKeySet(), addOnlyThisVariables, VSPrefs.LONG_PREFIX));
-        fullKeys.addAll(filterOut(prefsToAdd.getBooleanKeySet(), addOnlyThisVariables, VSPrefs.BOOLEAN_PREFIX));
-        fullKeys.addAll(filterOut(prefsToAdd.getStringKeySet(), addOnlyThisVariables, VSPrefs.STRING_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getIntegerKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.INTEGER_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getVectorKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.VECTOR_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getFloatKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.FLOAT_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getLongKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.LONG_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getBooleanKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.BOOLEAN_PREFIX));
+        fullKeys.addAll(filterOut(prefsToAdd.getStringKeySet(),
+                                  addOnlyThisVariables,
+                                  VSPrefs.STRING_PREFIX));
 
         Collections.sort(fullKeys);
 
@@ -738,12 +797,11 @@ public abstract class VSAbstractEditor implements ActionListener {
                 this.stringFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
             }
-
         }
     }
 
     /**
-     * Adds the separator.
+     * Adds a separator.
      *
      * @param label the label
      */
@@ -752,7 +810,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Adds the variable.
+     * Adds a variable.
      *
      * @param label the label
      * @param component the component
@@ -763,14 +821,15 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Adds the variable.
+     * Adds a variable.
      *
      * @param prefsKey the prefs key
      * @param label the label
      * @param component the component
      * @param prefs the prefs
      */
-    private void addVariable(String prefsKey, String label, Component component, VSPrefs prefs) {
+    private void addVariable(String prefsKey, String label,
+                             Component component, VSPrefs prefs) {
         prefsToEditMap.put(prefsKey, prefs);
         editTable.addVariable(label, component);
     }
@@ -787,7 +846,8 @@ public abstract class VSAbstractEditor implements ActionListener {
         for (String key : booleanKeys) {
             String keys[] = getKeys(key);
             JCheckBox valField = booleanFields.get(key);
-            valField.setSelected(prefsToEditMap.get(keys[1]).getBoolean(keys[0]));
+            valField.setSelected(prefsToEditMap.get(
+                                     keys[1]).getBoolean(keys[0]));
         }
 
         for (String key : vectorKeys) {
@@ -811,7 +871,8 @@ public abstract class VSAbstractEditor implements ActionListener {
         for (String key : colorKeys) {
             String keys[] = getKeys(key);
             JTextField valField = colorFields.get(key);
-            valField.setBackground(prefsToEditMap.get(keys[1]).getColor(keys[0]));
+            valField.setBackground(prefsToEditMap.get(
+                                       keys[1]).getColor(keys[0]));
         }
 
         for (String key : stringKeys) {
@@ -840,7 +901,7 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Save prefs.
+     * Saves the prefs.
      */
     protected void savePrefs() {
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
@@ -848,7 +909,9 @@ public abstract class VSAbstractEditor implements ActionListener {
         for (String key : integerKeys) {
             String keys[] = getKeys(key);
             JComboBox valComboBox = integerFields.get(key);
-            prefsToEditMap.get(keys[1]).setInteger(keys[0], (Integer) valComboBox.getSelectedItem());
+            prefsToEditMap.get(
+                keys[1]).setInteger(keys[0],
+                                    (Integer) valComboBox.getSelectedItem());
         }
 
         for (String key : vectorKeys) {
@@ -862,13 +925,15 @@ public abstract class VSAbstractEditor implements ActionListener {
             } catch (exceptions.VSParseIntegerVectorException e) {
             }
 
-            valField.setText(""+prefsToEditMap.get(keys[1]).getVector(keys[0]));
+            valField.setText(""+
+                             prefsToEditMap.get(keys[1]).getVector(keys[0]));
         }
 
         for (String key : booleanKeys) {
             String keys[] = getKeys(key);
             JCheckBox valField = booleanFields.get(key);
-            prefsToEditMap.get(keys[1]).setBoolean(keys[0], valField.isSelected());
+            prefsToEditMap.get(keys[1]).setBoolean(
+                keys[0], valField.isSelected());
         }
 
         for (String key : floatKeys) {
@@ -880,7 +945,8 @@ public abstract class VSAbstractEditor implements ActionListener {
                 prefsToEditMap.get(keys[1]).setFloat(keys[0], val);
 
             } catch (NumberFormatException e) {
-                valField.setText(""+prefsToEditMap.get(keys[1]).getFloat(keys[0]));
+                valField.setText(""+
+                                 prefsToEditMap.get(keys[1]).getFloat(keys[0]));
             }
         }
 
@@ -893,14 +959,16 @@ public abstract class VSAbstractEditor implements ActionListener {
                 prefsToEditMap.get(keys[1]).setLong(keys[0], val);
 
             } catch (NumberFormatException e) {
-                valField.setText(""+prefsToEditMap.get(keys[1]).getLong(keys[0]));
+                valField.setText(""+
+                                 prefsToEditMap.get(keys[1]).getLong(keys[0]));
             }
         }
 
         for (String key : colorKeys) {
             String keys[] = getKeys(key);
             JTextField valField = colorFields.get(key);
-            prefsToEditMap.get(keys[1]).setColor(keys[0], valField.getBackground());
+            prefsToEditMap.get(keys[1]).setColor(
+                keys[0], valField.getBackground());
         }
 
         for (String key : stringKeys) {
@@ -913,9 +981,9 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Expert mode changed.
+     * Check if the expert mode has changed.
      *
-     * @return true, if successful
+     * @return true, if it has changed. false, if it has not changed.
      */
     public boolean expertModeChanged() {
         boolean ret = expertModeChanged;
@@ -927,7 +995,8 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /* (non-Javadoc)
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @see java.awt.event.ActionListener#actionPerformed(
+     *	java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
@@ -941,18 +1010,18 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
-     * Gets the edits the panel.
+     * Gets the edit panel
      *
-     * @return the edits the panel
+     * @return the edit panel
      */
     public JPanel getEditPanel() {
         return editPanel;
     }
 
     /**
-     * Gets the edits the table.
+     * Gets the edit table
      *
-     * @return the edits the table
+     * @return the edit table
      */
     public VSEditorTable getEditTable() {
         return editTable;

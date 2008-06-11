@@ -29,11 +29,13 @@ import javax.swing.event.*;
 
 import prefs.VSPrefs;
 
-// TODO: Auto-generated Javadoc
 /**
- * The class VSColorChooser.
+ * The class VSColorChooser, is for selecting a color within an editor.
+ *
+ * @author Paul C. Buetow
  */
 public class VSColorChooser extends JPanel implements ChangeListener {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The color chooser. */
@@ -45,18 +47,14 @@ public class VSColorChooser extends JPanel implements ChangeListener {
     /** The val field. */
     private JTextField valField;
 
-    /** The prefs. */
-    //private VSPrefs prefs;
-
     /**
-     * Instantiates a new lang.process.removecolor chooser.
+     * Instantiates a new VSColorChooser object.
      *
      * @param prefs the prefs
      * @param valField the val field
      */
     public VSColorChooser(VSPrefs prefs, JTextField valField) {
         super(new BorderLayout());
-        //this.prefs = prefs;
         this.color = valField.getBackground();
         this.valField = valField;
 
@@ -69,7 +67,8 @@ public class VSColorChooser extends JPanel implements ChangeListener {
     }
 
     /* (non-Javadoc)
-     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+     * @see javax.swing.event.ChangeListener#stateChanged(
+     *	javax.swing.event.ChangeEvent)
      */
     public void stateChanged(ChangeEvent e) {
         Color newColor = colorChooser.getColor();

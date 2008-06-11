@@ -28,8 +28,8 @@ import events.*;
 import prefs.VSPrefs;
 
 /**
- * This class represents a message which is send from one process to another
- * process in the simulator.
+ * An object of this class represents a message which is sent from one process
+ * to another process in the simulator.
  *
  * @author Paul C. Buetow
  */

@@ -27,9 +27,14 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 /**
- * The class VSDefaultPrefs.
+ * The class VSDefaultPrefs, makes sure that the simulator has its default
+ * configuration values. (Btw: This is the only class which is allowed to have
+ * code lines which are longer than 80 chars!)
+ *
+ * @author Paul C. Buetow
  */
 public class VSDefaultPrefs extends VSPrefs {
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -256,5 +261,6 @@ public class VSDefaultPrefs extends VSPrefs {
         initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtausfallw'k. bilden");
         initBoolean("sim.messages.relevant", true, "Nur alle relevanten Nachrichten ausliefern");
+        initBoolean("sim.periodic", false, "Simulation periodisch wiederholen");
     }
 }

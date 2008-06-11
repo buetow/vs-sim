@@ -24,8 +24,7 @@
 package core.time;
 
 /**
- * The class VSLamportTime. This class defined how the lamport
- * timestamps are represented.
+ * The class VSLamportTime, defines how the lamport timestamps are represented.
  *
  * @author Paul C. Buetow
  */

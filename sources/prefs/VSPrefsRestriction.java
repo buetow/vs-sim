@@ -33,9 +33,9 @@ public class VSPrefsRestriction implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The class VSIntegerPrefRestriction.
+     * The class VSIntegerPrefsRestriction.
      */
-    public static class VSIntegerPrefRestriction extends VSPrefsRestriction {
+    public static class VSIntegerPrefsRestriction extends VSPrefsRestriction {
         private static final long serialVersionUID = 1L;
         /** The min value. */
         private int minValue;
@@ -49,7 +49,7 @@ public class VSPrefsRestriction implements Serializable {
          * @param minValue the min value
          * @param maxValue the max value
          */
-        public VSIntegerPrefRestriction(int minValue, int maxValue) {
+        public VSIntegerPrefsRestriction(int minValue, int maxValue) {
             this.minValue = minValue;
             this.maxValue = maxValue;
         }

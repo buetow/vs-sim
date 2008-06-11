@@ -30,7 +30,10 @@ import java.util.*;
 import serialize.*;
 
 /**
- * The class VSPrefs.
+ * The class VSPrefs, this class is for dynamic data storage. It can hold
+ * various different types such as Boolean, Floats, Integers, Strings, Colors.
+ *
+ * @author Paul C. Buetow
  */
 public class VSPrefs implements VSSerializable {
     /** The Constant BOOLEAN_PREFIX. */
@@ -89,9 +92,6 @@ public class VSPrefs implements VSSerializable {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4L;
-
-    /** The Constant PREFERENCES_FILENAME. */
-    protected final static String PREFERENCES_FILENAME = "vs.dat";
 
     /** The id counter. */
     private static int idCounter;
@@ -201,7 +201,8 @@ public class VSPrefs implements VSSerializable {
      * @param key the key
      * @param settingRestriction the setting restriction
      */
-    public synchronized void initRestriction(String key, VSPrefsRestriction settingRestriction) {
+    public synchronized void initRestriction(String key,
+            VSPrefsRestriction settingRestriction) {
         restrictions.put(key, settingRestriction);
     }
 
@@ -589,7 +590,8 @@ public class VSPrefs implements VSSerializable {
      * @param descr the descr
      * @param r the restriction
      */
-    public void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefRestriction r) {
+    public void initInteger(String key, int val, String descr,
+                            VSPrefsRestriction.VSIntegerPrefsRestriction r) {
         initInteger(key, val, descr);
         initRestriction(INTEGER_PREFIX + key, r);
     }
@@ -602,7 +604,9 @@ public class VSPrefs implements VSSerializable {
      * @param descr the descr
      * @param r the restriction
      */
-    public void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefRestriction r, String unit) {
+    public void initInteger(String key, int val, String descr,
+                            VSPrefsRestriction.VSIntegerPrefsRestriction r,
+                            String unit) {
         initInteger(key, val, descr, r);
         initUnit(INTEGER_PREFIX + key, unit);
     }
@@ -616,9 +620,11 @@ public class VSPrefs implements VSSerializable {
      * @param minValue the min value
      * @param maxValue the max value
      */
-    public void initInteger(String key, int val, String descr, int minValue, int maxValue) {
+    public void initInteger(String key, int val, String descr, int minValue,
+                            int maxValue) {
         initInteger(key, val, descr,
-                    new VSPrefsRestriction.VSIntegerPrefRestriction(minValue, maxValue));
+                    new VSPrefsRestriction.VSIntegerPrefsRestriction(
+                        minValue, maxValue));
     }
 
     /**
@@ -631,7 +637,8 @@ public class VSPrefs implements VSSerializable {
      * @param maxValue the max value
      * @param unit the unit
      */
-    public void initInteger(String key, int val, String descr, int minValue, int maxValue, String unit) {
+    public void initInteger(String key, int val, String descr, int minValue,
+                            int maxValue, String unit) {
         initInteger(key, val, descr, minValue, maxValue);
         initUnit(INTEGER_PREFIX + key, unit);
     }
@@ -716,7 +723,8 @@ public class VSPrefs implements VSSerializable {
      * @param val the val
      * @param descr the descr
      */
-    public void initVector(String key, Vector<Integer> val, String descr, String unit) {
+    public void initVector(String key, Vector<Integer> val, String descr,
+                           String unit) {
         initVector(key, val, descr);
         initUnit(VECTOR_PREFIX + key, unit);
     }
@@ -932,11 +940,6 @@ public class VSPrefs implements VSSerializable {
      */
     public void fillWithDefaults() {}
 
-    @SuppressWarnings("unchecked")
-    public synchronized void readObject(ObjectInputStream objectInputStream)
-    throws IOException, ClassNotFoundException {
-    }
-
     /* (non-Javadoc)
      * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
      *	java.io.ObjectOutputStream)
@@ -974,16 +977,23 @@ public class VSPrefs implements VSSerializable {
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
 
-        booleanPrefs = (HashMap<String,Boolean>) objectInputStream.readObject();
-        colorPrefs = (HashMap<String,Color>) objectInputStream.readObject();
+        booleanPrefs = (HashMap<String,Boolean>)
+                       objectInputStream.readObject();
+        colorPrefs = (HashMap<String,Color>)
+                     objectInputStream.readObject();
         descriptionPrefs = (HashMap<String,String>)
                            objectInputStream.readObject();
-        floatPrefs = (HashMap<String,Float>) objectInputStream.readObject();
-        integerPrefs = (HashMap<String,Integer>) objectInputStream.readObject();
-        longPrefs = (HashMap<String,Long>) objectInputStream.readObject();
+        floatPrefs = (HashMap<String,Float>)
+                     objectInputStream.readObject();
+        integerPrefs = (HashMap<String,Integer>)
+                       objectInputStream.readObject();
+        longPrefs = (HashMap<String,Long>)
+                    objectInputStream.readObject();
         restrictions = new HashMap<String,VSPrefsRestriction>();
-        stringPrefs = (HashMap<String,String>) objectInputStream.readObject();
-        units = (HashMap<String,String>) objectInputStream.readObject();
+        stringPrefs = (HashMap<String,String>)
+                      objectInputStream.readObject();
+        units = (HashMap<String,String>)
+                objectInputStream.readObject();
         vectorPrefs = (HashMap<String,Vector<Integer>>)
                       objectInputStream.readObject();
 
@@ -992,7 +1002,7 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Copy integers.
+     * Copies integers into another VSPrefs object.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1002,13 +1012,13 @@ public class VSPrefs implements VSSerializable {
             copyInto.initInteger(key,
                                  getInteger(key),
                                  getDescription(INTEGER_PREFIX + key),
-                                 (VSPrefsRestriction.VSIntegerPrefRestriction)
+                                 (VSPrefsRestriction.VSIntegerPrefsRestriction)
                                  getRestriction(INTEGER_PREFIX + key),
                                  getUnit(INTEGER_PREFIX + key));
     }
 
     /**
-     * Copy longs.
+     * Copies longs into another VSPrefs object.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1021,7 +1031,7 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Copy floats.
+     * Copies floats into another VSPrefs object.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1034,7 +1044,7 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Copy strings.
+     * Copies strings into another VSPrefs object.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1046,7 +1056,7 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Copy colors.
+     * Copies color references into another VSPrefs object.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1058,7 +1068,7 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Copy colors.
+     * Copies colors.
      *
      * @param copyInto the copy into
      * @param keys the keys
@@ -1135,9 +1145,9 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Checks if is empty.
+     * Checks if the prefs are empty.
      *
-     * @return true, if is empty
+     * @return true, if empty
      */
     public boolean isEmpty() {
         if (!colorPrefs.isEmpty())
@@ -1165,9 +1175,9 @@ public class VSPrefs implements VSSerializable {
     }
 
     /**
-     * Return all full keys
+     * Returns all full keys.
      *
-     * @return Allf ull keys
+     * @return All full keys
      */
     public ArrayList<String> getAllFullKeys() {
         ArrayList<String> allKeys = new ArrayList<String>();
