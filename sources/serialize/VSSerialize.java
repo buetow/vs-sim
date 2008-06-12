@@ -41,7 +41,7 @@ public final class VSSerialize {
     private static final long serialVersionUID = 1L;
 
     /** True if debug mode of serialization/deserialization */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     /** The last filename used for saveing/opening*/
     public static String LAST_FILENAME = null;
