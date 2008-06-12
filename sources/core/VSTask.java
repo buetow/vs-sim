@@ -370,8 +370,8 @@ public class VSTask implements Comparable, VSSerializable {
             String shortname = event.getShortname();
             String shortname2 = event2.getShortname();
 
-			/* One of those may be null if an VSAbstractEvent object has not 
-			   been initialized yet */
+            /* One of those may be null if an VSAbstractEvent object has not
+               been initialized yet */
             if (shortname == null || shortname2 == null)
                 return 0;
 

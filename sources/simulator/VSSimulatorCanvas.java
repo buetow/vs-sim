@@ -1015,6 +1015,8 @@ public class VSSimulatorCanvas extends Canvas
     private VSProcess getProcessAtYPos(int yPos) {
         final int reachDistance = (int) (yDistance/3);
         int y = YOFFSET + YOUTER_SPACEING + YSEPLINE_SPACEING;
+        //int bla = 0;
+        //System.out.println("FOO " + bla++);
 
         int yOffset = numProcesses > 1
                       ?  (int) ((paintSize-2*
@@ -1025,12 +1027,19 @@ public class VSSimulatorCanvas extends Canvas
 
         for (int i = 0; i < numProcesses; ++i) {
             if (yPos < y + reachDistance && yPos > y - reachDistance -
-                    LINE_WIDTH)
+                    LINE_WIDTH) {
+                VSProcess process = null;
+                //System.out.println("FOO " + bla++);
                 synchronized (processes) {
-                    return processes.get(i);
+                    //System.out.println("FOO " + bla++);
+                    process = processes.get(i);
                 }
+                //System.out.println("FOO " + bla++);
+                return process;
+            }
             y += yOffset;
         }
+        //System.out.println("BAZ " + bla++);
 
         return null;
     }
@@ -1408,7 +1417,10 @@ public class VSSimulatorCanvas extends Canvas
     public void editProcess(int processNum) {
         synchronized (processes) {
             VSProcess process = processes.get(processNum);
-            editProcess(process);
+            /* May be null if another thread changed the processes arraylist
+               before this process actually called editProcess */
+            if (process != null)
+                editProcess(process);
         }
     }
 
@@ -1544,12 +1556,22 @@ public class VSSimulatorCanvas extends Canvas
      * @return The process which has been added
      */
     private VSProcess addProcess() {
+        VSProcess newProcess = null;
+        //int foo = -1;
+        //System.out.println("ADD " + ++foo);
         synchronized (processes) {
+            //System.out.println("ADD " + ++foo);
             numProcesses = processes.size() + 1;
-            VSProcess newProcess = createProcess(processes.size());
-            addProcess(newProcess);
-            return newProcess;
+            //System.out.println("ADD " + ++foo);
+            newProcess = createProcess(processes.size());
+            //System.out.println("ADD " + ++foo);
+            //System.out.println("ADD " + ++foo);
         }
+
+        //System.out.println("ADD " + ++foo);
+        addProcess(newProcess);
+        //System.out.println("ADD " + ++foo);
+        return newProcess;
     }
 
     /**
@@ -1558,16 +1580,23 @@ public class VSSimulatorCanvas extends Canvas
      * @newProcess The process to add
      */
     private void addProcess(VSProcess newProcess) {
+        //int foo = -1;
+        //System.out.println("ADD_ " + ++foo);
         synchronized (processes) {
+            //System.out.println("ADD_ " + ++foo);
             processes.add(newProcess);
 
             for (VSProcess process : processes)
                 if (!process.equals(newProcess))
                     process.addedAProcess();
-
-            recalcOnChange();
-            simulator.addProcessAtIndex(processes.size()-1);
+            //System.out.println("ADD_ " + ++foo);
         }
+
+        //System.out.println("ADD_ " + ++foo);
+        recalcOnChange();
+        //System.out.println("ADD_ " + ++foo);
+        simulator.addProcessAtIndex(processes.size()-1);
+        //System.out.println("ADD_ " + ++foo);
     }
 
     /**

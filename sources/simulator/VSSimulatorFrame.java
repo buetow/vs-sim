@@ -405,6 +405,7 @@ public class VSSimulatorFrame extends VSFrame {
 
         JMenuItem globalPrefsItem = new JMenuItem(
             prefs.getString("lang.prefs"));
+
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 VSPrefs simulatorPrefs = currentSimulator.getPrefs();
@@ -415,18 +416,20 @@ public class VSSimulatorFrame extends VSFrame {
                                   simulatorEditor);
             }
         });
+
         menuEdit.add(globalPrefsItem);
         menuEdit.addSeparator();
 
         if (currentSimulator == null)
             return;
 
-        final String processString = prefs.getString("lang.process");
-        final ArrayList<VSProcess> arr =
+        String processString = prefs.getString("lang.process");
+        ArrayList<VSProcess> arr =
             currentSimulator.getSimulatorCanvas().getProcessesArray();
-        final int numProcesses = arr.size();
 
+        int numProcesses = arr.size();
         int processNum = 0;
+
         for (VSProcess process : arr) {
             int processID = process.getProcessID();
             JMenuItem processItem = new JMenuItem(processString + " " +
