@@ -959,6 +959,7 @@ public class VSPrefs implements VSSerializable {
         objectOutputStream.writeObject(stringPrefs);
         objectOutputStream.writeObject(units);
         objectOutputStream.writeObject(vectorPrefs);
+        objectOutputStream.writeObject(restrictions);
 
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
@@ -989,12 +990,13 @@ public class VSPrefs implements VSSerializable {
                        objectInputStream.readObject();
         longPrefs = (HashMap<String,Long>)
                     objectInputStream.readObject();
-        restrictions = new HashMap<String,VSPrefsRestriction>();
         stringPrefs = (HashMap<String,String>)
                       objectInputStream.readObject();
         units = (HashMap<String,String>)
                 objectInputStream.readObject();
         vectorPrefs = (HashMap<String,Vector<Integer>>)
+                      objectInputStream.readObject();
+        restrictions = (HashMap<String,VSPrefsRestriction>)
                       objectInputStream.readObject();
 
         /** For later backwards compatibility, to add more stuff */

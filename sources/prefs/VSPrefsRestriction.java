@@ -77,8 +77,8 @@ abstract public class VSPrefsRestriction implements Serializable {
          */
         public void writeObject(ObjectOutputStream out)
         throws IOException {
-            out.writeObject(new Integer(minValue));
-            out.writeObject(new Integer(maxValue));
+			out.writeObject(new Integer(minValue));
+			out.writeObject(new Integer(maxValue));
         }
 
         /* (non-Javadoc)
@@ -86,8 +86,8 @@ abstract public class VSPrefsRestriction implements Serializable {
          */
         public void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException {
-            minValue = ((Integer) in.readObject()).intValue();
-            maxValue = ((Integer) in.readObject()).intValue();
+			minValue = ((Integer) in.readObject()).intValue();
+			maxValue = ((Integer) in.readObject()).intValue();
         }
     }
 
@@ -126,17 +126,17 @@ abstract public class VSPrefsRestriction implements Serializable {
          */
         public void writeObject(ObjectOutputStream out)
         throws IOException {
-            out.writeObject(possibleSelections);
+			out.writeObject(possibleSelections);	
         }
 
         /* (non-Javadoc)
          * @see prefs.VSPrefsRestriction#readObject(java.io.ObjectInputStream)
          */
-        @SuppressWarnings("unchecked")
+    	@SuppressWarnings("unchecked")
         public void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException {
-            possibleSelections = (Vector<String>) in.readObject();
-        }
+			possibleSelections = (Vector<String>) in.readObject();
+		}
     }
 
     /**
