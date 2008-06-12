@@ -1627,6 +1627,8 @@ public class VSSimulatorCanvas extends Canvas
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
 
+        objectOutputStream.writeObject(new Integer(processCounter));
+
         synchronized (processes) {
             objectOutputStream.writeObject(new Integer(numProcesses));
             for (VSProcess process : processes)
@@ -1652,6 +1654,8 @@ public class VSSimulatorCanvas extends Canvas
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
+
+        processCounter = ((Integer) objectInputStream.readObject()).intValue();
 
         int num = ((Integer) objectInputStream.readObject()).intValue();
         logging.clear();

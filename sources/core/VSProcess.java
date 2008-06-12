@@ -216,14 +216,15 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         /* May be not null if called from deserialization */
         if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
+
         this.processNum = processNum;
         this.prefs = prefs;
         this.simulatorCanvas = simulatorCanvas;
         this.logging = logging;
 
-        tasks = new VSPriorityQueue<VSTask>();
         processID = simulatorCanvas.processIDCount();
         random = new VSRandom(processID*processNum+processID+processNum);
+        tasks = new VSPriorityQueue<VSTask>();
 
         initTimeFormats();
 
