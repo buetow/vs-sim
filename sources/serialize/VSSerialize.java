@@ -199,9 +199,11 @@ public final class VSSerialize {
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
 
         if (fileChooser.showOpenDialog(simulatorFrame) ==
-                JFileChooser.APPROVE_OPTION)
-            saveSimulator(fileChooser.getSelectedFile().getName(),
-                          simulator);
+                JFileChooser.APPROVE_OPTION) {
+			String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+			System.out.println("Save " + fileName);
+            saveSimulator(fileName, simulator);
+		}
     }
 
     /**
@@ -256,9 +258,11 @@ public final class VSSerialize {
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
 
         if (fileChooser.showOpenDialog(simulatorFrame) ==
-                JFileChooser.APPROVE_OPTION)
-            return openSimulator(fileChooser.getSelectedFile().getName(),
-                                 simulatorFrame);
+                JFileChooser.APPROVE_OPTION) {
+			String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+			System.out.println("Open " + fileName);
+            return openSimulator(fileName, simulatorFrame);
+		}
 
         return null;
     }
