@@ -317,9 +317,6 @@ public class VSTask implements Comparable, VSSerializable {
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object object) {
-		if (object == null)
-			return 0;
-
         if (object instanceof VSTask) {
             final VSTask task = (VSTask) object;
 
@@ -330,9 +327,6 @@ public class VSTask implements Comparable, VSSerializable {
                 return 1;
 
             VSAbstractEvent event2 = task.getEvent();
-
-			if (event2 == null || event == null)
-				return 0;
 
             /* If it's a recovering, it should get handled very first */
             boolean a = event instanceof VSProcessRecoverEvent;
@@ -373,7 +367,15 @@ public class VSTask implements Comparable, VSSerializable {
             if (b)
                 return 1;
 
-            return event.getShortname().compareTo(event2.getShortname());
+            String shortname = event.getShortname();
+            String shortname2 = event2.getShortname();
+
+			/* One of those may be null if an VSAbstractEvent object has not 
+			   been initialized yet */
+            if (shortname == null || shortname2 == null)
+                return 0;
+
+            return shortname.compareTo(shortname2);
         }
 
         return 0;

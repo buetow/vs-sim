@@ -1063,11 +1063,11 @@ public class VSPrefs implements VSSerializable {
      */
     public void copyColors(VSPrefs copyInto, String[] keys) {
         for (String key : keys) {
-			Color color = getColor(key);
-			float comp[] = color.getComponents(null);
+            Color color = getColor(key);
+            float comp[] = color.getComponents(null);
             copyInto.initColor(key, new Color(comp[0], comp[1], comp[2]),
                                getDescription(COLOR_PREFIX + key));
-		}
+        }
     }
 
     /**

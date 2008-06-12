@@ -23,20 +23,20 @@
 
 package prefs;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.Vector;
 
 /**
  * The class VSPrefsRestriction.
  */
-public class VSPrefsRestriction implements Serializable {
-    private static final long serialVersionUID = 1L;
+abstract public class VSPrefsRestriction implements Serializable {
+    private static final long serialVersionUID = 2L;
 
     /**
      * The class VSIntegerPrefsRestriction.
      */
     public static class VSIntegerPrefsRestriction extends VSPrefsRestriction {
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 2L;
         /** The min value. */
         private int minValue;
 
@@ -71,13 +71,31 @@ public class VSPrefsRestriction implements Serializable {
         public int getMaxValue() {
             return maxValue;
         }
+
+        /* (non-Javadoc)
+         * @see prefs.VSPrefsRestriction#writeObject(java.io.ObjectOutputStream)
+         */
+        public void writeObject(ObjectOutputStream out)
+        throws IOException {
+			out.writeObject(new Integer(minValue));
+			out.writeObject(new Integer(maxValue));
+        }
+
+        /* (non-Javadoc)
+         * @see prefs.VSPrefsRestriction#readObject(java.io.ObjectInputStream)
+         */
+        public void readObject(ObjectInputStream in)
+        throws IOException, ClassNotFoundException {
+			minValue = ((Integer) in.readObject()).intValue();
+			maxValue = ((Integer) in.readObject()).intValue();
+        }
     }
 
     /**
      * The class VSStringPrefsRestriction.
      */
     public static class VSStringPrefsRestriction extends VSPrefsRestriction {
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 2L;
 
         /** The possible selections. */
         Vector<String> possibleSelections;
@@ -102,5 +120,38 @@ public class VSPrefsRestriction implements Serializable {
         public Vector<String> getPossibleSelections() {
             return possibleSelections;
         }
+
+        /* (non-Javadoc)
+         * @see prefs.VSPrefsRestriction#writeObject(java.io.ObjectOutputStream)
+         */
+        public void writeObject(ObjectOutputStream out)
+        throws IOException {
+			out.writeObject(possibleSelections);	
+        }
+
+        /* (non-Javadoc)
+         * @see prefs.VSPrefsRestriction#readObject(java.io.ObjectInputStream)
+         */
+    	@SuppressWarnings("unchecked")
+        public void readObject(ObjectInputStream in)
+        throws IOException, ClassNotFoundException {
+			possibleSelections = (Vector<String>) in.readObject();
+		}
     }
+
+    /**
+     * Serializes the object.
+     *
+     * @param out The output stream
+     */
+    abstract public void writeObject(ObjectOutputStream out)
+    throws IOException;
+
+    /**
+     * Deserializes the object.
+     *
+     * @param in The input stream
+     */
+    abstract public void readObject(ObjectInputStream in)
+    throws IOException, ClassNotFoundException;
 }
