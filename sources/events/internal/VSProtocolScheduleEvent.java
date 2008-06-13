@@ -37,7 +37,7 @@ import serialize.*;
  * @author Paul C. Buetow
  */
 public class VSProtocolScheduleEvent extends VSAbstractInternalEvent
-            implements VSNotSerializable {
+            implements VSNotSerializable, VSCopyableEvent {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 

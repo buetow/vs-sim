@@ -51,6 +51,17 @@ public class VSProtocolEvent extends VSAbstractInternalEvent {
     /** The event is a protocol activation if true. Else it is a deactivation */
     private boolean isProtocolActivation;
 
+    /** 
+     * Fills a copy of this event with its values
+	 *
+	 * @param copy The copy
+     */
+    public void initCopy(VSProtocolEvent copy) {
+		copy.isClientProtocol(isClientProtocol);
+		copy.isProtocolActivation(isProtocolActivation);
+		copy.setProtocolClassname(protocolClassname);
+	}
+
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()
      */

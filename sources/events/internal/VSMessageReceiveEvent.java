@@ -26,17 +26,18 @@ package events.internal;
 import java.io.*;
 
 import core.VSMessage;
+import events.VSCopyableEvent;
 import protocols.VSAbstractProtocol;
 import serialize.VSNotSerializable;
 
 /**
- * The class VSMessageReceiveEvent. This event is used if a process receives
+ * The class VSMessageReceiveEvent, this event is used if a process receives
  * a message.
  *
  * @author Paul C. Buetow
  */
 public class VSMessageReceiveEvent extends VSAbstractInternalEvent
-            implements VSNotSerializable {
+            implements VSNotSerializable, VSCopyableEvent {
     /** The serioal version uid */
     private static final long serialVersionUID = 1L;
 

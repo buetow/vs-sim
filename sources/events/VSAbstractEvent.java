@@ -26,6 +26,7 @@ package events;
 import java.io.*;
 
 import core.VSProcess;
+import exceptions.*;
 import prefs.VSPrefs;
 import serialize.*;
 import utils.*;
@@ -52,6 +53,20 @@ abstract public class VSAbstractEvent extends VSPrefs {
 
     /** The event classname. */
     private String eventClassname;
+
+    /**
+     * Creates a copy of the event. 
+     *
+     * @return The copy
+     */
+    final public VSAbstractEvent getCopy() throws VSEventNotCopyableException {
+		VSAbstractEvent copy = null
+
+		if (this instanceof VSCopyableEvent)
+			throw new VSEventNotCopyableException(eventShortname);
+
+		return copy;
+    }
 
     /**
      * Inits the event.
