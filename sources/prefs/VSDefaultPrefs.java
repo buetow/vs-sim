@@ -98,7 +98,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.mode.expert", "Expertenmodus");
-        initString("lang.name", "VS-Simulator v0.3-devel");
+        initString("lang.name", "VS-Simulator v0.3-devel-II");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
