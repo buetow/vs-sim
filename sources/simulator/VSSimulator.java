@@ -329,16 +329,16 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param rows the rows
          */
         private void copyTasksAtRows(int rows[]) {
-			ArrayList<VSTask> copiedTasks = new ArrayList<VSTask>();
+            ArrayList<VSTask> copiedTasks = new ArrayList<VSTask>();
 
-			for (int row : rows) 
-				/* Use the copy constructor */
-            	copiedTasks.add(new VSTask(tasks.get(row)));
+            for (int row : rows)
+                /* Use the copy constructor */
+                copiedTasks.add(new VSTask(tasks.get(row)));
 
-			for (VSTask task : copiedTasks) {
-				taskManager.addTask(task, VSTaskManager.PROGRAMMED);
-				addTask(task);
-			}
+            for (VSTask task : copiedTasks) {
+                taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+                addTask(task);
+            }
 
             fireTableDataChanged();
         }
@@ -356,15 +356,15 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 ActionListener actionListener = new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
                         String command = ae.getActionCommand();
-						int rows[] = source.getSelectedRows();
+                        int rows[] = source.getSelectedRows();
 
                         if (command.equals(prefs.getString("lang.remove"))) {
-							for (int i = rows.length - 1; i >= 0; --i)
-                            	removeTaskAtRow(rows[i]);
+                            for (int i = rows.length - 1; i >= 0; --i)
+                                removeTaskAtRow(rows[i]);
 
                         } else if (command.equals(
-									prefs.getString("lang.copy"))) {
-							copyTasksAtRows(rows);
+                        prefs.getString("lang.copy"))) {
+                            copyTasksAtRows(rows);
                         }
                     }
                 };

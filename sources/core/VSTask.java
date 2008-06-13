@@ -101,10 +101,10 @@ public class VSTask implements Comparable, VSSerializable {
      * @param task the task to copy
      */
     public VSTask(VSTask task) {
-        init(task.getTaskTime(), 
-				task.getProcess(), 
-				task.getEvent(), 
-				!task.isGlobalTimed());
+        init(task.getTaskTime(),
+             task.getProcess(),
+             task.getEvent(),
+             !task.isGlobalTimed());
     }
 
     /**

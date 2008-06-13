@@ -997,7 +997,7 @@ public class VSPrefs implements VSSerializable {
         vectorPrefs = (HashMap<String,Vector<Integer>>)
                       objectInputStream.readObject();
         restrictions = (HashMap<String,VSPrefsRestriction>)
-                      objectInputStream.readObject();
+                       objectInputStream.readObject();
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();

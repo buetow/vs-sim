@@ -194,18 +194,18 @@ public final class VSSerialize {
         VSPrefs prefs = simulator.getPrefs();
         VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
 
-		String saveText = prefs.getString("lang.save");
+        String saveText = prefs.getString("lang.save");
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
-		fileChooser.setApproveButtonText(saveText);
+        fileChooser.setApproveButtonText(saveText);
 
         if (fileChooser.showOpenDialog(simulatorFrame) ==
                 JFileChooser.APPROVE_OPTION) {
-			String fileName = fileChooser.getSelectedFile().getAbsolutePath();
-			System.out.println(saveText + ": " + fileName);
+            String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println(saveText + ": " + fileName);
             saveSimulator(fileName, simulator);
-		}
+        }
     }
 
     /**
@@ -255,18 +255,18 @@ public final class VSSerialize {
     public VSSimulator openSimulator(VSSimulatorFrame simulatorFrame) {
         VSPrefs prefs = simulatorFrame.getPrefs();
 
-		String openText = prefs.getString("lang.open");
+        String openText = prefs.getString("lang.open");
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
-		fileChooser.setApproveButtonText(openText);
+        fileChooser.setApproveButtonText(openText);
 
         if (fileChooser.showOpenDialog(simulatorFrame) ==
                 JFileChooser.APPROVE_OPTION) {
-			String fileName = fileChooser.getSelectedFile().getAbsolutePath();
-			System.out.println(openText + ": " + fileName);
+            String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println(openText + ": " + fileName);
             return openSimulator(fileName, simulatorFrame);
-		}
+        }
 
         return null;
     }
