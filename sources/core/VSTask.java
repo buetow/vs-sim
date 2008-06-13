@@ -96,6 +96,18 @@ public class VSTask implements Comparable, VSSerializable {
     }
 
     /**
+     * Instantiates a new task, it's a copy constructor.
+     *
+     * @param task the task to copy
+     */
+    public VSTask(VSTask task) {
+        init(task.getTaskTime(), 
+				task.getProcess(), 
+				task.getEvent(), 
+				!task.isGlobalTimed());
+    }
+
+    /**
      * Instantiates a new task during a deserialization.
      *
      * @param serialize the serialize object

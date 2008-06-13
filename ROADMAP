@@ -1,7 +1,7 @@
+If Copy group of events and events changable -> make copy constructor of changed
+event!
 Must do:
 	Warn if a file does not exists while trying to open!
-	Overwrite some default values of VSPrefs while deserializing
-		lang.*
 	Reliable Multicast
 	Helper:
 		Print warning if not activated protocol while doing a protocol request
@@ -9,13 +9,11 @@ Must do:
 		Change PID
 		Change time
 		Copy event
-		Delete group of events
-		Copy group of events
 	Paint area right click:
 		Add local event
 		Add global event (in expert mode)
-	Splash screen
 Evtl.:
+	Splash screen
 	Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
 	Periodische Tasks anlegen koennen
 	"Himmelobjekt"?

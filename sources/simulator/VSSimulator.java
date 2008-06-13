@@ -323,6 +323,26 @@ public class VSSimulator extends JPanel implements VSSerializable {
             fireTableDataChanged();
         }
 
+        /**
+         * Copies the tasks at a specified rows.
+         *
+         * @param rows the rows
+         */
+        private void copyTasksAtRows(int rows[]) {
+			ArrayList<VSTask> copiedTasks = new ArrayList<VSTask>();
+
+			for (int row : rows) 
+				/* Use the copy constructor */
+            	copiedTasks.add(new VSTask(tasks.get(row)));
+
+			for (VSTask task : copiedTasks) {
+				taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+				addTask(task);
+			}
+
+            fireTableDataChanged();
+        }
+
         /* (non-Javadoc)
          * @see java.awt.event.MouseListener#mouseClicked(
          *	java.awt.event.MouseEvent)
@@ -337,15 +357,24 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     public void actionPerformed(ActionEvent ae) {
                         String command = ae.getActionCommand();
 						int rows[] = source.getSelectedRows();
+
                         if (command.equals(prefs.getString("lang.remove"))) {
 							for (int i = rows.length - 1; i >= 0; --i)
                             	removeTaskAtRow(rows[i]);
+
+                        } else if (command.equals(
+									prefs.getString("lang.copy"))) {
+							copyTasksAtRows(rows);
                         }
                     }
                 };
 
                 JPopupMenu popup = new JPopupMenu();
                 JMenuItem item = new JMenuItem(prefs.getString("lang.remove"));
+                item.addActionListener(actionListener);
+                popup.add(item);
+
+                item = new JMenuItem(prefs.getString("lang.copy"));
                 item.addActionListener(actionListener);
                 popup.add(item);
 

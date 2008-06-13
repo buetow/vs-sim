@@ -98,7 +98,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.mode.expert", "Expertenmodus");
-        initString("lang.name", "VS-Simulator v0.3-devel-II");
+        initString("lang.name", "VS-Simulator v0.3-dev-II Lucky Luke");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
@@ -136,6 +136,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.protocols", "Protokolle");
         initString("lang.quit", "Beenden");
         initString("lang.recovered", "Wiederbelebt");
+        initString("lang.copy", "Kopieren");
         initString("lang.remove", "Entfernen");
         initString("lang.replay", "Wiederholen");
         //initString("lang.requests", "Anfragen");
