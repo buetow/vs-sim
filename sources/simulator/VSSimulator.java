@@ -328,7 +328,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          *	java.awt.event.MouseEvent)
          */
         public void mouseClicked(MouseEvent me) {
-            JTable source = (JTable) me.getSource();
+            final JTable source = (JTable) me.getSource();
             final int row = source.rowAtPoint(me.getPoint());
             final int col = source.columnAtPoint(me.getPoint());
 
@@ -336,8 +336,10 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 ActionListener actionListener = new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
                         String command = ae.getActionCommand();
+						int rows[] = source.getSelectedRows();
                         if (command.equals(prefs.getString("lang.remove"))) {
-                            removeTaskAtRow(row);
+							for (int i = rows.length - 1; i >= 0; --i)
+                            	removeTaskAtRow(rows[i]);
                         }
                     }
                 };
