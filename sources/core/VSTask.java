@@ -287,6 +287,15 @@ public class VSTask implements Comparable, VSSerializable {
     }
 
     /**
+     * Sets the task time.
+     *
+     * @param taskTime the task time
+     */
+    public void setTaskTime(long taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    /**
      * Gets the event.
      *
      * @return the event

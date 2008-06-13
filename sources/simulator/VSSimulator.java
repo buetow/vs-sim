@@ -289,7 +289,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
          */
         public boolean isCellEditable(int row, int col) {
-            return false;
+            return true;
         }
 
         /* (non-Javadoc)
@@ -297,7 +297,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
          *	java.lang.Object, int, int)
          */
         public void setValueAt(Object value, int row, int col) {
-            fireTableDataChanged();
         }
 
         /**
@@ -315,12 +314,24 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * Removes the task at a specified row.
          *
          * @param row the row
+		 * @return The removed task
          */
-        private void removeTaskAtRow(int row) {
+        public VSTask removeTaskAtRow(int row) {
             VSTask task = tasks.get(row);
             tasks.remove(task);
             taskManager.removeTask(task);
             fireTableDataChanged();
+			return task;
+        }
+
+        /**
+         * Gets the index of a specific task
+         *
+         * @param task The task
+		 * @return The index of the task
+         */
+        public int getIndexOf(VSTask task) {
+			return tasks.indexOf(task);
         }
 
         /**
@@ -405,6 +416,86 @@ public class VSSimulator extends JPanel implements VSSerializable {
          *	java.awt.event.MouseEvent)
          */
         public void mouseReleased(MouseEvent me) { }
+    }
+
+    /**
+     * The class VSTaskManagerCellEditor, an object of this class handles
+     * the task manager's JTable editor
+     */
+    private class VSTaskManagerCellEditor extends AbstractCellEditor
+                implements TableCellEditor {
+        /** the serial version uid */
+        private static final long serialversionuid = 1l;
+
+        /** The JTable model */
+        private VSTaskManagerTableModel model;
+
+        /**
+         * Instantiates a new VSTaskManagerCellEditor object.
+         *
+         * @param model the model
+         */
+        public VSTaskManagerCellEditor(VSTaskManagerTableModel model) {
+            this.model = model;
+        }
+
+        /**
+        /* (non-Javadoc)
+         * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(
+         *      javax.swing.JTable, java.lang.Object, boolean, int, int)
+         */
+        public Component getTableCellEditorComponent(final JTable table,
+                Object object,
+                boolean isSelected,
+                final int row,
+                final int col) {
+            switch (col) {
+            case 0:
+                Long val = (Long) model.getValueAt(row, col);
+                final JTextField valField = new JTextField(val.toString());
+                valField.setBackground(Color.WHITE);
+                valField.setBorder(null);
+                valField.addActionListener(new ActionListener() {
+					private boolean isRed = false;
+					public void actionPerformed(ActionEvent ae) {
+                        try {
+                            Long val = Long.valueOf(valField.getText());
+							VSTask task = model.removeTaskAtRow(row);
+							task.setTaskTime(val.longValue());
+							taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+							model.addTask(task);
+							if (isRed) {
+                            	valField.setBackground(Color.WHITE);
+								isRed = false;
+							}
+							int index = model.getIndexOf(task);
+							ListSelectionModel selectionModel =
+								table.getSelectionModel();
+							selectionModel.setSelectionInterval(index, index);
+							fireEditingStopped();
+
+                        } catch (NumberFormatException exc) {
+                            valField.setBackground(Color.RED);
+							isRed = true;
+                        }
+                    }
+                });
+                return valField;
+            case 1:
+                break;
+            case 2:
+                break;
+            }
+
+            return new JTextField();
+        }
+
+        /* (non-Javadoc)
+         * @see javax.swing.CellEditor#getCellEditorValue()
+         */
+        public Object getCellEditorValue() {
+            return new String("");
+        }
     }
 
 
@@ -786,6 +877,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
         VSProcess process = getSelectedProcess();
         VSTaskManagerTableModel model =
             new VSTaskManagerTableModel(process, localTasks);
+        VSTaskManagerCellEditor cellEditor =
+            new VSTaskManagerCellEditor(model);
 
         if (localTasks)
             taskManagerLocalModel = model;
@@ -793,7 +886,9 @@ public class VSSimulator extends JPanel implements VSSerializable {
             taskManagerGlobalModel = model;
 
         JTable table = new JTable(model);
+        table.setDefaultEditor(Object.class, cellEditor);
         model.setTable(table);
+
         table.addMouseListener(model);
 
         TableColumn col = table.getColumnModel().getColumn(0);
