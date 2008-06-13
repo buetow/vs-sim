@@ -24,6 +24,7 @@
 package simulator;
 
 import java.awt.*;
+import java.util.Locale;
 import javax.swing.*;
 
 import events.*;
@@ -86,6 +87,7 @@ public class VSMain {
                 UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) { }
 
+		Locale.setDefault(Locale.GERMAN);
         javax.swing.JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         VSPrefs prefs = VSDefaultPrefs.init();
         VSRegisteredEvents.init(prefs);
