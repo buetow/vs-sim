@@ -24,11 +24,13 @@
 package exceptions;
 
 /**
- * The Interface VSParseIntegerVectorException, this exception is thrown if
- * the VSAbstractEditor is not able to parse the vector fields input of the
- * user.
+ * The Interface VSEventNotCopyableException, this exception is thrown if
+ * the someone tried to copy a not copyable event!
  *
  * @author Paul C. Buetow
  */
-public class VSParseIntegerVectorException extends Exception {
+public class VSEventNotCopyableException extends Exception {
+    public VSEventNotCopyableException(String descr) {
+        super(descr);
+    }
 }

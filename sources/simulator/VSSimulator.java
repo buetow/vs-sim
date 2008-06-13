@@ -289,6 +289,9 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
          */
         public boolean isCellEditable(int row, int col) {
+            if (col == 2)
+                return false;
+
             return true;
         }
 
@@ -314,24 +317,34 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * Removes the task at a specified row.
          *
          * @param row the row
-		 * @return The removed task
+         * @return The removed task
          */
         public VSTask removeTaskAtRow(int row) {
             VSTask task = tasks.get(row);
             tasks.remove(task);
             taskManager.removeTask(task);
             fireTableDataChanged();
-			return task;
+            return task;
+        }
+
+        /**
+         * Gets the task at a specified row.
+         *
+         * @param row the row
+         * @return The task
+         */
+        public VSTask getTaskAtRow(int row) {
+            return tasks.get(row);
         }
 
         /**
          * Gets the index of a specific task
          *
          * @param task The task
-		 * @return The index of the task
+         * @return The index of the task
          */
         public int getIndexOf(VSTask task) {
-			return tasks.indexOf(task);
+            return tasks.indexOf(task);
         }
 
         /**
@@ -456,38 +469,61 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 valField.setBackground(Color.WHITE);
                 valField.setBorder(null);
                 valField.addActionListener(new ActionListener() {
-					private boolean isRed = false;
-					public void actionPerformed(ActionEvent ae) {
+                    private boolean isRed = false;
+                    public void actionPerformed(ActionEvent ae) {
                         try {
                             Long val = Long.valueOf(valField.getText());
-							VSTask task = model.removeTaskAtRow(row);
-							task.setTaskTime(val.longValue());
-							taskManager.addTask(task, VSTaskManager.PROGRAMMED);
-							model.addTask(task);
-							if (isRed) {
-                            	valField.setBackground(Color.WHITE);
-								isRed = false;
-							}
-							int index = model.getIndexOf(task);
-							ListSelectionModel selectionModel =
-								table.getSelectionModel();
-							selectionModel.setSelectionInterval(index, index);
-							fireEditingStopped();
+                            VSTask task = model.removeTaskAtRow(row);
+                            task.setTaskTime(val.longValue());
+                            taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+                            model.addTask(task);
+                            if (isRed) {
+                                valField.setBackground(Color.WHITE);
+                                isRed = false;
+                            }
+                            int index = model.getIndexOf(task);
+                            ListSelectionModel selectionModel =
+                                table.getSelectionModel();
+                            selectionModel.setSelectionInterval(index, index);
+                            fireEditingStopped();
 
                         } catch (NumberFormatException exc) {
                             valField.setBackground(Color.RED);
-							isRed = true;
+                            isRed = true;
                         }
                     }
                 });
                 return valField;
             case 1:
-                break;
+                Integer current[] = { (Integer) model.getValueAt(row, col) };
+                final JComboBox comboBox = new JComboBox(current);
+
+                Integer pids[] = simulatorCanvas.getProcessIDs();
+                for (Integer pid : pids)
+                    comboBox.addItem(pid);
+
+                comboBox.setSelectedIndex(0);
+                comboBox.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent ae) {
+                        System.out.println("DFSDF ");
+                        int index = comboBox.getSelectedIndex() - 1;
+                        if (index >= 0) {
+                            VSTask task = model.getTaskAtRow(row);
+                            VSProcess process =
+                                simulatorCanvas.getProcess(index);
+                            task.setProcess(process);
+                        }
+
+                        fireEditingStopped();
+                    }
+                });
+
+                return comboBox;
             case 2:
                 break;
             }
 
-            return new JTextField();
+            return null;
         }
 
         /* (non-Javadoc)

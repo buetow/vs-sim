@@ -1454,6 +1454,23 @@ public class VSSimulatorCanvas extends Canvas
     }
 
     /**
+     * Gets the processes IDs.
+     *
+     * @return the processes IDs
+     */
+    public Integer[] getProcessIDs() {
+        Integer pids[] = null;
+
+        synchronized (processes) {
+            pids = new Integer[numProcesses];
+            for (int i = 0; i < numProcesses; ++i)
+                pids[i] = new Integer(processes.get(i).getProcessID());
+        }
+
+        return pids;
+    }
+
+    /**
      * Gets the processes.
      *
      * @return the processes

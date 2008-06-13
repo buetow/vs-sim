@@ -23,16 +23,23 @@
 
 package events.implementations;
 
-import events.VSAbstractEvent;
+import events.*;
 
 /**
  * The class VSProcessCrashEvent. This event makes a process to crash.
  *
  * @author Paul C. Buetow
  */
-public class VSProcessCrashEvent extends VSAbstractEvent {
+public class VSProcessCrashEvent extends VSAbstractEvent
+            implements VSCopyableEvent {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
+
+    /* (non-Javadoc)
+     * @see events.VSCopyableEvent#initCopy(events.VSAbstractEvent)
+     */
+    public void initCopy(VSAbstractEvent copy) {
+    }
 
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()

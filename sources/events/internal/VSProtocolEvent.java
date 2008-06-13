@@ -38,7 +38,8 @@ import serialize.VSSerialize;
  *
  * @author Paul C. Buetow
  */
-public class VSProtocolEvent extends VSAbstractInternalEvent {
+public class VSProtocolEvent extends VSAbstractInternalEvent
+            implements VSCopyableEvent {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -51,16 +52,15 @@ public class VSProtocolEvent extends VSAbstractInternalEvent {
     /** The event is a protocol activation if true. Else it is a deactivation */
     private boolean isProtocolActivation;
 
-    /** 
-     * Fills a copy of this event with its values
-	 *
-	 * @param copy The copy
+    /* (non-Javadoc)
+     * @see events.VSCopyableEvent#initCopy(events.VSAbstractEvent)
      */
-    public void initCopy(VSProtocolEvent copy) {
-		copy.isClientProtocol(isClientProtocol);
-		copy.isProtocolActivation(isProtocolActivation);
-		copy.setProtocolClassname(protocolClassname);
-	}
+    public void initCopy(VSAbstractEvent copy) {
+        VSProtocolEvent protocolEventCopy = (VSProtocolEvent) copy;
+        protocolEventCopy.isClientProtocol(isClientProtocol);
+        protocolEventCopy.isProtocolActivation(isProtocolActivation);
+        protocolEventCopy.setProtocolClassname(protocolClassname);
+    }
 
     /* (non-Javadoc)
      * @see events.VSAbstractEvent#onInit()

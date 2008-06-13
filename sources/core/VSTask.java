@@ -28,6 +28,7 @@ import java.io.*;
 import events.*;
 import events.implementations.*;
 import events.internal.*;
+import exceptions.*;
 import prefs.VSPrefs;
 import protocols.VSAbstractProtocol;
 import serialize.*;
@@ -101,9 +102,20 @@ public class VSTask implements Comparable, VSSerializable {
      * @param task the task to copy
      */
     public VSTask(VSTask task) {
+        VSAbstractEvent event = task.getEvent();
+
+        try {
+            VSAbstractEvent copy = event.getCopy();
+            // Use the copy of the event object
+            event = copy;
+        } catch (VSEventNotCopyableException e) {
+            // Use the original event object
+            System.out.println(e);
+        }
+
         init(task.getTaskTime(),
              task.getProcess(),
-             task.getEvent(),
+             event,
              !task.isGlobalTimed());
     }
 
@@ -293,6 +305,17 @@ public class VSTask implements Comparable, VSSerializable {
      */
     public void setTaskTime(long taskTime) {
         this.taskTime = taskTime;
+    }
+
+    /**
+     * Sets the process.
+     *
+     * @param process the process
+     */
+    public void setProcess(VSProcess process) {
+        this.process = process;
+        // TODO:: use the process' specific event object
+        //this.event  = null;
     }
 
     /**

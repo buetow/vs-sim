@@ -26,7 +26,6 @@ package events.internal;
 import java.io.*;
 
 import core.VSMessage;
-import events.VSCopyableEvent;
 import protocols.VSAbstractProtocol;
 import serialize.VSNotSerializable;
 
@@ -37,7 +36,7 @@ import serialize.VSNotSerializable;
  * @author Paul C. Buetow
  */
 public class VSMessageReceiveEvent extends VSAbstractInternalEvent
-            implements VSNotSerializable, VSCopyableEvent {
+            implements VSNotSerializable {
     /** The serioal version uid */
     private static final long serialVersionUID = 1L;
 
