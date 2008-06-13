@@ -55,21 +55,38 @@ abstract public class VSAbstractEvent extends VSPrefs {
     private String eventClassname;
 
     /**
+     * Creates a copy of the event and using a new process.
+     *
+     * @param newProcess The new process
+     * @return The copy
+     */
+    final public VSAbstractEvent getCopy(VSProcess theProcess) 
+		throws VSEventNotCopyableException {
+
+		if (theProcess == null)
+			theProcess = process;
+
+        if (!(this instanceof VSCopyableEvent))
+            throw new VSEventNotCopyableException(
+					eventShortname + " (" + eventClassname + ")");
+
+        VSAbstractEvent copy =
+            VSRegisteredEvents.createEventInstanceByClassname(
+                eventClassname, theProcess);
+
+        ((VSCopyableEvent) this).initCopy(copy);
+		copy.setShortname(eventShortname);
+
+        return copy;
+    }
+
+    /**
      * Creates a copy of the event.
      *
      * @return The copy
      */
     final public VSAbstractEvent getCopy() throws VSEventNotCopyableException {
-        if (!(this instanceof VSCopyableEvent))
-            throw new VSEventNotCopyableException(eventShortname);
-
-        VSAbstractEvent copy =
-            VSRegisteredEvents.createEventInstanceByClassname(
-                eventClassname, process);
-
-        ((VSCopyableEvent) this).initCopy(copy);
-
-        return copy;
+        return getCopy(null);
     }
 
     /**

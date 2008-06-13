@@ -505,13 +505,15 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 comboBox.setSelectedIndex(0);
                 comboBox.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
-                        System.out.println("DFSDF ");
                         int index = comboBox.getSelectedIndex() - 1;
                         if (index >= 0) {
-                            VSTask task = model.getTaskAtRow(row);
+                            VSTask task = model.removeTaskAtRow(row);
                             VSProcess process =
                                 simulatorCanvas.getProcess(index);
                             task.setProcess(process);
+                            taskManager.addTask(task, VSTaskManager.PROGRAMMED);
+							if (allProcessesAreSelected())
+                            	model.addTask(task);
                         }
 
                         fireEditingStopped();
@@ -1186,6 +1188,16 @@ public class VSSimulator extends JPanel implements VSSerializable {
      */
     private int getSelectedProcessNum() {
         return processesComboBox.getSelectedIndex();
+    }
+
+    /**
+     * Checks if 'all processes' is selected 
+     *
+     * @return True, if 'all processes' are selected, else false
+     */
+    private boolean allProcessesAreSelected() {
+        return processesComboBox.getSelectedIndex() + 1
+			== processesComboBox.getItemCount();
     }
 
     /**

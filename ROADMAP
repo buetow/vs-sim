@@ -1,18 +1,16 @@
-If Copy group of events and events changable -> make copy constructor of changed
-event!
 Must do:
+	JComboBox if PID changed @ Table Editor -> remove if onMouseOver
+	able to open a saved simulator @ first window
 	Warn if a file does not exists while trying to open!
 	Reliable Multicast
-	Helper:
-		Print warning if not activated protocol while doing a protocol request
 	Task Manager right click:
-		Change PID
-		Change time
-		Copy event
+		change event
 	Paint area right click:
 		Add local event
 		Add global event (in expert mode)
 Evtl.:
+	Helper:
+		Print warning if not activated protocol while doing a protocol request
 	Splash screen
 	Kapseln: Protokolle sollen nur fuer sie bestimtme methoden aufrufen koennen
 	Periodische Tasks anlegen koennen

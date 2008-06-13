@@ -105,12 +105,11 @@ public class VSTask implements Comparable, VSSerializable {
         VSAbstractEvent event = task.getEvent();
 
         try {
-            VSAbstractEvent copy = event.getCopy();
             // Use the copy of the event object
-            event = copy;
+            event = event.getCopy();
+
         } catch (VSEventNotCopyableException e) {
             // Use the original event object
-            System.out.println(e);
         }
 
         init(task.getTaskTime(),
@@ -313,9 +312,24 @@ public class VSTask implements Comparable, VSSerializable {
      * @param process the process
      */
     public void setProcess(VSProcess process) {
-        this.process = process;
-        // TODO:: use the process' specific event object
-        //this.event  = null;
+		/* Only do it if the process differs */
+		if (!this.process.equals(process)) {
+        	this.process = process;
+
+			try {
+            	// Use the copy of the event object
+				event  = event.getCopy(process);
+
+        	} catch (VSEventNotCopyableException e) {
+				if (event instanceof VSAbstractProtocol) {
+					String eventShortname = event.getShortname();
+					event = process.getProtocolObject(event.getClassname());
+					event.setShortname(eventShortname);
+				} else {
+					System.out.println(e);
+				}
+			}
+		}
     }
 
     /**
