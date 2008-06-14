@@ -227,8 +227,9 @@ public final class VSSerialize {
             ObjectInputStream objectInputStream =
                 new ObjectInputStream(fileInputStream);
 
-            VSPrefs prefs = new VSPrefs();
+            VSDefaultPrefs prefs = new VSDefaultPrefs();
             prefs.deserialize(this, objectInputStream);
+			prefs.addWithDefaults();
             this.setObject("prefs", prefs);
 
             simulator = new VSSimulator(prefs, simulatorFrame);

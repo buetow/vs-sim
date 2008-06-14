@@ -43,16 +43,23 @@ public class VSDefaultPrefs extends VSPrefs {
      * @return the lang.process.removeprefs
      */
     public static VSPrefs init() {
-        VSPrefs prefs = new VSDefaultPrefs();
+        VSDefaultPrefs prefs = new VSDefaultPrefs();
         prefs.fillWithDefaults();
         return prefs;
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillWithDefaults()
+    /**
+     * Fill everything with ts defaults.
      */
     public void fillWithDefaults() {
         super.clear();
+		addWithDefaults();
+    }
+
+    /**
+     * Adds default values if not existent.
+     */
+    public void addWithDefaults() {
         fillDefaultBooleans();
         fillDefaultColors();
         fillDefaultFloats();
@@ -61,8 +68,8 @@ public class VSDefaultPrefs extends VSPrefs {
         fillDefaultStrings();
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillDefaultStrings()
+    /**
+     * Fill with default strings.
      */
     public void fillDefaultStrings() {
         initString("lang.about", "About");
@@ -174,8 +181,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.window.new", "Neues Fenster");
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillDefaultIntegers()
+    /**
+     * Fill with default integers.
      */
     public void fillDefaultIntegers() {
         /* Simulator prefs */
@@ -216,8 +223,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillDefaultFloats()
+    /**
+     * Fill with default floats.
      */
     public void fillDefaultFloats() {
         /* Simulator prefs */
@@ -234,8 +241,8 @@ public class VSDefaultPrefs extends VSPrefs {
         initLong("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillDefaultColors()
+    /**
+     * Fill with default colors.
      */
     public void fillDefaultColors() {
         /* Internal prefs */
@@ -253,15 +260,14 @@ public class VSDefaultPrefs extends VSPrefs {
         initColor("col.message.lost", new Color(0xFF, 0x00, 0x00));
     }
 
-    /* (non-Javadoc)
-     * @see prefs.VSPrefs#fillDefaultBooleans()
+    /**
+     * Fill with default booleans.
      */
     public void fillDefaultBooleans() {
-        //initBoolean("message.broadcast", false, "Nachrichten sind immer Broadcasts");
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
         initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtausfallw'k. bilden");
-        initBoolean("sim.messages.relevant", true, "Nur alle relevanten Nachrichten ausliefern");
+        initBoolean("sim.messages.relevant", true, "Nur relevante Nachrichten anzeigen");
         initBoolean("sim.periodic", false, "Simulation periodisch wiederholen");
     }
 }

@@ -910,36 +910,6 @@ public class VSPrefs implements VSSerializable {
         stringPrefs.put(key, val);
     }
 
-    /**
-     * Fill default strings.
-     */
-    public void fillDefaultStrings() {}
-
-    /**
-     * Fill default integers.
-     */
-    public void fillDefaultIntegers() {}
-
-    /**
-     * Fill default floats.
-     */
-    public void fillDefaultFloats() {}
-
-    /**
-     * Fill default colors.
-     */
-    public void fillDefaultColors() {}
-
-    /**
-     * Fill default booleans.
-     */
-    public void fillDefaultBooleans() {}
-
-    /**
-     * Fill with defaults.
-     */
-    public void fillWithDefaults() {}
-
     /* (non-Javadoc)
      * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
      *	java.io.ObjectOutputStream)
