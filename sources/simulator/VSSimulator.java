@@ -1073,7 +1073,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 int index = comboBox.getSelectedIndex();
                 VSCreateTask createTask = createTasks.get(index);
 
-                if (createTask == null)
+                if (createTask.isDummy())
                     return false;
 
                 ArrayList<VSProcess> processes =
@@ -1106,17 +1106,20 @@ public class VSSimulator extends JPanel implements VSSerializable {
             VSRegisteredEvents.getNonProtocolClassnames();
 
         comboBox.setMaximumRowCount(20);
-        comboBox.addItem("----- " + prefs.getString("lang.events.process") +
-                         " -----");
+		String menuText = "----- " + 
+						prefs.getString("lang.events.process") +
+                         " -----";
+        comboBox.addItem(menuText);
+
         if (createTaskFlag)
-            createTasks.add(null);
+            createTasks.add(new VSCreateTask(menuText));
 
         for (String eventClassname : eventClassnames) {
             String eventShortname =
                 VSRegisteredEvents.getShortnameByClassname(eventClassname);
             comboBox.addItem(eventShortname);
             if (createTaskFlag)
-                createTasks.add(new VSCreateTask(eventClassname));
+                createTasks.add(new VSCreateTask(menuText, eventClassname));
         }
 
         String activate = prefs.getString("lang.activate");
@@ -1135,29 +1138,34 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 VSRegisteredEvents.getShortnameByClassname(eventClassname);
             String eventShortname = null;
 
-            comboBox.addItem("----- " + eventShortname_ + " " +
-                             protocol + " -----");
+			menuText = "----- " + eventShortname_ + " " +
+                             protocol + " -----";
+            comboBox.addItem(menuText);
+
             if (createTaskFlag)
-                createTasks.add(null);
+                createTasks.add(new VSCreateTask(menuText));
 
             if (VSRegisteredEvents.isOnServerStartProtocol(eventClassname))
                 eventShortname = eventShortname_ + " " + serverRequest;
             else
                 eventShortname = eventShortname_ + " " + clientRequest;
 
-            comboBox.addItem(eventShortname);
+			menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag) {
-                VSCreateTask createTask = new VSCreateTask(eventClassname);
+                VSCreateTask createTask = new VSCreateTask(menuText,
+						eventClassname);
                 createTask.setShortname(eventShortname);
                 createTask.isRequest(true);
                 createTasks.add(createTask);
             }
 
             eventShortname = eventShortname_ + " " + client + " " + activate;
-            comboBox.addItem(eventShortname);
+			menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
-                    new VSCreateTask(protocolEventClassname);
+                    new VSCreateTask(menuText, protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(true);
                 createTask.setProtocolClassname(eventClassname);
@@ -1166,10 +1174,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + client + " " + deactivate;
-            comboBox.addItem(eventShortname);
+			menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
-                    new VSCreateTask(protocolEventClassname);
+                    new VSCreateTask(menuText, protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(true);
                 createTask.setProtocolClassname(eventClassname);
@@ -1178,10 +1187,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + server + " " + activate;
-            comboBox.addItem(eventShortname);
+			menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
-                    new VSCreateTask(protocolEventClassname);
+                    new VSCreateTask(menuText, protocolEventClassname);
                 createTask.isProtocolActivation(true);
                 createTask.isClientProtocol(false);
                 createTask.setProtocolClassname(eventClassname);
@@ -1190,10 +1200,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + server + " " + deactivate;
-            comboBox.addItem(eventShortname);
+			menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
-                    new VSCreateTask(protocolEventClassname);
+                    new VSCreateTask(menuText, protocolEventClassname);
                 createTask.isProtocolDeactivation(true);
                 createTask.isClientProtocol(false);
                 createTask.setProtocolClassname(eventClassname);
@@ -1461,6 +1472,17 @@ public class VSSimulator extends JPanel implements VSSerializable {
      */
     public synchronized VSPrefs getPrefs() {
         return prefs;
+    }
+
+    /**
+     * Gets the create tasks objects. Those objects are for creating new tasks
+	 * via the task manager GUI or via right click on the paint area of the
+	 * simulator canvas!
+     *
+     * @return The create tasks objects
+     */
+    ArrayList<VSCreateTask> getCreateTasksObjects() {
+        return createTasks;
     }
 
     /* (non-Javadoc)

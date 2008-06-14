@@ -41,6 +41,9 @@ public class VSCreateTask {
     /** The event classname. */
     private String eventClassname;
 
+    /** The create task menu string. */
+    private String menuText;
+
     /** The protocol classname. */
     private String protocolClassname;
 
@@ -64,10 +67,22 @@ public class VSCreateTask {
     /**
      * Instantiates a new VSCreateTask object.
      *
+     * @param menuText the menu text
      * @param eventClassname the event classname
      */
-    public VSCreateTask(String eventClassname) {
+    public VSCreateTask(String menuText, String eventClassname) {
+		this.menuText = menuText;
         this.eventClassname = eventClassname;
+    }
+
+    /**
+     * Instantiates a new VSCreateTask dummy object.
+     *
+     * @param menuText the menu text
+     */
+    public VSCreateTask(String menuText) {
+		this.menuText = menuText;
+        this.eventClassname = null;
     }
 
     /**
@@ -97,7 +112,7 @@ public class VSCreateTask {
     }
 
     /**
-     * Checks if is client protocol.
+     * Sets if it is a client protocol.
      *
      * @param isClientProtocol the is client protocol
      */
@@ -106,12 +121,21 @@ public class VSCreateTask {
     }
 
     /**
-     * Checks if is client request.
+     * Sets if it is a client request.
      *
      * @param isRequest the is client request
      */
     public void isRequest(boolean isRequest) {
         this.isRequest = isRequest;
+    }
+
+    /**
+     * Checks if it is a dummy object..
+     *
+     * @return true, if dummy
+     */
+    public boolean isDummy() {
+        return eventClassname == null;
     }
 
     /**
@@ -130,6 +154,15 @@ public class VSCreateTask {
      */
     public void setShortname(String shortname) {
         this.shortname = shortname;
+    }
+
+    /**
+     * Gets the create tasks menu text.
+     *
+     * @return The text 
+     */
+    public String getMenuText() {
+        return menuText;
     }
 
     /**
