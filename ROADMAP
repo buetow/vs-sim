@@ -2,8 +2,6 @@ Must do:
 	able to open a saved simulator @ first window
 	Warn if a file does not exists while trying to open!
 	Reliable Multicast
-	Task Manager right click:
-		change event
 	Paint area right click:
 		Add local event
 		Add global event (in expert mode)
