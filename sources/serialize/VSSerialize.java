@@ -220,6 +220,7 @@ public final class VSSerialize {
                                      VSSimulatorFrame simulatorFrame) {
         VSSimulator simulator = null;
         simulatorFrame.resetCurrentSimulator();
+        LAST_FILENAME = filename;
 
         try {
             FileInputStream fileInputStream =
