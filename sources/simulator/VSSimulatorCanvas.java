@@ -555,12 +555,15 @@ public class VSSimulatorCanvas extends Canvas
                     };
 
                     JPopupMenu popup = new JPopupMenu();
-                    JMenuItem item = new JMenuItem(
+                    JMenuItem item = null;
+					if (process != null) {
+                    item = new JMenuItem(
                         finalPrefs.getString("lang.process.selected") +
                         ": " + process.getProcessID());
                     item.setEnabled(false);
                     popup.add(item);
                     popup.addSeparator();
+					}
 
                     item = new JMenuItem(
                         finalPrefs.getString("lang.process.edit"));
@@ -609,6 +612,8 @@ public class VSSimulatorCanvas extends Canvas
                     JMenu subMenu = new JMenu(
                         finalPrefs.getString("lang.event.add.local")
                         + " " + timeString);
+					if (process == null)
+						subMenu.setEnabled(false);
                     //subMenu.addActionListener(actionListener);
                     popup.add(subMenu);
                     item = new JMenuItem("foo");
@@ -618,6 +623,8 @@ public class VSSimulatorCanvas extends Canvas
                         subMenu = new JMenu(
                             finalPrefs.getString("lang.event.add.global")
                             + " " + timeString);
+					if (process == null)
+						subMenu.setEnabled(false);
                         popup.add(subMenu);
                     }
 
@@ -1044,8 +1051,6 @@ public class VSSimulatorCanvas extends Canvas
     private VSProcess getProcessAtYPos(int yPos) {
         final int reachDistance = (int) (yDistance/3);
         int y = YOFFSET + YOUTER_SPACEING + YSEPLINE_SPACEING;
-        //int bla = 0;
-        //System.out.println("FOO " + bla++);
 
         int yOffset = numProcesses > 1
                       ?  (int) ((paintSize-2*
@@ -1058,17 +1063,13 @@ public class VSSimulatorCanvas extends Canvas
             if (yPos < y + reachDistance && yPos > y - reachDistance -
                     LINE_WIDTH) {
                 VSProcess process = null;
-                //System.out.println("FOO " + bla++);
                 synchronized (processes) {
-                    //System.out.println("FOO " + bla++);
                     process = processes.get(i);
                 }
-                //System.out.println("FOO " + bla++);
                 return process;
             }
             y += yOffset;
         }
-        //System.out.println("BAZ " + bla++);
 
         return null;
     }

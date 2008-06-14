@@ -1,4 +1,3 @@
-bugfix: PID table col width
 Must do:
 	Warn if a file does not exists while trying to open!
 	Reliable Multicast

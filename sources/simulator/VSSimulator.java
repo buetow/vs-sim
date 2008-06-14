@@ -548,7 +548,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 comboBox.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
                         int index = comboBox.getSelectedIndex() - 1;
-                        if (model.rowExists(index)) {
+                        if (model.rowExists(row)) {
                             VSTask task = model.removeTaskAtRow(row);
                             VSProcess process =
                                 simulatorCanvas.getProcess(index);
@@ -979,7 +979,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         col.setResizable(false);
 
         col = table.getColumnModel().getColumn(1);
-        col.setMaxWidth(23);
+        col.setMaxWidth(40);
         col.setResizable(false);
 
         col = table.getColumnModel().getColumn(2);
