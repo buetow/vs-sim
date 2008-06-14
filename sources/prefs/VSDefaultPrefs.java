@@ -94,6 +94,9 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
         initString("lang.event", "Ereignis");
+        initString("lang.event.add.time", "bei");
+        initString("lang.event.add.local", "Lokales Ereignis einfügen");
+        initString("lang.event.add.global", "Globales Ereignis einfügen");
         initString("lang.events", "Ereignisse");
         initString("lang.events.process", "Prozessereignisse");
         //initString("lang.events.protocol", "Protokollereignisse");
@@ -169,6 +172,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time", "Zeit");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
+        initString("lang.process.selected", "Aktuell ausgewählter Prozess");
         initString("lang.timed.global", "Globale Ereignisse");
         initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.type", "Typ");
