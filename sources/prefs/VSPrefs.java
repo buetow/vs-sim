@@ -885,7 +885,7 @@ public class VSPrefs implements VSSerializable {
      */
     public synchronized void initString(String key, String val) {
         //if (!stringPrefs.containsKey(key))
-            stringPrefs.put(key, val);
+        stringPrefs.put(key, val);
     }
 
     /**

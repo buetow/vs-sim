@@ -76,6 +76,15 @@ public class VSSimulatorFrame extends VSFrame {
     /** The menu file. */
     private JMenu menuFile;
 
+    /** The close item. */
+    private JMenuItem closeItem;
+
+    /** The save item. */
+    private JMenuItem saveItem;
+
+    /** The save as item. */
+    private JMenuItem saveAsItem;
+
     /** The menu simulator. */
     private JMenu menuSimulator;
 
@@ -228,7 +237,10 @@ public class VSSimulatorFrame extends VSFrame {
         resetButton.setEnabled(false);
         startButton.setEnabled(false);
         menuEdit.setEnabled(false);
-        menuFile.setEnabled(false);
+        //menuFile.setEnabled(false);
+        closeItem.setEnabled(false);
+        saveItem.setEnabled(false);
+        saveAsItem.setEnabled(false);
         menuSimulator.setEnabled(false);
     }
 
@@ -250,13 +262,13 @@ public class VSSimulatorFrame extends VSFrame {
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
-        menuItem = new JMenuItem(
+        closeItem = new JMenuItem(
             prefs.getString("lang.simulator.close"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.close"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(actionListener);
-        menuFile.add(menuItem);
+        closeItem.setAccelerator(KeyStroke.getKeyStroke(
+                                     prefs.getInteger("keyevent.close"),
+                                     ActionEvent.ALT_MASK));
+        closeItem.addActionListener(actionListener);
+        menuFile.add(closeItem);
 
         menuFile.addSeparator();
 
@@ -277,19 +289,19 @@ public class VSSimulatorFrame extends VSFrame {
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
-        menuItem = new JMenuItem(prefs.getString("lang.save"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+        saveItem = new JMenuItem(prefs.getString("lang.save"));
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.save"),
                                     ActionEvent.ALT_MASK));
-        menuItem.addActionListener(actionListener);
-        menuFile.add(menuItem);
+        saveItem.addActionListener(actionListener);
+        menuFile.add(saveItem);
 
-        menuItem = new JMenuItem(prefs.getString("lang.saveas"));
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(
-                                    prefs.getInteger("keyevent.saveas"),
-                                    ActionEvent.ALT_MASK));
-        menuItem.addActionListener(actionListener);
-        menuFile.add(menuItem);
+        saveAsItem = new JMenuItem(prefs.getString("lang.saveas"));
+        saveAsItem.setAccelerator(KeyStroke.getKeyStroke(
+                                      prefs.getInteger("keyevent.saveas"),
+                                      ActionEvent.ALT_MASK));
+        saveAsItem.addActionListener(actionListener);
+        menuFile.add(saveAsItem);
 
         menuFile.addSeparator();
 
@@ -384,9 +396,11 @@ public class VSSimulatorFrame extends VSFrame {
             public void stateChanged(ChangeEvent ce) {
                 JTabbedPane pane = (JTabbedPane) ce.getSource();
                 currentSimulator = (VSSimulator) pane.getSelectedComponent();
-                currentSimulator.getSimulatorCanvas().paint();
-                updateEditMenu();
-                updateSimulatorMenu();
+                if (currentSimulator != null) {
+                    currentSimulator.getSimulatorCanvas().paint();
+                    updateEditMenu();
+                    updateSimulatorMenu();
+                }
             }
         });
 
@@ -495,7 +509,10 @@ public class VSSimulatorFrame extends VSFrame {
 
         if (simulators.size() == 1) {
             menuEdit.setEnabled(true);
-            menuFile.setEnabled(true);
+            //menuFile.setEnabled(true);
+            closeItem.setEnabled(true);
+            saveItem.setEnabled(true);
+            saveAsItem.setEnabled(true);
             menuSimulator.setEnabled(true);
         }
     }
@@ -507,13 +524,21 @@ public class VSSimulatorFrame extends VSFrame {
      */
     public void removeSimulator(VSSimulator simulatorToRemove) {
         if (simulators.size() == 1) {
-            dispose();
-
-        } else {
-            simulators.remove(simulatorToRemove);
-            tabbedPane.remove(simulatorToRemove);
-            simulatorToRemove.getSimulatorCanvas().stopThread();
+            pauseButton.setEnabled(false);
+            replayButton.setEnabled(false);
+            resetButton.setEnabled(false);
+            startButton.setEnabled(false);
+            menuEdit.setEnabled(false);
+            //menuFile.setEnabled(false);
+            closeItem.setEnabled(false);
+            saveItem.setEnabled(false);
+            saveAsItem.setEnabled(false);
+            menuSimulator.setEnabled(false);
         }
+
+        simulators.remove(simulatorToRemove);
+        tabbedPane.remove(simulatorToRemove);
+        simulatorToRemove.getSimulatorCanvas().stopThread();
     }
 
     /**
@@ -536,6 +561,9 @@ public class VSSimulatorFrame extends VSFrame {
      * Resets the current simulator
      */
     public void resetCurrentSimulator() {
+        if (currentSimulator == null)
+            return;
+
         VSMenuItemStates menuItemState =
             currentSimulator.getMenuItemStates();
         menuItemState.setStart(true);

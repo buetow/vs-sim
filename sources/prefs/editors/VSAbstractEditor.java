@@ -233,7 +233,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
         stringKeys = filterKeys(prefsToEdit.getStringKeySet());
 
-		fillEditPanelFront(prefsToEdit);
+        fillEditPanelFront(prefsToEdit);
         fillEditPanel(prefsToEdit);
     }
 
@@ -544,7 +544,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param prefsToEdit the prefs to edit
      */
     protected void fillEditPanelFront(VSPrefs prefsToEdit) {
-	}
+    }
 
     /**
      * Fills the edit panel.
