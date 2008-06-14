@@ -143,6 +143,12 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /** The task manager local model. */
     private VSTaskManagerTableModel taskManagerLocalModel;
 
+    /** The task manager global editor. */
+    private VSTaskManagerCellEditor taskManagerGlobalEditor;
+
+    /** The task manager local editor. */
+    private VSTaskManagerCellEditor taskManagerLocalEditor;
+
     /** The simulator has started. */
     private boolean hasStarted = false;
 
@@ -195,6 +201,9 @@ public class VSSimulator extends JPanel implements VSSerializable {
         /** The table. */
         private JTable table;
 
+        /** The editor. */
+        private VSTaskManagerCellEditor editor;
+
         /**
          * Instantiates a new VSTaskManagerTableModel object
          *
@@ -219,6 +228,15 @@ public class VSSimulator extends JPanel implements VSSerializable {
          */
         public void setTable(JTable table) {
             this.table = table;
+        }
+
+        /**
+         * Sets the editor.
+         *
+         * @param editor the editor
+         */
+        public void setEditor(VSTaskManagerCellEditor editor) {
+            this.editor = editor;
         }
 
         /**
@@ -325,6 +343,22 @@ public class VSSimulator extends JPanel implements VSSerializable {
             taskManager.removeTask(task);
             fireTableDataChanged();
             return task;
+        }
+
+        /**
+         * Checks if a specific row exists
+         *
+         * @param row the row
+         * @return True, if the row exists. False, if not
+         */
+        public boolean rowExists(int row) {
+			if (row < 0)
+				return false;
+
+			if (tasks.size() <= row)
+				return false;
+
+			return true;
         }
 
         /**
@@ -450,6 +484,14 @@ public class VSSimulator extends JPanel implements VSSerializable {
          */
         public VSTaskManagerCellEditor(VSTaskManagerTableModel model) {
             this.model = model;
+			model.setEditor(this);
+        }
+
+        /**
+         * Stops editing
+         */
+        public void stopEditing() {
+			fireEditingStopped();
         }
 
         /**
@@ -506,7 +548,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 comboBox.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent ae) {
                         int index = comboBox.getSelectedIndex() - 1;
-                        if (index >= 0) {
+                        if (model.rowExists(index)) {
                             VSTask task = model.removeTaskAtRow(row);
                             VSProcess process =
                                 simulatorCanvas.getProcess(index);
@@ -918,10 +960,13 @@ public class VSSimulator extends JPanel implements VSSerializable {
         VSTaskManagerCellEditor cellEditor =
             new VSTaskManagerCellEditor(model);
 
-        if (localTasks)
+        if (localTasks) {
             taskManagerLocalModel = model;
-        else
+			taskManagerLocalEditor = cellEditor;
+		} else {
             taskManagerGlobalModel = model;
+			taskManagerGlobalEditor = cellEditor;
+		}
 
         JTable table = new JTable(model);
         table.setDefaultEditor(Object.class, cellEditor);
@@ -1238,6 +1283,9 @@ public class VSSimulator extends JPanel implements VSSerializable {
     public synchronized void updateTaskManagerTable() {
         VSProcess process = getSelectedProcess();
         boolean allProcesses = process == null;
+
+		taskManagerLocalEditor.stopEditing();
+		taskManagerGlobalEditor.stopEditing();
 
         taskManagerLocalModel.set(process,
                                   VSTaskManagerTableModel.LOCAL,
