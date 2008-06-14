@@ -1,9 +1,6 @@
 Must do:
 	Warn if a file does not exists while trying to open!
 	Reliable Multicast
-	Paint area right click:
-		Add local event
-		Add global event (in expert mode)
 Evtl.:
 	Helper:
 		Print warning if not activated protocol while doing a protocol request

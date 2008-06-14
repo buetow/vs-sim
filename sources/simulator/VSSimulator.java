@@ -1106,10 +1106,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
             VSRegisteredEvents.getNonProtocolClassnames();
 
         comboBox.setMaximumRowCount(20);
-		String menuText = "----- " + 
-						prefs.getString("lang.events.process") +
-                         " -----";
-        comboBox.addItem(menuText);
+        String menuText = prefs.getString("lang.events.process");
+        comboBox.addItem("----- " + menuText + " -----");
 
         if (createTaskFlag)
             createTasks.add(new VSCreateTask(menuText));
@@ -1117,7 +1115,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
         for (String eventClassname : eventClassnames) {
             String eventShortname =
                 VSRegisteredEvents.getShortnameByClassname(eventClassname);
-            comboBox.addItem(eventShortname);
+            menuText = eventShortname;
+            comboBox.addItem(menuText);
             if (createTaskFlag)
                 createTasks.add(new VSCreateTask(menuText, eventClassname));
         }
@@ -1138,9 +1137,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 VSRegisteredEvents.getShortnameByClassname(eventClassname);
             String eventShortname = null;
 
-			menuText = "----- " + eventShortname_ + " " +
-                             protocol + " -----";
-            comboBox.addItem(menuText);
+            menuText = eventShortname_ + " " + protocol;
+            comboBox.addItem("----- " + menuText + " -----");
 
             if (createTaskFlag)
                 createTasks.add(new VSCreateTask(menuText));
@@ -1150,18 +1148,18 @@ public class VSSimulator extends JPanel implements VSSerializable {
             else
                 eventShortname = eventShortname_ + " " + clientRequest;
 
-			menuText = eventShortname;
+            menuText = eventShortname;
             comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask = new VSCreateTask(menuText,
-						eventClassname);
+                        eventClassname);
                 createTask.setShortname(eventShortname);
                 createTask.isRequest(true);
                 createTasks.add(createTask);
             }
 
             eventShortname = eventShortname_ + " " + client + " " + activate;
-			menuText = eventShortname;
+            menuText = eventShortname;
             comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
@@ -1174,7 +1172,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + client + " " + deactivate;
-			menuText = eventShortname;
+            menuText = eventShortname;
             comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
@@ -1187,7 +1185,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + server + " " + activate;
-			menuText = eventShortname;
+            menuText = eventShortname;
             comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
@@ -1200,7 +1198,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             eventShortname = eventShortname_ + " " + server + " " + deactivate;
-			menuText = eventShortname;
+            menuText = eventShortname;
             comboBox.addItem(menuText);
             if (createTaskFlag) {
                 VSCreateTask createTask =
@@ -1476,12 +1474,12 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
     /**
      * Gets the create tasks objects. Those objects are for creating new tasks
-	 * via the task manager GUI or via right click on the paint area of the
-	 * simulator canvas!
+     * via the task manager GUI or via right click on the paint area of the
+     * simulator canvas!
      *
      * @return The create tasks objects
      */
-    ArrayList<VSCreateTask> getCreateTasksObjects() {
+    ArrayList<VSCreateTask> getCreateTaskObjects() {
         return createTasks;
     }
 

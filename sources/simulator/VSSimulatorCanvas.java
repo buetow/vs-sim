@@ -511,6 +511,8 @@ public class VSSimulatorCanvas extends Canvas
         updateFromPrefs();
 
         final VSPrefs finalPrefs = prefs;
+        final VSSimulator finalSimulator = simulator;
+
         addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent me) {
                 final VSProcess process = getProcessAtYPos(me.getY());
@@ -608,7 +610,7 @@ public class VSSimulatorCanvas extends Canvas
 
                     popup.addSeparator();
 
-                    long xPosTime = getXPositionTime(me.getX());
+                    final long xPosTime = getXPositionTime(me.getX());
                     String timeString = finalPrefs.getString(
                                             "lang.event.add.time") +
                                         " " + xPosTime + "ms";
@@ -616,21 +618,73 @@ public class VSSimulatorCanvas extends Canvas
                     JMenu subMenu = new JMenu(
                         finalPrefs.getString("lang.event.add.local")
                         + " " + timeString);
-                    if (process == null)
-                        subMenu.setEnabled(false);
-                    //subMenu.addActionListener(actionListener);
-                    popup.add(subMenu);
-                    item = new JMenuItem("foo");
-                    subMenu.add(item);
 
-                    if (finalPrefs.getBoolean("sim.mode.expert")) {
-                        subMenu = new JMenu(
-                            finalPrefs.getString("lang.event.add.global")
-                            + " " + timeString);
-                        if (process == null)
-                            subMenu.setEnabled(false);
-                        popup.add(subMenu);
+                    ArrayList<VSCreateTask> createTasks =
+                        finalSimulator.getCreateTaskObjects();
+
+                    if (process == null) {
+                        subMenu.setEnabled(false);
+                    } else {
+                        JMenu subSubMenu = null;
+                        for (final VSCreateTask createTask : createTasks) {
+                            if (createTask.isDummy()) {
+                                if (subSubMenu != null)
+                                    subMenu.add(subSubMenu);
+                                subSubMenu = new JMenu(
+                                    createTask.getMenuText());
+                            } else {
+                                item = new JMenuItem(createTask.getMenuText());
+                                item.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                        VSTask task =
+                                            createTask.createTask(process,
+                                                                  xPosTime,
+                                                                  true);
+                                        taskManager.addTask(
+                                            task, VSTaskManager.PROGRAMMED);
+                                        finalSimulator.updateTaskManagerTable();
+                                    }
+                                });
+                                subSubMenu.add(item);
+                            }
+                        }
                     }
+
+                    popup.add(subMenu);
+
+                    subMenu = new JMenu(
+                        finalPrefs.getString("lang.event.add.global")
+                        + " " + timeString);
+                    if (process == null) {
+                        subMenu.setEnabled(false);
+                    } else {
+                        JMenu subSubMenu = null;
+                        for (final VSCreateTask createTask : createTasks) {
+                            if (createTask.isDummy()) {
+                                if (subSubMenu != null)
+                                    subMenu.add(subSubMenu);
+                                subSubMenu = new JMenu(
+                                    createTask.getMenuText());
+                            } else {
+                                item = new JMenuItem(createTask.getMenuText());
+                                item.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                        VSTask task =
+                                            createTask.createTask(process,
+                                                                  xPosTime,
+                                                                  false);
+                                        taskManager.addTask(
+                                            task, VSTaskManager.PROGRAMMED);
+                                        finalSimulator.updateTaskManagerTable();
+                                    }
+                                });
+                                subSubMenu.add(item);
+                            }
+                        }
+                    }
+
+                    if (finalPrefs.getBoolean("sim.mode.expert"))
+                        popup.add(subMenu);
 
                     popup.addSeparator();
 

@@ -71,7 +71,7 @@ public class VSCreateTask {
      * @param eventClassname the event classname
      */
     public VSCreateTask(String menuText, String eventClassname) {
-		this.menuText = menuText;
+        this.menuText = menuText;
         this.eventClassname = eventClassname;
     }
 
@@ -81,7 +81,7 @@ public class VSCreateTask {
      * @param menuText the menu text
      */
     public VSCreateTask(String menuText) {
-		this.menuText = menuText;
+        this.menuText = menuText;
         this.eventClassname = null;
     }
 
@@ -159,7 +159,7 @@ public class VSCreateTask {
     /**
      * Gets the create tasks menu text.
      *
-     * @return The text 
+     * @return The text
      */
     public String getMenuText() {
         return menuText;
