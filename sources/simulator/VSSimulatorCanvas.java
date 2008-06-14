@@ -557,10 +557,10 @@ public class VSSimulatorCanvas extends Canvas
                     JPopupMenu popup = new JPopupMenu();
                     JMenuItem item = new JMenuItem(
                         finalPrefs.getString("lang.process.selected") +
-						": " + process.getProcessID());
-					item.setEnabled(false);
+                        ": " + process.getProcessID());
+                    item.setEnabled(false);
                     popup.add(item);
-					popup.addSeparator();
+                    popup.addSeparator();
 
                     item = new JMenuItem(
                         finalPrefs.getString("lang.process.edit"));
@@ -601,26 +601,25 @@ public class VSSimulatorCanvas extends Canvas
 
                     popup.addSeparator();
 
-					long xPosTime = getXPositionTime(me.getX());
-					String timeString = finalPrefs.getString(
-							"lang.event.add.time") + 
-							" " + xPosTime + "ms"; 
+                    long xPosTime = getXPositionTime(me.getX());
+                    String timeString = finalPrefs.getString(
+                                            "lang.event.add.time") +
+                                        " " + xPosTime + "ms";
 
-                    item = new JMenuItem(
+                    JMenu subMenu = new JMenu(
                         finalPrefs.getString("lang.event.add.local")
-						+ " " + timeString);
-                    item.addActionListener(actionListener);
-					item.setEnabled(false);
-                    popup.add(item);
+                        + " " + timeString);
+                    //subMenu.addActionListener(actionListener);
+                    popup.add(subMenu);
+                    item = new JMenuItem("foo");
+                    subMenu.add(item);
 
-        			if (finalPrefs.getBoolean("sim.mode.expert")) {
-                    item = new JMenuItem(
-                        finalPrefs.getString("lang.event.add.global")
-						+ " " + timeString);
-                    item.addActionListener(actionListener);
-					item.setEnabled(false);
-                    popup.add(item);
-					}
+                    if (finalPrefs.getBoolean("sim.mode.expert")) {
+                        subMenu = new JMenu(
+                            finalPrefs.getString("lang.event.add.global")
+                            + " " + timeString);
+                        popup.add(subMenu);
+                    }
 
                     popup.addSeparator();
 
@@ -1090,16 +1089,16 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @param xPos the x position
      *
-     * @return the time 
+     * @return the time
      */
     private long getXPositionTime(double xPos) {
-		xPos -= XOFFSET;
+        xPos -= XOFFSET;
 
-		if (xPos <= 0)
-			return 0;
+        if (xPos <= 0)
+            return 0;
 
-		else if (xPos >= xPaintSize)
-			return untilTime;
+        else if (xPos >= xPaintSize)
+            return untilTime;
 
         return (long) ((untilTime/xPaintSize) * xPos);
     }
