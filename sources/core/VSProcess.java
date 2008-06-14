@@ -1067,6 +1067,9 @@ public class VSProcess extends VSPrefs implements VSSerializable {
             protocol.deserialize(serialize, objectInputStream);
         }
 
+		localTime = 0;
+		setLong("process.localTime", localTime);
+
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
 
