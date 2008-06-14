@@ -229,7 +229,7 @@ public final class VSSerialize {
 
             VSDefaultPrefs prefs = new VSDefaultPrefs();
             prefs.deserialize(this, objectInputStream);
-			prefs.addWithDefaults();
+            prefs.addWithDefaults();
             this.setObject("prefs", prefs);
 
             simulator = new VSSimulator(prefs, simulatorFrame);

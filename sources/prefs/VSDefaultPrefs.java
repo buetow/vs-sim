@@ -53,7 +53,7 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillWithDefaults() {
         super.clear();
-		addWithDefaults();
+        addWithDefaults();
     }
 
     /**
