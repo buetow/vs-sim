@@ -116,7 +116,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.info!", "Prozessvariablen können für jeden Prozess einzelnd eingestellt werden. Die hier gezeigen Prozessvariablen sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
         initString("lang.prefs.message", "Nachrichteneinstellungen");
         initString("lang.prefs.message.defaults", "Nachrichteneinstellungen für neue Prozesse");
-        initString("lang.prefs.process.defaults", "Prozesseinstellungen für neue Prozesse");
+        initString("lang.prefs.process.defaults", "Einstellungen für neue Prozesse");
         initString("lang.prefs.more", "Mehr Einstellungen");
         initString("lang.prefs.process", "Prozesseinstellungen");
         initString("lang.prefs.process", "Prozessstandardeinstellungen");
@@ -152,13 +152,12 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.saveas", "Speichern unter");
         initString("lang.server", "Server");
         initString("lang.simulator", "Simulator");
-        initString("lang.simulator.close", "Simulator schliessen");
-        initString("lang.simulator.finished", "Simulator beendet");
-        initString("lang.simulator.new", "Neue Simulator");
-        initString("lang.simulator.new", "Neue Simulator");
-        initString("lang.simulator.paused", "Simulator pausiert");
-        initString("lang.simulator.resetted", "Simulator zurückgesetzt");
-        initString("lang.simulator.started", "Simulator gestartet");
+        initString("lang.simulator.close", "Simulation schliessen");
+        initString("lang.simulator.finished", "Simulation beendet");
+        initString("lang.simulator.new", "Neue Simulation");
+        initString("lang.simulator.paused", "Simulation pausiert");
+        initString("lang.simulator.resetted", "Simulation zurückgesetzt");
+        initString("lang.simulator.started", "Simulation gestartet");
         initString("lang.start", "Starten");
         initString("lang.stop", "Stoppen");
         initString("lang.takeover", "Übernehmen");
@@ -189,7 +188,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
         initInteger("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
         initInteger("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
-        initInteger("sim.seconds", 15, "Simulatorsdauer", 5, 120, "s");
+        initInteger("sim.seconds", 15, "Dauer der Simulation", 5, 120, "s");
 
         /* Internal prefs */
         initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);

@@ -233,6 +233,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         booleanKeys = filterKeys(prefsToEdit.getBooleanKeySet());
         stringKeys = filterKeys(prefsToEdit.getStringKeySet());
 
+		fillEditPanelFront(prefsToEdit);
         fillEditPanel(prefsToEdit);
     }
 
@@ -538,6 +539,14 @@ public abstract class VSAbstractEditor implements ActionListener {
     }
 
     /**
+     * Fills the edit panel at the front. May be overloaded by another class.
+     *
+     * @param prefsToEdit the prefs to edit
+     */
+    protected void fillEditPanelFront(VSPrefs prefsToEdit) {
+	}
+
+    /**
      * Fills the edit panel.
      *
      * @param prefsToEdit the prefs to edit
@@ -805,7 +814,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @param label the label
      */
-    private void addSeparator(String label) {
+    protected void addSeparator(String label) {
         editTable.addSeparator(label);
     }
 

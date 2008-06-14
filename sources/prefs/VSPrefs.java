@@ -153,7 +153,7 @@ public class VSPrefs implements VSSerializable {
      * @param unit the unit
      */
     public synchronized void initUnit(String key, String unit) {
-        if (unit == null || units.containsKey(key))
+        if (unit == null /*|| units.containsKey(key)*/)
             return;
         units.put(key, unit);
     }
@@ -166,7 +166,7 @@ public class VSPrefs implements VSSerializable {
      * @param descr the descr
      */
     public synchronized void initDescription(String key, String descr) {
-        if (descr == null || descriptionPrefs.containsKey(key))
+        if (descr == null /*|| descriptionPrefs.containsKey(key)*/)
             return;
         descriptionPrefs.put(key, descr);
     }
@@ -884,7 +884,7 @@ public class VSPrefs implements VSSerializable {
      * @param val the val
      */
     public synchronized void initString(String key, String val) {
-        if (!stringPrefs.containsKey(key))
+        //if (!stringPrefs.containsKey(key))
             stringPrefs.put(key, val);
     }
 
