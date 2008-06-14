@@ -556,14 +556,14 @@ public class VSSimulatorCanvas extends Canvas
 
                     JPopupMenu popup = new JPopupMenu();
                     JMenuItem item = null;
-					if (process != null) {
-                    item = new JMenuItem(
-                        finalPrefs.getString("lang.process.selected") +
-                        ": " + process.getProcessID());
-                    item.setEnabled(false);
-                    popup.add(item);
-                    popup.addSeparator();
-					}
+                    if (process != null) {
+                        item = new JMenuItem(
+                            finalPrefs.getString("lang.process.selected") +
+                            ": " + process.getProcessID());
+                        item.setEnabled(false);
+                        popup.add(item);
+                        popup.addSeparator();
+                    }
 
                     item = new JMenuItem(
                         finalPrefs.getString("lang.process.edit"));
@@ -612,8 +612,8 @@ public class VSSimulatorCanvas extends Canvas
                     JMenu subMenu = new JMenu(
                         finalPrefs.getString("lang.event.add.local")
                         + " " + timeString);
-					if (process == null)
-						subMenu.setEnabled(false);
+                    if (process == null)
+                        subMenu.setEnabled(false);
                     //subMenu.addActionListener(actionListener);
                     popup.add(subMenu);
                     item = new JMenuItem("foo");
@@ -623,8 +623,8 @@ public class VSSimulatorCanvas extends Canvas
                         subMenu = new JMenu(
                             finalPrefs.getString("lang.event.add.global")
                             + " " + timeString);
-					if (process == null)
-						subMenu.setEnabled(false);
+                        if (process == null)
+                            subMenu.setEnabled(false);
                         popup.add(subMenu);
                     }
 
