@@ -556,14 +556,18 @@ public class VSSimulatorCanvas extends Canvas
 
                     JPopupMenu popup = new JPopupMenu();
                     JMenuItem item = null;
-                    if (process != null) {
+
+                    if (process != null)
                         item = new JMenuItem(
                             finalPrefs.getString("lang.process.selected") +
                             ": " + process.getProcessID());
-                        item.setEnabled(false);
-                        popup.add(item);
-                        popup.addSeparator();
-                    }
+                    else
+                        item = new JMenuItem(
+                            finalPrefs.getString("lang.process.not.selected"));
+
+                    item.setEnabled(false);
+                    popup.add(item);
+                    popup.addSeparator();
 
                     item = new JMenuItem(
                         finalPrefs.getString("lang.process.edit"));

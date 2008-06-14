@@ -173,6 +173,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
         initString("lang.process.selected", "Aktuell ausgewählter Prozess");
+        initString("lang.process.not.selected", "Kein Prozess ausgewählt");
         initString("lang.timed.global", "Globale Ereignisse");
         initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.type", "Typ");
