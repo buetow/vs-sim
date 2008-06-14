@@ -1,3 +1,4 @@
+bugfix? save sim if stopped via toolbare before runs again
 Must do:
 	Warn if a file does not exists while trying to open!
 	Reliable Multicast
