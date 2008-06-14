@@ -1674,6 +1674,15 @@ public class VSSimulatorCanvas extends Canvas
     }
 
     /**
+     * Checks if the simulation is resetted.
+     *
+     * @return true, if the simulation is resetted
+     */
+    boolean isResetted() {
+        return isResetted;
+    }
+
+    /**
      * Checks if the simulation has finished
      *
      * @return true, if the simulation has finished

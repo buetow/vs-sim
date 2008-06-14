@@ -161,6 +161,7 @@ public class VSSimulatorFrame extends VSFrame {
                     VSSimulatorCanvas simulatorCanvas =
                         currentSimulator.getSimulatorCanvas();
                     boolean flag = !simulatorCanvas.isPaused()
+								   && !simulatorCanvas.isResetted()
                                    && !simulatorCanvas.hasFinished();
 
                     if (flag)
@@ -177,6 +178,7 @@ public class VSSimulatorFrame extends VSFrame {
                     VSSimulatorCanvas simulatorCanvas =
                         currentSimulator.getSimulatorCanvas();
                     boolean flag = !simulatorCanvas.isPaused()
+								   && !simulatorCanvas.isResetted()
                                    && !simulatorCanvas.hasFinished();
                     if (flag)
                         pauseCurrentSimulator();
