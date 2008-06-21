@@ -3,7 +3,6 @@ Einleitung
 		Ossmann
 		Andre Herbst
 		Florian Buetow
-	Blabla
 	Motivation
 		Was ist ein verteiltes System? Warum Simulation?
 Grundkomponenten von verteilten Systemen

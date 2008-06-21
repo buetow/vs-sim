@@ -1,0 +1,29 @@
+\chapter{Grundbegriffe}
+
+F\"{u}r das Verst\"{a}ndnis wie die Simulation von verteilten Systemen funktioniert, werden hier einige Grundbegriffe beschrieben.
+
+\section{Client/Server Modell}
+
+Der Simulator basiert auf dem Client/Server Prinzip. Bei jeder sinnvollen Simulation gibt es mindestens einen teilnehmenden Client und einen Server. Bei komplexen Simulationen k\"{o}nnen auch mehrere Clients und/oder Server mitwirken.
+
+\section{Prozesse und deren Rollen}
+
+Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es ist auch m\"{o}glich, dass ein Prozess die Rollen mehrerer Server und Clients aufeinmal einnimmt. Ob das sinnvoll ist h\"{a}ngt vom Szenario ab. Um einen Prozess eindeutig zu kennzeichnen besitzt jeder Prozess eine eindeutige Prozess-Identifikationsnummer (PID).
+
+\section{Nachrichten}
+
+Damit das Client/Server Modell angewandt werden kann, m\"{u}ssen Nachrichten verschickt werden k\"{o}nnen. Eine Nachricht kann von einem Client- oder Serverprozess verschickt werden und kann beliebig viele Empf\"{a}nger haben. Um eine Nachricht eindeutig zu kennzeichnen besitzt jede Nachricht eine eindeutige Nachrichten-Identifikationsnummer (NID).
+
+\section{Lokale und globale Uhren}
+
+In einer Simulation gibt es \textbf{genau eine} globale Uhr. Sie stellt die aktuelle und \textbf{immer korrekte} Zeit dar. Eine globale Uhr geht nie falsch.
+
+Zudem besitzt jeder beteiligter Prozess eine eigene lokale Uhr. Sie stellt die aktuelle, jedoch nicht zwangsm\"{a}ßig global-korrekte, Zeit des jeweiligen Prozesses dar. Wenn die Prozesszeit nicht korrekt ist (nicht der globalen Zeit gleicht), dann wurde die Prozessuhr entweder im Laufe einer Simulation neugestellt oder sie besitzt eine Uhrabweichung. Eine Uhrabweichung gibt an, um wieviel eine Uhr falsch geht. Wenn eine lokale Uhr nicht neugesetzt wird und auch keine Uhrabweichung hat, dann gibt sie stets die korrekte globale Zeit wieder.
+
+\section{Ereignisse}
+
+Eine Simulation besteht aus der Hintereinanderausf\"{u}hrung von endlich vielen Ereignissen. Beispielsweise kann es ein Ereignis geben, welches einen Prozess eine Nachricht verschicken- oder selbst abst\"{u}rzen l\"{a}ßt. Jedes Ereignis tritt zu einem bestimmten Zeitpunkt ein. Wenn es zeitgleiche Ereignisse gibt, so werden sie ebenso hintereinander ausgef\"{u}hrt, behalten aber in der Simulation die selben Ausf\"{u}hrzeiten.
+
+\section{Protokolle}
+
+
