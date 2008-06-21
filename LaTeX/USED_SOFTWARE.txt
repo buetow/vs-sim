@@ -3,6 +3,7 @@ eingesetzt!
 
 Apache Ant - Als Buildtool fuer den Javacode
 Apache HTTPD (Hypertext Transfer Protocol Daemon) - Fuer Subversion Server via WebDAV (Web-based Distributed Authoring and Versioning)
+ArgoUML - UML Diagramme
 Dokumentation mittels Javadoc
 Eclipse, JAutoDoc Plugin, Subversion Plugin
 Firefox fuer das Betrachten von WebSVN und Javadoc, Internetrecherche
@@ -22,7 +23,3 @@ ding - Als Englisch - Deutsch, Deutsch - Englisch Woerterbuch
 xPDF - Fuer das Betrachten von PDF-Dateien
 zip - Fuer das Erstellen von VS-Sim. Distributionen
 zsh - Als FreeBSD Unix Shell
-
-Noch fehlt:
-
-Ein gescheites Tool fuer die Erstellung von UML-Diagrammen.
