@@ -1,18 +1,105 @@
 \chapter{Der Simulator}
 
-\section{Graphical User Interface (GUI)}
+\section{Die grafische Benutzerschnittstelle}
 
-\subsection{Toolbar}
+Die grafische Benutzerschnittstelle (GUI; Graphical User Interface) pr\"{a}sentiert sich standardm\"{a}ßig wie in Abbildung \ref{fig:StandardGUI}.
 
-\subsection{Visualisierung}
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics{images/ss-neue-simulation-klein}}
+	\caption{Standard GUI}
+	\label{fig:StandardGUI}
+\end{figure}
 
-\subsubsection{Zeitachse}
+Im folgenden werden in die einzelnen Komponenten des GUIs eingegangen.
 
-\subsubsection{Prozesse}
+\subsection{Die Men\"{u}zeile}
 
-\subsubsection{Nachrichten}
+Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen erstellen oder die aktuell ge\"{o}ffnete Simulation schliessen. Neue Simulationen \"{o}ffnen sich standardm\"{a}ßig in einem neuen Tab. Es k\"{o}nnen allerdings auch neue Simulationsfenster, die wiederrum eigene Tabs besitzen, ge\"{o}ffnet oder geschlossen werden. In jedem Tab befindet sich eine von den Anderen vollst\"{a}ndig unabh\"{a}ngige Simulation. Es k\"{o}nnen somit beliebig viele Simulationen parallel ausgef\"{u}hrt werden. Die Men\"{u}eintr\"{a}ge ``\"{O}ffnen'', ``Speichern'' und ``Speichern unter'' dienen f\"{u}r das Laden und Speichern von Simulationen. 
 
-\subsection{``Sidebar''}
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=14cm]{images/ss-datei-menu}}
+	\caption{``Datei''-Men\"{u}}
+	\label{fig:DateiMenue}
+\end{figure}
+
+\"{U}ber das ``Editieren''-Men\"{u} gelangt man zu den Simulationseinstellungen. Es werden auch alle beteiligten Prozesse zum Editieren aufgelistet. Und das Men\"{u} ``Simulator'' bietet die selben Optionen wie die Toolbar (s.u.).
+
+\subsection{Die Toolbar}
+
+Oben links befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}) des Simulators. Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am schnellsten und h\"{a}ufigsten verwendet werden.
+
+Die Toolbar bietet vier verschiedene Aktionen an:
+
+\begin{itemize}
+	%\setlength{\itemsep}{-1mm}
+	\item Starten der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit nicht l\"{a}uft.
+	\item Pausieren der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit l\"{a}uft.
+	\item Wiederholen der Simulation, kann nicht bet\"{a}tigt werden, wenn die Simulation noch nicht gestartet wurde.
+	\item Zur\"{u}cksetzen der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation pausiert wurde oder wenn die Simulation abgelaufen ist.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=5cm]{images/ss-neue-simulation-toolbar}}
+	\caption{Die Men\"{u}zeile inklusive Toolbar}
+	\label{fig:Toolbar}
+\end{figure}
+
+
+Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, rechts oder unten des Simulatorfensters). Hierf\"{u}r muss per ``Drag-n-Drop'' die ``raue Fl\"{a}che'' zur Zielposition gezogen werden.
+
+
+\subsection{Die Visualisierung}
+
+Mittig rechts (Abbildung \ref{fig:StandardGUI}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
+
+Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=14cm]{images/ss-visualisierung}}
+	\caption{Visualisierung einer noch nicht gestarteten Simulation}
+	\label{fig:Visualisierung}
+\end{figure}
+
+
+Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Simulation betr\"{a}gt mindestens 5 -und maximal 120 Sekunden. Die Simulation endet erst, wenn die globale Zeit 15 Sekunden erreicht hat, und nicht, wenn eine lokale Prozesszeit die 15 Sekunden erreicht.
+
+\subsection{Die Sidebar}
+
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+ sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+
 
 \subsubsection{Ereignisse}
 
