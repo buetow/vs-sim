@@ -2,20 +2,14 @@
 
 \section{Die grafische Benutzerschnittstelle}
 
-Die grafische Benutzerschnittstelle (GUI; Graphical User Interface) pr\"{a}sentiert sich standardm\"{a}ﬂig wie in Abbildung \ref{fig:StandardGUI}.
-
 \begin{figure}[htbp]
 	\centering
-	\fbox{\includegraphics{images/ss-neue-simulation-klein}}
-	\caption{Standard GUI}
-	\label{fig:StandardGUI}
+	\fbox{\includegraphics{images/ss-neues-fenster-klein}}
+	\caption{Der Simulator nach dem ersten Starten}
+	\label{fig:NeuesFenster}
+
 \end{figure}
-
-Im folgenden werden in die einzelnen Komponenten des GUIs eingegangen.
-
-\subsection{Die Men\"{u}zeile}
-
-Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen erstellen oder die aktuell ge\"{o}ffnete Simulation schliessen. Neue Simulationen \"{o}ffnen sich standardm\"{a}ﬂig in einem neuen Tab. Es k\"{o}nnen allerdings auch neue Simulationsfenster, die wiederrum eigene Tabs besitzen, ge\"{o}ffnet oder geschlossen werden. In jedem Tab befindet sich eine von den Anderen vollst\"{a}ndig unabh\"{a}ngige Simulation. Es k\"{o}nnen somit beliebig viele Simulationen parallel ausgef\"{u}hrt werden. Die Men\"{u}eintr\"{a}ge ``\"{O}ffnen'', ``Speichern'' und ``Speichern unter'' dienen f\"{u}r das Laden und Speichern von Simulationen. 
+Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neu zu erstellende Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann wie in Abbildung \ref{fig:StandardGUI} aus.
 
 \begin{figure}[htbp]
 	\centering
@@ -24,21 +18,24 @@ Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen
 	\label{fig:DateiMenue}
 \end{figure}
 
+\subsection{Die Men\"{u}zeile}
+
+Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen erstellen oder die aktuell ge\"{o}ffnete Simulation schliessen. Neue Simulationen \"{o}ffnen sich standardm\"{a}ﬂig in einem neuen Tab. Es k\"{o}nnen allerdings auch neue Simulationsfenster, die wiederrum eigene Tabs besitzen, ge\"{o}ffnet oder geschlossen werden. In jedem Tab befindet sich eine von den Anderen vollst\"{a}ndig unabh\"{a}ngige Simulation. Es k\"{o}nnen somit beliebig viele Simulationen parallel ausgef\"{u}hrt werden. Die Men\"{u}eintr\"{a}ge ``\"{O}ffnen'', ``Speichern'' und ``Speichern unter'' dienen f\"{u}r das Laden und Speichern von Simulationen. 
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics{images/ss-neue-simulation-klein}}
+	\caption{Standard GUI}
+	\label{fig:StandardGUI}
+\end{figure}
+
 \"{U}ber das ``Editieren''-Men\"{u} gelangt man zu den Simulationseinstellungen. Es werden auch alle beteiligten Prozesse zum Editieren aufgelistet. Und das Men\"{u} ``Simulator'' bietet die selben Optionen wie die Toolbar (s.u.).
+
+Einige Men\"{u}s sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
 
 \subsection{Die Toolbar}
 
-Oben links befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}) des Simulators. Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am schnellsten und h\"{a}ufigsten verwendet werden.
-
-Die Toolbar bietet vier verschiedene Aktionen an:
-
-\begin{itemize}
-	%\setlength{\itemsep}{-1mm}
-	\item Starten der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit nicht l\"{a}uft.
-	\item Pausieren der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit l\"{a}uft.
-	\item Wiederholen der Simulation, kann nicht bet\"{a}tigt werden, wenn die Simulation noch nicht gestartet wurde.
-	\item Zur\"{u}cksetzen der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation pausiert wurde oder wenn die Simulation abgelaufen ist.
-\end{itemize}
+Oben links befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}) des Simulators. Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am h\"{a}ufigsten verwendet werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -47,25 +44,19 @@ Die Toolbar bietet vier verschiedene Aktionen an:
 	\label{fig:Toolbar}
 \end{figure}
 
+Die Toolbar bietet vier verschiedene Aktionen an:
+
+\begin{itemize}
+	%\setlength{\itemsep}{-1mm}
+	\item Starten der Simulation; kann nur bet\"{a}tigt werden, wenn die Simulation derzeit nicht l\"{a}uft.
+	\item Pausieren der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit l\"{a}uft.
+	\item Wiederholen der Simulation, kann nicht bet\"{a}tigt werden, wenn die Simulation noch nicht gestartet wurde. 
+	\item Zur\"{u}cksetzen der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation pausiert wurde oder wenn die Simulation abgelaufen ist.
+\end{itemize}
 
 Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, rechts oder unten des Simulatorfensters). Hierf\"{u}r muss per ``Drag-n-Drop'' die ``raue Fl\"{a}che'' zur Zielposition gezogen werden.
 
-
 \subsection{Die Visualisierung}
-
-\begin{figure}[htbp]
-	\centering
-	\fbox{\includegraphics[width=8.8cm]{images/ss-rechtsklick-prozessbalken}}
-	\caption{Rechtsklick auf einen Prozessbalken}
-	\label{fig:RechtsklickProzessbalken}
-\end{figure}
-
-Mittig rechts (Abbildung \ref{fig:StandardGUI}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
-
-
-Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
-
-Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das ``Simulator''-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
 
 \begin{figure}[htbp]
 	\centering
@@ -74,12 +65,51 @@ Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Pro
 	\label{fig:Visualisierung}
 \end{figure}
 
+Mittig rechts (Abbildung \ref{fig:StandardGUI}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
+
+Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
+
+Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das ``Simulator''-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=8.8cm]{images/ss-rechtsklick-prozessbalken}}
+	\caption{Rechtsklick auf einen Prozessbalken}
+	\label{fig:RechtsklickProzessbalken}
+\end{figure}
 
 Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Simulation betr\"{a}gt mindestens 5 -und maximal 120 Sekunden. Die Simulation endet erst, wenn die globale Zeit 15 Sekunden erreicht hat, und nicht, wenn eine lokale Prozesszeit die 15 Sekunden erreicht.
 
+\subsubsection{Farbliche Differenzierung}
+
+F\"{u}r Visualisierung einer Simulation spielen Farben eine groﬂe Rolle. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standarfarben, welche man \"{u}ber die Einstellungen neudefinieren kann.
+
+\begin{table}
+	\fbox{
+	\begin{tabular}{c|l}
+		\textbf{Prozessfarbe} & \textbf{Bedeutung} \\
+		\hline 
+		 	Schwarz & Simulation l\"{a}uft derzeit nicht (z.B. noch nicht gestartet, abgelaufen oder\\
+				& pausiert)\\
+		 	Orange & Die Maus befindet sich \"{u}ber den Prozessbalken\\
+		 	Rot & Der Prozess ist abgest\"{u}rzt\\
+			& \\
+		\textbf{Nachrichtfarbe} & \textbf{Bedeutung} \\
+		\hline 
+		 	Gr\"{u}n & Die Nachricht ist noch unterwegs hat das Ziel noch nicht erreicht\\
+		 	Blau & Die Nachricht hat das Ziel erfolgreich erreicht\\
+		 	Rot & Die Nachricht ging verloren (entweder weil der Zielprozess abgest\"{u}rzt ist\\
+				& oder weil sie unterwegs verloren ging)\\
+
+	\end{tabular}\\
+	}
+	\caption{Farbliche Differenzierung von Prozessen und Nachrichten}
+	\label{tb:Farben}
+\end{table}
+
 \subsection{Die Sidebar}
 
-Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:StandardGUI}) lassen sich Ereignisse bestimmter Prozesse verwalten. Ganz oben (Abbildung \ref{fig:Sidebar}) ist der zu verwaltende Prozess selektiert. Dort gibt es auch die Auswahl ``Alle Prozesse'', womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man die Ereignisse, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
+Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:StandardGUI}) lassen sich Ereignisse bestimmter Prozesse verwalten. Ganz oben (Abbildung \ref{fig:Sidebar}) ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man die Ereignisse, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
 
 \begin{figure}[htbp]
 	\centering
@@ -88,7 +118,7 @@ Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:StandardGUI}) lassen sich
 	\label{fig:Sidebar}
 \end{figure}
 
-F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken.
+F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach 123ms, Wiederbelebung nach 321ms und erneuerter Absturz nach 3000ms des Prozesses mit der ID 1. 
 
 \begin{figure}[htbp]
 	\centering
@@ -97,9 +127,181 @@ F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick
 	\label{fig:Ereignisauswahl}
 \end{figure}
 
+Mit Rechtsklick lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Die Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen.
+
 Neben dem ``Ereignis''-Tab gibt es in der Sidebar einen Tab mit dem Namen ``Variablen''. Dort kann man alle Variablen des aktuell ausgew\"{a}hlten Prozesses editieren. Mehr dazu aber sp\"{a}ter. 
 
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=9cm]{images/ss-sidebar-mit-ereignissen}}
+	\caption{Der Ereigniseditor mit 3 programmierten Ereignissen}
+	\label{fig:SidebarMitEreignissen}
+\end{figure}
+
 \subsection{Loggfenster}
+
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
 
 \subsection{Expertenmodus}
 
