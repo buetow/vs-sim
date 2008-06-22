@@ -53,9 +53,19 @@ Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, recht
 
 \subsection{Die Visualisierung}
 
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=8.8cm]{images/ss-rechtsklick-prozessbalken}}
+	\caption{Rechtsklick auf einen Prozessbalken}
+	\label{fig:RechtsklickProzessbalken}
+\end{figure}
+
 Mittig rechts (Abbildung \ref{fig:StandardGUI}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
 
+
 Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
+
+Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das ``Simulator''-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
 
 \begin{figure}[htbp]
 	\centering
@@ -69,41 +79,25 @@ Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Sim
 
 \subsection{Die Sidebar}
 
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
- sdfljsdf lsdjfsdlk fjsdlfj sdlkfjsd lfsdjfdl k
+Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:StandardGUI}) lassen sich Ereignisse bestimmter Prozesse verwalten. Ganz oben (Abbildung \ref{fig:Sidebar}) ist der zu verwaltende Prozess selektiert. Dort gibt es auch die Auswahl ``Alle Prozesse'', womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man die Ereignisse, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
 
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=9cm]{images/ss-sidebar}}
+	\caption{Die Sidebar}
+	\label{fig:Sidebar}
+\end{figure}
 
-\subsubsection{Ereignisse}
+F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken.
 
-\subsubsection{Variablen}
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=9cm]{images/ss-ereignisauswahl}}
+	\caption{Die Ereignisauswahl via Sidebar}
+	\label{fig:Ereignisauswahl}
+\end{figure}
+
+Neben dem ``Ereignis''-Tab der Sidebar gibt es einen Tab mit dem Namen ``Variablen''. Dort kann man alle Variablen des aktuell ausgew\"{a}hlten Prozesses editieren. Mehr dazu aber sp\"{a}ter. 
 
 \subsection{Loggfenster}
 
