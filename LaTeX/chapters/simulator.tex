@@ -138,8 +138,22 @@ Neben dem ``Ereignis''-Tab gibt es in der Sidebar einen Tab mit dem Namen ``Vari
 	\label{fig:SidebarMitEreignissen}
 \end{figure}
 
-\subsection{Loggfenster}
+\subsection{Das Loggfenster}
 
+Das Loggfenster (Abbildung \ref{fig:StandardGUI}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht man das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=16.5cm]{images/ss-loggfenster}}
+	\caption{Das Loggfenster}
+	\label{fig:Loggfenster}
+\end{figure}
+
+Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ßt sich das direkte Loggen von Nachrichten tempor\"{a}r ausstellen. Ohne aktivierter Checkbox erscheinen keine neuen Nachrichten mehr im Loggfenster. Nach Reaktivieren der Checkbox werden alle ausgelassenen Nachrichten nachtr\"{a}glich in das Fenster geschrieben. Eine Deaktivierung des Loggings kann zu verbessertem Leistungsverhalten des Simulators f\"{u}hren (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator l\"{a}uft, abh\"{a}ngig). 
+
+\"{U}ber die Checkbox ``Expertenmodus'' wird der Expertenmodus aktiviert/deaktiviert. 
+
+\subsection{Der Expertenmodus}
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
@@ -303,7 +317,6 @@ Neben dem ``Ereignis''-Tab gibt es in der Sidebar einen Tab mit dem Namen ``Vari
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
 
-\subsection{Expertenmodus}
 
 \subsubsection{Lamport- und Vektorzeit}
 
