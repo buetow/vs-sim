@@ -4,7 +4,7 @@ F\"{u}r das Verst\"{a}ndnis wie die Simulation von verteilten Systemen funktioni
 
 \section{Client/Server Modell}
 
-Der Simulator basiert auf dem Client/Server Prinzip. Bei jeder sinnvollen Simulation gibt es mindestens einen teilnehmenden Client und einen Server, die miteinander \"{u}ber Nachrichten (s.u.) kommunizieren (Abbildung \ref{fig:ClientServer}). Bei komplexen Simulationen k\"{o}nnen auch mehrere Clients und/oder Server mitwirken. In der Regel empfangen Server nur Nachrichten, die von Clients verschickt wurden und virce versa.
+Der Simulator basiert auf dem Client/Server Prinzip. Bei jeder sinnvollen Simulation gibt es mindestens einen teilnehmenden Client und einen Server, die miteinander \"{u}ber Nachrichten kommunizieren (Abbildung \ref{fig:ClientServer}). Bei komplexen Simulationen k\"{o}nnen auch mehrere Clients und/oder Server mitwirken. In der Regel empfangen Server nur Nachrichten, die von Clients verschickt wurden und virce versa.
 
 \begin{figure}[htbp]
 	\centering
@@ -19,7 +19,7 @@ Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt h
 
 \section{Nachrichten}
 
-Damit das Client/Server Modell angewandt werden kann, m\"{u}ssen Nachrichten verschickt werden k\"{o}nnen. Eine Nachricht kann von einem Client- oder Serverprozess verschickt werden und kann beliebig viele Empf\"{a}nger haben. Der Inhalt einer Nachricht h\"{a}ngt vom verwendeten Protokoll (s.u.) ab. Um eine Nachricht zu kennzeichnen besitzt jede Nachricht eine \textbf{eindeutige} Nachrichten-Identifikationsnummer (NID).
+Damit das Client/Server Modell angewandt werden kann, m\"{u}ssen Nachrichten verschickt werden k\"{o}nnen. Eine Nachricht kann von einem Client- oder Serverprozess verschickt werden und kann beliebig viele Empf\"{a}nger haben. Der Inhalt einer Nachricht h\"{a}ngt vom verwendeten Protokoll ab. Was unter einem Protokoll zu verstehen ist, wird sp\"{a}ter behandelt. Um eine Nachricht zu kennzeichnen besitzt jede Nachricht eine \textbf{eindeutige} Nachrichten-Identifikationsnummer (NID).
 
 \section{Lokale und globale Uhren}
 
