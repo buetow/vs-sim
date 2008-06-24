@@ -123,3 +123,7 @@
 2008-06-21 21:07:12,943  WARN: MutableGraphModel connect() returned null (ModeCreatePolyEdge.java:224)
 2008-06-21 21:07:16,851  WARN: The current namespace is not a valid one! (UMLModelElementNamespaceComboBoxModel.java:87)
 2008-06-21 21:09:20,634  WARN: The current namespace is not a valid one! (UMLModelElementNamespaceComboBoxModel.java:87)
+2008-06-24 22:15:58,818  WARN: Owner of [org.argouml.uml.diagram.use_case.ui.FigUseCase@1698cbe/class org.argouml.uml.diagram.use_case.ui.FigUseCase] is null. (FigNodeModelElement.java:1326)
+2008-06-24 22:15:58,826  WARN: I return... (FigNodeModelElement.java:1328)
+2008-06-24 22:15:58,866  WARN: Owner of [org.argouml.uml.diagram.use_case.ui.FigUseCase@b8fba5/class org.argouml.uml.diagram.use_case.ui.FigUseCase] is null. (FigNodeModelElement.java:1326)
+2008-06-24 22:15:58,867  WARN: I return... (FigNodeModelElement.java:1328)

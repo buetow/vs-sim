@@ -1,6 +1,6 @@
 FILENAME=diplomarbeit
 all:
-	svn info | grep 'Changed Rev' | awk '{ print $$4 }' > VERSION
+	svn info | grep 'Changed Rev' | awk '{ print $$4 }' > revision.tex
 	rubber -d $(FILENAME).tex 
 clean:
 	ls $(FILENAME).* | \
