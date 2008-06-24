@@ -9,12 +9,12 @@
 	\label{fig:NeuesFenster}
 
 \end{figure}
-Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neu zu erstellende Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann wie in Abbildung \ref{fig:StandardGUI} aus.
+Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neu zu erstellende Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann wie in Abbildung \ref{fig:NeuErstellteSimulation} aus.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=14cm]{images/ss-datei-menu}}
-	\caption{``Datei''-Men\"{u}}
+	\caption{Datei-Men\"{u}}
 	\label{fig:DateiMenue}
 \end{figure}
 
@@ -25,17 +25,17 @@ Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics{images/ss-neue-simulation-klein}}
-	\caption{Standard GUI}
-	\label{fig:StandardGUI}
+	\caption{Eine neuerstellte Simulation}
+	\label{fig:NeuErstellteSimulation}
 \end{figure}
 
-\"{U}ber das ``Editieren''-Men\"{u} gelangt man zu den Simulationseinstellungen. Es werden auch alle beteiligten Prozesse zum Editieren aufgelistet. Das ``Simulator''-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
+\"{U}ber das Editieren-Men\"{u} gelangt man zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
 
 Einige Men\"{u}s sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
 
 \subsection{Die Toolbar}
 
-Oben links befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}) des Simulators. Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am h\"{a}ufigsten verwendet werden.
+Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}). Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am h\"{a}ufigsten verwendet werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -44,7 +44,7 @@ Oben links befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}) des Simulator
 	\label{fig:Toolbar}
 \end{figure}
 
-Die Toolbar bietet vier verschiedene Aktionen an:
+Die Toolbar bietet vier verschiedene Funktionalit\"{a}ten an:
 
 \begin{itemize}
 	%\setlength{\itemsep}{-1mm}
@@ -65,11 +65,11 @@ Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, recht
 	\label{fig:Visualisierung}
 \end{figure}
 
-Mittig rechts (Abbildung \ref{fig:StandardGUI}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
+Mittig rechts (Abbildung \ref{fig:NeuErstellteSimulation}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
 
 Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
 
-Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das ``Simulator''-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
+Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das Simulator-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
 
 \begin{figure}[htbp]
 	\centering
@@ -109,16 +109,16 @@ F\"{u}r Visualisierung einer Simulation spielen Farben eine groﬂe Rolle. Standar
 
 \subsection{Die Sidebar}
 
-Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:StandardGUI}) lassen sich Ereignisse bestimmter Prozesse verwalten. Ganz oben (Abbildung \ref{fig:Sidebar}) ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man die Ereignisse, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
+Mithilfe der Sidebar (mittig links, Abbildung \ref{fig:NeuErstellteSimulation}) lassen sich Ereignisse bestimmter Prozesse verwalten. Ganz oben in Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man die Ereignisse, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=9cm]{images/ss-sidebar}}
-	\caption{Die Sidebar}
+	\caption{Die Sidebar mit noch keinen programmierten Ereignissen}
 	\label{fig:Sidebar}
 \end{figure}
 
-F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach 123ms, Wiederbelebung nach 321ms und erneuerter Absturz nach 3000ms des Prozesses mit der ID 1. 
+F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im darunterliegendem Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach 123ms, Wiederbelebung nach 321ms und erneuerter Absturz nach 3000ms des Prozesses mit der ID 1. 
 
 \begin{figure}[htbp]
 	\centering
@@ -127,9 +127,9 @@ F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit Rechtsklick
 	\label{fig:Ereignisauswahl}
 \end{figure}
 
-Mit Rechtsklick lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Die Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen.
+Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Die Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen.
 
-Neben dem ``Ereignis''-Tab gibt es in der Sidebar einen Tab mit dem Namen ``Variablen''. Dort kann man alle Variablen des aktuell ausgew\"{a}hlten Prozesses editieren. Mehr dazu aber sp\"{a}ter. 
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Dort k\"{o}nnen alle Variablen des aktuell ausgew\"{a}hlten Prozesses editiert werden. Mehr dazu aber sp\"{a}ter. 
 
 \begin{figure}[htbp]
 	\centering
@@ -140,7 +140,7 @@ Neben dem ``Ereignis''-Tab gibt es in der Sidebar einen Tab mit dem Namen ``Vari
 
 \subsection{Das Loggfenster}
 
-Das Loggfenster (Abbildung \ref{fig:StandardGUI}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht man das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
+Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht man das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
 
 \begin{figure}[htbp]
 	\centering
