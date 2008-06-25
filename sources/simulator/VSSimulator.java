@@ -34,6 +34,7 @@ import javax.swing.table.*;
 import core.*;
 import events.*;
 import events.internal.*;
+import exceptions.*;
 import prefs.*;
 import prefs.editors.*;
 import serialize.*;
@@ -515,6 +516,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     public void actionPerformed(ActionEvent ae) {
                         try {
                             Long val = Long.valueOf(valField.getText());
+							if (val.longValue() < 0) 
+								throw new VSNegativeNumberException();
                             VSTask task = model.removeTaskAtRow(row);
                             task.setTaskTime(val.longValue());
                             taskManager.addTask(task, VSTaskManager.PROGRAMMED);
@@ -532,7 +535,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
                         } catch (NumberFormatException exc) {
                             valField.setBackground(Color.RED);
                             isRed = true;
-                        }
+
+                        } catch (VSNegativeNumberException exc) {
+                            valField.setBackground(Color.RED);
+                            isRed = true;
+						}
                     }
                 });
                 return valField;
