@@ -57,7 +57,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     /**
      * Creates a copy of the event and using a new process.
      *
-     * @param newProcess The new process
+     * @param theProcess The new process
      * @return The copy
      */
     final public VSAbstractEvent getCopy(VSProcess theProcess)
