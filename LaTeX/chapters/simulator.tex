@@ -65,7 +65,7 @@ Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, recht
 	\label{fig:Visualisierung}
 \end{figure}
 
-Mittig rechts (Abbildung \ref{fig:NeuErstellteSimulation}) befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
+Mittig rechts in Abbildung \ref{fig:NeuErstellteSimulation} befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
 
 Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
 
@@ -157,7 +157,7 @@ Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ßt sich das direkte Loggen v
 
 \subsection{Vom einfachen Modus zum Expertenmodus}
 
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ßig im einfachen Modus. Die Idee ist die, dass der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal konfrontiert werden soll. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters aktiviert und deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen.
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ßig im einfachen Modus. Die Idee ist die, dass der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal konfrontiert werden soll. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert und deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen.
 
 \begin{figure}[htbp]
 	\centering
@@ -170,8 +170,7 @@ Wenn man den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimul
 
 \subsection{Globale Ereignisse}
 
-Der erste Unterschied ist, wie in Abbildung \ref{fig:SidebarExpertenmodus} in der Sidebar zu erkennen. Dort kann man nun zus\"{a}tzlich zu den lokalen Ereignissen auch globale Ereignisse editieren. Wie bereits er\"{a}hnt sind unter ``lokale Ereignisse'' diejenigen Ereignisse zu verstehen, die auftreten, wenn die zum jeweiligen Prozess lokale Prozesszeit eingetreten ist. 
-
+Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zus\"{a}tzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erw\"{a}hnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind die Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis ist zwar an einen Prozess zwecks Ausf\"{u}hrung gebunden (z.B. ein Prozess st\"{u}rzt ab), nimmt aber die globale Zeit als Eintrittskriterium.
 
 \begin{figure}[htbp]
 	\centering
@@ -180,7 +179,11 @@ Der erste Unterschied ist, wie in Abbildung \ref{fig:SidebarExpertenmodus} in de
 	\label{fig:SidebarExpertenmodus}
 \end{figure}
 
+Eine weitere Sidebar-Funktionalit\"{a}t, die im einfachen Modus noch nicht verf\"{u}gbar war, ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis direkt die PID zuzuweisen. Im einfachen Modus wurde, wenn man ein neues Ereignis erstellte, standardm\"{a}ßig immer die PID des aktuell ausgew\"{a}hlten Prozesses (in der obersten Combo-Box) verwendet. In der Combo-Box sollte man bestenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse angezeigt werden.
+
 \subsection{Lamport- und Vektorzeit}
+
+Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''. 
 
 \subsection{Loggfilter}
 
