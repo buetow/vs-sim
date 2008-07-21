@@ -9,7 +9,7 @@
 	\label{fig:NeuesFenster}
 
 \end{figure}
-Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neu zu erstellende Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann wie in Abbildung \ref{fig:NeuErstellteSimulation} aus.
+Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neue Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann wie in Abbildung \ref{fig:NeuErstellteSimulation} aus.
 
 \begin{figure}[htbp]
 	\centering
@@ -18,22 +18,22 @@ Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie in Abbildung \ref
 	\label{fig:DateiMenue}
 \end{figure}
 
-\subsection{Die Men\"{u}zeile}
+\subsubsection{Die Men\"{u}zeile}
 
 Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen erstellen oder die aktuell ge\"{o}ffnete Simulation schliessen. Neue Simulationen \"{o}ffnen sich standardm\"{a}ﬂig in einem neuen Tab. Es k\"{o}nnen allerdings auch neue Simulationsfenster, die wiederrum eigene Tabs besitzen, ge\"{o}ffnet oder geschlossen werden. In jedem Tab befindet sich eine von den Anderen vollst\"{a}ndig unabh\"{a}ngige Simulation. Es k\"{o}nnen somit beliebig viele Simulationen parallel ausgef\"{u}hrt werden. Die Men\"{u}eintr\"{a}ge ``\"{O}ffnen'', ``Speichern'' und ``Speichern unter'' dienen f\"{u}r das Laden und Speichern von Simulationen. 
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics{images/ss-neue-simulation-klein}}
-	\caption{Eine neuerstellte Simulation}
+	\caption{Eine neue Simulation}
 	\label{fig:NeuErstellteSimulation}
 \end{figure}
 
-\"{U}ber das Editieren-Men\"{u} gelangt man zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
+\"{U}ber das Editieren-Men\"{u} gelangt man zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. W\"{a}hlt man dort einen Prozess aus, dann \"{o}ffnet sich der dazugeh\"{o}rige Prozesseditor. Auf diesen wird ebenso sp\"{a}ter genauer eingegangen. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
 
-Einige Men\"{u}s sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
+Einige Men\"{u}unterpunkte sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
 
-\subsection{Die Toolbar}
+\subsubsection{Die Toolbar}
 
 Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}). Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am h\"{a}ufigsten verwendet werden.
 
@@ -56,7 +56,7 @@ Die Toolbar bietet vier verschiedene Funktionalit\"{a}ten an:
 
 Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, rechts oder unten des Simulatorfensters). Hierf\"{u}r muss per ``Drag-n-Drop'' die ``raue Fl\"{a}che'' zur Zielposition gezogen werden.
 
-\subsection{Die Visualisierung}
+\subsubsection{Die Visualisierung}
 
 \begin{figure}[htbp]
 	\centering
@@ -65,11 +65,11 @@ Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, recht
 	\label{fig:Visualisierung}
 \end{figure}
 
-Mittig rechts in Abbildung \ref{fig:NeuErstellteSimulation} befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse repr\"{a}sentiert die Zeit in Millisekunden. Die aktuelle Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann man die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Zeit dar. 
+Mittig rechts in Abbildung \ref{fig:NeuErstellteSimulation} befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse gibt die Zeit in Millisekunden an. Unsere Demo-Simulation endet nach genau 15 Sekunden. In Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann der Benutzer die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Simulationszeit dar. 
 
-Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert.
+Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht zum Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert. Sie werden aber im Loggfenster (mehr dazu sp\"{a}ter) protokolliert.
 
-Mit einem Linksklick auf einen Prozessbalken ist es ebenso m\"{o}glich einen Prozess zu editieren. Dies muss also nicht zwingend \"{u}ber das Simulator-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
+Eine andere M\"{o}glichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess geh\"{o}rigen Prozessbalken. Dies muss also nicht zwingend \"{u}ber das Simulator-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
 
 \begin{figure}[htbp]
 	\centering
@@ -82,7 +82,7 @@ Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Sim
 
 \subsubsection{Farbliche Differenzierung}
 
-F\"{u}r Visualisierung einer Simulation spielen Farben eine groﬂe Rolle. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standarfarben, welche man \"{u}ber die Einstellungen neudefinieren kann.
+Farben helfen dabei die Vorg\"{a}nge einer Simulation zu deuten. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standarfarben, welche man \"{u}ber die Einstellungen umkonfigurieren kann.
 
 \begin{table}
 	\fbox{
@@ -96,7 +96,7 @@ F\"{u}r Visualisierung einer Simulation spielen Farben eine groﬂe Rolle. Standar
 			& \\
 		\textbf{Nachrichtfarbe} & \textbf{Bedeutung} \\
 		\hline 
-		 	Gr\"{u}n & Die Nachricht ist noch unterwegs hat das Ziel noch nicht erreicht\\
+		 	Gr\"{u}n & Die Nachricht ist noch unterwegs und hat das Ziel noch nicht erreicht\\
 		 	Blau & Die Nachricht hat das Ziel erfolgreich erreicht\\
 		 	Rot & Die Nachricht ging verloren (entweder weil der Zielprozess abgest\"{u}rzt ist\\
 				& oder weil sie unterwegs verloren ging)\\
@@ -107,18 +107,18 @@ F\"{u}r Visualisierung einer Simulation spielen Farben eine groﬂe Rolle. Standar
 	\label{tb:Farben}
 \end{table}
 
-\subsection{Die Sidebar}
+\subsubsection{Die Sidebar}
 
-Mithilfe der Sidebar lassen sich Ereignisse von Prozessen verwalten. Ganz oben in Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeit sowie PID auf.
+Mithilfe der Sidebar lassen sich Ereignisse von Prozessen verwalten. Ganz oben in Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=9cm]{images/ss-sidebar}}
-	\caption{Die Sidebar mit noch keinen programmierten Ereignissen}
+	\caption{Die Sidebar mit leerem Ereigniseditor}
 	\label{fig:Sidebar}
 \end{figure}
 
-F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im darunterliegendem Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach 123ms, Wiederbelebung nach 321ms und erneuerter Absturz nach 3000ms des Prozesses mit der ID 1. 
+F\"{u}r die Erstellung eines neuen Ereignisses kann der Benutzer entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im darunterliegendem Textfeld die Zeit eintragen und auf ``\"{U}bernehmen'' klicken. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach 123ms, Wiederbelebung nach 321ms und erneuerter Absturz nach 3000ms des Prozesses mit der ID 1. 
 
 \begin{figure}[htbp]
 	\centering
@@ -127,9 +127,9 @@ F\"{u}r die Erstellung eines neuen Ereignisses kann man entweder mit einem Recht
 	\label{fig:Ereignisauswahl}
 \end{figure}
 
-Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Die Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen.
+Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Die Eintr\"{a}ge der Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen.
 
-In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Dort k\"{o}nnen alle Variablen des aktuell ausgew\"{a}hlten Prozesses editiert werden. Mehr dazu aber sp\"{a}ter. 
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgew\"{a}hlten Prozesses. Dort k\"{o}nnen alle Variablen des Prozesses editiert werden. Dies wird sp\"{a}ter genauer behandelt. 
 
 \begin{figure}[htbp]
 	\centering
@@ -138,7 +138,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 	\label{fig:SidebarMitEreignissen}
 \end{figure}
 
-\subsection{Das Loggfenster}
+\subsubsection{Das Loggfenster}
 
 Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht man das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
 
@@ -149,15 +149,15 @@ Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokollier
 	\label{fig:Loggfenster}
 \end{figure}
 
-Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ﬂt sich das direkte Loggen von Nachrichten tempor\"{a}r ausstellen. Ohne aktivierter Checkbox erscheinen keine neuen Nachrichten mehr im Loggfenster. Nach Reaktivieren der Checkbox werden alle ausgelassenen Nachrichten nachtr\"{a}glich in das Fenster geschrieben. Eine Deaktivierung des Loggings kann zu verbessertem Leistungsverhalten des Simulators f\"{u}hren (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator l\"{a}uft, abh\"{a}ngig). 
+Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ﬂt sich das direkte Loggen von Nachrichten tempor\"{a}r deaktivieren. Ohne aktivierter Checkbox erscheinen keine neuen Nachrichten mehr im Loggfenster. Nach Reaktivieren der Checkbox werden alle ausgelassenen Nachrichten nachtr\"{a}glich in das Fenster geschrieben. Eine Deaktivierung des Loggings kann zu verbessertem Leistungsverhalten des Simulators f\"{u}hren (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator l\"{a}uft, abh\"{a}ngig). Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken.
 
 \"{U}ber die Checkbox ``Expertenmodus'' wird der Expertenmodus aktiviert beziehungsweise deaktiviert. 
 
+\subsection{Eine Beispielsimulation}
+
 \section{Der Expertenmodus}
 
-\subsection{Vom einfachen Modus zum Expertenmodus}
-
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ﬂig im einfachen Modus. Die Idee ist die, dass der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal konfrontiert werden soll. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert und deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen.
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ﬂig im einfachen Modus, so dass sich der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal auseinandersetzen muﬂ. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r mehr erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen.
 
 \begin{figure}[htbp]
 	\centering
@@ -166,11 +166,13 @@ Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen ei
 	\label{fig:SimulationExpertenmodus}
 \end{figure}
 
-Wenn man den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun allesamt behandelt werden.
+Wenn man den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun behandelt werden.
 
-\subsection{Globale Ereignisse}
+\subsubsection{Globale Ereignisse und weitere Sidebar-Funktionalit\"{a}ten}
 
-Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zus\"{a}tzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erw\"{a}hnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind die Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis ist zwar an einen Prozess zwecks Ausf\"{u}hrung gebunden (z.B. ein Prozess st\"{u}rzt ab), nimmt aber die globale Zeit als Eintrittskriterium.
+Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zus\"{a}tzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erw\"{a}hnt, sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind die Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Zeit- und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.\\
+\\
+Eine weitere Sidebar-Funktionalit\"{a}t, die im einfachen Modus noch nicht verf\"{u}gbar war, ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis direkt die PID zuzuweisen. Im einfachen Modus wurde, wenn man ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell ausgew\"{a}hlten Prozesses (in der obersten Combo-Box) verwendet. In der Combo-Box sollte man bestenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse angezeigt werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -179,190 +181,202 @@ Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarEx
 	\label{fig:SidebarExpertenmodus}
 \end{figure}
 
-Eine weitere Sidebar-Funktionalit\"{a}t, die im einfachen Modus noch nicht verf\"{u}gbar war, ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis direkt die PID zuzuweisen. Im einfachen Modus wurde, wenn man ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell ausgew\"{a}hlten Prozesses (in der obersten Combo-Box) verwendet. In der Combo-Box sollte man bestenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse angezeigt werden.
 
-\subsection{Lamport- und Vektorzeit}
+\subsubsection{Lamport- und Vektorzeit}
 
-Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''. 
+Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''. Aktiviert man eine dieser beiden Checkboxen, dann wird die Lamport- bzw. Vektorzeit in die Visualisierung mitangegeben. \"{U}bersichtshalber kann man nur jeweils eine dieser beiden Checkboxen aktivieren. Wenn die Lamportzeit-Checkbox bereits aktiviert ist und der Benutzer versucht die Vektorzeit-Checkbox zus\"{a}tzlich zu aktivieren, so wird die Lamportzeit-Checkbox automatisch deaktiviert und virce versa.
 
-\subsection{Loggfilter}
+\subsubsection{Anti-Aliasing}
 
+Die Anti-Aliasing-Checkbox erm\"{o}glicht dem Benutzer Anti-Aliasing zu aktivieren und deaktivieren. Mit aktiviertem Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performancegr\"{u}nden ist Anti-Aliasing standardm\"{a}ﬂig deaktiviert.
+
+\subsubsection{Loggfilter}
+
+Je komplexer eine Simulation wird, desto un\"{u}bersichtlicher werden die Eintr\"{a}ge im Loggfenster. Hier f\"{a}llt es zunehmend schwerer die \"{U}bersicht aller Ereignisse zu behalten. Um dem entgegenzuwirken gibt es im Expertenmodus einen Loggfilter, welcher es erm\"{o}glicht nur die wesentlichen Daten aus den Loggs zu filtern. Der Loggfilter wird anhand der dazugeh\"{o}rigen Checkbox ``Filter'' aktiviert bzw. deaktiviert. In der dahinterliegenden Eingabezeile kann ein regul\"{a}rer Ausdruck in Java-Syntax angegeben werden. Beispielsweise werden mit ``\texttt{PID: (1|2)}'' nur Loggzeilen angezeigt, die entweder ``\texttt{PID: 1}'' oder ``\texttt{PID: 2}'' beinhalten. Alle anderen Zeilen, beispielsweise mit ``\texttt{PID: 3}'', werden nicht angezeigt. Mit aktiviertem Loggfilter werden nur die Loggzeilen angezeigt, auf die der regul\"{a}re Ausdruck passt. Der Loggfilter kann auch nachtr\"{a}glich aktiviert werden. Bereits protokollierte Ereignisse werden jedes Mal erneuert gefiltert. Der Loggfilter kann auch w\"{a}hrend einer laufenden Simulation verwendet werden. Wenn der Loggfilter deaktiviert wird, dann werden wieder alle Nachrichten (auch nachtr\"{a}glich) im Loggfenster angezeigt. 
 
 \section{Ereignisse}
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
 
+Des Weiteren wird hier auf alle Ereignisse eingegangen, die man, wie wir schon gesehen haben, mithilfe des Ereigniseditors programmieren kann. 
 
+\subsubsection{Prozessabsturz- und Wiederbelebung}
 
-\subsection{Prozessabsturz}
+Die beiden grundliegensten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgest\"{u}rzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgest\"{u}rzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und, wenn er eine Nachricht empfangen sollte, geht sie verloren. Die einzige Ausnahme bildet ein Wiederbelebungsereignis. Ein abgest\"{u}rzter Prozess kann nichts, ausser wiederbelebt werden. W\"{a}hrend eines Prozessabsturzes l\"{a}uft die lokale Prozessuhr wie gewohnt weiter. D.h. es k\"{o}nnte sein, dass ein Prozess einige seiner lokalen Ereignisse gar nicht ausf\"{u}hrt, da er zu den Ereigniseintrittszeiten abgest\"{u}rzt ist. Selbiges trifft nat\"{u}rlich auch auf globale Ereignisse zu. Wenn im echten Leben ein Computer abst\"{u}rzt oder abgeschaltet wird, dann l\"{a}uft dort die Hardwareuhr, unabh\"{a}ngig vom Betriebssystem, auch weiter.
 
-\subsection{Prozesswiederbelebung}
+\subsubsection{Aktivierung und Deaktivierung von Protokollen}
 
-\subsection{Aktivierung und Deaktivierung von Protokollen}
+Wir wissen bereits, dass ein Prozess mehrere Protokolle, sowohl Client- als auch Serverseitig, unterst\"{u}tzen kann. Welches Protokoll von einem Prozess unterst\"{u}tzt wird, kann man anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die M\"{o}glichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterst\"{u}tzt und ggf. ein anderes Protokoll abl\"{o}st. Jedes Protokoll kann entwender Server- oder Clientseitig aktiviert beziehungsweise deaktiviert werden. Welche Protokolle es gibt wird sp\"{a}ter genauer behandelt.
 
-\subsection{Weitere Protokollereignisse}
+\subsubsection{Weitere Protokollereignisse}
+
+\subsubsection{Nachrichtenempfang}
+
+\subsubsection{Call-Back Ereignis}
 
 \section{Protokolle}
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+ lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+
+
 
 \subsection{Beispiel (Dummy) Protokoll}
 
@@ -400,4 +414,3 @@ Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt
 
 \subsection{Protokolleinstellungen}
 
-TODO: Farben der Prozessbalken, Farben der Nachrichten
