@@ -1,6 +1,6 @@
 Must do:
 	Warn if a file does not exists while trying to open!
-	Reliable Multicast
+	Ereigniseintritt bei Lamport und Vektorzeiten?	
 Evtl.:
 	Helper:
 		Print warning if not activated protocol while doing a protocol request
