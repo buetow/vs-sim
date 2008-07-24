@@ -29,7 +29,7 @@ Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen
 	\label{fig:NeuErstellteSimulation}
 \end{figure}
 
-\"{U}ber das Editieren-Men\"{u} gelangt man zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. W\"{a}hlt man dort einen Prozess aus, dann \"{o}ffnet sich der dazugeh\"{o}rige Prozesseditor. Auf diesen wird ebenso sp\"{a}ter genauer eingegangen. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
+\"{U}ber das Editieren-Men\"{u} gelangt der Benutzer zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. W\"{a}hlt der Benutzer dort einen Prozess aus, dann \"{o}ffnet sich der dazugeh\"{o}rige Prozesseditor. Auf diesen wird ebenso sp\"{a}ter genauer eingegangen. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
 
 Einige Men\"{u}unterpunkte sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
 
@@ -82,7 +82,7 @@ Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Sim
 
 \subsubsection{Farbliche Differenzierung}
 
-Farben helfen dabei die Vorg\"{a}nge einer Simulation zu deuten. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standarfarben, welche man \"{u}ber die Einstellungen umkonfigurieren kann.
+Farben helfen dabei die Vorg\"{a}nge einer Simulation zu deuten. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standarfarben, welche der Benutzer \"{u}ber die Einstellungen umkonfigurieren kann.
 
 \begin{table}
 	\fbox{
@@ -109,7 +109,7 @@ Farben helfen dabei die Vorg\"{a}nge einer Simulation zu deuten. Standardm\"{a}ﬂ
 
 \subsubsection{Die Sidebar}
 
-Mithilfe der Sidebar lassen sich Ereignisse von Prozessen verwalten. Ganz oben in Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
+Mithilfe der Sidebar lassen sich Ereignisse von Prozessen verwalten. Ganz oben in Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht der Benutzer diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
 
 \begin{figure}[htbp]
 	\centering
@@ -140,7 +140,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 
 \subsubsection{Das Loggfenster}
 
-Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht man das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
+Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht der Benutzer das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess wird ebenso seine lokale Zeit sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt. 
 
 \begin{figure}[htbp]
 	\centering
@@ -162,7 +162,7 @@ Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ﬂt sich das direkte Loggen v
 	\label{fig:SimulationExpertenmodus}
 \end{figure}
 
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ﬂig im einfachen Modus, so dass sich der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal auseinandersetzen muﬂ. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r mehr erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn man den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun aufs Weitere behandelt werden.
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator started standardm\"{a}ﬂig im einfachen Modus, so dass sich der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal auseinandersetzen muﬂ. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eigent sich f\"{u}r mehr erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Benutzer den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun aufs Weitere behandelt werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -173,9 +173,9 @@ Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen ei
 
 Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zus\"{a}tzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erw\"{a}hnt, sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Zeit- und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
 
-Eine weitere neue Funktionalit\"{a}t ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis direkt die PID zuzuweisen. Im einfachen Modus wurde, wenn man ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell ausgew\"{a}hlten Prozesses (in der obersten Combo-Box) verwendet. In dieser Combo-Box sollte man gegebenenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse aufgelistet werden.
+Eine weitere neue Funktionalit\"{a}t ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis direkt die PID zuzuweisen. Im einfachen Modus wurde, wenn der Benutzer ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell ausgew\"{a}hlten Prozesses (in der obersten Combo-Box) verwendet. In dieser Combo-Box sollte der Benutzer gegebenenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse aufgelistet werden.
 
-Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert man eine dieser beiden Checkboxen, dann wird die Lamport- beziehungsweise Vektorzeit in die Visualisierung dargestellt. \"{U}bersichtshalber kann der Benutzer nur jeweils eine dieser beiden Checkboxen aktivieren. Wenn die Lamportzeit-Checkbox bereits aktiviert ist und der Benutzer versucht die Vektorzeit-Checkbox zus\"{a}tzlich zu aktivieren, so wird die Lamportzeit-Checkbox automatisch deaktiviert und virce versa. 
+Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Benutzer eine dieser beiden Checkboxen, dann wird die Lamport- beziehungsweise Vektorzeit in die Visualisierung dargestellt. \"{U}bersichtshalber kann der Benutzer nur jeweils eine dieser beiden Checkboxen aktivieren. Wenn die Lamportzeit-Checkbox bereits aktiviert ist und der Benutzer versucht die Vektorzeit-Checkbox zus\"{a}tzlich zu aktivieren, so wird die Lamportzeit-Checkbox automatisch deaktiviert und virce versa. 
 
 %TODO: Lamport und Vektorzeit definieren!
 
@@ -207,7 +207,7 @@ Der Benutzer hat die Auswahl zwischen f\"{u}nf weiteren Protokollereignissen:
 	\item Starten einer Client/Server-Anfrage des gegebenen Protokolls
 \end{itemize}
 
-Ob sich das Ereignis f\"{u}r das Starten einer Anfrage auf den Client oder Server bezieht, h\"{a}ngt vom verwendeten Protokoll ab. Man unterscheidet von Protokollen die Clientseitig- oder Serverseitig eine initiale Anfrage starten. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client- und bei dem ``Commit-Protokollen'' der Server immer die erste Anfrage. Es gibt kein Protokoll, wo Client und Server jeweils eine initiale Anfragen starten k\"{o}nnen. 
+Ob sich das Ereignis f\"{u}r das Starten einer Anfrage auf den Client oder Server bezieht, h\"{a}ngt vom verwendeten Protokoll ab. der Benutzer unterscheidet von Protokollen die Clientseitig- oder Serverseitig eine initiale Anfrage starten. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client- und bei dem ``Commit-Protokollen'' der Server immer die erste Anfrage. Es gibt kein Protokoll, wo Client und Server jeweils eine initiale Anfragen starten k\"{o}nnen. 
 
 Bei allen dieser f\"{u}nf Ereignissen kann der betroffene Prozess noch beliebig andere Dinge, abh\"{a}ngig vom Protokoll, tun. Beispielsweise kann er den Inhalt der Nachricht generieren oder lokale Variablen initialisieren oder eine der lokalen Uhzeiten \"{a}ndern oder Wecker f\"{u}r ``Callback Ereignisse'' setzen (mehr dazu sp\"{a}ter).
 
@@ -225,7 +225,7 @@ In diesem Abschnitt wird auf die m\"{o}glichen Simulationseinstellungen genauer 
 
 \subsection{Simulationseinstellungen}
 
-Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn man hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeiten nach Erstellen einer Simulation die Einstellungen zu \"{a}ndern, indem man das Einstellungsfenster erneuert unter ``Editieren $\rightarrow$ Einstellungen'' aufruft.
+Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Benutzer hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeiten nach Erstellen einer Simulation die Einstellungen zu \"{a}ndern, indem der Benutzer das Einstellungsfenster erneuert unter ``Editieren $\rightarrow$ Einstellungen'' aufruft.
 
 \begin{figure}[htbp]
 	\centering
@@ -238,12 +238,13 @@ Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rig
 Im Folgenden werden alle in den Simulationseinstellungen verf\"{u}gbaren Variablen beschrieben. Die Klammern geben den Typen und die Standardwerte an, in denen die Variablen vorliegen. 
 
 \begin{itemize}
-	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean, false)}: Standardm\"{a}ﬂig k\"{o}nnen Prozesse aus \"{u}bersichtshalber keine Nachrichten empfangen, die sie selbst verschickt haben. Wenn diese Variable jedoch auf true gesetzt wird, dann kann ein Prozess auch auf selbst verschickte Nachrichten antworten. Die Zeit f\"{u}r das Versenden und Empfangen einer Nachricht an sich selbst betr\"{a}gt jedoch stets 0ms. Diese Variable sollte mit Vorsicht verwendet werden, da hierdurch, bedingt aus den 0ms, Endlosschleifen entstehen k\"{o}nnen. 
-	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean, true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickendem Prozess abh\"{a}ngige zuf\"{a}llige \"{U}bertragungszeit. Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sende- und Empfangsprozess gebildet. Ansonsten wird stets die \"{U}bertragungszeit des Senderprozesses verwendet.
-	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean, false)}: Hier l\"{a}sst sich ebenso der Expertenmodus aktivieren oder deaktivieren.
-	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean, false)}: Wenn diese Variable auf true gesetzt wird, so wird die Simulation jedes Mal nach Ablauf automatisch erneuert gestartet. 
+	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean, false)}: Standardm\"{a}ﬂig k\"{o}nnen Prozesse \"{u}bersichtshalber keine Nachrichten empfangen, die sie selbst verschickt haben. Wenn diese Variable jedoch auf true gesetzt wird, dann kann ein Prozess auch auf selbst verschickte Nachrichten antworten. Die Zeit f\"{u}r das Versenden und Empfangen einer Nachricht an sich selbst betr\"{a}gt jedoch stets 0ms. Diese Variable sollte mit Vorsicht verwendet werden, da hierdurch, bedingt aus den 0ms, Endlosschleifen entstehen k\"{o}nnen. 
+	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean, true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickendem Prozess abh\"{a}ngige zuf\"{a}llige \"{U}bertragungszeit. Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sende- und Empfangsprozess gebildet. Ansonsten wird stets die \"{U}bertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
+	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean, true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, so werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann, weil er das dazugeh\"{o}rige Protokoll nicht unterst\"{u}tzt, nicht angezeigt. Hierdurch wird eine Simulation viel \"{u}bersichtlicher.
+	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean, false)}: Hier l\"{a}sst sich der Expertenmodus ebenso aktivieren oder deaktivieren.
+	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean, false)}: Wenn diese Variable auf true gesetzt ist, so wird die Simulation jedes Mal nach Ablauf automatisch erneuert gestartet. 
 	\item \textbf{Abspielgeschwindigkeit der Simulation} \textit{(Float, 0.5)}: Gibt den Faktor der Simulationsabspielgeschindigkeit an. Wenn als Faktor 1 gew\"{a}hlt wird, dann dauert eine simulierte Sekunde auch in echt eine Sekunde. Der Faktor 0.5 gibt somit an, dass die Simulation mit halber Echtzeitgschwindigkeit simuliert wird.
-	\item \textbf{Anzahl der Prozesse} \textit{(Integer, 3)}: Gibt an wieviele Prozesse an der Simulation teilnehmen sollen. Wie schon erw\"{a}hnt kann man auch nachtr\"{a}glich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzuf\"{u}gen.
+	\item \textbf{Anzahl der Prozesse} \textit{(Integer, 3)}: Gibt an, wieviele Prozesse an der Simulation teilnehmen sollen. Wie schon erw\"{a}hnt kann der Benutzer auch nachtr\"{a}glich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzuf\"{u}gen.
 	\item \textbf{Dauer der Simulation} \textit{(Integer, 15)}: Gibt die Dauer der Simulation in Sekunden an.
 \end{itemize}
 
@@ -264,14 +265,49 @@ Jeder Prozess besitzt folgende Variablen, die entweder via dem Variablen-Tab in 
 	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer, 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob der gegebene Prozess w\"{a}hrend der Simulation zuf\"{a}llig abst\"{u}rzt. 
 	\item \textbf{Lokale Zeit} \textit{(Long, 0)}: Gibt die aktuelle lokale Prozesszeit in ms an. Es empfiehlt sich daher die Simulation, bevor Prozesseinstellungen vorgenommen werden, zu pausieren. 
 	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer, 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob eine vom aktuell ausgew\"{a}hlten Prozess verschickte Nachricht unterwegs verloren geht. 
-	\item \textbf{} \textit{(, )}:
-	\item \textbf{} \textit{(, )}:
-	\item \textbf{} \textit{(, )}:
-	\item \textbf{} \textit{(, )}:
+	\item \textbf{Maximale \"{U}bertragungszeit} \textit{(Long, 2000)}: Gibt die Dauer in ms an, die eine vom Prozess verschickte Nachricht maximal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt. 
+	\item \textbf{Minimale \"{U}bertragungszeit} \textit{(Long, 500)}: Gibt die Dauer in ms an, die eine vom Prozess verschickte Nachricht minimal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt.
 \end{itemize}
 
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics{images/ss-simulationseinstellungen-experten}}
+	\caption{Weitere Simulationseinstellungen im Expertenmodus}
+	\label{fig:SimulationseinstellungenExperten}
+\end{figure}
+
+Im selben Fenster lassen sich auch die Protokollvariablen editieren. Die Protokollvariablen werden jedoch sp\"{a}ter in der Protokollsektion beschrieben.
 
 \subsection{Einstellungen im Expertenmodus}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{l|l}
+		\textbf{Schl\"{u}ssel} & \textbf{Beschreibung}\\
+		\hline 
+			\texttt{col.background} & Die Hintergrundfarbe der Simulation\\
+			\texttt{col.message.arrived} & Nachrichtenfarbe wenn sie ihr Ziel erreicht hat\\
+			\texttt{col.message.lost} & Nachrichtenfarbe wenn sie verloren ging\\
+			\texttt{col.message.sending} & Nachrichtenfarbe wenn sie noch unterwegs ist\\
+			\textbf{\texttt{col.process.crashed}} & Prozessfarbe wenn er abgest\"{u}rzt ist\\
+			\textbf{\texttt{col.process.default}} & Prozessfarbe wenn die Simulation aktuell nicht l\"{a}uft und \\
+				& der Prozess aktuell nicht abgest\"{u}rzt ist \\
+			\textbf{\texttt{col.process.highlight}} & Prozessfarbe wenn die Maus \"{u}ber seinem Balken liegt\\
+			\texttt{col.process.line} & Farbe, in der die kleine ``Prozessfane'' an der auch die \\
+				& lokale Prozesszeit angegeben wird, dargestellt wird\\
+			\textbf{\texttt{col.process.running}} & Prozessfarbe wenn er nicht abgest\"{u}rzt ist und die\\
+				& Simulation aktuell l\"{a}uft\\
+			\texttt{col.process.secondline} & Farbe in der die Sekunden-Zeitgitter dargestellt werden \\
+			\texttt{col.process.sepline} & Farbe der globalen Zeitachse\\
+			\textbf{\texttt{col.process.stopped}} & Prozessfarbe wenn die Simulation pausiert wurde\\
+	\end{tabular}
+	}
+	\caption{Farbeinstellungen}
+	\label{tb:Farbeinstellungen}
+\end{table}
+
+Mit aktiven Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl der Pixel verschiedener der GUI-Elemente, editieren. In Abbildung \ref{fig:SimulationseinstellungenExperten} sieht der Benutzer alle einstellbaren Farben. Die fettgedruckten Schl\"{u}ssel in Tabelle \ref{tb:Farbeinstellungen} dienen nur als Standardwerte f\"{u}r neuzuerstellende Prozesse und sind auch jeweils in den Prozesseinstellungen separat editierbar.
 
 \section{Protokolle}
 
@@ -314,7 +350,7 @@ Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen 
 	\label{fig:PingPongSturmProto}
 \end{figure}
 
-\"{A}ndert man die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks} ab, so l\"{a}sst sich ein Ping-Pong Sturm realisieren. Dort wurde ein neuer Prozess 3 eingef\"{u}hrt, der als Ping-Pong Server fungiert. Als Ursache verdoppelt sich die Anzahl der kursierenden Nachrichten bei jedem Client-Server Roundtrip, da auf jede Clientnachricht stets 2 Serverantworten verschickt werden. In Abbildung \ref{fig:PingPongSturmProto} ist der resultierende Simulationsverlauf dargestellt.
+Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks} abge\"{a}ndert, so l\"{a}sst sich ein Ping-Pong Sturm realisieren. Dort wurde ein neuer Prozess 3 eingef\"{u}hrt, der als Ping-Pong Server fungiert. Als Ursache verdoppelt sich die Anzahl der kursierenden Nachrichten bei jedem Client-Server Roundtrip, da auf jede Clientnachricht stets 2 Serverantworten verschickt werden. In Abbildung \ref{fig:PingPongSturmProto} ist der resultierende Simulationsverlauf dargestellt.
 
 \begin{table}
 	\centering
