@@ -39,7 +39,7 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
     private static final long serialVersionUID = 1L;
 
     /** The sent messages. */
-    private ArrayList<VSMessage> sentMessages;
+    private ArrayList<Integer> sentMessages;
 
     /** The broadcast count. */
     private static int broadcastCount;
@@ -50,7 +50,7 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
     public VSBroadcastSturmProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
         setClassname(getClass().toString());
-        sentMessages = new ArrayList<VSMessage>();
+        sentMessages = new ArrayList<Integer>();
     }
 
     /* (non-Javadoc)
@@ -71,7 +71,7 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
     public void onClientStart() {
         VSMessage message = new VSMessage();
         message.setInteger("Broadcast", broadcastCount++);
-        sentMessages.add(message);
+        sentMessages.add(message.getIntegerObj("Broadcast"));
         sendMessage(message);
     }
 
@@ -111,11 +111,11 @@ public class VSBroadcastSturmProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
-        if (!sentMessages.contains(recvMessage)) {
+        if (!sentMessages.contains(recvMessage.getIntegerObj("Broadcast"))) {
             VSMessage message = new VSMessage();
             message.setInteger("Broadcast",
                                recvMessage.getInteger("Broadcast"));
-            sentMessages.add(message);
+            sentMessages.add(message.getIntegerObj("Broadcast"));
             sendMessage(message);
         }
     }

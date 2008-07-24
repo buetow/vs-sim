@@ -236,25 +236,87 @@ Das Dummy-Protokoll dient lediglich als leeres Template f\"{u}r die Erstellung e
 	\label{fig:PingPongProto}
 \end{figure}
 
-Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen Client und Server st\"{a}ndig Nachrichten hin- und hergeschickt. Der Ping-Pong Client startet die erste Anfrage, worauf der Server dem Client antwortet. Auf diese Antwort wird vom Client wiederum geantwortet und so weiter. Jeder Nachricht wird ein Z\"{a}hler mitgeschickt, der bei jeder Station um eins inkrementiert wird und jeweils im Loggfenster protokolliert wird. Es werden erst keine Nachrichten mehr versendet, wenn entweder eine Nachricht verloren geht, oder wenn die Simulationszeit das Ende erreicht hat.
+Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen zwei Prozessen, Client P1 und Server P2, st\"{a}ndig Nachrichten hin- und hergeschickt. Der Ping-Pong Client startet die erste Anfrage, worauf der Server dem Client antwortet. Auf diese Antwort wird vom Client wiederum geantwortet und so weiter. Jeder Nachricht wird ein Z\"{a}hler mitgeschickt, der bei jeder Station um eins inkrementiert- und jeweils im Loggfenster protokolliert wird. In der Simulation werden erst keine Antwortnachrichten mehr verschickt, wenn entweder eine Nachricht verloren geht, oder wenn die Simulationszeit das Ende erreicht hat. In Tabelle \ref{tb:PingPongTasks} sind alle f\"{u}r dieses Beispiel programmierten Ereignisse aufgef\"{u}hrt! Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet! Wenn die Eintrittszeiten f\"{u}r Aktivierung und das Starten der Anfrage identisch sind, so ordnet der Ereigniseditor diese Ereignisse automatisch in der richtigen Reihenfolge an.  Anhand diesen Beispiels ist auch erkennbar, dass die noch nicht ausgelieferte Nachrichten noch g\"{u}n eingef\"{a}rbt ist. Alle ausgelieferten Nachrichten tragen schon die Farbe Blau.
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0 & 1 & Ping Pong Client aktivieren\\
+		 	0 & 2 & Ping Pong Server aktivieren\\
+		 	0 & 1 & Ping Pong Clientanfrage starten
+	\end{tabular}
+	}
+	\caption{Programmierte Ping-Pong Ereignisse}
+	\label{tb:PingPongTasks}
+\end{table}
 
 \begin{figure}[htbp]
 	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong-lamport}}
-	\caption{Das Ping-Pong Protokoll mit Lamport-Zeitstempel}
-	\label{fig:PingPongLamport}
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong-sturm}}
+	\caption{Das Ping-Pong Protokoll (Sturm)}
+	\label{fig:PingPongSturmProto}
 \end{figure}
 
-Das Ping-Pong Beispiel eignet sich auch f\"{u}r ein erstes Beispiel der Lamport- und Vektorzeitangaben. In Abbildung \ref{fig:PingPongLamport} wurde im Simulator die Lamportzeit-Checkbox aktiviert und in Abbildung \ref{fig:PingPongVektor} die der Vektorzeit. Selbstverst\"{a}ndlich lassen sich die Lamport- und Vektorzeiten auch bei jedem anderen Protokoll darstellen.
+\"{A}ndert man die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks} ab, so l\"{a}sst sich ein Ping-Pong Sturm realisieren. Dort wurde ein neuer Prozess 3 eingef\"{u}hrt, der als Ping-Pong Server fungiert. Als Ursache verdoppelt sich die Anzahl der kursierenden Nachrichten bei jedem Client-Server Roundtrip, da auf jede Clientnachricht stets 2 Serverantworten verschickt werden. In Abbildung \ref{fig:PingPongSturmProto} ist der resultierende Simulationsverlauf dargestellt.
 
-\begin{figure}[htbp]
+\begin{table}
 	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong-vektor}}
-	\caption{Das Ping-Pong Protokoll mit Vektor-Zeitstempel}
-	\label{fig:PingPongVektor}
-\end{figure}
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0 & 1 & Ping Pong Client aktivieren\\
+		 	0 & 2 & Ping Pong Server aktivieren\\
+		 	0 & 3 & Ping Pong Server aktivieren\\
+		 	0 & 1 & Ping Pong Clientanfrage starten
+	\end{tabular}
+	}
+	\caption{Programmierte Ping-Pong Ereignisse (Sturm)}
+	\label{tb:PingPongSturmTasks}
+\end{table}
+
 
 \subsection{Das Broadcast-Sturm Protokoll}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-broadcast-sturm}}
+	\caption{Das Broadcast-Sturm Protokoll}
+	\label{fig:BroadcastSturmProto}
+\end{figure}
+
+Das Broadcast-Sturm Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Protokoll. Der Unterschied besteht darin, dass sich das Protokoll anhand einer eindeutigen Broadcast-ID merkt, welche Nachrichten bereits verschickt wurden. Das Broadcast-Sturm Protokoll (Server- und Clientseitig) verschickt alle erhaltenen Nachrichten, sofern sie vom jeweiligen Prozess noch nicht schoneinmal verschickt wurden, erneuert. Somit l\"{a}sst sich, unter Verwendung mehrerer Prozesse (hier 6), wie auf Abbildung \ref{fig:BroadcastSturmProto}, ein Broadcast-Sturm erzeugen. P1 ist der Client und startet je eine Anfrage nach 0ms und 2500ms. Die Simulationsdauer betr\"{a}gt hier genau 5000ms. Da Client nur Servernachrichten und Server nur Clientnachrichten empfangen k\"{o}nnen, ist in dieser Simulation jeder Prozess, wie in Tabelle \ref{tb:BroadcastSturmTasks} angegeben, gleichzeitig Server und Client. 
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0000 & 1 & Broadcaststurn Client aktivieren\\
+		 	0000 & 2 & Broadcaststurn Client aktivieren\\
+		 	0000 & 3 & Broadcaststurn Client aktivieren\\
+		 	0000 & 4 & Broadcaststurn Client aktivieren\\
+		 	0000 & 5 & Broadcaststurn Client aktivieren\\
+		 	0000 & 6 & Broadcaststurn Client aktivieren\\
+		 	0000 & 1 & Broadcaststurn Server aktivieren\\
+		 	0000 & 2 & Broadcaststurn Server aktivieren\\
+		 	0000 & 3 & Broadcaststurn Server aktivieren\\
+		 	0000 & 4 & Broadcaststurn Server aktivieren\\
+		 	0000 & 5 & Broadcaststurn Server aktivieren\\
+		 	0000 & 6 & Broadcaststurn Server aktivieren\\
+		 	0000 & 1 & Broadcaststurn Clientanfrage starten\\
+		 	2500 & 1 & Broadcaststurn Clientanfrage starten
+	\end{tabular}
+	}
+	\caption{Programmierte Broadcast-Sturm Ereignisse}
+	\label{tb:BroadcastSturmTasks}
+\end{table}
+
+
 
 \subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System}
 
