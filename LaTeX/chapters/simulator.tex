@@ -219,6 +219,61 @@ Nachdem ein Prozess eine Anfragenachricht versendet hat, und ein weiterer Prozes
 
 Ein Callback-Ereignis kann von einem Protokoll ausgel\"{o}st werden. Das Protokoll setzt einen Wecker zur welcher lokalen Uhrzeit eine weitere Aktion ausgef\"{u}hrt werden soll. Zum Beispiel lassen sich hiermit Timeouts realisieren, wenn ein Protokoll eine Antwort erwartet, diese aber nicht eintrifft. Nach dem Timeout kann dann eine Anfrage erneuert verschickt werden! Es k\"{o}nnen beliebig viele Callback-Ereignisse definiert werden. Wenn sie noch nicht ausgef\"{u}hrt wurden und aufgrund eines anderen Ereignisses nicht mehr ben\"{o}tigt werden, k\"{o}nnen sie vom Protokoll auch wieder entfernt werden. Wenn ein Callback-Ereignis ausgef\"{u}hrt wird, kann es sich selbst wieder f\"{u}r eine weitere Ausf\"{u}hrung erneuert planen. So lassen sich periodisch wiedereintreffende Ereignisse realisieren. Beispielsweise verwendet das ``Reliable Multicast Protokoll'' Callback-Ereignisse, indem solange Anfragen verschickt werden, bis alle ben\"{o}tigten Antworten vorliegen.
 
+\section{Einstellungen}
+
+In diesem Abschnitt wird auf die m\"{o}glichen Simulationseinstellungen genauer eingegangen. Es wird zwischen drei verschiedenen Typen von Einstellungen unterschieden. Zun\"{a}chst gibt es globale Simulationseinstellungen. Diese beinhalten Variablen die f\"{u}r die gesamte Simulation gelten. Zudem hat jeder Prozess eigene lokale Einstellungen. Selbst jedes Protokoll hat f\"{u}r jeden Prozess eigene Einstellungen die editiert werden k\"{o}nnen. 
+
+\subsection{Simulationseinstellungen}
+
+Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn man hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeiten nach Erstellen einer Simulation die Einstellungen zu \"{a}ndern, indem man das Einstellungsfenster erneuert unter ``Editieren $\rightarrow$ Einstellungen'' aufruft.
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics{images/ss-simulationseinstellungen}}
+	%\fbox{\includegraphics[width=11cm]{images/ss-simulationseinstellungen}}
+	\caption{Das Fenster zu den Simulationseinstellungen}
+	\label{fig:Simulationseinstellungen}
+\end{figure}
+
+Im Folgenden werden alle in den Simulationseinstellungen verf\"{u}gbaren Variablen beschrieben. Die Klammern geben den Typen und die Standardwerte an, in dem die Variablen vorliegen. 
+
+\begin{itemize}
+	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean, false)}: Standardm\"{a}ßig k\"{o}nnen Prozesse aus \"{u}bersichtshalber keine Nachrichten empfangen, die sie selbst verschickt haben. Wenn diese Variable jedoch auf true gesetzt wird, dann kann ein Prozess auch auf selbst verschickte Nachrichten antworten. Die Zeit f\"{u}r das Versenden und Empfangen einer Nachricht an sich selbst betr\"{a}gt jedoch stets 0ms. Diese Variable sollte mit Vorsicht verwendet werden, da hierdurch, bedingt aus den 0ms, Endlosschleifen entstehen k\"{o}nnen. 
+	\item \textbf{Mittelwerte der Nachrichtenausfallwahrscheinlichkeiten bilden} \textit{(Boolean, true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickendem Prozess abh\"{a}ngige zuf\"{a}llige Sendezeit. Wenn diese Option aktiviert ist, so wird der Mittelwert dieser Zeit vom Sende- und Empfangsprozess gebildet. Ansonsten wird stets die Sendezeit des Senderprozesses verwendet.
+	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean, false)}: Hier l\"{a}sst sich ebenso der Expertenmodus aktivieren oder deaktivieren.
+	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean, false)}: Wenn diese Variable auf true gesetzt wird, so wird die Simulation jedes Mal nach Ablauf automatisch erneuert gestartet. 
+	\item \textbf{Abspielgeschwindigkeit der Simulation} \textit{(Float, 0.5)}: Gibt den Faktor der Simulationsabspielgeschindigkeit an. Wenn als Faktor 1 gew\"{a}hlt wird, dann dauert eine simulierte Sekunde auch in echt eine Sekunde. Der Faktor 0.5 gibt somit an, dass die Simulation mit halber Echtzeitgschwindigkeit simuliert werden soll.
+	\item \textbf{Anzahl der Prozesse} \textit{(Integer, 3)}: Gibt an wieviele Prozesse an der Simulation teilnehmen sollen. Wie schon erw\"{a}hnt kann man auch nachtr\"{a}glich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzuf\"{u}gen.
+	\item \textbf{Dauer der Simulation} \textit{(Integer, 15)}: Gibt die Dauer der Simulation in Sekunden an.
+\end{itemize}
+
+Die weiteren Einstellungen unter ``Einstellungen f\"{u}r neue Prozesse'' sowie ``Nachrichteneinstellungen f\"{u}r neue Prozesse'' geben lediglich Standardwerte an, die f\"{u}r neu zu erstellende Prozesse verwendet werden. 
+
+\subsection{Prozess- und Protokolleinstellungen}
+
+Jeder Prozess besitzt folgende Variablen, die entweder via dem Variablen-Tab in der Sidebar oder ``Editieren $\rightarrow$ Prozess \textit{PID}'' oder Linksklick auf den Prozessbalken editiert werden k\"{o}nnen:
+
+\begin{itemize}
+	\item \textbf{Uhrabweichung} \textit{(Float, 0.0)}: Gibt den Faktor $f$ an, um den die lokale Prozessuhr abweicht. Die Uhrabweichung wird wie folgt berechnet:
+		\begin{itemize}
+			\item $f := $ Der Faktor wie oben beschrieben
+			\item $t := $ Aktuelle Prozesszeit in ms
+			\item $t' := $ Die neu verstrichene Zeit in ms
+		\end{itemize}
+		Die Neue Zeit berechnet sich durch $t := t + t' * (1 + f)$. Der Faktor 0.0 besagt also, dass die Uhr keine Abweichung hat. F\"{u}r $f$ sind nur Werte $> -1.0$ erlaubt, da sonst die Prozessuhr r\"{u}ckw\"{a}rts laufen k\"{o}nnte. Bei allen anderen Werten wird der Faktor wieder automatisch auf 0.0 gesetzt. Da der Simulator intern mit Fliesskommazahlen doppelter Genauigkeit arbeitet, kann es zu kleinen, jedoch vernachl\"{a}ssigbaren, Rundungsfehlern kommen.
+	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer, 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob der gegebene Prozess w\"{a}hrend der Simulation zuf\"{a}llig abst\"{u}rzt. 
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+	\item \textbf{} \textit{(, )}:
+\end{itemize}
+
+
+\subsection{Einstellungen im Expertenmodus}
+
 \section{Protokolle}
 
 Im Folgenden werden alle bisher verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl Clientseitig als auch Serverseitig untest\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig Server und Client ist. Der Benutzer kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
@@ -278,7 +333,6 @@ Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen 
 	\label{tb:PingPongSturmTasks}
 \end{table}
 
-
 \subsection{Das Broadcast-Sturm Protokoll}
 
 \begin{figure}[htbp]
@@ -316,9 +370,14 @@ Das Broadcast-Sturm Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Pro
 	\label{tb:BroadcastSturmTasks}
 \end{table}
 
-
-
 \subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync}}
+	\caption{Das Protokoll zur internen Synchronisierung}
+	\label{fig:TimeSyncProto}
+\end{figure}
 
 \subsection{Christians Methode zur externen Synchronisierung}
  lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
@@ -497,11 +556,4 @@ Das Broadcast-Sturm Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Pro
 
 \subsection{Der zuverl\"{a}ssige (Reliable) Multicast}
 
-\section{Einstellungen}
-
-\subsection{Simulationseinstellungen}
-
-\subsection{Prozesseinstellungen}
-
-\subsection{Protokolleinstellungen}
 
