@@ -592,7 +592,6 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	\label{fig:TwoPhaseCommitProto}
 \end{figure}
 
-
 Das Zwei-Phasen Commit Protokoll ist eine Erweiterung des Ein-Phasen Commit Protokolls. Der Server statet zun\"{a}chst eine Anfrage an alle beteiligten Clients, ob festgeschrieben werden soll. Jeder Client antwortet dann mit true oder false. Der Server fragt so oft periodisch nach, bis ein Ergebnis aller Clients vorliegt. Nach Erhalt aller Abstimmungen \"{u}berpr\"{u}ft der Server, ob alle mit true abgestimmt haben. F\"{u}r den Fall dass mindestens ein Client mit false abgestimmt hat, wird der Festschreibevorgang abgebrochen und als globales Abstimmungsergebnis false verschickt. Wenn alle jedoch mit true abstimmten, soll festgeschrieben werden. Dabei wird das globale Abstimmungsergebnis true verschickt. Das globale Abstimmungsergebnis wird periodisch so oft erneuert verschickt, bis von jedem Client eine Best\"{a}tigung des Erhalts vorliegt.
 
 \begin{table}
@@ -696,7 +695,7 @@ In dem Beispiel (Abbildung \ref{fig:TwoPhaseCommitProto}) sind P1 und P3 Clients
 	\centering
 	\fbox{
 	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Logg} \\
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
 			\hline
 004434 & 1 & Abstimmung true versendet\\
 \hline
@@ -755,7 +754,211 @@ Und folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 
 \subsection{Der ungen\"{u}gende (Basic) Multicast}
 
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-basic-multicast}}
+	\caption{Das Basic-Multicast Protokoll}
+	\label{fig:BasicMulticastProto}
+\end{figure}
+
+Das Basic-Multicast Protokoll ist sehr einfach aufgebaut. In dem Beispiel auf Abbildung \ref{fig:BasicMulticastProto} sind P1 und P3 Server und P2 der Client. Bei diesem Protokoll startet der Client immer die Anfrage, was bei diesem Protokoll eine einfache Multicast-Nachricht ist, die jeder Server empfangen kann. Wie in Tabelle \ref{tb:BasicMulticastTasks} aufgef\"{u}hrt verschickt P2 alle 2500ms jeweils eine Multicast-Nachricht, die alle voneinander v\"{o}llig unabh\"{a}ngig sind. P1 kann jedoch erst nach 2500ms Multicast-Nachrichten empfangen, da er vorher das Protokoll nicht unterst\"{u}tzt w\"{a}hrend P3 von 3000ms bis 6000ms abgest\"{u}rzt ist und auch keine Nachrichten empfangen kann. Da die Einstellung ``Nur relevante Nachrichten anzeigen'' aktiviert ist, wird die erste Multicast-Nachricht von P2 an P1 nicht dargestellt. Bei jedem Prozess wurde die Nachrichtenverlustwahrscheinlichkeit auf 30 Prozent gesetzt, worauf alle in dieser Simulation verschickten Nachrichten mit einer Wahrscheinlichkeit von 30 Prozent ausfallen. Hier ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5. sowie 6. Nachricht auf den Weg zu P1 verloren.
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	00000 & 2 & Basic Multicast Client aktivieren\\
+		 	00000 & 3 & Basic Multicast Server aktivieren\\
+		 	00000 & 2 & Basic Multicast Clientanfrage starten\\
+		 	02500 & 1 & Basic Multicast Server aktivieren\\
+		 	02500 & 2 & Basic Multicast Clientanfrage starten\\
+		 	03000 & 3 & Prozessabsturz\\
+		 	05000 & 2 & Basic Multicast Clientanfrage starten\\
+		 	06000 & 3 & Prozesswiederbelebung\\
+		 	07500 & 2 & Basic Multicast Clientanfrage starten\\
+		 	10000 & 2 & Basic Multicast Clientanfrage starten\\
+		 	12500 & 2 & Basic Multicast Clientanfrage starten
+	\end{tabular}
+	}
+	\caption{Programmierte Basic-Multicast Ereignisse}
+	\label{tb:BasicMulticastTasks}
+\end{table}
+
 \subsection{Der zuverl\"{a}ssige (Reliable) Multicast}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-reliable-multicast}}
+	\caption{Das Reliable-Multicast Protokoll}
+	\label{fig:ReliableMulticastProto}
+\end{figure}
+
+Bei dem  zuverl\"{a}ssigen (Reliable) Multicast verschickt der Client so oft periodisch seine Multicast-Nachricht, bis er von allen beteiligten Servern eine Best\"{a}tigung erhalten hat. Nach jedem erneuten Versuch vergisst der Client, von welchen Servern er bereits eine Best\"{a}tigung erhalten hat, womit jeder erneuter Versuch von allen Teilnehmern aufs Neue best\"{a}tigt werden muss. In dem Beispiel (Abbildung \ref{fig:ReliableMulticastProto}, Tabelle \ref{tb:ReliableMulticastTasks}, sowie den Loggs in den Tabellen \ref{tb:ReliableMulticastLoggs} und \ref{tb:ReliableMulticastLoggs2}) ist P2 der Multicast-verschickende Client, w\"{a}hrend P1 und P3 die Server sind. Bei 0ms initiiert der Client seine Multicast-Nachricht. Die Nachrichtenverlustwahrscheinlichkeiten sind \"{u}berall auf 30 Prozent eingestellt.
+
+In diesem Beispiel ben\"{o}tigt der Client bis zur korrekten Auslieferung eines zuverl\"{a}ssigen Multicasts genau 5 Versuche:
+
+\begin{enumerate}
+	\setlength{\itemsep}{-2mm}
+	\item Versuch: 
+		\begin{itemize}
+			\setlength{\itemsep}{-2.5mm}
+			\item P1 unterst\"{u}tzt das Reliable-Multicast Protokoll noch nicht, und kann somit weder Multicast-Nachricht erhalten noch eine Best\"{a}tigung verschicken.
+			\item P3 empf\"{a}ngt die Multicast-Nachricht, jedoch geht seine Best\"{a}tigungsnachricht verloren.
+		\end{itemize}
+	\item Versuch: 
+		\begin{itemize}
+			\setlength{\itemsep}{-2.5mm}
+			\item P1: Die Multicast-Nachricht geht unterwegs zu P1 verloren.
+			\item P3: Die Multicast-Nachricht erreicht P3, aber P3 ist abgest\"{u}rzt und kann somit keine Nachricht verarbeiten.
+		\end{itemize}
+	\item Versuch: 
+		\begin{itemize}
+			\setlength{\itemsep}{-2.5mm}
+			\item P1 empf\"{a}ngt die Multicast-Nachricht und seine Best\"{a}tigung kommt wie geplant bei P2 an. 
+			\item P3: Die Multicast-Nachricht geht unterwegs zu P3 verloren.
+		\end{itemize}
+	\item Versuch: 
+		\begin{itemize}
+			\setlength{\itemsep}{-2.5mm}
+			\item P1 empf\"{a}ngt die Multicast-Nachricht und seine Best\"{a}tigung kommt wie geplant bei P2 an. 
+			\item P3: Die Multicast-Nachricht erreicht P3, aber P3 ist abgest\"{u}rzt und kann somit keine Nachricht verarbeiten.
+		\end{itemize}
+	\item Versuch: 
+		\begin{itemize}
+			\item P1 empf\"{a}ngt die Multicast-Nachricht und seine Best\"{a}tigung kommt wie geplant bei P2 an. 
+			\setlength{\itemsep}{-2.5mm}
+			\item P3 empf\"{a}ngt die Multicast-Nachricht und seine Best\"{a}tigung kommt wie geplant bei P2 an. 
+		\end{itemize}
+\end{enumerate}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	00000 & 3 & Reliable Multicast Server aktivieren\\
+		 	00000 & 2 & Reliable Multicast Client aktivieren\\
+		 	00000 & 2 & Reliable Multicast Clientanfrage starten\\
+		 	02500 & 1 & Reliable Multicast Server aktivieren\\
+		 	03000 & 3 & Prozessabsturz\\
+		 	10000 & 3 & Prozesswiederbelebung\\
+	\end{tabular}
+	}
+	\caption{Programmierte Reliable-Multicast Ereignisse}
+	\label{tb:ReliableMulticastTasks}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
+			\hline
+000000 & & Simulation gestartet\\
+\hline
+000000 & 2 & Reliable Multicast Client aktiviert\\
+\hline
+000000 & 2 & Nachricht versendet; ID: 280; Protokoll: Reliable Multicast;\\
+	   & & Boolean: isMulticast=true\\
+\hline
+000000 & 3 & Reliable Multicast Server aktiviert\\
+\hline
+001590 & 3 & Nachricht erhalten; ID: 280; Protokoll: Reliable Multicast\\
+\hline
+001590 & 3 & Nachricht versendet; ID: 281; Protokoll: Reliable Multicast\\
+	   & & Integer: pid=3; Boolean: isAck=true\\
+\hline
+001590 & 3 & ACK versendet\\
+\hline
+002500 & 1 & Reliable Multicast Server aktiviert\\
+\hline
+002500 & 2 & Nachricht versendet; ID: 282; Protokoll: Reliable Multicast\\
+	   & & Boolean: isMulticast=true\\
+\hline
+003000 & 3 & Abgestürzt\\
+\hline
+005000 & 2 & Nachricht versendet; ID: 283; Protokoll: Reliable Multicast\\
+	   & & Boolean: isMulticast=true\\
+\hline
+005952 & 1 & Nachricht erhalten; ID: 283; Protokoll: Reliable Multicast\\
+\hline
+005952 & 1 & Nachricht versendet; ID: 284; Protokoll: Reliable Multicast\\
+	   & & Integer: pid=1; Boolean: isAck=true\\
+\hline
+005952 & 1 & ACK versendet\\
+\hline
+007500 & 2 & Nachricht versendet; ID: 285; Protokoll: Reliable Multicast\\
+	   & & Boolean: isMulticast=true\\
+\hline
+007937 & 2 & Nachricht erhalten; ID: 284; Protokoll: Reliable Multicast\\
+\hline
+007937 & 2 & ACK von Prozess 1 erhalten!\\
+\hline
+008469 & 1 & Nachricht erhalten; ID: 285; Protokoll: Reliable Multicast\\
+\hline
+008469 & 1 & Nachricht versendet; ID: 286; Protokoll: Reliable Multicast\\
+	   & & Integer: pid=1; Boolean: isAck=true\\
+\hline
+008469 & 1 & ACK erneuert versendet\\
+\hline
+010000 & 2 & Nachricht versendet; ID: 287; Protokoll: Reliable Multicast\\
+	   & & Boolean: isMulticast=true\\
+\hline
+010000 & 3 & Wiederbelebt\\
+\hline
+010395 & 2 & Nachricht erhalten; ID: 286; Protokoll: Reliable Multicast\\
+\hline
+010995 & 3 & Nachricht erhalten; ID: 287; Protokoll: Reliable Multicast\\
+\hline
+010995 & 3 & Nachricht versendet; ID: 288; Protokoll: Reliable Multicast\\
+	   & & Integer: pid=3; Boolean: isAck=true\\
+\hline
+010995 & 3 & ACK erneuert versendet\\
+\hline
+011213 & 1 & Nachricht erhalten; ID: 287; Protokoll: Reliable Multicast\\
+\hline
+011213 & 1 & Nachricht versendet; ID: 289; Protokoll: Reliable Multicast\\
+	   & & Integer: pid=1; Boolean: isAck=true\\
+	\end{tabular}
+	}
+	\caption{Auszug aus der Loggausgabe des Reliable-Multicast Beispiels}
+	\label{tb:ReliableMulticastLoggs}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
+			\hline
+011213 & 1 & ACK erneuert versendet\\
+\hline
+011813 & 2 &  Nachricht erhalten; ID: 288; Protokoll: Reliable Multicast\\
+\hline
+011813 & 2 &  ACK von Prozess 3 erhalten!\\
+\hline
+011813 & 2 &  ACKs von allen beteiligten Prozessen erhalten!\\
+\hline
+012047 & 2 &  Nachricht erhalten; ID: 289; Protokoll: Reliable Multicast\\
+\hline
+015000 & & Simulation beendet\\
+	\end{tabular}
+	}
+	\caption{Auszug aus der Loggausgabe des Reliable-Multicast Beispiels (2)}
+	\label{tb:ReliableMulticastLoggs2}
+\end{table}
+
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Reliable Multicast Server'' konfiguriert werden k\"{o}nnen:
+
+\begin{itemize}
+	\item \textbf{Zeit bis erneuerter Anfrage} \textit{(Long, 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Muticast erneuert verschickt wird.
+	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
+\end{itemize}
 
 \section{Weitere Beispiele}
 
