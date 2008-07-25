@@ -55,9 +55,8 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
      */
     public void onClientInit() {
         Vector<Integer> vec = new Vector<Integer>();
-        vec.add(2);
+        vec.add(1);
         vec.add(3);
-        vec.add(4);
 
         initVector("pids", vec, "PIDs beteilitger Prozesse");
         initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
