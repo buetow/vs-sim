@@ -540,10 +540,49 @@ In den Beispiel in Abbildung \ref{fig:BerkeleyProto} gibt es 2 Clientprozesse P1
 Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozesseinstellungen unter dem Punkt ``Berkeley Server'' konfiguriert werden kann. Clientseitig gibt es hier keine Variablen.
 
 \begin{itemize}
-	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,2])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server synchronisieren soll. Wenn hier eine PID angegeben wird, die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig unterst\"{u}tz, funktioniert das Protokoll nicht. Dann wird ewig auf eine fehlende Clientantwort gewartet.
+	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server synchronisieren soll. Wenn hier eine PID angegeben wird, die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig unterst\"{u}tz, funktioniert das Protokoll nicht. Dann wird ewig auf eine fehlende Clientantwort gewartet.
 \end{itemize}
 
 \subsection{Das Ein-Phasen Commit Protokoll}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-one-phase-commit}}
+	\caption{Das Ein-Phasen Commit Protokoll}
+	\label{fig:OnePhaseCommitProto}
+\end{figure}
+
+Das Ein-Phasen Commit Protokoll ist daf\"{u}r da, beliebig vielen Clients zu einer Festschreibung zu bewegen. Im realen Leben k\"{o}nnte dies beispielsweise das Erstellen oder L\"{o}schen einer Datei sein, von der auf jedem Client eine lokale Kopie existiert. Der Server ist der Koordinator und auch derjenige, der einen Festschreibewunsch initiiert. Hierbei verschickt der Server periodisch so oft den Festschreibewunsch, bis er von jedem Client eine Best\"{a}tigung erhalten hat. Der Server muss dabei die PIDs aller beteiligten Clientprozesse sowie einen Wecker f\"{u}r erneuertes Versenden des Festschreibewunsches eingestellt bekommen. 
+
+Die programmierten Ereignisse des Beispiels in Abbildung \ref{fig:OnePhaseCommitProto} sind in Tabelle \ref{tb:OnePhaseCommitTasks} aufgelistet. P1 und P3 simulieren jeweils einen Client und P2 den Server. Damit die Simulation mehrere Festschreibew\"{u}nsche verschickt, st\"{u}rzt in der Simulation P1 nach 1000ms ab und nach 5000ms steht er wieder zur Verf\"{u}gung. Die ersten beide Festschreibew\"{u}nsche erreichen dadurch P1 nicht und erst der dritte Versuch verl\"{a}uft erfolgreich. Bevor die Best\"{a}tigung von P1 bei P2 eintrifft, l\"{a}uft jedoch der Wecker erneuert ab, so dass ein weiterer Festschreibewunsch versendet wird. Da P1 und P3 jeweils schon eine Best\"{a}tigung verschickt haben, wird dieser Wunsch ignoriert.
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0000 & 1 & 1-Phasen Commit Client aktivieren\\
+		 	0000 & 2 & 1-Phasen Commit Server aktivieren\\
+		 	0000 & 3 & 1-Phasen Commit Client aktivieren\\
+		 	0000 & 2 & 1-Phasen Commit Serveranfrage starten\\
+		 	1000 & 1 & Prozessabsturz\\
+		 	5000 & 1 & Prozessweiderbelebung
+	\end{tabular}
+	}
+	\caption{Programmierte Ein-Phasen Commit Ereignisse}
+	\label{tb:OnePhaseCommitTasks}
+\end{table}
+
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``1-Phasen Commit Server'' konfiguriert werden kann. Clientseitig gibt es hier keine Variablen.
+
+\begin{itemize}
+	\item \textbf{Zeit bis erneuerter Anfrage} \textit{(Long, 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneuert verschickt wird.
+	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
+\end{itemize}
+
 
 \subsection{Das Zwei-Phasen Commit Protokoll}
 

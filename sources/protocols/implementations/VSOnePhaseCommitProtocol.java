@@ -56,7 +56,7 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
     public void onServerInit() {
         /* Can be changed via GUI variables editor of each process */
         Vector<Integer> vec = new Vector<Integer>();
-        vec.add(2);
+        vec.add(1);
         vec.add(3);
 
         initVector("pids", vec, "PIDs beteilitger Prozesse");
@@ -109,9 +109,14 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
 
             logg("ACK von Prozess " + pid + " erhalten!");
 
-            if (pids.size() == 0)
+            if (pids.size() == 0) {
                 logg("ACKs von allen beteiligten Prozessen erhalten! " +
                      "Festgeschrieben!");
+
+                /* Remove the active schedule which has been created in the
+                   onServerStart method */
+                removeSchedules();
+			}
         }
     }
 

@@ -71,7 +71,7 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
      */
     public void onServerInit() {
         Vector<Integer> vec = new Vector<Integer>();
-        vec.add(2);
+        vec.add(1);
         vec.add(3);
         initVector("pids", vec, "PIDs beteiliger Prozesse");
     }
