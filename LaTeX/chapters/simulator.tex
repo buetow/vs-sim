@@ -225,7 +225,7 @@ In diesem Abschnitt wird auf die m\"{o}glichen Simulationseinstellungen genauer 
 
 \subsection{Simulationseinstellungen}
 
-Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Benutzer hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeiten nach Erstellen einer Simulation die Einstellungen zu \"{a}ndern, indem der Benutzer das Einstellungsfenster erneuert unter ``Editieren $\rightarrow$ Einstellungen'' aufruft.
+Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Benutzer hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeiten nach Erstellen einer Simulation die Einstellungen nachtr\"{a}glich zu \"{a}ndern, indem der Benutzer das Einstellungsfenster erneuert unter ``Editieren $\rightarrow$ Einstellungen'' aufruft.
 
 \begin{figure}[htbp]
 	\centering
@@ -261,12 +261,12 @@ Jeder Prozess besitzt folgende Variablen, die entweder via dem Variablen-Tab in 
 			\item $t := $ Aktuelle Prozesszeit in ms
 			\item $t' := $ Die neu verstrichene Zeit in ms
 		\end{itemize}
-		Die Neue Zeit berechnet sich durch $t := t + t' * (1 + f)$. Der Faktor 0.0 besagt also, dass die Uhr keine Abweichung hat. F\"{u}r $f$ sind nur Werte $> -1.0$ erlaubt, da sonst die Prozessuhr r\"{u}ckw\"{a}rts laufen k\"{o}nnte. Bei allen anderen Werten wird der Faktor wieder automatisch auf 0.0 gesetzt. Da der Simulator intern mit Fliesskommazahlen doppelter Genauigkeit arbeitet, kann es zu kleinen, jedoch vernachl\"{a}ssigbaren, Rundungsfehlern kommen.
+		Die Neue Zeit berechnet sich durch $t := t + t' (1 + f)$. Der Faktor 0.0 besagt also, dass die Uhr keine Abweichung hat. F\"{u}r $f$ sind nur Werte $> -1.0$ erlaubt, da sonst die Prozessuhr r\"{u}ckw\"{a}rts laufen k\"{o}nnte. Bei allen anderen Werten wird der Faktor wieder automatisch auf 0.0 gesetzt. Da der Simulator intern mit Fliesskommazahlen doppelter Genauigkeit arbeitet, kann es zu kleinen, jedoch vernachl\"{a}ssigbaren, Rundungsfehlern kommen.
 	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer, 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob der gegebene Prozess w\"{a}hrend der Simulation zuf\"{a}llig abst\"{u}rzt. 
-	\item \textbf{Lokale Zeit} \textit{(Long, 0)}: Gibt die aktuelle lokale Prozesszeit in ms an. Es empfiehlt sich daher die Simulation, bevor Prozesseinstellungen vorgenommen werden, zu pausieren. 
+	\item \textbf{Lokale Zeit} \textit{(Long, 0)}: Gibt die aktuelle lokale Prozesszeit in Millisekunden an. Es empfiehlt sich daher die Simulation, bevor Prozesseinstellungen vorgenommen werden, zu pausieren. 
 	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer, 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob eine vom aktuell ausgew\"{a}hlten Prozess verschickte Nachricht unterwegs verloren geht. 
-	\item \textbf{Maximale \"{U}bertragungszeit} \textit{(Long, 2000)}: Gibt die Dauer in ms an, die eine vom Prozess verschickte Nachricht maximal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt. 
-	\item \textbf{Minimale \"{U}bertragungszeit} \textit{(Long, 500)}: Gibt die Dauer in ms an, die eine vom Prozess verschickte Nachricht minimal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt.
+	\item \textbf{Maximale \"{U}bertragungszeit} \textit{(Long, 2000)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht maximal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt. Im weiteren Verlauf wird dieser Wert mit $t_{max}$ bezeichnet.
+	\item \textbf{Minimale \"{U}bertragungszeit} \textit{(Long, 500)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht minimal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Der verwendete Wert wird zuf\"{a}llig zwischen (inklusive) der minimalen- und der maximalen Zeit gew\"{a}hlt. Im weiteren Verlauf wird dieser Wert mit $t_{min}$ bezeichnet.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -319,15 +319,6 @@ Das Dummy-Protokoll dient lediglich als leeres Template f\"{u}r die Erstellung e
 
 \subsection{Das Ping-Pong Protokoll}
 
-\begin{figure}[htbp]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong}}
-	\caption{Das Ping-Pong Protokoll}
-	\label{fig:PingPongProto}
-\end{figure}
-
-Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen zwei Prozessen, Client P1 und Server P2, st\"{a}ndig Nachrichten hin- und hergeschickt. Der Ping-Pong Client startet die erste Anfrage, worauf der Server dem Client antwortet. Auf diese Antwort wird vom Client wiederum geantwortet und so weiter. Jeder Nachricht wird ein Z\"{a}hler mitgeschickt, der bei jeder Station um eins inkrementiert- und jeweils im Loggfenster protokolliert wird. In der Simulation werden erst keine Antwortnachrichten mehr verschickt, wenn entweder eine Nachricht verloren geht, oder wenn die Simulationszeit das Ende erreicht hat. In Tabelle \ref{tb:PingPongTasks} sind alle f\"{u}r dieses Beispiel programmierten Ereignisse aufgef\"{u}hrt! Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet! Wenn die Eintrittszeiten f\"{u}r Aktivierung und das Starten der Anfrage identisch sind, so ordnet der Ereigniseditor diese Ereignisse automatisch in der richtigen Reihenfolge an.  Anhand diesen Beispiels ist auch erkennbar, dass die noch nicht ausgelieferte Nachrichten noch g\"{u}n eingef\"{a}rbt ist. Alle ausgelieferten Nachrichten tragen schon die Farbe Blau.
-
 \begin{table}
 	\centering
 	\fbox{
@@ -342,6 +333,16 @@ Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen 
 	\caption{Programmierte Ping-Pong Ereignisse}
 	\label{tb:PingPongTasks}
 \end{table}
+
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong}}
+	\caption{Das Ping-Pong Protokoll}
+	\label{fig:PingPongProto}
+\end{figure}
+
+Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen zwei Prozessen, Client P1 und Server P2, st\"{a}ndig Nachrichten hin- und hergeschickt. Der Ping-Pong Client startet die erste Anfrage, worauf der Server dem Client antwortet. Auf diese Antwort wird vom Client wiederum geantwortet und so weiter. Jeder Nachricht wird ein Z\"{a}hler mitgeschickt, der bei jeder Station um eins inkrementiert- und jeweils im Loggfenster protokolliert wird. In der Simulation werden erst keine Antwortnachrichten mehr verschickt, wenn entweder eine Nachricht verloren geht, oder wenn die Simulationszeit das Ende erreicht hat. In Tabelle \ref{tb:PingPongTasks} sind alle f\"{u}r dieses Beispiel programmierten Ereignisse aufgef\"{u}hrt! Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet! Wenn die Eintrittszeiten f\"{u}r Aktivierung und das Starten der Anfrage identisch sind, so ordnet der Ereigniseditor diese Ereignisse automatisch in der richtigen Reihenfolge an.  Anhand dieses Beispiels ist auch erkennbar, dass die noch nicht ausgelieferte Nachrichten noch g\"{u}n eingef\"{a}rbt ist. Alle ausgelieferten Nachrichten tragen bereits die Farbe Blau.
 
 \begin{figure}[htbp]
 	\centering
@@ -407,6 +408,29 @@ Das Broadcast-Sturm Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Pro
 
 \subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System}
 
+Bisher haben wir uns nur mit Protokollen besch\"{a}ftigt, in denen die beteiligten Prozesse keine Uhrabweichung hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewand weden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine falsche lokale Zeit $t_c$ mit einem Server synchronisieren m\"{o}chte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zur\"{u}ck, womit der Client seine neue und genauere Prozesszeit berechnen kann. Wie genau die neue Prozesszeit berechnet wird, wird im Folgenden beschrieben. 
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	00000 & 1 & Interne Sync. Client aktivieren \\
+		 	00000 & 2 & Interne Sync. Server aktivieren\\
+		 	00000 & 1 & Interne Sync. Clientanfrage starten\\
+		 	05000 & 1 & Interne Sync. Clientanfrage starten\\
+		 	10000 & 1 & Interne Sync. Clientanfrage starten\\
+	\end{tabular}
+	}
+	\caption{Programmierte Ereignisse zur internen Synchronisierung}
+	\label{tb:InterneSyncTasks}
+\end{table}
+
+Hier (Abbildung \ref{fig:TimeSyncProto}) stellt P1 den Client und P2 den Server dar. Da die \"{U}bertragungszeit $t_u$ einer Nachricht angenommen zwischen $t'_{min}$ und $t'_{max}$ liegt, setzt der Client P1 nach Empfang der Serverantwort seine lokale Prozesszeit auf $t_c := t_s + \frac{1}{2} (t'_{min} + t'_{max})$. Somit wurde die lokale Zeit von P1, bis auf einen Fehler $f$ mit $f < \frac{t'_{max} - t'_{min}}{2}$, synchronisiert. 
+
+Der Clientprozess hat in der Abbildung \ref{fig:TimeSyncProto} als Uhrabweichung den Wert 0.1 und der Server hat als Uhrabweichung den Wert 0.0 konfiguriert. Der Client startet, wie in Tabelle \ref{tb:InterneSyncTasks} angegeben, nach 0ms, 5000ms und 10000ms seiner lokalen Prozesszeit jeweils eine Clientanfrage. In der Abbildung l\"{a}sst sich erkennen, dass die 2. und die 3. Anfrage nicht synchron zu der globalen Zeit (Sekunden-Gatter) gestartet werden. Dies ist auf die Uhrabweichung von P1 zur\"{u}ckzuf\"{u}hren. Nach Simulationsende ist die Zeit von P1 bis auf $15000ms - 15976ms = -976 ms$ synchronisiert.
+
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync}}
@@ -414,174 +438,58 @@ Das Broadcast-Sturm Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Pro
 	\label{fig:TimeSyncProto}
 \end{figure}
 
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Interne Sync. Client'' konfiguriert werden k\"{o}nnen. Serverseitig gibt es hier keine Variablen.
+
+\begin{itemize}
+	\item \textbf{Min. \"{U}bertragungszeit} \textit{(Long, 500)}: Gibt den Wert $t'_{min}$ in Millisekunden an
+	\item \textbf{Max. \"{U}bertragungszeit} \textit{(Long, 2000)}: Gibt den Wert $t'_{max}$ in Millisekunden an
+\end{itemize}
+
+$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie k\"{o}nnen sich allerdings von den tats\"{a}chlichen Nachrichten\"{u}bertragungszeiten $t_{min}$ und $t_{max}$ (siehe Sektion \"{u}ber Prozesseinstellungen) abweichen. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch konfiguriert wurde und die Zeitsynchronisation gr\"{o}ssere Ungenauigkeiten aufweisen kann.
+
 \subsection{Christians Methode zur externen Synchronisierung}
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
- lsdkfjds lfjds flsjfsljsd flsdjf sldkfjsdlfkj 
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync-2}}
+	\caption{Interne Synchronisierung und Christians Methode im Vergleich}
+	\label{fig:TimeSync2Proto}
+\end{figure}
+
+Ein weiteres Protokoll f\"{u}r die Synchronisierung von Uhrzeiten funktioniert nach der Christians Methode zur externen Synchronisierung. Die Christians Methode benutzt die RTT (Round Trip Zeit) $t_{rtt}$, um die \"{U}bertragungszeiten von einzelnen Nachrichten zu approximieren. 
+
+Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren m\"{o}chte, so verschickt er eine Anfrage, und misst dabei die RTT $t_{rtt}$ bis die Serverantwort eintrifft. Die Serverantwort beinhaltet die lokale Prozesszeit vom Server $t_s$ von dem Zeitpunkt, als der Server die Antwort verschickte. Der Client setzt dann seine lokale Zeit neu auf $t_c := t_s + \frac{1}{2} t_{rtt}$, und zwar mit einer Genauigkeit von $\pm(\frac{1}{2} t_{rtt} - u_{min}$) wenn $u_{min}$ eine Schranke f\"{u}r eine Nachrichten\"{u}bertragung mit $t_{rtt} < u_{min}$ ist (siehe Vorlesung Verteilte Systeme an der FH Aachen).
 
 
+Im Prinzip sieht eine Christians-Simulation so aus wie in Abbildung \ref{fig:TimeSyncProto}, daher wird hier auf eine einfache Abbildung vom Christians-Protokoll verzichtet. Viel Interessanter ist der direkte Vergleich zwischen dem Protokoll zur internen Synchronisierung und der Christians Methode der externen Synchronisierung (Abbildung \ref{fig:TimeSync2Proto}). Hier stellt P1 den Client zur internen Synchronisierung und P3 den Client zur externen Synchronisierung dar. P2 fungiert f\"{u}r beide Protokolle gleichzeitig als Server. P1 und P3 starten jeweils zu den lokalen Prozesszeiten 0ms, 5000ms und 10000ms eine Clientanfrage (Tabelle \ref{tb:InterneSync2Tasks}). P1 und P3 haben als Uhrabweichung 0.1 eingestellt und die Simulationsdauer betr\"{a}gt insgesamt 15000ms.
 
+Es ist zu ablesbar, dass P1 seine Zeit bis auf $15000ms - 14567ms = 433ms$ und P3 seine Zeit bis auf $15000ms - 15539ms = -539ms$ synchronisiert hat. In diesem Beispiel hat also das Protokoll zur internen Synchronisierung ein besseres Ergebnis geliefert. Dies ist allerdings nicht zwingend immer der Fall, da nach einer erneuerten Ausf\"{u}hrung alle Nachrichten wieder eine neue zuf\"{a}llige \"{U}bertragungszeit haben werden, die auf das eine oder andere Protokoll schlechte oder gute Auswirkungen haben k\"{o}nnen.
 
-\subsection{Berkeley Algorithmus zur internen Synchronisation}
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	00000 & 1 & Interne Sync. Client aktivieren \\
+		 	00000 & 1 & Interne Sync. Clientanfrage starten\\
+		 	00000 & 2 & Christians Server aktivieren\\
+		 	00000 & 2 & Interne Sync. Server aktivieren\\
+		 	00000 & 3 & Christians Client aktivieren \\
+		 	00000 & 3 & Christians Clientanfrage starten\\
+		 	05000 & 1 & Interne Sync. Clientanfrage starten\\
+		 	05000 & 3 & Christians Clientanfrage starten\\
+		 	10000 & 1 & Interne Sync. Clientanfrage starten\\
+		 	10000 & 3 & Christians Clientanfrage starten\\
+	\end{tabular}
+	}
+	\caption{Programmierte Ereignisse, Vergleich interne und externe Synchronisierung}
+	\label{tb:InterneSync2Tasks}
+\end{table}
+
+\subsection{Berkeley Algorithmus zur internen Synchronisierung}
 
 \subsection{Das Ein-Phasen Commit Protokoll}
 
