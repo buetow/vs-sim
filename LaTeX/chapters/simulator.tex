@@ -217,7 +217,7 @@ Nachdem ein Prozess eine Anfragenachricht versendet hat, und ein weiterer Prozes
 
 \subsubsection{Callback-Ereignisse (nicht-programmierbar)}
 
-Ein Callback-Ereignis kann von einem Protokoll ausgel\"{o}st werden. Das Protokoll setzt einen Wecker zur welcher lokalen Uhrzeit eine weitere Aktion ausgef\"{u}hrt werden soll. Zum Beispiel lassen sich hiermit Timeouts realisieren, wenn ein Protokoll eine Antwort erwartet, diese aber nicht eintrifft. Nach dem Timeout kann dann eine Anfrage erneuert verschickt werden! Es k\"{o}nnen beliebig viele Callback-Ereignisse definiert werden. Wenn sie noch nicht ausgef\"{u}hrt wurden und aufgrund eines anderen Ereignisses nicht mehr ben\"{o}tigt werden, k\"{o}nnen sie vom Protokoll auch wieder entfernt werden. Wenn ein Callback-Ereignis ausgef\"{u}hrt wird, kann es sich selbst wieder f\"{u}r eine weitere Ausf\"{u}hrung erneuert planen. So lassen sich periodisch wiedereintreffende Ereignisse realisieren. Beispielsweise verwendet das ``Reliable Multicast Protokoll'' Callback-Ereignisse, indem solange Anfragen verschickt werden, bis alle ben\"{o}tigten Antworten vorliegen.
+Ein Callback-Ereignis kann von einem Protokoll ausgel\"{o}st werden. Das Protokoll setzt einen Wecker zur welcher lokalen Uhrzeit eine weitere Aktion ausgef\"{u}hrt werden soll. Zum Beispiel lassen sich hiermit Timeouts realisieren, wenn ein Protokoll eine Antwort erwartet, diese aber nicht eintrifft. Nach dem Timeout kann dann eine Anfrage erneuert verschickt werden! Es k\"{o}nnen beliebig viele Callback-Ereignisse definiert werden. Wenn sie noch nicht ausgef\"{u}hrt wurden und aufgrund eines anderen Ereignisses nicht mehr ben\"{o}tigt werden, k\"{o}nnen sie vom Protokoll auch wieder entfernt werden. Wenn ein Callback-Ereignis ausgef\"{u}hrt wird, kann es sich selbst wieder f\"{u}r eine weitere Ausf\"{u}hrung erneuert planen. So lassen sich periodisch wiedereintreffende Ereignisse realisieren. Beispielsweise verwenden die ``Commit-Protokolle'' (mehr dazu sp\"{a}ter) Callback-Ereignisse, indem solange Anfragen verschickt werden, bis alle ben\"{o}tigten Antworten vorliegen.
 
 \section{Einstellungen}
 
@@ -583,14 +583,41 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
 \end{itemize}
 
-
 \subsection{Das Zwei-Phasen Commit Protokoll}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-two-phase-commit}}
+	\caption{Das Zwei-Phasen Commit Protokoll}
+	\label{fig:TwoPhaseCommitProto}
+\end{figure}
+
+
+Das Zwei-Phasen Commit Protokoll ist eine Erweiterung des Ein-Phasen Commit Protokolls. Der Server statet zun\"{a}chst eine Anfrage an alle beteiligten Clients, ob festgeschrieben werden soll. Jeder Client antwortet dann mit true oder false. Der Server fragt so oft periodisch nach, bis ein Ergebnis aller Clients vorliegt. Nach Erhalt aller Abstimmungen \"{u}berpr\"{u}ft der Server, ob alle mit true abgestimmt haben. F\"{u}r den Fall dass mindestens ein Client mit false abgestimmt hat, wird der Festschreibevorgang abgebrochen und als globales Abstimmungsergebnis false verschickt. Wenn alle jedoch mit true abstimmten, soll festgeschrieben werden. Dabei wird das globale Abstimmungsergebnis true verschickt. Das globale Abstimmungsergebnis wird periodisch so oft erneuert verschickt, bis von jedem Client eine Best\"{a}tigung des Erhalts vorliegt.
 
 \begin{table}
 	\centering
 	\fbox{
 	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Logg} \\
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0000 & 1 & 2-Phasen Commit Client aktivieren\\
+		 	0000 & 2 & 2-Phasen Commit Server aktivieren\\
+		 	0000 & 3 & 2-Phasen Commit Client aktivieren\\
+		 	0000 & 2 & 2-Phasen Commit Serveranfrage starten
+	\end{tabular}
+	}
+	\caption{Programmierte Zwei-Phasen Commit Ereignisse}
+	\label{tb:TwoPhaseCommitTasks}
+\end{table}
+
+In dem Beispiel (Abbildung \ref{fig:TwoPhaseCommitProto}) sind P1 und P3 Clients und P2 der Server. Der Server verschickt nach 0ms seine initiale Anfrage (Tabelle \ref{tb:TwoPhaseCommitTasks}). Da diese Simulation recht un\"{u}bersichtlich ist, liegen In den Tabellen \ref{tb:TwoPhaseCommitLoggs} und \ref{tb:TwoPhaseCommitLoggs2} Ausz\"{u}ge dem Loggfenster vor. Hier stimmen P1 und P3 jeweils mit true, d.h. es soll festgeschrieben werden, ab. Auf die Lamport- und Vektorzeitstempel sowie die lokalen Prozesszeiten wurde in der Darstellung wegen Irrelevanz verzichtet. Da keine Uhrabweichungen konfiguriert wurden, sind die lokalen Prozesszeiten stets gleich der globalen Zeit. Anhand der Nachrichten IDs lassen sich dort die einzelnen Sendungen zuordnen. In den Loggs wird auch st\"{a}ndig der Inhalt der verschickten Nachricht sowie die dazugeh\"{o}rigen Datentypen aufgef\"{u}hrt.
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
 			\hline
 000000 & & Simulation gestartet\\
 \hline
@@ -661,7 +688,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
 	\end{tabular}
 	}
-	\caption{Auszug aus der Loggausgabe des 2-Phasen Commit Beispiels}
+	\caption{Auszug aus der Loggausgabe des Zwei-Phasen Commit Beispiels}
 	\label{tb:TwoPhaseCommitLoggs}
 \end{table}
 
@@ -707,9 +734,24 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 010000 & & Simulation beendet
 	\end{tabular}
 	}
-	\caption{Auszug aus der Loggausgabe des 2-Phasen Commit Beispiels (2)}
+	\caption{Auszug aus der Loggausgabe des Zwei-Phasen Commit Beispiels (2)}
 	\label{tb:TwoPhaseCommitLoggs2}
 \end{table}
+
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``2-Phasen Commit Server'' konfiguriert werden k\"{o}nnen:
+
+\begin{itemize}
+	\item \textbf{Zeit bis erneuerter Anfrage} \textit{(Long, 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneuert verschickt wird.
+	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die \"{u}ber eine Festschreibung abstimmen, und anschliessend gegebenenfalls festschreiben sollen. 
+\end{itemize}
+
+Und folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt ``2-Phasen Commit Client'' konfiguriert werden:
+
+\begin{itemize}
+	\item \textbf{Festschreibwahrscheinlichkeit} \textit{(Integer, 50)}: Gibt die Wahrscheinlichkeit in Prozent an, die der Client mit true, also f\"{u}r das Festschreiben, abstimmt.
+\end{itemize}
 
 \subsection{Der ungen\"{u}gende (Basic) Multicast}
 
