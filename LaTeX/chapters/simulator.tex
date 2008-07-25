@@ -460,8 +460,7 @@ $t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Wer
 
 Ein weiteres Protokoll f\"{u}r die Synchronisierung von Uhrzeiten funktioniert nach der Christians Methode zur externen Synchronisierung. Die Christians Methode benutzt die RTT (Round Trip Zeit) $t_{rtt}$, um die \"{U}bertragungszeiten von einzelnen Nachrichten zu approximieren. 
 
-Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren m\"{o}chte, so verschickt er eine Anfrage, und misst dabei die RTT $t_{rtt}$ bis die Serverantwort eintrifft. Die Serverantwort beinhaltet die lokale Prozesszeit vom Server $t_s$ von dem Zeitpunkt, als der Server die Antwort verschickte. Der Client setzt dann seine lokale Zeit neu auf $t_c := t_s + \frac{1}{2} t_{rtt}$, und zwar mit einer Genauigkeit von $\pm(\frac{1}{2} t_{rtt} - u_{min}$) wenn $u_{min}$ eine Schranke f\"{u}r eine Nachrichten\"{u}bertragung mit $t_{rtt} < u_{min}$ ist (siehe Vorlesung Verteilte Systeme an der FH Aachen).
-
+Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren m\"{o}chte, so verschickt er eine Anfrage, und misst dabei die RTT $t_{rtt}$ bis die Serverantwort eintrifft. Die Serverantwort beinhaltet die lokale Prozesszeit vom Server $t_s$ von dem Zeitpunkt, als der Server die Antwort verschickte. Der Client setzt dann seine lokale Zeit neu auf $t_c := t_s + \frac{1}{2} t_{rtt}$, und zwar mit einer Genauigkeit von $\pm(\frac{1}{2} t_{rtt} - u_{min}$) wenn $u_{min}$ eine Schranke f\"{u}r eine Nachrichten\"{u}bertragung mit $t_{rtt} < u_{min}$ ist (siehe \cite{Vorlesung}).
 
 Im Prinzip sieht eine Christians-Simulation so aus wie in Abbildung \ref{fig:TimeSyncProto}, daher wird hier auf eine einfache Abbildung vom Christians-Protokoll verzichtet. Viel Interessanter ist der direkte Vergleich zwischen dem Protokoll zur internen Synchronisierung und der Christians Methode der externen Synchronisierung (Abbildung \ref{fig:TimeSync2Proto}). Hier stellt P1 den Client zur internen Synchronisierung und P3 den Client zur externen Synchronisierung dar. P2 fungiert f\"{u}r beide Protokolle gleichzeitig als Server. P1 und P3 starten jeweils zu den lokalen Prozesszeiten 0ms, 5000ms und 10000ms eine Clientanfrage (Tabelle \ref{tb:InterneSync2Tasks}). P1 und P3 haben als Uhrabweichung 0.1 eingestellt und die Simulationsdauer betr\"{a}gt insgesamt 15000ms.
 
@@ -489,7 +488,60 @@ Es ist zu ablesbar, dass P1 seine Zeit bis auf $15000ms - 14567ms = 433ms$ und P
 	\label{tb:InterneSync2Tasks}
 \end{table}
 
-\subsection{Berkeley Algorithmus zur internen Synchronisierung}
+\subsection{Der Berkeley Algorithmus zur internen Synchronisierung}
+
+\begin{figure}[htbp]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-berkeley}}
+	\caption{Der Berkeley Algorithmus zur internen Synchronisierung}
+	\label{fig:BerkeleyProto}
+\end{figure}
+
+Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere M\"{o}glichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, bei dem der Server die initiale Anfrage startet. Der Server stellt den Koordinator des Protokolls dar. Die Clients sind somit passiv und m\"{u}ssen warten, bis eine Serveranfrage eintritt. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Prozesseinstellungen des Servers einstellen l\"{a}sst.
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
+		\hline 
+		 	0000 & 1 & Berkeley Client aktivieren \\
+		 	0000 & 2 & Berkeley Server aktivieren \\
+		 	0000 & 3 & Berkeley Client aktivieren \\
+		 	0000 & 2 & Berkeley Serveranfrage starten\\
+		 	7500 & 2 & Berkeley Serveranfrage starten\\
+	\end{tabular}
+	}
+	\caption{Programmierte Ereignisse zum Berkeley Algorithmus}
+	\label{tb:BerkeleyTasks}
+\end{table}
+
+Wenn der Server seine eigene lokale Zeit $t_s$ und auch die lokalen Prozesszeiten $t_i$ der Clients ($i = 1, ..., n$) synchronisieren m\"{o}chte, so verschickt er eine Serveranfrage. $n$ sei hierbei die Anzahl beteiligter Clients. Die Clients senden dann ihre lokalen Prozesszeiten in einer Nachricht zur\"{u}ck zum Server. Der Server hat dabei die RTTs $r_i$ bis zur Ankunft aller Clientantworten gemessen. Nachdem alle Antworten vorliegen, setzt er zun\"{a}chst seine eigene Zeit $t_s$ auf den Mittelwert seiner eigener Zeit sowie aller Prozesszeiten. Die \"{U}bertragungszeit einer Clientantwort wird auf die h\"{a}lfte der RTT gesch\"{a}tzt und wird in der Berechnung ber\"{u}cksichtigt:
+
+\begin{equation*}
+	t_{avg} :=
+	\frac{1}{n+1} ( t_s +
+		\sum_{\substack{
+			i=1\\
+		}}^n
+		\frac{r_i}{2} + t_i
+	)
+\end{equation*}
+\begin{equation*}
+	t_s := t_{avg}
+\end{equation*}
+
+Anschliessend berechent der Server f\"{u}r jeden Client einen Korrekturwert $k_i := t_{avg} - t_i$, den er jeweils in einer separaten Nachricht zur\"{u}ckschickt. Die Clients setzten dann jeweils die lokale Prozesszeit auf $t'_i := t'_i + k_i$. Hierbei stellt $t'_i$ die derzeit aktuelle Prozesszeit des jeweiligen Clients dar. Denn bis zum Eintreffen des Korrekturwertes ist inzwischen wieder Zeit verstrichen.
+
+In den Beispiel in Abbildung \ref{fig:BerkeleyProto} gibt es 2 Clientprozesse P1 und P3 sowie den Serverprozess P2. Der Server startet nach jeweils 0ms und 7500ms eine Synchronisationsanfrage (Tabelle \ref{tb:BerkeleyTasks}). In der Abbildung ist zu erkennen, dass der Server stets 2 Korrekturwerte verschickt, die jeweils P1 und P2 erreichen. Es werden hier also pro Synchronisierungsvorgang 4 Korrekturwerte ausgeliefert. Eine Korrekturnachricht enth\"{a}lt neben dem Korrekturwert $k_i$ auch die PID des Prozesses, f\"{u}r den die Nachricht bestimmt ist. Ein Client verarbeiten so nur die f\"{u}r ihn bestimmten Korrekturwerte, indem das Protokoll die PID vorher \"{u}berpr\"{u}ft. 
+
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozesseinstellungen unter dem Punkt ``Berkeley Server'' konfiguriert werden kann. Clientseitig gibt es hier keine Variablen.
+
+\begin{itemize}
+	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[], [1,2])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server synchronisieren soll. Wenn hier eine PID angegeben wird, die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig unterst\"{u}tz, funktioniert das Protokoll nicht. Dann wird ewig auf eine fehlende Clientantwort gewartet.
+\end{itemize}
 
 \subsection{Das Ein-Phasen Commit Protokoll}
 
@@ -498,5 +550,9 @@ Es ist zu ablesbar, dass P1 seine Zeit bis auf $15000ms - 14567ms = 433ms$ und P
 \subsection{Der ungen\"{u}gende (Basic) Multicast}
 
 \subsection{Der zuverl\"{a}ssige (Reliable) Multicast}
+
+\section{Weitere Beispiele}
+
+\subsection{Vektor- und Lamportzeitstempel}
 
 

@@ -80,17 +80,18 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     public void onServerReset() {
+		//System.out.println("FOOBAR");
         processTimes.clear();
         recvTimes.clear();
         realTimesRTT.clear();
         peers.clear();
-        peers.addAll(getVector("pids"));
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerStart()
      */
     public void onServerStart() {
+		//System.out.println("FOO");
         peers.addAll(getVector("pids"));
         requestTime = process.getTime();
         VSMessage message = new VSMessage();
