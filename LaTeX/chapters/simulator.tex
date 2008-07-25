@@ -586,6 +586,131 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 
 \subsection{Das Zwei-Phasen Commit Protokoll}
 
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Logg} \\
+			\hline
+000000 & & Simulation gestartet\\
+\hline
+000000 & 1 & 2-Phasen Commit Client aktiviert\\
+\hline
+000000 & 2 & 2-Phasen Commit Server aktiviert\\
+\hline
+000000 & 2 & Nachricht versendet; ID: 94; Protokoll: 2-Phasen Commit\\
+	& & Boolean: wantVote=true\\
+\hline
+000000 & 3 & 2-Phasen Commit Client aktiviert\\
+\hline
+000905 & 3 & Nachricht erhalten; ID: 94; Protokoll: 2-Phasen Commit\\
+\hline
+000905 & 3 & Nachricht versendet; ID: 95; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=3; Boolean: isVote=true; vote=true\\
+\hline
+000905 & 3 & Abstimmung true versendet\\
+\hline
+001880 & 2 & Nachricht erhalten; ID: 95; Protokoll: 2-Phasen Commit\\
+\hline
+001880 & 2 & Abstimmung von Prozess 3 erhalten! Ergebnis: true\\
+\hline
+001947 & 1 & Nachricht erhalten; ID: 94; Protokoll: 2-Phasen Commit\\
+\hline
+001947 & 1 & Nachricht versendet; ID: 96; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
+\hline
+001947 & 1 & Abstimmung true versendet\\
+\hline
+002500 & 2 & Nachricht versendet; ID: 97; Protokoll: 2-Phasen Commit\\
+	& & Boolean: wantVote=true\\
+\hline
+003006 & 3 & Nachricht erhalten; ID: 97; Protokoll: 2-Phasen Commit\\
+\hline
+003006 & 3 & Nachricht versendet; ID: 98; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=3; Boolean: isVote=true; vote=true\\
+\hline
+003006 & 3 & Abstimmung true versendet\\
+\hline
+003137 & 2 & Nachricht erhalten; ID: 96; Protokoll: 2-Phasen Commit\\
+\hline
+003137 & 2 & Abstimmung von Prozess 1 erhalten! Ergebnis: true\\
+\hline
+003137 & 2 & Abstimmungen von allen beteiligten Prozessen erhalten!\\
+	& & Globales Ergebnis: true\\
+\hline
+003137 & 2 & Nachricht versendet; ID: 99; Protokoll: 2-Phasen Commit\\
+	& & Boolean: isVoteResult=true; voteResult=true\\
+\hline
+004124 & 1 & Nachricht erhalten; ID: 99; Protokoll: 2-Phasen Commit\\
+\hline
+004124 & 1 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
+\hline
+004124 & 1 & Nachricht versendet; ID: 100; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=1; Boolean: isAck=true\\
+\hline
+004354 & 3 & Nachricht erhalten; ID: 99; Protokoll: 2-Phasen Commit\\
+\hline
+004354 & 3 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
+\hline
+004354 & 3 & Nachricht versendet; ID: 101; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=3; Boolean: isAck=true\\
+\hline
+004434 & 1 & Nachricht erhalten; ID: 97; Protokoll: 2-Phasen Commit\\
+\hline
+004434 & 1 & Nachricht versendet; ID: 102; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
+	\end{tabular}
+	}
+	\caption{Auszug aus der Loggausgabe des 2-Phasen Commit Beispiels}
+	\label{tb:TwoPhaseCommitLoggs}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Logg} \\
+			\hline
+004434 & 1 & Abstimmung true versendet\\
+\hline
+004527 & 2 & Nachricht erhalten; ID: 98; Protokoll: 2-Phasen Commit\\
+\hline
+004975 & 2 & Nachricht erhalten; ID: 101; Protokoll: 2-Phasen Commit\\
+\hline
+005311 & 2 & Nachricht erhalten; ID: 102; Protokoll: 2-Phasen Commit\\
+\hline
+005637 & 2 & Nachricht versendet; ID: 103; Protokoll: 2-Phasen Commit\\
+	& & Boolean: isVoteResult=true; voteResult=true\\
+\hline
+006051 & 2 & Nachricht erhalten; ID: 100; Protokoll: 2-Phasen Commit\\
+\hline
+006051 & 2 & Alle Teilnehmer haben die Abstimmung erhalten\\
+\hline
+006766 & 1 & Nachricht erhalten; ID: 103; Protokoll: 2-Phasen Commit\\
+\hline
+006766 & 1 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
+\hline
+006766 & 1 & Nachricht versendet; ID: 104; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=1; Boolean: isAck=true\\
+\hline
+007279 & 2 & Nachricht erhalten; ID: 104; Protokoll: 2-Phasen Commit\\
+\hline
+007618 & 3 & Nachricht erhalten; ID: 103; Protokoll: 2-Phasen Commit\\
+\hline
+007618 & 3 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
+\hline
+007618 & 3 & Nachricht versendet; ID: 105; Protokoll: 2-Phasen Commit\\
+	& & Integer: pid=3; Boolean: isAck=true\\
+\hline
+009170 & 2 & Nachricht erhalten; ID: 105; Protokoll: 2-Phasen Commit\\
+\hline
+010000 & & Simulation beendet
+	\end{tabular}
+	}
+	\caption{Auszug aus der Loggausgabe des 2-Phasen Commit Beispiels (2)}
+	\label{tb:TwoPhaseCommitLoggs2}
+\end{table}
+
 \subsection{Der ungen\"{u}gende (Basic) Multicast}
 
 \subsection{Der zuverl\"{a}ssige (Reliable) Multicast}
