@@ -59,7 +59,7 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
         vec.add(3);
 
         initVector("pids", vec, "PIDs beteilitger Prozesse");
-        initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
+        initLong("timeout", 2500, "Zeit bis erneute Anfrage", "ms");
     }
 
     /* (non-Javadoc)
@@ -151,7 +151,7 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
             sendMessage(message);
 
 			if (ackSent) {
-            	logg("ACK erneuert versendet");
+            	logg("ACK erneut versendet");
 
 			} else {
             	logg("ACK versendet");

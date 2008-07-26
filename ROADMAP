@@ -1,4 +1,5 @@
 Must do:
+	Lamport und Vektorzeitstempel nicht nur bei nachrichten sondern auch bei anderen ereignissen unkrementieren (einstellbar)
 	Warn if a file does not exists while trying to open!
 	"Simulatorseinstelungen" falsch geschrieben
 	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor

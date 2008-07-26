@@ -67,7 +67,7 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
         vec.add(3);
 
         initVector("pids", vec, "PIDs beteilitger Prozesse");
-        initLong("timeout", 2500, "Zeit bis erneuerter Anfrage", "ms");
+        initLong("timeout", 2500, "Zeit bis erneute Anfrage", "ms");
     }
 
     /* (non-Javadoc)
