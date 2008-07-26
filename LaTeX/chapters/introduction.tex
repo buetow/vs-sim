@@ -15,13 +15,13 @@ In der Literatur findet man viele verschiedene Definitionen eins verteiltes Syst
 
 Der Benutzer muss sich nur mit dem lokalen vor ihm befindenden Computer auseinander setzen (Abbildung \ref{fig:VerteiltesSystem}) w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicherstellt.
 
-Der Sinn und der Zweck dieser Diplomarbeit ist die Betrachtung von verteilten Systemen aus einer anderen Perspektive zu vereinfachen. Wir nehmen nicht die Sichtweise eines Endbenutzers ein, sondern wollen die   Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifen. Es sollen alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
+Der Sinn und der Zweck dieser Diplomarbeit ist die vereinfachte Betrachtung von verteilten Systemen aus einer anderen Perspektive. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
 
 Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden, der dies erm\"{o}glicht. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll helfen zu verstehen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt werden, daher muss die M\"{o}glichkeit gegeben werden eigene Protokolle selbst entwerfen zu k\"{o}nnen. 
 
 \section{Grundlagen}
 
-F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}utert. Eine Vertiefung findet erst in den nachfolgenden Kapiteln statt.
+F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}utert. Eine Vertiefung findet erst in sp\"{a}teren Kapiteln statt.
 
 \subsubsection{Client/Server Modell}
 
@@ -36,7 +36,7 @@ Der Simulator basiert auf dem Client/Server Prinzip. Jeder Simulation besteht in
 
 \subsubsection{Prozesse und deren Rollen}
 
-Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es ist auch m\"{o}glich, dass ein Prozess die Rollen mehrerer Server und Clients auf einmal einnimmt. Ob das sinnvoll ist h\"{a}ngt vom Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
+Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es besteht auch die M\"{o}glichkeit, dass ein Prozess die Rollen mehrerer Server und Clients auf einmal einnimmt. Ob das sinnvoll ist h\"{a}ngt vom simulierten Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
 
 \subsubsection{Nachrichten}
 
@@ -46,18 +46,11 @@ In einem verteiltem System m\"{u}ssen Nachrichten verschickt werden k\"{o}nnen. 
 
 In einer Simulation gibt es \textbf{genau eine} globale Uhr. Sie stellt die aktuelle und \textbf{immer korrekte} Zeit dar. Eine globale Uhr geht nie falsch.
 
-Zudem besitzt jeder beteiligter Prozess eine eigene lokale Uhr. Sie stellt die aktuelle Zeit des jeweiligen Prozesses dar. Im Gegensatz zu der globalen Uhr k\"{o}nnen lokale Uhren eine falsche Zeit anzeigen. Wenn die Prozesszeit nicht global-korrekt ist (nicht der globalen Zeit gleicht beziehungsweise eine falsche Zeit anzeigt), dann wurde sie entweder im Laufe einer Simulation ge\"{a}ndert, oder sie geht wegen einer Uhrabweichung falsch. Die Uhrabweichung gibt an, um welchen Faktor die Uhr falsch geht. Hierauf wird sp\"{a}ter genauer eingegangen. 
+Zudem besitzt jeder beteiligter Prozess eine eigene lokale Uhr. Sie stellt die aktuelle Zeit des jeweiligen Prozesses dar. Im Gegensatz zu der globalen Uhr k\"{o}nnen lokale Uhren eine falsche Zeit anzeigen. Wenn die Prozesszeit nicht global-korrekt ist (nicht der globalen Zeit gleicht beziehungsweise eine falsche Zeit anzeigt), dann wurde sie entweder im Laufe einer Simulation neu gestellt, oder sie geht wegen einer Uhrabweichung falsch. Die Uhrabweichung gibt an, um welchen Faktor die Uhr falsch geht. Hierauf wird sp\"{a}ter genauer eingegangen. 
 
 Neben den normalen Uhren sind auch die \textbf{Vektor-Zeitstempel} sowie die \textbf{logischen Uhren von Lamport} von Interesse. Jeder Prozess besitzt zus\"{a}tzlich einen Vektor-Zeitstempel f\"{u}r seine Vektorzeit, sowie einen Lamportzeitstempel f\"{u}r seine Lamportzeit. F\"{u}r die Vektor- und Lamportzeiten gibt es hier, im Gegensatz zu der normalen Zeit, keine globalen \"{A}quivalente. 
 
 Konkrete Beispiele zu den Lamport- und Vektorzeiten werden sp\"{a}ter anhand einer Simulation behandelt.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics{images/client-server-protokolle}
-	\caption{Client/Server Protokolle}
-	\label{fig:ClientServerProtokolle}
-\end{figure}
 
 \subsubsection{Ereignisse}
 
@@ -66,9 +59,18 @@ Eine Simulation besteht aus der Hintereinanderausf\"{u}hrung von endlich vielen 
 
 \subsubsection{Protokolle}
 
+
+
 Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits erw\"{a}hnt, dass ein Prozess die Rollen von Servern und/oder Clients annehmen kann. Bei jeder Server- und Clientrolle muss zus\"{a}tzlich das dazugeh\"{o}rige Protokoll spezifiziert werden. Ein Protokoll definiert, wie ein Client und ein Server Nachrichten verschickt und wie bei Ankunft einer Nachricht reagiert wird. Ein Protokoll legt auch fest, welche Daten in einer Nachricht enthalten sind. Ein Prozess verarbeitet eine empfangene Nachricht nur, wenn er das jeweilige Protokoll versteht.
 
-In Abbildung \ref{fig:ClientServerProtokolle} sind 3 Prozesse dargestellt. Prozess 1 unterst\"{u}tzt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterst\"{u}tzt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. D.h., Prozess 1 kann mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren. Die Prozesse 2 und 3 sind zueinander inkompatibel und k\"{o}nnen voneinander erhaltene Nachrichten nicht verarbeiten.
+In Abbildung \ref{fig:ClientServerProtokolle} sind 3 Prozesse dargestellt. Prozess 1 unterst\"{u}tzt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterst\"{u}tzt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. Das heiﬂt, dass Prozess 1 mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren kann. Die Prozesse 2 und 3 sind zueinander inkompatibel und k\"{o}nnen voneinander erhaltene Nachrichten nicht verarbeiten.
 
 Clients k\"{o}nnen nicht mit Clients, und Server nicht mit Server kommunizieren. F\"{u}r eine Kommunikation wird stets mindestens ein Client und ein Server ben\"{o}tigt. Dieser Einschr\"{a}nkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unters\"{u}tzt (siehe Broadcast-Sturm Protokoll sp\"{a}ter). Alle vom Simulator verf\"{u}gbaren Protokolle werden sp\"{a}ter genauer behandelt.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{images/client-server-protokolle}
+	\caption{Client/Server Protokolle}
+	\label{fig:ClientServerProtokolle}
+\end{figure}
 
