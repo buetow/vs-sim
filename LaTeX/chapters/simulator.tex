@@ -1,6 +1,6 @@
 \chapter{Der Simulator}
 
-\section{Die grafische Benutzerschnittstelle}
+\section{Die grafische Anwenderschnittstelle}
 
 \begin{figure}[htbp]
 	\centering
@@ -9,7 +9,7 @@
 	\label{fig:NeuesFenster}
 \end{figure}
 
-Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie auf Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neue Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht dann aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
+Der Simulator pr\"{a}sentiert sich nach dem ersten Starten wie auf Abbildung \ref{fig:NeuesFenster}. F\"{u}r die Erstellung einer neuen Simulation wird im Men\"{u} ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgew\"{a}hlt, wo anschlieﬂend das Einstellungsfenster f\"{u}r die neue Simulation erscheint.  Auf die einzelnen Optionen wird sp\"{a}ter genauer eingegangen und es werden nun nur die Standardeinstellungen \"{u}bernommen. Die GUI mit einer frischen Simulation sieht aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
 
 \begin{figure}[htbp]
 	\centering
@@ -29,13 +29,13 @@ Im Datei-Men\"{u} (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen
 	\label{fig:NeuErstellteSimulation}
 \end{figure}
 
-\"{U}ber das Editieren-Men\"{u} gelangt der Benutzer zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. W\"{a}hlt der Benutzer dort einen Prozess aus, dann \"{o}ffnet sich der dazugeh\"{o}rige Prozesseditor. Auf diesen wird ebenso sp\"{a}ter genauer eingegangen. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird.
+\"{U}ber das Editieren-Men\"{u} gelangt der Anwender zu den Simulationseinstellungen, worauf sp\"{a}ter genauer eingegangen wird. Es werden in diesem Men\"{u} auch alle beteiligten Prozesse zum Editieren aufgelistet. W\"{a}hlt der Anwender dort einen Prozess aus, dann \"{o}ffnet sich der dazugeh\"{o}rige Prozesseditor. Auf diesen wird ebenso sp\"{a}ter genauer eingegangen. Das Simulator-Men\"{u} bietet die selben Optionen wie die Toolbar, welche im n\"{a}chsten Teilkapitel beschrieben wird, an.
 
-Einige Men\"{u}unterpunkte sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
+Einige Men\"{u}unterpunkte sind erst erreichbar, wenn im aktuellen Fenster eine Simulation erstellt oder geladen wurde.
 
 \subsubsection{Die Toolbar}
 
-Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}). Die Toolbar enth\"{a}lt die Funktionen, die vom Benutzer am h\"{a}ufigsten ben\"{o}tigt werden.
+Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}). Die Toolbar enth\"{a}lt die Funktionen die vom Anwender am h\"{a}ufigsten ben\"{o}tigt werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -49,12 +49,12 @@ Die Toolbar bietet vier verschiedene Funktionalit\"{a}ten an:
 \begin{itemize}
 	%\setlength{\itemsep}{-1mm}
 	\item Starten der Simulation; kann nur bet\"{a}tigt werden, wenn die Simulation derzeit nicht l\"{a}uft.
-	\item Pausieren der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation derzeit l\"{a}uft.
-	\item Wiederholen der Simulation, kann nicht bet\"{a}tigt werden, wenn die Simulation noch nicht gestartet wurde. 
-	\item Zur\"{u}cksetzen der Simulation, kann nur bet\"{a}tigt werden, wenn die Simulation pausiert wurde oder wenn die Simulation abgelaufen ist.
+	\item Pausieren der Simulation; kann nur bet\"{a}tigt werden, wenn die Simulation derzeit l\"{a}uft.
+	\item Wiederholen der Simulation; kann nicht bet\"{a}tigt werden, wenn die Simulation noch nicht gestartet wurde. 
+	\item Zur\"{u}cksetzen der Simulation; kann nur bet\"{a}tigt werden, wenn die Simulation pausiert wurde oder wenn die Simulation abgelaufen ist.
 \end{itemize}
 
-Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, rechts oder unten des Simulatorfensters). Hierf\"{u}r muss sie per ``Drag-n-Drop'' zur Zielposition gezogen werden.
+Die Toolbar l\"{a}sst sich nach Wunsch repositionieren (z.B. links, rechts oder unten des Simulatorfensters). Hierf\"{u}r muss sie per ``Drag-n-Drop'' zur Zielposition gezogen werden.
 
 \subsubsection{Die Visualisierung}
 
@@ -65,11 +65,11 @@ Die Toolbar l\"{a}sst sich auch nach Belieben repositionieren (z.B. links, recht
 	\label{fig:Visualisierung}
 \end{figure}
 
-Mittig rechts befindet sich die grafische Repr\"{a}sentation der Simulation. Die X-Achse gibt die Zeit in Millisekunden an und auf der Y-Achse sind alle beteiligten Prozesse aufgef\"{u}hrt. Unsere Demo-Simulation endet nach genau 15 Sekunden. Auf Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann der Benutzer die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Simulationszeit dar. 
+Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse gibt die Zeit in Millisekunden an und auf der Y-Achse sind alle beteiligten Prozesse aufgef\"{u}hrt. Unsere Demo-Simulation endet nach genau 15 Sekunden. Auf Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann der Anwender die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Simulationszeit dar. 
 
 Die Prozessbalken dienen auch f\"{u}r Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht an Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst schickt, werden nicht visualisiert. Sie werden aber im Loggfenster (mehr dazu sp\"{a}ter) protokolliert.
 
-Eine andere M\"{o}glichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess geh\"{o}rigen Prozessbalken. Dies muss also nicht zwingend \"{u}ber das Simulator-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur dann abst\"{u}rzen oder wiederbelebt werden, wenn die Simulation aktuell l\"{a}uft.
+Eine andere M\"{o}glichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess geh\"{o}rigen Prozessbalken. Dies muss also nicht zwingend \"{u}ber das Simulator-Men\"{u} geschehen. Ein Rechtsklick hingegen \"{o}ffnet ein Popup-Fenster mit weiteren Auswahlm\"{o}glichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann \"{u}ber das Popup-Men\"{u} nur w\"{a}hrend einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -78,18 +78,18 @@ Eine andere M\"{o}glichkeit einen Prozesseditor aufzurufen ist ein Linksklick au
 	\label{fig:RechtsklickProzessbalken}
 \end{figure}
 
-Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Simulation betr\"{a}gt mindestens 5 -und h\"{o}chstens 120 Sekunden. Die Simulation endet erst, wenn sie die globale Zeit die angegebene Simulationsendzeit (hier 15 Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
+Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Simulation betr\"{a}gt mindestens \texttt{5} und h\"{o}chstens \texttt{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit die angegebene Simulationsendzeit (hier \texttt{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
 
 \subsubsection{Farbliche Differenzierung}
 
-Farben helfen dabei die Vorg\"{a}nge einer Simulation besser zu deuten. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standardfarben, welche \"{u}ber die Einstellungen umkonfigurierbar sind.
+Farben helfen dabei die Vorg\"{a}nge einer Simulation besser zu deuten. Standardm\"{a}ﬂig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standardfarben, welche \"{u}ber die Einstellungen ge\"{a}ndert werden k\"{o}nnen.
 
 \begin{table}
 	\fbox{
 	\begin{tabular}{c|l}
 		\textbf{Prozessfarbe} & \textbf{Bedeutung} \\
 		\hline 
-		 	Schwarz & Simulation l\"{a}uft derzeit nicht (z.B. noch nicht gestartet, abgelaufen oder\\
+		 	Schwarz & Die Simulation l\"{a}uft derzeit nicht\\
 				& pausiert)\\
 		 	Orange & Die Maus befindet sich \"{u}ber den Prozessbalken\\
 		 	Rot & Der Prozess ist abgest\"{u}rzt\\
@@ -98,9 +98,7 @@ Farben helfen dabei die Vorg\"{a}nge einer Simulation besser zu deuten. Standard
 		\hline 
 		 	Gr\"{u}n & Die Nachricht ist noch unterwegs und hat das Ziel noch nicht erreicht\\
 		 	Blau & Die Nachricht hat das Ziel erfolgreich erreicht\\
-		 	Rot & Die Nachricht ging verloren (entweder weil der Zielprozess abgest\"{u}rzt ist\\
-				& oder weil sie unterwegs verloren ging)\\
-
+		 	Rot & Die Nachricht ging verloren\\
 	\end{tabular}\\
 	}
 	\caption{Farbliche Differenzierung von Prozessen und Nachrichten}
@@ -109,7 +107,7 @@ Farben helfen dabei die Vorg\"{a}nge einer Simulation besser zu deuten. Standard
 
 \subsubsection{Die Sidebar}
 
-Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
+Mit Hilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die M\"{o}glichkeit ``Alle Prozesse'' auszuw\"{a}hlen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden k\"{o}nnen. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
 
 \begin{figure}[htbp]
 	\centering
@@ -118,7 +116,7 @@ Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbil
 	\label{fig:Sidebar}
 \end{figure}
 
-F\"{u}r die Erstellung eines neuen Ereignisses kann der Benutzer entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken und dort ``Lokales Ereignis einf\"{u}gen'' w\"{a}hlen, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im darunter liegendem Textfeld die Ereigniseintrittszeit eintragen und auf ``\"{U}bernehmen'' gehen. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach \texttt{123ms}, Wiederbelebung nach \texttt{321ms} und erneuter Absturz nach \texttt{3000ms} des Prozesses mit der ID 1. 
+F\"{u}r die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken und dort ``Lokales Ereignis einf\"{u}gen'' w\"{a}hlen, oder unterhalb der Ereignistabelle ein Ereignis ausw\"{a}hlen (Abbildung \ref{fig:Ereignisauswahl}), im darunter liegendem Textfeld die Ereigniseintrittszeit eintragen und auf ``\"{U}bernehmen'' gehen. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugef\"{u}gt: Absturz nach \texttt{123ms}, Wiederbelebung nach \texttt{321ms} und erneuter Absturz nach \texttt{3000ms} des Prozesses mit der ID 1. 
 
 \begin{figure}[htbp]
 	\centering
@@ -127,7 +125,7 @@ F\"{u}r die Erstellung eines neuen Ereignisses kann der Benutzer entweder mit ei
 	\label{fig:Ereignisauswahl}
 \end{figure}
 
-Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Mithilfe der Strg-Taste k\"{o}nnen auch mehrere Ereignisse gleichzeitig markiert werden. Die Eintr\"{a}ge der Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einem anderen Prozess zuzuweisen. Allerdings sollte der Benutzer darauf achten, dass er nach dem \"{A}ndern der Ereigniseintrittszeit die Enter-Taste bet\"{a}tigt, da sonst die \"{A}nderung unwirksam ist.
+Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Mit Hilfe der Strg-Taste k\"{o}nnen auch mehrere Ereignisse gleichzeitig markiert werden. Die Eintr\"{a}ge der Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem \"{A}ndern der Ereigniseintrittszeit die Enter-Taste bet\"{a}tigt, da sonst die \"{A}nderung unwirksam ist.
 
 In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgew\"{a}hlten Prozesses. Dort k\"{o}nnen alle Variablen des Prozesses editiert werden. Der Prozesseditor wird sp\"{a}ter genauer behandelt. 
 
@@ -140,7 +138,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 
 \subsubsection{Das Loggfenster}
 
-Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht der Benutzer das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt.  Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angeh\"{o}rt, gemacht. Dies wird sp\"{a}ter noch anhand von Beispielen demonstriert.
+Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} sieht der Anwender das Loggfenster nach Erstellung unserer Simulation, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgef\"{u}hrt. Letztere werden sp\"{a}ter genauer behandelt.  Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angeh\"{o}rt, gemacht. Dies wird sp\"{a}ter noch anhand von Beispielen demonstriert.
 
 \begin{figure}[htbp]
 	\centering
@@ -162,7 +160,7 @@ Mit dem Deaktivieren der Checkbox ``Logging'' l\"{a}ﬂt sich das Loggen von Nachr
 	\label{fig:SimulationExpertenmodus}
 \end{figure}
 
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator startet standardm\"{a}ﬂig im einfachen Modus, sodass sich der Benutzer nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal auseinandersetzen muﬂ. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich f\"{u}r mehr erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Benutzer den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun behandelt werden.
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator startet standardm\"{a}ﬂig im einfachen Modus, sodass sich der Anwender nicht mit der vollen Funktionalit\"{a}t des Simulators auf einmal auseinandersetzen muﬂ. Der einfache Modus ist \"{u}bersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich f\"{u}r mehr erfahrene Anwender und bietet dementsprechend auch mehr Flexibilit\"{a}t. Der Expertenmodus kann \"{u}ber die gleichnamige Checkbox unterhalb des Loggfensters oder \"{u}ber die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Anwender den Simulator im Expertenmodus mit Abbildung \ref{fig:NeuErstellteSimulation} vergleicht, dann fallen einige Unterschiede auf, die nun behandelt werden.
 
 \begin{figure}[htbp]
 	\centering
@@ -175,13 +173,13 @@ Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen ei
 
 Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zus\"{a}tzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erw\"{a}hnt, sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugeh\"{o}rigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Zeit- und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
 
-Eine weitere neue Funktionalit\"{a}t ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis die PID direkt zuzuweisen. Im einfachen Modus wurde, wenn der Benutzer ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell (in der obersten Combo-Box) ausgew\"{a}hlten Prozesses verwendet. In dieser Combo-Box sollte der Benutzer gegebenenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse aufgelistet werden.
+Eine weitere neue Funktionalit\"{a}t ist die M\"{o}glichkeit einem neuzuerstellenen Ereignis die PID direkt zuzuweisen. Im einfachen Modus wurde, wenn der Anwender ein neues Ereignis erstellte, standardm\"{a}ﬂig immer die PID des aktuell (in der obersten Combo-Box) ausgew\"{a}hlten Prozesses verwendet. In dieser Combo-Box sollte der Anwender gegebenenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse aufgelistet werden.
 
 \subsubsection{Lamportzeit, Vektorzeit und Anti-Aliasing Schalter}
 
-Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Benutzer eine dieser beiden Checkboxen, so wird die Lamport- beziehungsweise Vektorzeit in die Visualisierung dargestellt. \"{U}bersichtshalber kann der Benutzer nur jeweils eine dieser beiden Checkboxen aktivieren. Wenn die Lamportzeit-Checkbox bereits aktiviert ist und der Benutzer versucht die Vektorzeit-Checkbox zus\"{a}tzlich zu aktivieren, so wird die Lamportzeit-Checkbox automatisch deaktiviert und virce versa. 
+Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Checkboxen ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Anwender eine dieser beiden Checkboxen, so wird die Lamport- beziehungsweise Vektorzeit in die Visualisierung dargestellt. \"{U}bersichtshalber kann der Anwender nur jeweils eine dieser beiden Checkboxen aktivieren. Wenn die Lamportzeit-Checkbox bereits aktiviert ist und der Anwender versucht die Vektorzeit-Checkbox zus\"{a}tzlich zu aktivieren, so wird die Lamportzeit-Checkbox automatisch deaktiviert und virce versa. 
 
-Die Anti-Aliasing-Checkbox erm\"{o}glicht dem Benutzer Anti-Aliasing zu aktivieren und deaktivieren. Mit aktiviertem Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performancegr\"{u}nden ist Anti-Aliasing standardm\"{a}ﬂig nicht aktiv.
+Die Anti-Aliasing-Checkbox erm\"{o}glicht dem Anwender Anti-Aliasing zu aktivieren und deaktivieren. Mit aktiviertem Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performancegr\"{u}nden ist Anti-Aliasing standardm\"{a}ﬂig nicht aktiv.
 
 \subsubsection{Der Loggfilter}
 
@@ -196,7 +194,7 @@ Es wird zwischen zwei verschiedenen Haupttypen von Ereignissen unterschieden: Pr
 Die beiden grundliegensten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgest\"{u}rzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgest\"{u}rzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und, wenn er eine Nachricht empfangen sollte, geht diese verloren. Die einzige Ausnahme bildet ein Wiederbelebungsereignis. Ein abgest\"{u}rzter Prozess kann nichts, auﬂer wiederbelebt werden. W\"{a}hrend eines Prozessabsturzes l\"{a}uft die lokale Prozessuhr, abgesehen der Lamport- und Vektor-Uhren, wie gewohnt weiter. Das heiﬂt es besteht die M\"{o}glichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausf\"{u}hrt, da er zu den Ereigniseintrittszeiten abgest\"{u}rzt ist. Wenn im echten Leben ein Computer abst\"{u}rzt oder abgeschaltet wird, dann l\"{a}uft dort die Hardware-Uhr, unabh\"{a}ngig vom Betriebssystem, auch weiter.
 
 \subsubsection{Aktivierung und Deaktivierung von Protokollen sowie Starten von Anfragen (programmierbar)}
-Wir wissen bereits, dass ein Prozess mehrere Protokolle Client- und auch Serverseitig unterst\"{u}tzen kann. Welches Protokoll von einem Prozess unterst\"{u}tzt wird, kann der Benutzer anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die M\"{o}glichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterst\"{u}tzt und gegebenenfalls ein anderes Protokoll abl\"{o}st. Jedes Protokoll kann entweder Server- oder Clientseitig aktiviert beziehungsweise deaktiviert werden. Welche Protokolle es gibt wird sp\"{a}ter behandelt. Der Benutzer hat die Auswahl zwischen f\"{u}nf verschiedenen Protokollereignistypen: 
+Wir wissen bereits, dass ein Prozess mehrere Protokolle Client- und auch Serverseitig unterst\"{u}tzen kann. Welches Protokoll von einem Prozess unterst\"{u}tzt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die M\"{o}glichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterst\"{u}tzt und gegebenenfalls ein anderes Protokoll abl\"{o}st. Jedes Protokoll kann entweder Server- oder Clientseitig aktiviert beziehungsweise deaktiviert werden. Welche Protokolle es gibt wird sp\"{a}ter behandelt. Der Anwender hat die Auswahl zwischen f\"{u}nf verschiedenen Protokollereignistypen: 
 
 \begin{itemize}
 	\item Aktivierung des Clients eines gegebenen Protokolls
@@ -256,7 +254,7 @@ In diesem Abschnitt wird auf die m\"{o}glichen Konfigurationsm\"{o}glichkeiten g
 \end{figure}
 
 
-Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen k\"{o}nnen (Tabelle \ref{tb:VariablenDatentypen}). Im folgenden bedeutet \texttt{Prefix}: \textit{wert}, dass die Variable vom Typ \texttt{Prefix} ist, und standardm\"{a}ssig den Wert \textit{wert} zugewiesen hat. Vom Benutzer lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen sowie Variablennamen, \"{a}ndern.
+Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen k\"{o}nnen (Tabelle \ref{tb:VariablenDatentypen}). Im folgenden bedeutet \texttt{Prefix}: \textit{wert}, dass die Variable vom Typ \texttt{Prefix} ist, und standardm\"{a}ssig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen sowie Variablennamen, \"{a}ndern.
 
 \subsection{Simulationseinstellungen}
 
@@ -268,7 +266,7 @@ Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellb
 \end{figure}
 
 
-Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Benutzer hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeit die Einstellungen nachtr\"{a}glich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
+Beim Erstellen einer neuen Simulation erscheint zun\"{a}chst das dazugeh\"{o}rige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Anwender hier die Standardwerte \"{u}bernimmt. Es besteht auch die M\"{o}glichkeit die Einstellungen nachtr\"{a}glich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
 
 Im Folgenden werden alle in den Simulationseinstellungen verf\"{u}gbaren Variablen beschrieben. Die Klammern geben den Typen und die Standardwerte an, in denen die Variablen vorliegen. 
 
@@ -279,7 +277,7 @@ Im Folgenden werden alle in den Simulationseinstellungen verf\"{u}gbaren Variabl
 	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean, false)}: Hier l\"{a}sst sich der Expertenmodus auf einen alternativen Weg aktivieren beziehungsweise wieder deaktivieren. 
 	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean: false)}: Wenn diese Variable auf \texttt{true} gesetzt ist, so wird die Simulation jedes Mal nach Ablauf automatisch erneut gestartet. 
 	\item \textbf{Abspielgeschwindigkeit der Simulation} \textit{(Float: 0.5)}: Gibt den Faktor der Simulationsabspielgeschindigkeit an. Wenn als Faktor \texttt{1} gew\"{a}hlt wird, dann dauert eine simulierte Sekunde so lange wie eine echte Sekunde. Der Faktor \texttt{0.5} gibt somit an, dass die Simulation mit halber Echtzeitgschwindigkeit abgespielt wird.
-	\item \textbf{Anzahl der Prozesse} \textit{(Integer: 3)}: Gibt an wieviele Prozesse an der Simulation teilnehmen sollen. Wie schon erw\"{a}hnt kann der Benutzer auch nachtr\"{a}glich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzuf\"{u}gen.
+	\item \textbf{Anzahl der Prozesse} \textit{(Integer: 3)}: Gibt an wieviele Prozesse an der Simulation teilnehmen sollen. Wie schon erw\"{a}hnt kann der Anwender auch nachtr\"{a}glich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzuf\"{u}gen.
 	\item \textbf{Dauer der Simulation} \textit{(Integer: 15)}: Gibt die Dauer der Simulation in Sekunden an.
 \end{itemize}
 
@@ -332,11 +330,11 @@ Im selben Fenster lassen sich auch die Protokollvariablen editieren. Die Protoko
 	\label{tb:Farbeinstellungen}
 \end{table}
 
-Im Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl der Pixel verschiedener der GUI-Elemente, editieren. Auf Abbildung \ref{fig:SimulationseinstellungenExperten} sieht der Benutzer alle einstellbaren Farben. Die fett-gedruckten Schl\"{u}ssel in Tabelle \ref{tb:Farbeinstellungen} dienen nur als Standardwerte f\"{u}r neuzuerstellenen Prozesse und sind auch jeweils in den Prozesseinstellungen separat editierbar.
+Im Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl der Pixel verschiedener der GUI-Elemente, editieren. Auf Abbildung \ref{fig:SimulationseinstellungenExperten} sieht der Anwender alle einstellbaren Farben. Die fett-gedruckten Schl\"{u}ssel in Tabelle \ref{tb:Farbeinstellungen} dienen nur als Standardwerte f\"{u}r neuzuerstellenen Prozesse und sind auch jeweils in den Prozesseinstellungen separat editierbar.
 
 \section{Protokolle}
 
-Im Folgenden werden alle verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl Clientseitig als auch Serverseitig untest\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig Server und Client ist. Der Benutzer kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
+Im Folgenden werden alle verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl Clientseitig als auch Serverseitig untest\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig Server und Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
 
 \subsection{Beispiel (Dummy) Protokoll}
 

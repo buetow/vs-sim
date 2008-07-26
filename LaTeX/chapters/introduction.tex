@@ -2,9 +2,9 @@
 
 \section{Motivation}
 
-In der Literatur findet man viele verschiedene Definitionen eins verteiltes Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwerf\"{a}llt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben f\"{u}r die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
+In der Literatur findet man viele verschiedene Definitionen eines verteiltes Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwerf\"{a}llt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben f\"{u}r die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
 
-\cite{Tanenbaum} \textit{``Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Benutzer wie ein einzelnes, koh\"{a}rentes System erscheinen''}
+\cite{Tanenbaum} \textit{``Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Anwender wie ein einzelnes, koh\"{a}rentes System erscheinen''}
 
 \begin{figure}[htbp]
 	\centering
@@ -13,11 +13,11 @@ In der Literatur findet man viele verschiedene Definitionen eins verteiltes Syst
 	\label{fig:VerteiltesSystem}
 \end{figure}
 
-Der Benutzer muss sich nur mit dem lokalen vor ihm befindenden Computer auseinander setzen (Abbildung \ref{fig:VerteiltesSystem}) w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicherstellt.
+Der Anwender muss sich nur mit dem lokalen vor ihm befindenden Computer auseinandersetzen (Abbildung \ref{fig:VerteiltesSystem}) w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicher stellt.
 
 Der Sinn und der Zweck dieser Diplomarbeit ist die vereinfachte Betrachtung von verteilten Systemen aus einer anderen Perspektive. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
 
-Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden, der dies erm\"{o}glicht. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll helfen zu verstehen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt werden, daher muss die M\"{o}glichkeit gegeben werden eigene Protokolle selbst entwerfen zu k\"{o}nnen. 
+Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden, der dies erm\"{o}glicht. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll helfen zu verstehen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt sein. Es muss daher dem Gebraucher erm\"{o}glicht werden, eigene Protokolle zu entwerfen.
 
 \section{Grundlagen}
 
@@ -54,12 +54,10 @@ Konkrete Beispiele zu den Lamport- und Vektorzeiten werden sp\"{a}ter anhand ein
 
 \subsubsection{Ereignisse}
 
-Eine Simulation besteht aus der Hintereinanderausf\"{u}hrung von endlich vielen Ereignissen. Beispielsweise kann es ein Ereignis geben, welches einen Prozess eine Nachricht verschicken- oder den Prozess selbst abst\"{u}rzen l\"{a}ßt. Jedes Ereignis tritt zu einem bestimmten Zeitpunkt ein. Wenn es zeitgleiche Ereignisse gibt, so werden sie in Wirklichkeit ebenso hintereinander ausgef\"{u}hrt, erscheinen aber in der Simulation als ob sie parallel ausgef\"{u}hrt w\"{u}rden. Dieser Umstand ist auf die Implementierung des Simulators zur\"{u}ckzuf\"{u}hren, worauf sp\"{a}ter noch genauer eingegangen wird. Dem Benutzer des Simulators st\"{o}rt dies jedoch nicht, da Ereignisse aus seiner Sicht parallel ausgef\"{u}hrt werden.
+Eine Simulation besteht aus der Hintereinanderausf\"{u}hrung von endlich vielen Ereignissen. Beispielsweise kann es ein Ereignis geben, welches einen Prozess eine Nachricht verschicken l\"{a}sst. Denkbar w\"{a}re auch ein Prozessabsturzereignis. Jedes Ereignis tritt zu einem bestimmten Zeitpunkt ein. Wenn es zeitgleiche Ereignisse gibt, so werden sie in Wirklichkeit ebenso hintereinander ausgef\"{u}hrt, erscheinen aber in der Simulation als ob sie parallel ausgef\"{u}hrt w\"{u}rden. Dieser Umstand ist auf die Implementierung des Simulators zur\"{u}ckzuf\"{u}hren, worauf sp\"{a}ter noch genauer eingegangen wird. Den Anwender des Simulators hindert dies jedoch nicht, da Ereignisse aus seiner Sicht parallel ausgef\"{u}hrt werden.
 
 
 \subsubsection{Protokolle}
-
-
 
 Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits erw\"{a}hnt, dass ein Prozess die Rollen von Servern und/oder Clients annehmen kann. Bei jeder Server- und Clientrolle muss zus\"{a}tzlich das dazugeh\"{o}rige Protokoll spezifiziert werden. Ein Protokoll definiert, wie ein Client und ein Server Nachrichten verschickt und wie bei Ankunft einer Nachricht reagiert wird. Ein Protokoll legt auch fest, welche Daten in einer Nachricht enthalten sind. Ein Prozess verarbeitet eine empfangene Nachricht nur, wenn er das jeweilige Protokoll versteht.
 
