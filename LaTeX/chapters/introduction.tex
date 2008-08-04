@@ -2,9 +2,15 @@
 
 \section{Motivation}
 
-In der Literatur findet man viele verschiedene Definitionen eines verteiltes Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwerf\"{a}llt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben f\"{u}r die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
+In der Literatur findet man viele verschiedene Definitionen eines verteilten Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwer f\"{a}llt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben f\"{u}r die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
 
 \cite{Tanenbaum} \textit{``Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Anwender wie ein einzelnes, koh\"{a}rentes System erscheinen''}
+
+Der Anwender muss sich nur mit dem lokalen vor ihm befindenden Computer auseinandersetzen (Abbildung \ref{fig:VerteiltesSystem}) w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicherstellt.
+
+Diese Diplomarbeit soll den Gebrauchern die Betrachtung von verteilten Systemen aus einer anderen Perspektive erleichtern. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
+
+Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden, der dies erm\"{o}glicht. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke an der Fachhochschule Aachen entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll zu verstehen helfen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt sein. Es muss daher dem Gebraucher erm\"{o}glicht werden, eigene Protokolle zu entwerfen.
 
 \begin{figure}[htbp]
 	\centering
@@ -13,15 +19,9 @@ In der Literatur findet man viele verschiedene Definitionen eines verteiltes Sys
 	\label{fig:VerteiltesSystem}
 \end{figure}
 
-Der Anwender muss sich nur mit dem lokalen vor ihm befindenden Computer auseinandersetzen (Abbildung \ref{fig:VerteiltesSystem}) w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicher stellt.
-
-Der Sinn und der Zweck dieser Diplomarbeit ist die vereinfachte Betrachtung von verteilten Systemen aus einer anderen Perspektive. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
-
-Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden, der dies erm\"{o}glicht. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll helfen zu verstehen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt sein. Es muss daher dem Gebraucher erm\"{o}glicht werden, eigene Protokolle zu entwerfen.
-
 \section{Grundlagen}
 
-F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}utert. Eine Vertiefung findet erst in sp\"{a}teren Kapiteln statt.
+F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}utert. Eine Vertiefung findet erst in den sp\"{a}teren Kapiteln statt.
 
 \subsubsection{Client/Server Modell}
 
@@ -36,7 +36,7 @@ Der Simulator basiert auf dem Client/Server Prinzip. Jeder Simulation besteht in
 
 \subsubsection{Prozesse und deren Rollen}
 
-Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es besteht auch die M\"{o}glichkeit, dass ein Prozess die Rollen mehrerer Server und Clients auf einmal einnimmt. Ob das sinnvoll ist h\"{a}ngt vom simulierten Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
+Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es besteht auch die M\"{o}glichkeit, dass ein Prozess die Rollen mehrerer Server und Clients gleichzeitig einnimmt. Ob das sinnvoll ist h\"{a}ngt vom simulierten Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
 
 \subsubsection{Nachrichten}
 
@@ -63,7 +63,7 @@ Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits
 
 In Abbildung \ref{fig:ClientServerProtokolle} sind 3 Prozesse dargestellt. Prozess 1 unterst\"{u}tzt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterst\"{u}tzt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. Das heiﬂt, dass Prozess 1 mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren kann. Die Prozesse 2 und 3 sind zueinander inkompatibel und k\"{o}nnen voneinander erhaltene Nachrichten nicht verarbeiten.
 
-Clients k\"{o}nnen nicht mit Clients, und Server nicht mit Server kommunizieren. F\"{u}r eine Kommunikation wird stets mindestens ein Client und ein Server ben\"{o}tigt. Diese Einschr\"{a}nkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unters\"{u}tzten (siehe Broadcast-Sturm Protokoll sp\"{a}ter). Alle vom Simulator verf\"{u}gbaren Protokolle werden sp\"{a}ter genauer behandelt.
+Clients k\"{o}nnen nicht mit Clients, und Server nicht mit Server kommunizieren. F\"{u}r eine Kommunikation wird stets mindestens ein Client und ein Server ben\"{o}tigt. Diese Einschr\"{a}nkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unterst\"{u}tzen (siehe Broadcast-Sturm Protokoll sp\"{a}ter). Alle vom Simulator verf\"{u}gbaren Protokolle werden sp\"{a}ter genauer behandelt.
 
 \begin{figure}[htbp]
 	\centering
