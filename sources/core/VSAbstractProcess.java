@@ -37,115 +37,116 @@ import simulator.*;
 import utils.*;
 
 /**
- * The class VSProcess, an object of this class represents a process of a
- * simulator.
+ * The class VSAbstractProcess, an object of this class represents a process
+ * of a simulator.
  *
  * @author Paul C. Buetow
  */
-public class VSProcess extends VSPrefs implements VSSerializable {
+public abstract class VSAbstractProcess extends VSPrefs
+            implements VSSerializable {
     /** The data serialization id. */
-    private static final long serialVersionUID = 1L;
+    protected static final long serialVersionUID = 1L;
 
     /** The protocols to reset if the simulator is over or the reset
      * button has been pressed.
      */
-    private ArrayList<VSAbstractProtocol> protocolsToReset;
+    protected ArrayList<VSAbstractProtocol> protocolsToReset;
 
     /** The crash history. represents all crashes of the process using the
      * global simulator time.
      */
-    private ArrayList<Long> crashHistory;
+    protected ArrayList<Long> crashHistory;
 
     /** The lamport time history. */
-    private ArrayList<VSLamportTime> lamportTimeHistory;
+    protected ArrayList<VSLamportTime> lamportTimeHistory;
 
     /** The vector time history. */
-    private ArrayList<VSVectorTime> vectorTimeHistory;
+    protected ArrayList<VSVectorTime> vectorTimeHistory;
 
     /** The color used if the process has crashed. */
-    private Color crashedColor;;
+    protected Color crashedColor;;
 
     /** The process' current color. */
-    private Color currentColor;
+    protected Color currentColor;
 
     /** A temp. color. For internal usage. */
-    private Color tmpColor;
+    protected Color tmpColor;
 
     /** The logging object. */
-    private VSLogging logging;
+    protected VSLogging logging;
 
     /** The simulator's default prefs. */
-    private VSPrefs prefs;
+    protected VSPrefs prefs;
 
     /** The random generator of the process. */
-    private VSRandom random;
+    protected VSRandom random;
 
     /** The simulator canvas. */
-    private VSSimulatorCanvas simulatorCanvas;
+    protected VSSimulatorCanvas simulatorCanvas;
 
     /** The random crash task. May be null if there is no such random task. */
-    private VSTask randomCrashTask;
+    protected VSTask randomCrashTask;
 
     /** The vector time. */
-    private VSVectorTime vectorTime;
+    protected VSVectorTime vectorTime;
 
     /** The tasks of the process. DO ONLY MANIPULATE THIS OBJECT WITHIN THE
      * VSTaskManager CLASS! OTHERWISE THE SYNCHRONIZATION IS WRONG! Use the
-     * VSProcess.getTasks() method to get a reference to this object within the
+     * VSAbstractProcess.getTasks() method to get a reference to this object within the
      * VSTaskManager! */
-    private VSPriorityQueue<VSTask> tasks;
+    protected VSPriorityQueue<VSTask> tasks;
 
     /** The process has crashed. But may be working again. */
-    private boolean hasCrashed;
+    protected boolean hasCrashed;
 
     /** The process has started. But may be paused or crashed.. */
-    private boolean hasStarted;
+    protected boolean hasStarted;
 
     /** The process is crashed. */
-    private boolean isCrashed;
+    protected boolean isCrashed;
 
     /** The process is highlighted. */
-    private boolean isHighlighted;
+    protected boolean isHighlighted;
 
     /** The process is paused. */
-    private boolean isPaused;
+    protected boolean isPaused;
 
     /** The time has been modified in a task. Needed by the task manager to
      * calculate correct offsets.
      */
-    private boolean timeModified;
+    protected boolean timeModified;
 
     /** The clock offset. Used by the task manager and also by the process'
      * clock variance.
      */
-    private double clockOffset;
+    protected double clockOffset;
 
     /** The clock variance. */
-    private float clockVariance;
+    protected float clockVariance;
 
     /** The process id. */
-    private int processID;
+    protected int processID;
 
     /** The process num. It is different to the process id. It represents the
      * array index of there the process is stored at.
       */
-    private int processNum;
+    protected int processNum;
 
     /** The global time. */
-    private long globalTime;
+    protected long globalTime;
 
     /** The lamport time. */
-    private long lamportTime;
+    protected long lamportTime;
 
     /** The local time. */
-    private long localTime;
+    protected long localTime;
 
     /** The Constant DEFAULT_INTEGER_VALUE_KEYS.
      * This array contains all Integer prefs of the process which should show
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    private static final String DEFAULT_INTEGER_VALUE_KEYS[] = {
+    protected static final String DEFAULT_INTEGER_VALUE_KEYS[] = {
         "process.prob.crash",
         "message.prob.outage",
     };
@@ -155,7 +156,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    private static final String DEFAULT_LONG_VALUE_KEYS[] = {
+    protected static final String DEFAULT_LONG_VALUE_KEYS[] = {
         "message.sendingtime.min",
         "message.sendingtime.max",
     };
@@ -165,7 +166,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    private static final String DEFAULT_FLOAT_VALUE_KEYS[] = {
+    protected static final String DEFAULT_FLOAT_VALUE_KEYS[] = {
         "process.clock.variance",
     };
 
@@ -174,7 +175,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    private static final String DEFAULT_COLOR_VALUE_KEYS[] = {
+    protected static final String DEFAULT_COLOR_VALUE_KEYS[] = {
         "col.process.default",
         "col.process.running",
         "col.process.stopped",
@@ -187,7 +188,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * up in the prefs menu! All keys which dont start with "sim." only show
      * up in the extended prefs menu!
      */
-    private static final String DEFAULT_STRING_VALUE_KEYS[] = {
+    protected static final String DEFAULT_STRING_VALUE_KEYS[] = {
     };
 
     /**
@@ -198,8 +199,8 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * @param simulatorCanvas the simulator canvas
      * @param logging the logging object
      */
-    public VSProcess(VSPrefs prefs, int processNum,
-                     VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+    public VSAbstractProcess(VSPrefs prefs, int processNum,
+                             VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
         init(prefs, processNum, simulatorCanvas, logging);
     }
 
@@ -211,8 +212,8 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      * @param simulatorCanvas the simulator canvas
      * @param logging the logging object
      */
-    private void init(VSPrefs prefs, int processNum,
-                      VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+    protected void init(VSPrefs prefs, int processNum,
+                        VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
         /* May be not null if called from deserialization */
         if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
@@ -242,13 +243,13 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         initLong("process.localtime", localTime,
                  prefs.getString("lang.process.time.local"), "ms");
 
-        createRandomCrashTask();
+        createRandomCrashTask_();
     }
 
     /**
      * Inits the time formats. E.g. lamport and vector time stamps.
      */
-    private void initTimeFormats() {
+    protected void initTimeFormats() {
         lamportTime = 0;
         lamportTimeHistory = new ArrayList<VSLamportTime>();
 
@@ -264,7 +265,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
     /**
      * Reset time formats. E.g. lamport and vector time stamps.
      */
-    private void resetTimeFormats() {
+    protected void resetTimeFormats() {
         lamportTime = 0;
         lamportTimeHistory.clear();
 
@@ -275,132 +276,6 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         final int numProcesses = simulatorCanvas.getNumProcesses();
         for (int i = numProcesses; i > 0; --i)
             vectorTime.add(new Long(0));
-    }
-
-    /**
-     * Called from the VSProcessEditor, after finishing editing! This makes
-     * sure that the VSProcess object is using the up to date prefs!
-     */
-    public synchronized void updateFromPrefs() {
-        setClockVariance(getFloat("process.clock.variance"));
-        setLocalTime(getLong("process.localtime"));
-        crashedColor = getColor("col.process.crashed");
-        createRandomCrashTask();
-    }
-
-    /**
-     * Called from the VSProcessEditor, before starting editing! This makes
-     * sure that the editor edits the up to date prefs of the process!
-     */
-    public synchronized void updatePrefs() {
-        setFloat("process.clock.variance", getClockVariance());
-        setLong("process.localtime", getTime());
-    }
-
-    /**
-     * Syncs the process' time. This method is using the clockOffset and
-     * clockVariance variables. This method is called repeatedly from the
-     * VSSimulatorCanvas in order to update the process' local and global
-     * time values.
-     *
-     * @param globalTime the global time.
-     */
-    public synchronized void syncTime(final long globalTime) {
-        final long currentGlobalTimestep = globalTime - this.globalTime;
-        this.globalTime = globalTime;
-
-        localTime += currentGlobalTimestep;
-        clockOffset += currentGlobalTimestep * (double) clockVariance;
-
-        while (clockOffset >= 1) {
-            clockOffset -= 1;
-            ++localTime;
-        }
-
-        while (clockOffset <= -1) {
-            clockOffset += 1;
-            --localTime;
-        }
-
-        /* We do not want a negative time */
-        if (localTime < 0)
-            localTime = 0;
-    }
-
-    /**
-     * Sets the current color.
-     *
-     * @param newColor the new current color
-     */
-    private void setCurrentColor(Color newColor) {
-        if (isHighlighted)
-            tmpColor = newColor;
-        else
-            currentColor = newColor;
-    }
-
-    /**
-     * Highlights the process.
-     */
-    public synchronized void highlightOn() {
-        tmpColor = currentColor;
-        currentColor = getColor("col.process.highlight");
-        isHighlighted = true;
-    }
-
-    /**
-     * Unhighlights the process.
-     */
-    public synchronized void highlightOff() {
-        currentColor = tmpColor;
-        isHighlighted = false;
-    }
-
-    /**
-     * Resets the process.
-     */
-    public synchronized void reset() {
-        isPaused = true;
-        isCrashed = false;
-        hasCrashed = false;
-        localTime = 0;
-        globalTime = 0;
-        clockOffset = 0;
-
-        for (VSAbstractProtocol protocol : protocolsToReset)
-            protocol.reset();
-
-        setCurrentColor(getColor("col.process.default"));
-        resetTimeFormats();
-    }
-
-    /**
-     * Creates the random crash task. The crash task will be created only if
-     * the process is not crashed atm. and if VSProcess.getARandomCrashTime()
-     * returns a non-negative value. The random crash task uses the simulaion's
-     * global time for its scheduling.
-     */
-    public synchronized void createRandomCrashTask() {
-        if (!isCrashed) {
-            VSTaskManager taskManager = simulatorCanvas.getTaskManager();
-            long crashTime = getARandomCrashTime();
-
-            if (crashTime < 0)
-                return;
-
-            if (randomCrashTask != null)
-                taskManager.removeTask(randomCrashTask);
-
-            if (crashTime >= getGlobalTime())  {
-                VSAbstractEvent event = new VSProcessCrashEvent();
-                randomCrashTask = new VSTask(crashTime, this, event,
-                                             VSTask.GLOBAL);
-                taskManager.addTask(randomCrashTask);
-
-            } else {
-                randomCrashTask = null;
-            }
-        }
     }
 
     /**
@@ -420,32 +295,8 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      *
      * @param add the clock offset to add.
      */
-    public synchronized void addClockOffset(long add) {
+    protected synchronized void addClockOffset(long add) {
         this.clockOffset += add;
-    }
-
-    /**
-     * The process' state is 'play'. Called by the simulator canvas.
-     */
-    public synchronized void play() {
-        isPaused = false;
-        setCurrentColor(getColor("col.process.running"));
-    }
-
-    /**
-     * The process' state is 'pause'. Called by the simulator canvas.
-     */
-    public synchronized void pause() {
-        isPaused = true;
-        setCurrentColor(getColor("col.process.stopped"));
-    }
-
-    /**
-     * The process' state is 'Finish'. Called by the simulator canvas.
-     */
-    public synchronized void finish() {
-        isPaused = true;
-        setCurrentColor(getColor("col.process.default"));
     }
 
     /**
@@ -474,27 +325,6 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      */
     public synchronized void setProcessID(int processID) {
         this.processID = processID;
-    }
-
-    /**
-     * Gets the current process' color.
-     *
-     * @return the current color of the process.
-     */
-    public synchronized Color getColor() {
-        return currentColor;
-    }
-
-    /**
-     * Sets the local time.
-     *
-     * @param localTime the new local time.
-     */
-    public synchronized void setLocalTime(final long localTime) {
-        if (localTime >= 0)
-            this.localTime = localTime;
-        else
-            this.localTime = 0;
     }
 
     /**
@@ -554,50 +384,12 @@ public class VSProcess extends VSPrefs implements VSSerializable {
     }
 
     /**
-     * Gets the color of this process if it's crashed.
-     *
-     * @return the crashed color
-     */
-    public synchronized Color getCrashedColor() {
-        return crashedColor;
-    }
-
-    /**
-     * Checks if the time has been modified. by a task.
-     * This mehod is needed by the task manager in order to add a clock offset
-     * to the process object.
-     *
-     * @return true, if yes
-     */
-    public synchronized boolean timeModified() {
-        return timeModified;
-    }
-
-    /**
-     * Sets if the time has been modified by a task.
-     *
-     * @param timeModified true, if it has been modified.
-     */
-    public synchronized void timeModified(boolean timeModified) {
-        this.timeModified = timeModified;
-    }
-
-    /**
      * Gets the global time.
      *
      * @return the global time
      */
     public synchronized long getGlobalTime() {
         return globalTime;
-    }
-
-    /**
-     * Sets the global time.
-     *
-     * @param globalTime the new global time
-     */
-    public synchronized void setGlobalTime(final long globalTime) {
-        this.globalTime = globalTime >= 0 ? globalTime : 0;
     }
 
     /**
@@ -628,61 +420,12 @@ public class VSProcess extends VSPrefs implements VSSerializable {
     }
 
     /**
-     * Gets the duration time of a message to send.
-     *
-     * @return the duration time
-     */
-    public synchronized long getDurationTime() {
-        final long maxDurationTime = getLong("message.sendingtime.max");
-        final long minDurationTime = getLong("message.sendingtime.min");
-
-        if (maxDurationTime <= minDurationTime)
-            return minDurationTime;
-
-        final int diff = (int) (maxDurationTime - minDurationTime);
-
-        /* Integer overflow */
-        if (diff <= 0)
-            return minDurationTime;
-
-        return minDurationTime + random.nextInt(diff+1);
-    }
-
-    /**
-     * Gets the a random message outage time.
-     *
-     * @param durationTime the duration time
-     *
-     * @return the a random message outage time. It will be -1 if the message
-     *	will not get lost at all.
-     */
-    public synchronized long getARandomMessageOutageTime(long durationTime,
-            VSProcess receiverProcess) {
-        int percentage = (int) ((getInteger("message.prob.outage") +
-                                 receiverProcess.getInteger(
-                                     "message.prob.outage")) / 2);
-
-        /* Check if the message will have an outage or not */
-        if (getRandomPercentage() < percentage) {
-
-            /* Calculate the random outage time! */
-            long outageTime = globalTime + random.nextLong(durationTime+1) %
-                              simulatorCanvas.getUntilTime();
-
-            return outageTime;
-        }
-
-        /* No outage */
-        return -1;
-    }
-
-    /**
      * Gets the a random crash time.
      *
      * @return the a random crash time. It will be -1 if the process will not
      *	crash at all randomly!
      */
-    private long getARandomCrashTime() {
+    protected long getARandomCrashTime() {
         /* Check if the process will crash or not */
         if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
@@ -694,24 +437,6 @@ public class VSProcess extends VSPrefs implements VSSerializable {
 
         /* No crash */
         return -1;
-    }
-
-    /**
-     * Gets the random crash task.
-     *
-     * @return the random crash task
-     */
-    public synchronized VSTask getCrashTask() {
-        return randomCrashTask;
-    }
-
-    /**
-     * Checks if the process is paused.
-     *
-     * @return true, if is paused
-     */
-    public synchronized boolean isPaused() {
-        return isPaused;
     }
 
     /**
@@ -770,7 +495,20 @@ public class VSProcess extends VSPrefs implements VSSerializable {
     }
 
     /**
-     * Increases the vector time.
+     * Increases the vector and the lamport time by 1 each if
+     * sim.update.vectortime.all/sim.update.lamporttime.all are set
+     * to true.
+     */
+    public void increaseVectorAndLamportTimeIfAll() {
+        if (prefs.getBoolean("sim.update.lamporttime.all"))
+            increaseLamportTime();
+
+        if (prefs.getBoolean("sim.update.vectortime.all"))
+            increaseVectorTime();
+    }
+
+    /**
+     * Increases the vector time by 1.
      */
     public synchronized void increaseVectorTime() {
         vectorTime.set(processNum,
@@ -836,20 +574,6 @@ public class VSProcess extends VSPrefs implements VSSerializable {
             arr[i] = crashHistory.get(i);
 
         return arr;
-    }
-
-    /**
-     * Called by a task if the process sends a message.
-     *
-     * @param message the message to send.
-     */
-    public synchronized void sendMessage(VSMessage message) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(prefs.getString("lang.message.sent"));
-        buffer.append("; ");
-        buffer.append(message.toStringFull());
-        logg(buffer.toString());
-        simulatorCanvas.sendMessage(message);
     }
 
     /**
@@ -919,17 +643,8 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      *
      * @return true, if both processes are the same (same processNum).
      */
-    public boolean equals(VSProcess process) {
+    public boolean equals(VSAbstractProcess process) {
         return process.getProcessNum() == processNum;
-    }
-
-    /**
-     * Gets the simulator canvas.
-     *
-     * @return the simulator canvas
-     */
-    public VSSimulatorCanvas getSimulatorCanvas() {
-        return simulatorCanvas;
     }
 
     /**
@@ -939,77 +654,6 @@ public class VSProcess extends VSPrefs implements VSSerializable {
      */
     public VSPrefs getPrefs() {
         return prefs;
-    }
-
-    /**
-     * Removes the process at the specified index. Called by the simulator
-     * canvas if a process has been removed from the simulator. Needed in
-     * order to update the vector time and the local processNum.
-     *
-     * @param index the index the process has to get removed.
-     */
-    public synchronized void removedAProcessAtIndex(int index) {
-        if (index < processNum)
-            --processNum;
-
-        vectorTime.remove(index);
-        for (VSVectorTime vectorTime : vectorTimeHistory)
-            vectorTime.remove(index);
-    }
-
-    /**
-     * Added a process. Needed in order to update the vector time's size.
-     * Called by the simulator canvas if a process has been added to the
-     * simulator.
-     */
-    public synchronized void addedAProcess() {
-        vectorTime.add(new Long(0));
-        for (VSVectorTime vectorTime : vectorTimeHistory)
-            vectorTime.add(new Long(0));
-    }
-
-    /**
-     * Gets the tasks of the process.
-     *
-     * @return The tasks
-     */
-    public VSPriorityQueue<VSTask> getTasks() {
-        return tasks;
-    }
-
-    /**
-     * Sets the tasks of the process.
-     *
-     * @param tasks The tasks
-     */
-    public void setTasks(VSPriorityQueue<VSTask> tasks) {
-        this.tasks = tasks;
-    }
-
-    /**
-     * Gets the protocol object.
-     *
-     * @param protocolClassname the protocol classname
-     *
-     * @return the protocol object
-     */
-    public synchronized VSAbstractProtocol getProtocolObject(
-        String protocolClassname) {
-        VSAbstractProtocol protocol = null;
-
-        if (!objectExists(protocolClassname)) {
-            protocol = (VSAbstractProtocol)
-                       VSRegisteredEvents.createEventInstanceByClassname(
-                           protocolClassname, this);
-
-            setObject(protocolClassname, protocol);
-            protocolsToReset.add(protocol);
-
-        } else {
-            protocol = (VSAbstractProtocol) getObject(protocolClassname);
-        }
-
-        return protocol;
     }
 
     /* (non-Javadoc)
@@ -1022,7 +666,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
         super.serialize(serialize, objectOutputStream);
 
         if (VSSerialize.DEBUG)
-            System.out.println("Serializing: VSProcess (num: " + processNum
+            System.out.println("Serializing: VSAbstractProcess (num: " + processNum
                                + "; id: " + processID + ")");
 
         /** For later backwards compatibility, to add more stuff */
@@ -1048,10 +692,10 @@ public class VSProcess extends VSPrefs implements VSSerializable {
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         super.deserialize(serialize, objectInputStream);
-        updateFromPrefs();
+        updateFromPrefs_();
 
         if (VSSerialize.DEBUG)
-            System.out.println("Deserializing: VSProcess");
+            System.out.println("Deserializing: VSAbstractProcess");
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
@@ -1063,7 +707,7 @@ public class VSProcess extends VSPrefs implements VSSerializable {
 
         for (int i = 0; i < numProtocols; ++i) {
             String protocolClassname = (String) objectInputStream.readObject();
-            VSAbstractProtocol protocol = getProtocolObject(protocolClassname);
+            VSAbstractProtocol protocol = getProtocolObject_(protocolClassname);
             protocol.deserialize(serialize, objectInputStream);
         }
 
@@ -1075,4 +719,21 @@ public class VSProcess extends VSPrefs implements VSSerializable {
 
         serialize.setObject(processNum, "process", this);
     }
+
+    /**
+     * Sets the current color.
+     *
+     * @param newColor the new current color
+     */
+    protected void setCurrentColor(Color newColor) {
+        if (isHighlighted)
+            tmpColor = newColor;
+        else
+            currentColor = newColor;
+    }
+
+    protected abstract void updateFromPrefs_();
+    protected abstract void createRandomCrashTask_();
+    protected abstract VSAbstractProtocol getProtocolObject_(
+			String protocolClassname);
 }

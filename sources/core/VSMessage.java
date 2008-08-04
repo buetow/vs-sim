@@ -57,7 +57,7 @@ public class VSMessage extends VSPrefs {
     private VSPrefs prefs;
 
     /** A reference to the process who sent this message. */
-    private VSProcess sendingProcess;
+    private VSInternalProcess sendingProcess;
 
     /** The vector time of the sending process after sending. The receiver
      * process will use this vector time in order to update the local vector
@@ -93,7 +93,7 @@ public class VSMessage extends VSPrefs {
      * @param protocolClassname The classname of the protocol this message.
      * @param isServerMessage Sets if the message has been sent by a server.
      */
-    public void init(VSProcess process, String protocolClassname,
+    void init(VSInternalProcess process, String protocolClassname,
                      boolean isServerMessage) {
         this.sendingProcess = process;
         this.protocolClassname = protocolClassname;
@@ -136,7 +136,7 @@ public class VSMessage extends VSPrefs {
      *
      * @return The process which sent this message.
      */
-    public VSProcess getSendingProcess() {
+    public VSInternalProcess getSendingProcess() {
         return sendingProcess;
     }
 

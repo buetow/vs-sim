@@ -17,3 +17,5 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 find ./sources -name \*.java | xargs wc -l
+echo "Num .java files:"
+find ./sources -name \*.java | wc -l

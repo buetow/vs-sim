@@ -25,7 +25,7 @@ package events;
 
 import java.io.*;
 
-import core.VSProcess;
+import core.VSInternalProcess;
 import exceptions.*;
 import prefs.VSPrefs;
 import serialize.*;
@@ -46,7 +46,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     public VSPrefs prefs;
 
     /** The process. */
-    public VSProcess process;
+    public VSInternalProcess process;
 
     /** The event shortname. */
     private String eventShortname;
@@ -60,7 +60,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      * @param theProcess The new process
      * @return The copy
      */
-    final public VSAbstractEvent getCopy(VSProcess theProcess)
+    final public VSAbstractEvent getCopy(VSInternalProcess theProcess)
     throws VSEventNotCopyableException {
 
         if (theProcess == null)
@@ -94,7 +94,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      *
      * @param process the process
      */
-    public void init(VSProcess process) {
+    public void init(VSInternalProcess process) {
         if (this.process == null) {
             this.process = process;
             this.prefs = process.getPrefs();
@@ -166,7 +166,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      *
      * @return the process
      */
-    public VSProcess getProcess() {
+    public VSInternalProcess getProcess() {
         return process;
     }
 

@@ -116,7 +116,7 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
                 /* Remove the active schedule which has been created in the
                    onServerStart method */
                 removeSchedules();
-			}
+            }
         }
     }
 

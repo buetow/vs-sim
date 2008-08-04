@@ -89,8 +89,8 @@ public final class VSRegisteredEvents {
                       "Basic Multicast", "Basic Multicast");
         registerEvent("protocols.implementations.VSBerkelyTimeProtocol",
                       "Berkeley Algorithmus zur internen Sync.", "Berkeley");
-        registerEvent("protocols.implementations.VSBroadcastSturmProtocol",
-                      "Broadcaststurm", null);
+        registerEvent("protocols.implementations.VSBroadcastProtocol",
+                      "Broadcast", null);
         registerEvent("protocols.implementations.VSDummyProtocol",
                       "Beispiel/Dummy", null);
         registerEvent("protocols.implementations.VSExternalTimeSyncProtocol",
@@ -322,7 +322,7 @@ public final class VSRegisteredEvents {
      * @return An instance of the event classname, if exists. Else null.
      */
     public static VSAbstractEvent createEventInstanceByClassname(
-        String eventClassname, VSProcess process) {
+        String eventClassname, VSInternalProcess process) {
         Object protocolObj = new VSClassLoader().newInstance(eventClassname);
 
         if (protocolObj instanceof VSAbstractEvent) {
@@ -343,7 +343,7 @@ public final class VSRegisteredEvents {
      * @return An instance of the event, if exists. Else null.
      */
     public static VSAbstractEvent createEventInstanceByName(String eventName,
-            VSProcess process) {
+            VSInternalProcess process) {
         return createEventInstanceByClassname(
                    eventClassnamesByNames.get(eventName), process);
     }

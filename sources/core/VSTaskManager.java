@@ -104,7 +104,7 @@ public class VSTaskManager implements VSSerializable {
         long globalTime;
         final long globalOffsetTime = lastGlobalTime + step;
         boolean redo;
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
 
         do {
             redo = false;
@@ -112,7 +112,7 @@ public class VSTaskManager implements VSSerializable {
             /* Run tasks which have for its schedule the global time */
             while (globalTasks.size() != 0) {
                 task = globalTasks.peek();
-                VSProcess process = task.getProcess();
+                VSInternalProcess process = task.getProcess();
                 localTime = process.getTime();
                 offsetTime = localTime + step;
                 taskTime = task.getTaskTime();
@@ -165,7 +165,7 @@ public class VSTaskManager implements VSSerializable {
             }
 
             synchronized (processes) {
-                for (VSProcess process : processes) {
+                for (VSInternalProcess process : processes) {
                     PriorityQueue<VSTask> tasks = process.getTasks();
 
                     /* Run tasks which have for its schedule the local
@@ -232,11 +232,11 @@ public class VSTaskManager implements VSSerializable {
      * Resets the task manager.
      */
     public synchronized void reset() {
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
         PriorityQueue<VSTask> tmp = null;
 
         synchronized (processes) {
-            for (VSProcess process : processes) {
+            for (VSInternalProcess process : processes) {
                 tmp = process.getTasks();
                 process.setTasks(new VSPriorityQueue<VSTask>());
 
@@ -337,7 +337,7 @@ public class VSTaskManager implements VSSerializable {
      *
      * @param process the process to remove the tasks of
      */
-    public synchronized void removeTasksOf(VSProcess process) {
+    public synchronized void removeTasksOf(VSInternalProcess process) {
         ArrayList<VSTask> removeThose = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
@@ -366,14 +366,14 @@ public class VSTaskManager implements VSSerializable {
      */
     public synchronized ArrayList<VSTask> getLocalTasks() {
         ArrayList<VSTask> localTasks = new ArrayList<VSTask>();
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (!task.isGlobalTimed())
                 localTasks.add(task);
 
         synchronized (processes) {
-            for (VSProcess process : processes) {
+            for (VSInternalProcess process : processes) {
                 VSPriorityQueue<VSTask> tasks = process.getTasks();
                 for (VSTask task : tasks)
                     localTasks.add(task);
@@ -410,7 +410,7 @@ public class VSTaskManager implements VSSerializable {
      * @return the local tasks of the specified process
      */
     public synchronized ArrayList<VSTask> getProcessLocalTasks(
-        VSProcess process) {
+        VSInternalProcess process) {
         ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
         VSPriorityQueue<VSTask> tasks = process.getTasks();
 
@@ -434,7 +434,7 @@ public class VSTaskManager implements VSSerializable {
      * @return the global timed tasks of the specified process
      */
     public synchronized ArrayList<VSTask> getProcessGlobalTasks(
-        VSProcess process) {
+        VSInternalProcess process) {
         ArrayList<VSTask> processTasks = new ArrayList<VSTask>();
 
         for (VSTask task : fullfilledProgrammedTasks)
@@ -476,9 +476,9 @@ public class VSTaskManager implements VSSerializable {
         buffer.append(prefs.getString("lang.tasks.local"));
         buffer.append(": ");
 
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
         synchronized (processes) {
-            for (VSProcess process : processes) {
+            for (VSInternalProcess process : processes) {
                 VSPriorityQueue<VSTask> tasks = process.getTasks();
                 for (VSTask task : tasks) {
                     buffer.append(task);
@@ -517,10 +517,10 @@ public class VSTaskManager implements VSSerializable {
                 serializeThoseTasks.add(task);
         }
 
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
 
         synchronized (processes) {
-            for (VSProcess process : processes) {
+            for (VSInternalProcess process : processes) {
                 VSPriorityQueue<VSTask> localTasks = process.getTasks();
                 for (VSTask task : localTasks) {
                     if (!task.hasNotSerializableEvent())
@@ -554,9 +554,9 @@ public class VSTaskManager implements VSSerializable {
 
         globalTasks.clear();
 
-        ArrayList<VSProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
         synchronized (processes) {
-            for (VSProcess process : processes)
+            for (VSInternalProcess process : processes)
                 process.getTasks().clear();
         }
 

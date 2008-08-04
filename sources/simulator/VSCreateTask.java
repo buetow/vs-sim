@@ -174,7 +174,7 @@ public class VSCreateTask {
      *
      * @return the new task
      */
-    public VSTask createTask(VSProcess process, long time,
+    public VSTask createTask(VSInternalProcess process, long time,
                              boolean localTimedTask) {
         VSAbstractEvent event = null;
 

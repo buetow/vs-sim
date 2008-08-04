@@ -212,7 +212,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param localTask true, if this table manages the local task. false,
          *	if this table manages the global tasks.
          */
-        public VSTaskManagerTableModel(VSProcess process, boolean localTask) {
+        public VSTaskManagerTableModel(VSInternalProcess process, boolean localTask) {
             tasks = new ArrayList<VSTask>();
             set(process, localTask, ONE_PROCESS);
             columnNames = new String[3];
@@ -249,7 +249,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param allProcesses true, if this table shows tasks of all processes.
          *	false, if this table only shows tasks of the specified process.
          */
-        public void set(VSProcess process, boolean localTasks,
+        public void set(VSInternalProcess process, boolean localTasks,
                         boolean allProcesses) {
             this.allProcesses = allProcesses;
 
@@ -516,8 +516,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     public void actionPerformed(ActionEvent ae) {
                         try {
                             Long val = Long.valueOf(valField.getText());
-							if (val.longValue() < 0) 
-								throw new VSNegativeNumberException();
+                            if (val.longValue() < 0)
+                                throw new VSNegativeNumberException();
                             VSTask task = model.removeTaskAtRow(row);
                             task.setTaskTime(val.longValue());
                             taskManager.addTask(task, VSTaskManager.PROGRAMMED);
@@ -539,7 +539,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                         } catch (VSNegativeNumberException exc) {
                             valField.setBackground(Color.RED);
                             isRed = true;
-						}
+                        }
                     }
                 });
                 return valField;
@@ -557,7 +557,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                         int index = comboBox.getSelectedIndex() - 1;
                         if (model.rowExists(row)) {
                             VSTask task = model.removeTaskAtRow(row);
-                            VSProcess process =
+                            VSInternalProcess process =
                                 simulatorCanvas.getProcess(index);
                             task.setProcess(process);
                             taskManager.addTask(task, VSTaskManager.PROGRAMMED);
@@ -892,7 +892,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 }
 
                 if (processNum != simulatorCanvas.getNumProcesses()) {
-                    VSProcess process = getSelectedProcess();
+                    VSInternalProcess process = getSelectedProcess();
                     VSProcessEditor processEditor =
                         new VSProcessEditor(prefs, process);
                     tabbedPane.setComponentAt(1,
@@ -961,7 +961,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * @return the table
      */
     private JTable createTaskTable(boolean localTasks) {
-        VSProcess process = getSelectedProcess();
+        VSInternalProcess process = getSelectedProcess();
         VSTaskManagerTableModel model =
             new VSTaskManagerTableModel(process, localTasks);
         VSTaskManagerCellEditor cellEditor =
@@ -1076,17 +1076,17 @@ public class VSSimulator extends JPanel implements VSSerializable {
             }
 
             private boolean takeover(long time) {
-                VSProcess selectedProcess = getSelectedProcess();
+                VSInternalProcess selectedProcess = getSelectedProcess();
                 int index = comboBox.getSelectedIndex();
                 VSCreateTask createTask = createTasks.get(index);
 
                 if (createTask.isDummy())
                     return false;
 
-                ArrayList<VSProcess> processes =
+                ArrayList<VSInternalProcess> processes =
                     getConcernedProcesses(localTasks);
 
-                for (VSProcess process : processes) {
+                for (VSInternalProcess process : processes) {
                     VSTask task = createTask.createTask(process, time,
                                                         localTasks);
                     taskManager.addTask(task, VSTaskManager.PROGRAMMED);
@@ -1266,7 +1266,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the selected process
      */
-    private VSProcess getSelectedProcess() {
+    private VSInternalProcess getSelectedProcess() {
         int processNum = getSelectedProcessNum();
         return simulatorCanvas.getProcess(processNum);
     }
@@ -1279,7 +1279,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the concerned processes
      */
-    private ArrayList<VSProcess> getConcernedProcesses(boolean localTasks) {
+    private ArrayList<VSInternalProcess> getConcernedProcesses(boolean localTasks) {
         int processNum = localTasks
                          ? localPIDComboBox.getSelectedIndex()
                          : globalPIDComboBox.getSelectedIndex();
@@ -1287,7 +1287,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         if (processNum == simulatorCanvas.getNumProcesses())
             return simulatorCanvas.getProcessesArray();
 
-        ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
+        ArrayList<VSInternalProcess> arr = new ArrayList<VSInternalProcess>();
         arr.add(simulatorCanvas.getProcess(processNum));
 
         return arr;
@@ -1297,7 +1297,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * Update task manager table.
      */
     public synchronized void updateTaskManagerTable() {
-        VSProcess process = getSelectedProcess();
+        VSInternalProcess process = getSelectedProcess();
         boolean allProcesses = process == null;
 
         taskManagerLocalEditor.stopEditing();
@@ -1459,7 +1459,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         /* Update the 'Variables tab' */
         if (getSelectedProcessNum() != simulatorCanvas.getNumProcesses()) {
-            VSProcess process = getSelectedProcess();
+            VSInternalProcess process = getSelectedProcess();
             VSProcessEditor editor = new VSProcessEditor(prefs, process);
             tabbedPane.setComponentAt(1, editor.getContentPane());
         }

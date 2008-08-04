@@ -64,7 +64,7 @@ public class VSTask implements Comparable, VSSerializable {
     private VSAbstractEvent event;
 
     /** The process to run the task at. */
-    private VSProcess process;
+    private VSInternalProcess process;
 
     /** The simulator's default prefs. */
     private VSPrefs prefs;
@@ -91,7 +91,7 @@ public class VSTask implements Comparable, VSSerializable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    public VSTask(long taskTime, VSProcess process, VSAbstractEvent event,
+    public VSTask(long taskTime, VSInternalProcess process, VSAbstractEvent event,
                   boolean isLocal) {
         init(taskTime, process, event, isLocal);
     }
@@ -137,7 +137,7 @@ public class VSTask implements Comparable, VSSerializable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    private void init(long taskTime, VSProcess process, VSAbstractEvent event,
+    private void init(long taskTime, VSInternalProcess process, VSAbstractEvent event,
                       boolean isLocal) {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
@@ -256,7 +256,7 @@ public class VSTask implements Comparable, VSSerializable {
      *
      * @return true, if the task is using the process
      */
-    public boolean isProcess(VSProcess process) {
+    public boolean isProcess(VSInternalProcess process) {
         return this.process.equals(process);
     }
 
@@ -274,7 +274,7 @@ public class VSTask implements Comparable, VSSerializable {
      *
      * @return the process of the event
      */
-    public VSProcess getProcess() {
+    public VSInternalProcess getProcess() {
         return process;
     }
 
@@ -284,6 +284,10 @@ public class VSTask implements Comparable, VSSerializable {
     public void run() {
         if (event.getProcess() == null)
             event.init(process);
+
+        if (!(event instanceof VSMessageReceiveEvent)
+                && !(event instanceof VSAbstractProtocol))
+            process.increaseVectorAndLamportTimeIfAll();
 
         event.onStart();
     }
@@ -311,7 +315,7 @@ public class VSTask implements Comparable, VSSerializable {
      *
      * @param process the process
      */
-    public void setProcess(VSProcess process) {
+    public void setProcess(VSInternalProcess process) {
         /* Only do it if the process differs */
         if (!this.process.equals(process)) {
             this.process = process;
@@ -484,8 +488,8 @@ public class VSTask implements Comparable, VSSerializable {
         objectInputStream.readObject();
 
         int processNum = ((Integer) objectInputStream.readObject()).intValue();
-        VSProcess process = (VSProcess)
-                            serialize.getObject(processNum, "process");
+        VSInternalProcess process = (VSInternalProcess)
+                                    serialize.getObject(processNum, "process");
 
         String eventClassname = (String) objectInputStream.readObject();
         int eventID = ((Integer) objectInputStream.readObject()).intValue();

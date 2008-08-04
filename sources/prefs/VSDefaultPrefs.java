@@ -274,5 +274,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtverlustw'k. bilden");
         initBoolean("sim.messages.relevant", true, "Nur relevante Nachrichten anzeigen");
         initBoolean("sim.periodic", false, "Simulation periodisch wiederholen");
+        initBoolean("sim.update.lamporttime.all", false, "Lamportzeiten betreffen alle Ereignisse");
+        initBoolean("sim.update.vectortime.all", false, "Vektorzeiten betreffen alle Ereignisse");
     }
 }

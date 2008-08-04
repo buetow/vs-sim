@@ -440,13 +440,13 @@ public class VSSimulatorFrame extends VSFrame {
             return;
 
         String processString = prefs.getString("lang.process");
-        ArrayList<VSProcess> arr =
+        ArrayList<VSInternalProcess> arr =
             currentSimulator.getSimulatorCanvas().getProcessesArray();
 
         int numProcesses = arr.size();
         int processNum = 0;
 
-        for (VSProcess process : arr) {
+        for (VSInternalProcess process : arr) {
             int processID = process.getProcessID();
             JMenuItem processItem = new JMenuItem(processString + " " +
                                                   processID);

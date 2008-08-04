@@ -94,10 +94,12 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         process.increaseLamportTime();
         process.increaseVectorTime();
 
+		VSMessageStub stub = new VSMessageStub(message);
+
         if (currentContextIsServer)
-            message.init(process, getClassname(), VSMessage.IS_SERVER_MESSAGE);
+            stub.init(process, getClassname(), VSMessage.IS_SERVER_MESSAGE);
         else
-            message.init(process, getClassname(), VSMessage.IS_CLIENT_MESSAGE);
+            stub.init(process, getClassname(), VSMessage.IS_CLIENT_MESSAGE);
 
         process.sendMessage(message);
     }

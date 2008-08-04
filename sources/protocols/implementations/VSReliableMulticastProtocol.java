@@ -89,7 +89,7 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
             VSMessage message = new VSMessage();
             message.setBoolean("isMulticast", true);
             sendMessage(message);
-        } 
+        }
     }
 
     /* (non-Javadoc)
@@ -124,8 +124,8 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
         onClientStart();
     }
 
-	/** True if ACK has been sent already */
-	private boolean ackSent;
+    /** True if ACK has been sent already */
+    private boolean ackSent;
 
     /* (non-Javadoc)
      * @see events.VSAbstractProtocol#onServerInit()
@@ -137,7 +137,7 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     public void onServerReset() {
-		ackSent = false;
+        ackSent = false;
     }
 
     /* (non-Javadoc)
@@ -150,13 +150,13 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
             message.setInteger("pid", process.getProcessID());
             sendMessage(message);
 
-			if (ackSent) {
-            	logg("ACK erneut versendet");
+            if (ackSent) {
+                logg("ACK erneut versendet");
 
-			} else {
-            	logg("ACK versendet");
-				ackSent = true;
-			}
+            } else {
+                logg("ACK versendet");
+                ackSent = true;
+            }
         }
     }
 

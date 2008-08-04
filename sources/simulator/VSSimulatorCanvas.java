@@ -56,7 +56,7 @@ public class VSSimulatorCanvas extends Canvas
     private static final long serialVersionUID = 1L;
 
     /** The highlighted process. */
-    private VSProcess highlightedProcess;
+    private VSInternalProcess highlightedProcess;
 
     /** The simulator. */
     private VSSimulator simulator;
@@ -125,7 +125,7 @@ public class VSSimulatorCanvas extends Canvas
     private LinkedList<VSMessageLine> messageLinesToRemove;
 
     /** The processes. */
-    private ArrayList<VSProcess> processes;
+    private ArrayList<VSInternalProcess> processes;
 
     /** The clock speed. */
     private double clockSpeed;
@@ -242,7 +242,7 @@ public class VSSimulatorCanvas extends Canvas
         private static final long serialVersionUID = 1L;
 
         /** The receiver process. */
-        private VSProcess receiverProcess;
+        private VSInternalProcess receiverProcess;
 
         /** The color. */
         private Color color;
@@ -312,7 +312,7 @@ public class VSSimulatorCanvas extends Canvas
          * @param receiverNum the receiver num
          * @param task the task
          */
-        public VSMessageLine(VSProcess receiverProcess, long sendTime,
+        public VSMessageLine(VSInternalProcess receiverProcess, long sendTime,
                              long recvTime, long outageTime, int senderNum ,
                              int receiverNum, VSTask task) {
             this.receiverProcess = receiverProcess;
@@ -500,7 +500,7 @@ public class VSSimulatorCanvas extends Canvas
 
         /* May be not null if called from deserialization */
         if (this.processes == null) {
-            this.processes = new ArrayList<VSProcess>();
+            this.processes = new ArrayList<VSInternalProcess>();
 
             numProcesses = prefs.getInteger("sim.process.num");
 
@@ -515,7 +515,7 @@ public class VSSimulatorCanvas extends Canvas
 
         addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent me) {
-                final VSProcess process = getProcessAtYPos(me.getY());
+                final VSInternalProcess process = getProcessAtYPos(me.getY());
 
                 if (SwingUtilities.isRightMouseButton(me)) {
                     ActionListener actionListener = new ActionListener() {
@@ -721,7 +721,7 @@ public class VSSimulatorCanvas extends Canvas
             public void mouseDragged(MouseEvent e) { }
 
             public void mouseMoved(MouseEvent e) {
-                VSProcess p = getProcessAtYPos(e.getY());
+                VSInternalProcess p = getProcessAtYPos(e.getY());
 
                 if (p == null) {
                     if (highlightedProcess != null) {
@@ -864,7 +864,7 @@ public class VSSimulatorCanvas extends Canvas
             taskManager.runTasks(l, offset, lastSimulatorTime);
 
         synchronized (processes) {
-            for (VSProcess process : processes)
+            for (VSInternalProcess process : processes)
                 process.syncTime(simulatorTime);
         }
     }
@@ -939,7 +939,7 @@ public class VSSimulatorCanvas extends Canvas
                               };
 
         synchronized (processes) {
-            for (VSProcess process : processes) {
+            for (VSInternalProcess process : processes) {
                 final long localTime = process.getTime();
 
                 g.setColor(process.getColor());
@@ -1006,7 +1006,7 @@ public class VSSimulatorCanvas extends Canvas
      * @param distance the distance
      */
     private void paintTime(final Graphics2D g, final VSTime times[],
-                           final VSProcess process, final int yStart,
+                           final VSInternalProcess process, final int yStart,
                            final int distance) {
 
         final int lastPos[] = { -1, -1, -1, -1 };
@@ -1106,7 +1106,7 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return the process at y pos
      */
-    private VSProcess getProcessAtYPos(int yPos) {
+    private VSInternalProcess getProcessAtYPos(int yPos) {
         final int reachDistance = (int) (yDistance/3);
         int y = YOFFSET + YOUTER_SPACEING + YSEPLINE_SPACEING;
 
@@ -1120,7 +1120,7 @@ public class VSSimulatorCanvas extends Canvas
         for (int i = 0; i < numProcesses; ++i) {
             if (yPos < y + reachDistance && yPos > y - reachDistance -
                     LINE_WIDTH) {
-                VSProcess process = null;
+                VSInternalProcess process = null;
                 synchronized (processes) {
                     process = processes.get(i);
                 }
@@ -1244,7 +1244,7 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return the process
      */
-    public VSProcess getProcess(int processNum) {
+    public VSInternalProcess getProcess(int processNum) {
         synchronized (processes) {
             if (processNum >= processes.size())
                 return null;
@@ -1304,7 +1304,7 @@ public class VSSimulatorCanvas extends Canvas
         final long currentTime = System.currentTimeMillis();
 
         synchronized (processes) {
-            for (VSProcess p : processes)
+            for (VSInternalProcess p : processes)
                 p.play();
         }
 
@@ -1332,7 +1332,7 @@ public class VSSimulatorCanvas extends Canvas
      */
     public void finish() {
         synchronized (processes) {
-            for (VSProcess p : processes)
+            for (VSInternalProcess p : processes)
                 p.finish();
         }
 
@@ -1354,7 +1354,7 @@ public class VSSimulatorCanvas extends Canvas
     public void pause() {
         isPaused = true;
         synchronized (processes) {
-            for (VSProcess p : processes)
+            for (VSInternalProcess p : processes)
                 p.pause();
         }
 
@@ -1380,7 +1380,7 @@ public class VSSimulatorCanvas extends Canvas
             simulatorTime = 0;
 
             synchronized (processes) {
-                for (VSProcess process : processes)
+                for (VSInternalProcess process : processes)
                     process.reset();
             }
 
@@ -1389,7 +1389,7 @@ public class VSSimulatorCanvas extends Canvas
             taskManager.reset();
 
             synchronized (processes) {
-                for (VSProcess process : processes)
+                for (VSInternalProcess process : processes)
                     process.createRandomCrashTask();
             }
 
@@ -1466,12 +1466,12 @@ public class VSSimulatorCanvas extends Canvas
     public void sendMessage(VSMessage message) {
         VSTask task = null;
         VSAbstractEvent receiveEvent = null;
-        VSProcess sendingProcess = message.getSendingProcess();
+        VSInternalProcess sendingProcess = message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
 
         synchronized (processes) {
-            for (VSProcess receiverProcess : processes) {
+            for (VSInternalProcess receiverProcess : processes) {
                 if (receiverProcess.equals(sendingProcess)) {
                     if (recvOwn) {
                         deliverTime = sendingProcess.getGlobalTime();
@@ -1523,7 +1523,7 @@ public class VSSimulatorCanvas extends Canvas
      */
     public void editProcess(int processNum) {
         synchronized (processes) {
-            VSProcess process = processes.get(processNum);
+            VSInternalProcess process = processes.get(processNum);
             /* May be null if another thread changed the processes arraylist
                before this process actually called editProcess */
             if (process != null)
@@ -1536,7 +1536,7 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @param process the process
      */
-    public void editProcess(VSProcess process) {
+    public void editProcess(VSInternalProcess process) {
         if (process != null) {
             process.updatePrefs();
             new VSEditorFrame(prefs, simulator.getSimulatorFrame(),
@@ -1549,11 +1549,11 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return the processes array
      */
-    public ArrayList<VSProcess> getProcessesArray() {
-        ArrayList<VSProcess> arr = new ArrayList<VSProcess>();
+    public ArrayList<VSInternalProcess> getProcessesArray() {
+        ArrayList<VSInternalProcess> arr = new ArrayList<VSInternalProcess>();
 
         synchronized (processes) {
-            for (VSProcess process : processes)
+            for (VSInternalProcess process : processes)
                 arr.add(process);
         }
 
@@ -1582,7 +1582,7 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return the processes
      */
-    public ArrayList<VSProcess> getProcesses() {
+    public ArrayList<VSInternalProcess> getProcesses() {
         return processes;
     }
 
@@ -1621,7 +1621,7 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @param process the process
      */
-    private void removeProcess(VSProcess process) {
+    private void removeProcess(VSInternalProcess process) {
         if (numProcesses == 1) {
             simulator.getSimulatorFrame().removeSimulator(simulator);
 
@@ -1631,7 +1631,7 @@ public class VSSimulatorCanvas extends Canvas
                 index = processes.indexOf(process);
                 processes.remove(index);
 
-                for (VSProcess p : processes)
+                for (VSInternalProcess p : processes)
                     p.removedAProcessAtIndex(index);
 
                 numProcesses = processes.size();
@@ -1668,8 +1668,8 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return the new process
      */
-    private VSProcess createProcess(int processNum) {
-        VSProcess process = new VSProcess(prefs, processNum, this, logging);
+    private VSInternalProcess createProcess(int processNum) {
+        VSInternalProcess process = new VSInternalProcess(prefs, processNum, this, logging);
         logging.logg(prefs.getString("lang.process.new") + "; " + process);
         return process;
     }
@@ -1679,8 +1679,8 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @return The process which has been added
      */
-    private VSProcess addProcess() {
-        VSProcess newProcess = null;
+    private VSInternalProcess addProcess() {
+        VSInternalProcess newProcess = null;
         //int foo = -1;
         //System.out.println("ADD " + ++foo);
         synchronized (processes) {
@@ -1703,14 +1703,14 @@ public class VSSimulatorCanvas extends Canvas
      *
      * @newProcess The process to add
      */
-    private void addProcess(VSProcess newProcess) {
+    private void addProcess(VSInternalProcess newProcess) {
         //int foo = -1;
         //System.out.println("ADD_ " + ++foo);
         synchronized (processes) {
             //System.out.println("ADD_ " + ++foo);
             processes.add(newProcess);
 
-            for (VSProcess process : processes)
+            for (VSInternalProcess process : processes)
                 if (!process.equals(newProcess))
                     process.addedAProcess();
             //System.out.println("ADD_ " + ++foo);
@@ -1764,7 +1764,7 @@ public class VSSimulatorCanvas extends Canvas
 
         synchronized (processes) {
             objectOutputStream.writeObject(new Integer(numProcesses));
-            for (VSProcess process : processes)
+            for (VSInternalProcess process : processes)
                 process.serialize(serialize, objectOutputStream);
         }
 

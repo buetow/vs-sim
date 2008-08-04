@@ -33,7 +33,7 @@ import events.*;
 import prefs.VSPrefs;
 
 /**
- * The class VSProcessEditor, is for editing a VSProcess object.
+ * The class VSProcessEditor, is for editing a VSInternalProcess object.
  *
  * @author Paul C. Buetow
  */
@@ -42,7 +42,7 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
     private static final long serialVersionUID = 1L;
 
     /** The process. */
-    private VSProcess process;
+    private VSInternalProcess process;
 
     /** The TAKEOVE r_ button. */
     public static boolean TAKEOVER_BUTTON;
@@ -53,7 +53,7 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
      * @param prefs the prefs
      * @param process the process
      */
-    public VSProcessEditor(VSPrefs prefs, VSProcess process) {
+    public VSProcessEditor(VSPrefs prefs, VSInternalProcess process) {
         super(prefs, process, prefs.getString("lang.name") + " - " +
               prefs.getString("lang.prefs.process"));;
         this.process = process;
