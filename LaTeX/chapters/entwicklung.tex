@@ -33,14 +33,15 @@ Da es sonst den Rahmen sprengen w\"{u}rde, im Folgenden der komplette Quelltext 
 Die Programmierrichtlinien entsprechen in den meisten F\"{a}llen denen aus der Vorlesung \cite{OOS} und die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
 
 \begin{itemize}
-	\item Alle Klassen- und Interfacenamen tragen als Prefix \textit{VS}, was f\"{u}r Verteilte Systeme steht. 
+	\item Alle Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Statische Variablen und Attribute sind komplett in Groﬂbuchstaben geschrieben.
 	\item Alle Quelltext-Dateien besitzen einen Header, der Informationen der verwendeten Lizenz angibt.
 	\item Alle Quelltext-Dateien sind vollst\"{a}ndig mit Javadoc dokumentiert worden. Somit sind alle Klassen-, Attribute-, Methoden-, Methodenparameter- und Methodenr\"{u}ckgabewerte dokumentiert.
+	\item Der komplette Quelltext inklusive Dokumentation wurde in englischer Sprache verfasst. 
 	\item Eine Quelltext-Datei hat eine maximale Zeilenl\"{a}nge von 80 Zeichen. Eine Ausnahme stellt die Klasse \textit{prefs.VSDefaultPrefs} dar, denn hier befinden sich auch l\"{a}ngere Texte die in Strings abgespeichert werden, wo manuelle Zeilenumbr\"{u}che wenig Sinn ergeben. 
 	\item Es werden zuerst Klassen aus der Java-Standardbibliothek importiert, bevor Klassen aus dem VS-Simulator selbst importiert werden.
-	\item F\"{u}r die Einr\"{u}ckung des Quelltextes wurde das Tool \textit{astyle} mit den Parametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einr\"{u}ckungsl\"{a}nge von 4 Zeichen verwendet.
-	\item Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Statische Variablen und Attribute sind komplett in Groﬂbuchstaben geschrieben.
-	\item Namen abstrakter Klassen beginnen stets mit \textit{VSAbstract}.
+	\item F\"{u}r die Einr\"{u}ckung des Quelltextes wurde das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einr\"{u}ckungsl\"{a}nge von 4 Zeichen verwendet.
+	\item Namen abstrakter Klassen tragen stets das Prefix \textit{VSAbstract}.
+	\item Namen aller Klassen und Interfaces tragen als Prefix stets \textit{VS}, was f\"{u}r Verteilte Systeme steht. 
 \end{itemize}
 
 
@@ -75,14 +76,10 @@ Im Folgenden werden nicht alle exisierenden Methoden aufgelistet, da diese auch 
 	\item \textit{java.util.Set<String> getIntegerKeySet()}
 	\item \textit{void initInteger(String key, int val) }
 	\item \textit{void initInteger(String key, int val, String descr) }
-	\item \textit{void initInteger(String key, int val, String descr, \\
-			int minValue, int maxValue) }
-	\item \textit{void initInteger(String key, int val, String descr, \\
-			int minValue, int maxValue, String unit) }
-	\item \textit{void initInteger(String key, int val, String descr, \\
-			VSPrefsRestriction.VSIntegerPrefsRestriction r) }
-	\item \textit{void initInteger(String key, int val, String descr, \\
-			VSPrefsRestriction.VSIntegerPrefsRestriction r, String unit) }
+	\item \textit{void initInteger(String key, int val, String descr, int minValue, int maxValue) }
+	\item \textit{void initInteger(String key, int val, String descr, int minValue, int maxValue, String unit) }
+	\item \textit{void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefsRestriction r) }
+	\item \textit{void initInteger(String key, int val, String descr, VSPrefsRestriction.VSIntegerPrefsRestriction r, String unit) }
 \end{itemize}
 
 Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwert dar. \textit{descr} ist eine optionale Variablenbeschreibung. Wenn f\"{u}r eine Variable keine Beschreibung existiert so wird, wie auf Abbildung \ref{fig:SimulationseinstellungenExperten} anhand der Farbvariablen schon gesehen wurde, f\"{u}r die Anzeige der Datentyp und der Variablenname verwendet. Es k\"{o}nnen sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern allerdings als Integer-Objekt abgespeichert und macht somit keinen groﬂen Unterschied. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} zur\"{u}ck.
@@ -189,10 +186,12 @@ Der Task-Manager speichert anschlieﬂend die Empfangsereignisse in den lokalen Wa
 
 Eine Instanz von \textit{VSInternalProcess} repr\"{a}sentiert einen simulierten Prozess. Ein \textit{VSInternalProcess} stellt alle vom Simulator intern verwendeten Methoden zur Verf\"{u}gung, w\"{a}hrend ein \textit{VSAbstractProcess} lediglich Methoden hat, die man im Protokoll-API f\"{u}r die Erstellung eigener Protokolle verwenden darf. Da \textit{VSAbstractProcess} abstrakt ist und hiervon keine Instanz gebildet werden darf, muss stets ein \textit{VSInternalProcess}-Objekt erstellt werden. Via Polymorphie wird dieses Objekt nach \textit{VSAbstractProcess} umgewandelt und so dem Protokoll-API zur Verf\"{u}gung gestellt. 
 
-Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} geerbt. Aus Performancegr\"{u}nden speichert \textit{VSInternalProcess} von einigen Variablen eine lokale Kopie damit bei Neuberechnungen die Variablen nicht dauernd \"{u}ber eine \textit{HashMap} von \textit{VSPrefs} zugregriffen werden muﬂ. Zum Beispiel wird f\"{u}r die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor- und nach dem Editieren \"{u}ber den Prozesseditor werden die \textit{VSPrefs} beziehungsweise die lokalen Kopien auf den neusten Stand gebracht. Selbiges gilt f\"{u}r weitere Variablen wie zum Beispiel der Uhrabweichung.
+Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Aus Performancegr\"{u}nden speichert \textit{VSInternalProcess} von einigen Variablen eine lokale Kopie damit bei Neuberechnungen die Variablen nicht dauernd \"{u}ber eine \textit{HashMap} von \textit{VSPrefs} zugregriffen werden muﬂ. Zum Beispiel wird f\"{u}r die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor- und nach dem Editieren \"{u}ber den Prozesseditor werden die \textit{VSPrefs} beziehungsweise die lokalen Kopien auf den neusten Stand gebracht. Selbiges gilt f\"{u}r weitere Variablen wie zum Beispiel der Uhrabweichung.
 
 
 \section{Protokolle}
+
+\subsection{Die Funktionsweise des Protokoll-APIs}
 
 \begin{figure}[htbp]
 	\centering
@@ -201,7 +200,7 @@ Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} geerb
 	\label{fig:PackageProtocols}
 \end{figure}
 
-In diesem Abschnitt wird auf die Implementierung der Protokolle eingegangen. Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche f\"{u}r die Protokollimplementierungen zust\"{a}ndig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verf\"{u}gung, die von allen Protokollen verwendet verwenden werden k\"{o}nnen. Zus\"{a}tzlich werden von \textit{VSAbstractProtocol} die Methoden \textit{onInit()} sowie \textit{onStart()} aus der abstrakten Klasse \textit{VSAbstractEvent} implementiert, wo die jeweiligen Protokollmethoden (mit Unterscheidung zwischen Server und Client) aufgerufen werden. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Wie bereits erw\"{a}hnt erbt \textit{VSAbstractProtocol} von \textit{VSAbstractEvent}, sodass jedes Protokoll auch als Ereignis (Server- beziehnungsweise Clientanfrage starten) eingesetzt werden kann.
+In diesem Abschnitt wird auf die Implementierung der Protokolle eingegangen. Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche f\"{u}r die Protokollimplementierungen zust\"{a}ndig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verf\"{u}gung, die von allen Protokollen verwendet werden k\"{o}nnen. Zus\"{a}tzlich werden von \textit{VSAbstractProtocol} die Methoden \textit{onInit()} sowie \textit{onStart()} aus der abstrakten Klasse \textit{VSAbstractEvent} implementiert, wo die jeweiligen Protokollmethoden (mit Unterscheidung zwischen Server und Client) aufgerufen werden. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Wie bereits erw\"{a}hnt erbt \textit{VSAbstractProtocol} von \textit{VSAbstractEvent}, sodass jedes Protokoll auch als Ereignis (Server- beziehnungsweise Clientanfrage starten) eingesetzt werden kann.
 
 Jede Protokollklasse muﬂ die folgenden Methoden implementieren:
 
@@ -215,7 +214,136 @@ Jede Protokollklasse muﬂ die folgenden Methoden implementieren:
 	\item \textit{public String toString()}: Diese Methode ist nur optional. Hiermit lassen sich die Loggnachrichten eines Protokolls anpassen. Wenn diese Methode in einer Protokollimplementierung ausgelassen wird, so wird stets die \textit{toString}-Methode der Mutterklasse \textit{VSAbstractProtocol} verwendet.
 \end{itemize}
 
-F\"{u}r alle hier aufgelisteten Client-Methoden sind auch die korespondierenen Server-Methoden anzugeben. Die Server-Methoden sind analog so aufgebaut wie die Client-Methoden.
+F\"{u}r alle hier aufgelisteten Client-Methoden sind auch die korespondierenen Server-Methoden anzugeben. Die Server-Methoden sind analog so aufgebaut wie die Client-Methoden. 
+
+\subsection{Beispielimplementierung eines Protokolls anhand des Protokoll-APIs}
+
+Im Folgenden wird die Implementierung des zuverl\"{a}ssigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} als Beispiel aufgef\"{u}hrt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 2.5.10 beschrieben. Client- und Serverseite werden in der selben Klasse implementiert.
+
+Im Konstruktor muﬂ stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{HAS\_ON\_CLIENT\_START} wird dem API mitgeteilt, dass der Client die Anfragen startet. F\"{u}r \textit{HAS\_ON\_SERVER\_START} und Serveranfragen gilt Selbiges analog:
+	
+\begin{code}
+package protocols.implementations;
+
+import java.util.ArrayList;
+import java.util.Vector;
+import protocols.VSAbstractProtocol;
+import core.VSMessage;
+
+public class VSReliableMulticastProtocol 
+	extends VSAbstractProtocol {
+    public VSReliableMulticastProtocol() {
+        super(VSAbstractProtocol.HAS_ON_CLIENT_START);
+        setClassname(getClass().toString());
+    }
+\end{code}
+
+\subsubsection{Clientseite des Protokolls}
+
+Das private Klassenattribut \textit{pids} wird f\"{u}r die Zwischenspeicherung beteiligter PIDs ben\"{o}tigt. Hier sind alle PIDs abgelegt, von denen noch Best\"{a}tigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden k\"{o}nnen:
+\begin{code}
+    private ArrayList<Integer> pids;
+
+    public void onClientInit() {
+        Vector<Integer> vec = new Vector<Integer>();
+        vec.add(1); vec.add(3);
+        initVector("pids", vec, "PIDs beteilitger Prozesse");
+        initLong("timeout", 2500, 
+                 "Zeit bis erneute Anfrage", "ms");
+    }
+\end{code}
+
+Wenn die Simulation zur\"{u}ckgesetzt wird, dann wird auch \textit{pids} reinitialisiert:
+\begin{code}
+    public void onClientReset() {
+       	pids.clear();
+        pids.addAll(getVector("pids"));
+    }
+\end{code}
+
+In \textit{onClientStart} wird gepr\"{u}ft, ob eine Clientanfrage gestartet werden soll. Wenn dies der Fall ist (wenn von mindestens einem beteiligten Prozess noch keine Best\"{a}tigungen erhalten wurde), wird ein neues Nachrichtenobjekt erstellt, und mit dem Inhalt \textit{Boolean: isMulticast=true} verschickt (intern wird hier f\"{u}r jeden Empf\"{a}ngerprozess ein \textit{VSMessageReceiveEvent} erzeugt). Mit \textit{scheduleAt} wird ein Wecker festgelegt, zur welchen lokalen Prozesszeit die Methode \textit{onClientSchedule} aufgerufen werden soll (intern wird hier ein \textit{VSProtocolScheduleEvent} erzeugt). \"{U}ber das vererbte Attribut \textit{process} kann stets auf das Prozessobjekt (\textit{VSAbstractProcess}) zugegriffen werden, und \textit{process.getTime()} gibt die aktuelle lokale Prozesszeit zur\"{u}ck:
+\begin{code}
+    public void onClientStart() {
+        if (pids.size() != 0) {
+            long timeout = getLong("timeout") + process.getTime();
+            scheduleAt(timeout);
+
+            VSMessage message = new VSMessage();
+            message.setBoolean("isMulticast", true);
+            sendMessage(message);
+        }
+    }
+\end{code}
+
+Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. Hier wird \"{u}berpr\"{u}ft, ob \"{u}berhaupt noch Multicast-Best\"{a}tigungen ben\"{o}tigt werden. Wenn dies der Fall ist, dann wird geschaut, ob es sich bei der Antwort um eine noch nicht eingetroffene Best\"{a}tigung handelt. Gegebenenfalls wird die jeweilige PID aus \textit{pids} entfernt. Wenn \textit{pids} leer ist, dann wurde von allen beteiligten Prozessen eine Best\"{a}tigung erhalten und der Client entfernt mit \textit{removeSchedules} alle seine Wecker.
+
+\begin{code}
+    public void onClientRecv(VSMessage recvMessage) {
+        if (pids.size() != 0 && recvMessage.getBoolean("isAck")) {
+            Integer pid = recvMessage.getIntegerObj("pid");
+
+            if (pids.contains(pid)) 
+                pids.remove(pid);
+            else 
+                return;
+
+            logg("ACK von Prozess " + pid + " erhalten!");
+
+            if (pids.size() == 0) {
+                logg("ACKs von allen beteiligten Prozessen " +
+                     "erhalten!");
+
+                removeSchedules();
+            }
+        }
+    }
+\end{code}
+
+F\"{u}r das erneute Verschicken einer Clientanfrage ruft \textit{onClientSchedule} lediglich die Methode \textit{onClientStart} auf, die wiederum einen neuen Wecker planen kann:
+\begin{code}
+    public void onClientSchedule() {
+        onClientStart();
+    }
+\end{code}
+
+\subsubsection{Serverseite des Protokolls}
+
+Die Serverseite des Protokolls speichert im Attribut \textit{ackSent} ab, ob es bereits eine Best\"{a}tigung des Multicasts verschickt hat oder nicht. In diesem Protokoll werden in \textit{onServerInit} keine Initialisierungen vorgenommen. Demach gibt es f\"{u}r den Benutzer auch keine serverseitigen Protokollvariablen zu editieren. Beim Zur\"{u}cksetzen der Simulation wird lediglich \textit{ackSent} auf den Ursprungswert gesetzt:
+\begin{code}
+    private boolean ackSent;
+
+    public void onServerInit() { }
+
+    public void onServerReset() {
+        ackSent = false;
+    }
+\end{code}
+
+Wenn der Server eine Clientanfrage erhalten hat, so \"{u}berpr\"{u}ft der Server, ob es sich um eine Multicast-Nachricht handelte. Anschlieﬂend wird gegebenenfalls die Best\"{a}tigungsnachricht mit \textit{Boolean: isAck=true} und der Server-PID verschickt. Jenachdem ob bereits eine Best\"{a}tigung verschickt wurde oder nicht wird eine verschiedene Nachricht geloggt: 
+\begin{code}
+    public void onServerRecv(VSMessage recvMessage) {
+        if (recvMessage.getBoolean("isMulticast")) {
+            VSMessage message = new VSMessage();
+            message.setBoolean("isAck", true);
+            message.setInteger("pid", process.getProcessID());
+            sendMessage(message);
+
+            if (ackSent) {
+                logg("ACK erneut versendet");
+            } else {
+                logg("ACK versendet");
+                ackSent = true;
+            }
+        }
+    }
+\end{code}
+
+Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Methode \textit{onServerSchedule} auch einen leeren Rumpf:
+\begin{code}
+    public void onServerSchedule() { }
+}
+\end{code}
+
 
 \section{Serialisierung von Simulationen}
 
@@ -223,10 +351,37 @@ F\"{u}r alle hier aufgelisteten Client-Methoden sind auch die korespondierenen S
 
 \section{Entwicklungsumgebung}
 
-In diesem Teilkapitel soll ein kleiner Einblick in die Umgebung, mit der der Simulator entwickelt wurde, gew\"{a}hrt werden. F\"{u}r diese Diplomarbeit wurde ausschlieﬂlich Open Source Software verwendet. Die einzige Ausnahme stellt Microsoft Windows XP dar, worauf der Simulator auch getestet wurde. Der Simulator wurde jedoch haupts\"{a}chlich unter dem Betriebssystem FreeBSD 7.0 (\url{http://www.FreeBSD.org}), was ein open source Unix-Derivat ist, programmiert. 
+In diesem Teilkapitel soll ein kleiner Einblick in die Umgebung, in der der Simulator entwickelt wurde, gew\"{a}hrt werden. F\"{u}r diese Diplomarbeit wurde ausschlieﬂlich Open Source Software verwendet. Die einzige Ausnahme stellt Microsoft Windows XP dar, worauf der Simulator zus\"{a}tzlich getestet wurde. Der Simulator wurde jedoch haupts\"{a}chlich unter dem Betriebssystem FreeBSD 7.0, was ein open source Unix-Derivat ist, programmiert. 
 
-Wie bereits bekannt ist, wurde Java (\url{http://java.sun.com}), was mittlerweile auch Open Source Software ist, in der Version 6 (1.6) als die Implementierungssprache gew\"{a}hlt. Als Built-Tool wurde hier auf Apache Ant gesetzt. F\"{u}r die Erstellung dieses Dokumentes wurde LaTeX verwendet.
+Wie bereits bekannt ist, wurde Sun's Java, was mittlerweile auch Open Source Software ist, in der Version 6 (1.6) als die Implementierungssprache gew\"{a}hlt und f\"{u}r die Quelltextdokumentation kam Javadoc und f\"{u}r die automatische Quelltexteinr\"{u}ckung astyle zum Einsatz. Als Built-Tool wurde hier auf Apache Ant gesetzt. F\"{u}r die Erstellung dieses PDF-Dokumentes wurde LaTeX in Verbindung mit dem Built-Tool GNU Make und Rubber verwendet. Eine Rechtschreibe\"{u}berpr\"{u}fung wurde mit aspell durchgef\"{u}hrt. xPDF diente als PDF-Anzeigeprogramm.
 
-F\"{u}r schreiben von Quelltext (Java und LaTeX) wurde GVim (\url{http://www.vim.org}) sowie Eclipse (\url{http://www.eclipse.org}) verwendet. Eclipse unterst\"{u}tzt bessere Code-Refactoring-Methoden, w\"{a}hrend GVim mit seiner Flexibilit\"{a}t und schnelleren Editierm\"{o}glichkeiten und mit Vim-Script, der eigenen Script-Engine, gl\"{a}nzt. Je nach Zweck wurde zwischen diesen beiden Umgebungen gewechselt. 
+Als Versionierungssystem wurde SVN (Subversion) verwendet. F\"{u}r den Zugriff auf das SVN-Repository mittels HTTPS (Hypertext Transfer Protocol Secure) wurde der Apache-Websever mit WebDAV-Plugin verwendet. Zudem kam WebSVN als Webschnitstelle des SVN-Repositories zum Einsatz. Als SSL Zertifikat diente ein Kostenloses von CaCert (\url{http://www.CaCert.org}). Mozilla Firefox diente f\"{u}r das Betrachten der Javadocs und der WebSVN-Oberfl\"{a}che.
 
-Als Versionierungssystem wurde SVN (Subversion) verwendet. F\"{u}r den Zugriff auf das SVN-Repository mittels HTTPS (Hypertext Transfer Protocol via SSL) wurde der Apache-Websever (\url{http://httpd.apache.org}) mit web\_dav-Plugin verwendet. Als SSL Zertifikat diente ein Kostenloses von CaCert (\url{http://www.CaCert.org}).
+F\"{u}r schreiben von Java-Quelltext wurde GVim (Graphical Vi IMproved) sowie Eclipse verwendet. Eclipse unterst\"{u}tzt bessere Code-Refactoring-Methoden, w\"{a}hrend GVim mit seiner Flexibilit\"{a}t und schnelleren Editierm\"{o}glichkeiten und mit Vim-Script, der eigenen Script-Engine, gl\"{a}nzt. Es wurden ausserdem das JAutoDoc- (f\"{u}r die Erstellung von Javadoc-Kommentate) und das Subversion-Eclipse-Plugin verwendet. Je nach Zweck wurde zwischen diesen beiden Umgebungen gewechselt. F\"{u}r das Verfassen des LaTeX-Dokumentes wurde GVim verwendet.
+
+S\"{a}mtliche UML-Diagramme wurden mit ArgoUML angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. 
+
+\subsubsection{Linkliste der verwendeten Software}
+
+\begin{itemize}
+	\setlength{\itemsep}{-2mm}
+	\item Apache Webserver - \url{http://httpd.apache.org}	
+	\item ArgoUML - \url{http://argouml.tigris.org}
+	\item Eclipse - \url{http://www.eclipse.org}
+	\item FreeBSD - \url{http://www.FreeBSD.org}
+	\item GNU Make - \url{http://www.gnu.org/software/make}
+	\item GVim - \url{http://www.vim.org}
+	\item ImageMagick - \url{http://www.imagemagick.org}
+	\item Javadoc - \url{http://java.sun.com/j2s2/javadoc}
+	\item Mozilla Firefox - \url{http://www.mozilla.com}
+	\item Rubber - \url{http://www.pps.jussieu.fr/~beffara/soft/rubber}
+	\item Sun Java - \url{http://java.sun.com}
+	\item The GIMP - \url{http://www.gimp.org}
+	\item WebDAV - \url{http://httpd.apache.org/docs/2.0/mod/mod\_dav.html}	
+	\item WebSVN - \url{http://websvn.tigris.org}
+	\item aspell - \url{http://aspell.sourceforge.net}
+	\item astyle - \url{http://astyle.sourceforge.net}
+	\item xPDF - \url{http://www.foolabs.com/xpdf}
+	\item zip - \url{http://www.info-zip.org/Zip.html}
+\end{itemize}
+

@@ -71,11 +71,8 @@
 \onehalfspacing
 %\doublespacing
 
-
 %\setlength{\baselineskip}{24pt}
 %\renewcommand{\baselinestretch}{1.5} 
-
-
 
 %
 % define variables
@@ -103,7 +100,7 @@
 % Type 1 Fonts für bessere darstellung in PDF verwenden.
 %
 \usepackage{mathptmx}           % Times + passende Mathefonts
-\usepackage[scaled=.92]{helvet} % skalierte Helvetica als \sfdefault
+\usepackage[scaled=.75]{helvet} % skalierte Helvetica als \sfdefault
 \usepackage{courier}            % Courier als \ttdefault
 
 %
@@ -111,6 +108,8 @@
 %
 \usepackage{rotating}
 
+\usepackage{verbatim,framed}
+\usepackage{moreverb}
 
 %
 % Für Acronyme
@@ -120,7 +119,9 @@
 %
 % Package für Farben im PDF
 %
-\usepackage{color}
+%\usepackage{color}
+\usepackage[dvipsnames]{color}
+\usepackage[dvipsnames,svgnames]{pstricks}
 
 %
 % Paket für Links innerhalb des PDF Dokuments
@@ -181,6 +182,19 @@ pdfpagelayout=OneColumn % Continuous page scrolling.
 \newenvironment{ListChanges}%
 	{\begin{list}{$\diamondsuit$}{}}%
 	{\end{list}}
+
+\newenvironment{code}%
+{%
+\definecolor{shadecolor}{named}{LightYellow}%
+\topsep=0ex\relax
+\framed
+\small
+\verbatim
+}%
+{%
+\endverbatim
+\endframed
+}%
 
 %
 % Index erzeucgen
