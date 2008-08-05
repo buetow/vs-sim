@@ -108,6 +108,8 @@ F\"{u}r Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Proz
 
 \section{Ereignisse}
 
+\subsection{Die Funktionsweise von Ereignissen}
+
 F\"{u}r jedes Ereignis existiert eine dazugeh\"{o}rige Klasse, welche die auszuf\"{u}hrenden Aktionen implementiert. Eine Instanz davon wird, f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung, in einem \textit{VSTask}-Objekt verpackt dem Task-Manager \"{u}bergeben. Auf den Task-Manager wird sp\"{a}ter noch genauer eingegangen. 
 \begin{figure}[htbp]
 	\centering
@@ -145,6 +147,8 @@ In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschied
 \end{enumerate}
 
 Alle Ereignisse, die das Interface \textit{VSCopyableEvent} implementieren k\"{o}nnen im Ereigniseditor mit einem Rechtsklick kopiert werden.
+
+\subsection{Beispielimplementierung eines Ereignisses}
 
 \section{Prozesse, Zeitformate, Nachrichten sowie Task-Manager}
 
@@ -345,9 +349,15 @@ Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Met
 \end{code}
 
 
+\section{GUI}
+
 \section{Serialisierung von Simulationen}
 
 \subsection{R\"{u}ckw\"{a}rtskompatibel}
+
+\section{Weiteres}
+
+exceptions, utils
 
 \section{Entwicklungsumgebung}
 
