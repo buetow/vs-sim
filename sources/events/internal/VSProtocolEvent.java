@@ -25,9 +25,11 @@ package events.internal;
 
 import java.io.*;
 
+import core.VSInternalProcess;
 import events.*;
 import protocols.VSAbstractProtocol;
 import serialize.VSSerialize;
+import simulator.VSSimulatorCanvas;
 
 /**
  * The class VSProtocolEvent, this event is used if a protocol (server or
@@ -122,8 +124,9 @@ public class VSProtocolEvent extends VSAbstractInternalEvent
      * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
+		VSInternalProcess internalProcess = (VSInternalProcess) process;
         VSAbstractProtocol protocol =
-            process.getProtocolObject(protocolClassname);
+            internalProcess.getProtocolObject(protocolClassname);
 
         if (isClientProtocol)
             protocol.isClient(isProtocolActivation);

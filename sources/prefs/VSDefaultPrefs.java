@@ -73,7 +73,7 @@ public class VSDefaultPrefs extends VSPrefs {
      */
     public void fillDefaultStrings() {
         initString("lang.about", "About");
-        initString("lang.about.info!", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulator verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann als 1. Prüfer sowie Betreuer und Prof. Dr. rer. nat. Fassbender als 2. Prüfer erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
+        initString("lang.about.info", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulator verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann als 1. Prüfer sowie Betreuer und Prof. Dr. rer. nat. Fassbender als 2. Prüfer erstellt. Dieses Programm stellt noch keinesfalls eine fertige Version dar, da es sich noch in Entwicklung befindet und die Diplomarbeit erst mitte August abgeschlossen sein wird! Bei Fehlern bitte eine kurze Mail mitsamt Fehlerbeschreibung an paul@buetow.org schicken! Dieser Simulator wird später außerdem unter einer open source Linzenz (wahrscheinlich der GNU General Public License) freigegeben!");
         initString("lang.activate", "aktivieren");
         initString("lang.activated", "aktiviert");
         initString("lang.actualize", "Aktualisieren");
@@ -82,24 +82,23 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.cancel", "Abbrechen");
         initString("lang.client", "Client");
         initString("lang.clientrequest.start", "Clientanfrage starten");
-        initString("lang.dat", "Simulation (.dat)");
-        initString("lang.serverrequest.start", "Serveranfrage starten");
         initString("lang.close", "Schliessen");
         initString("lang.colorchooser", "Farbauswahl");
         initString("lang.colorchooser2", "Bitte Farbe auswählen");
+        initString("lang.copy", "Kopieren");
         initString("lang.crashed", "Abgestürzt");
+        initString("lang.dat", "Simulation (.dat)");
         initString("lang.deactivate", "deaktivieren");
         initString("lang.deactivated", "deaktiviert");
         initString("lang.default", "Defaults");
         initString("lang.edit", "Editieren");
         initString("lang.editor", "Editor");
         initString("lang.event", "Ereignis");
-        initString("lang.event.add.time", "bei");
-        initString("lang.event.add.local", "Lokales Ereignis einfügen");
         initString("lang.event.add.global", "Globales Ereignis einfügen");
+        initString("lang.event.add.local", "Lokales Ereignis einfügen");
+        initString("lang.event.add.time", "bei");
         initString("lang.events", "Ereignisse");
         initString("lang.events.process", "Prozessereignisse");
-        //initString("lang.events.protocol", "Protokollereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
         initString("lang.logging.active", "Logging");
@@ -109,7 +108,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.message.sent", "Nachricht versendet");
         initString("lang.mode.expert", "Expertenmodus");
         initString("lang.name", "VS-Simulator");
-        //initString("lang.name", "VS-Simulator v0.3-dev-III Joe Dalton");
+        //initString("lang.name", "VS-Simulator v0.4-dev Red Bull");
         initString("lang.ok", "OK");
         initString("lang.open", "Öffnen");
         initString("lang.pause", "Pausieren");
@@ -117,25 +116,25 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.prefs.color", "Farbeinstellungen");
         initString("lang.prefs.diverse", "Diverse Einstellungen");
         initString("lang.prefs.ext", "Erweiterte Einstellungen");
-        initString("lang.prefs.info!", "Prozessvariablen können für jeden Prozess einzelnd eingestellt werden. Die hier gezeigen Prozessvariablen sind lediglich die globalen Defaultwerte, die für neue Prozesse verwendet werden!");
         initString("lang.prefs.message", "Nachrichteneinstellungen");
         initString("lang.prefs.message.defaults", "Nachrichteneinstellungen für neue Prozesse");
-        initString("lang.prefs.process.defaults", "Einstellungen für neue Prozesse");
         initString("lang.prefs.more", "Mehr Einstellungen");
         initString("lang.prefs.process", "Prozesseinstellungen");
         initString("lang.prefs.process", "Prozessstandardeinstellungen");
+        initString("lang.prefs.process.defaults", "Einstellungen für neue Prozesse");
         initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
-        initString("lang.prefs.process.info!", "Änderungen werden erst nach Betätigen des \"Übernehmen\" Knopfes übernommen!");
         initString("lang.prefs.protocols", "Protokolleinstellungen");
-        initString("lang.prefs.simulator", "Simulatorseinstellungen");
+        initString("lang.prefs.simulator", "Simulationseinstellungen");
         initString("lang.process", "Prozess");
         initString("lang.process.add.new", "Neuen Prozess hinzufügen");
         initString("lang.process.crash", "Prozess abstürzen");
-        initString("lang.process.remove", "Prozess entfernen");
         initString("lang.process.edit", "Prozess editieren");
         initString("lang.process.id", "PID");
         initString("lang.process.new", "Neuer Prozess");
+        initString("lang.process.not.selected", "Kein Prozess ausgewählt");
         initString("lang.process.recover", "Prozess wiederbeleben");
+        initString("lang.process.remove", "Prozess entfernen");
+        initString("lang.process.selected", "Aktuell ausgewählter Prozess");
         initString("lang.process.time.local", "Lokale Zeit");
         initString("lang.processes.all", "Alle Prozesse");
         initString("lang.protocol", "Protokoll");
@@ -147,14 +146,13 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.protocols", "Protokolle");
         initString("lang.quit", "Beenden");
         initString("lang.recovered", "Wiederbelebt");
-        initString("lang.copy", "Kopieren");
         initString("lang.remove", "Entfernen");
         initString("lang.replay", "Wiederholen");
-        //initString("lang.requests", "Anfragen");
         initString("lang.reset", "Reset");
         initString("lang.save", "Speichern");
         initString("lang.saveas", "Speichern unter");
         initString("lang.server", "Server");
+        initString("lang.serverrequest.start", "Serveranfrage starten");
         initString("lang.simulator", "Simulator");
         initString("lang.simulator.close", "Simulation schliessen");
         initString("lang.simulator.finished", "Simulation beendet");
@@ -173,8 +171,6 @@ public class VSDefaultPrefs extends VSPrefs {
         initString("lang.time", "Zeit");
         initString("lang.time.lamport", "Lamportzeit");
         initString("lang.time.vector", "Vektorzeit");
-        initString("lang.process.selected", "Aktuell ausgewählter Prozess");
-        initString("lang.process.not.selected", "Kein Prozess ausgewählt");
         initString("lang.timed.global", "Globale Ereignisse");
         initString("lang.timed.local", "Lokale Ereignisse");
         initString("lang.type", "Typ");
@@ -224,7 +220,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initInteger("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
         initInteger("div.window.loggsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
         initInteger("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
-        initInteger("div.window.xsize", 1024, "Hauptfenster X-Achse", 800, 3200, "px");
+        initInteger("div.window.xsize", 1024, "Hauptfenster X-Achse", 750, 3200, "px");
         initInteger("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
     }
 

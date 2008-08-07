@@ -1,12 +1,14 @@
 Must do:
-	Lamport und Vektorzeitstempel nicht nur bei nachrichten sondern auch bei anderen ereignissen unkrementieren (einstellbar)
+	pakete serialize, simulator, utils beschreiben
+	ausblick schreiben
+	paket-privat vs paket-global vs paket-lokal?
 	Warn if a file does not exists while trying to open!
-	"Simulatorseinstelungen" falsch geschrieben
-	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
 	Literaturangaben komplettieren
-	Immer alles Defaultwerte, wenn nicht angegeben, DAS SCHREIBEN!
-	Umbenennung Broadcast-Sturm Protokoll -> Broadcast Protokoll
+	UML for wrapping ..process(prioqueue(vstask(messagereceive(message))))
+	About-Text aendern 
 Evtl.:
+	setClassname wegmachen? -> instanceof
+	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
 	Ereigniseintritt bei Lamport und Vektorzeiten?	
 	Helper:
 		Print warning if not activated protocol while doing a protocol request

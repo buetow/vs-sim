@@ -249,7 +249,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         boolean expertMode = prefs.getBoolean("sim.mode.expert");
 
         for (String elem : set) {
-            if (!elem.startsWith("lang.") && !elem.startsWith("keyevent")) {
+            if (!elem.startsWith("lang.") && !elem.startsWith("keyevent.")) {
                 if (expertMode)
                     filtered.add(elem);
                 else if (!elem.startsWith("col.") && (!elem.startsWith("div.")))

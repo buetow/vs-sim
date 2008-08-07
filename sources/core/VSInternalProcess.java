@@ -434,15 +434,23 @@ public class VSInternalProcess extends VSAbstractProcess {
             this.localTime = 0;
     }
 
-
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#updateFromPrefs()
+     */
     protected void updateFromPrefs_() {
         updateFromPrefs();
     }
 
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#createRandomCrashTask()
+     */
     protected void createRandomCrashTask_() {
         createRandomCrashTask();
     }
 
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#getProtocolObjekt(java.util.String)
+     */
     protected VSAbstractProtocol getProtocolObject_(String protocolClassname) {
         return getProtocolObject(protocolClassname);
     }

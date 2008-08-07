@@ -732,8 +732,19 @@ public abstract class VSAbstractProcess extends VSPrefs
             currentColor = newColor;
     }
 
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#updateFromPrefs()
+     */
     protected abstract void updateFromPrefs_();
+
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#createRandomCrashTask()
+     */
     protected abstract void createRandomCrashTask_();
+
+    /* (non-Javadoc)
+     * @see core.VSInternalMessage#getProtocolObjekt(java.util.String)
+     */
     protected abstract VSAbstractProtocol getProtocolObject_(
 			String protocolClassname);
 }

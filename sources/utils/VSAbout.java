@@ -70,7 +70,7 @@ public class VSAbout extends VSFrame {
         Container contentPane = getContentPane();
 
         VSInfoArea infoArea = new VSInfoArea(
-            prefs.getString("lang.about.info!"));
+            prefs.getString("lang.about.info"));
         JPanel buttonPane = createButtonPanel();
         JScrollPane scrollPane = new JScrollPane(infoArea);
 

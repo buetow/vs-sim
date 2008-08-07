@@ -44,13 +44,15 @@ public class VSMessageStub {
     /**
      * The constructor of the message stub. Creates a new message stub object.
 	 *
-	 * @message the message
+	 * @param message the message
      */
     public VSMessageStub(VSMessage message) {
         this.message = message;
     }
 
-	
+    /* (non-Javadoc)
+     * @see core.VSMessage#init(VSInternalProcess, java.util.String, boolean)
+     */
     public void init(VSInternalProcess process, String protocolClassname,
                      boolean isServerMessage) {
 		message.init(process, protocolClassname, isServerMessage);

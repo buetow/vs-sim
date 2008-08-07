@@ -25,6 +25,7 @@ package events;
 
 import java.io.*;
 
+import core.VSAbstractProcess;
 import core.VSInternalProcess;
 import exceptions.*;
 import prefs.VSPrefs;
@@ -46,7 +47,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     public VSPrefs prefs;
 
     /** The process. */
-    public VSInternalProcess process;
+    public VSAbstractProcess process;
 
     /** The event shortname. */
     private String eventShortname;
@@ -64,7 +65,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
     throws VSEventNotCopyableException {
 
         if (theProcess == null)
-            theProcess = process;
+            theProcess = (VSInternalProcess) process;
 
         if (!(this instanceof VSCopyableEvent))
             throw new VSEventNotCopyableException(
@@ -166,7 +167,7 @@ abstract public class VSAbstractEvent extends VSPrefs {
      *
      * @return the process
      */
-    public VSInternalProcess getProcess() {
+    public VSAbstractProcess getProcess() {
         return process;
     }
 
