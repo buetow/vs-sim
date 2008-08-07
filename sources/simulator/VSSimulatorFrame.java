@@ -191,7 +191,7 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.about"))) {
-                    new VSAbout(finalPrefs, VSSimulatorFrame.this);
+                    new VSAboutFrame(finalPrefs, VSSimulatorFrame.this);
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.quit"))) {

@@ -29,7 +29,7 @@ import javax.swing.border.*;
 
 /**
  * The class VSInfoArea, an object of this class is used for some information
- *areas. E.g. in the VSAbout class.
+ *areas. E.g. in the VSAboutFrame class.
  *
  * @author Paul C. Buetow
  */

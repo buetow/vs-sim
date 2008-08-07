@@ -42,6 +42,8 @@ Die Programmierrichtlinien entsprechen in den meisten F\"{a}llen denen aus der V
 	\item F\"{u}r die Einr\"{u}ckung des Quelltextes wird das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einr\"{u}ckungsl\"{a}nge von 4 Zeichen verwendet.
 	\item Namen abstrakter Klassen tragen stets das Prefix \textit{VSAbstract}.
 	\item Namen aller Klassen und Interfaces tragen als Prefix stets \textit{VS}, was f\"{u}r Verteilte Systeme steht. 
+	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol}, zum Beispiel \textit{VSPingPongProtocol}.
+	\item \"{U}berall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (z.B. \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}.
 \end{itemize}
 
 
@@ -238,19 +240,7 @@ Jede Simulation besitzt genau eine Instanz von \textit{VSTaskManager}. Eine Inst
 	\label{fig:PackageCore}
 \end{figure}
 
-Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. F\"{u}r jedes Versenden einer Nachricht wird hiervon eine Instanz gebildet, wo der Senderprozess die zu verschickende Daten ablegt. Da \textit{VSMessage} von \textit{VSPrefs} erbt, k\"{o}nnen zwischen zwei Prozessen beliebige Datentypen (Tabelle \ref{tb:VariablenDatentypen}) \"{u}ber eine Nachricht verschickt werden. Anschlieﬂend wird f\"{u}r jeden Empf\"{a}ngerprozess das neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welche eine Referenz der verschickten Nachricht besitzt. Danach wird ein \textit{VSTask}-Objekt instanziert, wo die Referenz auf das Ereignisobjekt und das dazugeh\"{o}rige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager "{u}bergeben, der das dazugeh\"{o}rige Ereignis ausf\"{u}hrt, wenn die Ereigniseintrittszeit eingetroffen ist. 
-
-Via Java-Polymorphie wird das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt. Wenn die aktuelle globale Zeit $t_g$ ist und wenn $t_{min}$ sowie $t_{max}$ die beim Senderprozess eingestellten Variablen entsprechen, dann wird die Ereigniseintrittszeit $t_e$ f\"{u}r den Empfang der Nachricht wie folgt berechnet:
-
-\begin{equation*}
-	t_e := t_g + rand(t_{min}, t_{max})
-\end{equation*}
-
-Das heiﬂt, dass die Nachricht nach einer zuf\"{a}lligen Zeit zwischen $t_{min}$ und $t_{max}$ beim Empf\"{a}nger eintrifft. F\"{u}r jeden Emfp\"{a}nger wird hierbei ein neuer Zufallswert gew\"{a}hlt. F\"{u}r den Fall, dass die Einstellung ``Mittelwerte der \"{U}bertragungszeiten w\"{a}hlen'' aktiviert ist, und wenn $t'_{min}$ und $t'_{max}$ die beim Empf\"{a}ngerprozess eingestellten Werte ensprechen, dann wird die Nachrichtenempfangszeit wie folgt berechnet:
-
-\begin{equation*}
-	t_e := t_g + \frac{1}{2} (rand(t_{min}, t_{max}) + rand(t'_{min}, t'_{max}))
-\end{equation*}
+Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. F\"{u}r jedes Versenden einer Nachricht wird hiervon eine Instanz gebildet, wo der Senderprozess die zu verschickende Daten ablegt. Da \textit{VSMessage} von \textit{VSPrefs} erbt, k\"{o}nnen zwischen zwei Prozessen beliebige Datentypen (Tabelle \ref{tb:VariablenDatentypen}) \"{u}ber eine Nachricht verschickt werden. Anschlieﬂend wird f\"{u}r jeden Empf\"{a}ngerprozess das neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welche eine Referenz der verschickten Nachricht besitzt. Danach wird ein \textit{VSTask}-Objekt instanziert, wo die Referenz auf das Ereignisobjekt und das dazugeh\"{o}rige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager "{u}bergeben, der das dazugeh\"{o}rige Ereignis ausf\"{u}hrt, wenn die Ereigniseintrittszeit eingetroffen ist. Via Java-Polymorphie wird das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt. 
 
 Erw\"{a}hnentswert ist auch die Klasse \textit{VSMessageStub}, welche ein \textit{VSMessage} kapselt. Ihr Zweck ist das Verstecken einiger Methoden von \textit{VSMessage} im Protokoll-API, welches f\"{u}r die Erstellung eigener Protokolle dient. Der Protokoll-Entwickler soll m\"{o}glichst nichts falsch machen k\"{o}nnen und deswegen soll den Protokoll-API ein eingeschr\"{a}nkter Funktionsumpfang zur Verf\"{u}rung gestellt werden. Da sich \textit{VSMessageStub} im selben Paket wie \textit{VSMessage} befindet, kann \textit{VSMessageStub} auf paket-private Methoden von \textit{VSMessage} zugreifen. Protokolle hingegen werden in einem anderen Paket implementiert und haben somit keinen Zugriff auf diese paket-privaten Methoden. Zwar kann der Protokollentwickler ein eigenes \textit{VSMessageStub}-Objekt anlegen, jedoch kann er auf diese Weise besser unterscheiden, auf welche Mehhoden er zugreifen sollte und auf welche nicht. Das Protokoll-API wird sp\"{a}ter genauer behandelt. 
 
@@ -460,9 +450,36 @@ registerEvent("protocols.implementations.VSMyProtocol",
 
 \subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
-\section{Weiteres}
+\section{Noch nicht Erw\"{a}hntes}
 
-exceptions, utils
+Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=11cm]{images/utils}
+	\caption{Das Paket \textit{utils}}
+	\label{fig:PackageUtils}
+\end{figure}
+
+\begin{itemize}
+	\item \textit{VSFrame}: Alle Objekte, die ein eigenes Swing-Fenster besitzen, erben von der Klasse \textit{VSFrame}. Sie stellt sicher, dass neue Fenster an der richtigen Position der Bildf\"{a}che platziert werden und dass Unterfenster (Fenster, die aus einem anderen Fenster aus ge\"{o}ffnet wurden) automatisch mitgeschlossen werden, sobald ihre ``Erzeugerfenster'' geschlossen werden. 
+	\item \textit{VSAboutFrame}: Dieses Fenster implementiert die ``About-Anzeige'' die im Simulator \"{u}ber das Datei-Men\"{u} aufgerufen werden kann.
+	\item \textit{VSInfoArea}: Ist f\"{u}r die Textanzeige in \textit{VSAboutFrame} zust\"{a}ndig.
+	\item \textit{VSClassLoader}: Diese Klasse wird f\"{u}r die automatische Instanzierung von Ereignisobjekten ben\"{o}tigt, wenn dem Simulator lediglich die Klassennamen (aus \textit{events.VSRegisteredEvents}) bekannt sind.
+	\item \textit{VSHelper}: In dieser Klasse befinden sich statische Hilfsmethoden, die in keine andere Klasse passen.
+	\item \textit{VSPriorityQueue}: Diese Klasse wird f\"{u}r das Verwalten von \textit{core.VSTask}-Objekte im Task-Manager ben\"{o}tigt. \textit{VSPriorityQueue} passt die Priorit\"{a}ts-Warteschlange aus der Java-Standardbibliothek den Anforderungen des Simulators an.
+	\item \textit{VSRandom}: Wird f\"{u}r Zufallsereignisse ben\"{o}tigt. Jedes Prozessobjekt besitzt einen solchen eigenen Pseudozufallsgenerator. Diese Klasse setzt gleichzeitig einen eigenen Seed basierend auf der lokalen Systemzeit und anderer Berechnungen fest. 
+	\item \textit{VSTupel}: Diese Klasse ist eine Implementierung eines sehr einfach aufgebauten 3-Tupel Datentyps. Alle 3 Elemente k\"{o}nnen von einem anderen Typ sein, was mithilfe der Java-Generics verwirklicht wird. Wird von den Editorklassen f\"{u}r die Generierung von GUI-Elementen ben\"{o}tigt.
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=7.5cm]{images/exceptions}
+	\caption{Das Paket \textit{exceptions}}
+	\label{fig:PackageExceptions}
+\end{figure}
+
+Im Paket \textit{exceptions} befinden sich lediglich einige eigene Objekte f\"{u}r Ausnahmebehandlungen. \textit{VSNotCopyableException} wird von einem nicht-kopierbaren Ereignis geworfen, wenn versucht wird es zu kopieren. \textit{VSNegatieNumberException} wird geworfen, wenn intern negative Zahlen dort auftreten, wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zur\"{u}ck.
 
 \section{Entwicklungsumgebung}
 

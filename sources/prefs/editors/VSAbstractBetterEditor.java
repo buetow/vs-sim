@@ -43,7 +43,7 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     private Container contentPane;
 
     /** The info area. */
-    private VSInfoArea infoArea;
+    //private VSInfoArea infoArea;
 
     /** The title. */
     private String title;
@@ -90,7 +90,7 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
         JPanel panel  = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        infoArea = new VSInfoArea();
+        //infoArea = new VSInfoArea();
         JPanel editPanel = getEditPanel();
         JPanel buttonPanel = getButtonPanel();
 
@@ -134,7 +134,7 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
      *
      * @return the info area
      */
-    protected VSInfoArea getInfoArea() {
-        return infoArea;
-    }
+    //protected VSInfoArea getInfoArea() {
+     //   return infoArea;
+    //}
 }

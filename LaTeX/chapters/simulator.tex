@@ -283,7 +283,7 @@ Im Folgenden werden alle in den Simulationseinstellungen verf\"{u}gbaren Variabl
 \begin{itemize}
 	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean: sim.message.own.recv = false)}: Standardm\"{a}ﬂig k\"{o}nnen Prozesse keine Nachrichten empfangen, die sie selbst verschickt haben. Dies tr\"{a}gt zur \"{U}bersichtlichkeit der Simulation bei. Wenn diese Variable jedoch auf \textit{true} gesetzt wird, dann kann ein Prozess auch selbst verschickte Nachrichten emfpangen und auf diese ebenso antworten. Die Zeit f\"{u}r das Versenden und Empfangen einer Nachricht an sich selbst betr\"{a}gt jedoch stets \textit{0ms}. Diese Variable sollte mit Vorsicht verwendet werden, da bedingt durch den \textit{0ms} Endlosschleifen entstehen k\"{o}nnen. 
 	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abh\"{a}ngige zuf\"{a}llige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, so wird die der Mittelwert aus den Verlustwahrscheinlichkeiten vom Sender- und Empf\"{a}ngerprozess gebildet. Ansonsten wird stets die Verlustwahrscheinlichkeit, die beim Senderprozesses angegeben wurde, verwendet. 
-	\item \textbf{Mittelwerte der \"{U}bertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abh\"{a}ngige zuf\"{a}llige \"{U}bertragungszeit bis sie ihr Ziel erreicht. Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empf\"{a}ngerprozess gebildet. Ansonsten wird stets die \"{U}bertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
+	\item \textbf{Mittelwerte der \"{U}bertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abh\"{a}ngige zuf\"{a}llige \"{U}bertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen sp\"{a}ter). Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empf\"{a}ngerprozess gebildet. Ansonsten wird stets die \"{U}bertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
 	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean: sim.messages.relevant = true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, dann werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann, weil er das dazugeh\"{o}rige Protokoll nicht unterst\"{u}tzt, nicht angezeigt. Dies verbessert die \"{U}bersicht.
 	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean: sim.mode.expert = false)}: Hier l\"{a}sst sich der Expertenmodus aktivieren beziehungsweise deaktivieren. Alternativ kann dies \"{u}ber den gleichnamigen Schalter unterhalb des Loggfensters geschehen.
 	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean: sim.periodic = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann wird die Simulation jedes Mal nach Ablauf automatisch erneut gestartet. 
@@ -307,10 +307,22 @@ Jeder Prozess besitzt folgende Variablen, die entweder via dem Variablen-Tab in 
 	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer: process.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob der gegebene Prozess w\"{a}hrend der Simulation zuf\"{a}llig abst\"{u}rzt. Die Wahrscheinlichkeit bezieht sich auf die komplette Simulationsdauer. Bei einer Einstellung von \textit{100} Prozent und der Simulationsdauer von \textit{15} Sekunden st\"{u}rzt der Prozess auf jeden Fall zwischen \textit{0ms} und \textit{15000ms} ab. An welcher Stelle dies geschieht wird zuf\"{a}llig bestimmt. Wenn der Prozess nach seinem Absturz wiederbelebt wird, st\"{u}rzt er nicht noch einmal zuf\"{a}llig ab. Dies gilt allerdings nicht, wenn die Prozesseinstellungen nach dem Zufallsabsturz erneut ge\"{a}ndert und \"{u}bernommen werden, da dann das Zufallsabst\"{u}rzereignis erneut erstellt wird. 
 	\item \textbf{Lokale Zeit} \textit{(Long: process.localtime = 0)}: Gibt die lokale Prozesszeit in Millisekunden an. 
 	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer: message.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob eine vom aktuell ausgew\"{a}hlten Prozess verschickte Nachricht unterwegs verloren geht. An welcher Stelle die Nachricht zwischen dem Sende- und Empfangsprozess verloren geht wird vom Simulator zuf\"{a}llig gew\"{a}hlt.
-	\item \textbf{Maximale \"{U}bertragungszeit} \textit{(Long: message.sendingtime.max = 2000)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht maximal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{max}$ bezeichnet. Der tats\"{a}chlich verwendete Wert wird zuf\"{a}llig zwischen der minimalen- und der maximalen Zeit (jeweils inklusive) gew\"{a}hlt. 
-	\item \textbf{Minimale \"{U}bertragungszeit} \textit{(Long: message.sendingtime.min = 500)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht minimal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{min}$ bezeichnet. Der tats\"{a}chlich verwendete Wert wird zuf\"{a}llig zwischen der minimalen- und der maximalen Zeit (jeweils inklusive) gew\"{a}hlt. \\
-		\\
-		Wenn die \"{U}bertragungszeiten von Nachrichten immer exakt die selbe Zeit in Anspruch nehmen sollen, dann m\"{u}ssen alle Prozesseinstellungen mit $t_{min} = t_{max}$ konfiguriert werden.
+	\item \textbf{Maximale \"{U}bertragungszeit} \textit{(Long: message.sendingtime.max = 2000)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht maximal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{max}$ bezeichnet. 
+	\item \textbf{Minimale \"{U}bertragungszeit} \textit{(Long: message.sendingtime.min = 500)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht minimal ben\"{o}tigt, bis sie einen Empf\"{a}ngerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{min}$ bezeichnet. 
+		
+Wenn die \"{U}bertragungszeiten von Nachrichten immer exakt die selbe Zeit in Anspruch nehmen sollen, dann m\"{u}ssen alle Prozesseinstellungen mit $t_{min} = t_{max}$ konfiguriert werden. Wenn die aktuelle globale Zeit $t_g$ ist und die Simulationseinstellung ``Mittelwerte der \"{U}bertragungszeiten'' nicht aktiv ist, dann wird die Ereigniseintrittszeit $t_e$ f\"{u}r den Empfang der Nachricht wie folgt berechnet:
+
+\begin{equation*}
+	t_e := t_g + rand(t_{min}, t_{max})
+\end{equation*}
+
+Das heiﬂt, dass die Nachricht nach einer zuf\"{a}lligen Zeit zwischen $t_{min}$ und $t_{max}$ beim Empf\"{a}nger eintrifft. F\"{u}r jeden Emfp\"{a}nger wird hierbei ein neuer Zufallswert gew\"{a}hlt. F\"{u}r den Fall, dass die Einstellung ``Mittelwerte der \"{U}bertragungszeiten w\"{a}hlen'' aktiviert ist, und wenn $t'_{min}$ und $t'_{max}$ die beim Empf\"{a}ngerprozess eingestellten Werte ensprechen, dann wird die Nachrichtenempfangszeit wie folgt berechnet:
+
+\begin{equation*}
+	t_e := t_g + \frac{1}{2} (rand(t_{min}, t_{max}) + rand(t'_{min}, t'_{max}))
+\end{equation*}
+
+Das heiﬂt, dass stets der Mittelwert der Nachrichten\"{u}bertragungszeiten des Sender- und Empf\"{a}ngerprozesses verwendet wird.
 
 \end{itemize}
 
@@ -1032,7 +1044,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 
 Bisher wurden alle verf\"{u}gbaren Protokolle anhand von Beispielen aufgef\"{u}hrt. Mit dem Simulator lassen sich allerdings noch viel mehr Szenarien simulieren. Daher soll hier auf weitere Anwendungsbeispiele eingegangen werden.
 
-\subsection{Vektor- und Lamportzeitstempel}
+\subsection{Simulation von Vektor- und Lamportzeitstempel}
 
 \begin{figure}[h]
 	\centering
@@ -1066,3 +1078,22 @@ Wenn im Laufe einer Simulation Prozesse entfernt- oder neue Prozesse hinzugef\"{
 
 Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardm\"{a}ﬂig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, ber\"{u}cksichtigt. F\"{u}r eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
 
+\newpage
+\subsection{Simulation langsamer Verbindungen}
+
+Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. F\"{u}r die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verf\"{u}gung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine l\"{a}ngere \"{U}bertragungszeit haben.
+
+Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der \"{U}bertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde ``Minimale \"{U}bertragungszeit'' auf \textit{2000ms} und ``Maximale \"{U}bertragungszeit'' auf \textit{8000ms} gesetzt. P1 und P2 behalten als Standardeinstellungen f\"{u}r die minimale und maximale \"{U}bertragungszeiten jeweils \textit{500ms} und \textit{2000ms} eingestellt. Die Simulationsdauer wurde auf \textit{20000ms} gesetzt.
+
+\begin{figure}[h]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync-2-long-transfer}}
+	\caption{Simulation einer langsamen Verbindung}
+	\label{fig:TimeSync2LongTransferProto}
+\end{figure}
+
+Als Folge (Abbildung \ref{fig:TimeSync2LongTransferProto}) dauern Nachrichten, die von- und an P3 verschickt werden, f\"{u}r eine \"{U}bertragung immer l\"{a}nger. Bevor P3 eine Antwort auf seine vorherige Anfrage bekommt, verschickt er eine erneute Anfrage. Da P3 die Serverantworten immer stets seiner letzten verschickten Anfrage zuordnet, berechnet er die RTTs allesamt falsch und seine lokale Zeit wird bei jedem Durchgang zus\"{a}tzlich verf\"{a}lscht. Die Berechnungsformeln der \"{U}bertragungszeiten wurde bereits in Kapitel 2.4.3 bei den Prozesseinstellungen behandelt. Konkret bedeutet dies f\"{u}r die \"{U}bertragungszeiten alle Nachrichten von- und an P3 jeweils:
+
+\begin{equation*}
+	\frac{1}{2} (rand(500, 2000) + rand(2000, 8000)) = \frac{1}{2} rand(2500, 10000) = rand(1250, 5000) ms
+\end{equation*}
