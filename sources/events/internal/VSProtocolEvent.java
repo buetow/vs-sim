@@ -124,7 +124,7 @@ public class VSProtocolEvent extends VSAbstractInternalEvent
      * @see events.VSAbstractEvent#onStart()
      */
     public void onStart() {
-		VSInternalProcess internalProcess = (VSInternalProcess) process;
+        VSInternalProcess internalProcess = (VSInternalProcess) process;
         VSAbstractProtocol protocol =
             internalProcess.getProtocolObject(protocolClassname);
 

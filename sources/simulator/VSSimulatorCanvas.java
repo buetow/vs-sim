@@ -1485,9 +1485,9 @@ public class VSSimulatorCanvas extends Canvas
                     durationTime = sendingProcess.getDurationTime();
 
                     if (prefs.getBoolean("sim.message.sendingtime.mean")) {
-						durationTime += receiverProcess.getDurationTime();
-						durationTime /= 2;
-					}
+                        durationTime += receiverProcess.getDurationTime();
+                        durationTime /= 2;
+                    }
 
                     deliverTime = sendingProcess.getGlobalTime() +
                                   durationTime;
@@ -1675,7 +1675,8 @@ public class VSSimulatorCanvas extends Canvas
      * @return the new process
      */
     private VSInternalProcess createProcess(int processNum) {
-        VSInternalProcess process = new VSInternalProcess(prefs, processNum, this, logging);
+        VSInternalProcess process =
+            new VSInternalProcess(prefs, processNum, this, logging);
         logging.logg(prefs.getString("lang.process.new") + "; " + process);
         return process;
     }

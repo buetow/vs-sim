@@ -92,8 +92,8 @@ public abstract class VSAbstractProcess extends VSPrefs
 
     /** The tasks of the process. DO ONLY MANIPULATE THIS OBJECT WITHIN THE
      * VSTaskManager CLASS! OTHERWISE THE SYNCHRONIZATION IS WRONG! Use the
-     * VSAbstractProcess.getTasks() method to get a reference to this object within the
-     * VSTaskManager! */
+     * VSAbstractProcess.getTasks() method to get a reference to this object
+     * within the VSTaskManager! */
     protected VSPriorityQueue<VSTask> tasks;
 
     /** The process has crashed. But may be working again. */
@@ -200,7 +200,8 @@ public abstract class VSAbstractProcess extends VSPrefs
      * @param logging the logging object
      */
     public VSAbstractProcess(VSPrefs prefs, int processNum,
-                             VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+                             VSSimulatorCanvas simulatorCanvas,
+                             VSLogging logging) {
         init(prefs, processNum, simulatorCanvas, logging);
     }
 
@@ -666,7 +667,8 @@ public abstract class VSAbstractProcess extends VSPrefs
         super.serialize(serialize, objectOutputStream);
 
         if (VSSerialize.DEBUG)
-            System.out.println("Serializing: VSAbstractProcess (num: " + processNum
+            System.out.println("Serializing: VSAbstractProcess (num: "
+                               + processNum
                                + "; id: " + processID + ")");
 
         /** For later backwards compatibility, to add more stuff */
@@ -746,5 +748,5 @@ public abstract class VSAbstractProcess extends VSPrefs
      * @see core.VSInternalMessage#getProtocolObjekt(java.util.String)
      */
     protected abstract VSAbstractProtocol getProtocolObject_(
-			String protocolClassname);
+        String protocolClassname);
 }

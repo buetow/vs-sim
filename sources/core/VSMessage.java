@@ -94,7 +94,7 @@ public class VSMessage extends VSPrefs {
      * @param isServerMessage Sets if the message has been sent by a server.
      */
     void init(VSInternalProcess process, String protocolClassname,
-                     boolean isServerMessage) {
+              boolean isServerMessage) {
         this.sendingProcess = process;
         this.protocolClassname = protocolClassname;
         this.isServerMessage = isServerMessage;

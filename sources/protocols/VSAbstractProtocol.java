@@ -95,15 +95,15 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         process.increaseLamportTime();
         process.increaseVectorTime();
 
-		VSMessageStub stub = new VSMessageStub(message);
-		VSInternalProcess internalProcess = (VSInternalProcess) process;
+        VSMessageStub stub = new VSMessageStub(message);
+        VSInternalProcess internalProcess = (VSInternalProcess) process;
 
         if (currentContextIsServer)
-            stub.init(internalProcess, getClassname(), 
-					VSMessage.IS_SERVER_MESSAGE);
+            stub.init(internalProcess, getClassname(),
+                      VSMessage.IS_SERVER_MESSAGE);
         else
-            stub.init(internalProcess, getClassname(), 
-					VSMessage.IS_CLIENT_MESSAGE);
+            stub.init(internalProcess, getClassname(),
+                      VSMessage.IS_CLIENT_MESSAGE);
 
         internalProcess.sendMessage(message);
     }
@@ -303,7 +303,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      * @param time The process' local time to run the schedule at.
      */
     public final void scheduleAt(long time) {
-		VSInternalProcess internalProcess = (VSInternalProcess) process;
+        VSInternalProcess internalProcess = (VSInternalProcess) process;
         VSAbstractEvent scheduleEvent =
             new VSProtocolScheduleEvent(this, currentContextIsServer);
         VSTask scheduleTask =
@@ -315,14 +315,14 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
             clientSchedules.add(scheduleTask);
 
         VSSimulatorCanvas canvas = internalProcess.getSimulatorCanvas();
-		canvas.getTaskManager().addTask(scheduleTask);
+        canvas.getTaskManager().addTask(scheduleTask);
     }
 
     /**
      * Removes all schedules of the protocol (server or client)
      */
     public final void removeSchedules() {
-		VSInternalProcess internalProcess = (VSInternalProcess) process;
+        VSInternalProcess internalProcess = (VSInternalProcess) process;
 
         if (currentContextIsServer) {
             internalProcess.getSimulatorCanvas().
@@ -399,7 +399,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         if (process == null)
             return 0;
 
-		VSInternalProcess internalProcess = (VSInternalProcess) process;
+        VSInternalProcess internalProcess = (VSInternalProcess) process;
         return internalProcess.getSimulatorCanvas().getNumProcesses();
     }
 

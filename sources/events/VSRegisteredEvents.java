@@ -355,7 +355,7 @@ public final class VSRegisteredEvents {
      * @param eventName the event name
      */
     private static void registerEvent(String eventClassname, String eventName) {
-		registerEvent(eventClassname, eventName, null);
+        registerEvent(eventClassname, eventName, null);
     }
 
     /**

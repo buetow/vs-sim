@@ -43,8 +43,8 @@ public class VSMessageStub {
 
     /**
      * The constructor of the message stub. Creates a new message stub object.
-	 *
-	 * @param message the message
+     *
+     * @param message the message
      */
     public VSMessageStub(VSMessage message) {
         this.message = message;
@@ -55,7 +55,7 @@ public class VSMessageStub {
      */
     public void init(VSInternalProcess process, String protocolClassname,
                      boolean isServerMessage) {
-		message.init(process, protocolClassname, isServerMessage);
+        message.init(process, protocolClassname, isServerMessage);
     }
 }
 

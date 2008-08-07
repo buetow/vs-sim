@@ -37,8 +37,8 @@ import simulator.*;
 import utils.*;
 
 /**
- * The class VSInternalProcess, an object of this class represents a process of a
- * simulator.
+ * The class VSInternalProcess, an object of this class represents a process
+ * of a simulator.
  *
  * @author Paul C. Buetow
  */
@@ -52,7 +52,8 @@ public class VSInternalProcess extends VSAbstractProcess {
      * @param logging the logging object
      */
     public VSInternalProcess(VSPrefs prefs, int processNum,
-                     VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+                             VSSimulatorCanvas simulatorCanvas,
+                             VSLogging logging) {
         super(prefs, processNum, simulatorCanvas, logging);
     }
 
@@ -143,9 +144,10 @@ public class VSInternalProcess extends VSAbstractProcess {
 
     /**
      * Creates the random crash task. The crash task will be created only if
-     * the process is not crashed atm. and if VSInternalProcess.getARandomCrashTime()
-     * returns a non-negative value. The random crash task uses the simulaion's
-     * global time for its scheduling.
+     * the process is not crashed atm. and if
+     * VSInternalProcess.getARandomCrashTime() * returns a non-negative value.
+     * The random crash task uses the simulaion's global time for its
+     * scheduling.
      */
     public synchronized void createRandomCrashTask() {
         if (!isCrashed) {
@@ -291,7 +293,7 @@ public class VSInternalProcess extends VSAbstractProcess {
      *	will not get lost at all.
      */
     public synchronized long getARandomMessageOutageTime(long durationTime,
-    VSInternalProcess receiverProcess) {
+            VSInternalProcess receiverProcess) {
         int percentage = (int) ((getInteger("message.prob.outage") +
                                  receiverProcess.getInteger(
                                      "message.prob.outage")) / 2);
@@ -404,7 +406,7 @@ public class VSInternalProcess extends VSAbstractProcess {
      * @return the protocol object
      */
     public synchronized VSAbstractProtocol getProtocolObject(
-    String protocolClassname) {
+        String protocolClassname) {
         VSAbstractProtocol protocol = null;
 
         if (!objectExists(protocolClassname)) {

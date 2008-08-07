@@ -135,6 +135,6 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
      * @return the info area
      */
     //protected VSInfoArea getInfoArea() {
-     //   return infoArea;
+    //   return infoArea;
     //}
 }

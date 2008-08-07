@@ -91,7 +91,8 @@ public class VSTask implements Comparable, VSSerializable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    public VSTask(long taskTime, VSInternalProcess process, VSAbstractEvent event,
+    public VSTask(long taskTime, VSInternalProcess process,
+                  VSAbstractEvent event,
                   boolean isLocal) {
         init(taskTime, process, event, isLocal);
     }
@@ -137,8 +138,8 @@ public class VSTask implements Comparable, VSSerializable {
      * @param event the event
      * @param isLocal the taks is local timed
      */
-    private void init(long taskTime, VSInternalProcess process, VSAbstractEvent event,
-                      boolean isLocal) {
+    private void init(long taskTime, VSInternalProcess process,
+                      VSAbstractEvent event, boolean isLocal) {
         this.process = process;
         this.taskTime = taskTime > 0 ? taskTime : 0;
         /* May be not null if called from deserialization */

@@ -212,7 +212,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param localTask true, if this table manages the local task. false,
          *	if this table manages the global tasks.
          */
-        public VSTaskManagerTableModel(VSInternalProcess process, boolean localTask) {
+        public VSTaskManagerTableModel(VSInternalProcess process,
+                                       boolean localTask) {
             tasks = new ArrayList<VSTask>();
             set(process, localTask, ONE_PROCESS);
             columnNames = new String[3];
@@ -1279,7 +1280,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the concerned processes
      */
-    private ArrayList<VSInternalProcess> getConcernedProcesses(boolean localTasks) {
+    private ArrayList<VSInternalProcess> getConcernedProcesses(
+        boolean localTasks) {
         int processNum = localTasks
                          ? localPIDComboBox.getSelectedIndex()
                          : globalPIDComboBox.getSelectedIndex();
