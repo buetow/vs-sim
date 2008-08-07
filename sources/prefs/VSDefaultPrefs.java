@@ -268,6 +268,7 @@ public class VSDefaultPrefs extends VSPrefs {
         initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
         initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
         initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtverlustw'k. bilden");
+        initBoolean("sim.message.sendingtime.mean", true, "Mittelwerte der Übertragungszeiten bilden");
         initBoolean("sim.messages.relevant", true, "Nur relevante Nachrichten anzeigen");
         initBoolean("sim.periodic", false, "Simulation periodisch wiederholen");
         initBoolean("sim.update.lamporttime.all", false, "Lamportzeiten betreffen alle Ereignisse");

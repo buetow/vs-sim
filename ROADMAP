@@ -1,7 +1,6 @@
 Must do:
 	pakete serialize, simulator, utils beschreiben
 	ausblick schreiben
-	paket-privat vs paket-global vs paket-lokal?
 	Warn if a file does not exists while trying to open!
 	Literaturangaben komplettieren
 	UML for wrapping ..process(prioqueue(vstask(messagereceive(message))))

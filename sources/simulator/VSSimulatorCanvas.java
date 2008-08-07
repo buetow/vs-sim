@@ -1483,6 +1483,12 @@ public class VSSimulatorCanvas extends Canvas
 
                 } else {
                     durationTime = sendingProcess.getDurationTime();
+
+                    if (prefs.getBoolean("sim.message.sendingtime.mean")) {
+						durationTime += receiverProcess.getDurationTime();
+						durationTime /= 2;
+					}
+
                     deliverTime = sendingProcess.getGlobalTime() +
                                   durationTime;
 
