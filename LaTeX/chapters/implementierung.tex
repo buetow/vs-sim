@@ -52,7 +52,7 @@ Eine Simulation ist von einer Vielzahl von Einstellungen abh\"{a}ngig. Da auf di
 
 \subsection{Einstellungsobjekte}
 
-Auf Abbilung \ref{fig:PackagePrefs} ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen f\"{u}r eine sp\"{a}tere Verwendung dynamisch ablegen und stellt somit einen Container f\"{u}r diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle seine Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Protokollobjekt f\"{u}r lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Selbst Nachrichtenobjekte besitzt hiervon eine eigene Instanz, wobei hier die zu verschickenden Daten abgelegt werden k\"{o}nnen.
+Auf Abbilung \ref{fig:PackagePrefs} ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen f\"{u}r eine sp\"{a}tere Verwendung dynamisch ablegen und stellt somit einen Container f\"{u}r diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle seine Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Ereignisobjekt (und da Protokolle auch Ereignisse sind auch jedes Protokollobjekt) f\"{u}r lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Selbst Nachrichtenobjekte besitzt hiervon eine eigene Instanz, wobei hier die zu verschickenden Daten abgelegt werden k\"{o}nnen.
 
 \begin{figure}[h]
 	\centering
@@ -131,7 +131,7 @@ F\"{u}r Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Proz
 
 \section{Ereignisse}
 
-\subsection{Die Funktionsweise von Ereignissen}
+\subsection{Funktionsweise von Ereignissen}
 
 F\"{u}r jedes Ereignis existiert eine dazugeh\"{o}rige Klasse, welche die auszuf\"{u}hrenden Aktionen implementiert. Eine Instanz davon wird, f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung, in einem \textit{VSTask}-Objekt verpackt dem Task-Manager \"{u}bergeben. Auf den Task-Manager wird sp\"{a}ter noch genauer eingegangen. 
 \begin{figure}[h]
@@ -182,7 +182,7 @@ Des Weiteren werden folgende nicht-abstrakte Methoden von \textit{VSAbstractEven
 Jede Ereiginsklasse hat zudem Zugriff auf folgende Attribute, die von \textit{VSAbstractEvent} vererbt werden:
 
 \begin{itemize}
-	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hier\"{u}ber lassen sich alle Simulationseinstellungen beziehen.
+	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hier\"{u}ber lassen sich alle Simulationseinstellungen beziehen. \textit{prefs} ist nicht zu verwechseln mit den TODO 
 	\item \textit{protected VSAbstractProcess process}: Eine Referenz auf das Prozessobjekt des jeweiligen Prozesses, auf welches das Ereignis angewendet wird.
 \end{itemize}
 
@@ -273,16 +273,16 @@ void createCrashAndRecoverExample(VSTaskManager taskManager,
 
     VSAbstractEvent recoverEvent = new VSProcessRecoverEvent();
     VSTask globalTask = new VSTask(2000, process, 
-                                  recoverEvent, VSTask.GLOBAL);
+                                   recoverEvent, VSTask.GLOBAL);
     taksManager.addTask(globalTask);
 }
 \end{code}
 
-In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, w\"{a}hrend das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. F\"{u}r den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt, wird es nicht ausgef\"{u}hrt, da der Prozess noch nicht abgest\"{u}rzt ist. 
+In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, w\"{a}hrend das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. F\"{u}r den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt wird es nicht ausgef\"{u}hrt, da der Prozess noch nicht abgest\"{u}rzt ist. 
 
 \section{Protokolle}
 
-\subsection{Die Funktionsweise des Protokoll-APIs}
+\subsection{Funktionsweise des Protokoll-APIs}
 
 \begin{figure}[h]
 	\centering
@@ -437,11 +437,28 @@ Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Met
 
 \subsection{Erstellung eigener Protokolle}
 
-\section{GUI}
+Hier werden alle Schritte zusammegefasst, die f\"{u}r die Erstellung eines eigenen Protokolls \textit{VSMyProtocol} durchgef\"{u}rt werden m\"{u}ssen.
+
+\begin{enumerate}
+	\item VS-Simulator Quelltext beziehen und in das Verzeichnis \textit{vs/sources/protocols/implementations} wechseln.
+	\item Das Template-Protokoll \textit{VSDummyProtocol.java} nach \textit{VSMyProtocol.java} kopieren.
+	\item \textit{VSDummyProtocol.java} editieren und den Klassennamen dort anpassen (\textit{VSDummyProtocol} $\rightarrow$ \textit{VSMyProtocol}).
+	\item In das oberste Verzeichnis \textit{vs/} wechseln
+	\item Die datei \textit{sources/events/VSRegisteredEvents.java} editieren, und in der \textit{init}-Methode folgende Zeile hinzuf\"{u}gen:
+	\begin{code}
+registerEvent("protocols.implementations.VSMyProtocol", 
+              "Langer Name des Protokolls", // Langer name
+              "Neues Protokoll"); // Kurzer Name
+	\end{code}
+	\item Mit dem Befehl \textit{ant compile} die \"{A}nderungen \"{u}bernehmen und mit \textit{ant test} testen, ob der Simulator das Protokoll \"{u}bernommen hat. Hierbei wird der Simulator direkt aus dem Quellverzeichnis gestartet. ``Neues Protokoll'' sollte nun im Ereigniseditor programmiert werden k\"{o}nnen.
+	\item Mit dem Befehl \textit{ant dist} das Archiv \textit{dist/lib/VS-Sim-Latest.jar} erstellen und verwenden.
+\end{enumerate}
+
+\section{GUI sowie Simulationsvisualisierung}
 
 \section{Serialisierung von Simulationen}
 
-\subsection{R\"{u}ckw\"{a}rtskompatibel}
+\subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
 \section{Weiteres}
 

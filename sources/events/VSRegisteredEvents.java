@@ -74,7 +74,7 @@ public final class VSRegisteredEvents {
     private static VSPrefs prefs;
 
     /**
-     * Inits the.
+     * Registers available events.
      *
      * @param prefs_ the prefs_
      */
@@ -82,17 +82,17 @@ public final class VSRegisteredEvents {
         prefs = prefs_;
 
         registerEvent("events.implementations.VSProcessCrashEvent",
-                      "Prozessabsturz", null);
+                      "Prozessabsturz");
         registerEvent("events.implementations.VSProcessRecoverEvent",
-                      "Prozesswiederbelebung", null);
+                      "Prozesswiederbelebung");
         registerEvent("protocols.implementations.VSBasicMulticastProtocol",
                       "Basic Multicast", "Basic Multicast");
         registerEvent("protocols.implementations.VSBerkelyTimeProtocol",
                       "Berkeley Algorithmus zur internen Sync.", "Berkeley");
         registerEvent("protocols.implementations.VSBroadcastProtocol",
-                      "Broadcast", null);
+                      "Broadcast");
         registerEvent("protocols.implementations.VSDummyProtocol",
-                      "Beispiel/Dummy", null);
+                      "Beispiel/Dummy");
         registerEvent("protocols.implementations.VSExternalTimeSyncProtocol",
                       "Christians Methode zur externen Sync.", "Christians");
         registerEvent("protocols.implementations.VSInternalTimeSyncProtocol",
@@ -100,7 +100,7 @@ public final class VSRegisteredEvents {
         registerEvent("protocols.implementations.VSOnePhaseCommitProtocol",
                       "Ein-Phasen Commit", "1-Phasen Commit");
         registerEvent("protocols.implementations.VSPingPongProtocol",
-                      "Ping Pong", null);
+                      "Ping Pong");
         registerEvent("protocols.implementations.VSReliableMulticastProtocol",
                       "Reliable Multicast", "Reliable Multicast");
         registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol",
@@ -346,6 +346,16 @@ public final class VSRegisteredEvents {
             VSInternalProcess process) {
         return createEventInstanceByClassname(
                    eventClassnamesByNames.get(eventName), process);
+    }
+
+    /**
+     * Registers an event.
+     *
+     * @param eventClassname the event classname
+     * @param eventName the event name
+     */
+    private static void registerEvent(String eventClassname, String eventName) {
+		registerEvent(eventClassname, eventName, null);
     }
 
     /**
