@@ -30,7 +30,7 @@ import core.*;
 import events.*;
 import events.internal.*;
 import serialize.*;
-import simulator.VSSimulatorCanvas;
+import simulator.VSSimulatorVisualization;
 import utils.*;
 
 /**
@@ -314,7 +314,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
         else
             clientSchedules.add(scheduleTask);
 
-        VSSimulatorCanvas canvas = internalProcess.getSimulatorCanvas();
+        VSSimulatorVisualization canvas = internalProcess.getSimulatorCanvas();
         canvas.getTaskManager().addTask(scheduleTask);
     }
 

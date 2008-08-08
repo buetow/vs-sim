@@ -41,7 +41,7 @@ import serialize.*;
 import utils.*;
 
 /**
- * The class VSSimulatorCanvas. An instance of this object represents the
+ * The class VSSimulatorVisualization. An instance of this object represents the
  * graphical paint area of a simulator. It contains all graphic calculations.
  * Also the simulator thread takes place in this class in a loop! This class
  * is probably the most cryptic of the whole simulator source code. This is
@@ -49,7 +49,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public class VSSimulatorCanvas extends Canvas
+public class VSSimulatorVisualization extends Canvas
             implements Runnable, VSSerializable {
 
     /** The serial version uid */
@@ -468,19 +468,19 @@ public class VSSimulatorCanvas extends Canvas
     }
 
     /**
-     * Instantiates a new VSSimulatorCanvas object.
+     * Instantiates a new VSSimulatorVisualization object.
      *
      * @param prefs the prefs
      * @param simulator the simulator
      * @param logging the logging
      */
-    public VSSimulatorCanvas(VSPrefs prefs, VSSimulator simulator,
+    public VSSimulatorVisualization(VSPrefs prefs, VSSimulator simulator,
                              VSLogging logging) {
         init(prefs, simulator, logging);
     }
 
     /**
-     * Instantiates inits the VSSimulatorCanvas object.
+     * Instantiates inits the VSSimulatorVisualization object.
      *
      * @param prefs the prefs
      * @param simulator the simulator
@@ -1790,7 +1790,7 @@ public class VSSimulatorCanvas extends Canvas
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         if (VSSerialize.DEBUG)
-            System.out.println("Deserializing: VSSimulatorCanvas");
+            System.out.println("Deserializing: VSSimulatorVisualization");
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();

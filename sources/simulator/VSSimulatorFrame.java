@@ -158,11 +158,11 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.save"))) {
-                    VSSimulatorCanvas simulatorCanvas =
+                    VSSimulatorVisualization simulatorVisualization =
                         currentSimulator.getSimulatorCanvas();
-                    boolean flag = !simulatorCanvas.isPaused()
-                                   && !simulatorCanvas.isResetted()
-                                   && !simulatorCanvas.hasFinished();
+                    boolean flag = !simulatorVisualization.isPaused()
+                                   && !simulatorVisualization.isResetted()
+                                   && !simulatorVisualization.hasFinished();
 
                     if (flag)
                         pauseCurrentSimulator();
@@ -175,11 +175,11 @@ public class VSSimulatorFrame extends VSFrame {
 
                 } else if (sourceText.equals(
                 finalPrefs.getString("lang.saveas"))) {
-                    VSSimulatorCanvas simulatorCanvas =
+                    VSSimulatorVisualization simulatorVisualization =
                         currentSimulator.getSimulatorCanvas();
-                    boolean flag = !simulatorCanvas.isPaused()
-                                   && !simulatorCanvas.isResetted()
-                                   && !simulatorCanvas.hasFinished();
+                    boolean flag = !simulatorVisualization.isPaused()
+                                   && !simulatorVisualization.isResetted()
+                                   && !simulatorVisualization.hasFinished();
                     if (flag)
                         pauseCurrentSimulator();
 

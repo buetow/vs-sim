@@ -48,13 +48,13 @@ public class VSInternalProcess extends VSAbstractProcess {
      *
      * @param prefs the simulator's default prefs
      * @param processNum the process num
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      * @param logging the logging object
      */
     public VSInternalProcess(VSPrefs prefs, int processNum,
-                             VSSimulatorCanvas simulatorCanvas,
+                             VSSimulatorVisualization simulatorVisualization,
                              VSLogging logging) {
-        super(prefs, processNum, simulatorCanvas, logging);
+        super(prefs, processNum, simulatorVisualization, logging);
     }
 
     /**
@@ -80,7 +80,7 @@ public class VSInternalProcess extends VSAbstractProcess {
     /**
      * Syncs the process' time. This method is using the clockOffset and
      * clockVariance variables. This method is called repeatedly from the
-     * VSSimulatorCanvas in order to update the process' local and global
+     * VSSimulatorVisualization in order to update the process' local and global
      * time values.
      *
      * @param globalTime the global time.
@@ -151,7 +151,7 @@ public class VSInternalProcess extends VSAbstractProcess {
      */
     public synchronized void createRandomCrashTask() {
         if (!isCrashed) {
-            VSTaskManager taskManager = simulatorCanvas.getTaskManager();
+            VSTaskManager taskManager = simulatorVisualization.getTaskManager();
             long crashTime = getARandomCrashTime();
 
             if (crashTime < 0)
@@ -303,7 +303,7 @@ public class VSInternalProcess extends VSAbstractProcess {
 
             /* Calculate the random outage time! */
             long outageTime = globalTime + random.nextLong(durationTime+1) %
-                              simulatorCanvas.getUntilTime();
+                              simulatorVisualization.getUntilTime();
 
             return outageTime;
         }
@@ -341,7 +341,7 @@ public class VSInternalProcess extends VSAbstractProcess {
         buffer.append("; ");
         buffer.append(message.toStringFull());
         logg(buffer.toString());
-        simulatorCanvas.sendMessage(message);
+        simulatorVisualization.sendMessage(message);
     }
 
     /**
@@ -349,8 +349,8 @@ public class VSInternalProcess extends VSAbstractProcess {
      *
      * @return the simulator canvas
      */
-    public VSSimulatorCanvas getSimulatorCanvas() {
-        return simulatorCanvas;
+    public VSSimulatorVisualization getSimulatorCanvas() {
+        return simulatorVisualization;
     }
 
     /**

@@ -43,7 +43,7 @@ public class VSTaskManager implements VSSerializable {
     private static final long serialVersionUID = 1L;
 
     /** The simulator canvas. */
-    private VSSimulatorCanvas simulatorCanvas;
+    private VSSimulatorVisualization simulatorVisualization;
 
     /** The global tasks. */
     private PriorityQueue<VSTask> globalTasks;
@@ -64,21 +64,21 @@ public class VSTaskManager implements VSSerializable {
      * Instantiates a new task manager object.
      *
      * @param prefs the simulator's default prefs
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      */
-    public VSTaskManager(VSPrefs prefs, VSSimulatorCanvas simulatorCanvas) {
-        init(prefs, simulatorCanvas);
+    public VSTaskManager(VSPrefs prefs, VSSimulatorVisualization simulatorVisualization) {
+        init(prefs, simulatorVisualization);
     }
 
     /**
      * Inits the task manager.
      *
      * @param prefs the simulator's default prefs
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      */
-    private void init(VSPrefs prefs, VSSimulatorCanvas simulatorCanvas) {
+    private void init(VSPrefs prefs, VSSimulatorVisualization simulatorVisualization) {
         this.prefs = prefs;
-        this.simulatorCanvas = simulatorCanvas;
+        this.simulatorVisualization = simulatorVisualization;
 
         /* May be not null if called from deserialization */
         if (globalTasks == null)
@@ -104,7 +104,7 @@ public class VSTaskManager implements VSSerializable {
         long globalTime;
         final long globalOffsetTime = lastGlobalTime + step;
         boolean redo;
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
 
         do {
             redo = false;
@@ -232,7 +232,7 @@ public class VSTaskManager implements VSSerializable {
      * Resets the task manager.
      */
     public synchronized void reset() {
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
         PriorityQueue<VSTask> tmp = null;
 
         synchronized (processes) {
@@ -366,7 +366,7 @@ public class VSTaskManager implements VSSerializable {
      */
     public synchronized ArrayList<VSTask> getLocalTasks() {
         ArrayList<VSTask> localTasks = new ArrayList<VSTask>();
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
 
         for (VSTask task : fullfilledProgrammedTasks)
             if (!task.isGlobalTimed())
@@ -476,7 +476,7 @@ public class VSTaskManager implements VSSerializable {
         buffer.append(prefs.getString("lang.tasks.local"));
         buffer.append(": ");
 
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
         synchronized (processes) {
             for (VSInternalProcess process : processes) {
                 VSPriorityQueue<VSTask> tasks = process.getTasks();
@@ -517,7 +517,7 @@ public class VSTaskManager implements VSSerializable {
                 serializeThoseTasks.add(task);
         }
 
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
 
         synchronized (processes) {
             for (VSInternalProcess process : processes) {
@@ -554,7 +554,7 @@ public class VSTaskManager implements VSSerializable {
 
         globalTasks.clear();
 
-        ArrayList<VSInternalProcess> processes = simulatorCanvas.getProcesses();
+        ArrayList<VSInternalProcess> processes = simulatorVisualization.getProcesses();
         synchronized (processes) {
             for (VSInternalProcess process : processes)
                 process.getTasks().clear();

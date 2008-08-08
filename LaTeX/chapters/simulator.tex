@@ -1053,7 +1053,7 @@ Bisher wurden alle verf\"{u}gbaren Protokolle anhand von Beispielen aufgef\"{u}h
 	\label{fig:Lamportzeit}
 \end{figure}
 
-Die Vektor- und Lamportzeitstempel lassen sich sehr gut am bereits behandeltem Beispiel des Berkeley-Protokoll's demonstrieren. Nach Aktivierung des Lamportzeit-Schalters erscheint bei jedem Ereignis die zum jeweiligen Prozess geh\"{o}rigen Lamportzeitstempel (Abbildung \ref{fig:Lamportzeit}). Jeder Prozess besitzt einen eigenen Lamportzeitstempel, der bei jedem Versenden oder Erhalten einer Nachricht inkrementiert wird. Jeder Nachricht wird die aktuelle Lamportzeit $t_l(i)$ des Senderprozesses $i$ beigef\"{u}gt. Wenn ein weiterer Prozess $j$ diese Nachricht erh\"{a}lt, so wird der aktuelle Lamportzeitstempel $t_l(j)$ von Prozess $j$ wie folgt neu berechnet:
+Die Vektor- und Lamportzeitstempel lassen sich sehr gut am bereits behandeltem Beispiel des Berkeley-Protokoll's demonstrieren. Nach Aktivierung des Lamportzeit-Schalters erscheint bei jedem Ereignis eines Prozesses der aktuelle Lamportzeitstempel (Abbildung \ref{fig:Lamportzeit}). Jeder Prozess besitzt einen eigenen Lamportzeitstempel, der bei jedem Versenden oder Erhalten einer Nachricht inkrementiert wird. Jeder Nachricht wird die aktuelle Lamportzeit $t_l(i)$ des Senderprozesses $i$ beigef\"{u}gt. Wenn ein weiterer Prozess $j$ diese Nachricht erh\"{a}lt, so wird der aktuelle Lamportzeitstempel $t_l(j)$ von Prozess $j$ wie folgt neu berechnet:
 
 \begin{equation*}
 	t_l(j) := 1 + max(t_l(j), t_l(i))
@@ -1081,7 +1081,7 @@ Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Va
 \newpage
 \subsection{Simulation langsamer Verbindungen}
 
-Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. F\"{u}r die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verf\"{u}gung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine l\"{a}ngere \"{U}bertragungszeit haben.
+Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. F\"{u}r die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verf\"{u}gung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine l\"{a}ngere \"{U}bertragungszeit ben\"{o}tigen.
 
 Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der \"{U}bertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde ``Minimale \"{U}bertragungszeit'' auf \textit{2000ms} und ``Maximale \"{U}bertragungszeit'' auf \textit{8000ms} gesetzt. P1 und P2 behalten als Standardeinstellungen f\"{u}r die minimale und maximale \"{U}bertragungszeiten jeweils \textit{500ms} und \textit{2000ms} eingestellt. Die Simulationsdauer wurde auf \textit{20000ms} gesetzt.
 

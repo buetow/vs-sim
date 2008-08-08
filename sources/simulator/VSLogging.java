@@ -54,7 +54,7 @@ public class VSLogging {
     private ArrayList<StringBuffer> loggingLines;
 
     /** The simulator canvas. */
-    private VSSimulatorCanvas simulatorCanvas;
+    private VSSimulatorVisualization simulatorVisualization;
 
     /** The logging messages are filtered. */
     private boolean isFiltered;
@@ -81,10 +81,10 @@ public class VSLogging {
     /**
      * Sets the simulator canvas.
      *
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      */
-    public void setSimulatorCanvas(VSSimulatorCanvas simulatorCanvas) {
-        this.simulatorCanvas = simulatorCanvas;
+    public void setSimulatorCanvas(VSSimulatorVisualization simulatorVisualization) {
+        this.simulatorVisualization = simulatorVisualization;
     }
 
     /**
@@ -102,10 +102,10 @@ public class VSLogging {
      * @param message the message
      */
     public void logg(String message) {
-        if (simulatorCanvas == null)
+        if (simulatorVisualization == null)
             logg(message, 0);
         else
-            logg(message, simulatorCanvas.getTime());
+            logg(message, simulatorVisualization.getTime());
     }
 
     /**

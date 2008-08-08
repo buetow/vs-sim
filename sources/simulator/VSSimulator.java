@@ -130,7 +130,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private VSPrefs prefs;
 
     /** The simulator canvas. */
-    private VSSimulatorCanvas simulatorCanvas;
+    private VSSimulatorVisualization simulatorVisualization;
 
     /** The simulator frame. */
     private VSSimulatorFrame simulatorFrame;
@@ -548,7 +548,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 Integer current[] = { (Integer) model.getValueAt(row, col) };
                 final JComboBox comboBox = new JComboBox(current);
 
-                Integer pids[] = simulatorCanvas.getProcessIDs();
+                Integer pids[] = simulatorVisualization.getProcessIDs();
                 for (Integer pid : pids)
                     comboBox.addItem(pid);
 
@@ -559,7 +559,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                         if (model.rowExists(row)) {
                             VSTask task = model.removeTaskAtRow(row);
                             VSInternalProcess process =
-                                simulatorCanvas.getProcess(index);
+                                simulatorVisualization.getProcess(index);
                             task.setProcess(process);
                             taskManager.addTask(task, VSTaskManager.PROGRAMMED);
                             if (allProcessesAreSelected())
@@ -629,7 +629,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
-        int numProcesses = simulatorCanvas.getNumProcesses();
+        int numProcesses = simulatorVisualization.getNumProcesses();
         for (int i = 0; i <= numProcesses; ++i) {
             localTextFields.add("0000");
             globalTextFields.add("0000");
@@ -639,7 +639,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         localPIDComboBox.setSelectedIndex(0);
         globalPIDComboBox.setSelectedIndex(0);
 
-        thread = new Thread(simulatorCanvas);
+        thread = new Thread(simulatorVisualization);
         thread.start();
     }
 
@@ -653,15 +653,15 @@ public class VSSimulator extends JPanel implements VSSerializable {
         splitPaneV = new JSplitPane();
 
         /* Not null if init has been called from the deserialization */
-        if (this.simulatorCanvas == null)
-            simulatorCanvas = new VSSimulatorCanvas(prefs, this, logging);
+        if (this.simulatorVisualization == null)
+            simulatorVisualization = new VSSimulatorVisualization(prefs, this, logging);
 
-        taskManager = simulatorCanvas.getTaskManager();
-        logging.setSimulatorCanvas(simulatorCanvas);
+        taskManager = simulatorVisualization.getTaskManager();
+        logging.setSimulatorCanvas(simulatorVisualization);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
-        canvasPanel.add(simulatorCanvas);
+        canvasPanel.add(simulatorVisualization);
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
@@ -722,7 +722,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorCanvas.showLamport(buttonModel.isSelected());
+                    simulatorVisualization.showLamport(buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         vectorTimeActiveCheckBox.setSelected(false);
                 }
@@ -737,7 +737,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorCanvas.showVectorTime(buttonModel.isSelected());
+                    simulatorVisualization.showVectorTime(buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         lamportActiveCheckBox.setSelected(false);
                 }
@@ -752,7 +752,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorCanvas.isAntiAliased(buttonModel.isSelected());
+                    simulatorVisualization.isAntiAliased(buttonModel.isSelected());
                 }
             });
             toolsPanel.add(antiAliasing);
@@ -834,11 +834,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
         globalPIDComboBox = new JComboBox();
 
         lastSelectedProcessNum = 0;
-        int numProcesses = simulatorCanvas.getNumProcesses();
+        int numProcesses = simulatorVisualization.getNumProcesses();
         String processString = prefs.getString("lang.process");
 
         for (int i = 0; i < numProcesses; ++i) {
-            int pid = simulatorCanvas.getProcess(i).getProcessID();
+            int pid = simulatorVisualization.getProcess(i).getProcessID();
             processesComboBox.addItem(processString + " " + pid);
             localPIDComboBox.addItem("PID: " + pid);
             globalPIDComboBox.addItem("PID: " + pid);
@@ -883,7 +883,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                 localPIDComboBox.setSelectedIndex(processNum);
                 globalPIDComboBox.setSelectedIndex(processNum);
 
-                if (processNum == simulatorCanvas.getNumProcesses()) {
+                if (processNum == simulatorVisualization.getNumProcesses()) {
                     tabbedPane.setEnabledAt(1, false);
                     if (tabbedPane.getSelectedIndex() == 1)
                         tabbedPane.setSelectedIndex(0);
@@ -892,7 +892,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     tabbedPane.setEnabledAt(1, true);
                 }
 
-                if (processNum != simulatorCanvas.getNumProcesses()) {
+                if (processNum != simulatorVisualization.getNumProcesses()) {
                     VSInternalProcess process = getSelectedProcess();
                     VSProcessEditor processEditor =
                         new VSProcessEditor(prefs, process);
@@ -1269,7 +1269,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      */
     private VSInternalProcess getSelectedProcess() {
         int processNum = getSelectedProcessNum();
-        return simulatorCanvas.getProcess(processNum);
+        return simulatorVisualization.getProcess(processNum);
     }
 
     /**
@@ -1286,11 +1286,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
                          ? localPIDComboBox.getSelectedIndex()
                          : globalPIDComboBox.getSelectedIndex();
 
-        if (processNum == simulatorCanvas.getNumProcesses())
-            return simulatorCanvas.getProcessesArray();
+        if (processNum == simulatorVisualization.getNumProcesses())
+            return simulatorVisualization.getProcessesArray();
 
         ArrayList<VSInternalProcess> arr = new ArrayList<VSInternalProcess>();
-        arr.add(simulatorCanvas.getProcess(processNum));
+        arr.add(simulatorVisualization.getProcess(processNum));
 
         return arr;
     }
@@ -1318,11 +1318,11 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * Update the processes combo box
      */
     private void updateProcessesComboBox() {
-        int numProcesses = simulatorCanvas.getNumProcesses();
+        int numProcesses = simulatorVisualization.getNumProcesses();
         String processString = prefs.getString("lang.process");
 
         for (int i = 0; i < numProcesses; ++i) {
-            int processID = simulatorCanvas.getProcess(i).getProcessID();
+            int processID = simulatorVisualization.getProcess(i).getProcessID();
 
             processesComboBox.removeItemAt(i);
             localPIDComboBox.removeItemAt(i);
@@ -1368,8 +1368,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
      *
      * @return the simulator canvas
      */
-    public synchronized VSSimulatorCanvas getSimulatorCanvas() {
-        return simulatorCanvas;
+    public synchronized VSSimulatorVisualization getSimulatorCanvas() {
+        return simulatorVisualization;
     }
 
     /**
@@ -1385,8 +1385,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * Update from prefs.
      */
     public synchronized void updateFromPrefs() {
-        simulatorCanvas.setBackground(prefs.getColor("col.background"));
-        simulatorCanvas.updateFromPrefs();
+        simulatorVisualization.setBackground(prefs.getColor("col.background"));
+        simulatorVisualization.updateFromPrefs();
     }
 
     /**
@@ -1416,7 +1416,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * @param index the index
      */
     public synchronized void addProcessAtIndex(int index) {
-        int processID = simulatorCanvas.getProcess(index).getProcessID();
+        int processID = simulatorVisualization.getProcess(index).getProcessID();
         String processString = prefs.getString("lang.process");
 
         localTextFields.add(index, "0000");
@@ -1460,7 +1460,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         tabbedPane.setSelectedIndex(selectedIndex);
 
         /* Update the 'Variables tab' */
-        if (getSelectedProcessNum() != simulatorCanvas.getNumProcesses()) {
+        if (getSelectedProcessNum() != simulatorVisualization.getNumProcesses()) {
             VSInternalProcess process = getSelectedProcess();
             VSProcessEditor editor = new VSProcessEditor(prefs, process);
             tabbedPane.setComponentAt(1, editor.getContentPane());
@@ -1502,7 +1502,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
 
-        simulatorCanvas.serialize(serialize, objectOutputStream);
+        simulatorVisualization.serialize(serialize, objectOutputStream);
 
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
@@ -1526,7 +1526,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
 
-        simulatorCanvas.deserialize(serialize, objectInputStream);
+        simulatorVisualization.deserialize(serialize, objectInputStream);
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();

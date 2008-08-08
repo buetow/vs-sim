@@ -82,7 +82,7 @@ public abstract class VSAbstractProcess extends VSPrefs
     protected VSRandom random;
 
     /** The simulator canvas. */
-    protected VSSimulatorCanvas simulatorCanvas;
+    protected VSSimulatorVisualization simulatorVisualization;
 
     /** The random crash task. May be null if there is no such random task. */
     protected VSTask randomCrashTask;
@@ -196,13 +196,13 @@ public abstract class VSAbstractProcess extends VSPrefs
      *
      * @param prefs the simulator's default prefs
      * @param processNum the process num
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      * @param logging the logging object
      */
     public VSAbstractProcess(VSPrefs prefs, int processNum,
-                             VSSimulatorCanvas simulatorCanvas,
+                             VSSimulatorVisualization simulatorVisualization,
                              VSLogging logging) {
-        init(prefs, processNum, simulatorCanvas, logging);
+        init(prefs, processNum, simulatorVisualization, logging);
     }
 
     /**
@@ -210,21 +210,21 @@ public abstract class VSAbstractProcess extends VSPrefs
      *
      * @param prefs the simulator's default prefs
      * @param processNum the process num
-     * @param simulatorCanvas the simulator canvas
+     * @param simulatorVisualization the simulator canvas
      * @param logging the logging object
      */
     protected void init(VSPrefs prefs, int processNum,
-                        VSSimulatorCanvas simulatorCanvas, VSLogging logging) {
+                        VSSimulatorVisualization simulatorVisualization, VSLogging logging) {
         /* May be not null if called from deserialization */
         if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
 
         this.processNum = processNum;
         this.prefs = prefs;
-        this.simulatorCanvas = simulatorCanvas;
+        this.simulatorVisualization = simulatorVisualization;
         this.logging = logging;
 
-        processID = simulatorCanvas.processIDCount();
+        processID = simulatorVisualization.processIDCount();
         random = new VSRandom(processID*processNum+processID+processNum);
         tasks = new VSPriorityQueue<VSTask>();
 
@@ -258,7 +258,7 @@ public abstract class VSAbstractProcess extends VSPrefs
         vectorTimeHistory = new ArrayList<VSVectorTime>();
         crashHistory = new ArrayList<Long>();
 
-        final int numProcesses = simulatorCanvas.getNumProcesses();
+        final int numProcesses = simulatorVisualization.getNumProcesses();
         for (int i = 0; i < numProcesses; ++i)
             vectorTime.add(new Long(0));
     }
@@ -274,7 +274,7 @@ public abstract class VSAbstractProcess extends VSPrefs
         vectorTimeHistory.clear();
         crashHistory.clear();
 
-        final int numProcesses = simulatorCanvas.getNumProcesses();
+        final int numProcesses = simulatorVisualization.getNumProcesses();
         for (int i = numProcesses; i > 0; --i)
             vectorTime.add(new Long(0));
     }
@@ -431,8 +431,8 @@ public abstract class VSAbstractProcess extends VSPrefs
         if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
             final long crashTime =  random.nextLong(
-                                        simulatorCanvas.getUntilTime()+1) %
-                                    simulatorCanvas.getUntilTime();
+                                        simulatorVisualization.getUntilTime()+1) %
+                                    simulatorVisualization.getUntilTime();
             return crashTime;
         }
 

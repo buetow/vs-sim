@@ -29,7 +29,7 @@ import core.VSInternalProcess;
 import events.*;
 import protocols.VSAbstractProtocol;
 import serialize.VSSerialize;
-import simulator.VSSimulatorCanvas;
+import simulator.VSSimulatorVisualization;
 
 /**
  * The class VSProtocolEvent, this event is used if a protocol (server or
