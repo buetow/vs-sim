@@ -33,7 +33,7 @@ Da es sonst den Rahmen sprengen w\"{u}rde, soll im Folgenden der komplette Quell
 Die Programmierrichtlinien entsprechen in den meisten F\"{a}llen denen aus der Vorlesung \cite{OOS}. Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
 
 \begin{itemize}
-	\item Alle Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen statischer Variablen und Attribute sind komplett in Groﬂbuchstaben gehalten.
+	\item Alle Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen finaler Variablen und Attribute sind komplett in Groﬂbuchstaben gehalten.
 	\item Alle Quelltext-Dateien besitzen einen Header, der Informationen der verwendeten Lizenz angibt.
 	\item Alle Quelltext-Dateien sind vollst\"{a}ndig mit Javadoc dokumentiert worden. 
 	\item Der komplette Quelltext inklusive Dokumentation wurde in englischer Sprache verfasst. 
@@ -446,13 +446,32 @@ registerEvent("protocols.implementations.VSMyProtocol",
 
 \section{GUI sowie Simulationsvisualisierung}
 
-Vektor-Lamport Paint-Pos
+Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols} dargestellt) implementiert die eigentliche graphische Benutzeroberf\"{a}che des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=11.0cm]{images/simulator}
+	\caption{Das Paket \textit{simulator}}
+	\label{fig:PackageProtocols}
+\end{figure}
+
+Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instanziiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschlieﬂend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie bereits schon auf Abbildung \ref{fig:NeuesFenster} zu sehen war) implementiert. Das Simulatorfenster erstellt f\"{u}r jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation} wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugeh\"{o}rige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zur\"{u}ck, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}) implementiert. 
+
+\textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java2D-Grafikbibliothek zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ﬂern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neuberechnet. 
+
+Die Klasse \textit{VSMenuItemStates} wird f\"{u}r die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Men\"{u}s (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Damit ist gemeint, ob die Simulation bereits gestartet wurde oder nicht oder gegebenenfalls schon abgelaufen ist. Oder ob die Simulation sich in einem pausierten Status befindet. Abh\"{a}ngig davon kann der Benutzer bestimmte Aktionen durchf\"{u}hren oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier m\"{o}glichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt.
+
+Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert wie das jeweilige Ereignis anzulegen ist und es automatisch in ein \textit{VSTask}-Objekt gekapselt f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung dem Task-Manager \"{u}bergibt. 
+
+\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt.
 
 \section{Serialisierung von Simulationen}
 
+Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden.
+
 \subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
-\section{Helfer- und Ausnahmeklassen}
+\section{Helferklassen und Klassen f\"{u}r Ausnahmebehandlungen}
 
 Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
 
@@ -493,7 +512,7 @@ Als Versionierungssystem wurde SVN (Subversion) verwendet. F\"{u}r den Zugriff a
 
 F\"{u}r schreiben von Java-Quelltext wurde GVim (Graphical Vi IMproved) sowie Eclipse verwendet. Eclipse unterst\"{u}tzt bessere Code-Refactoring-Methoden, w\"{a}hrend GVim mit seiner Flexibilit\"{a}t und schnelleren Editierm\"{o}glichkeiten und mit Vim-Script, der eigenen Script-Engine, gl\"{a}nzt. Es wurden ausserdem das JAutoDoc- (f\"{u}r die Erstellung von Javadoc-Kommentate) und das Subversion-Eclipse-Plugin verwendet. Je nach Zweck wurde zwischen diesen beiden Umgebungen gewechselt. F\"{u}r das Verfassen des LaTeX-Dokumentes wurde GVim verwendet.
 
-S\"{a}mtliche UML-Diagramme wurden mit ArgoUML angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. Mit zip wurden alle VS-Simulator Distributionen eingepackt.
+S\"{a}mtliche UML-Diagramme wurden mit ArgoUML angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. Mit dem zip-Programm wurden alle VS-Simulator Distributionen verpackt.
 
 \subsubsection{Linkliste der verwendeten Software}
 
