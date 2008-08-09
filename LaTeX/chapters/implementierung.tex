@@ -131,6 +131,7 @@ Die Klasse \textit{VSSimulatorEditor} dient f\"{u}r das Editieren der globalen S
 
 F\"{u}r Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Prozesseditor aus editiert werden k\"{o}nnen. Dabei iteriert der Prozesseditor \"{u}ber alle f\"{u}r den jeweiligen Prozess verf\"{u}gbaren Protokollobjekte und f\"{u}gt deren Variablen zus\"{a}tzlich in den Prozesseditor ein. Somit erscheinen die Prozess- und die dazugeh\"{o}rigen Protokollvariablen im selben Editor, womit dem Benutzer eine bessere \"{U}bersicht geboten wird. 
 
+\newpage
 \section{Ereignisse}
 
 \subsection{Funktionsweise von Ereignissen}
@@ -184,7 +185,7 @@ Des Weiteren werden folgende nicht-abstrakte Methoden von \textit{VSAbstractEven
 Jede Ereiginsklasse hat zudem Zugriff auf folgende Attribute, die von \textit{VSAbstractEvent} vererbt werden:
 
 \begin{itemize}
-	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hier\"{u}ber lassen sich alle Simulationseinstellungen beziehen. \textit{prefs} ist nicht zu verwechseln mit den TODO 
+	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hier\"{u}ber lassen sich alle Simulationseinstellungen beziehen. 
 	\item \textit{protected VSAbstractProcess process}: Eine Referenz auf das Prozessobjekt des jeweiligen Prozesses, auf welches das Ereignis angewendet wird.
 \end{itemize}
 
@@ -202,18 +203,19 @@ extends VSAbstractEvent implements VSCopyableEvent {
     }
 
     public void onInit() {
-        setClassname(getClass().toString());
+        super.setClassname(super.getClass().toString());
     }
 
     public void onStart() {
         if (!process.isCrashed()) {
             process.isCrashed(true);
-            logg(prefs.getString("lang.crashed"));
+            super.logg(prefs.getString("lang.crashed"));
         }
     }
 }
 \end{code}
 
+\newpage
 \section{Zeitformate, Prozesse, Nachrichten sowie Task-Manager}
 
 \subsection{Funktionsweise}
@@ -270,6 +272,7 @@ void createCrashAndRecoverExample(VSTaskManager taskManager,
 
 In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, w\"{a}hrend das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. F\"{u}r den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt wird es nicht ausgef\"{u}hrt, da der Prozess noch nicht abgest\"{u}rzt ist. 
 
+\newpage
 \section{Protokolle}
 
 \subsection{Funktionsweise des Protokoll-APIs}
@@ -281,11 +284,21 @@ In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines geg
 	\label{fig:PackageProtocols}
 \end{figure}
 
-In diesem Abschnitt wird auf die Implementierung der Protokolle eingegangen. Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche f\"{u}r die Protokollimplementierungen zust\"{a}ndig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verf\"{u}gung, die von allen Protokollen verwendet werden k\"{o}nnen. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Wie bereits erw\"{a}hnt erbt \textit{VSAbstractProtocol} von \textit{VSAbstractEvent}, sodass jedes Protokoll auch als Ereignis (Server- beziehnungsweise Clientanfrage starten) eingesetzt werden kann.
+In diesem Abschnitt wird auf die Implementierung der Protokolle eingegangen. Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche f\"{u}r die Protokollimplementierungen zust\"{a}ndig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verf\"{u}gung, die von allen Protokollen verwendet werden k\"{o}nnen. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Im Prinzip besitzt jedes Prozessobjekt von jedem Protokoll seine eigene Instanz. Bei \textit{10} Protokollen und \textit{3} beteiligten Prozessen werden also \textit{30} Protokollobjekte verwendet. Jedes Protokollobjekt verwaltet sowohl die Server- als auch die Clientseite eines Protokolls auf einmal. Dabei merkt sich \textit{VSAbstractProtocol} anhand eines Flags ob der aktuelle Kontext server- oder clientbezogen ist und f\"{u}hrt dementsprechen beim Eintreffen von Ereignissen die Server- beziehungsweise Clientmethoden des Protokolls auf. \textit{VSAbstractProtocol} \"{u}berpr\"{u}ft auch, ob Client oder Server \"{u}berhaupt aktiviert ist. Nur wenn der Server oder Client aktiviert ist, reagiert der Server beziehungsweise der Cleint wenn f\"{u}r sie ein Ereignis eintritt.
 
-Jede Protokollklasse muﬂ die folgenden Methoden implementieren:
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm]{images/ss-protokollvariablen}
+	\caption{Protokollvariablen im Prozesseditor}
+	\label{fig:Protokollvariablen}
+\end{figure}
+
+Es ist bereits bekannt, dass Protokolle auch eigene vom Anwender im Prozesseditor editierbare Variablen haben k\"{o}nnen. Da \textit{VSAbstractProtocol} von \textit{VSAbstractEvent} erbt, was wiederum von \textit{VSPrefs} erbt, werden alle Protokollvariablen einfach in die Mutterklasse \textit{VSPrefs} abgelegt. Zum Beispiel kann mit \textit{super.setBoolean(``test'', true);} eine neue Protokollvariable ``true'' angelegt werden. Anhand eines sp\"{a}teren Beispiels wird dies noch weiter verdeutlicht.
+
+Da der Simulator daf\"{u}r ausgelegt wurde eigene Protokolle zu implementieren, werden im Folgenden alle verf\"{u}gbaren Protokoll-API-Methoden etwas ausf\"{u}hrlicher als gewohnt beschrieben. Jede Protokollklasse muﬂ die folgenden Methoden implementieren:
 
 \begin{itemize}
+	\setlength{\itemsep}{-2mm}
 	\item Einen \"{o}ffentlichen (\textit{public}) Konstruktor. Der Konstruktor muﬂ angeben, ob bei dem gegebene Protokoll der Client oder der Server die Anfragen startet. 
 	\item \textit{abstract public void onClientInit()}: Bevor das Protokollobjekt benutzt werden kann, muﬂ es initialisiert werden. Diese Methode wird vor dem ersten Verwenden des Protokolls innerhalb einer Simulation ausgef\"{u}hrt. In der Regel werden hier Protokollvariablen unter Verwendung von \textit{VSPrefs} und Attribute der Protokollklasse initialisiert. Die hier initialisierten Protokollvariablen lassen sich vom Benutzer im Prozesseditor des jeweiligen Prozesses editieren.
 	\item \textit{abstract public void onClientReset()}: Dese Methode wird jedes Mal ausgef\"{u}hrt, wenn die Simulation zur\"{u}ckgesetzt wird.
@@ -295,13 +308,76 @@ Jede Protokollklasse muﬂ die folgenden Methoden implementieren:
 	\item \textit{public String toString()}: Diese Methode ist nur optional. Hiermit lassen sich die Loggnachrichten eines Protokolls anpassen. Wenn diese Methode in einer Protokollimplementierung ausgelassen wird, so wird stets die \textit{toString}-Methode der Mutterklasse \textit{VSAbstractProtocol} verwendet.
 \end{itemize}
 
-F\"{u}r alle hier aufgelisteten Client-Methoden sind auch die korespondierenen Server-Methoden anzugeben. Die Server-Methoden sind analog zu den Client-Methoden aufgebaut. 
+F\"{u}r alle hier aufgelisteten Client-Methoden sind auch die korespondierenen Server-Methoden anzugeben. Die Server-Methoden sind analog zu den Client-Methoden aufgebaut, wobei lediglich \textit{Client} durch \textit{Server} ausgetauscht werden muﬂ. 
+
+Jede Protokollklasse bekommt folgende Methoden von \textit{VSAbstractProtocol} vererbt, welche allesamt vom Protokollentwickler verwendet werden k\"{o}nnen:
+
+\begin{itemize}
+	\setlength{\itemsep}{-2mm}
+	\item \textit{pubic void sendMessage(VSMessage message)}: Hiermit verchickt das Protokoll eine Nachricht.
+	\item \textit{pubic final boolean hasOnServerStart()}: Hiermit l\"{a}ﬂt sich bestimmen, ob der Server- oder der Client bei dem aktuellen Protokoll die Anfragen startet.
+	\item \textit{pubic final boolean isServer()}: Hiermit l\"{a}ﬂt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll serverseitig aktiviert hat. 
+	\item \textit{pubic final boolean isClient()}: Hiermit l\"{a}ﬂt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll clientseitig aktiviert hat. 
+	\item \textit{pubic final void scheduleAt(long time)}: Diese Methode stellt einen Wecker, der zur angegebenen lokalen Prozesszeit eintritt. Nach Ablauf des Weckers wird, abh\"{a}ngig ob der aktuelle Kontext Client- oder Serverseitig ist, \textit{onClientSchedue} beziehungsweise \textit{onServerSchedule} ausgef\"{u}hrt. 
+	\item \textit{pubic final void removeSchedules()}: Entfernt alle gesetzten Wecker des aktuellen Kontextes (Server oder Client).
+	\item \textit{pubic final int getNumProcesses()}: Gibt die Anzahl an der Simulation beteiligten Prozesse zur\"{u}ck.
+\end{itemize}
+
+Bei der Implementierung von Protokollen k\"{o}nnen zus\"{a}tzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verf\"{u}gbare Methoden von \textit{VSPrefs} wurden bereits behandelt. \"{U}ber \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (zum Beispiel die Simulationsvariable die Angibt, ob Prozesse eigene nachrichten empfangen: \textit{bool foo = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden d\"{u}rfen auf \textit{process} aus dem Protokoll-API verwendet werden:
+
+\begin{itemize}
+	\setlength{\itemsep}{-2mm}
+	\item \textit{public float getClockVariance()}: Gibt die Uhrabweichung zur\"{u}ck. 
+	\item \textit{public void setClockVariance(float clockVariance)}: Setzt die Uhrabweichung des Prozesses.
+	\item \textit{public long getGlobalTime()}: Gibt die aktuelle globale Simulationszeit zur\"{u}ck.
+	\item \textit{public long getTime()}: Gibt die aktuelle lokale Prozesszeit zur\"{u}ck.
+	\item \textit{public void setTime(long time)}: Setzt die aktuelle lokale Prozesszeit.
+	\item \textit{public long getLamportTime()}: Gibt die aktuelle Lamportzeit des Prozesses zur\"{u}ck.
+	\item \textit{public void setLamportTime(long lamportTime)}: Setzt die aktuelle Lamportzeit des Prozesses.
+	\item \textit{public void increaseLamportTime()}: Inkrementiert die Lamportzeit um eins.
+	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert die Lamportzeit. Siehe Kapitel 2.6.1 wie die Lamportzeiten erneuert werden.
+	\item \textit{public VSVectorTime getVectorTime()}: Gibt die aktuelle Vektor-Zeit des Prozesses zur\"{u}ck.
+	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamportzeitstempelhistorie des Prozesses zur\"{u}ck. Kann jeweils nach VSLamportTime gecastet werden.
+	\item \textit{public VSTime getVectorTimeArray()}: Gibt die gesamte Vektor-Zeitstempelhistorie des Prozesses zur\"{u}ck. Kann jeweils nach VSVectorTime gecastet werden.
+	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert die Vektorzeit. Siehe Kapitel 2.6.1 wie die Vektorzeiten erneuert werden.
+	\item \textit{public void increaseVectorTime()}: Inkrementiert die Vektorzeit an lokalem Index um eins.
+	\item \textit{public int getProcessID()}: Gibt die PID zur\"{u}ck.
+	\item \textit{public void setProcessID(int processID)}: Setz die PID.
+	\item \textit{public int getProcessNum()}: Gibt die Prozessnummer zur\"{u}ck. Dieser Wert unterscheidet sich von der PID. Die Prozessnummer gibt an, um den wievielten Prozess, beginnend bei 0, es sich handelt. 
+	\item \textit{public int getRandomPercentage()}: Gibt einen Zufallswert zwischen \textit{0} und \textit{100} zur\"{u}ck.
+	\item \textit{public boolean hasCrashed()}: Gibt \textit{true} zur\"{u}ck, wenn der Prozess w\"{a}hrend der aktuellen Simulation schonmal abgest\"{u}rzt ist.
+	\item \textit{public boolean isCrashed()}: Gibt \textit{true} zur\"{u}ck, wenn der Prozess aktuell abgest\"{u}rzt ist.
+	\item \textit{public void isCrashed(boolean isCrashed)}: Hiermit kann man den Prozess abst\"{u}rzen (\textit{isCrashed = true}) und wiederbeleben (\textit{isCrashed = false}) lassen.
+\end{itemize}
+
+In der Regel werden in Protokollen auch Nachrichten (\textit{VSMessage}) verschickt. Folgende Methoden d\"{u}rfen davon im Protokoll-API verwendet werden:
+
+\begin{itemize}
+	\setlength{\itemsep}{-2mm}
+	\item \textit{public VSMessage()}: Der Standardkonstruktor f\"{u}r die Erstellung einer neuen Nachricht.
+	\item \textit{public String getProtocolClassname()}: Gibt den Klassennamen des zur Nachricht dazugeh\"{o}rigen Protokolls zur\"{u}ck. Diese Methode funktioniert nur bei empfangenen Nachrichten.
+	\item \textit{public int getmessageID()}: Gibt die Nachrichten-ID zur\"{u}ck.
+	\item \textit{public boolean equals(VSMessage message)}: Hiermit l\"{a}ﬂt sich \"{u}berpr\"{u}fen, ob eine gegebene Nachricht die selbe Nachrichten-ID besitzt (es sich um die selbe Nachricht handelt).
+\end{itemize}
+
+Folgende weitere Methoden von \textit{VSMessage} k\"{o}nnen bei Erhalt einer Nachricht verwendet werden:
+
+\begin{itemize}
+	\setlength{\itemsep}{-2mm}
+	\item \textit{public String getName()}: Gibt den Namen des zur Nachricht dazugeh\"{o}rigen Protokolls zur\"{u}ck. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public String getProtocolClassname()}: Gibt den Klassennamen des zur Nachricht dazugeh\"{o}rigen Protokolls zur\"{u}ck. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public VSInternalProcess getSendingProcess()}: Gibt eine Referenz auf den Senderprozess zur\"{u}ck. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public long getLamportTime()}: Gibt die Lamportzeit des Senderprozesses zur\"{u}ck. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public boolean isServerMessage()}: Hiermit l\"{a}ﬂt sich entscheiden, ob es sich um eine Server- oder eine Clientnachricht handelt. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+\end{itemize}
+
+Wenn \"{u}ber eine Nachricht Daten verschickt werden sollen, so werden die von \textit{VSPrefs} vererben Methoden verwendet. 
 
 \subsection{Beispielimplementierung eines Protokolls}
 
 Im Folgenden wird die Implementierung des zuverl\"{a}ssigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} als Beispiel aufgef\"{u}hrt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 2.5.10 beschrieben. Client- und Serverseite werden in der selben Klasse implementiert.
 
-Im Konstruktor muﬂ stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{HAS\_ON\_CLIENT\_START} wird dem API mitgeteilt, dass der Client die Anfragen startet. F\"{u}r \textit{HAS\_ON\_SERVER\_START} und Serveranfragen gilt Selbiges analog:
+Im Konstruktor muﬂ stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{HAS\_ON\_CLIENT\_START} wird dem API mitgeteilt, dass der Client die Anfragen startet. F\"{u}r \textit{HAS\_ON\_SERVER\_START} und Serveranfragen gilt Selbiges analog. Da ein Protokoll auch ein \textit{VSAbstractEvent} ist, muss auch hier im Konstruktor mit \textit{setClassname} der Klassenname des aktuellen Protokolls angegeben werden:
 	
 \begin{code}
 package protocols.implementations;
@@ -315,22 +391,23 @@ public class VSReliableMulticastProtocol
 	extends VSAbstractProtocol {
     public VSReliableMulticastProtocol() {
         super(VSAbstractProtocol.HAS_ON_CLIENT_START);
-        setClassname(getClass().toString());
+        super.setClassname(super.getClass().toString());
     }
 \end{code}
 
 \subsubsection{Clientseite des Protokolls}
 
-Das private Klassenattribut \textit{pids} wird f\"{u}r die Zwischenspeicherung beteiligter PIDs ben\"{o}tigt. Hier sind alle PIDs abgelegt, von denen noch Best\"{a}tigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden k\"{o}nnen:
+Das private Klassenattribut \textit{pids} wird f\"{u}r die Zwischenspeicherung beteiligter PIDs ben\"{o}tigt. Hier sind alle PIDs abgelegt, von denen noch Best\"{a}tigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden k\"{o}nnen (siehe Abbildung \ref{fig:Protokollvariablen} unter ``Reliable Multicast Client'' ganz unten):
 \begin{code}
     private ArrayList<Integer> pids;
 
     public void onClientInit() {
         Vector<Integer> vec = new Vector<Integer>();
         vec.add(1); vec.add(3);
-        initVector("pids", vec, "PIDs beteilitger Prozesse");
-        initLong("timeout", 2500, 
-                 "Zeit bis erneute Anfrage", "ms");
+        super.initVector("pids", vec,
+                         "PIDs beteilitger Prozesse");
+        super.initLong("timeout", 2500, 
+                       "Zeit bis erneute Anfrage", "ms");
     }
 \end{code}
 
@@ -338,7 +415,7 @@ Wenn die Simulation zur\"{u}ckgesetzt wird, dann wird auch \textit{pids} reiniti
 \begin{code}
     public void onClientReset() {
        	pids.clear();
-        pids.addAll(getVector("pids"));
+        pids.addAll(super.getVector("pids"));
     }
 \end{code}
 
@@ -346,12 +423,13 @@ In \textit{onClientStart} wird gepr\"{u}ft, ob eine Clientanfrage gestartet werd
 \begin{code}
     public void onClientStart() {
         if (pids.size() != 0) {
-            long timeout = getLong("timeout") + process.getTime();
-            scheduleAt(timeout);
+            long timeout = super.getLong("timeout") 
+                         + process.getTime();
+            super.scheduleAt(timeout);
 
             VSMessage message = new VSMessage();
             message.setBoolean("isMulticast", true);
-            sendMessage(message);
+            super.sendMessage(message);
         }
     }
 \end{code}
@@ -368,13 +446,13 @@ Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. H
             else 
                 return;
 
-            logg("ACK von Prozess " + pid + " erhalten!");
+            super.logg("ACK von Prozess " + pid + " erhalten!");
 
             if (pids.size() == 0) {
-                logg("ACKs von allen beteiligten Prozessen " +
-                     "erhalten!");
+                super.logg("ACKs von allen beteiligten " +
+                           " Prozessen erhalten!");
 
-                removeSchedules();
+                super.removeSchedules();
             }
         }
     }
@@ -407,12 +485,12 @@ Wenn der Server eine Clientanfrage erhalten hat, so \"{u}berpr\"{u}ft der Server
             VSMessage message = new VSMessage();
             message.setBoolean("isAck", true);
             message.setInteger("pid", process.getProcessID());
-            sendMessage(message);
+            super.sendMessage(message);
 
             if (ackSent) {
-                logg("ACK erneut versendet");
+                super.logg("ACK erneut versendet");
             } else {
-                logg("ACK versendet");
+                super.logg("ACK versendet");
                 ackSent = true;
             }
         }
@@ -444,6 +522,7 @@ registerEvent("protocols.implementations.VSMyProtocol",
 	\item Mit dem Befehl \textit{ant dist} das Archiv \textit{dist/lib/VS-Sim-Latest.jar} erstellen und verwenden.
 \end{enumerate}
 
+\newpage
 \section{GUI sowie Simulationsvisualisierung}
 
 Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols} dargestellt) implementiert die eigentliche graphische Benutzeroberf\"{a}che des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
@@ -455,9 +534,9 @@ Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocol
 	\label{fig:PackageProtocols}
 \end{figure}
 
-Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instanziiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschlieﬂend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie bereits schon auf Abbildung \ref{fig:NeuesFenster} zu sehen war) implementiert. Das Simulatorfenster erstellt f\"{u}r jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation} wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugeh\"{o}rige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zur\"{u}ck, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}) implementiert. 
+Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instanziiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschlieﬂend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie bereits schon auf Abbildung \ref{fig:NeuesFenster} zu sehen war) implementiert. Das Simulatorfenster erstellt f\"{u}r jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation} wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugeh\"{o}rige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zur\"{u}ck, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}) implementiert. 
 
-\textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java2D-Grafikbibliothek zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ﬂern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neuberechnet. 
+\textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java2D-Grafikbibliothek zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ﬂern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neu berechnet. 
 
 Die Klasse \textit{VSMenuItemStates} wird f\"{u}r die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Men\"{u}s (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Damit ist gemeint, ob die Simulation bereits gestartet wurde oder nicht oder gegebenenfalls schon abgelaufen ist. Oder ob die Simulation sich in einem pausierten Status befindet. Abh\"{a}ngig davon kann der Benutzer bestimmte Aktionen durchf\"{u}hren oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier m\"{o}glichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt.
 
@@ -465,12 +544,14 @@ Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereignis
 
 \textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt.
 
+\newpage
 \section{Serialisierung von Simulationen}
 
 Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden.
 
 \subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
+\newpage
 \section{Helferklassen und Klassen f\"{u}r Ausnahmebehandlungen}
 
 Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
@@ -502,6 +583,7 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:P
 
 Im Paket \textit{exceptions} befinden sich lediglich einige eigene Objekte f\"{u}r Ausnahmebehandlungen. \textit{VSNotCopyableException} wird von einem nicht-kopierbaren Ereignis geworfen, wenn versucht wird es zu kopieren. \textit{VSNegatieNumberException} wird geworfen, wenn intern negative Zahlen dort auftreten, wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zur\"{u}ck.
 
+\newpage
 \section{Entwicklungsumgebung}
 
 In diesem Teilkapitel soll ein kleiner Einblick in die Umgebung, in der der Simulator entwickelt wurde, gew\"{a}hrt werden. F\"{u}r diese Diplomarbeit wurde ausschlieﬂlich Open Source Software verwendet. Die einzige Ausnahme stellt Microsoft Windows XP dar, worauf der Simulator zus\"{a}tzlich getestet wurde. Der Simulator wurde jedoch haupts\"{a}chlich unter dem Betriebssystem FreeBSD 7.0, was ein open source Unix-Derivat ist, programmiert. 

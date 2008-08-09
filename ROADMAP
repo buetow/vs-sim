@@ -1,11 +1,10 @@
 Must do:
-	pakete serialize, simulator beschreiben
+	paket serialize beschreiben
 	ausblick schreiben
 	Warn if a file does not exists while trying to open!
 	Literaturangaben komplettieren
 	UML for wrapping ..process(prioqueue(vstask(messagereceive(message))))
 	alle API methoden beschreiben
-	About-Text aendern 
 Evtl.:
 	setClassname wegmachen? -> instanceof
 	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor

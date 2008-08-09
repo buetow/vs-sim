@@ -395,7 +395,7 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
      *
      * @return the num processes
      */
-    public int getNumProcesses() {
+    public final int getNumProcesses() {
         if (process == null)
             return 0;
 
