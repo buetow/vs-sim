@@ -26,7 +26,7 @@ In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der S
 	\label{tb:Pakete}
 \end{table}
 
-Da es sonst den Rahmen sprengen w\"{u}rde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich n\"{a}mlich, einschlieﬂlich Kommentare, auf \"{u}ber 15.000 Zeilen und \"{u}ber 59 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) \"{u}ber 2MB groﬂ. Alle folgenden UML-Diagramme stellen aufgrund der \"{U}bersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugeh\"{o}rigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete} in alphanumerischer Reihenfolge aufgef\"{u}hrt.  
+Da es sonst den Rahmen sprengen w\"{u}rde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich n\"{a}mlich, einschlieﬂlich Kommentare, auf \"{u}ber 15.000 Zeilen und \"{u}ber 61 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) \"{u}ber 2MB groﬂ. Alle folgenden UML-Diagramme stellen aufgrund der \"{U}bersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugeh\"{o}rigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete} in alphanumerischer Reihenfolge aufgef\"{u}hrt.  
 
 \section{Einstellungen und Editoren}
 
@@ -90,7 +90,9 @@ Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwe
 
 \textit{VSPrefs} speichert alle Integervariablen in einem \textit{HashMap<String,Integer>}-Objekt ab, wobei der String-Wert den Variablenamen \textit{key} angibt. F\"{u}r die Beschreibung \textit{descr}, den Einheiten-String \textit{unit} sowie m\"{o}glichen Minimum- und Maximumwerte werden separate Instanzen von \textit{HashMap} verwendet. Da alle \textit{HashMap}-Objekte synchronisiert sind, k\"{o}nnen alle Methoden von verschiednenen Threads gleichzeitig verwendet werden. 
 
-Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSPrefs} und initialisiert bei Instanzierung automatisch alle verf\"{u}gbaren Simulationsvariablen mit ihren Standardwerten. Dort sind auch alle Spracheinstellungen abgelegt. Sollte jemand den Simulator in eine andere Sprache, zum Beispiel ins Englische, \"{u}bersetzen wollen, so muﬂ er lediglich diese Datei und die Protokoll-Klassen (mehr dazu sp\"{a}ter) editieren. Die Spracheinstellungen sind n\"{a}mlich in einem \textit{VSPrefs}--Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen f\"{u}r Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort f\"{u}r den Protokollentwickler bietet und f\"{u}r jede neue Textausgabe nicht st\"{a}ndig \textit{VSDefaultPrefs.java} editiert werden muss. 
+\textit{VSSerializablePrefs} implementiert das Interface \textit{VSSerializable} und kann somit alle enthaltenen Daten in eine Datei abspeichern und neu laden. Auf die Serialisierung und Deserialisierung von Simulationen wird sp\"{a}ter genauer eingegangen.
+
+Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSSerializablePrefs} und initialisiert bei Instanzierung automatisch alle verf\"{u}gbaren Simulationsvariablen mit ihren Standardwerten. Dort sind auch alle Spracheinstellungen abgelegt. Sollte jemand den Simulator in eine andere Sprache, zum Beispiel ins Englische, \"{u}bersetzen wollen, so muﬂ er lediglich diese Datei und die Protokoll-Klassen (mehr dazu sp\"{a}ter) editieren. Die Spracheinstellungen sind n\"{a}mlich in einem \textit{VSPrefs}--Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen f\"{u}r Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort f\"{u}r den Protokollentwickler bietet und f\"{u}r jede neue Textausgabe nicht st\"{a}ndig \textit{VSDefaultPrefs.java} editiert werden muss. 
 
 Alle Variablen die als Prefix \textit{lang}, \textit{keyevent}, \textit{div} oder \textit{col} tragen, sind versteckte Variablen und werden in einem Editor nicht angezeigt. Im Expertenmodus sind hingegen nur Variablen die mit \textit{lang} und \textit{keyevent} beginnen versteckt. Somit lassen sich im Expertenmodus weitere Variablen vom Anwender editieren.
 
@@ -98,7 +100,7 @@ Alle Variablen die als Prefix \textit{lang}, \textit{keyevent}, \textit{div} ode
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=11cm]{images/prefs-editors}
+	\includegraphics[width=10.5cm]{images/prefs-editors}
 	\caption{Das Paket \textit{prefs.editors}}
 	\label{fig:PackagePrefsEditors}
 \end{figure}
@@ -170,7 +172,9 @@ Jede Ereiginsklasse hat zudem Zugriff auf folgende Attribute, die von \textit{VS
 
 \subsection{Beispielimplementierung eines Ereignisses}
 
-Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugeh\"{o}rige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Jede Ereignisklasse muss in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. In \textit{onStart()} wird das eigentliche Ereignis ausgef\"{u}hrt. Hier wird obligatorisch \"{u}berpr\"{u}ft, ob der Prozess bereits abgest\"{u}rzt (hier eigentlich nicht Notwendig, verbessert aber die Lesbarkeit der Logik) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. Der Task-Manager \"{u}berpr\"{u}ft bereits, ob der Prozess abgest\"{u}rzt ist oder nicht, d.h. ein Ereignis wird bei einem abgest\"{u}rztem Prozess gar nicht erst ausgef\"{u}hrt. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgef\"{u}hrt wird, auch wenn der Prozess abgest\"{u}rzt ist. Mit \textit{logg} wird eine Nachricht in das Loggfenster geschrieben, welche ueber das \textit{VSPrefs}-Objekt \textit{prefs} bezogen wird:
+Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugeh\"{o}rige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Jede Ereignisklasse muss in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. In \textit{onStart()} wird das eigentliche Ereignis ausgef\"{u}hrt. Hier wird obligatorisch \"{u}berpr\"{u}ft, ob der Prozess bereits abgest\"{u}rzt (hier eigentlich nicht Notwendig, verbessert aber die Lesbarkeit der Logik) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. 
+
+Der Task-Manager \"{u}berpr\"{u}ft bereits, ob der Prozess abgest\"{u}rzt ist oder nicht, d.h. ein Ereignis wird bei einem abgest\"{u}rztem Prozess gar nicht erst ausgef\"{u}hrt. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgef\"{u}hrt wird, auch wenn der Prozess abgest\"{u}rzt ist. Mit \textit{logg} wird eine Nachricht in das Loggfenster geschrieben, welche ueber das \textit{VSPrefs}-Objekt \textit{prefs} bezogen wird:
 \begin{code}
 package events.implementations;
 
@@ -514,26 +518,71 @@ Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocol
 
 Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instanziiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschlieﬂend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie bereits schon auf Abbildung \ref{fig:NeuesFenster} zu sehen war) implementiert. Das Simulatorfenster erstellt f\"{u}r jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation} wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugeh\"{o}rige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zur\"{u}ck, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}) implementiert. 
 
-\textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java2D-Grafikbibliothek zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ﬂern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neu berechnet. 
+\textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java's Grafikbibliothek Java2D zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ﬂern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neu berechnet. 
 
 Die Klasse \textit{VSMenuItemStates} wird f\"{u}r die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Men\"{u}s (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Damit ist gemeint, ob die Simulation bereits gestartet wurde oder nicht oder gegebenenfalls schon abgelaufen ist. Oder ob die Simulation sich in einem pausierten Status befindet. Abh\"{a}ngig davon kann der Benutzer bestimmte Aktionen durchf\"{u}hren oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier m\"{o}glichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt.
 
 Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert wie das jeweilige Ereignis anzulegen ist und es automatisch in ein \textit{VSTask}-Objekt gekapselt f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung dem Task-Manager \"{u}bergibt. 
 
-\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt.
+\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt. F\"{u}r den Loggfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} zugegriffen, womit anhand von regul\"{a}ren Ausdr\"{u}cken in Java-Syntax die Loggs gefiltert werden k\"{o}nnen.
 
-\section{Serialisierung von Simulationen}
+\section{Serialisierung und Deserialisierung von Simulationen}
 
-Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird auf die von Java angebotene M\"{o}glichkeit Objekte zu Serialisieren gebrauch gemacht. Im Paket \textit{serialize} befinden sich Helferklassen, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen.
+Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen M\"{o}glichkeit Objekte zu Serialisieren gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}) befinden sich Helferklassen, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
+
+Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Objekt. Alle Serialisierbaren Klassen implementieren das Interface \textit{VSSerializable} mit folgenden zwei Methoden:
+
+\begin{itemize}
+	\item \textit{public void serialize(VSSerialize serialize, ObjectOutputStream oos)}: Diese Methode wird bei jedem Serialisierungsvorgang aufgerufen (beim Speichern einer Simulation).
+	\item \textit{public void deserialize(VSSerialize serialize, ObjectInputStream ois)}: Diese Methode wird bei jedem Deserialisierungsvorgang aufgerufen (beim Laden einer Simulation).
+\end{itemize}
+
+Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. F\"{u}r jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die ben\"{o}tigten Aktionen durchzuf\"{u}hren. Eine zu serialisierende Simulation besteht aus vielen voneinander abh\"{a}ngigen Objekte. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. W\"{u}rde jedes Objekt komplett serialisiert werden, so w\"{u}rden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausf\"{u}hrung seriaisiert werden. Bei Kreissverweisen w\"{u}rde die Serialisierung sogar in einer Endlosschleife enden. 
+
+\textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, sodass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
+
+Da \textit{VSAbstractEvent} und \textit{VSAbstractProcess} die Klasse \textit{VSSerializablePrefs} erweitern, sind automatisch auch alle Ereignisobjekte (und somit auch alle Protokollobjekte) und Prozessobjekte serialisierbar.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=13cm]{images/serialize}
-	\caption{Das Paket \textit{serialize}}
+	\caption{Das Paket \textit{serialize} und serialisierbare Klassen}
 	\label{fig:PackageSerialize}
 \end{figure}
 
-\subsubsection{R\"{u}ckw\"{a}rtskompatibel}
+Abgespeicherte Simulationen sollen auch mit zuk\"{u}nftigen Versionen des Simulators kompatibel bleiben. Deshalb werden alle Objekte derjenigen Klassen, die \textit{VSSerializable} implementieren, nicht komplett serialisiert. Bei der Serialisierung werden nur relevante Klassenattriute, die der Simulationsprogrammierung- und nicht bispielsweise GUI-komponenten angeh\"{o}ren, serialisiert. 
+
+Der folgende Quelltext-Ausschnitt zeigt eine Beispielimplementierung von \textit{serialize}:
+
+\begin{code}
+    public synchronized void serialize(VSSerialize serialize,
+                                       ObjectOutputStream oos)
+    throws IOException {
+        oss.writeObject(new Boolean(false)); // flag
+        oss.writeObject(attributeOne);
+        oss.writeObject(ottributeTwo);
+        serialize.setObject("sampleObject", this);
+        prefs.serialize(serialize, oos);
+        someOtherSerializableObject.serialize(serialize, oos);
+        oss.writeObject(new Boolean(false)); // flag
+    }
+\end{code}
+
+Vor- und nach der eigenlichen Objektserialisierung wird jeweils ein boolsches Flag serialisiert, welches auf \textit{true} gesetzt wird, sobald in sp\"{a}teren Simulator-Versionen (was relativ unwahrscheinlich, aber m\"{o}glich ist) weitere zu serialisierende Klassenattribute hinzukommen. Eine Deserialisiernug kann die Flags dann abfragen und separat behandeln. Somit bleiben \"{a}ltere bereits abgespeicherte Simulationen stets zur neusten Version des Simulators kompatibel. Wenn ein Flag auf \textit{true} gesetzt wird, dann kann unter den neuen Attributserialisierungen ein weiteres Flag gesetzt werden. Somit k\"{o}nnen beliebig viele Erweiterungen in die Serialisierung Einzug halten.
+
+Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute k\"{o}nnen vernachl\"{a}ﬂigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objektserialisierungen zur\"{u}ckgreifen k\"{o}nnen. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. Wobei hier zuerst die Instanzen der Klassen auf normalen Weg erstellt werden und dann nachtr\"{a}glich die relevanten Attribute deserialisiert und den Objekten zugewiesen werden. Hierbei werden auch mithilfe von \textit{VSSerialize} mehrere Referenzen auf das selbe Objekt korrekt behandelt.
+
+Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} w\"{a}hlt, dann wird zun\"{a}chst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgef\"{u}hrt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}). Das Simulator-Objekt f\"{u}hrt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschliessend folgt der Task-Manager inklusive allen programmierten Ereignissen. Alle Instanzen von \textit{VSSerializablePrefs} werden automatisch mitserialisiert. Sie beinhalten alle Simulationseinstellungen. 
+
+\begin{figure}
+	\centering
+	\rotatebox{90}{%
+		\includegraphics[width=22cm]{images/sequence-serialize}
+	}
+	\caption{Serialisierungssequenz}
+	\label{fig:SequenceSerialize}
+\end{figure}
+
 
 \section{Helferklassen und Klassen f\"{u}r Ausnahmebehandlungen}
 
