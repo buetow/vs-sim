@@ -507,6 +507,8 @@ registerEvent("protocols.implementations.VSMyProtocol",
 
 \section{GUI sowie Simulationsvisualisierung}
 
+\subsection{Funktionsweise}
+
 Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols} dargestellt) implementiert die eigentliche graphische Benutzeroberf\"{a}che des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
 
 \begin{figure}[h]
@@ -520,15 +522,47 @@ Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VS
 
 \textit{VSSimulatorVisualization} ist bei Weitem die kryptischste Klasse des Simulators. Die greift auf die Java's Grafikbibliothek Java2D zur\"{u}ck und ist aus Performancegr\"{u}nden mit dem Simulationsverlauf stark verzahnt. Variablen, die stets den selbe Wert haben, wurden stets als finale Variablen angelegt. Variablen, die von Konfigurationen oder Einstellungen abh\"{a}ngig sind, die sich nur nach Konfigurations\"{a}nderung oder Vergr\"{o}ßern beziehungsweise Verkleinern des Simulationsfensters \"{a}ndern, werden nur wenn es n\"{o}tig ist neu berechnet. 
 
-Die Klasse \textit{VSMenuItemStates} wird f\"{u}r die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Men\"{u}s (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Damit ist gemeint, ob die Simulation bereits gestartet wurde oder nicht oder gegebenenfalls schon abgelaufen ist. Oder ob die Simulation sich in einem pausierten Status befindet. Abh\"{a}ngig davon kann der Benutzer bestimmte Aktionen durchf\"{u}hren oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier m\"{o}glichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt.
+Die Klasse \textit{VSMenuItemStates} wird f\"{u}r die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Men\"{u}s (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Damit ist gemeint, ob die Simulation bereits gestartet wurde, noch nicht gestartet wurde oder gegebenenfalls schon abgelaufen ist. Oder ob die Simulation sich in einem pausierten Status befindet. Abh\"{a}ngig davon kann der Benutzer bestimmte Aktionen durchf\"{u}hren oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier m\"{o}glichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt.
 
-Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert wie das jeweilige Ereignis anzulegen ist und es automatisch in ein \textit{VSTask}-Objekt gekapselt f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung dem Task-Manager \"{u}bergibt. 
+Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert wie das jeweilige Ereignis anzulegen ist und es automatisch in ein \textit{VSTask}-Objekt gekapselt f\"{u}r eine sp\"{a}tere Ausf\"{u}hrung dem Task-Manager \"{u}bergibt. 
 
 \textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt. F\"{u}r den Loggfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} zugegriffen, womit anhand von regul\"{a}ren Ausdr\"{u}cken in Java-Syntax die Loggs gefiltert werden k\"{o}nnen.
 
+\subsection{Threads und Zeitsynchronisierung}
+
+Ziel vom Simulator is es bis auf jede Millisekunde genau zu simulieren. Jede simulierte Sekunde soll relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit l\"{a}ßt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen. Damit dies gew\"{a}hrleistet wird, muß folgendes ber\"{u}cksichtigt werden:
+
+\begin{itemize}
+	\item Das Zeichnen der Visualisierung ben\"{o}tigt pro Aktualisierung einige Millisekunden. Dies ist der Rechenintensivste Teil des Simulators. Hier werden st\"{a}ndig mathematische Berechnungen (wie zum Beispiel die Gerade einer Nachrichtenlinie, die automatische Skalierung des Diagrams die sich automatisch an die Fenstergr\"{o}ße und der Simulationsdauer anpasst und vieles mehr).
+	\item Das Neuberechnen der Simulation ben\"{o}tigt pro Aktualisierung einige Millisekunden. Hier wird insbesondere der Task-Manager beansprucht, der \"{u}berpr\"{u}ft, ob Ereignisse auszuf\"{u}hren sind und sie gegebenenfalls dann auch ausf\"{u}hrt.
+	\item Jeder simulierte Prozess sollte mit selber Geschwindigkeit fortschreiten, und dies auf jedem Rechner wo der Simulator ausgef\"{u}hrt wird. Da Java-Threads nicht komplett platformunabh\"{a}ngig sind (Threads sind im Betriebssystem implementiert), kann das Verhalten auf verschiedenen Rechnern minimal variieren. Ausserdem \"{u}bernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf. Ausser man synchronisiert Threads manuell so, dass sie den eigenen Anspr\"{u}chen entsprechen. Letzteres bedeutet aber auch mehr Programmieraufwand.
+	\item Die Simulationszeit ist stets in Millisekunden angegeben, welche in einer \textit{long}-Variable abgespeichert wird. Somit kann eine Simulationszeit immer nur eine ganze Zahl sein. Berechnungsrundungsfehler wegen \textit{sim.clock.speed} m\"{u}ssen ber\"{u}cksichtig werden.
+	\item Der Simulator soll nicht st\"{a}ndig die komplette CPU des Anwender-Computers voll beanspruchen.
+\end{itemize}
+
+Es wurde folgende relativ einfache L\"{o}sung gew\"{a}hlt, bei der lediglich ein einziger Thread fuer die Visualisierung und die Berechnung der Simulation zust\"{a}ndig ist (alle Zeitangaben sind in Millisekunden). Der Algorithmus verl\"{a}uft leicht vereinfacht in folgender Form ab:
+
+\begin{enumerate}
+	\item Die simulierte Startzeit sei $s$ und die Zeit wo die Simulation aufh\"{o}rt sei $e$.
+	\item Wenn $s > e$, dann $s := e$ setzen. 
+	\item Neuberechnen und Zeichnen der Visualisierung zum Zeitpunkt $s$. Die dabei verstrichene Zeit sei $v$. 
+	\item Wenn $s == e$, dann Simulation beenden.
+	\item F\"{u}r einige Millisekunden den Thread pausieren (schlafen lassen). Hierbei sei $p$ die beim Schlafen verstrichene Zeit.
+	\item 
+		\begin{verbatim}
+for (i = s; i < s + v + p && i < e; i++)
+    Alle Ereignisse des Zeitpunktes i hintereinander ausführen
+		\end{verbatim}
+	\item Bei Punkt 2 mit neuer Startzeit $s := s + v + p$ weitermachen.
+\end{enumerate}
+
+Hinzu kommt noch die Ber\"{u}cksichtigung der Simulationsvariable \textit{sim.clock.speed}, die wegen der \"{U}bersicht im Algorithmus nicht dargestellt wurde. Intern hat der Simulator die echte Zeit und die Simulationszeit abgespeichert. Es werden st\"{a}ndig die verstrichenen echten Zeiten gemessen und anschliessend anhand von \textit{sim.clock.speed} die neuen tats\"{a}chlichen Simulationszeiten berechnet. Rundungsfehler werden pro Durchgang in eine \textit{double}-Variable (Fließkommazahl doppelter Genauigkeit) abgespeichert und wenn der Betrag der Rundungsfehler $>= 1$ ist, dann werden davon die ganzen Werteanteile in der Simulationszeit ber\"{u}cksichtigt.
+
+Jede Simulation besitzt somit seinen eigenen Simulationsthread. Bei mehreren parallel laufenden Simulationen laufen auch mehrere parallele voneinander unabh\"{a}ngige Threads. Des Weiteren gibt es noch den Java Swing-Thread, der f\"{u}r die GUI und der Anwenderinteraktion zust\"{a}ndig ist. Der Anwender kann zu jedem Zeitpunkt in die Simulation eingreifen. Anwendereingriffe m\"{u}ssen daher synchronisiert werden, da es ansonsten zu zeitgleichen Zugriffen/\"{A}nderungen gleicher Objekte kommen kann und somit eine Java-Ausnahme geworfen wird die das Stoppen eines Threads verursacht.
+
 \section{Serialisierung und Deserialisierung von Simulationen}
 
-Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen M\"{o}glichkeit Objekte zu Serialisieren gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}) befinden sich Helferklassen, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
+Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen M\"{o}glichkeit Objekte zu Serialisieren gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}) befinden sich Helfer, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
 
 Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Objekt. Alle Serialisierbaren Klassen implementieren das Interface \textit{VSSerializable} mit folgenden zwei Methoden:
 
@@ -537,7 +571,7 @@ Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Ob
 	\item \textit{public void deserialize(VSSerialize serialize, ObjectInputStream ois)}: Diese Methode wird bei jedem Deserialisierungsvorgang aufgerufen (beim Laden einer Simulation).
 \end{itemize}
 
-Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. F\"{u}r jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die ben\"{o}tigten Aktionen durchzuf\"{u}hren. Eine zu serialisierende Simulation besteht aus vielen voneinander abh\"{a}ngigen Objekte. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. W\"{u}rde jedes Objekt komplett serialisiert werden, so w\"{u}rden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausf\"{u}hrung seriaisiert werden. Bei Kreissverweisen w\"{u}rde die Serialisierung sogar in einer Endlosschleife enden. 
+Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. F\"{u}r jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die ben\"{o}tigten Aktionen durchzuf\"{u}hren. Eine zu serialisierende Simulation besteht aus vielen voneinander abh\"{a}ngigen Objekten. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. W\"{u}rde jedes Objekt komplett serialisiert werden, so w\"{u}rden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausf\"{u}hrung serialisiert werden. Bei Kreissverweisen (Objekt A hat eine Referenz auf Objekt B und Objekt B hat eine Referenz auf Objekt A als Attribut gespeichert) w\"{u}rde die Serialisierung sogar in einer Endlosschleife enden. 
 
 \textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, sodass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
 
@@ -572,7 +606,7 @@ Vor- und nach der eigenlichen Objektserialisierung wird jeweils ein boolsches Fl
 
 Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute k\"{o}nnen vernachl\"{a}ßigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objektserialisierungen zur\"{u}ckgreifen k\"{o}nnen. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. Wobei hier zuerst die Instanzen der Klassen auf normalen Weg erstellt werden und dann nachtr\"{a}glich die relevanten Attribute deserialisiert und den Objekten zugewiesen werden. Hierbei werden auch mithilfe von \textit{VSSerialize} mehrere Referenzen auf das selbe Objekt korrekt behandelt.
 
-Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} w\"{a}hlt, dann wird zun\"{a}chst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgef\"{u}hrt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}). Das Simulator-Objekt f\"{u}hrt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschliessend folgt der Task-Manager inklusive allen programmierten Ereignissen. Alle Instanzen von \textit{VSSerializablePrefs} werden automatisch mitserialisiert. Sie beinhalten alle Simulationseinstellungen. 
+Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} w\"{a}hlt, dann wird zun\"{a}chst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgef\"{u}hrt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}). Das Simulator-Objekt f\"{u}hrt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschliessend folgt der Task-Manager inklusive allen programmierten Ereignissen. 
 
 \begin{figure}
 	\centering
