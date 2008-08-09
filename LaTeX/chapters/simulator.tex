@@ -138,7 +138,7 @@ F\"{u}r die Erstellung eines neuen Ereignisses kann der Anwender entweder mit ei
 
 Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder l\"{o}schen. Mithilfe der Strg-Taste k\"{o}nnen auch mehrere Ereignisse gleichzeitig markiert werden. Die Eintr\"{a}ge der Spalten f\"{u}r die Zeit und der PID lassen sich nachtr\"{a}glich editieren. Somit besteht eine komfortable M\"{o}glichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem \"{A}ndern der Ereigniseintrittszeit die Enter-Taste bet\"{a}tigt, da sonst die \"{A}nderung unwirksam ist.
 
-In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgew\"{a}hlten Prozesses. Dort k\"{o}nnen alle Variablen des Prozesses editiert werden und ist somit eine weitere M\"{o}glichkeit einen Prozesseditor aufzurufen. Der Prozesseditor wird sp\"{a}ter genauer behandelt. 
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgew\"{a}hlten Prozesses (Abbildung \ref{fig:NeueSimulationVariablen} links). Dort k\"{o}nnen alle Variablen des Prozesses editiert werden und ist somit eine weitere M\"{o}glichkeit einen Prozesseditor aufzurufen. Der Prozesseditor wird sp\"{a}ter genauer behandelt. 
 
 
 \subsubsection{Das Loggfenster}
@@ -193,6 +193,13 @@ Je komplexer eine Simulation wird, desto un\"{u}bersichtlicher werden die Eintr\
 Der Loggfilter wird anhand dem dazugeh\"{o}rigen Schalter ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regul\"{a}rer Ausdruck in Java-Syntax angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Loggzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die zum Beispiel nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Loggfilter werden nur die Loggzeilen angezeigt, auf die der angegebene regul\"{a}re Ausdruck passt. Der Loggfilter kann auch nachtr\"{a}glich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filter\"{a}nderung erneut gefiltert werden. 
 
 Der Loggfilter kann auch w\"{a}hrend einer laufenden Simulation verwendet werden. Bei Filterdeaktivierung werden alle Nachrichten wieder dargestellt. Loggnachrichten, die aufgrund des Filters noch nie angezeigt wurden, werden dann nachtr\"{a}glich angezeigt.
+
+\begin{figure}[h]
+	\centering
+	\fbox{\includegraphics[width=12cm]{images/ss-neue-simulation-variablen}}
+	\caption{Der Prozesseditor in der Sidebar}
+	\label{fig:NeueSimulationVariablen}
+\end{figure}
 
 \section{Ereignisse}
 
@@ -358,6 +365,7 @@ Im selben Fenster lassen sich auch die Protokollvariablen editieren. Die Protoko
 
 Im Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl oder Pixel verschiedener der GUI-Elemente, editieren. Auf Abbildung \ref{fig:SimulationseinstellungenExperten} sieht der Anwender alle einstellbaren Farben. Die fett-gedruckten Schl\"{u}ssel in Tabelle \ref{tb:Farbeinstellungen} dienen nur als Standardwerte f\"{u}r die neu zu erstellenen Prozesse und sind auch jeweils in den Prozesseinstellungen f\"{u}r jeden Prozess separat editierbar.
 
+\newpage
 \section{Protokolle}
 
 Im Folgenden werden alle verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterst\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
