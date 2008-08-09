@@ -1,10 +1,11 @@
 Must do:
+	beschreiben warum VSAbstractEvent -> VSPrefs
 	paket serialize beschreiben
 	ausblick schreiben
 	Warn if a file does not exists while trying to open!
 	Literaturangaben komplettieren
+	TODO suchen undfixen
 	UML for wrapping ..process(prioqueue(vstask(messagereceive(message))))
-	alle API methoden beschreiben
 Evtl.:
 	setClassname wegmachen? -> instanceof
 	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor

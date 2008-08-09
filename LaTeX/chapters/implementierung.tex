@@ -65,7 +65,7 @@ Auf Abbilung \ref{fig:PackagePrefs} ist der Aufbau des Pakets \textit{prefs} zu 
 
 Jede Variable besteht aus einen Datentypen, einen Variablenamen und einer optionalen Beschreibung sowie einen Wert. Einige Datentypen unterst\"{u}tzen auch die Angabe von Minimum- und Maximumwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mithilfe der \textit{VSPrefsRestriction}-Klasse implementiert wird. Da man beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen m\"{o}chte, kann f\"{u}r jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
 
-Eine Variablenbeschreibung wird f\"{u}r die Darstellung im GUI verwendet, w\"{a}hrend der Variablenname eher f\"{u}r die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) die Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn f\"{u}r eine Variable keine Beschreibung existiert so wird, wie auf Abbildung \ref{fig:SimulationseinstellungenExperten} anhand der Farbvariablen schon gesehen wurde, f\"{u}r die Anzeige f\"{u}r eine Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die auf Tabelle \ref{tb:VariablenPrefixe} angegebenen Prefixe. Alle verf\"{u}gbaren Typen wurden bereits in Tabelle \ref{tb:VariablenDatentypen} aufgelistet. \textit{VSPrefs} stellt f\"{u}r alle Variablen entsprechende Zugriffsmethoden zur Verf\"{u}gung.  
+Eine Variablenbeschreibung wird f\"{u}r die Darstellung im GUI verwendet, w\"{a}hrend der Variablenname eher f\"{u}r die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) die Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn f\"{u}r eine Variable keine Beschreibung existiert so wird, wie auf Abbildung \ref{fig:SimulationseinstellungenExperten} anhand der Farbvariablen schon gesehen wurde, f\"{u}r die Anzeige f\"{u}r eine Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die auf Tabelle \ref{tb:VariablenPrefixe} angegebenen Prefixe. Alle verf\"{u}gbaren Typen wurden bereits in Tabelle \ref{tb:VariablenDatentypen} aufgelistet. \textit{VSPrefs} stellt f\"{u}r alle Variablentypen entsprechende Zugriffsmethoden zur Verf\"{u}gung.  
 
 Im Folgenden werden nicht alle exisierenden Methoden aufgelistet, da diese auch in der Quelltext-Dokumentation (Javadoc) eingesehen werden k\"{o}nnen. Die Methoden werden nun nur anhand des Integer-Datentyps verdeutlicht. F\"{u}r alle anderen Typen gilt fast alles analog. F\"{u}r Integer stehen in \textit{VSPrefs} folgende Methoden zur Verf\"{u}gung:
 
@@ -104,7 +104,7 @@ Im Folgenden werden nicht alle exisierenden Methoden aufgelistet, da diese auch 
 	\label{tb:VariablenPrefixe}
 \end{table}
 
-Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwert dar. \textit{descr} ist eine optionale Variablenbeschreibung. Es k\"{o}nnen sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern allerdings als Integer-Objekt abgespeichert und macht somit keinen groﬂen Unterschied. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} zur\"{u}ck.
+Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwert dar. \textit{descr} ist eine optionale Variablenbeschreibung. Es k\"{o}nnen sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern allerdings als Integer-Objekt abgespeichert (f\"{u}r eine sp\"{a}tere Serialisierung, mehr dazu aber sp\"{a}ter) und macht somit keinen groﬂen Unterschied. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} zur\"{u}ck.
 
 \textit{VSPrefs} bietet auch eine Reihe von \textit{initInteger}-Methoden an, welche sich von den \textit{setInteger}-Methoden dadurch unterscheiden, dass sie eine Variable nur einen Wert zuweisen, wenn sie vorher noch nicht initialisiert wurde, was durch \textit{setInteger} oder \textit{initInteger} selbst geschehen sein kann. Eine komplette \"{U}bersicht aller Methoden (auch f\"{u}r andere Datentypen) gibt es in der Quelltext-Dokumentation.
 
@@ -131,7 +131,6 @@ Die Klasse \textit{VSSimulatorEditor} dient f\"{u}r das Editieren der globalen S
 
 F\"{u}r Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Prozesseditor aus editiert werden k\"{o}nnen. Dabei iteriert der Prozesseditor \"{u}ber alle f\"{u}r den jeweiligen Prozess verf\"{u}gbaren Protokollobjekte und f\"{u}gt deren Variablen zus\"{a}tzlich in den Prozesseditor ein. Somit erscheinen die Prozess- und die dazugeh\"{o}rigen Protokollvariablen im selben Editor, womit dem Benutzer eine bessere \"{U}bersicht geboten wird. 
 
-\newpage
 \section{Ereignisse}
 
 \subsection{Funktionsweise von Ereignissen}
@@ -144,9 +143,9 @@ F\"{u}r jedes Ereignis existiert eine dazugeh\"{o}rige Klasse, welche die auszuf
 	\label{fig:PackageEvents}
 \end{figure}
 
-Jedes programmierbare Ereignis muﬂ, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Da sich die Anzahl der verf\"{u}gbaren Ereignisse bei Laufzeit des Simulators nicht \"{a}ndert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind hier statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann m\"{u}ssen alle neuen Ereignisse per Hand in die Datei \textit{VSRegisteredEvents.java} \"{u}bernommen- und der Simulator erneut kompiliert werden.
+Jedes programmierbare Ereignis muﬂ, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Da sich die Anzahl der verf\"{u}gbaren Ereignisklassen des Simulators bei Laufzeit nicht \"{a}ndert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind hier statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann m\"{u}ssen alle neuen Ereignisse per Hand in die Datei \textit{VSRegisteredEvents.java} \"{u}bernommen- und der Simulator erneut kompiliert werden.
 
-In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in verschiedenen Paketen liegen (siehe auch die leicht vereinfachte Abbildung \ref{fig:PackageEvents}):
+In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in verschiedenen Paketen liegen (Abbildung \ref{fig:PackageEvents}):
 
 \begin{enumerate}
 	\item \textit{events.implementations}: In diesem Paket befinden sich alle Ereignisse, die ohne weitere Spezialbehanldung im Simulator eingesetzt werden k\"{o}nnen und vom Benutzer direkt im Ereigniseditor programmierbar sind. 
@@ -191,7 +190,7 @@ Jede Ereiginsklasse hat zudem Zugriff auf folgende Attribute, die von \textit{VS
 
 \subsection{Beispielimplementierung eines Ereignisses}
 
-Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugeh\"{o}rige Klasse keine Attribute besitzt, verleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Jede Ereignisklasse muss in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. In \textit{onStart()} wird das eigentliche Ereignis ausgef\"{u}hrt. Hier wird obligatorisch \"{u}berpr\"{u}ft, ob der Prozess bereits abgest\"{u}rzt (hier eigentlich nicht Notwendig, verbessert aber die Lesbarkeit der Logik) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. Der Task-Manager \"{u}berpr\"{u}ft bereits, ob der Prozess abgest\"{u}rzt ist oder nicht, d.h. ein Ereignis wird bei einem abgest\"{u}rztem Prozess gar nicht erst ausgef\"{u}hrt. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgef\"{u}hrt wird, auch wenn der Prozess abgest\"{u}rzt ist. Mit \textit{logg} wird eine Nachricht in das Loggfenster geschrieben, welche ueber das \textit{VSPrefs}-Objekt \textit{prefs} bezogen wird:
+Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugeh\"{o}rige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Jede Ereignisklasse muss in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen TODO. In \textit{onStart()} wird das eigentliche Ereignis ausgef\"{u}hrt. Hier wird obligatorisch \"{u}berpr\"{u}ft, ob der Prozess bereits abgest\"{u}rzt (hier eigentlich nicht Notwendig, verbessert aber die Lesbarkeit der Logik) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. Der Task-Manager \"{u}berpr\"{u}ft bereits, ob der Prozess abgest\"{u}rzt ist oder nicht, d.h. ein Ereignis wird bei einem abgest\"{u}rztem Prozess gar nicht erst ausgef\"{u}hrt. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgef\"{u}hrt wird, auch wenn der Prozess abgest\"{u}rzt ist. Mit \textit{logg} wird eine Nachricht in das Loggfenster geschrieben, welche ueber das \textit{VSPrefs}-Objekt \textit{prefs} bezogen wird:
 \begin{code}
 package events.implementations;
 
@@ -215,7 +214,6 @@ extends VSAbstractEvent implements VSCopyableEvent {
 }
 \end{code}
 
-\newpage
 \section{Zeitformate, Prozesse, Nachrichten sowie Task-Manager}
 
 \subsection{Funktionsweise}
@@ -272,7 +270,6 @@ void createCrashAndRecoverExample(VSTaskManager taskManager,
 
 In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, w\"{a}hrend das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. F\"{u}r den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt wird es nicht ausgef\"{u}hrt, da der Prozess noch nicht abgest\"{u}rzt ist. 
 
-\newpage
 \section{Protokolle}
 
 \subsection{Funktionsweise des Protokoll-APIs}
@@ -503,7 +500,7 @@ Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Met
 }
 \end{code}
 
-\subsection{Erstellung eigener Protokolle}
+\subsection{Erstellung eigener Protokolle (Schnelldurchlauf)}
 
 Hier werden alle Schritte zusammegefasst, die f\"{u}r die Erstellung eines eigenen Protokolls \textit{VSMyProtocol} durchgef\"{u}rt werden m\"{u}ssen.
 
@@ -522,7 +519,6 @@ registerEvent("protocols.implementations.VSMyProtocol",
 	\item Mit dem Befehl \textit{ant dist} das Archiv \textit{dist/lib/VS-Sim-Latest.jar} erstellen und verwenden.
 \end{enumerate}
 
-\newpage
 \section{GUI sowie Simulationsvisualisierung}
 
 Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols} dargestellt) implementiert die eigentliche graphische Benutzeroberf\"{a}che des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
@@ -544,14 +540,12 @@ Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereignis
 
 \textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie tempor\"{a}re Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt \"{u}bergeben und dort dargestellt.
 
-\newpage
 \section{Serialisierung von Simulationen}
 
 Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden.
 
 \subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
-\newpage
 \section{Helferklassen und Klassen f\"{u}r Ausnahmebehandlungen}
 
 Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
@@ -583,7 +577,6 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:P
 
 Im Paket \textit{exceptions} befinden sich lediglich einige eigene Objekte f\"{u}r Ausnahmebehandlungen. \textit{VSNotCopyableException} wird von einem nicht-kopierbaren Ereignis geworfen, wenn versucht wird es zu kopieren. \textit{VSNegatieNumberException} wird geworfen, wenn intern negative Zahlen dort auftreten, wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zur\"{u}ck.
 
-\newpage
 \section{Entwicklungsumgebung}
 
 In diesem Teilkapitel soll ein kleiner Einblick in die Umgebung, in der der Simulator entwickelt wurde, gew\"{a}hrt werden. F\"{u}r diese Diplomarbeit wurde ausschlieﬂlich Open Source Software verwendet. Die einzige Ausnahme stellt Microsoft Windows XP dar, worauf der Simulator zus\"{a}tzlich getestet wurde. Der Simulator wurde jedoch haupts\"{a}chlich unter dem Betriebssystem FreeBSD 7.0, was ein open source Unix-Derivat ist, programmiert. 
