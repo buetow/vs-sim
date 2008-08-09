@@ -28,26 +28,6 @@ In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der S
 
 Da es sonst den Rahmen sprengen w\"{u}rde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich n\"{a}mlich, einschlieﬂlich Kommentare, auf \"{u}ber 15.000 Zeilen und \"{u}ber 59 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) \"{u}ber 2MB groﬂ. Alle folgenden UML-Diagramme stellen aufgrund der \"{U}bersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugeh\"{o}rigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete} in alphanumerischer Reihenfolge aufgef\"{u}hrt.  
 
-\section{Programmierrichtlinien}
-
-Die Programmierrichtlinien entsprechen in den meisten F\"{a}llen denen aus der Vorlesung \cite{OOS}. Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
-
-\begin{itemize}
-	\item Alle Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen finaler Variablen und Attribute sind komplett in Groﬂbuchstaben gehalten.
-	\item Alle Quelltext-Dateien besitzen einen Header, der Informationen der verwendeten Lizenz angibt.
-	\item Alle Quelltext-Dateien sind vollst\"{a}ndig mit Javadoc dokumentiert worden. 
-	\item Der komplette Quelltext inklusive Dokumentation wurde in englischer Sprache verfasst. 
-	\item Eine Quelltext-Datei hat eine maximale Zeilenl\"{a}nge von 80 Zeichen. Eine Ausnahme stellt die Klasse \textit{prefs.VSDefaultPrefs} dar, denn hier befinden sich auch l\"{a}ngere Texte die in Strings abgespeichert werden, wo manuelle Zeilenumbr\"{u}che wenig Sinn ergeben. 
-	\item Es werden zuerst Klassen aus der Java-Standardbibliothek importiert, bevor Klassen aus dem VS-Simulator selbst importiert werden.
-	\item F\"{u}r die Einr\"{u}ckung des Quelltextes wird das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einr\"{u}ckungsl\"{a}nge von 4 Zeichen verwendet.
-	\item Namen abstrakter Klassen tragen stets das Prefix \textit{VSAbstract}.
-	\item Namen aller Klassen und Interfaces tragen als Prefix stets \textit{VS}, was f\"{u}r Verteilte Systeme steht. 
-	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol}, zum Beispiel \textit{VSPingPongProtocol}.
-	\item \"{U}berall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (z.B. \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}.
-\end{itemize}
-
-
-
 \section{Einstellungen und Editoren}
 
 Eine Simulation ist von einer Vielzahl von Einstellungen abh\"{a}ngig. Da auf diese Einstellungen in den weiteren Teilkapitel sets zur\"{u}ckgegriffen wird, macht es Sinn die dazugeh\"{o}rigen Klassen zuerst zu betrachten.
@@ -544,7 +524,14 @@ Die klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereignis
 
 \section{Serialisierung von Simulationen}
 
-Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden.
+Der Anwender kann eine erstellte Simulation im Datei-Men\"{u} speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird auf die von Java angebotene M\"{o}glichkeit Objekte zu Serialisieren gebrauch gemacht. Im Paket \textit{serialize} befinden sich Helferklassen, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm]{images/serialize}
+	\caption{Das Paket \textit{serialize}}
+	\label{fig:PackageSerialize}
+\end{figure}
 
 \subsubsection{R\"{u}ckw\"{a}rtskompatibel}
 
@@ -578,6 +565,24 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:P
 \end{figure}
 
 Im Paket \textit{exceptions} befinden sich lediglich einige eigene Objekte f\"{u}r Ausnahmebehandlungen. \textit{VSNotCopyableException} wird von einem nicht-kopierbaren Ereignis geworfen, wenn versucht wird es zu kopieren. \textit{VSNegatieNumberException} wird geworfen, wenn intern negative Zahlen dort auftreten, wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zur\"{u}ck.
+
+\section{Programmierrichtlinien}
+
+Die Programmierrichtlinien entsprechen in den meisten F\"{a}llen denen aus der Vorlesung \cite{OOS}. Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
+
+\begin{itemize}
+	\item Alle Klassen- und Interfacenamen beginnen mit groﬂen Buchstaben, w\"{a}hrend alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen finaler Variablen und Attribute sind komplett in Groﬂbuchstaben gehalten.
+	\item Alle Quelltext-Dateien besitzen einen Header, der Informationen der verwendeten Lizenz angibt.
+	\item Alle Quelltext-Dateien sind vollst\"{a}ndig mit Javadoc dokumentiert worden. 
+	\item Der komplette Quelltext inklusive Dokumentation wurde in englischer Sprache verfasst. 
+	\item Eine Quelltext-Datei hat eine maximale Zeilenl\"{a}nge von 80 Zeichen. Eine Ausnahme stellt die Klasse \textit{prefs.VSDefaultPrefs} dar, denn hier befinden sich auch l\"{a}ngere Texte die in Strings abgespeichert werden, wo manuelle Zeilenumbr\"{u}che wenig Sinn ergeben. 
+	\item Es werden zuerst Klassen aus der Java-Standardbibliothek importiert, bevor Klassen aus dem VS-Simulator selbst importiert werden.
+	\item F\"{u}r die Einr\"{u}ckung des Quelltextes wird das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einr\"{u}ckungsl\"{a}nge von 4 Zeichen verwendet.
+	\item Namen abstrakter Klassen tragen stets das Prefix \textit{VSAbstract}.
+	\item Namen aller Klassen und Interfaces tragen als Prefix stets \textit{VS}, was f\"{u}r Verteilte Systeme steht. 
+	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol}, zum Beispiel \textit{VSPingPongProtocol}.
+	\item \"{U}berall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (z.B. \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}.
+\end{itemize}
 
 \section{Entwicklungsumgebung}
 
