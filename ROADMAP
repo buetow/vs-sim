@@ -1,6 +1,4 @@
 Must do:
-	Fassbender Programmierrichtlinien pruefen
-	beschreiben warum VSAbstractEvent -> VSPrefs (wg. serialisierung und protokollvariablen)
 	Warn if a file does not exists while trying to open!
 	Literaturangaben komplettieren
 

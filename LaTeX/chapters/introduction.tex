@@ -2,19 +2,19 @@
 
 \section{Motivation}
 
-In der Literatur findet man viele verschiedene Definitionen eines verteilten Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwer f\"{a}llt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben f\"{u}r die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
+In der Literatur findet man viele verschiedene Definitionen eines verteilten Systems. Vieler dieser Definitionen unterschieden sich untereinander, so dass es schwer fällt eine Definition zu finden, die als Alleinige als die Richtige gilt. Andrew Tanenbaum und Marten van Steen haben für die Beschreibung eins verteilten Systems die Folgende lockere Charakterisierung formuliert:
 
-\cite{Tanenbaum} \textit{``Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Anwender wie ein einzelnes, koh\"{a}rentes System erscheinen''}
+\cite{Tanenbaum} \textit{``Ein verteiltes System ist eine Menge voneinander unabhängiger Computer, die dem Anwender wie ein einzelnes, kohärentes System erscheinen''}
 
-Der Anwender muss sich nur mit dem lokalen vor ihm befindenden Computer auseinandersetzen, w\"{a}hrend die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicherstellt.
+Der Anwender muss sich nur mit dem lokalen vor ihm befindenden Computer auseinandersetzen, während die Software des lokalen Computers die reibungslose Kommunikation mit den anderen beteiligten Computern des verteilten Systems sicherstellt.
 
-Diese Diplomarbeit soll den Gebrauchern die Betrachtung von verteilten Systemen aus einer anderen Perspektive erleichtern. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen relevante Ereignisse eines verteilten Systems transparent dargestellt werden k\"{o}nnen. 
+Diese Diplomarbeit soll den Gebrauchern die Betrachtung von verteilten Systemen aus einer anderen Perspektive erleichtern. Es soll nicht die Sichtweise eines Endbenutzers eingenommen werden, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht werden. Es sollen relevante Ereignisse eines verteilten Systems transparent dargestellt werden können. 
 
-Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden. Der Simulator soll insbesondere f\"{u}r Lehr- und Lernzwecke an der Fachhochschule Aachen entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden k\"{o}nnen. Der Simulator soll zu verstehen helfen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum f\"{u}r eigene Experimente zur Verf\"{u}gung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschr\"{a}nkt sein. Es muss daher dem Gebraucher erm\"{o}glicht werden, eigene Protokolle zu entwerfen.
+Um dieses Ziel zu erreichen soll ein Simulator entwickelt werden. Der Simulator soll insbesondere für Lehr- und Lernzwecke an der Fachhochschule Aachen entwickelt werden. Beispielsweise sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren simuliert werden können. Der Simulator soll zu verstehen helfen wie die gegebenen Protokolle funktionieren und es soll viel Spielraum für eigene Experimente zur Verfügung stehen. Der Simulator soll nicht auf eine feste Anzahl von Protokollen beschränkt sein. Es muss daher dem Gebraucher ermöglicht werden, eigene Protokolle zu entwerfen.
 
 \section{Grundlagen}
 
-F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}utert. Eine Vertiefung findet erst in den sp\"{a}teren Kapiteln statt.
+Für das Grundverständnis werden im Folgenden einige Grundlagen erläutert. Eine Vertiefung findet erst in den späteren Kapiteln statt.
 
 \subsubsection{Client/Server Modell}
 
@@ -25,15 +25,15 @@ F\"{u}r das Grundverst\"{a}ndnis werden im Folgenden einige Grundlagen erl\"{a}u
 	\label{fig:ClientServer}
 \end{figure}
 
-Der Simulator basiert auf dem Client/Server Prinzip. Jeder Simulation besteht in der Regel aus einen teilnehmenden Client und einen Server, die miteinander \"{u}ber Nachrichten kommunizieren (Abbildung \ref{fig:ClientServer}). Bei komplexen Simulationen k\"{o}nnen auch mehrere Clients und/oder Server mitwirken. 
+Der Simulator basiert auf dem Client/Server Prinzip. Jeder Simulation besteht in der Regel aus einen teilnehmenden Client und einen Server, die miteinander über Nachrichten kommunizieren (Abbildung \ref{fig:ClientServer}). Bei komplexen Simulationen können auch mehrere Clients und/oder Server mitwirken. 
 
 \subsubsection{Prozesse und deren Rollen}
 
-Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es besteht auch die M\"{o}glichkeit, dass ein Prozess die Rollen mehrerer Server und Clients gleichzeitig einnimmt. Ob das sinnvoll ist h\"{a}ngt vom simulierten Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
+Ein verteiltes System wird anhand von Prozessen simuliert. Jeder Prozess nimmt hierbei eine oder mehrere Rollen ein. Beispielsweise kann ein Prozess die Rolle eines Clients einnehmen und ein weiterer Prozess die Rolle eines Servers. Ein Prozess kann auch Client und Server gleichzeitig sein. Es besteht auch die Möglichkeit, dass ein Prozess die Rollen mehrerer Server und Clients gleichzeitig einnimmt. Ob das sinnvoll ist hängt vom simulierten Szenario ab. Um einen Prozess zu kennzeichnen besitzt jeder Prozess eine \textbf{eindeutige} Prozess-Identifikationsnummer (PID). 
 
 \subsubsection{Nachrichten}
 
-In einem verteiltem System m\"{u}ssen Nachrichten verschickt werden k\"{o}nnen. Eine Nachricht kann von einem Client- oder Serverprozess verschickt werden und kann beliebig viele Empf\"{a}nger haben. Der Inhalt einer Nachricht h\"{a}ngt vom verwendeten Protokoll ab. Was unter einem Protokoll zu verstehen ist, wird sp\"{a}ter behandelt. Um eine Nachricht zu kennzeichnen besitzt jede Nachricht eine \textbf{eindeutige} Nachrichten-Identifikationsnummer (NID).
+In einem verteiltem System müssen Nachrichten verschickt werden können. Eine Nachricht kann von einem Client- oder Serverprozess verschickt werden und kann beliebig viele Empfänger haben. Der Inhalt einer Nachricht hängt vom verwendeten Protokoll ab. Was unter einem Protokoll zu verstehen ist, wird später behandelt. Um eine Nachricht zu kennzeichnen besitzt jede Nachricht eine \textbf{eindeutige} Nachrichten-Identifikationsnummer (NID).
 
 \subsubsection{Lokale und globale Uhren}
 
@@ -46,20 +46,19 @@ In einer Simulation gibt es \textbf{genau eine} globale Uhr. Sie stellt die aktu
 	\label{fig:ClientServerProtokolle}
 \end{figure}
 
-Zudem besitzt jeder beteiligter Prozess eine eigene lokale Uhr. Sie stellt die aktuelle Zeit des jeweiligen Prozesses dar. Im Gegensatz zu der globalen Uhr k\"{o}nnen lokale Uhren eine falsche Zeit anzeigen. Wenn die Prozesszeit nicht global-korrekt ist (nicht der globalen Zeit gleicht beziehungsweise eine falsche Zeit anzeigt), dann wurde sie entweder im Laufe einer Simulation neu gestellt, oder sie geht wegen einer Uhrabweichung falsch. Die Uhrabweichung gibt an, um welchen Faktor die Uhr falsch geht. Hierauf wird sp\"{a}ter genauer eingegangen. 
+Zudem besitzt jeder beteiligter Prozess eine eigene lokale Uhr. Sie stellt die aktuelle Zeit des jeweiligen Prozesses dar. Im Gegensatz zu der globalen Uhr können lokale Uhren eine falsche Zeit anzeigen. Wenn die Prozesszeit nicht global-korrekt ist (nicht der globalen Zeit gleicht beziehungsweise eine falsche Zeit anzeigt), dann wurde sie entweder im Laufe einer Simulation neu gestellt, oder sie geht wegen einer Uhrabweichung falsch. Die Uhrabweichung gibt an, um welchen Faktor die Uhr falsch geht. Hierauf wird später genauer eingegangen. 
 
-Neben den normalen Uhren sind auch die Vektor-Zeitstempel sowie die logischen Uhren von Lamport von Interesse. Jeder Prozess besitzt zus\"{a}tzlich einen Vektor-Zeitstempel f\"{u}r seine Vektorzeit, sowie einen Lamportzeitstempel f\"{u}r seine Lamportzeit. F\"{u}r die Vektor- und Lamportzeiten gibt es hier, im Gegensatz zu der normalen Zeit, keine globalen \"{A}quivalente. Konkrete Beispiele zu den Lamport- und Vektorzeiten werden sp\"{a}ter anhand einer Simulation behandelt.
+Neben den normalen Uhren sind auch die Vektor-Zeitstempel sowie die logischen Uhren von Lamport von Interesse. Jeder Prozess besitzt zusätzlich einen Vektor-Zeitstempel für seine Vektorzeit, sowie einen Lamportzeitstempel für seine Lamportzeit. Für die Vektor- und Lamportzeiten gibt es hier, im Gegensatz zu der normalen Zeit, keine globalen äquivalente. Konkrete Beispiele zu den Lamport- und Vektorzeiten werden später anhand einer Simulation behandelt.
 
 \subsubsection{Ereignisse}
 
-Eine Simulation besteht aus der Hintereinanderausf\"{u}hrung von endlich vielen Ereignissen. Beispielsweise kann es ein Ereignis geben, welches einen Prozess eine Nachricht verschicken l\"{a}sst. Denkbar w\"{a}re auch ein Prozessabsturzereignis. Jedes Ereignis tritt zu einem bestimmten Zeitpunkt ein. Ereignisse mit selber Eintrittszeit werden vom Simulator direkt hintereinander ausgef\"{u}hrt. Den Anwendern des Simulators hindert dies jedoch nicht, da Ereignisse aus seiner Sicht parallel ausgef\"{u}hrt werden k\"{o}nnen.
+Eine Simulation besteht aus der Hintereinanderausführung von endlich vielen Ereignissen. Beispielsweise kann es ein Ereignis geben, welches einen Prozess eine Nachricht verschicken lässt. Denkbar wäre auch ein Prozessabsturzereignis. Jedes Ereignis tritt zu einem bestimmten Zeitpunkt ein. Ereignisse mit selber Eintrittszeit werden vom Simulator direkt hintereinander ausgeführt. Den Anwendern des Simulators hindert dies jedoch nicht, da Ereignisse aus seiner Sicht parallel ausgeführt werden können.
 
 \subsubsection{Protokolle}
 
-Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits erw\"{a}hnt, dass ein Prozess die Rollen von Servern und/oder Clients annehmen kann. Bei jeder Server- und Clientrolle muss zus\"{a}tzlich das dazugeh\"{o}rige Protokoll spezifiziert werden. Ein Protokoll definiert, wie ein Client und ein Server Nachrichten verschickt und wie bei Ankunft einer Nachricht reagiert wird. Ein Protokoll legt auch fest, welche Daten in einer Nachricht enthalten sind. Ein Prozess verarbeitet eine empfangene Nachricht nur, wenn er das jeweilige Protokoll versteht.
+Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits erwähnt, dass ein Prozess die Rollen von Servern und/oder Clients annehmen kann. Bei jeder Server- und Clientrolle muss zusätzlich das dazugehörige Protokoll spezifiziert werden. Ein Protokoll definiert, wie ein Client und ein Server Nachrichten verschickt und wie bei Ankunft einer Nachricht reagiert wird. Ein Protokoll legt auch fest, welche Daten in einer Nachricht enthalten sind. Ein Prozess verarbeitet eine empfangene Nachricht nur, wenn er das jeweilige Protokoll versteht.
 
-In Abbildung \ref{fig:ClientServerProtokolle} sind 3 Prozesse dargestellt. Prozess 1 unterst\"{u}tzt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterst\"{u}tzt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. Das heißt, dass Prozess 1 mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren kann. Die Prozesse 2 und 3 sind zueinander inkompatibel und k\"{o}nnen voneinander erhaltene Nachrichten nicht verarbeiten.
+In Abbildung \ref{fig:ClientServerProtokolle} sind 3 Prozesse dargestellt. Prozess 1 unterstützt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterstützt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. Das heißt, dass Prozess 1 mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren kann. Die Prozesse 2 und 3 sind zueinander inkompatibel und können voneinander erhaltene Nachrichten nicht verarbeiten.
 
-Clients k\"{o}nnen nicht mit Clients, und Server nicht mit Server kommunizieren. F\"{u}r eine Kommunikation wird stets mindestens ein Client und ein Server ben\"{o}tigt. Diese Einschr\"{a}nkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unterst\"{u}tzen (siehe Broadcast-Sturm Protokoll sp\"{a}ter). Alle vom Simulator verf\"{u}gbaren Protokolle werden sp\"{a}ter genauer behandelt.
-
+Clients können nicht mit Clients, und Server nicht mit Server kommunizieren. Für eine Kommunikation wird stets mindestens ein Client und ein Server benötigt. Diese Einschränkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unterstützen (siehe Broadcast-Sturm Protokoll später). Alle vom Simulator verfügbaren Protokolle werden später genauer behandelt.
 

@@ -59,7 +59,7 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
         vec.add(1);
         vec.add(3);
 
-        initVector("pids", vec, "PIDs beteilitger Prozesse");
+        initVector("pids", vec, "PIDs beteiligter Prozesse");
         initLong("timeout", 2500, "Zeit bis erneute Anfrage", "ms");
     }
 
