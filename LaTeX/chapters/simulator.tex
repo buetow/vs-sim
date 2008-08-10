@@ -1077,13 +1077,23 @@ Es wird also stets die gr\"{o}ssere Lamportzeit vom Sender- und Empf\"{a}ngerpro
 	\label{fig:Vektorzeit}
 \end{figure}
 
-Mit aktiven Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (Abbildung \ref{fig:Vektorzeit}). Wie bei den Lamportzeitstempeln wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigegef\"{u}gt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die gr\"{o}ße $n$. Somit gibt es f\"{u}r jeden beteiligten Prozess $i$ einen eigenen Index $i$. \"{U}ber $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. 
+Mit aktiven Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (Abbildung \ref{fig:Vektorzeit}). Wie bei den Lamportzeitstempeln wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigef\"{u}gt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die gr\"{o}ße $n$. Somit gibt es f\"{u}r jeden beteiligten Prozess $i$ einen eigenen Index $i$. \"{U}ber $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empf\"{a}ngerprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektorzeitstempel wie folgt (hier in Pseudo-Code angegeben) neuberechnet:
+
+\begin{code}
+for (i := 0; i < n; i++) {
+    if (i = j) {
+        v(i)++;
+    } else if (v(i) < w(i)) {
+        v(i) := w(i);
+    }
+}
+\end{code}
 
 Standardm\"{a}ßig wird der Vektor-Zeitstempel nur inkrementiert, wenn eine Nachricht verschickt- oder erhalten wird. Bei beiden F\"{a}llen inkrementiert der Sender- und Empf\"{a}ngerprozess jeweils seinen eigenen Index im Vektor-Zeitstempel mit $v(i) = v(i) + 1$. Beim Empfang einer Nachricht wird anschließend der lokale Vektor-Zeitstempel mit dem des Senderprozesses verglichen und f\"{u}r alle Indizies stets der gr\"{o}ßere Wert in den lokalen Vektor-Zeitstempel \"{u}bernommen.
 
 Im Beispiel auf Abbildung \ref{fig:Vektorzeit} hat P1 \textit{(8,10,6)}, P2 \textit{(6,10,6)} und P3 \textit{(6,10,8)} als Vektor-Zeitstempel abgespeichert.
 
-Wenn im Laufe einer Simulation Prozesse entfernt- oder neue Prozesse hinzugef\"{u}gt werden, so passt sich die Gr\"{o}ße der Vektor-Zeitstempel aller anderen Prozesse automatisch der Anzahl der Prozesse an.
+Wenn w\"{a}hrend einer Simulation Prozesse entfernt- oder neue Prozesse hinzugef\"{u}gt werden, so passt sich die Gr\"{o}ße der Vektor-Zeitstempel aller anderen Prozesse automatisch der totalen Anzahl der Prozesse an.
 
 Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardm\"{a}ßig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, ber\"{u}cksichtigt. F\"{u}r eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
 
@@ -1092,7 +1102,7 @@ Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Va
 
 Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. F\"{u}r die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verf\"{u}gung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine l\"{a}ngere \"{U}bertragungszeit ben\"{o}tigen.
 
-Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der \"{U}bertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde ``Minimale \"{U}bertragungszeit'' auf \textit{2000ms} und ``Maximale \"{U}bertragungszeit'' auf \textit{8000ms} gesetzt. P1 und P2 behalten als Standardeinstellungen f\"{u}r die minimale und maximale \"{U}bertragungszeiten jeweils \textit{500ms} und \textit{2000ms} eingestellt. Die Simulationsdauer wurde auf \textit{20000ms} gesetzt.
+Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der \"{U}bertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde ``Minimale \"{U}bertragungszeit'' auf \textit{2000ms} und ``Maximale \"{U}bertragungszeit'' auf \textit{8000ms} gestellt. P1 und P2 behalten als Standardeinstellungen f\"{u}r die minimale und maximale \"{U}bertragungszeiten jeweils \textit{500ms} und \textit{2000ms} eingestellt. Die Simulationsdauer wurde auf \textit{20000ms} gestellt.
 
 \begin{figure}[h]
 	\centering
@@ -1101,7 +1111,7 @@ Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} darges
 	\label{fig:TimeSync2LongTransferProto}
 \end{figure}
 
-Als Folge (Abbildung \ref{fig:TimeSync2LongTransferProto}) dauern Nachrichten, die von- und an P3 verschickt werden, f\"{u}r eine \"{U}bertragung immer l\"{a}nger. Bevor P3 eine Antwort auf seine vorherige Anfrage bekommt, verschickt er eine erneute Anfrage. Da P3 die Serverantworten immer stets seiner letzten verschickten Anfrage zuordnet, berechnet er die RTTs allesamt falsch und seine lokale Zeit wird bei jedem Durchgang zus\"{a}tzlich verf\"{a}lscht. Die Berechnungsformeln der \"{U}bertragungszeiten wurde bereits in Kapitel 2.4.3 bei den Prozesseinstellungen behandelt. Konkret bedeutet dies f\"{u}r die \"{U}bertragungszeiten alle Nachrichten von- und an P3 jeweils:
+Als Folge (Abbildung \ref{fig:TimeSync2LongTransferProto}) ben\"{o}tigen Nachrichten, die von- und an P3 verschickt werden, f\"{u}r eine \"{U}bertragung immer mehr Zeit. Bevor P3 eine Antwort auf seine vorherige Anfrage bekommt, verschickt er eine erneute Anfrage. Da P3 die Serverantworten immer stets seiner letzten verschickten Anfrage zuordnet, berechnet er die RTTs allesamt falsch und seine lokale Zeit wird bei jedem Durchgang zus\"{a}tzlich verf\"{a}lscht. Die Berechnungsformeln der \"{U}bertragungszeiten wurde bereits in Kapitel 2.4.3 bei den Prozesseinstellungen behandelt. Konkret bedeutet dies f\"{u}r die \"{U}bertragungszeiten alle Nachrichten von- und an P3 jeweils:
 
 \begin{equation*}
 	\frac{1}{2} (rand(500, 2000) + rand(2000, 8000)) = \frac{1}{2} rand(2500, 10000) = rand(1250, 5000) ms

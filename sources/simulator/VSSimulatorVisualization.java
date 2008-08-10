@@ -1466,7 +1466,8 @@ public class VSSimulatorVisualization extends Canvas
     public void sendMessage(VSMessage message) {
         VSTask task = null;
         VSAbstractEvent receiveEvent = null;
-        VSInternalProcess sendingProcess = message.getSendingProcess();
+        VSInternalProcess sendingProcess = (VSInternalProcess)
+			message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
 

@@ -136,7 +136,7 @@ public class VSMessage extends VSPrefs {
      *
      * @return The process which sent this message.
      */
-    public VSInternalProcess getSendingProcess() {
+    public VSAbstractProcess getSendingProcess() {
         return sendingProcess;
     }
 
