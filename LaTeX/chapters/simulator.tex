@@ -138,8 +138,7 @@ Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem 
 
 Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder löschen. Mithilfe der Strg-Taste können auch mehrere Ereignisse gleichzeitig markiert werden. Die Einträge der Spalten für die Zeit und der PID lassen sich nachträglich editieren. Somit besteht eine komfortable Möglichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem ändern der Ereigniseintrittszeit die Enter-Taste betätigt, da sonst die Änderung unwirksam ist.
 
-In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (Abbildung \ref{fig:NeueSimulationVariablen} links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. Der Prozesseditor wird später genauer behandelt. 
-
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (Abbildung \ref{fig:NeueSimulationVariablen} links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. 
 
 \subsubsection{Das Loggfenster}
 
@@ -150,7 +149,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 	\label{fig:Loggfenster}
 \end{figure}
 
-Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} ist das Loggfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Letztere werden später genauer behandelt.  Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
+Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} ist das Loggfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
 
 Mit dem Deaktivieren des Logging-Schalters läßt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Loggfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator läuft, abhängig). Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
@@ -171,7 +170,7 @@ Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen ei
 
 Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zusätzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erwähnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Zeit- und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
 
-Des Weiteren kann der Anwender bei der Programmierung eines neuen Ereignisses direkt die dazugehörige PID selektieren. Im einfachen Modus wurde hier immer standardmäßig die PID des aktuell (in der obersten Combo-Box) ausgewählten Prozesses verwendet (hier mit PID 1). In dieser Combo-Box sollte der Anwender gegebenenfalls ``Alle Prozesse'' selektieren, damit im Ereigniseditor stets die Ereignisse aller Prozesse aufgelistet werden.
+Des Weiteren kann der Anwender bei der Programmierung eines neuen Ereignisses direkt die dazugehörige PID selektieren. Im einfachen Modus wurde hier immer standardmäßig die PID des aktuell (in der obersten Combo-Box) ausgewählten Prozesses verwendet (hier mit PID 1). 
 
 \subsubsection{Lamportzeit-, Vektorzeit- und Anti-Aliasing Schalter}
 
@@ -220,11 +219,11 @@ Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch ser
 	\item Starten einer Client/Server-Anfrage eines gegebenen Protokolls
 \end{itemize}
 
-Ob sich das Ereignis für das Starten einer Anfrage auf einen Client oder einen Server bezieht hängt vom verwendeten Protokoll ab. Es gibt Protokolle, wo der Client die Anfragen starten muss, und es gibt Protokolle, wo der Server diese Aufgabe übernimmt. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client- und bei dem ``Commit-Protokollen'' der Server immer die Anfragen. Es gibt kein Protokoll, wo der Client und der Server jeweils Anfragen starten können. 
+Ob sich das Ereignis für das Starten einer Anfrage auf einen Client oder einen Server bezieht, hängt vom verwendeten Protokoll ab. Es gibt Protokolle, wo der Client die Anfragen starten muss, und es gibt Protokolle, wo der Server diese Aufgabe übernimmt. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client- und bei dem ``Commit-Protokollen'' der Server immer die Anfragen. Es gibt kein Protokoll, wo der Client und der Server jeweils Anfragen starten können. 
 
 \subsubsection{Nachrichtenempfang sowie Antwortnachrichten (nicht-programmierbar)}
 
-Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muß der Empfangsprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfangsprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
+Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muß der Empfängerprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfängerprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
 
 \subsubsection{Callback-Ereignisse (nicht-programmierbar)}
 
@@ -269,7 +268,7 @@ In diesem Abschnitt wird genauer auf die möglichen Konfigurationsmöglichkeiten e
 \end{figure}
 
 
-Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (Tabelle \ref{tb:VariablenDatentypen}). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor (mehr zu Editoren später) angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen, ändern.
+Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (Tabelle \ref{tb:VariablenDatentypen}). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor (mehr zu Editoren später) angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen ändern.
 
 \subsection{Simulationseinstellungen}
 
@@ -288,8 +287,8 @@ Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen b
 
 \begin{itemize}
 	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean: sim.message.own.recv = false)}: Standardmäßig können Prozesse keine Nachrichten empfangen, die sie selbst verschickt haben. Dies trägt zur Übersichtlichkeit der Simulation bei. Wenn diese Variable jedoch auf \textit{true} gesetzt wird, dann kann ein Prozess auch selbst verschickte Nachrichten empfangen und auf diese ebenso antworten. Die Zeit für das Versenden und Empfangen einer Nachricht an sich selbst beträgt jedoch stets \textit{0ms}. Diese Variable sollte mit Vorsicht verwendet werden, da bedingt durch den \textit{0ms} Endlosschleifen entstehen können. 
-	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, so wird die der Mittelwert aus den Verlustwahrscheinlichkeiten vom Sender- und Empfangsprozess gebildet. Ansonsten wird stets die Verlustwahrscheinlichkeit, die beim Senderprozesses angegeben wurde, verwendet. 
-	\item \textbf{Mittelwerte der Übertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Übertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen später). Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empfangsprozess gebildet. Ansonsten wird stets die Übertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
+	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, so wird hier der Mittelwert aus den Verlustwahrscheinlichkeiten vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Verlustwahrscheinlichkeit, die beim Senderprozesses angegeben wurde, verwendet. 
+	\item \textbf{Mittelwerte der Übertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Übertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen später). Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Übertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
 	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean: sim.messages.relevant = true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, dann werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann, weil er das dazugehörige Protokoll nicht unterstützt, nicht angezeigt. Dies verbessert die Übersicht.
 	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean: sim.mode.expert = false)}: Hier lässt sich der Expertenmodus aktivieren beziehungsweise deaktivieren. Alternativ kann dies über den gleichnamigen Schalter unterhalb des Loggfensters geschehen.
 	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean: sim.periodic = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann wird die Simulation jedes Mal nach Ablauf automatisch erneut gestartet. 
@@ -312,27 +311,27 @@ Jeder Prozess besitzt folgende Variablen, die entweder via dem Variablen-Tab in 
 	\item \textbf{Uhrabweichung} \textit{(Float: process.clock.variance = 0.0)}: Gibt den Wert an, um den die lokale Prozessuhr abweicht. Der Wert \textit{0.0} besagt beispielsweise, dass die Uhr keine Abweichung hat und somit global-korrekt läuft. Ein Wert von \textit{1.0} würde hingegen bedeuten, dass die Uhr mit doppelter Geschwindigkeit- und ein Wert von \textit{-0.5}, dass die lokale Prozessuhr mit halber Geschwindigkeit der globalen Uhr fortschreitet. Es sind nur Werte > \textit{-1.0} erlaubt, da sonst die Prozessuhr rückwärts laufen könnte. Bei allen anderen Werten wird die Einstellung wieder automatisch auf \textit{0.0} gesetzt. Da der Simulator intern mit Fließkommazahlen doppelter Genauigkeit arbeitet, kann es zu kleinen, jedoch vernachlässigbaren, Rundungsfehlern kommen. 
 	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer: process.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob der gegebene Prozess während der Simulation zufällig abstürzt. Die Wahrscheinlichkeit bezieht sich auf die komplette Simulationsdauer. Bei einer Einstellung von \textit{100} Prozent und der Simulationsdauer von \textit{15} Sekunden stürzt der Prozess auf jeden Fall zwischen \textit{0ms} und \textit{15000ms} ab. An welcher Stelle dies geschieht wird zufällig bestimmt. Wenn der Prozess nach seinem Absturz wiederbelebt wird, stürzt er nicht noch einmal zufällig ab. Dies gilt allerdings nicht, wenn die Prozesseinstellungen nach dem Zufallsabsturz erneut geändert und übernommen werden, da dann das Zufallsabstürzereignis erneut erstellt wird. 
 	\item \textbf{Lokale Zeit} \textit{(Long: process.localtime = 0)}: Gibt die lokale Prozesszeit in Millisekunden an. 
-	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer: message.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob eine vom aktuell ausgewählten Prozess verschickte Nachricht unterwegs verloren geht. An welcher Stelle die Nachricht zwischen dem Sende- und Empfangsprozess verloren geht wird vom Simulator zufällig gewählt.
-	\item \textbf{Maximale Übertragungszeit} \textit{(Long: message.sendingtime.max = 2000)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht maximal benötigt, bis sie einen Empfangsprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{max}$ bezeichnet. 
-	\item \textbf{Minimale Übertragungszeit} \textit{(Long: message.sendingtime.min = 500)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht minimal benötigt, bis sie einen Empfangsprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{min}$ bezeichnet. 
+	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer: message.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, ob eine vom aktuell ausgewählten Prozess verschickte Nachricht unterwegs verloren geht. An welcher Stelle die Nachricht zwischen dem Sende- und Empfängerprozess verloren geht wird vom Simulator zufällig gewählt.
+	\item \textbf{Maximale Übertragungszeit} \textit{(Long: message.sendingtime.max = 2000)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht maximal benötigt, bis sie einen Empfängerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{max}$ bezeichnet. 
+	\item \textbf{Minimale Übertragungszeit} \textit{(Long: message.sendingtime.min = 500)}: Gibt die Dauer in Millisekunden an, die eine vom Prozess verschickte Nachricht minimal benötigt, bis sie einen Empfängerprozess erreicht. Im weiteren Verlauf wird dieser Wert mit $t_{min}$ bezeichnet. 
 		
-Wenn die Übertragungszeiten von Nachrichten immer exakt die selbe Zeit in Anspruch nehmen sollen, dann müssen alle Prozesseinstellungen mit $t_{min} = t_{max}$ konfiguriert werden. Wenn die aktuelle globale Zeit $t_g$ ist und die Simulationseinstellung ``Mittelwerte der Übertragungszeit'' nicht aktiv ist, dann wird die Ereigniseintrittszeit $t_e$ für den Empfang der Nachricht wie folgt berechnet:
+Wenn die Übertragungszeiten von Nachrichten immer exakt die selbe Zeit in Anspruch nehmen sollen, dann müssen alle Prozesseinstellungen mit $t_{min} = t_{max}$ konfiguriert werden. Wenn die aktuelle globale Zeit $t_g$ ist und die Simulationseinstellung ``Mittelwerte der Übertragungszeiten bilden'' nicht aktiv ist, dann wird die Ereigniseintrittszeit $t_e$ für den Empfang der Nachricht wie folgt berechnet:
 
 \begin{equation*}
 	t_e := t_g + rand(t_{min}, t_{max})
 \end{equation*}
 
-Das heißt, dass die Nachricht nach einer zufälligen Zeit zwischen $t_{min}$ und $t_{max}$ beim Empfänger eintrifft. Für jeden Empfänger wird hierbei ein neuer Zufalls-wert gewählt. Für den Fall, dass die Einstellung ``Mittelwerte der Übertragungszeiten wählen'' aktiviert ist, und wenn $t'_{min}$ und $t'_{max}$ die beim Empfangsprozess eingestellten Werte entsprechen, dann wird die Nachrichtenempfangszeit wie folgt berechnet:
+Das heißt, dass die Nachricht nach einer zufälligen Zeit zwischen $t_{min}$ und $t_{max}$ beim Empfänger eintrifft. Für jeden Empfänger wird hierbei ein neuer Zufalls-wert gewählt. Für den Fall, dass die Einstellung ``Mittelwerte der Übertragungszeiten bilden'' aktiviert ist, und wenn $t'_{min}$ und $t'_{max}$ die beim Empfängerprozess eingestellten Werte entsprechen, dann wird die Nachrichtenempfangszeit wie folgt berechnet:
 
 \begin{equation*}
 	t_e := t_g + \frac{1}{2} (rand(t_{min}, t_{max}) + rand(t'_{min}, t'_{max}))
 \end{equation*}
 
-Das heißt, dass stets der Mittelwert der Nachrichtenübertragungszeiten des Sender- und Empfangsprozesses verwendet wird.
+Das heißt, dass stets der Mittelwert der Nachrichtenübertragungszeiten des Sender- und Empfängerprozesses verwendet wird.
 
 \end{itemize}
 
-Im selben Fenster lassen sich auch die Protokollvariablen editieren. Die Protokollvariablen werden jedoch später bei den Protokollen beschrieben.
+Im selben Fenster (im Prozesseditor) lassen sich auch die Protokollvariablen editieren. Die Protokollvariablen werden jedoch später bei den Protokollen beschrieben.
 
 \subsection{Einstellungen im Expertenmodus}
 
@@ -620,7 +619,7 @@ Im Beispiel auf Abbildung \ref{fig:BerkeleyProto} gibt es die 2 Clientprozesse P
 Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozesseinstellungen unter dem Punkt ``Berkeley Server'' konfiguriert werden kann. Clientseitig gibt es hier keine Variablen.
 
 \begin{itemize}
-	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig gar nicht unterstützt. In diesem Fall würde ewig auf eine fehlende Clientantwort gewartet werden.
+	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig gar nicht unterstützt. In diesem Fall würde ewig auf eine fehlende Clientantwort gewartet werden.
 \end{itemize}
 
 \newpage
@@ -661,7 +660,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 
 \begin{itemize}
 	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneut verschickt wird.
-	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
+	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
 \end{itemize}
 
 \newpage
@@ -700,7 +699,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 
 \begin{itemize}
 	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneut verschickt wird.
-	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse die über eine Festschreibung abstimmen und anschließend gegebenenfalls festschreiben sollen. 
+	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse die über eine Festschreibung abstimmen und anschließend gegebenenfalls festschreiben sollen. 
 \end{itemize}
 
 Und folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt ``2-Phasen Commit Client'' konfiguriert werden:
@@ -1045,7 +1044,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 
 \begin{itemize}
 	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Muticast erneut verschickt wird.
-	\item \textbf{PIDs beteiliger Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
+	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
 \end{itemize}
 
 \newpage
@@ -1068,7 +1067,7 @@ Die Vektor- und Lamportzeitstempel lassen sich sehr gut am bereits behandeltem B
 	t_l(j) := 1 + max(t_l(j), t_l(i))
 \end{equation*}
 
-Es wird also stets die größere Lamportzeit vom Sender- und Empfangsprozess verwendet und anschließend wird diese um \textit{1} inkrementiert. Nach Ablauf der Berkeley-Simulation hat P1 \textit{(16)}, P2 (\textit{14}) und P3 (\textit{15}) als Lamportzeitstempel abgespeichert. 
+Es wird also stets die größere Lamportzeit vom Sender- und Empfängerprozess verwendet und anschließend wird diese um \textit{1} inkrementiert. Nach Ablauf der Berkeley-Simulation hat P1 \textit{(16)}, P2 (\textit{14}) und P3 (\textit{15}) als Lamportzeitstempel abgespeichert. 
 
 \begin{figure}[h]
 	\centering
@@ -1077,7 +1076,7 @@ Es wird also stets die größere Lamportzeit vom Sender- und Empfangsprozess verwe
 	\label{fig:Vektorzeit}
 \end{figure}
 
-Mit aktiven Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (Abbildung \ref{fig:Vektorzeit}). Wie bei den Lamportzeitstempel wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigefügt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die Größe $n$. Somit gibt es für jeden beteiligten Prozess $i$ einen eigenen Index $i$. über $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empfangsprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektorzeitstempel wie folgt (hier in Pseudo-Code angegeben) neu berechnet:
+Mit aktivem Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (Abbildung \ref{fig:Vektorzeit}). Wie bei den Lamportzeitstempel wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigefügt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die Größe $n$. Somit gibt es für jeden beteiligten Prozess $i$ einen eigenen Index $i$. über $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empfängerprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektorzeitstempel wie folgt (hier in Pseudo-Code angegeben) neu berechnet:
 
 \begin{code}
 for (i := 0; i < n; i++) {
@@ -1089,7 +1088,7 @@ for (i := 0; i < n; i++) {
 }
 \end{code}
 
-Standardmäßig wird der Vektor-Zeitstempel nur inkrementiert, wenn eine Nachricht verschickt- oder erhalten wird. Bei beiden Fällen inkrementiert der Sender- und Empfangsprozess jeweils seinen eigenen Index im Vektor-Zeitstempel mit $v(i) = v(i) + 1$. Beim Empfang einer Nachricht wird anschließend der lokale Vektor-Zeitstempel mit dem des Senderprozesses verglichen und für alle Indizes stets der größere Wert in den lokalen Vektor-Zeitstempel übernommen.
+Standardmäßig wird der Vektor-Zeitstempel nur inkrementiert, wenn eine Nachricht verschickt- oder erhalten wird. Bei beiden Fällen inkrementiert der Sender- und Empfängerprozess jeweils seinen eigenen Index im Vektor-Zeitstempel mit $v(i) = v(i) + 1$. Beim Empfang einer Nachricht wird anschließend der lokale Vektor-Zeitstempel mit dem des Senderprozesses verglichen und für alle Indizes stets der größere Wert in den lokalen Vektor-Zeitstempel übernommen.
 
 Im Beispiel auf Abbildung \ref{fig:Vektorzeit} hat P1 \textit{(8,10,6)}, P2 \textit{(6,10,6)} und P3 \textit{(6,10,8)} als Vektor-Zeitstempel abgespeichert.
 
@@ -1116,3 +1115,5 @@ Als Folge (Abbildung \ref{fig:TimeSync2LongTransferProto}) benötigen Nachrichten
 \begin{equation*}
 	\frac{1}{2} (rand(500, 2000) + rand(2000, 8000)) = \frac{1}{2} rand(2500, 10000) = rand(1250, 5000) ms
 \end{equation*}
+
+In dem Beispiel auf Abbildung \ref{fig:TimeSync2LongTransferProto} ist die lokale Prozesszeit von P1 bis auf \textit{20000 - 21446 = - 1446ms} synchronisiert, w\"{a}hrend die Prozesszeit von P3 satte \textit{20000 - 16557 = 3443ms} falsch geht.
