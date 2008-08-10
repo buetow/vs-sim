@@ -28,7 +28,7 @@ import java.io.*;
 import core.VSAbstractProcess;
 import core.VSInternalProcess;
 import exceptions.*;
-import prefs.VSPrefs;
+import prefs.*;
 import serialize.*;
 import utils.*;
 
@@ -39,7 +39,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-abstract public class VSAbstractEvent extends VSPrefs {
+abstract public class VSAbstractEvent extends VSSerializablePrefs {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 

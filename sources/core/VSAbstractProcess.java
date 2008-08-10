@@ -42,7 +42,7 @@ import utils.*;
  *
  * @author Paul C. Buetow
  */
-public abstract class VSAbstractProcess extends VSPrefs
+public abstract class VSAbstractProcess extends VSSerializablePrefs
             implements VSSerializable {
     /** The data serialization id. */
     protected static final long serialVersionUID = 1L;

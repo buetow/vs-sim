@@ -35,7 +35,7 @@ import serialize.*;
  *
  * @author Paul C. Buetow
  */
-public class VSPrefs implements VSSerializable {
+public class VSPrefs {
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";
 
@@ -914,7 +914,7 @@ public class VSPrefs implements VSSerializable {
      * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
      *	java.io.ObjectOutputStream)
      */
-    public synchronized void serialize(VSSerialize serialize,
+    protected synchronized void serialize_(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
         /** For later backwards compatibility, to add more stuff */
@@ -940,7 +940,7 @@ public class VSPrefs implements VSSerializable {
      *	java.io.ObjectInputStream)
      */
     @SuppressWarnings("unchecked")
-    public synchronized void deserialize(VSSerialize serialize,
+    protected synchronized void deserialize_(VSSerialize serialize,
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         objectPrefs.clear();

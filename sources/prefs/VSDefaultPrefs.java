@@ -33,7 +33,7 @@ import java.awt.event.KeyEvent;
  *
  * @author Paul C. Buetow
  */
-public class VSDefaultPrefs extends VSPrefs {
+public class VSDefaultPrefs extends VSSerializablePrefs {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 

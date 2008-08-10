@@ -173,7 +173,8 @@ public final class VSSerialize {
             ObjectOutputStream objectOutputStream =
                 new ObjectOutputStream(fileOutputStream);
 
-            VSPrefs prefs = simulator.getPrefs();
+            VSSerializablePrefs prefs = (VSSerializablePrefs) 
+				simulator.getPrefs();
             prefs.serialize(this, objectOutputStream);
             simulator.serialize(this, objectOutputStream);
 

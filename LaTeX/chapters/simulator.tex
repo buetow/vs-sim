@@ -370,12 +370,14 @@ Im Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diver
 
 Im Folgenden werden alle verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterst\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
 
+Im mitgelieferten Verzeichnis ``simulationen'' befinden sich zum Testen alle Beispielsimulationen als \textit{.dat} (Java-Serialisierungsobjekt) abgespeichert.
+
 \subsection{Beispiel (Dummy) Protokoll}
 
 Das Dummy-Protokoll dient lediglich als leeres Template f\"{u}r die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Ereignissen lediglich Loggnachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgef\"{u}hrt.
 
 \newpage
-\subsection{Das Ping-Pong Protokoll}
+\subsection{Das Ping-Pong Protokoll \small{\textit{(ping-pong.dat, ping-pong-sturm.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -455,7 +457,7 @@ Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks} abge\"{a}ndert,
 	\caption{Programmierte Broadcast Ereignisse}
 	\label{tb:BroadcastSturmTasks}
 \end{table}
-\subsection{Das Broadcast Protokoll}
+\subsection{Das Broadcast Protokoll \small{\textit{(broadcast.dat)}}}
 
 \begin{figure}[h]
 	\centering
