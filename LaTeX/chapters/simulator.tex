@@ -370,7 +370,7 @@ Im Expertenmodus lassen sich zus\"{a}tzliche Variablen, wie beispielsweise diver
 
 Im Folgenden werden alle verf\"{u}gbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server k\"{o}nnen auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterst\"{u}tzen. Theoretisch ist es auch m\"{o}glich, dass ein Prozess f\"{u}r ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden k\"{o}nnen wird sp\"{a}ter behandelt. 
 
-Im mitgelieferten Verzeichnis ``simulationen'' befinden sich zum Testen alle Beispielsimulationen als \textit{.dat} (Java-Serialisierungsobjekt) abgespeichert.
+Im mitgelieferten Verzeichnis \textit{saved-simulations} befinden sich alle Beispielsimulationen zum Selbstprobieren als \textit{.dat} (Java-Serialisierungsobjekt) abgespeichert.
 
 \subsection{Beispiel (Dummy) Protokoll}
 
@@ -471,7 +471,7 @@ Das Broadcast Protokoll verh\"{a}lt sich \"{a}hnlich wie das Ping-Pong Protokoll
 Der Server und der Client unterscheiden sich in diesem Fall nicht und f\"{u}hren bei Ankunft einer Nachricht jeweis die selben Aktionen durch. Somit l\"{a}sst sich, unter Verwendung mehrerer Prozesse (hier 6), wie auf Abbildung \ref{fig:BroadcastSturmProto}, ein Broadcast erzeugen. P1 ist der Client und startet je eine Anfrage nach \textit{0ms} und \textit{2500ms}. Die Simulationsdauer betr\"{a}gt hier genau \textit{5000ms}. Da ein Client nur Servernachrichten und ein Server nur Clientnachrichten empfangen kann, ist in dieser Simulation jeder Prozess, wie in Tabelle \ref{tb:BroadcastSturmTasks} angegeben, gleichzeitig Server und Client. 
 
 \newpage
-\subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System}
+\subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System \small{\textit{(int-sync.dat)}}}
 
 Bisher wurden nur Protokolle vorgef\"{u}hrt, in denen die beteiligten Prozesse keine Uhrabweichung eingestellt hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine falsche lokale Zeit $t_c$ mit einem Server synchronisieren m\"{o}chte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zur\"{u}ck, womit der Client seine neue und genauere Prozesszeit berechnen kann. Wie genau die neue Prozesszeit berechnet wird, ist im Folgenden beschrieben: 
 
@@ -521,7 +521,7 @@ Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Pro
 $t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie k\"{o}nnen sich allerdings von den tats\"{a}chlichen Nachrichten\"{u}bertragungszeiten $t_{min}$ und $t_{max}$ (siehe Sektion \"{u}ber Prozesseinstellungen) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wo in der Zeitsynchronisierung groﬂe Fehler auftreten k\"{o}nnen.
 
 \newpage
-\subsection{Christians Methode zur externen Synchronisierung}
+\subsection{Christians Methode zur externen Synchronisierung \small{\textit{(ext-vs-int-sync.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -567,7 +567,7 @@ Auf der Abbildung \ref{fig:TimeSync2Proto} ist ablesbar, dass nach Ablauf der Si
 \end{table}
 
 \newpage
-\subsection{Der Berkeley Algorithmus zur internen Synchronisierung}
+\subsection{Der Berkeley Algorithmus zur internen Synchronisierung \small{\textit{(berkeley.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -624,7 +624,7 @@ Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozessei
 \end{itemize}
 
 \newpage
-\subsection{Das Ein-Phasen Commit Protokoll}
+\subsection{Das Ein-Phasen Commit Protokoll \small{\textit{(one-phase-commit.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -665,7 +665,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 \end{itemize}
 
 \newpage
-\subsection{Das Zwei-Phasen Commit Protokoll}
+\subsection{Das Zwei-Phasen Commit Protokoll \small{\textit{(two-phase-commit.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -835,7 +835,7 @@ Und folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 \end{table}
 
 \newpage
-\subsection{Der ungen\"{u}gende (Basic) Multicast}
+\subsection{Der ungen\"{u}gende (Basic) Multicast \small{\textit{(basic-multicast.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -874,7 +874,7 @@ In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5.
 \end{table}
 
 \newpage
-\subsection{Der zuverl\"{a}ssige (Reliable) Multicast}
+\subsection{Der zuverl\"{a}ssige (Reliable) Multicast \small{\textit{(reliable-multicast.dat)}}}
 
 \begin{figure}[h]
 	\centering
@@ -1088,7 +1088,7 @@ Wenn im Laufe einer Simulation Prozesse entfernt- oder neue Prozesse hinzugef\"{
 Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardm\"{a}ﬂig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, ber\"{u}cksichtigt. F\"{u}r eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
 
 \newpage
-\subsection{Simulation langsamer Verbindungen}
+\subsection{Simulation langsamer Verbindungen \small{\textit{(slow-connection.dat)}}}
 
 Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. F\"{u}r die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verf\"{u}gung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine l\"{a}ngere \"{U}bertragungszeit ben\"{o}tigen.
 
