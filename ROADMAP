@@ -2,7 +2,6 @@ Must do:
 	beschreiben warum VSAbstractEvent -> VSPrefs
 	Warn if a file does not exists while trying to open!
 	Literaturangaben komplettieren
-	Simulationsdateinamen bei Beispielen angeben
 Evtl.:
 	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
 	Ereigniseintritt bei Lamport und Vektorzeiten?	
