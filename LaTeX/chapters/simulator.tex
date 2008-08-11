@@ -9,7 +9,7 @@
 	\label{fig:NeuesFenster}
 \end{figure}
 
-Der Simulator läßt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten und präsentiert sich danach wie auf Abbildung \ref{fig:NeuesFenster}. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
+Der Simulator lässt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten und präsentiert sich danach wie auf Abbildung \ref{fig:NeuesFenster}. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
 
 \subsubsection{Die Menüzeile}
 
@@ -118,7 +118,7 @@ Farben helfen dabei die Vorgänge einer Simulation besser zu deuten. Standardmäßi
 	\label{fig:Sidebar}
 \end{figure}
 
-Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die Möglichkeit ``Alle Prozesse'' auszuwählen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden können. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Die darunterliegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
+Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die Möglichkeit ``Alle Prozesse'' auszuwählen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden können. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Die darunter liegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
 
 \begin{figure}[h]
 	\centering
@@ -151,7 +151,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 
 Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} ist das Loggfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
 
-Mit dem Deaktivieren des Logging-Schalters läßt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Loggfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator läuft, abhängig). Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
+Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Loggfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator läuft, abhängig). Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
 über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert beziehungsweise deaktiviert. 
 
@@ -164,7 +164,7 @@ Mit dem Deaktivieren des Logging-Schalters läßt sich das Loggen von Nachrichten 
 	\label{fig:SimulationExpertenmodus}
 \end{figure}
 
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator startet standardmäßig im einfachen Modus, sodass sich der Anwender nicht mit der vollen Funktionalität des Simulators auf einmal auseinandersetzen muß. Der einfache Modus ist übersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich mehr für erfahrene Anwender und bietet dementsprechend auch mehr Flexibilität. Der Expertenmodus kann über den gleichnamigen Schalter unterhalb des Loggfensters oder über die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Expertenmodus mit dem normalen Modus verglichen wird, dann fallen einige Unterschiede auf:
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator startet standardmäßig im einfachen Modus, sodass sich der Anwender nicht mit der vollen Funktionalität des Simulators auf einmal auseinandersetzen muss. Der einfache Modus ist übersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich mehr für erfahrene Anwender und bietet dementsprechend auch mehr Flexibilität. Der Expertenmodus kann über den gleichnamigen Schalter unterhalb des Loggfensters oder über die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Expertenmodus mit dem normalen Modus verglichen wird, dann fallen einige Unterschiede auf:
 
 \subsubsection{Neue Funktionen in der Sidebar}
 
@@ -223,7 +223,7 @@ Ob sich das Ereignis für das Starten einer Anfrage auf einen Client oder einen S
 
 \subsubsection{Nachrichtenempfang sowie Antwortnachrichten (nicht-programmierbar)}
 
-Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muß der Empfängerprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfängerprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
+Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muss der Empfängerprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfängerprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
 
 \subsubsection{Callback-Ereignisse (nicht-programmierbar)}
 
