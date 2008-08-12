@@ -196,7 +196,8 @@ public final class VSSerialize {
         VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
 
         String saveText = prefs.getString("lang.save");
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(
+				new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
         fileChooser.setApproveButtonText(saveText);
@@ -259,7 +260,8 @@ public final class VSSerialize {
         VSPrefs prefs = simulatorFrame.getPrefs();
 
         String openText = prefs.getString("lang.open");
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(
+				new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
         fileChooser.setApproveButtonText(openText);
