@@ -1032,6 +1032,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         final JComboBox comboBox = new JComboBox();
         JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
+		takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
         takeoverButton.addActionListener(new ActionListener() {
             private boolean isRed;
             public void actionPerformed(ActionEvent ae) {

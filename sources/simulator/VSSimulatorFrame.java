@@ -450,7 +450,7 @@ public class VSSimulatorFrame extends VSFrame {
             int processID = process.getProcessID();
             JMenuItem processItem = new JMenuItem(processString + " " +
                                                   processID);
-            if (processNum < 10)
+            if (processNum < 9)
                 processItem.setAccelerator(
                     KeyStroke.getKeyStroke(0x31+processNum,
                                            ActionEvent.ALT_MASK));

@@ -193,7 +193,7 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
 
         /* Internal prefs */
         initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);
-        initInteger("keyevent.cancel", KeyEvent.VK_N, null, 0, 100);
+        initInteger("keyevent.cancel", KeyEvent.VK_A, null, 0, 100);
         initInteger("keyevent.close", KeyEvent.VK_C, null, 0, 100);
         initInteger("keyevent.default", KeyEvent.VK_F, null, 0, 100);
         initInteger("keyevent.edit", KeyEvent.VK_E, null, 0, 100);
@@ -207,7 +207,7 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
         initInteger("keyevent.prefs", KeyEvent.VK_P, null, 0, 100);
         initInteger("keyevent.prefs.ext", KeyEvent.VK_E, null, 0, 100);
         initInteger("keyevent.quit", KeyEvent.VK_B, null, 0, 100);
-        initInteger("keyevent.replay", KeyEvent.VK_R, null, 0, 100);
+        initInteger("keyevent.replay", KeyEvent.VK_W, null, 0, 100);
         initInteger("keyevent.reset", KeyEvent.VK_R, null, 0, 100);
         initInteger("keyevent.save", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.saveas", KeyEvent.VK_V, null, 0, 100);
