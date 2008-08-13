@@ -534,9 +534,9 @@ Wenn eine Simulatorversion versucht eine abgespeicherte Simulation eines nicht i
 
 \section{GUI sowie Simulationsvisualisierung}
 
-Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols}. dargestellt) implementiert die eigentliche graphische Benutzeroberfläche des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
+Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols}. dargestellt) implementiert die eigentliche graphische Benutzeroberfläche des Simulators. Ausnahmen stellen die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame} dar. 
 
-Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie es schon auf Abbildung \ref{fig:NeuesFenster}. zu sehen war) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation}. wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugehörige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zurück, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}.) implementiert. 
+Beim Starten des Simulators wird auf die \textit{main}-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie es schon auf Abbildung \ref{fig:NeuesFenster}. zu sehen war) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}, wobei jede Simulation im Simulationsfenster einen eigenen Tab besitzt. Auf Abbildung \ref{fig:NeuErstellteSimulation}. wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugehörige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zurück, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}.) implementiert. 
 
 \begin{figure}[h]
 	\centering
@@ -545,40 +545,40 @@ Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VS
 	\label{fig:PackageProtocols}
 \end{figure}
 
-\textit{VSSimulatorVisualization} greift auf Java's Grafikbibliothek Java2D zurück und ist aus Performance-Gründen mit dem Simulationsverlauf stark verzahnt \cite{Games}. Klassenattribute, dessen Wert sich nie ändert, wurden stets als \textit{final} deklariert. Attribute, die von Konfigurationen oder Einstellungen abhängig sind, die sich nur nach Konfigurationsänderung oder Vergrößern beziehungsweise Verkleinern des Simulationsfensters ändern (Werte, die für die Berechnung des Sekunden-Gatters notwendig sind), werden nur wenn es nötig ist neu berechnet. 
+\textit{VSSimulatorVisualization} greift auf Java's Grafikbibliothek Java2D zurück und ist, aus Performance-Gründen, mit dem Simulationsverlauf stark verzahnt \cite{Games}. Klassenattribute, dessen Wert sich nie ändert, wurden stets als \textit{final} deklariert. Attribute, die von Konfigurationen oder Einstellungen abhängig sind, die sich nur nach Konfigurationsänderung oder Vergrößern beziehungsweise Verkleinern des Simulationsfensters ändern (Werte, die für die Berechnung des Sekunden-Gatters notwendig sind), werden nur wenn es nötig ist neu berechnet. 
 
 Die Klasse \textit{VSMenuItemStates} wird für die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Menüs (beide Letztere auf Abbildung \ref{fig:Toolbar}. zu sehen) verwendet. Abhängig davon kann der Benutzer bestimmte Aktionen durchführen oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier möglichen Aktionen wurden bereits in Kapitel 2.1. im Abschnitt ``Die Toolbar'' behandelt. 
 
 Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}.) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert, wie das jeweilige Ereignis anzulegen ist.
 
-\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten gelogt werden. Hier werden alle Logfunktionen (inklusive Logfilter sowie temporäre Deaktivierung des Logen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt übergeben und dort dargestellt. Für den Logfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können.
+\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten gelogt werden. Hier werden alle Logfunktionen (inklusive Logfilter sowie temporäre Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt übergeben um dort dargestellt zu werden. Für den Logfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} (\cite{Regexp}) zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können.
 
 \subsubsection{Threads und Zeitsynchronisierung}
 
-Ziel vom Simulator ist es bis auf jede Millisekunde genau simulieren zu können. Jede simulierte Sekunde soll relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit lässt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen. Damit dies gewährleistet wird, muss folgendes berücksichtigt werden:
+Der Simulator soll im Stande sein, bis auf jede Millisekunde genau zu simulieren. Jede simulierte Sekunde soll dabei relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit lässt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen. Damit dies gewährleistet wird, muss folgendes berücksichtigt werden:
 
 \begin{itemize}
 	\item Das Zeichnen der Visualisierung benötigt pro Aktualisierung einige Millisekunden. Dies ist der rechen-intensivste Teil des Simulators. Hier werden ständig mathematische Berechnungen (wie zum Beispiel die Gerade einer Nachrichtenlinie, die automatische Skalierung des Diagramms die sich automatisch an die Fenstergröße und der Simulationsdauer anpasst und vieles mehr).
-	\item Das Neuberechnen der Simulation benötigt pro Aktualisierung einige Millisekunden. Hier wird insbesondere der Task-Manager beansprucht, der überprüft, ob Ereignisse auszuführen sind und sie gegebenenfalls dann auch ausführt.
-	\item Jeder simulierte Prozess sollte mit selber Geschwindigkeit fortschreiten, und dies auf jedem Rechner wo der Simulator ausgeführt wird. Da Java-Threads nicht komplett plattformunabhängig sind (Threads sind im Betriebssystem implementiert), kann das Verhalten auf verschiedenen Rechnern minimal variieren. Außerdem übernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf. Außer man synchronisiert Threads manuell so, dass sie den eigenen Ansprüchen entsprechen. Letzteres bedeutet aber auch mehr Programmieraufwand.
+	\item Das Neuberechnen der Simulation benötigt pro Aktualisierung einige Millisekunden. Hier wird insbesondere der Task-Manager beansprucht, welcher überprüft, ob Ereignisse auszuführen sind, und sie gegebenenfalls dann auch ausführt.
+	\item Jeder simulierte Prozess sollte mit selber Geschwindigkeit fortschreiten, und dies auf jedem Rechner wo der Simulator ausgeführt wird. Da Java-Threads nicht komplett plattformunabhängig sind (Threads sind im Betriebssystem implementiert), k\"{o}nnte das Verhalten auf verschiedenen Betriebssystemen oder Architekturen variieren. Außerdem übernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf. Außer man synchronisiert Threads manuell so, dass sie den eigenen Ansprüchen entsprechen. Letzteres bedeutet aber auch mehr Programmieraufwand.
 	\item Die Simulationszeit ist stets in Millisekunden angegeben, welche in einer \textit{long}-Variable abgespeichert wird. Somit kann eine Simulationszeit immer nur eine ganze Zahl sein. Berechnungsrundungsfehler wegen \textit{sim.clock.speed} müssen berücksichtigt werden.
 	\item Der Simulator soll nicht ständig die komplette CPU des Anwender-Computers voll beanspruchen.
 \end{itemize}
 
-Es wurde folgende relativ einfache Lösung gewählt, bei der lediglich ein einziger Thread für die Visualisierung und die Berechnung der Simulation zuständig ist (alle Zeitangaben sind in Millisekunden). Der Algorithmus verläuft leicht vereinfacht in folgender Form ab:
+Es wurde eine Lösung gewählt, bei der lediglich ein einziger Thread für die Visualisierung und die Berechnung der Simulation zuständig ist (alle Zeitangaben sind in Millisekunden angegeben). Der Algorithmus verläuft leicht vereinfacht in folgender Form ab:
 
 \begin{enumerate}
-	\item Die simulierte globale Startzeit sei $s$ und die globale Zeit wo die Simulation aufhört sei $e$.
-	\item Wenn $s > e$, dann $s := e$ setzen. 
-	\item Neuberechnen und Zeichnen der Visualisierung zum Zeitpunkt $s$. Die dabei verstrichene Zeit sei $v$. 
-	\item Wenn $s = e$, dann Simulation beenden.
+	\item Die aktuelle simulierte globale Zeit sei $t$ und die globale Zeit wo die Simulation aufhört sei $e$.
+	\item Wenn $t > e$, dann $t := e$ setzen. 
+	\item Neuberechnen und Zeichnen der Visualisierung zum Zeitpunkt $t$. Die dabei verstrichene Zeit sei $v$. 
+	\item Wenn $t = e$, dann Simulation beenden.
 	\item Für einige Millisekunden den Thread pausieren (schlafen lassen). Hierbei sei $p$ die beim Schlafen verstrichene Zeit.
 	\item 
 		\begin{verbatim}
-for (i = s; i < s + v + p && i < e; i++)
+for (i = t; i < t + v + p && i < e; i++)
     Alle Ereignisse des Zeitpunktes i hintereinander ausführen
 		\end{verbatim}
-	\item Bei Punkt 2 mit neuer Startzeit $s := s + v + p$ weitermachen.
+	\item Bei Punkt 2 mit neuer Startzeit $t := t + v + p$ weitermachen.
 \end{enumerate}
 
 Hinzu kommt noch die Berücksichtigung der Simulationsvariable \textit{sim.clock.speed}, die wegen der Übersicht im Algorithmus nicht dargestellt wurde. Intern hat der Simulator die echte Zeit und die Simulationszeit abgespeichert. Es werden ständig die verstrichenen echten Zeiten gemessen und anschließend anhand von \textit{sim.clock.speed} die neuen tatsächlichen Simulationszeiten berechnet. Rundungsfehler werden pro Durchgang in eine \textit{double}-Variable (Fließkommazahl doppelter Genauigkeit) abgespeichert und wenn der Betrag der Rundungsfehler $>= 1$ ist, dann werden davon die ganzen Wertanteile in der Simulationszeit berücksichtigt. F\"{u}r jede lokale Prozesszeit sowie der dazugeh\"{o}rigen lokalen Uhrabweichung und den lokale Ereignisse wird \"{a}hnlich verfahren.
@@ -587,7 +587,7 @@ Jede Simulation besitzt somit seinen eigenen Simulationsthread. Bei mehreren par
 
 \section{Serialisierung und Deserialisierung von Simulationen}
 
-Der Anwender kann eine erstellte Simulation im Datei-Menü speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}.) befinden sich Helfer, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
+Der Anwender kann eine erstellte Simulation im Datei-Menü speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von der aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}.) befinden sich Helfer, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
 
 Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Objekt. Alle Serialisierbaren Klassen implementieren das Interface \textit{VSSerializable} mit folgenden zwei Methoden:
 
@@ -596,7 +596,7 @@ Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Ob
 	\item \textit{public void deserialize(VSSerialize serialize, ObjectInputStream ois)}: Diese Methode wird bei jedem Deserialisierungsvorgang aufgerufen (beim Laden einer Simulation).
 \end{itemize}
 
-Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. Für jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die benötigten Aktionen durchzuführen. Eine zu serialisierende Simulation besteht aus vielen voneinander abhängigen Objekten. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. Würde jedes Objekt komplett serialisiert werden, so würden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausführung behandelt (in eine Datei abgespeichert) werden. Bei Kreisverweisen (Objekt A hat eine Referenz auf Objekt B und Objekt B hat eine Referenz auf Objekt A als Attribut gespeichert) würde die Serialisierung sogar in einer Endlosschleife enden. \textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, so dass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
+Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. Für jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft, die benötigten Aktionen durchzuführen. Eine zu serialisierende Simulation besteht aus vielen voneinander abhängigen Objekten. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. Würde jedes Objekt komplett serialisiert werden, so würden Objekte, auf denen mehrere Referenzen existierten, in mehrfacher Ausführung behandelt (in eine Datei abgespeichert) werden. Bei Kreisverweisen (Objekt A hat eine Referenz auf Objekt B und Objekt B hat eine Referenz auf Objekt A als Attribut gespeichert) würde die Serialisierung sogar in einer Endlosschleife enden. \textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, so dass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
 
 \begin{figure}[h]
 	\centering
@@ -605,9 +605,9 @@ Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Da
 	\label{fig:PackageSerialize}
 \end{figure}
 
-Alle Klassen, die \textit{VSSerializePrefs} erweitern, können automatisch sämtliche Einstellungen komfortabel serialisieren und deserialiseren. Beispielsweise speichert ein Simulator (\textit{VSSimulator}) alle seine globalen Simulationseinstellungen bei einer Serialisierung automatisch ab. Bei den Prozessen und den Ereignissen (und somit auch Protokollen) gilt selbiges analog. 
+Alle Klassen, die \textit{VSSerializePrefs} erweitern, können automatisch sämtliche Einstellungen komfortabel serialisieren und deserialiseren. Beispielsweise speichert der Simulator alle seine globalen Simulationseinstellungen bei einer Serialisierung automatisch ab. Bei den Prozessen und den Ereignissen (und somit auch Protokollen) gilt Selbiges analog. 
 
-Abgespeicherte Simulationen sollen auch mit zukünftigen Versionen des Simulators kompatibel bleiben. Deshalb werden alle Objekte derjenigen Klassen, die \textit{VSSerializable} implementieren, nicht komplett serialisiert. Bei der Serialisierung werden nur relevante Klassenattribute, die der Simulationsprogrammierung- und nicht beispielsweise GUI-Komponenten angehören, serialisiert. 
+Abgespeicherte Simulationen sollen auch mit zukünftigen Versionen des Simulators kompatibel bleiben. Deshalb werden alle Objekte aller Klassen, die \textit{VSSerializable} implementieren, nicht komplett serialisiert. Bei der Serialisierung werden nur relevante Klassenattribute, die der Simulationsprogrammierung, und nicht beispielsweise GUI-Komponenten angehören, serialisiert. 
 
 \subsubsection{Beispielimplementierung einer \textit{serialize}-Methode}
 
@@ -627,11 +627,11 @@ Der folgende Quelltext-Ausschnitt zeigt eine Beispielimplementierung von \textit
     }
 \end{code}
 
-Vor- und nach der eigentlichen Objektserialisierung wird jeweils eine boolesche Flagge serialisiert, welche auf \textit{true} gesetzt wird, sobald in späteren Simulator-Versionen (was relativ unwahrscheinlich, aber möglich ist) weitere zu serialisierende Klassenattribute hinzukommen. Eine Deserialisierung kann die Flaggen dann abfragen und separat behandeln. Somit bleiben ältere bereits abgespeicherte Simulationen stets zur neusten Version des Simulators kompatibel. Wenn eine Flagge auf \textit{true} gesetzt wird, dann kann unter den neuen Attributserialisierungen eine weitere Flagge gesetzt werden. Somit können beliebig viele Erweiterungen in die Serialisierung Einzug halten.
+Vor- und nach der eigentlichen Objektserialisierung wird jeweils eine boolesche Flagge serialisiert, welche auf \textit{true} gesetzt wird, sobald in späteren Simulator-Versionen (was relativ unwahrscheinlich, aber möglich ist) weitere zu serialisierenden Klassenattribute hinzukommen. Eine Deserialisierung kann die Flaggen dann abfragen und separat behandeln. Somit bleiben ältere bereits abgespeicherte Simulationen stets zur neusten Version des Simulators kompatibel. Wenn eine Flagge auf \textit{true} gesetzt wird, dann kann unter den neuen Attributserialisierungen eine weitere Flagge gesetzt werden. Somit können beliebig viele Erweiterungen in die Serialisierung Einzug halten.
 
-Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute können vernachlässigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objektserialisierungen zurückgreifen können. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. Wobei hier zuerst die Instanzen der Klassen auf normalen Weg erstellt werden und dann nachträglich die relevanten Attribute deserialisiert und den Objekten zugewiesen werden. Hierbei werden auch mit Hilfe von \textit{VSSerialize} mehrere Referenzen auf das selbe Objekt korrekt behandelt.
+Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute können vernachlässigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objekte bei der Serialisierung zurückgreifen können. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. \textit{VSSerialize} hilft auch hier dabei mehrere Referenzen auf das selbe Objekt korrekt zu behandeln.
 
-Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} wählt, dann wird zunächst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgeführt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}.). Das Simulator-Objekt führt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschließend folgt der Task-Manager inklusive allen programmierten Ereignissen. 
+Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} wählt, dann wird zunächst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSPrefs} und \textit{VSSimulator} ausgeführt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}.). Das Simulator-Objekt führt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschließend folgt der Task-Manager inklusive allen programmierten Ereignissen. 
 
 
 \section{Helferklassen und Klassen für Ausnahmebehandlungen}
@@ -663,7 +663,7 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:P
 	\label{fig:PackageExceptions}
 \end{figure}
 
-Im Paket \textit{exceptions} befinden sich lediglich einige Klassen die für Ausnahmebehandlungen verwendet werden. \textit{VSNotCopyableException} wird während einem Kopierversuch eines nicht-kopierbaren Ereignis geworfen. \textit{VSNegatieNumberException} wird geworfen, wenn negative Zahlen dort auftreten wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zurück. 
+Im Paket \textit{exceptions} befinden sich lediglich einige Klassen, die für Ausnahmebehandlungen verwendet werden. \textit{VSNotCopyableException} wird während einem Kopierversuch eines nicht-kopierbaren Ereignis geworfen. \textit{VSNegatieNumberException} wird geworfen, wenn negative Zahlen dort auftreten, wo sie es nicht sollten. Wenn ein Editorobjekt die Benutzereingabe einer Integer-Vektor-Variable nicht parsen kann, so greifen es auf \textit{VSParseIntegerVectorException} zurück. 
 
 \begin{figure}
 	\centering
@@ -676,10 +676,9 @@ Im Paket \textit{exceptions} befinden sich lediglich einige Klassen die für Ausn
 
 \section{Programmierrichtlinien}
 
-Die Programmierrichtlinien \cite{Richtlinien} entsprechen in den meisten Fällen denen aus der Vorlesung \cite{OOS}. 
+Die Programmierrichtlinien entsprechen in den meisten Fällen denen aus \cite{OOS} (siehe auch \cite{Richtlinien}).
 
-Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
-
+Die \textit{main}-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
 \begin{itemize}
 	\item Es wird kein Gebrauch vom Java-Standardpaket gemacht. Alle Klassen befinden sich somit in explizit angegebenen Paketen (zum Beispiel \textit{events.implementations}).
 	\item Alle Klassen- und Interfacenamen beginnen mit großen Buchstaben, während alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen finaler Variablen und Attribute sind komplett in Großbuchstaben gehalten.
@@ -693,8 +692,8 @@ Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}.
 	\item Namen abstrakter Klassen tragen als Präfix stets \textit{VSAbstract}.
 	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol} (zum Beispiel \textit{VSPingPongProtocol}).
 	\item Namen aller Ereignisklassen, die keine Protokolle implementieren, tragen als Postfix \textit{Event} (zum Beispiel \textit{VSProcessCrashEvent}).
-	\item Namen aller dejenigen Klassen die ein Fenster implementieren tragen als Postfix \textit{Frame} (zum Beispiel \textit{VSSimulatorFrame}).
-	\item überall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (z.B. \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}.
+	\item Namen aller dejenigen Klassen, die ein Fenster implementieren, tragen als Postfix \textit{Frame} (zum Beispiel \textit{VSSimulatorFrame}).
+	\item überall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (zum Beispiel \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}).
 \end{itemize}
 
 \section{Entwicklungsumgebung}
@@ -705,7 +704,7 @@ Wie bereits bekannt ist, wurde Sun's Java, was mittlerweile auch Open Source Sof
 
 Als Versionierungssystem wurde SVN (Subversion) verwendet. Für den Zugriff auf das SVN-Repository mittels HTTPS (Hypertext Transfer Protocol Secure) wurde der Apache-Webserver mit WebDAV-Plugin verwendet. Zudem kam WebSVN als Webschnittstelle des SVN-Repository zum Einsatz. Mozilla Firefox diente für das Betrachten der Javadocs und der WebSVN-Oberfläche.
 
-Für schreiben von Java-Quelltext wurde GVim (Graphical Vi IMproved) sowie Eclipse verwendet. Eclipse unterstützt bessere Code-Refactoring-Methoden, während GVim mit seiner Flexibilität und schnelleren Editiermöglichkeiten und mit Vim-Script, der eigenen Script-Engine, glänzt. Es wurden außerdem das JAutoDoc- (für die Erstellung von Javadoc-Kommentare) und das Subversion-Eclipse-Plugin verwendet. Je nach Zweck wurde zwischen diesen beiden Umgebungen gewechselt. Für das Verfassen des LaTeX-Dokumentes wurde GVim verwendet.
+Für das schreiben von Java-Quelltext wurde GVim (Graphical Vi IMproved) sowie Eclipse verwendet. Eclipse unterstützt bessere Code-Refactoring-Methoden, während GVim mit seiner Flexibilität und schnelleren Editiermöglichkeiten und mit Vim-Script, der eigenen Script-Engine, glänzt. Es wurden außerdem das JAutoDoc- (für die Erstellung von Javadoc-Kommentare) und das Subversion-Eclipse-Plugin verwendet. Je nach Zweck wurde zwischen diesen beiden Umgebungen gewechselt. Für das Verfassen des LaTeX-Dokumentes wurde GVim verwendet.
 
 Sämtliche UML-Diagramme wurden mit ArgoUML angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. Mit dem zip-Programm wurden alle VS-Simulator Distributionen verpackt.
 
