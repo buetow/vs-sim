@@ -9,13 +9,13 @@
 	\label{fig:NeuesFenster}
 \end{figure}
 
-Der Simulator ben\"{o}tigt die JRE 6.0 (1.6) und lässt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten. Der Simulator präsentiert sich danach so wie in Abbildung \ref{fig:NeuesFenster}. zu sehen ist. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (s. Abbildung \ref{fig:DateiMenue}.) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie in Abbildung \ref{fig:NeuErstellteSimulation}.
+Der Simulator ben\"{o}tigt die JRE 6.0 (1.6) und lässt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten. Der Simulator präsentiert sich danach so wie in Abbildung \ref{fig:NeuesFenster}. zu sehen ist. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (s. Abb. \ref{fig:DateiMenue}.) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie in Abbildung \ref{fig:NeuErstellteSimulation}.
 
 Standardm\"{a}ßig wird der Simulator im ``einfachen Modus'' gestartet. Daneben gibt es noch einen ``Expertenmodus'', auf welchen sp\"{a}ter eingegangen wird.
 
 \subsubsection{Die Menüzeile}
 
-Im Datei-Menü (s. Abbildung \ref{fig:DateiMenue}.) lassen sich neue Simulationen erstellen oder die aktuell geöffnete Simulation schließen. Neue Simulationen öffnen sich standardmäßig in einem neuen Tab. Es können allerdings auch neue Simulationsfenster, die wiederum eigene Tabs besitzen, geöffnet oder geschlossen werden. In jedem Tab befindet sich eine, von den anderen vollständig unabhängige Simulation. Es können somit beliebig viele Simulationen parallel ausgeführt werden. Die Menüeinträge ``Öffnen'', ``Speichern'' und ``Speichern unter'' dienen für das Laden und Speichern von Simulationen. 
+Im Datei-Menü (s. Abb. \ref{fig:DateiMenue}.) lassen sich neue Simulationen erstellen oder die aktuell geöffnete Simulation schließen. Neue Simulationen öffnen sich standardmäßig in einem neuen Tab. Es können allerdings auch neue Simulationsfenster, die wiederum eigene Tabs besitzen, geöffnet oder geschlossen werden. In jedem Tab befindet sich eine, von den anderen vollständig unabhängige Simulation. Es können somit beliebig viele Simulationen parallel ausgeführt werden. Die Menüeinträge ``Öffnen'', ``Speichern'' und ``Speichern unter'' dienen für das Laden und Speichern von Simulationen. 
 
 \begin{figure}[h]
 	\centering
@@ -37,7 +37,7 @@ Einige Menüunterpunkte sind erst erreichbar, wenn im aktuellen Fenster bereits e
 
 \subsubsection{Die Toolbar}
 
-Oben links im Simulator befindet sich die Toolbar (s. Abbildung \ref{fig:Toolbar}.). Die Toolbar enthält die Funktionen die vom Anwender am häufigsten benötigt werden.
+Oben links im Simulator befindet sich die Toolbar (s. Abb. \ref{fig:Toolbar}.). Die Toolbar enthält die Funktionen die vom Anwender am häufigsten benötigt werden.
 
 Die Toolbar bietet vier verschiedene Funktionen an:
 
@@ -77,7 +77,7 @@ Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse
 
 Die Prozessbalken dienen auch für Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht an Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst verschicken, werden nicht visualisiert. Sie werden aber im Logfenster (mehr dazu später) protokolliert.
 
-Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Dies muss also nicht immer über das Simulator-Menü geschehen. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (s. Abbildung \ref{fig:RechtsklickProzessbalken}.). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
+Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Dies muss also nicht immer über das Simulator-Menü geschehen. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (s. Abb. \ref{fig:RechtsklickProzessbalken}.). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
 
 Generell kann die Anzahl der Prozesse nach Belieben variieren. Die Dauer der Simulation beträgt mindestens \textit{5} und höchstens \textit{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit, die angegebene Simulationsendzeit (hier \textit{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
 
@@ -129,7 +129,7 @@ Mit Hilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben in Abbil
 	\label{fig:SidebarMitEreignissen}
 \end{figure}
 
-Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem Rechtsklick auf einen Prozessbalken (s. Abbildung \ref{fig:RechtsklickProzessbalken}.) klicken und dort ``Lokales Ereignis einfügen'' wählen, oder unterhalb der Ereignistabelle ein Ereignis auswählen (s. Abbildung \ref{fig:Ereignisauswahl}.), im darunter liegenden Textfeld die Ereigniseintrittszeit eintragen und auf ``Übernehmen'' gehen. Beispielsweise wurden in Abbildung \ref{fig:SidebarMitEreignissen}. drei Ereignisse hinzugefügt: Absturz nach \textit{123ms}, Wiederbelebung nach \textit{321ms} und erneuter Absturz nach \textit{3000ms} des Prozesses mit der ID 1. 
+Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem Rechtsklick auf einen Prozessbalken (s. Abb. \ref{fig:RechtsklickProzessbalken}.) klicken und dort ``Lokales Ereignis einfügen'' wählen, oder unterhalb der Ereignistabelle ein Ereignis auswählen (s. Abb. \ref{fig:Ereignisauswahl}.), im darunter liegenden Textfeld die Ereigniseintrittszeit eintragen und auf ``Übernehmen'' gehen. Beispielsweise wurden in Abbildung \ref{fig:SidebarMitEreignissen}. drei Ereignisse hinzugefügt: Absturz nach \textit{123ms}, Wiederbelebung nach \textit{321ms} und erneuter Absturz nach \textit{3000ms} des Prozesses mit der ID 1. 
 
 \begin{figure}[h]
 	\centering
@@ -140,7 +140,7 @@ Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem 
 
 Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder löschen. Mit Hilfe der Strg-Taste können auch mehrere Ereignisse gleichzeitig markiert werden. Die Einträge der Spalten für die Zeit und der PID lassen sich nachträglich editieren. Somit besteht eine komfortable Möglichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem ändern der Ereigniseintrittszeit die Enter-Taste betätigt, da sonst die Änderung unwirksam ist.
 
-In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (s. Abbildung \ref{fig:NeueSimulationVariablen}. links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. 
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (s. Abb. \ref{fig:NeueSimulationVariablen}. links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. 
 
 \subsubsection{Das Logfenster}
 
@@ -151,7 +151,7 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 	\label{fig:Logfenster}
 \end{figure}
 
-Das Logfenster (s. Abbildung \ref{fig:NeuErstellteSimulation}., unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. In Abbildung \ref{fig:Logfenster}. ist das Logfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Logeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokalen Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
+Das Logfenster (s. Abb. \ref{fig:NeuErstellteSimulation}., unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. In Abbildung \ref{fig:Logfenster}. ist das Logfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Logeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokalen Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
 
 Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
@@ -170,7 +170,7 @@ Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen ei
 
 \subsubsection{Neue Funktionen in der Sidebar}
 
-Der erste Unterschied ist in der Sidebar erkennbar (s. Abbildung \ref{fig:SidebarExpertenmodus}.). Dort sind nun, zusätzlich zu den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erwähnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Simulationszeit und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
+Der erste Unterschied ist in der Sidebar erkennbar (s. Abb. \ref{fig:SidebarExpertenmodus}.). Dort sind nun, zusätzlich zu den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erwähnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Simulationszeit und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
 
 Des Weiteren kann der Anwender bei der Programmierung eines neuen Ereignisses direkt die dazugehörige PID selektieren. Im einfachen Modus wurde hier immer standardmäßig die PID des aktuell (in der obersten Combo-Box) ausgewählten Prozesses verwendet (hier mit PID 1). 
 
@@ -211,7 +211,7 @@ Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare 
 Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann kann sie nicht verarbeitet werden und geht deshalb verloren. Die einzige Ausnahme bietet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen von den Lamport- und Vektor-Zeitstempel, normal weiter. Das heißt, es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. Wenn im echten Leben ein Computer abstürzt oder abgeschaltet wird, dann läuft seine Hardware-Uhr unabhängig vom Betriebssystem auch weiter.
 
 \subsubsection{Aktivierung und Deaktivierung von Protokollen sowie Starten von Anfragen (programmierbar)}
-Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und gegebenenfalls ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert bzw. deaktiviert werden. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
+Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und ggf. ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert bzw. deaktiviert werden. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
 
 \begin{itemize}
 	\item Aktivierung des Clients eines gegebenen Protokolls
@@ -275,7 +275,7 @@ Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellb
 \subsection{Simulationseinstellungen}
 
 
-Beim Erstellen einer neuen Simulation erscheint zunächst das dazugehörige Einstellungsfenster (s. Abbildung \ref{fig:Simulationseinstellungen}.). In der Regel reicht es, wenn der Anwender hier, bis auf die Anzahl beteiligter Prozesse, die Standardwerte übernimmt. Es besteht auch die Möglichkeit die Einstellungen nachträglich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
+Beim Erstellen einer neuen Simulation erscheint zunächst das dazugehörige Einstellungsfenster (s. Abb. \ref{fig:Simulationseinstellungen}.). In der Regel reicht es, wenn der Anwender hier, bis auf die Anzahl beteiligter Prozesse, die Standardwerte übernimmt. Es besteht auch die Möglichkeit die Einstellungen nachträglich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
 
 Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen beschrieben. Die Klammern geben die Typen, Namen und die Standardwerte an, in denen die Variablen vorliegen. 
 

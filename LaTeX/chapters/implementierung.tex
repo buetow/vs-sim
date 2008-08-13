@@ -124,7 +124,7 @@ Jedes programmierbare Ereignis muss, bevor es vom Simulator verwendet werden kan
 	\label{fig:PackageEvents}
 \end{figure}
 
-In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in einem unterschiedlichen Paket liegen (s. Abbildung \ref{fig:PackageEvents}.):
+In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in einem unterschiedlichen Paket liegen (s. Abb. \ref{fig:PackageEvents}.):
 
 \begin{enumerate}
 	\item \textit{events.implementations}: In diesem Paket befinden sich alle Ereignisse, die ohne weitere Spezialbehandlung vom Simulator eingesetzt werden können und vom Benutzer direkt im Ereigniseditor programmierbar sind. 
@@ -171,7 +171,7 @@ Da \textit{VSAbstractEvent} die Klasse \textit{VSSerializablePrefs} erweitert, s
 
 \subsubsection{Beispielimplementierung eines Ereignisses}
 
-Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt auch hier die \textit{initCopy}-Methode mit leerem Klassenrumpf. Aufgrund der Serializierbarkeit von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wobei der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird überprüft, ob der Prozess bereits abgestürzt ist und gegebenenfalls zum Absturz gebracht. 
+Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt auch hier die \textit{initCopy}-Methode mit leerem Klassenrumpf. Aufgrund der Serializierbarkeit von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wobei der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird überprüft, ob der Prozess bereits abgestürzt ist und ggf. zum Absturz gebracht. 
 \begin{code}
 package events.implementations;
 
@@ -236,7 +236,7 @@ Jede Simulation besitzt genau eine Instanz von \textit{VSTaskManager}. Eine Inst
 	\label{fig:PackageCore}
 \end{figure}
 
-Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. Da \textit{VSMessage} von \textit{VSPrefs} erbt, können zwischen zwei Prozessen beliebige Datentypen (s. Tabelle \ref{tb:VariablenDatentypen}.) über eine Nachricht verschickt werden. Anschließend wird für jeden Empfängerprozess ein neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welches eine Referenz der verschickten Nachricht besitzt (s. Abbildung \ref{fig:Wrapping}.). Danach wird ein \textit{VSTask}-Objekt instantiiert, in dem die Referenz auf das Ereignisobjekt und das dazugehörige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager übergeben, der das dazugehörige Ereignis ausführt, wenn die Ereigniseintrittszeit eingetroffen ist. Via Java-Polymorphie wird hier das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt und so in \textit{VSTask} abgelegt. 
+Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. Da \textit{VSMessage} von \textit{VSPrefs} erbt, können zwischen zwei Prozessen beliebige Datentypen (s. Tabelle \ref{tb:VariablenDatentypen}.) über eine Nachricht verschickt werden. Anschließend wird für jeden Empfängerprozess ein neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welches eine Referenz der verschickten Nachricht besitzt (s. Abb. \ref{fig:Wrapping}.). Danach wird ein \textit{VSTask}-Objekt instantiiert, in dem die Referenz auf das Ereignisobjekt und das dazugehörige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager übergeben, der das dazugehörige Ereignis ausführt, wenn die Ereigniseintrittszeit eingetroffen ist. Via Java-Polymorphie wird hier das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt und so in \textit{VSTask} abgelegt. 
 
 \begin{figure}[h]
 	\centering
@@ -251,7 +251,7 @@ Der Task-Manager speichert anschließend die Nachrichtenempfangsereignisse in sei
 
 Eine Instanz von \textit{VSInternalProcess} repräsentiert einen simulierten Prozess. Ein \textit{VSInternalProcess} stellt alle vom Simulator intern verwendeten Methoden zur Verfügung, während ein \textit{VSAbstractProcess} lediglich Methoden hat, die der Protokollentwickler für die Erstellung eigener Protokolle verwenden darf. Da \textit{VSAbstractProcess} abstrakt ist und hiervon keine Instanz gebildet werden darf, muss für einen neuen Prozesses stets ein \textit{VSInternalProcess}-Objekt erstellt werden. Via Polymorphie wird dieses Objekt nach \textit{VSAbstractProcess} umgewandelt und so dem Protokoll-API zur Verfügung gestellt. Beispielsweise darf mit \textit{getTasks()} nur vom Simulator intern auf die Prioritäts-Warteschlangen zugegriffen werden, während man im Protokoll-API selbiges vermeiden sollte und dies auch gar nicht direkt möglich ist. Hier wäre auch ein Stub-Objekt \textit{VSProcessStub} denkbar gewesen. Da aber fast jede Millisekunde auf die Methoden von \textit{VSInternalProcess} zugegriffen wird, wurde hier aus Performance-Gründen der Weg über eine Vererbungsstufe preferiert. 
 
-Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-Gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs}, bzw. die lokalen Kopien, auf den neuesten Stand gebracht. Selbiges gilt für weitere Variablen, wie z.B. der Uhrabweichung eines Prozesses.
+Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} geerbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-Gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs}, bzw. die lokalen Kopien, auf den neuesten Stand gebracht. Selbiges gilt für weitere Variablen, wie z.B. der Uhrabweichung eines Prozesses.
 
 \subsubsection{Beispiel für die Erstellung von Prozessereignissen}
 
@@ -316,20 +316,20 @@ public String toString() {
 
 Für alle hier aufgelisteten Client-Methoden sind auch die korrespondierenden Server-Methoden anzugeben. Die Server-Methoden sind analog zu den Client-Methoden aufgebaut, wobei lediglich \textit{Client} durch \textit{Server} ausgetauscht werden muss. 
 
-Jede Protokollklasse bekommt folgende Methoden von \textit{VSAbstractProtocol} vererbt, welche allesamt vom Protokollentwickler verwendet werden können:
+Jede Protokollklasse erbt folgende Methoden von \textit{VSAbstractProtocol}, welche vom Protokollentwickler verwendet werden können:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
 	\item \textit{pubic void sendMessage(VSMessage message)}: Hiermit verschickt das Protokoll eine Nachricht.
-	\item \textit{pubic final boolean hasOnServerStart()}: Hiermit lässt sich bestimmen, ob der Server- oder der Client bei dem aktuellen Protokoll die Anfragen startet.
+	\item \textit{pubic final boolean hasOnServerStart()}: Stellt fest, ob der Server- oder der Client bei dem aktuellen Protokoll die Anfragen startet.
 	\item \textit{pubic final boolean isServer()}: Hiermit lässt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll serverseitig aktiviert hat. 
 	\item \textit{pubic final boolean isClient()}: Hiermit lässt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll clientseitig aktiviert hat. 
-	\item \textit{pubic final void scheduleAt(long time)}: Diese Methode erstellt einen Wecker, der zur angegebenen lokalen Prozesszeit eintritt. Nach Ablauf des Weckers wird, abhängig ob der aktuelle Kontext client- oder serverseitig ist, \textit{onClientSchedue} bzw. \textit{onServerSchedule} ausgeführt. 
-	\item \textit{pubic final void removeSchedules()}: Entfernt alle gesetzten Wecker des aktuellen Kontextes.
-	\item \textit{pubic final int getNumProcesses()}: Gibt die totale Anzahl an der Simulation beteiligten Prozesse zurück.
+	\item \textit{pubic final void scheduleAt(long time)}: Diese Methode erstellt einen Wecker, der zur angegebenen Prozesszeit eintritt. Nach Ablauf des Weckers wird, abhängig vom aktuellen Kontext (server- oder clientseitig), \textit{onClientSchedue} bzw. \textit{onServerSchedule} ausgeführt. 
+	\item \textit{pubic final void removeSchedules()}: Entfernt alle gesetzten Wecker im aktuellen Kontext.
+	\item \textit{pubic final int getNumProcesses()}: Gibt die Gesamtzahl an der Simulation beteiligten Prozesse zurück.
 \end{itemize}
 
-Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (z.B. die Simulationsvariable die Angibt, ob Prozesse eigene Nachrichten empfangen: \textit{bool recvOwn = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API verwendet werden:
+Bei der Implementierung von Protokollen kann zusätzlich auf die geerbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Die verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen. Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API angewendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -343,47 +343,47 @@ Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attrib
 	\item \textit{public void increaseLamportTime()}: Inkrementiert den Lamport-Zeitstempel um eins.
 	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert den Lamport-Zeitstempel (vgl. Kap. 3.11.1.).
 	\item \textit{public VSVectorTime getVectorTime()}: Gibt den aktuelle Vektor-Zeitstempel des Prozesses zurück.
-	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamport-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSLamportTime umgewandelt werden.
-	\item \textit{public VSTime getVectorTimeArray()}: Gibt die gesamte Vektor-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSVectorTime umgewandelt werden.
+	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamport-Zeitstempel-Historie des Prozesses zurück. Kann nach VSLamportTime umgewandelt werden.
+	\item \textit{public VSTime getVectorTimeArray()}: Gibt die gesamte Vektor-Zeitstempel-Historie des Prozesses zurück. Kann nach VSVectorTime umgewandelt werden.
 	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert den Vektor-Zeitstempel (vgl. Kap. 3.11.1.).
 	\item \textit{public void increaseVectorTime()}: Inkrementiert den Vektor-Zeitstempel am lokalen Index um eins.
 	\item \textit{public int getProcessID()}: Gibt die PID zurück.
 	\item \textit{public void setProcessID(int processID)}: Setzt die PID.
-	\item \textit{public int getProcessNum()}: Gibt die Prozessnummer zurück. Dieser Wert unterscheidet sich von der PID. Die Prozessnummer gibt an, um den wievielten Prozess, beginnend bei 0, es sich handelt. PIDs hingegen k\"{o}nnen alle m\"{o}glichen ganzstelligen positiven Zahlen sein.
+	\item \textit{public int getProcessNum()}: Gibt die Prozessnummer zurück. Die Prozessnummer gibt an, um den wievielten Prozess es sich handelt. Die Prozessnummer ist nicht die PID.
 	\item \textit{public int getRandomPercentage()}: Gibt einen Zufallswert zwischen \textit{0} und \textit{100} zurück.
-	\item \textit{public boolean hasCrashed()}: Gibt \textit{true} zurück, wenn der Prozess während der aktuellen Simulation schon mal abgestürzt ist.
-	\item \textit{public boolean isCrashed()}: Gibt \textit{true} zurück, wenn der Prozess aktuell abgestürzt ist.
-	\item \textit{public void isCrashed(boolean isCrashed)}: Hiermit kann man den Prozess abstürzen (\textit{isCrashed = true}) und wiederbeleben (\textit{isCrashed = false}) lassen.
+	\item \textit{public boolean hasCrashed()}: Gibt \textit{true} zurück, wenn der Prozess während der aktuellen Simulation bereits abgestürzt ist.
+	\item \textit{public boolean isCrashed()}: Gibt \textit{true} zurück, wenn der Prozess zur Zeit abgestürzt ist.
+	\item \textit{public void isCrashed(boolean isCrashed)}: Hiermit kann man den Prozess abstürzen lassen (\textit{isCrashed = true}) sowie wiederbeleben lassen (\textit{isCrashed = false}).
 \end{itemize}
 
-In der Regel werden in Protokollen auch Nachrichten (\textit{VSMessage}) verschickt. Folgende Methoden dürfen davon im Protokoll-API verwendet werden:
+In der Regel werden durch Protokolle Nachrichten (\textit{VSMessage}) verschickt. Davon dürfen folgende Methoden des Protokoll-API verwendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
 	\item \textit{public VSMessage()}: Der Standardkonstruktor für die Erstellung einer neuen Nachricht.
 	\item \textit{public int getMessageID()}: Gibt die Nachrichten-ID zurück.
-	\item \textit{public boolean equals(VSMessage message)}: Hiermit lässt sich überprüfen, ob eine weitere Nachricht die selbe NID besitzt (wobei es sich dann um die selbe Nachricht handeln würde).
+	\item \textit{public boolean equals(VSMessage message)}: Überprüft, ob eine weitere Nachricht die selbe NID besitzt.
 \end{itemize}
 
 Folgende weitere Methoden von \textit{VSMessage} können nach Erhalt einer Nachricht verwendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
-	\item \textit{public String getName()}: Gibt den Namen des zur Nachricht dazugehörigen Protokolls zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public String getProtocolClassname()}: Gibt den Klassennamen des zur Nachricht dazugehörigen Protokolls zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public VSAbstractProcess getSendingProcess()}: Gibt eine Referenz auf den Senderprozess zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public long getLamportTime()}: Gibt den Lamport-Zeitstempel des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public VSVectorTime getVectorTime()}: Gibt den Vektor-Zeitstempel des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public boolean isServerMessage()}: Hiermit lässt sich entscheiden, ob es sich um eine Server- oder eine Clientnachricht handelt. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public String getName()}: Gibt den Namen des zur Nachricht gehörenden Protokolls zurück.
+	\item \textit{public String getProtocolClassname()}: Gibt den Klassennamen des zur Nachricht gehörenden Protokolls zurück.
+	\item \textit{public VSAbstractProcess getSendingProcess()}: Gibt eine Referenz auf den Senderprozess zurück.
+	\item \textit{public long getLamportTime()}: Gibt den Lamport-Zeitstempel des Senderprozesses zurück.
+	\item \textit{public VSVectorTime getVectorTime()}: Gibt den Vektor-Zeitstempel des Senderprozesses zurück.
+	\item \textit{public boolean isServerMessage()}: Stellt fest, ob es sich um eine Server- oder eine Clientnachricht handelt.
 \end{itemize}
 
-Wenn über eine Nachricht Daten verschickt werden sollen, so werden die von \textit{VSPrefs} vererben Methoden verwendet. 
+Wenn über eine Nachricht Daten verschickt werden sollen, so werden die von \textit{VSPrefs} gerbten Methoden verwendet. 
 
 \subsubsection{Beispielimplementierung eines Protokolls}
 
-Im Folgenden wird die Implementierung des zuverlässigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} als Beispiel aufgeführt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 3.10. beschrieben. Client- und Serverseite werden in der selben Klasse implementiert.
+Im Folgenden wird die Implementierung des zuverlässigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} beispielhaft gezeigt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 3.10. beschrieben. Client- und Serverseite werden hier in der selben Klasse implementiert.
 
-Im Konstruktor muss stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{VSAbstractProtocol.HAS\_ON\_CLIENT\_START} wird dem API mitgeteilt, dass der Client die Anfragen startet. Für \textit{VSAbstractProtocol.HAS\_ON\_SERVER\_START} und Serveranfragen gilt selbiges analog. Da ein Protokoll auch ein \textit{VSAbstractEvent} ist, muss auch hier mit \textit{setClassname} der Klassenname des aktuellen Protokolls angegeben werden:
+Im Konstruktor muss stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{VSAbstractProtocol.HAS\_ON\_CLIENT\_START} wird dem Simulator mitgeteilt, dass der Client die Anfragen startet. Für \textit{VSAbstractProtocol.HAS\_ON\_SERVER\_START} und Serveranfragen gilt dies analog. Da ein Protokoll auch ein \textit{VSAbstractEvent} ist, muss auch hier mit \textit{setClassname} der Name der Klasse des aktuellen Protokolls angegeben werden:
 	
 \begin{code}
 package protocols.implementations;
@@ -403,7 +403,7 @@ public class VSReliableMulticastProtocol
 
 \textbf{Clientseite des Protokolls}
 
-Das private Klassenattribut \textit{pids} wird für die Zwischenspeicherung beteiligter PIDs benötigt. Hier sind alle PIDs abgelegt, von denen noch Bestätigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden können (s. Abbildung \ref{fig:Protokollvariablen}. unter ``Reliable Multicast Client'' ganz unten):
+Das private Klassenattribut \textit{pids} wird für die Zwischenspeicherung beteiligter PIDs benötigt. Hier sind alle PIDs der Prozesse abgelegt, von denen noch Bestätigungsnachrichten erwartet werden. als Standard-PIDs werden \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} gerbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden können (s. Abb. \ref{fig:Protokollvariablen}.):
 \begin{code}
     private ArrayList<Integer> pids;
 
@@ -419,7 +419,7 @@ Das private Klassenattribut \textit{pids} wird für die Zwischenspeicherung betei
     }
 \end{code}
 
-Wenn die Simulation zurückgesetzt wird, dann wird auch \textit{pids} reinitialisiert:
+Wenn die Simulation zurückgesetzt wird, dann wird auch das Klassenattribut \textit{pids} neu initialisiert:
 \begin{code}
     public void onClientReset() {
        	pids.clear();
@@ -427,7 +427,7 @@ Wenn die Simulation zurückgesetzt wird, dann wird auch \textit{pids} reinitialis
     }
 \end{code}
 
-In \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden soll. Wenn dies der Fall ist (wenn von mindestens einem beteiligten Prozess noch keine Bestätigung erhalten wurde), wird ein neues Nachrichtenobjekt erstellt, und mit dem Inhalt \textit{Boolean: isMulticast=true} verschickt (intern wird hier für jeden Empfängerprozess ein \textit{VSMessageReceiveEvent} erzeugt). Mit \textit{scheduleAt} wird ein Wecker festgelegt, zu welcher lokalen Prozesszeit die Methode \textit{onClientSchedule} aufgerufen werden soll (intern wird hier ein \textit{VSProtocolScheduleEvent} erzeugt): 
+In der Methode \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden soll. Ist dies der Fall  (d.h. mindestens von einem beteiligten Prozess wurde noch keine Bestätigung erhalten), so wird ein neues Nachrichtenobjekt erstellt. Dieses Objektt wird  mit dem Inhalt \textit{Boolean: isMulticast=true} verschickt (intern wird hier für jeden Empfängerprozess ein \textit{VSMessageReceiveEvent} erzeugt). Mit \textit{scheduleAt} wird ein Wecker festgelegt, der vorgibt zu welcher lokalen Prozesszeit die Methode \textit{onClientSchedule} aufgerufen werden soll (intern wird hier ein \textit{VSProtocolScheduleEvent} erzeugt): 
 \begin{code}
     public void onClientStart() {
         if (pids.size() != 0) {
@@ -442,7 +442,7 @@ In \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden s
     }
 \end{code}
 
-Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. Hier wird überprüft, ob überhaupt noch Multicast-Bestätigungen benötigt werden. Danach wird geschaut, ob es sich bei der Antwort um eine noch nicht eingetroffene Bestätigung handelt. Gegebenenfalls wird die jeweilige PID aus \textit{pids} entfernt. Wenn \textit{pids} leer ist, dann wurde von allen beteiligten Prozessen eine Bestätigung erhalten und der Client entfernt mit \textit{removeSchedules} alle seine derzeit programmierten Wecker.
+Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. Hier wird überprüft, ob überhaupt noch Multicast-Bestätigungen benötigt werden. Nach dieser Überprüfung wird geschaut, ob es sich bei der Antwort um eine noch nicht eingetroffene Bestätigung handelt. Gegebenenfalls wird dann die jeweilige PID aus \textit{pids} entfernt. Wenn \textit{pids} leer ist, dann wurde von allen beteiligten Prozessen eine Bestätigung erhalten und der Client entfernt mit \textit{removeSchedules} alle seine derzeit programmierten Wecker.
 
 \begin{code}
     public void onClientRecv(VSMessage recvMessage) {
@@ -466,7 +466,7 @@ Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. H
     }
 \end{code}
 
-Für das erneute Verschicken einer Clientanfrage ruft \textit{onClientSchedule} lediglich die Methode \textit{onClientStart} auf, die wiederum einen neuen Wecker planen kann:
+Für das erneute Verschicken einer Clientanfrage ruft \textit{onClientSchedule} lediglich die Methode \textit{onClientStart} auf, welche wiederum einen neuen Wecker planen kann:
 \begin{code}
     public void onClientSchedule() {
         onClientStart();
@@ -475,7 +475,7 @@ Für das erneute Verschicken einer Clientanfrage ruft \textit{onClientSchedule} l
 
 \textbf{Serverseite des Protokolls}
 
-Die Serverseite des Protokolls speichert im Attribut \textit{ackSent} ab, ob es bereits eine Bestätigung des Multicasts verschickt hat oder nicht. In diesem Protokoll werden in \textit{onServerInit} keine Initialisierungen vorgenommen. Demnach gibt es für den Benutzer auch keine serverseitigen Protokollvariablen zu editieren. Beim Zurücksetzen der Simulation wird lediglich \textit{ackSent} auf den Ursprungswert \textit{false} gesetzt:
+Die Serverseite des Protokolls speichert im Attribut \textit{ackSent}, ob es bereits eine Bestätigung des Multicasts verschickt hat oder nicht. In diesem Protokoll werden in \textit{onServerInit} keine Initialisierungen vorgenommen. Daher gibt es für den Benutzer auch keine serverseitigen Protokollvariablen zum Editieren. Beim Zurücksetzen der Simulation wird \textit{ackSent} lediglich auf den Ursprungswert \textit{false} gesetzt:
 \begin{code}
     private boolean ackSent = false;
 
@@ -486,7 +486,7 @@ Die Serverseite des Protokolls speichert im Attribut \textit{ackSent} ab, ob es 
     }
 \end{code}
 
-Wenn der Server eine Clientanfrage erhalten hat, so überprüft der Server, ob es sich um eine Multicast-Nachricht handelte. Anschließend wird gegebenenfalls die Bestätigungsnachricht mit \textit{Boolean: isAck=true} und der Server-PID verschickt. Je nachdem ob bereits eine Bestätigung verschickt wurde oder nicht, wird eine andere Nachricht gelogt: 
+Erhält der Server eine Clientanfrage, so überprüft er Server, ob es sich um eine Multicast-Nachricht handelte oder nicht. Daraufhin wird dann ggf. die Bestätigungsnachricht mit \textit{Boolean: isAck=true} und der Server-PID verschickt. Je nachdem ob bereits eine Bestätigung verschickt wurde oder nicht, wird eine andere Nachricht in Log erstellt: 
 \begin{code}
     public void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isMulticast")) {
@@ -505,7 +505,7 @@ Wenn der Server eine Clientanfrage erhalten hat, so überprüft der Server, ob es 
     }
 \end{code}
 
-Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Methode \textit{onServerSchedule} auch einen leeren Rumpf:
+Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat der Methodenrumpf von \textit{onServerSchedule} keinen Inhalt:
 \begin{code}
     public void onServerSchedule() { }
 }
@@ -513,7 +513,7 @@ Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Met
 
 \subsubsection{Erstellung eigener Protokolle (Schnelldurchlauf)}
 
-Hier werden alle Schritte zusammengefasst, die für die Erstellung eines eigenen Protokolls \textit{VSMyProtocol} durchgeführt werden müssen. Hierf\"{u}r muss der Protokoll-Entwickler das Java-SDK sowie Apache Ant installiert- und den Quelltext des Simulators vorliegen haben.
+Hier werden alle Schritte zusammengefasst, die für die Erstellung eines eigenen Protokolls \textit{VSMyProtocol} durchgeführt werden müssen. Ein Protokoll-Entwickler muss hierf\"{u}r das Java-SDK und Apache Ant installiert- und den Quelltext des Simulators vorliegen haben.
 
 \begin{enumerate}
 	\item VS-Simulator Quelltext beziehen und in das Verzeichnis \textit{vs/sources/protocols/implementations} wechseln.
@@ -526,17 +526,17 @@ registerEvent("protocols.implementations.VSMyProtocol",
               "Langer Name des Protokolls", // Langer Name
               "Neues Protokoll"); // Kurzer Name
 	\end{code}
-	\item Mit dem Befehl \textit{ant compile} die Änderungen übernehmen und mit \textit{ant test} testen, ob der Simulator das Protokoll übernommen hat. Hierbei wird der Simulator direkt aus dem Quellverzeichnis gestartet. ``Neues Protokoll'' sollte nun im Ereigniseditor programmiert werden können.
+	\item Mit dem Befehl \textit{ant compile} die Änderungen übernehmen und mit \textit{ant test} testen, ob der Simulator das Protokoll übernommen hat. Hierbei wird der Simulator direkt aus dem Quellverzeichnis gestartet. ``Neues Protokoll'' sollte nun im Ereigniseditor sichtbar sein und programmiert werden können.
 	\item Mit dem Befehl \textit{ant dist} das Archiv \textit{dist/lib/VS-Sim-Latest.jar} erstellen und verwenden.
 \end{enumerate}
 
-Wenn eine Simulatorversion versucht eine abgespeicherte Simulation eines nicht implementierten Protokolls zu laden, dann kommt es zu Fehlern. Mit einem neuen Protokoll muss also stets auch immer ein neuer Simulator ausgeliefert werden.
+Wenn eine Simulatorversion versucht eine abgespeicherte Simulation eines nicht implementierten Protokolls zu laden, dann kommt es unweigerlich zu Laufzeitfehlern. Daher muss mit einem neuen Protokoll also stets auch der neue Simulator ausgeliefert werden.
 
 \section{GUI sowie Simulationsvisualisierung}
 
-Das Paket \textit{simulator} (s. Abbildung \ref{fig:PackageProtocols}.) implementiert die graphische Benutzeroberfläche des Simulators. Ausnahmen stellen die Editorklassen in \textit{prefs.editors} sowie die Klasse \textit{utils.VSFrame} dar. 
+Das Paket \textit{simulator} (s. Abb. \ref{fig:PackageProtocols}.) implementiert die graphische Benutzeroberfläche des Simulators. Ausnahmen stellen die Editorklassen in \textit{prefs.editors} sowie die Klasse \textit{utils.VSFrame} dar. 
 
-Beim Starten des Simulators wird auf \textit{main}-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, worin alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (s. Abbildung \ref{fig:NeuesFenster}.) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt der Klasse \textit{VSSimulator}, wobei jede Simulation im Simulationsfenster einen eigenen Tab besitzt (s. Abbildung \ref{fig:NeuErstellteSimulation}., unten links). Jede Simulation besitzt dabei eine eigene Simulationsnummer. Jedes \textit{VSSimulator}-Objekt greift auf die Klasse \textit{VSSimulatorVisualization} zurück, welche die Simulationsvisualisierung (s. Abbildung \ref{fig:Visualisierung}.) implementiert. 
+Beim Starten des Simulators wird auf \textit{main}-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, worin alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (s. Abb. \ref{fig:NeuesFenster}.) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt der Klasse \textit{VSSimulator}, wobei jede Simulation im Simulationsfenster einen eigenen Tab besitzt (s. Abb. \ref{fig:NeuErstellteSimulation}., unten links). Jede Simulation besitzt dabei eine eigene Simulationsnummer. Jedes \textit{VSSimulator}-Objekt greift auf die Klasse \textit{VSSimulatorVisualization} zurück, welche die Simulationsvisualisierung (s. Abb. \ref{fig:Visualisierung}.) implementiert. 
 
 \begin{figure}[h]
 	\centering
@@ -549,7 +549,7 @@ Beim Starten des Simulators wird auf \textit{main}-Methode, welche sich in \text
 
 Die Klasse \textit{VSMenuItemStates} wird für die Synchronisierung des Simulationsstatusses verwendet. Abhängig davon kann der Benutzer bestimmte Aktionen durchführen oder nicht. Zum Beispiel kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird. Alle hier möglichen Aktionen sind bereits aus Kapitel 2.1. bekannt. 
 
-Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (s. Abbildung \ref{fig:SidebarMitEreignissen}.) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich ein \textit{VSCreateTask}-Objekt, welches angibt wie das ein Ereignis anzulegen ist.
+Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (s. Abb. \ref{fig:SidebarMitEreignissen}.) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich ein \textit{VSCreateTask}-Objekt, welches angibt wie das ein Ereignis anzulegen ist.
 
 Die Klasse \textit{VSLogging} kapselt f\"{u}r das Loggen von Nachrichten ein \textit{JTextArea}-Objekt ein. In dieser Klasse werden alle Logfunktionen implementiert. Die \textit{JTextArea} wird f\"{u}r die Darstellung dem Simulationsobjekt \textit{VSSimulator} \"{u}bergeben. Für den Logfilter wird auf das Java-Standardpaket \textit{java.util.regex} (s. \cite{Regexp}) zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können (s. Kap. 2.2.2. im Abschnitt Logfilter).
 
@@ -587,7 +587,7 @@ Jede Simulation besitzt somit seinen eigenen Simulationsthread. Des Weiteren gib
 
 \section{Serialisierung und Deserialisierung von Simulationen}
 
-Der Anwender kann eine erstellte Simulation im Datei-Menü speichern oder eine bereits abgespeicherte Simulation laden. Hierbei wird von der aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (s. Abbildung \ref{fig:PackageSerialize}.) befinden sich Helfer, die bei der Serialisierung einer Simulation unterst\"{u}tzend sind. 
+Der Anwender kann eine erstellte Simulation im Datei-Menü speichern oder eine bereits abgespeicherte Simulation laden. Hierbei wird von der aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (s. Abb. \ref{fig:PackageSerialize}.) befinden sich Helfer, die bei der Serialisierung einer Simulation unterst\"{u}tzend sind. 
 
 Da nicht alle Daten f\"{u}r die Speicherung einer Simulation relevant sind, wird nur eine Auswahl von Klassenattributen serialisiert. Zum Beispiel werden alle Simulationseinstellungen serialisiert, nicht jedoch GUI-Objekte. Alle serialisierbaren Klassen implementieren das Interface \textit{VSSerializable} mit folgenden zwei Methoden:
 
@@ -636,7 +636,7 @@ In Abbildung \ref{fig:SequenceSerialize} ist die komplette Sequenz f\"{u}r die S
 
 \section{Helferklassen und Klassen für Ausnahmebehandlungen}
 
-Es wurden noch nicht die Klassen der Pakete \textit{utils} (s. Abbildung \ref{fig:PackageUtils}.) sowie \textit{exceptions} (s. Abbildung \ref{fig:PackageExceptions}.) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
+Es wurden noch nicht die Klassen der Pakete \textit{utils} (s. Abb. \ref{fig:PackageUtils}.) sowie \textit{exceptions} (s. Abb. \ref{fig:PackageExceptions}.) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
 
 \begin{figure}[h]
 	\centering
