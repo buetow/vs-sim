@@ -1,6 +1,6 @@
-\chapter{Die Implementierung}
+\chapter{Implementierung}
 
-In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der Simulator wurde in der Programmiersprache Java entwickelt. Bei der Betrachtung der Zielgruppe wird klar, dass Java für die gestellte Aufgabe die geeignetste Programmiersprache ist. Der Simulator ist somit auf jeder Plattform verfügbar, für die es die JRE (Java Runtime Environment) gibt und erstreckt sich somit über alle gängigen Betriebssysteme. Da an der Fachhochschule Aachen auch Java gelehrt wird, sollten hier die meisten Studenten auch eigene Erweiterungen, wie eigene Protokolle, entwerfen können. Der Simulator wurde mit dem derzeit aktuellsten Java SDK (Software Development Kit) in der Version 6 (1.6) entwickelt.
+In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der Simulator wurde in der Programmiersprache Java entwickelt. Bei der Betrachtung der Zielgruppe wird klar, dass Java für die gestellte Aufgabe die geeignetste Programmiersprache ist. Der Simulator ist somit auf jeder Plattform verfügbar, für die es die JRE (Java Runtime Environment) gibt, und erstreckt sich somit über alle gängigen Betriebssysteme. Da an der Fachhochschule Aachen auch Java gelehrt wird, sollten hier die Studenten auch eigene Erweiterungen, wie eigene Protokolle, entwerfen können. Der Simulator wurde mit dem derzeit aktuellsten Java SDK (Software Development Kit) in der Version 6 (1.6) entwickelt.
 
 \begin{table}
 	\fbox{
@@ -26,15 +26,15 @@ In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der S
 	\label{tb:Pakete}
 \end{table}
 
-Da es sonst den Rahmen sprengen würde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich nämlich, einschließlich Kommentare, auf über 15.000 Zeilen und über 61 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) über 2MB groß. Alle folgenden UML-Diagramme stellen aufgrund der Übersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugehörigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete} in alphanumerischer Reihenfolge aufgeführt.  
+Da es sonst den Rahmen sprengen würde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich nämlich, einschließlich Kommentare, auf über 15.000 Zeilen und über 61 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) über 2MB groß. Alle folgenden UML-Diagramme stellen aufgrund der Übersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugehörigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete}. in alphanumerischer Reihenfolge aufgeführt.  
 
 \section{Einstellungen und Editoren}
 
-Eine Simulation ist von einer Vielzahl von Einstellungen abhängig. Da auf diese Einstellungen in den weiteren Teilkapitel stets zurückgegriffen wird, macht es Sinn die dazugehörigen Klassen zuerst zu betrachten.
+Eine Simulation ist von einer Vielzahl von Einstellungen abhängig. Da auf diese Einstellungen in den weiteren Teilkapitel stets zurückgegriffen wird, macht es Sinn, die dazugehörigen Klassen zuerst zu betrachten.
 
-\subsection{Einstellungsobjekte}
+\subsubsection{Einstellungsobjekte}
 
-Auf Abbildung \ref{fig:PackagePrefs} ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen für eine spätere Verwendung dynamisch ablegen und stellt somit einen Container für diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle seine Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Ereignisobjekt für lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Später wird noch erklärt, dass Protokollobjekte auch als Ereignisse eingesetzt werden. Somit können Protokolleinstellungen auch in ein \textit{VSPrefs}-Objekt abgespeichert werden. Selbst Nachrichtenobjekte besitzt hiervon eine eigene Instanz, wobei hier die zu verschickenden Daten abgelegt werden können. 
+Auf Abbildung \ref{fig:PackagePrefs}. ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen für eine spätere Verwendung dynamisch ablegen und stellt somit einen Container für diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle seine Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Ereignisobjekt für lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Später wird noch erklärt, dass Protokollobjekte auch als Ereignisse eingesetzt werden, womit Protokolleinstellungen auch in einem \textit{VSPrefs}-Objekt abgespeichert werden k\"{o}nnen. Selbst Nachrichtenobjekte besitzt hiervon eine eigene Instanz, wobei hier die zu verschickenden Daten abgelegt werden. 
 
 \begin{figure}[h]
 	\centering
@@ -43,11 +43,11 @@ Auf Abbildung \ref{fig:PackagePrefs} ist der Aufbau des Pakets \textit{prefs} zu
 	\label{fig:PackagePrefs}
 \end{figure}
 
-Jede Variable besteht aus einen Datentypen, einen Variablennamen und einer optionalen Beschreibung sowie einen Wert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mithilfe der \textit{VSPrefsRestriction}-Klasse implementiert wird. Da man beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
+Jede Variable besteht aus einen Datentypen, einen Variablennamen und einer optionalen Beschreibung sowie einen Wert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mit Hilfe der \textit{VSPrefsRestriction}-Klasse implementiert wird. Da der Anwender beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
 
-Eine Variablenbeschreibung wird für die Darstellung im GUI verwendet, während der Variablenname eher für die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) als Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn für eine Variable keine Beschreibung existiert so wird, wie auf Abbildung \ref{fig:SimulationseinstellungenExperten} anhand der Farbvariablen schon gesehen wurde, für die Anzeige einer Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die auf Tabelle \ref{tb:VariablenPrefixe} angegebenen Prefixkonventionen. Alle verfügbaren Typen wurden bereits in Tabelle \ref{tb:VariablenDatentypen} aufgelistet. \textit{VSPrefs} stellt für alle Variablentypen entsprechende Zugriffsmethoden zur Verfügung.  
+Eine Variablenbeschreibung wird für die Darstellung im GUI verwendet, während der Variablenname eher für die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) als Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn für eine Variable keine Beschreibung existiert so wird, wie auf Abbildung \ref{fig:SimulationseinstellungenExperten}. anhand der Farbvariablen schon gesehen wurde, für die Anzeige einer Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die auf Tabelle \ref{tb:VariablenPraefixe}. angegebenen Präfixkonventionen. Alle verfügbaren Typen wurden bereits in Tabelle \ref{tb:VariablenDatentypen}. aufgelistet. \textit{VSPrefs} stellt für alle Variablentypen entsprechende Zugriffsmethoden zur Verfügung.  
 
-Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch in der Quelltext-Dokumentation eingesehen werden können. Die Methoden werden nun nur anhand des Integer-Datentyps verdeutlicht. Für alle anderen Typen gilt fast alles analog. Für Integer stehen in \textit{VSPrefs} folgende Methoden zur Verfügung:
+Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch in der Quelltext-Dokumentation eingesehen werden können. Stattdessen werden die Methoden nur anhand des Integer-Datentyps verdeutlicht. Für alle anderen Typen gilt fast alles analog. Für Integer stehen in \textit{VSPrefs} folgende Methoden zur Verfügung:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -69,10 +69,10 @@ Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch
 \begin{table}
 	\fbox{
 	\begin{tabular}{c|l|l}
-		\textbf{Variablen-Prefix} & \textbf{Beschreibung}  & \textbf{Beispiel}\\
+		\textbf{Variablen-Präfix} & \textbf{Beschreibung}  & \textbf{Beispiel}\\
 		\hline 
 		\textit{col} & Farbvariablen & \textit{Color: col.background = Color-Objekt}\\
-		\textit{div} & Diverse versteckte Variablen & \textit{Integer: div.window.loggsize = 300} \\
+		\textit{div} & Diverse versteckte Variablen & \textit{Integer: div.window.logsize = 300} \\
 		\textit{keyevent} & Variablen, die Tastaturkürzel definieren & \textit{Integer: keyevent.close = KeyEvent.VK\_C} \\
 		\textit{lang} & Variablen, die Text beinhalten & \textit{String: lang.activate = aktivieren}\\
 		\textit{message} & Variablen, die Nachrichten betreffen & \textit{Integer: message.prob.outage = 0}\\
@@ -81,26 +81,26 @@ Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch
 	\end{tabular}
 	}
 	\caption{Konventionen für Variablennamen-Präfixe in \textit{VSDefautPrefs}}
-	\label{tb:VariablenPrefixe}
+	\label{tb:VariablenPraefixe}
 \end{table}
 
 Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwert dar. \textit{descr} ist eine optionale Variablenbeschreibung. Es können sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern allerdings als Integer-Objekt abgespeichert (für eine spätere Serialisierung, mehr dazu aber später) und macht somit keinen großen Unterschied. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} zurück.
 
-\textit{VSPrefs} bietet auch eine Reihe von \textit{initInteger}-Methoden an, welche sich von den \textit{setInteger}-Methoden dadurch unterscheiden, dass sie eine Variable nur einen Wert zuweisen, wenn sie vorher noch nicht initialisiert wurde, was durch \textit{setInteger} oder \textit{initInteger} selbst geschehen sein kann. Eine komplette Übersicht aller Methoden (auch für andere Datentypen) gibt es in der Quelltext-Dokumentation.
+\textit{VSPrefs} bietet auch eine Reihe von \textit{initInteger}-Methoden an, welche sich von den \textit{setInteger}-Methoden dadurch unterscheiden, dass sie einer Variable nur einen Wert zuweisen, wenn sie vorher noch nicht initialisiert wurde, was durch \textit{setInteger} oder \textit{initInteger} selbst geschehen sein kann. Eine komplette Übersicht aller Methoden (auch für andere Datentypen) gibt es in der Quelltext-Dokumentation.
 
-\textit{VSPrefs} speichert alle Integervariablen in einem \textit{HashMap<String,Integer>}-Objekt ab, wobei der String-Wert den Variablennamen \textit{key} angibt. Für die Beschreibung \textit{descr}, den Einheiten-String \textit{unit} sowie möglichen Minimal- und Maximalwerte werden separate Instanzen von \textit{HashMap} verwendet. Da alle \textit{HashMap}-Objekte synchronisiert sind, können alle Methoden von verschiednenen Threads gleichzeitig verwendet werden. 
+\textit{VSPrefs} speichert alle Integervariablen in einem \textit{HashMap<String,Integer>}-Objekt ab, wobei der String-Wert den Variablennamen \textit{key} angibt. Für die Beschreibung \textit{descr}, den Einheiten-String \textit{unit} sowie möglichen Minimal- und Maximalwerte werden separate Instanzen von \textit{HashMap} verwendet. Da alle \textit{HashMap}-Objekte synchronisiert sind, können alle Methoden von \textit{VSPrefs} aus verschiednenen Threads gleichzeitig verwendet werden. 
 
 \textit{VSSerializablePrefs} implementiert das Interface \textit{VSSerializable} und kann somit alle enthaltenen Daten in eine Datei abspeichern beziehungsweise laden. Auf die Serialisierung und Deserialisierung von Simulationen wird später genauer eingegangen.
 
-Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSSerializablePrefs} und initialisiert bei Instantiierung automatisch alle verfügbaren Simulationsvariablen (bereits schon \"{u}ber 160) mit ihren Standardwerten. Dort sind auch alle Spracheinstellungen abgelegt. Sollte jemand den Simulator in eine andere Sprache, zum Beispiel ins Englische, übersetzen wollen, so muss er lediglich diese Datei und die Protokoll-Klassen (mehr dazu später) editieren. Die Spracheinstellungen sind nämlich in einem \textit{VSPrefs}--Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen für Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort für den Protokollentwickler bietet und für jede neue Textausgabe nicht ständig \textit{VSDefaultPrefs.java} editiert werden muss. 
+Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSSerializablePrefs} und initialisiert bei Instantiierung automatisch alle verfügbaren Simulationsvariablen (bereits schon \"{u}ber 160) mit ihren Standardwerten. Dort sind auch alle Spracheinstellungen abgelegt. Sollte jemand den Simulator in eine andere Sprache, zum Beispiel ins Englische, übersetzen wollen, so muss er lediglich diese Datei und die Protokoll-Klassen (mehr dazu später) editieren. Die Spracheinstellungen sind einem \textit{VSPrefs}-Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen für Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort für den Protokollentwickler bedeutet und für jede neu programmierte Textausgabe nicht ständig \textit{VSDefaultPrefs.java} editiert werden muss. 
 
-Alle Variablen die als Prefix \textit{lang}, \textit{keyevent}, \textit{div} oder \textit{col} im Namen tragen, sind versteckte Variablen und werden in einem Editor nicht angezeigt. Im Expertenmodus sind hingegen nur Variablen die mit \textit{lang} und \textit{keyevent} beginnen versteckt. Somit lassen sich im Expertenmodus weitere Variablen vom Anwender editieren.
+Alle Variablen die als Präfix \textit{lang}, \textit{keyevent}, \textit{div} oder \textit{col} im Namen tragen, sind versteckte Variablen und werden in einem Editor nicht angezeigt. Im Expertenmodus sind hingegen nur Variablen, die mit \textit{lang} und \textit{keyevent} beginnen, versteckt. Somit lassen sich im Expertenmodus weitere Variablen vom Anwender editieren.
 
-\subsection{Editorobjekte}
+\subsubsection{Editorobjekte}
 
-Wie Variablen intern abgespeichert werden ist bereits bekannt. Für das Editieren der Variablen werden Editor-Objekte verwendet. Auf Abbildung \ref{fig:PackagePrefsEditors} ist die Klassenstruktur des dazugehörigen Paketes \textit{prefs.editors} angegeben. 
+Wie Variablen intern abgespeichert werden, ist bereits bekannt. Für das Editieren der Variablen werden Editor-Objekte verwendet. Auf Abbildung \ref{fig:PackagePrefsEditors}. ist die Klassenstruktur des dazugehörigen Paketes \textit{prefs.editors} angegeben. 
 
-Die Basis eines Editors stellt die abstrakte Klasse \textit{VSAbstractEditor} dar, dem ein \textit{VSPrefs} Objekt zum Editieren übergeben wird. Ein Editor stellt alle verfügbaren nicht-versteckten Variablen des \textit{VSPrefs}-Objektes im GUI dar und bietet gleichzeitig die Möglichkeit alle Variablen darüber zu editieren an. Für das Editieren von Farbwerten wird auf \textit{VSColorChooser} zurückgegriffen. Die Klasse \textit{VSEditorTable} ist für das \textit{JTable}-Objekt aus Java's Swing-Bibliothek zuständig, welches bei der graphischen Darstellung aller Variablen eingesetzt wird. Die abstrakte Klasse \textit{VSAbstractBetterEditor} wurde, wegen der Übersicht, als Zwischenschritt eingefügt. 
+Die Basis eines Editors stellt die abstrakte Klasse \textit{VSAbstractEditor} dar, dem ein \textit{VSPrefs} Objekt zum Editieren übergeben wird. Ein Editor stellt alle verfügbaren nicht-versteckten Variablen des \textit{VSPrefs}-Objektes im GUI dar und bietet gleichzeitig die Möglichkeit, alle Variablen darüber zu editieren. Für das Editieren von Farbwerten wird auf \textit{VSColorChooser} zurückgegriffen. Die Klasse \textit{VSEditorTable} ist für das \textit{JTable}-Objekt aus Java's Swing-Bibliothek zuständig, welches bei der graphischen Darstellung aller Variablen eingesetzt wird. Die abstrakte Klasse \textit{VSAbstractBetterEditor} wurde, wegen der Übersicht, als Zwischenschritt eingefügt. 
 
 \begin{figure}[h]
 	\centering
@@ -109,13 +109,13 @@ Die Basis eines Editors stellt die abstrakte Klasse \textit{VSAbstractEditor} da
 	\label{fig:PackagePrefsEditors}
 \end{figure}
 
-Die Klasse \textit{VSSimulatorEditor} dient für das Editieren der globalen Simulationseinstellungen und \textit{VSProcessEditor} für das Editieren der Prozesseinstellungen sowie der dazugehörigen Protokollvariablen. Da diese beiden Klassen von \textit{VSAbstractBetterEditor} erben, können sie mithilfe von \textit{VSEditorFrame} in einem separaten Fenster angezeigt werden. Alternativ können die Editoren auch in der Sidebar im Tab ``Variablen'' angezeigt werden. Auf Abbildung \ref{fig:Simulationseinstellungen} wurde bereits ein \textit{VSEditorFrame} in Aktion gesehen. Auf Abbildung \ref{fig:NeueSimulationVariablen} wurde hingegen ein Prozesseditor in der Sidebar geöffnet. Für Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Prozesseditor aus editiert werden können. Dabei iteriert der Prozesseditor über alle für den jeweiligen Prozess verfügbaren Protokollobjekte und fügt deren Variablen zusätzlich in den Prozesseditor ein. Somit erscheinen die Prozess- und die dazugehörigen Protokollvariablen im selben Editor und bieten dem Benutzer so eine bessere Übersicht.
+Die Klasse \textit{VSSimulatorEditor} dient für das Editieren der globalen Simulationseinstellungen und \textit{VSProcessEditor} für das Editieren der Prozesseinstellungen sowie der dazugehörigen Protokollvariablen. Da diese beiden Klassen von \textit{VSAbstractBetterEditor} erben, können sie mit Hilfe von \textit{VSEditorFrame} in einem separaten Fenster angezeigt werden. Alternativ können die Editoren auch in der Sidebar im Tab ``Variablen'' angezeigt werden. Auf Abbildung \ref{fig:Simulationseinstellungen}. wurde bereits ein \textit{VSEditorFrame} in Aktion gesehen. Auf Abbildung \ref{fig:NeueSimulationVariablen}. wurde hingegen ein Prozesseditor in der Sidebar geöffnet. Für Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Prozesseditor aus editiert werden können. Dabei iteriert der Prozesseditor über alle für den jeweiligen Prozess verfügbaren Protokollobjekte und fügt deren Variablen in den Prozesseditor zusätzlich ein. Somit erscheinen die Prozess- und die dazugehörigen Protokollvariablen im selben Editor und bieten dem Benutzer so eine bessere Übersicht.
 
 \section{Ereignisse}
 
-\subsection{Funktionsweise von Ereignissen}
-
 Für jedes Ereignis existiert eine dazugehörige Klasse, welche die auszuführenden Aktionen implementiert. Eine Instanz davon wird für eine spätere Ausführung dem Task-Manager übergeben. Auf den Task-Manager wird später noch genauer eingegangen. 
+Jedes programmierbare Ereignis muss, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Der Simulator bezieht alle verf\"{u}gbaren Ereignisse aus \textit{VSRegisterEvents}, womit der Entwickler bei jeder Entwicklung eines neuen Ereignisses keine andere Stelle mehr im Quelltext des gesamten Simulators \"{a}ndern muss. Da sich die Anzahl der verfügbaren Ereignisklassen des Simulators bei Laufzeit nicht ändert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind hier statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann müssen alle neuen Ereignisse per Hand in die Datei \textit{VSRegisteredEvents.java} übernommen- und der Simulator neu kompiliert werden.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=13.5cm]{images/events}
@@ -123,9 +123,7 @@ Für jedes Ereignis existiert eine dazugehörige Klasse, welche die auszuführenden
 	\label{fig:PackageEvents}
 \end{figure}
 
-Jedes programmierbare Ereignis muss, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Da sich die Anzahl der verfügbaren Ereignisklassen des Simulators bei Laufzeit nicht ändert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind hier statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann müssen alle neuen Ereignisse per Hand in die Datei \textit{VSRegisteredEvents.java} übernommen- und der Simulator neu kompiliert werden.
-
-In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in verschiedenen Paketen liegen (Abbildung \ref{fig:PackageEvents}):
+In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in verschiedenen Paketen liegen (Abbildung \ref{fig:PackageEvents}.):
 
 \begin{enumerate}
 	\item \textit{events.implementations}: In diesem Paket befinden sich alle Ereignisse, die ohne weitere Spezialbehandlung vom Simulator eingesetzt werden können und vom Benutzer direkt im Ereigniseditor programmierbar sind. 
@@ -134,14 +132,14 @@ In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschied
 			\item \textit{VSProcessRecoverEvent}: Dieses Ereignis lässt den dazugehörigen Prozess wiederbeleben.
 		\end{itemize}
 
-	\item \textit{events.internal}: In diesem Paket befinden sich alle Ereignisse, die vom Simulator intern verwendet werden. Bevor der Simulator von diesen Ereignissen Gebrauch machen kann, muss er vorher einige Spezialbehandlungen durchführen.
+	\item \textit{events.internal}: In diesem Paket befinden sich alle Ereignisse, die vom Simulator intern verwendet werden. 
 		\begin{itemize}
-			\item \textit{VSAbstractInternalEvent}: Diese Klasse stellt weitere Methoden zur Verfügung, die von allen internen Ereignissen benötigt werden. Derzeit betrifft dies nur Methoden zur Serialisierung der gegebenen Objekte. Auf die Serialisierung (Abspeichern/Laden) von Simulationen wird später noch genauer eingegangen.
-			\item \textit{VSMessageReceiveEvent}: Diese Klasse wird für die Ankunft einer Nachricht bei einem Empfängerprozess benötigt. Sie kapselt die eigentliche Nachricht und überprüft, ob der Empfängerprozess das zur Nachricht dazugehörige Protokoll versteht. Diese Klasse überprüft auch die Simulationseinstellung ``Nur relevante Nachrichten anzeigen'' und entscheidet, ob die Nachricht nach Eintreffen in der Visualisierung und im Loggfenster berücksichtigt werden soll oder nicht.
+			\item \textit{VSAbstractInternalEvent}: Diese Klasse stellt weitere Methoden zur Verfügung, die von allen internen Ereignissen benötigt werden. Derzeit betrifft dies nur Methoden zur Serialisierung der gegebenen Objekte. 
+			\item \textit{VSMessageReceiveEvent}: Diese Klasse wird für die Ankunft einer Nachricht bei einem Empfängerprozess benötigt. Sie kapselt die eigentliche Nachricht und überprüft, ob der Empfängerprozess das zur Nachricht dazugehörige Protokoll versteht. Diese Klasse überprüft auch die Simulationseinstellung ``Nur relevante Nachrichten anzeigen'' und entscheidet, ob die Nachricht nach Eintreffen in der Visualisierung und im Logfenster berücksichtigt werden soll oder nicht.
 			\item \textit{VSProtocolEvent}: Diese Klasse implementiert gleichzeitig vier verschiedene Ereignisse: Das Aktivieren/Deaktivieren eines Servers/Clients eines gegebenen Protokolls. Der Ereigniseditor berechnet anhand der verfügbaren Protokolle automatisch alle möglichen Kombinationen und bietet sie dem Anwender in seiner Auswahl an. Für alle dieser vier Ereignisse wird jeweils ein Objekt von \textit{VSProtocolEvent} verwendet, jedoch mit jeweils anderen Attributwerten.  
 			\item \textit{VSProtocolScheduleEvent}: Diese Klasse wird für die Wecker-Ereignisse benötigt. Wecker-Ereignisse können nur von Protokollen (mehr dazu später) erstellt werden. \textit{VSProtocolScheduleEvent} besitzt eine Referenz auf das gegebene Protokoll und ruft bei Ereigniseintrittszeit entweder die Methode \textit{onServerScheduleStart} bei einem Server- oder \textit{onClientScheduleStart} bei einem Clientprotokoll auf. 
 		\end{itemize}
-	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt hier seine eigene Klasse. Alle Protokolle erben hierbei von der auf Abbildung \ref{fig:PackageEvents} zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- beziehungsweise einer Clientanfrage entspricht. Die Implementierung von Protokollen wird später genauer behandelt. 
+	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt hier seine eigene Klasse. Alle Protokolle erben hierbei von der auf Abbildung \ref{fig:PackageEvents}. zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- beziehungsweise einer Clientanfrage entspricht. Die Implementierung von Protokollen wird später genauer behandelt. 
 \end{enumerate}
 
 Alle Ereignisse, die das Interface \textit{VSCopyableEvent} implementieren, können vom Anwender im Ereigniseditor mit einem Rechtsklick kopiert werden und müssen die Methode \textit{initCopy(VSAbstractEvent copy)} implementieren. Dort werden dann alle relevanten Attribute in das neue Ereignis \textit{copy} kopiert. 
@@ -156,9 +154,9 @@ Alle Ereignisklassen erweitern die abstrakte Klasse \textit{VSAbstractEvent} und
 Des Weiteren werden folgende nicht-abstrakte Methoden von \textit{VSAbstractEvent} vererbt:
 
 \begin{itemize}
-	\item \textit{public void logg(String message)}: Diese Methode schreibt eine Loggnachricht in das Simulationsloggfenster.
-	\item \textit{public VSAbstractEvent getCopy()}: Diese Methode erstellt vom aktuellen Ereignis eine Kopie, worauf eine Referenz zurückgegeben wird. Alle Ereignisse die kopiert werden können müssen ebenso das Interface \textit{VSCopyableEvent} implementieren. Wenn ein Ereignis dies nicht tut und \textit{getCopy()} aufgerufen wird, dann wird von Java die Ausnahme \textit{exceptions.VSEventNotCopyable} geworfen.
-	\item \textit{public VSAbstractEvent getCopy(VSInternalProcess process)}: Diese Methode erstellt vom aktuellen Ereignis ebenfalls eine Kopie, jedoch mit dem Unterschied, dass das Ereignis einem anderen Prozess zugewiesen wird. 
+	\item \textit{public void log(String message)}: Diese Methode schreibt eine Lognachricht in das Simulationslogfenster.
+	\item \textit{public VSAbstractEvent getCopy()}: Diese Methode erstellt vom aktuellen Ereignis eine Kopie, worauf eine Referenz zurückgegeben wird. Alle Ereignisse, die kopiert werden können, müssen auch das Interface \textit{VSCopyableEvent} implementieren. Wenn ein Ereignis dies nicht tut und \textit{getCopy()} aufgerufen wird, dann wird die Ausnahme \textit{exceptions.VSEventNotCopyable} geworfen.
+	\item \textit{public VSAbstractEvent getCopy(VSInternalProcess process)}: Diese Methode erstellt vom aktuellen Ereignis ebenso eine Kopie, jedoch mit dem Unterschied, dass das Ereignis einem anderen Prozess zugewiesen wird. 
 \end{itemize}
 
 Jede Ereignisklasse hat außerdem Zugriff auf folgende Attribute, die von \textit{VSAbstractEvent} vererbt werden:
@@ -168,11 +166,11 @@ Jede Ereignisklasse hat außerdem Zugriff auf folgende Attribute, die von \textit
 	\item \textit{protected VSAbstractProcess process}: Eine Referenz auf das Prozessobjekt des jeweiligen Prozesses, auf welches das Ereignis angewendet wird.
 \end{itemize}
 
-Da \textit{VSAbstractEvent} die Klasse \textit{VSSerializablePrefs} erweitert, können alle Ereignisse mit allen ihren Variablen serialisiert werden. Hierauf wird später nochmal eingegangen.
+Da \textit{VSAbstractEvent} die Klasse \textit{VSSerializablePrefs} erweitert, können alle Ereignisse mit allen ihren Variablen serialisiert werden. 
 
-\subsection{Beispielimplementierung eines Ereignisses}
+\subsubsection{Beispielimplementierung eines Ereignisses}
 
-Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Wegen der Serializierung und Deserialisierung von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wo der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird obligatorisch überprüft, ob der Prozess bereits abgestürzt (hier eigentlich nicht notwendig, verbessert hier aber die Lesbarkeit) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. 
+Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Wegen der Serializierung und Deserialisierung von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wo der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird überprüft, ob der Prozess bereits abgestürzt (hier eigentlich nicht notwendig, verbessert hier aber die Lesbarkeit) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. 
 \begin{code}
 package events.implementations;
 
@@ -190,14 +188,14 @@ extends VSAbstractEvent implements VSCopyableEvent {
     public void onStart() {
         if (!process.isCrashed()) {
             process.isCrashed(true);
-            super.logg(prefs.getString("lang.crashed"));
+            super.log(prefs.getString("lang.crashed"));
         }
     }
 }
 \end{code}
-Der Task-Manager überprüft bereits, ob der Prozess abgestürzt ist oder nicht. Das heißt, dass ein Ereignis bei einem abgestürztem Prozess gar nicht erst ausgeführt wird. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgeführt wird, auch wenn der Prozess abgestürzt ist. Mit \textit{logg} wird eine Nachricht (die über \textit{prefs} bezogen wird) in das Loggfenster geschrieben.
+Der Task-Manager überprüft bereits, ob der Prozess abgestürzt ist oder nicht. Das heißt, dass ein Ereignis bei einem abgestürztem Prozess gar nicht erst ausgeführt wird. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgeführt wird, auch wenn der Prozess abgestürzt ist. Mit \textit{log} wird eine Nachricht (die über \textit{prefs} bezogen wird) in das Logfenster geschrieben.
 
-In der Datei \textit{events/VSRegisteredEvents.java} muss in der \textit{init}-Methode für jedes programmierbare Ereignis ein Eintrag existieren. Die \textit{init}-Methode wird einmal beim Starten des Simulators ausgeführt:
+In der Datei \textit{events/VSRegisteredEvents.java} muss in der \textit{init}-Methode für jedes Ereignis ein Eintrag existieren. Die \textit{init}-Methode wird einmal beim Starten des Simulators ausgeführt:
 
 \begin{code}
 public static void init(VSPrefs prefs_) {
@@ -216,9 +214,7 @@ Als Resultat kann das Prozessabsturzereignis nach Belieben via GUI programmiert-
 
 \section{Zeitformate, Prozesse, Nachrichten sowie Task-Manager}
 
-\subsection{Funktionsweise}
-
-Das Paket \textit{core.time} auf Abbildung \ref{fig:PackageCoreTime} stellt lediglich die Klassen für die Vektor- und Lamportzeitstempel zur Verfügung. Für die normale lokale Prozesszeit wird aus Performance-gründen keine eigene Klasse, sondern ein einfaches \textit{long}-Attribut des Prozessobjektes verwendet.
+Das Paket \textit{core.time} auf Abbildung \ref{fig:PackageCoreTime}. stellt lediglich die Klassen für die Vektor- und Lamport-Zeitstempel zur Verfügung. Für die normale lokale Prozesszeit wird, aus Performance-Gründen, keine eigene Klasse, sondern ein einfaches \textit{long}-Attribut des Prozessobjektes verwendet.
 
 \begin{figure}[h]
 	\centering
@@ -227,9 +223,11 @@ Das Paket \textit{core.time} auf Abbildung \ref{fig:PackageCoreTime} stellt ledi
 	\label{fig:PackageCoreTime}
 \end{figure}
 
-Auf Abbildung \ref{fig:PackageCore} ist stark vereinfacht das Paket \textit{core} dargestellt. Für jedes auszuführendes Ereignis wird eine Instanz von \textit{VSTask} benötigt, welche die Ereigniseintrittszeit als Attribut abgespeichert hat sowie eine Referenz auf das Objekt des auszuführenden Ereignisses (\textit{VSAbstractEvent}) und dem Prozessobjekt (\textit{VSInternalProcess}) besitzt. Geplante \textit{VSTask}-Instanzen werden für eine spätere Ausführung dem Task-Manager übergeben.
+Auf Abbildung \ref{fig:PackageCore}. ist, stark vereinfacht, das Paket \textit{core} dargestellt. Für jedes auszuführende Ereignis wird eine Instanz von \textit{VSTask} benötigt, welche die Ereigniseintrittszeit als Attribut abgespeichert hat sowie eine Referenz auf das Objekt des auszuführenden Ereignisses (\textit{VSAbstractEvent}) und dem Prozessobjekt (\textit{VSInternalProcess}) besitzt. Ein \textit{VSTask} merkt sich auch, ob es sich um ein globales oder ein lokales Ereignis handelt. Geplante \textit{VSTask}-Instanzen werden für eine spätere Ausführung dem Task-Manager übergeben.
 
 Die Kapselung eines \textit{VSAbstractEvent}-Objektes in einem \textit{VSTask}-Objekt erlaubt es, dass die selbe \textit{VSAbstractEvent}-Instanz mehrmals auf einmal im Task-Manager geplant werden kann. Ohne dieser Kapselung gäbe es für jedes Ereignis lediglich nur eine einzige mögliche Eintrittszeit. Von dieser Möglichkeit wird zum Beispiel bei den Server- und Clientanfragen eines Protokollobjektes Gebrauch gemacht. Für jedes Protokoll kann der Anwender in einer Simulation beliebig viele Anfragen programmieren, wobei für jede Anfrage stets das selbe Protokollobjekt als Ereignis verwendet wird.
+
+Jede Simulation besitzt genau eine Instanz von \textit{VSTaskManager}. Eine Instanz dieser Klasse stellt den Task-Manager dar. Er verwaltet alle \textit{VSTask}-Instanzen und überprüft periodisch, ob es auszuführende Ereignisse gibt. Der Task-Manager unterscheidet zwischen globalen und lokalen Ereignissen. Hierbei werden alle globalen Ereignisse (gekapselt in einem \textit{VSTask}-Objekt) in einer Prioritäts-Warteschlange abgelegt. Die Prioritäts-Warteschlange stellt hierbei die korrekte Ereigniseintrittsreihenfolge sicher. Da sich die lokalen Zeiten aller beteiligten Prozesse voneinander unterscheiden können, muss für jeden Prozess eine separate lokale Prioritäts-Warteschlange verwendet werden, auf die jedes Prozessobjekt seine eigene Referenz hat. In den lokalen Warteschlangen sind die geplanten lokalen Ereignisse (auch gekapselt in einem \textit{VSTask}-Objekt) abgelegt. Der Task-Manager greift über eine \textit{java.util.ArrayList} auf alle Prozessobjekte zu, und kann somit auch auf alle lokalen Warteschlangen zugreifen und verwalten.
 
 \begin{figure}[h]
 	\centering
@@ -238,9 +236,7 @@ Die Kapselung eines \textit{VSAbstractEvent}-Objektes in einem \textit{VSTask}-O
 	\label{fig:PackageCore}
 \end{figure}
 
-Jede Simulation besitzt genau eine Instanz von \textit{VSTaskManager}. Eine Instanz dieser Klasse stellt den Task-Manager dar. Er verwaltet alle \textit{VSTask}-Instanzen und überprüft periodisch, ob es auszuführende Ereignisse gibt. Der Task-Manager unterscheidet zwischen globalen und lokalen Ereignissen. Hierbei werden alle globalen Ereignisse (gekapselt in einem \textit{VSTask}-Objekt) in einer Prioritäts-Warteschlange abgelegt. Die Prioritäts-Warteschlange stellt hierbei die korrekte Ereigniseintrittsreihenfolge sicher. Da sich die lokalen Zeiten aller beteiligten Prozesse voneinander unterscheiden können, muss für jeden Prozess eine separate lokale Prioritäts-Warteschlange verwendet werden, auf die jedes Prozessobjekt seine eigene Referenz hat. In den lokalen Warteschlangen sind die geplanten lokalen Ereignisse (auch gekapselt in einem \textit{VSTask}-Objekt) abgelegt. Der Task-Manager greift über eine \textit{java.util.ArrayList} auf alle Prozessobjekte zu und kann somit auch auf alle lokalen Warteschlangen zugreifen und verwalten.
-
-Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. Für jedes Versenden einer Nachricht wird hiervon eine Instanz gebildet, wo der Senderprozess die zu verschickende Daten ablegt. Da \textit{VSMessage} von \textit{VSPrefs} erbt, können zwischen zwei Prozessen beliebige Datentypen (Tabelle \ref{tb:VariablenDatentypen}) über eine Nachricht verschickt werden. Anschließend wird für jeden Empfängerprozess das neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welches eine Referenz der verschickten Nachricht besitzt (Abbildung \ref{fig:Wrapping}). Danach wird ein \textit{VSTask}-Objekt instantiiert, wo die Referenz auf das Ereignisobjekt und das dazugehörige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager übergeben, der das dazugehörige Ereignis ausführt, wenn die Ereigniseintrittszeit eingetroffen ist. Via Java-Polymorphie wird hier das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt. 
+Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Prozess verschickt wird. Für jedes Versenden einer Nachricht wird hiervon eine Instanz gebildet, wo der Senderprozess die zu verschickende Daten ablegt. Da \textit{VSMessage} von \textit{VSPrefs} erbt, können zwischen zwei Prozessen beliebige Datentypen (Tabelle \ref{tb:VariablenDatentypen}.) über eine Nachricht verschickt werden. Anschließend wird für jeden Empfängerprozess das neues Ereignisobjekt der Klasse \textit{VSMessageReceiveEvent} angelegt, welches eine Referenz der verschickten Nachricht besitzt (Abbildung \ref{fig:Wrapping}.). Danach wird ein \textit{VSTask}-Objekt instantiiert, wo die Referenz auf das Ereignisobjekt und das dazugehörige Prozessobjekt sowie die Ereigniseintrittszeit als Attribute gespeichert werden. Das \textit{VSTask}-Objekt wird dann dem Task-Manager übergeben, der das dazugehörige Ereignis ausführt, wenn die Ereigniseintrittszeit eingetroffen ist. Via Java-Polymorphie wird hier das \textit{VSMessageReceiveEvent}-Objekt in ein \textit{VSAbstractEvent} umgewandelt und so in \textit{VSTask} abgelegt. 
 
 \begin{figure}[h]
 	\centering
@@ -249,15 +245,15 @@ Eine Instanz von \textit{VSMessage} stellt eine Nachricht dar, die von einem Pro
 	\label{fig:Wrapping}
 \end{figure}
 
-Erwähnenswert ist auch die Klasse \textit{VSMessageStub}, welche ein \textit{VSMessage} kapselt. Ihr Zweck ist das Verstecken einiger Methoden vor dem Protokoll-API, welches für die Erstellung eigener Protokolle dient. Der Protokoll-Entwickler soll möglichst nichts falsch machen können und deswegen soll dem Protokoll-API ein eingeschränkter Funktionsumfang zur Verfügung gestellt werden. Da sich \textit{VSMessageStub} im selben Paket wie \textit{VSMessage} befindet, kann \textit{VSMessageStub} auf paket-private Methoden von \textit{VSMessage} zugreifen. Protokolle hingegen werden in einem anderen Paket implementiert und haben somit keinen Zugriff auf diese paket-privaten Methoden. Zwar kann der Protokollentwickler ein eigenes \textit{VSMessageStub}-Objekt anlegen, jedoch kann er auf diese Weise besser unterscheiden auf welche Methoden er zugreifen sollte und auf welche nicht. Das Protokoll-API wird später genauer behandelt. 
+Erwähnenswert ist auch die Klasse \textit{VSMessageStub}, welche ein \textit{VSMessage} kapselt. Ihr Zweck ist das Verstecken einiger Methoden vor dem Protokoll-API, welches für die Erstellung eigener Protokolle dient. Der Protokoll-Entwickler soll möglichst nichts falsch machen können und deswegen soll dem Protokoll-API ein eingeschränkter Funktionsumfang zur Verfügung gestellt werden. Da sich \textit{VSMessageStub} im selben Paket wie \textit{VSMessage} befindet, kann \textit{VSMessageStub} auf paket-private Methoden von \textit{VSMessage} zugreifen. Protokolle hingegen werden in einem anderen Paket implementiert und haben somit keinen Zugriff auf diese paket-privaten Methoden. Zwar kann der Protokollentwickler ein eigenes \textit{VSMessageStub}-Objekt anlegen, jedoch kann er auf diese Weise besser unterscheiden, auf welche Methoden er zugreifen sollte, und auf welche nicht. Das Protokoll-API wird später genauer behandelt. 
 
-Der Task-Manager speichert anschließend in der globalen Warteschlange die Nachrichtenempfangsereignisse. Die Nachricht kommt bei einem Empfängerprozess an, sobald das Ereignis für den Empfang eintritt. Für die korrekte Implementierung der Lamport- und Vektor-Zeitstempel wird jeder Nachricht automatisch eine Referenz auf die Lamport- sowie auf die Vektorzeit des sendenden Prozesses als Attribut beigefügt. Für die Überprüfung des Protokolls wird in jeder Nachricht auch der Klassenname des jeweiligen Protokolls abgespeichert.
+Der Task-Manager speichert anschließend die Nachrichtenempfangsereignisse in seiner globalen Warteschlange. Die Nachricht kommt bei einem Empfängerprozess an, sobald das Ereignis für den Empfang eintritt. Für die korrekte Implementierung der Lamport- und Vektor-Zeitstempel wird jeder Nachricht automatisch eine Referenz auf die Lamport- sowie auf die Vektor-Zeitstempel des sendenden Prozesses als Attribut beigefügt. Für die Überprüfung des Protokolls wird in jeder Nachricht auch der Klassenname des jeweiligen Protokolls abgespeichert.
 
-Eine Instanz von \textit{VSInternalProcess} repräsentiert einen simulierten Prozess. Ein \textit{VSInternalProcess} stellt alle vom Simulator intern verwendeten Methoden zur Verfügung, während ein \textit{VSAbstractProcess} lediglich Methoden hat, die der Protokollentwickler für die Erstellung eigener Protokolle verwenden darf. Da \textit{VSAbstractProcess} abstrakt ist und hiervon keine Instanz gebildet werden darf, muss für einen neuen Prozesses stets ein \textit{VSInternalProcess}-Objekt erstellt werden. Via Polymorphie wird dieses Objekt nach \textit{VSAbstractProcess} umgewandelt und so dem Protokoll-API zur Verfügung gestellt. Beispielsweise darf mit \textit{getTasks()} nur vom Simulator intern auf die Prioritäts-Warteschlangen zugegriffen werden, während man im Protokoll-API selbiges vermeiden sollte und auch gar nicht direkt möglich ist. Hierfür hätte man auch ein Stub-Objekt \textit{VSProcessStub} implementieren können. Da aber so gut wie alle paar Millisekunden auf die Methoden von \textit{VSInternalProcess} zugegriffen wird, wurde hier aus Performance-gründen der Weg über eine Vererbungungsstufe preferiert. 
+Eine Instanz von \textit{VSInternalProcess} repräsentiert einen simulierten Prozess. Ein \textit{VSInternalProcess} stellt alle vom Simulator intern verwendeten Methoden zur Verfügung, während ein \textit{VSAbstractProcess} lediglich Methoden hat, die der Protokollentwickler für die Erstellung eigener Protokolle verwenden darf. Da \textit{VSAbstractProcess} abstrakt ist und hiervon keine Instanz gebildet werden darf, muss für einen neuen Prozesses stets ein \textit{VSInternalProcess}-Objekt erstellt werden. Via Polymorphie wird dieses Objekt nach \textit{VSAbstractProcess} umgewandelt und so dem Protokoll-API zur Verfügung gestellt. Beispielsweise darf mit \textit{getTasks()} nur vom Simulator intern auf die Prioritäts-Warteschlangen zugegriffen werden, während man im Protokoll-API selbiges vermeiden sollte und auch gar nicht direkt möglich ist. Hier wäre auch ein Stub-Objekt \textit{VSProcessStub} denkbar gewesen. Da aber so gut wie alle paar Millisekunden auf die Methoden von \textit{VSInternalProcess} zugegriffen wird, wurde hier aus Performance-Gründen der Weg über eine Vererbungungsstufe preferiert. 
 
-Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor- und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs} beziehungsweise die lokalen Kopien auf den neusten Stand gebracht. Selbiges gilt für weitere Variablen wie zum Beispiel der Uhrabweichung eines Prozesses.
+Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-Gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor- und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs}, beziehungsweise die lokalen Kopien, auf den neusten Stand gebracht. Selbiges gilt für weitere Variablen, wie zum Beispiel der Uhrabweichung eines Prozesses.
 
-\subsection{Beispiel für die Erstellung von Prozessereignissen}
+\subsubsection{Beispiel für die Erstellung von Prozessereignissen}
 
 Anhand der Prozessabsturz- und Wiederbelebungsereignisse lässt sich wie folgt sehr gut demonstrieren, wie intern Ereignisse angelegt werden können:
 \begin{code}
@@ -275,11 +271,11 @@ void createCrashAndRecoverExample(VSTaskManager taskManager,
 }
 \end{code}
 
-In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, während das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. Für den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt wird es nicht ausgeführt, da der Prozess noch nicht abgestürzt ist. 
+In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines gegebenen Prozesses) angelegt. Das Absturzereignis tritt bei der aktuellen lokalen Prozesszeit plus \textit{500ms} ein, während das Wiederbelebungsereignis bei einer globalen Zeit von \textit{2000ms} stattfindet. Für den Fall, dass das Wiederbelebungsereignis vor dem Absturzereignis eintritt, wird es nicht ausgeführt, da der Prozess noch nicht abgestürzt ist. 
 
-\section{Protokolle}
+\section{Protokoll-API}
 
-\subsection{Funktionsweise des Protokoll-APIs}
+In diesem Abschnitt wird auf die Implementierung der Protokolle und das Protokoll-API eingegangen. Im Protokoll-API wird in der Regel nicht direkt auf den Task-Manager und auf die explizite Instantiierung von Ereignisobjekten zurückgegriffen, da dies vom API automatisch durchgef\"{u}hrt wird.
 
 \begin{figure}[h]
 	\centering
@@ -288,9 +284,7 @@ In diesem Beispiel wurden zwei Ereignisse (Absturz- und Wiederbelebung eines geg
 	\label{fig:PackageProtocols}
 \end{figure}
 
-In diesem Abschnitt wird auf die Implementierung der Protokolle und das Protokoll-API eingegangen. Im Protokoll-API wird in der Regel nicht direkt auf den Task-Manager und auf die explizite Instantiierung von Ereignisobjekten zurückgegriffen. Das wird alles vom API automatisch gemacht.
-
-Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche für die Protokollimplementierungen zuständig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verfügung, die von allen Protokollen verwendet werden können. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Im Prinzip besitzt jedes Prozessobjekt von jedem Protokoll seine eigene Instanz. Bei \textit{10} Protokollen und \textit{3} beteiligten Prozessen werden also \textit{30} Protokollobjekte verwendet. Jedes Protokollobjekt verwaltet sowohl die Server- als auch die Clientseite eines Protokolls auf einmal. Dabei merkt sich \textit{VSAbstractProtocol} anhand einer Flagge ob der aktuelle Kontext server- oder clientbezogen ist und führt dementsprechend beim Eintreffen von Ereignissen die Server- beziehungsweise Clientmethoden des Protokolls auf. \textit{VSAbstractProtocol} überprüft auch, ob ein Client oder ein Server überhaupt aktiviert ist. 
+Auf Abbildung \ref{fig:PackageProtocols}. sind die Pakete \textit{protocols} und \textit{protocols.implementations} dargestellt, welche für die Protokollimplementierungen zuständig sind. \textit{VSAbstractProtocol} stellt lediglich gemeinsame Methoden und Attribute zur Verfügung, die von allen Protokollen verwendet werden können. Jedes Protokoll hat im Paket \textit{protocols.implementations} seine eigene Klasse, die von \textit{VSAbstractProtocol} erbt. Im Prinzip besitzt jedes Prozessobjekt von jedem Protokoll seine eigene Instanz. Bei \textit{10} Protokollen und \textit{3} beteiligten Prozessen werden also \textit{30} Protokollobjekte verwendet. Jedes Protokollobjekt verwaltet sowohl die Server- als auch die Clientseite eines Protokolls auf einmal. Dabei merkt sich \textit{VSAbstractProtocol} anhand einer Flagge, ob der aktuelle Kontext server- oder clientbezogen ist, und führt dementsprechend beim Eintreffen von Ereignissen die Server- beziehungsweise Clientmethoden des Protokolls auf. \textit{VSAbstractProtocol} überprüft auch, ob ein Client oder ein Server überhaupt aktiviert ist. 
 
 \begin{figure}[h]
 	\centering
@@ -299,9 +293,9 @@ Auf Abbildung \ref{fig:PackageProtocols} sind die Pakete \textit{protocols} und 
 	\label{fig:Protokollvariablen}
 \end{figure}
 
-Es ist bereits bekannt, dass Protokolle im Prozesseditor editierbare Variablen haben können. Da \textit{VSAbstractProtocol} von \textit{VSAbstractEvent} erbt, was wiederum von \textit{VSSerializablePrefs} erbt (und \textit{VSSerializablePrefs} erweitert \textit{VSPrefs}), werden alle Protokollvariablen einfach in die Mutterklasse \textit{VSPrefs} abgelegt. Zum Beispiel kann mit \textit{super.setBoolean(``test'', true);} eine neue Protokollvariable \textit{test} mit dem Standardwert \textit{true} angelegt werden. Diese Variable erscheint dann automatisch im Prozesseditor und kann vom Anwender konfiguriert werden. 
+Es ist bereits bekannt, dass Protokolle im Prozesseditor editierbare Variablen haben können. Da \textit{VSAbstractProtocol} von \textit{VSAbstractEvent} erbt, was wiederum von \textit{VSSerializablePrefs} erbt (und \textit{VSSerializablePrefs} erweitert \textit{VSPrefs}), werden alle Protokollvariablen einfach in die Mutterklasse \textit{VSPrefs} abgelegt. Zum Beispiel kann mit \textit{super.setBoolean(``test'', true);} eine neue Protokollvariable \textit{test} mit dem Standardwert \textit{true} angelegt werden. Diese Variable erscheint dann automatisch im Prozesseditor und kann so vom Anwender konfiguriert werden. 
 
-Da der Simulator dafür ausgelegt wurde eigene Protokolle zu implementieren, werden im Folgenden alle verfügbaren Protokoll-API-Methoden etwas ausführlicher als gewohnt beschrieben. Jede Protokollklasse muss die folgenden Methoden implementieren:
+Da der Simulator darauf ausgelegt wurde eigene Protokolle zu implementieren, werden im Folgenden alle verfügbaren Protokoll-API-Methoden etwas ausführlicher als gewohnt beschrieben. Jede Protokollklasse muss die folgenden Methoden implementieren:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -309,9 +303,15 @@ Da der Simulator dafür ausgelegt wurde eigene Protokolle zu implementieren, werd
 	\item \textit{abstract public void onClientInit()}: Bevor das Protokollobjekt benutzt werden kann, muss es initialisiert werden. Diese Methode wird vor dem ersten Verwenden des Protokolls innerhalb einer Simulation ausgeführt. In der Regel werden hier Protokollvariablen unter Verwendung von \textit{VSPrefs} und Attribute der Protokollklasse initialisiert. Die hier initialisierten Protokollvariablen lassen sich vom Benutzer im Prozesseditor des jeweiligen Prozesses editieren.
 	\item \textit{abstract public void onClientReset()}: Diese Methode wird jedes Mal ausgeführt, wenn die Simulation zurückgesetzt wird.
 	\item \textit{abstract public void onClientStart()}: Diese Methode wird nur benötigt, wenn der Client immer die Anfragen startet. Diese Methode generiert in der Regel immer eine Clientanfrage, die via \textit{VSMessage}-Objekt an alle anderen beteiligten Prozesse verschickt wird.
-	\item \textit{abstract public void onClientRecv(VSMessage message)}: Diese Methode wird jedes Mal Ausgeführt, wenn eine Servernachricht \textit{message} bei dem Client eintrifft. 
+	\item \textit{abstract public void onClientRecv(VSMessage message)}: Diese Methode wird jedes Mal aufgerufen, wenn eine Servernachricht \textit{message} bei dem Client eintrifft. 
 	\item \textit{abstract public void onClientSchedule()}: Diese Methode wird jedes Mal ausgeführt, wenn ein Weckerereignis eintritt. 
-	\item \textit{public String toString()}: Diese Methode ist nur optional. Hiermit lassen sich die Loggnachrichten eines Protokolls anpassen. Wenn diese Methode in einer Protokollimplementierung ausgelassen wird, so wird stets die \textit{toString}-Methode der Mutterklasse \textit{VSAbstractProtocol} verwendet.
+	\item \textit{public String toString()}: Diese Methode ist nur optional. Hiermit lassen sich die Lognachrichten eines Protokolls anpassen. Wenn diese Methode in einer Protokollimplementierung ausgelassen wird, so wird stets die \textit{toString}-Methode der Mutterklasse \textit{VSAbstractProtocol} verwendet. Bei Verwendung wird empfohlen die Logausgabe lediglich wie folgt zu erweitern:
+	\begin{code}
+public String toString() {
+    return super.toString() + "; Neue Loginformationen";
+}
+	\end{code}
+	Hierbei wird jede Lognachricht, die das aktuelle Protokoll betrifft, um die Ausgabe \textit{; Neue Loginformation} erweitert. 
 \end{itemize}
 
 Für alle hier aufgelisteten Client-Methoden sind auch die korrespondierenden Server-Methoden anzugeben. Die Server-Methoden sind analog zu den Client-Methoden aufgebaut, wobei lediglich \textit{Client} durch \textit{Server} ausgetauscht werden muss. 
@@ -324,12 +324,12 @@ Jede Protokollklasse bekommt folgende Methoden von \textit{VSAbstractProtocol} v
 	\item \textit{pubic final boolean hasOnServerStart()}: Hiermit lässt sich bestimmen, ob der Server- oder der Client bei dem aktuellen Protokoll die Anfragen startet.
 	\item \textit{pubic final boolean isServer()}: Hiermit lässt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll serverseitig aktiviert hat. 
 	\item \textit{pubic final boolean isClient()}: Hiermit lässt sich bestimmen, ob der aktuelle Prozess das aktuelle Protokoll clientseitig aktiviert hat. 
-	\item \textit{pubic final void scheduleAt(long time)}: Diese Methode stellt einen Wecker dar, der zur angegebenen lokalen Prozesszeit eintritt. Nach Ablauf des Weckers wird, abhängig ob der aktuelle Kontext client- oder serverseitig ist, \textit{onClientSchedue} beziehungsweise \textit{onServerSchedule} ausgeführt. 
-	\item \textit{pubic final void removeSchedules()}: Entfernt alle gesetzten Wecker des aktuellen Kontextes (Server oder Client).
+	\item \textit{pubic final void scheduleAt(long time)}: Diese Methode erstellt einen Wecker, der zur angegebenen lokalen Prozesszeit eintritt. Nach Ablauf des Weckers wird, abhängig ob der aktuelle Kontext client- oder serverseitig ist, \textit{onClientSchedue} beziehungsweise \textit{onServerSchedule} ausgeführt. 
+	\item \textit{pubic final void removeSchedules()}: Entfernt alle gesetzten Wecker des aktuellen Kontextes.
 	\item \textit{pubic final int getNumProcesses()}: Gibt die totale Anzahl an der Simulation beteiligten Prozesse zurück.
 \end{itemize}
 
-Bei der Implementierung von Protokollen können zusätzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (zum Beispiel die Simulationsvariable die Angibt, ob Prozesse eigene Nachrichten empfangen: \textit{bool recvOwn = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API verwendet werden:
+Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (zum Beispiel die Simulationsvariable die Angibt, ob Prozesse eigene Nachrichten empfangen: \textit{bool recvOwn = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API verwendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -338,15 +338,15 @@ Bei der Implementierung von Protokollen können zusätzlich auf die vererbten Attr
 	\item \textit{public long getGlobalTime()}: Gibt die aktuelle globale Simulationszeit zurück.
 	\item \textit{public long getTime()}: Gibt die aktuelle lokale Prozesszeit zurück.
 	\item \textit{public void setTime(long time)}: Setzt die aktuelle lokale Prozesszeit.
-	\item \textit{public long getLamportTime()}: Gibt die aktuelle Lamportzeit des Prozesses zurück.
-	\item \textit{public void setLamportTime(long lamportTime)}: Setzt die aktuelle Lamportzeit des Prozesses.
-	\item \textit{public void increaseLamportTime()}: Inkrementiert die Lamportzeit um eins.
-	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert die Lamportzeit. Siehe Kapitel 2.6.1 wie die Lamportzeiten erneuert werden.
-	\item \textit{public VSVectorTime getVectorTime()}: Gibt die aktuelle Vektor-Zeit des Prozesses zurück.
-	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamportzeitstempelhistorie des Prozesses zurück. Kann jeweils nach VSLamportTime umgewandelt werden.
+	\item \textit{public long getLamportTime()}: Gibt den aktuelle Lamport-Zeitstempel des Prozesses zurück.
+	\item \textit{public void setLamportTime(long lamportTime)}: Setzt den aktuellen Lamport-Zeitstempel des Prozesses.
+	\item \textit{public void increaseLamportTime()}: Inkrementiert den Lamport-Zeitstempel um eins.
+	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert den Lamport-Zeitstempel. Siehe Kapitel 3.11.1., wie die Lamport-Zeitstempel erneuert werden.
+	\item \textit{public VSVectorTime getVectorTime()}: Gibt den aktuelle Vektor-Zeitstempel des Prozesses zurück.
+	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamport-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSLamportTime umgewandelt werden.
 	\item \textit{public VSTime getVectorTimeArray()}: Gibt die gesamte Vektor-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSVectorTime umgewandelt werden.
-	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert die Vektorzeit. Siehe Kapitel 2.6.1 wie die Vektorzeiten erneuert werden.
-	\item \textit{public void increaseVectorTime()}: Inkrementiert die Vektorzeit am lokalen Index um eins.
+	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert den Vektor-Zeitstempel. Siehe Kapitel 3.11.1., wie die Vektor-Zeitstempel erneuert werden.
+	\item \textit{public void increaseVectorTime()}: Inkrementiert den Vektor-Zeitstempel am lokalen Index um eins.
 	\item \textit{public int getProcessID()}: Gibt die PID zurück.
 	\item \textit{public void setProcessID(int processID)}: Setzt die PID.
 	\item \textit{public int getProcessNum()}: Gibt die Prozessnummer zurück. Dieser Wert unterscheidet sich von der PID. Die Prozessnummer gibt an, um den wievielten Prozess, beginnend bei 0, es sich handelt. PIDs hingegen k\"{o}nnen alle m\"{o}glichen ganzstelligen positiven Zahlen sein.
@@ -365,23 +365,23 @@ In der Regel werden in Protokollen auch Nachrichten (\textit{VSMessage}) verschi
 	\item \textit{public boolean equals(VSMessage message)}: Hiermit lässt sich überprüfen, ob eine weitere Nachricht die selbe NID besitzt (wobei es sich dann um die selbe Nachricht handeln würde).
 \end{itemize}
 
-Folgende weitere Methoden von \textit{VSMessage} können bei Erhalt einer Nachricht verwendet werden:
+Folgende weitere Methoden von \textit{VSMessage} können nach Erhalt einer Nachricht verwendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
 	\item \textit{public String getName()}: Gibt den Namen des zur Nachricht dazugehörigen Protokolls zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
 	\item \textit{public String getProtocolClassname()}: Gibt den Klassennamen des zur Nachricht dazugehörigen Protokolls zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
 	\item \textit{public VSAbstractProcess getSendingProcess()}: Gibt eine Referenz auf den Senderprozess zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public long getLamportTime()}: Gibt die Lamportzeit des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
-	\item \textit{public VSVectorTime getLamportTime()}: Gibt die Vektorzeit des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public long getLamportTime()}: Gibt den Lamport-Zeitstempel des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
+	\item \textit{public VSVectorTime getVectorTime()}: Gibt den Vektor-Zeitstempel des Senderprozesses zurück. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
 	\item \textit{public boolean isServerMessage()}: Hiermit lässt sich entscheiden, ob es sich um eine Server- oder eine Clientnachricht handelt. Diese Methode funktioniert nur bei empfangenen Nachrichten richtig.
 \end{itemize}
 
 Wenn über eine Nachricht Daten verschickt werden sollen, so werden die von \textit{VSPrefs} vererben Methoden verwendet. 
 
-\subsection{Beispielimplementierung eines Protokolls}
+\subsubsection{Beispielimplementierung eines Protokolls}
 
-Im Folgenden wird die Implementierung des zuverlässigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} als Beispiel aufgeführt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 2.5.10 beschrieben. Client- und Serverseite werden in der selben Klasse implementiert.
+Im Folgenden wird die Implementierung des zuverlässigen Multicast-Protokolls \textit{VSReliableMulticastProtocol.java} als Beispiel aufgeführt. Die Funktionsweise des Protokolls wurde bereits in Kapitel 3.10. beschrieben. Client- und Serverseite werden in der selben Klasse implementiert.
 
 Im Konstruktor muss stets angegeben werden, ob beim gegebenen Protokoll der Client oder der Server die Anfragen startet. Mit \textit{VSAbstractProtocol.HAS\_ON\_CLIENT\_START} wird dem API mitgeteilt, dass der Client die Anfragen startet. Für \textit{VSAbstractProtocol.HAS\_ON\_SERVER\_START} und Serveranfragen gilt Selbiges analog. Da ein Protokoll auch ein \textit{VSAbstractEvent} ist, muss auch hier mit \textit{setClassname} der Klassenname des aktuellen Protokolls angegeben werden:
 	
@@ -401,9 +401,9 @@ public class VSReliableMulticastProtocol
     }
 \end{code}
 
-\subsubsection{Clientseite des Protokolls}
+\textbf{Clientseite des Protokolls}
 
-Das private Klassenattribut \textit{pids} wird für die Zwischenspeicherung beteiligter PIDs benötigt. Hier sind alle PIDs abgelegt, von denen noch Bestätigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden können (siehe Abbildung \ref{fig:Protokollvariablen} unter ``Reliable Multicast Client'' ganz unten):
+Das private Klassenattribut \textit{pids} wird für die Zwischenspeicherung beteiligter PIDs benötigt. Hier sind alle PIDs abgelegt, von denen noch Bestätigungsnachrichten erwartet werden. Hier werden als Standard-PIDs \textit{1} und \textit{3} verwendet. Die Methoden \textit{initVector} und \textit{initLong} wurden von \textit{VSPrefs} vererbt und initialisieren die Protokollvariablen \textit{pids} und \textit{timeout}, welche vom Benutzer im Prozesseditor editiert werden können (siehe Abbildung \ref{fig:Protokollvariablen}. unter ``Reliable Multicast Client'' ganz unten):
 \begin{code}
     private ArrayList<Integer> pids;
 
@@ -427,7 +427,7 @@ Wenn die Simulation zurückgesetzt wird, dann wird auch \textit{pids} reinitialis
     }
 \end{code}
 
-In \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden soll. Wenn dies der Fall ist (wenn von mindestens einem beteiligten Prozess noch keine Bestätigung erhalten wurde), wird ein neues Nachrichtenobjekt erstellt, und mit dem Inhalt \textit{Boolean: isMulticast=true} verschickt (intern wird hier für jeden Empfängerprozess ein \textit{VSMessageReceiveEvent} erzeugt). Mit \textit{scheduleAt} wird ein Wecker festgelegt, zur welchen lokalen Prozesszeit die Methode \textit{onClientSchedule} aufgerufen werden soll (intern wird hier ein \textit{VSProtocolScheduleEvent} erzeugt): 
+In \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden soll. Wenn dies der Fall ist (wenn von mindestens einem beteiligten Prozess noch keine Bestätigung erhalten wurde), wird ein neues Nachrichtenobjekt erstellt, und mit dem Inhalt \textit{Boolean: isMulticast=true} verschickt (intern wird hier für jeden Empfängerprozess ein \textit{VSMessageReceiveEvent} erzeugt). Mit \textit{scheduleAt} wird ein Wecker festgelegt, zu welcher lokalen Prozesszeit die Methode \textit{onClientSchedule} aufgerufen werden soll (intern wird hier ein \textit{VSProtocolScheduleEvent} erzeugt): 
 \begin{code}
     public void onClientStart() {
         if (pids.size() != 0) {
@@ -442,7 +442,7 @@ In \textit{onClientStart} wird geprüft, ob eine Clientanfrage gestartet werden s
     }
 \end{code}
 
-Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. Hier wird überprüft, ob überhaupt noch Multicast-Bestätigungen benötigt werden. Wenn dies der Fall ist, dann wird geschaut, ob es sich bei der Antwort um eine noch nicht eingetroffene Bestätigung handelt. Gegebenenfalls wird die jeweilige PID aus \textit{pids} entfernt. Wenn \textit{pids} leer ist, dann wurde von allen beteiligten Prozessen eine Bestätigung erhalten und der Client entfernt mit \textit{removeSchedules} alle seine derzeit programmierten Wecker.
+Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. Hier wird überprüft, ob überhaupt noch Multicast-Bestätigungen benötigt werden. Danach wird geschaut, ob es sich bei der Antwort um eine noch nicht eingetroffene Bestätigung handelt. Gegebenenfalls wird die jeweilige PID aus \textit{pids} entfernt. Wenn \textit{pids} leer ist, dann wurde von allen beteiligten Prozessen eine Bestätigung erhalten und der Client entfernt mit \textit{removeSchedules} alle seine derzeit programmierten Wecker.
 
 \begin{code}
     public void onClientRecv(VSMessage recvMessage) {
@@ -454,10 +454,10 @@ Wenn eine Serverantwort eintrifft, dann wird \textit{onClientRecv} aufgerufen. H
             else 
                 return;
 
-            super.logg("ACK von Prozess " + pid + " erhalten!");
+            super.log("ACK von Prozess " + pid + " erhalten!");
 
             if (pids.size() == 0) {
-                super.logg("ACKs von allen beteiligten " +
+                super.log("ACKs von allen beteiligten " +
                            " Prozessen erhalten!");
 
                 super.removeSchedules();
@@ -473,7 +473,7 @@ Für das erneute Verschicken einer Clientanfrage ruft \textit{onClientSchedule} l
     }
 \end{code}
 
-\subsubsection{Serverseite des Protokolls}
+\textbf{Serverseite des Protokolls}
 
 Die Serverseite des Protokolls speichert im Attribut \textit{ackSent} ab, ob es bereits eine Bestätigung des Multicasts verschickt hat oder nicht. In diesem Protokoll werden in \textit{onServerInit} keine Initialisierungen vorgenommen. Demnach gibt es für den Benutzer auch keine serverseitigen Protokollvariablen zu editieren. Beim Zurücksetzen der Simulation wird lediglich \textit{ackSent} auf den Ursprungswert \textit{false} gesetzt:
 \begin{code}
@@ -486,7 +486,7 @@ Die Serverseite des Protokolls speichert im Attribut \textit{ackSent} ab, ob es 
     }
 \end{code}
 
-Wenn der Server eine Clientanfrage erhalten hat, so überprüft der Server, ob es sich um eine Multicast-Nachricht handelte. Anschließend wird gegebenenfalls die Bestätigungsnachricht mit \textit{Boolean: isAck=true} und der Server-PID verschickt. Je nachdem ob bereits eine Bestätigung verschickt wurde oder nicht wird eine andere Nachricht geloggt: 
+Wenn der Server eine Clientanfrage erhalten hat, so überprüft der Server, ob es sich um eine Multicast-Nachricht handelte. Anschließend wird gegebenenfalls die Bestätigungsnachricht mit \textit{Boolean: isAck=true} und der Server-PID verschickt. Je nachdem ob bereits eine Bestätigung verschickt wurde oder nicht, wird eine andere Nachricht gelogt: 
 \begin{code}
     public void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isMulticast")) {
@@ -496,9 +496,9 @@ Wenn der Server eine Clientanfrage erhalten hat, so überprüft der Server, ob es 
             super.sendMessage(message);
 
             if (ackSent) {
-                super.logg("ACK erneut versendet");
+                super.log("ACK erneut versendet");
             } else {
-                super.logg("ACK versendet");
+                super.log("ACK versendet");
                 ackSent = true;
             }
         }
@@ -511,7 +511,7 @@ Der Server benutzt in diesem Beispiel keinen Wecker. Dementsprechend hat die Met
 }
 \end{code}
 
-\subsection{Erstellung eigener Protokolle (Schnelldurchlauf)}
+\subsubsection{Erstellung eigener Protokolle (Schnelldurchlauf)}
 
 Hier werden alle Schritte zusammengefasst, die für die Erstellung eines eigenen Protokolls \textit{VSMyProtocol} durchgeführt werden müssen. Hierf\"{u}r muss der Protokoll-Entwickler das Java-SDK sowie Apache Ant installiert- und den Quelltext des Simulators vorliegen haben.
 
@@ -534,11 +534,9 @@ Wenn eine Simulatorversion versucht eine abgespeicherte Simulation eines nicht i
 
 \section{GUI sowie Simulationsvisualisierung}
 
-\subsection{Funktionsweise}
+Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols}. dargestellt) implementiert die eigentliche graphische Benutzeroberfläche des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
 
-Das Paket \textit{simulator} (vereinfacht auf Abbildung \ref{fig:PackageProtocols} dargestellt) implementiert die eigentliche graphische Benutzeroberfläche des Simulators. Ausnahmen sind die Editorklassen in \textit{prefs.editors} sowie \textit{utils.VSFrame}. 
-
-Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie es schon auf Abbildung \ref{fig:NeuesFenster} zu sehen war) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation} wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugehörige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zurück, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}) implementiert. 
+Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VSMain} befindet, aufgerufen. Sie instantiiert ein \textit{VSDefaultPrefs}-Objekt, wo alle Standardeinstellungen des Simulators abgelegt sind. Anschließend wird ein \textit{VSSimulatorFrame} erzeugt, welches ein Simulatorfenster (wie es schon auf Abbildung \ref{fig:NeuesFenster}. zu sehen war) implementiert. Das Simulatorfenster erstellt für jede neue Simulation jeweils ein Objekt von \textit{VSSimulator}. Jede Simulation hat im Simulationsfenster einen eigenen Tab. Auf Abbildung \ref{fig:NeuErstellteSimulation}. wurde bereits eine neue Simulation erstellt, wo auch unten links der dazugehörige Tab mit der Beschriftung ``Simulator 1'' zu sehen ist. Jede Simulation besitzt dabei eine eigene Simulationsnummer, die bei jeder neuen Simulation um eins inkrementiert wird. Jedes \textit{VSSimulator}-Objekt greift auf \textit{VSSimulatorVisualization} zurück, was die Simulationsvisualisierung (Abbildung \ref{fig:Visualisierung}.) implementiert. 
 
 \begin{figure}[h]
 	\centering
@@ -547,15 +545,15 @@ Beim Starten des Simulators wird auf die Main-Methode, welche sich in \textit{VS
 	\label{fig:PackageProtocols}
 \end{figure}
 
-\textit{VSSimulatorVisualization} greift auf Java's Grafikbibliothek Java2D zurück und ist aus Performance-gründen mit dem Simulationsverlauf stark verzahnt \cite{Games}. Klassenattribute, dessen Wert sich nie ändert, wurden stets als \textit{final} deklariert. Attribute, die von Konfigurationen oder Einstellungen abhängig sind, die sich nur nach Konfigurationsänderung oder Vergrößern beziehungsweise Verkleinern des Simulationsfensters ändern (Werte, die für die Berechnung des Sekunden-Gatters notwendig sind), werden nur wenn es nötig ist neu berechnet. 
+\textit{VSSimulatorVisualization} greift auf Java's Grafikbibliothek Java2D zurück und ist aus Performance-Gründen mit dem Simulationsverlauf stark verzahnt \cite{Games}. Klassenattribute, dessen Wert sich nie ändert, wurden stets als \textit{final} deklariert. Attribute, die von Konfigurationen oder Einstellungen abhängig sind, die sich nur nach Konfigurationsänderung oder Vergrößern beziehungsweise Verkleinern des Simulationsfensters ändern (Werte, die für die Berechnung des Sekunden-Gatters notwendig sind), werden nur wenn es nötig ist neu berechnet. 
 
-Die Klasse \textit{VSMenuItemStates} wird für die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Menüs (beide Letztere auf Abbildung \ref{fig:Toolbar} zu sehen) verwendet. Abhängig davon kann der Benutzer bestimmte Aktionen durchführen oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier möglichen Aktionen wurden bereits in Kapitel 2.1 im Abschnitt ``Die Toolbar'' behandelt. 
+Die Klasse \textit{VSMenuItemStates} wird für die Synchronisierung des Simulationsstatusses, der Toolbar und des Simulations-Menüs (beide Letztere auf Abbildung \ref{fig:Toolbar}. zu sehen) verwendet. Abhängig davon kann der Benutzer bestimmte Aktionen durchführen oder nicht (beispielsweise kann eine Simulation nur pausiert werden, wenn sie aktuell abgespielt wird). Alle hier möglichen Aktionen wurden bereits in Kapitel 2.1. im Abschnitt ``Die Toolbar'' behandelt. 
 
-Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert wie das jeweilige Ereignis anzulegen ist.
+Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (Abbildung \ref{fig:SidebarMitEreignissen}.) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich intern ein \textit{VSCreateTask}-Objekt, welches definiert, wie das jeweilige Ereignis anzulegen ist.
 
-\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten geloggt werden. Hier werden alle Loggfunktionen (inklusive Loggfilter sowie temporäre Deaktivierung des Loggen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt übergeben und dort dargestellt. Für den Loggfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Loggs gefiltert werden können.
+\textit{VSLogging} kapselt ein \textit{javax.swing.JTextArea}-Objekt, wo alle Nachrichten gelogt werden. Hier werden alle Logfunktionen (inklusive Logfilter sowie temporäre Deaktivierung des Logen) implementiert. Die \textit{JTextArea} wird dem \textit{VSSimulator}-Objekt übergeben und dort dargestellt. Für den Logfilter wird intern auf das Java-Standardpaket \textit{java.util.regex} zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können.
 
-\subsection{Threads und Zeitsynchronisierung}
+\subsubsection{Threads und Zeitsynchronisierung}
 
 Ziel vom Simulator ist es bis auf jede Millisekunde genau simulieren zu können. Jede simulierte Sekunde soll relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit lässt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen. Damit dies gewährleistet wird, muss folgendes berücksichtigt werden:
 
@@ -589,9 +587,7 @@ Jede Simulation besitzt somit seinen eigenen Simulationsthread. Bei mehreren par
 
 \section{Serialisierung und Deserialisierung von Simulationen}
 
-\subsection{Funktionsweise}
-
-Der Anwender kann eine erstellte Simulation im Datei-Menü speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}) befinden sich Helfer, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
+Der Anwender kann eine erstellte Simulation im Datei-Menü speichern und/oder eine bereits abgespeicherte Simulation laden. Hierbei wird von den aus Java angebotenen Möglichkeit Objekte zu Serialisieren Gebrauch gemacht. Im Paket \textit{serialize} (Abbildung \ref{fig:PackageSerialize}.) befinden sich Helfer, die bei einer Serialisierung und einer Deserialisierung einer Simulation unter die Arme greifen. 
 
 Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Objekt. Alle Serialisierbaren Klassen implementieren das Interface \textit{VSSerializable} mit folgenden zwei Methoden:
 
@@ -600,7 +596,7 @@ Der Simulator serialisiert nur notwendige Daten, und nicht jedes existierende Ob
 	\item \textit{public void deserialize(VSSerialize serialize, ObjectInputStream ois)}: Diese Methode wird bei jedem Deserialisierungsvorgang aufgerufen (beim Laden einer Simulation).
 \end{itemize}
 
-Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. Für jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die benötigten Aktionen durchzuführen. Eine zu serialisierende Simulation besteht aus vielen voneinander abhängigen Objekten. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. Würde jedes Objekt komplett serialisiert werden, so würden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausführung behandelt (in eine Datei abgespeichert) werden. Bei Kreisverweisen (Objekt A hat eine Referenz auf Objekt B und Objekt B hat eine Referenz auf Objekt A als Attribut gespeichert) würde die Serialisierung sogar in einer Endlosschleife enden. \textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, sodass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
+Die Methoden \textit{serialize} und \textit{deserialize} erhalten neben einen Dateistream auch ein \textit{VSSerialize}-Objekt. Für jeden (De)serialisierungsvorgang wird ein \textit{VSSerialize}-Objekt erzeugt, welches dabei Hilft die benötigten Aktionen durchzuführen. Eine zu serialisierende Simulation besteht aus vielen voneinander abhängigen Objekten. Jedes Objekt kann dabei Referenzen auf andere Objekte besitzen. Würde jedes Objekt komplett serialisiert werden, so würden Objekte, auf denen mehrere Referenzen existieren, in mehrfacher Ausführung behandelt (in eine Datei abgespeichert) werden. Bei Kreisverweisen (Objekt A hat eine Referenz auf Objekt B und Objekt B hat eine Referenz auf Objekt A als Attribut gespeichert) würde die Serialisierung sogar in einer Endlosschleife enden. \textit{VSSerialize} hilft hierbei dies zu vermeiden und merkt sich Informationen von allen bereits serialisierten Objekten, so dass jedes Objekt nur genau einmal serialisiert wird. Bei der Deserialisierung werden alle Objekte wieder automatisch mit den richtigen Referenzen ausgestattet, wobei kein Objekt doppelt deserialisiert wird.
 
 \begin{figure}[h]
 	\centering
@@ -613,7 +609,7 @@ Alle Klassen, die \textit{VSSerializePrefs} erweitern, können automatisch sämtli
 
 Abgespeicherte Simulationen sollen auch mit zukünftigen Versionen des Simulators kompatibel bleiben. Deshalb werden alle Objekte derjenigen Klassen, die \textit{VSSerializable} implementieren, nicht komplett serialisiert. Bei der Serialisierung werden nur relevante Klassenattribute, die der Simulationsprogrammierung- und nicht beispielsweise GUI-Komponenten angehören, serialisiert. 
 
-\subsection{Beispielimplementierung einer \textit{serialize}-Methode}
+\subsubsection{Beispielimplementierung einer \textit{serialize}-Methode}
 
 Der folgende Quelltext-Ausschnitt zeigt eine Beispielimplementierung von \textit{serialize}:
 
@@ -633,12 +629,14 @@ Der folgende Quelltext-Ausschnitt zeigt eine Beispielimplementierung von \textit
 
 Vor- und nach der eigentlichen Objektserialisierung wird jeweils eine boolesche Flagge serialisiert, welche auf \textit{true} gesetzt wird, sobald in späteren Simulator-Versionen (was relativ unwahrscheinlich, aber möglich ist) weitere zu serialisierende Klassenattribute hinzukommen. Eine Deserialisierung kann die Flaggen dann abfragen und separat behandeln. Somit bleiben ältere bereits abgespeicherte Simulationen stets zur neusten Version des Simulators kompatibel. Wenn eine Flagge auf \textit{true} gesetzt wird, dann kann unter den neuen Attributserialisierungen eine weitere Flagge gesetzt werden. Somit können beliebig viele Erweiterungen in die Serialisierung Einzug halten.
 
-Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute können vernachlässigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objektserialisierungen zurückgreifen können. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. Wobei hier zuerst die Instanzen der Klassen auf normalen Weg erstellt werden und dann nachträglich die relevanten Attribute deserialisiert und den Objekten zugewiesen werden. Hierbei werden auch mithilfe von \textit{VSSerialize} mehrere Referenzen auf das selbe Objekt korrekt behandelt.
+Das zu serialisierende Objekt besitzt hier lediglich zwei Attribute, die serialisiert werden sollen. Alle anderen Klassenattribute können vernachlässigt werden. Mit \textit{serialize.setObject} speichert \textit{serialize} eine Referenz auf das aktuelle Objekt ab, worauf andere Objektserialisierungen zurückgreifen können. Danach wird ein \textit{prefs} und \textit{someOtherSerializableObject} serialisiert. Die Deserialisierung folgt genau den Umgekehrten weg. Wobei hier zuerst die Instanzen der Klassen auf normalen Weg erstellt werden und dann nachträglich die relevanten Attribute deserialisiert und den Objekten zugewiesen werden. Hierbei werden auch mit Hilfe von \textit{VSSerialize} mehrere Referenzen auf das selbe Objekt korrekt behandelt.
 
-Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} wählt, dann wird zunächst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgeführt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}). Das Simulator-Objekt führt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschließend folgt der Task-Manager inklusive allen programmierten Ereignissen. 
+Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} wählt, dann wird zunächst ein \textit{VSSerialize}-Objekt erstellt. Ausgehend davon wird \textit{serialize} auf \textit{VSSimulator} ausgeführt (siehe Serialisierungssequenz auf Abbildung \ref{fig:SequenceSerialize}.). Das Simulator-Objekt führt \textit{serialize} wiederum auf das \textit{VSSimulatorVisualization}-Objekt aus. Dort wird jeder Prozess inklusive alle Protokollobjekte serialisiert. Anschließend folgt der Task-Manager inklusive allen programmierten Ereignissen. 
 
 
 \section{Helferklassen und Klassen für Ausnahmebehandlungen}
+
+Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}.) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}.) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
 
 \begin{figure}[h]
 	\centering
@@ -646,8 +644,6 @@ Wenn der Anwender \textit{Datei $\rightarrow$ Simulation speichern} wählt, dann 
 	\caption{Das Paket \textit{utils}}
 	\label{fig:PackageUtils}
 \end{figure}
-
-Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:PackageUtils}) sowie \textit{exceptions} (Abbildung \ref{fig:PackageExceptions}) vorgestellt. \textit{utils} fasst lediglich einige Helferklassen zusammen, die vom restlichen Quelltext verwendet werden.
 
 \begin{itemize}
 	\item \textit{VSFrame}: Alle Objekte, die ein eigenes Swing-Fenster besitzen, erben von der Klasse \textit{VSFrame}. Sie stellt sicher, dass neue Fenster an der richtigen Position der Bildfläche platziert werden und dass Unterfenster (Fenster, die aus einem anderen Fenster aus geöffnet wurden) automatisch mit-geschlossen werden, sobald eines ihrer ``Erzeugerfenster'' geschlossen wird. 
@@ -657,7 +653,7 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (Abbildung \ref{fig:P
 	\item \textit{VSHelper}: In dieser Klasse befinden sich statische Helfermethoden, die in keine andere Klasse passen.
 	\item \textit{VSPriorityQueue}: Diese Klasse wird für das Verwalten von \textit{core.VSTask}-Objekte im Task-Manager benötigt. \textit{VSPriorityQueue} passt die Prioritäts-Warteschlange aus der Java-Standardbibliothek den Anforderungen des Simulators an.
 	\item \textit{VSRandom}: Wird für Zufallsereignisse benötigt. Jedes Prozessobjekt besitzt einen solchen eigenen Pseudozufallsgenerator. Diese Klasse setzt gleichzeitig einen eigenen Seed basierend auf der lokalen Systemzeit und anderer Berechnungen fest. 
-	\item \textit{VSTupel}: Diese Klasse ist eine Implementierung eines sehr einfach aufgebauten 3-Tupel Datentyps. Alle 3 Elemente können von einem anderen Typ sein, was mithilfe der Java-Generics verwirklicht wurde. \textit{VSTupel} wird von den Editorklassen für die Generierung von GUI-Elementen benötigt.
+	\item \textit{VSTupel}: Diese Klasse ist eine Implementierung eines sehr einfach aufgebauten 3-Tupel Datentyps. Alle 3 Elemente können von einem anderen Typ sein, was mit Hilfe der Java-Generics verwirklicht wurde. \textit{VSTupel} wird von den Editorklassen für die Generierung von GUI-Elementen benötigt.
 \end{itemize}
 
 \begin{figure}[h]
@@ -693,8 +689,8 @@ Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}.
 	\item Eine Quelltext-Datei hat eine maximale Zeilenlänge von 80 Zeichen, was der Standardbreite eines UNIX-Terminals entspricht. Eine Ausnahme stellt die Klasse \textit{prefs.VSDefaultPrefs} dar, denn hier befinden sich auch längere Texte die in Strings abgespeichert werden, wo manuelle Zeilenumbrüche wenig Sinn ergeben. 
 	\item Es werden zuerst Klassen aus der Java-Standardbibliothek importiert, bevor Klassen aus dem VS-Simulator selbst importiert werden.
 	\item Für die Einrückung des Quelltextes wird das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einrückungslänge von 4 Zeichen verwendet.
-	\item Namen aller Klassen und Interfaces tragen als Prefix stets \textit{VS}, was für Verteilte Systeme steht. 
-	\item Namen abstrakter Klassen tragen als Prefix stets \textit{VSAbstract}.
+	\item Namen aller Klassen und Interfaces tragen als Präfix stets \textit{VS}, was für Verteilte Systeme steht. 
+	\item Namen abstrakter Klassen tragen als Präfix stets \textit{VSAbstract}.
 	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol} (zum Beispiel \textit{VSPingPongProtocol}).
 	\item Namen aller Ereignisklassen, die keine Protokolle implementieren, tragen als Postfix \textit{Event} (zum Beispiel \textit{VSProcessCrashEvent}).
 	\item Namen aller dejenigen Klassen die ein Fenster implementieren tragen als Postfix \textit{Frame} (zum Beispiel \textit{VSSimulatorFrame}).
@@ -705,7 +701,7 @@ Die Main-Methode befindet sich in der Klasse \textit{simulator.VSMain}.
 
 In diesem Teilkapitel soll ein kleiner Einblick in die Umgebung, in der der Simulator entwickelt wurde, gewährt werden. Für diese Diplomarbeit wurde ausschließlich Open Source Software verwendet. Die einzige Ausnahme stellt Microsoft Windows XP dar, worauf der Simulator zusätzlich getestet wurde. Der Simulator wurde jedoch hauptsächlich unter dem Betriebssystem FreeBSD 7.0, was ein open source Unix-Derivat ist, programmiert. 
 
-Wie bereits bekannt ist, wurde Sun's Java, was mittlerweile auch Open Source Software ist, in der Version 6 (1.6) als die Implementierungssprache gewählt und für die Quelltextdokumentation kam Javadoc- und für die automatische Quelltexteinrückung astyle zum Einsatz. Als Built-Tool wurde hier auf Apache Ant gesetzt. Für die Erstellung dieses PDF-Dokumentes wurde LaTeX in Verbindung mit dem Built-Tool GNU Make und Rubber verwendet. Eine Rechtschreibüberprüfung wurde mit aspell sowie OpenOffice.org durchgeführt. xPDF diente als PDF-Anzeigeprogramm.
+Wie bereits bekannt ist, wurde Sun's Java, was mittlerweile auch Open Source Software ist, in der Version 6 (1.6) als die Implementierungssprache gewählt und für die Quelltextdokumentation kam Javadoc-, für die automatische Quelltexteinrückung astyle und als Java-Referenz kam \cite{Javadoc} zum Einsatz. Als Built-Tool wurde hier auf Apache Ant gesetzt. Für die Erstellung dieses PDF-Dokumentes wurde LaTeX in Verbindung mit dem Built-Tool GNU Make und Rubber verwendet. Eine Rechtschreibüberprüfung wurde mit aspell sowie OpenOffice.org durchgeführt. xPDF diente als PDF-Anzeigeprogramm.
 
 Als Versionierungssystem wurde SVN (Subversion) verwendet. Für den Zugriff auf das SVN-Repository mittels HTTPS (Hypertext Transfer Protocol Secure) wurde der Apache-Webserver mit WebDAV-Plugin verwendet. Zudem kam WebSVN als Webschnittstelle des SVN-Repository zum Einsatz. Mozilla Firefox diente für das Betrachten der Javadocs und der WebSVN-Oberfläche.
 

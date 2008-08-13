@@ -1,6 +1,6 @@
-\chapter{Der Simulator}
+\chapter{Grafische Benutzeroberfläche (GUI)}
 
-\section{Grafische Benutzeroberfläche (GUI)}
+\section{Einfacher Modus}
 
 \begin{figure}[h]
 	\centering
@@ -9,11 +9,13 @@
 	\label{fig:NeuesFenster}
 \end{figure}
 
-Der Simulator lässt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten und präsentiert sich danach wie auf Abbildung \ref{fig:NeuesFenster}. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (Abbildung \ref{fig:DateiMenue}) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
+Der Simulator ben\"{o}tigt die JRE 6.0 (1.6) und lässt sich mit dem Befehl \textit{java -jar VS-Sim.jar} starten. Der Simulator präsentiert sich danach so wie auf Abbildung \ref{fig:NeuesFenster}. zu sehen ist. Für die Erstellung einer neuen Simulation wird im Menü ``Datei'' (Abbildung \ref{fig:DateiMenue}.) der Punkt ``Neue Simulation'' ausgewählt, wo anschließend das Einstellungsfenster für die neue Simulation erscheint.  Auf die einzelnen Optionen wird später genauer eingegangen und es werden nun nur die Standardeinstellungen übernommen. Die GUI mit einer frischen Simulation sieht aus wie auf Abbildung \ref{fig:NeuErstellteSimulation}.
+
+Standardm\"{a}ßig wird der Simulator im ``einfachen Modus'' gestartet. Daneben gibt es noch einen ``Expertenmodus'', auf welchen sp\"{a}ter eingegangen wird.
 
 \subsubsection{Die Menüzeile}
 
-Im Datei-Menü (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen erstellen oder die aktuell geöffnete Simulation schließen. Neue Simulationen öffnen sich standardmäßig in einem neuen Tab. Es können allerdings auch neue Simulationsfenster, die wiederum eigene Tabs besitzen, geöffnet oder geschlossen werden. In jedem Tab befindet sich eine von den Anderen vollständig unabhängige Simulation. Es können somit beliebig viele Simulationen parallel ausgeführt werden. Die Menüeinträge ``öffnen'', ``Speichern'' und ``Speichern unter'' dienen für das Laden und Speichern von Simulationen. 
+Im Datei-Menü (Abbildung \ref{fig:DateiMenue}.) lassen sich neue Simulationen erstellen oder die aktuell geöffnete Simulation schließen. Neue Simulationen öffnen sich standardmäßig in einem neuen Tab. Es können allerdings auch neue Simulationsfenster, die wiederum eigene Tabs besitzen, geöffnet oder geschlossen werden. In jedem Tab befindet sich eine, von den anderen vollständig unabhängige Simulation. Es können somit beliebig viele Simulationen parallel ausgeführt werden. Die Menüeinträge ``Öffnen'', ``Speichern'' und ``Speichern unter'' dienen für das Laden und Speichern von Simulationen. 
 
 \begin{figure}[h]
 	\centering
@@ -29,13 +31,13 @@ Im Datei-Menü (Abbildung \ref{fig:DateiMenue}) lassen sich neue Simulationen ers
 	\label{fig:NeuErstellteSimulation}
 \end{figure}
 
-über das Editieren-Menü gelangt der Anwender zu den Simulationseinstellungen, worauf später genauer eingegangen wird. In diesem Menü werden auch alle beteiligten Prozesse zum Editieren aufgelistet. Wählt der Anwender dort einen Prozess aus, dann öffnet sich der dazugehörige Prozesseditor. Auf diesen wird ebenso später genauer eingegangen. Das Simulator-Menü bietet die selben Optionen wie die Toolbar, welche im nächsten Teilkapitel beschrieben wird, an.
+Über das Editieren-Menü gelangt der Anwender zu den Simulationseinstellungen, worauf später genauer eingegangen wird. In diesem Menü werden auch alle beteiligten Prozesse zum Editieren aufgelistet. Wählt der Anwender dort einen Prozess aus, dann öffnet sich der dazugehörige Prozesseditor. Auf diesen wird ebenso später genauer eingegangen. Das Simulator-Menü bietet die selben Optionen wie die Toolbar, welche im nächsten Teilkapitel beschrieben wird, an.
 
 Einige Menüunterpunkte sind erst erreichbar, wenn im aktuellen Fenster bereits eine Simulation erstellt oder geladen wurde.
 
 \subsubsection{Die Toolbar}
 
-Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}). Die Toolbar enthält die Funktionen die vom Anwender am häufigsten benötigt werden.
+Oben links im Simulator befindet sich die Toolbar (Abbildung \ref{fig:Toolbar}.). Die Toolbar enthält die Funktionen die vom Anwender am häufigsten benötigt werden.
 
 Die Toolbar bietet vier verschiedene Funktionen an:
 
@@ -64,7 +66,7 @@ Die Toolbar bietet vier verschiedene Funktionen an:
 	\label{fig:Visualisierung}
 \end{figure}
 
-Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse gibt die Zeit in Millisekunden an und auf der Y-Achse sind alle beteiligten Prozesse aufgeführt. Die Demo-Simulation endet nach genau 15 Sekunden. Auf Abbildung \ref{fig:Visualisierung} sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann der Anwender die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Simulationszeit dar. 
+Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse gibt die Zeit in Millisekunden an und auf der Y-Achse sind alle beteiligten Prozesse aufgeführt. Die Demo-Simulation endet nach genau 15 Sekunden. Auf Abbildung \ref{fig:Visualisierung}. sind 3 Prozesse (mit den PIDs 1, 2 und 3) dargestellt, die jeweils einen eigenen horizontalen schwarzen Balken besitzen. Auf diesen Prozessbalken kann der Anwender die jeweilige lokale Prozesszeit ablesen. Die vertikale rote Linie stellt die globale Simulationszeit dar. 
 
 \begin{figure}[h]
 	\centering
@@ -73,16 +75,16 @@ Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse
 	\label{fig:RechtsklickProzessbalken}
 \end{figure}
 
-Die Prozessbalken dienen auch für Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht an Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum Anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst verschickt, werden nicht visualisiert. Sie werden aber im Loggfenster (mehr dazu später) protokolliert.
+Die Prozessbalken dienen auch für Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht an Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst verschicken, werden nicht visualisiert. Sie werden aber im Logfenster (mehr dazu später) protokolliert.
 
-Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Dies muss also nicht immer über das Simulator-Menü geschehen. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
+Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Dies muss also nicht immer über das Simulator-Menü geschehen. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (Abbildung \ref{fig:RechtsklickProzessbalken}.). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
 
-Generell kann die Anzahl der Prozesse nach belieben variieren. Die Dauer der Simulation beträgt mindestens \textit{5} und höchstens \textit{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit die angegebene Simulationsendzeit (hier \textit{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
+Generell kann die Anzahl der Prozesse nach Belieben variieren. Die Dauer der Simulation beträgt mindestens \textit{5} und höchstens \textit{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit, die angegebene Simulationsendzeit (hier \textit{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
 
 \subsubsection{Farbliche Differenzierung}
 
 
-Farben helfen dabei die Vorgänge einer Simulation besser zu deuten. Standardmäßig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben wie in Tabelle \ref{tb:Farben} aufgelistet dargestellt. Dies sind lediglich die Standardfarben, welche über die Einstellungen geändert werden können.
+Farben helfen dabei die Vorgänge einer Simulation besser zu deuten. Standardmäßig werden die Prozesse (Prozessbalken) und Nachrichten mit den Farben, wie in Tabelle \ref{tb:Farben}. aufgelistet, dargestellt. Dies sind lediglich die Standardfarben, welche über die Einstellungen geändert werden können.
 
 \begin{table}
 	\fbox{
@@ -118,7 +120,7 @@ Farben helfen dabei die Vorgänge einer Simulation besser zu deuten. Standardmäßi
 	\label{fig:Sidebar}
 \end{figure}
 
-Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar} ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die Möglichkeit ``Alle Prozesse'' auszuwählen, womit die Ereignisse aller Prozesse gleichzeitig verwaltet werden können. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Die darunter liegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
+Mit Hilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbildung \ref{fig:Sidebar}. ist der zu verwaltende Prozess selektiert (hier mit der PID 1). In dieser Prozessauswahl gibt es auch die Möglichkeit ``Alle Prozesse'' auszuwählen, womit alle programmierten Ereignisse aller Prozesse gleichzeitig dargestellt werden. Unter ``Lokale Ereignisse'' versteht man diejenigen Ereignisse, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Die darunter liegende Ereignistabelle listet alle programmierten Ereignisse (hier noch keine vorhanden) mitsamt Eintrittszeiten sowie den PIDs auf.
 
 \begin{figure}[h]
 	\centering
@@ -127,7 +129,7 @@ Mithilfe der Sidebar lassen sich Prozessereignisse programmieren. Oben auf Abbil
 	\label{fig:SidebarMitEreignissen}
 \end{figure}
 
-Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}) klicken und dort ``Lokales Ereignis einfügen'' wählen, oder unterhalb der Ereignistabelle ein Ereignis auswählen (Abbildung \ref{fig:Ereignisauswahl}), im darunter liegenden Textfeld die Ereigniseintrittszeit eintragen und auf ``übernehmen'' gehen. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen} drei Ereignisse hinzugefügt: Absturz nach \textit{123ms}, Wiederbelebung nach \textit{321ms} und erneuter Absturz nach \textit{3000ms} des Prozesses mit der ID 1. 
+Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem Rechtsklick auf einen Prozessbalken (Abbildung \ref{fig:RechtsklickProzessbalken}.) klicken und dort ``Lokales Ereignis einfügen'' wählen, oder unterhalb der Ereignistabelle ein Ereignis auswählen (Abbildung \ref{fig:Ereignisauswahl}.), im darunter liegenden Textfeld die Ereigniseintrittszeit eintragen und auf ``Übernehmen'' gehen. Beispielsweise wurden auf Abbildung \ref{fig:SidebarMitEreignissen}. drei Ereignisse hinzugefügt: Absturz nach \textit{123ms}, Wiederbelebung nach \textit{321ms} und erneuter Absturz nach \textit{3000ms} des Prozesses mit der ID 1. 
 
 \begin{figure}[h]
 	\centering
@@ -136,24 +138,24 @@ Für die Erstellung eines neuen Ereignisses kann der Anwender entweder mit einem 
 	\label{fig:Ereignisauswahl}
 \end{figure}
 
-Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder löschen. Mithilfe der Strg-Taste können auch mehrere Ereignisse gleichzeitig markiert werden. Die Einträge der Spalten für die Zeit und der PID lassen sich nachträglich editieren. Somit besteht eine komfortable Möglichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem ändern der Ereigniseintrittszeit die Enter-Taste betätigt, da sonst die Änderung unwirksam ist.
+Mit einem Rechtsklick auf den Ereigniseditor lassen sich alle selektierten Ereignisse entweder kopieren oder löschen. Mit Hilfe der Strg-Taste können auch mehrere Ereignisse gleichzeitig markiert werden. Die Einträge der Spalten für die Zeit und der PID lassen sich nachträglich editieren. Somit besteht eine komfortable Möglichkeit bereits programmierte Ereignisse auf eine andere Zeit zu verschieben oder einen anderen Prozess zuzuweisen. Allerdings sollte der Anwender darauf achten, dass er nach dem ändern der Ereigniseintrittszeit die Enter-Taste betätigt, da sonst die Änderung unwirksam ist.
 
-In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (Abbildung \ref{fig:NeueSimulationVariablen} links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. 
+In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. Hinter diesem Tab verbirgt sich der Prozesseditor des aktuell ausgewählten Prozesses (Abbildung \ref{fig:NeueSimulationVariablen}. links). Dort können alle Variablen des Prozesses editiert werden und ist somit eine weitere Möglichkeit einen Prozesseditor aufzurufen. 
 
-\subsubsection{Das Loggfenster}
+\subsubsection{Das Logfenster}
 
 \begin{figure}[h]
 	\centering
 	\fbox{\includegraphics[width=16.5cm]{images/ss-loggfenster}}
-	\caption{Das Loggfenster}
-	\label{fig:Loggfenster}
+	\caption{Das Logfenster}
+	\label{fig:Logfenster}
 \end{figure}
 
-Das Loggfenster (Abbildung \ref{fig:NeuErstellteSimulation}, unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Loggfenster} ist das Loggfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Loggeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokale Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
+Das Logfenster (Abbildung \ref{fig:NeuErstellteSimulation}., unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. Auf Abbildung \ref{fig:Logfenster}. ist das Logfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Logeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokalen Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
 
-Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Loggfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen (z.B. kein Rucklen; ist vom verwendeten Computer, auf dem der Simulator läuft, abhängig). Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
+Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
-über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert beziehungsweise deaktiviert. 
+Über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert, beziehungsweise deaktiviert. 
 
 \section{Expertenmodus}
 
@@ -164,17 +166,17 @@ Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten
 	\label{fig:SimulationExpertenmodus}
 \end{figure}
 
-Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen- und einen Expertenmodus. Der Simulator startet standardmäßig im einfachen Modus, sodass sich der Anwender nicht mit der vollen Funktionalität des Simulators auf einmal auseinandersetzen muss. Der einfache Modus ist übersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich mehr für erfahrene Anwender und bietet dementsprechend auch mehr Flexibilität. Der Expertenmodus kann über den gleichnamigen Schalter unterhalb des Loggfensters oder über die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus} ist der Simulator im Expertenmodus zu sehen. Wenn der Expertenmodus mit dem normalen Modus verglichen wird, dann fallen einige Unterschiede auf:
+Der Simulator kann in zwei verschiedenen Modi betrieben werden. Es gibt einen einfachen und einen Expertenmodus. Der Simulator startet standardmäßig im einfachen Modus, so dass sich der Anwender nicht mit der vollen Funktionalität des Simulators auf einmal auseinandersetzen muss. Der einfache Modus ist übersichtlicher, bietet jedoch weniger Funktionen an. Der Expertenmodus eignet sich mehr für erfahrene Anwender und bietet dementsprechend auch mehr Flexibilität. Der Expertenmodus kann über den gleichnamigen Schalter unterhalb des Logfensters oder über die Simulationseinstellungen aktiviert oder deaktiviert werden.  Auf Abbildung \ref{fig:SimulationExpertenmodus}. ist der Simulator im Expertenmodus zu sehen. Wenn der Expertenmodus mit dem einfachen Modus verglichen wird, so fallen einige Unterschiede auf:
 
 \subsubsection{Neue Funktionen in der Sidebar}
 
-Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}). Dort sind nun, zusätzlich den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erwähnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Zeit- und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
+Der erste Unterschied ist in der Sidebar erkennbar (Abbildung \ref{fig:SidebarExpertenmodus}.). Dort sind nun, zusätzlich zu den lokalen Ereignissen, auch globale Ereignisse editierbar.  Wie bereits erwähnt sind unter lokale Ereignisse diejenigen Ereignisse zu verstehen, die auftreten, wenn eine bestimmte lokale Zeit des dazugehörigen Prozesses eingetreten ist. Globale Ereignisse hingegen sind diejenigen Ereignisse, die auftreten, wenn eine bestimmte globale Zeit eingetreten ist. Ein globales Ereignis nimmt die globale Simulationszeit und ein lokales Ereignis die lokale Prozesszeit als Eintrittskriterium. Globale Ereignisse machen somit nur einen Unterschied, wenn sich die lokalen Prozesszeiten von der globalen Zeit unterscheiden.
 
 Des Weiteren kann der Anwender bei der Programmierung eines neuen Ereignisses direkt die dazugehörige PID selektieren. Im einfachen Modus wurde hier immer standardmäßig die PID des aktuell (in der obersten Combo-Box) ausgewählten Prozesses verwendet (hier mit PID 1). 
 
 \subsubsection{Lamportzeit-, Vektorzeit- und Anti-Aliasing Schalter}
 
-Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt es unter Anderem zwei neue Schalter ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Anwender einen dieser beiden Schalter, so wird die Lamport- beziehungsweise Vektorzeit in der Visualisierung dargestellt. Damit die Übersichtlichkeit nicht leidet, kann der Anwender nur jeweils einen dieser beiden Schalter zur gleichen Zeit aktiviert haben. 
+Weitere Unterschiede machen sich unterhalb des Logfensters bemerkbar. Dort gibt es unter anderem zwei neue Schalter ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Anwender einen dieser beiden Schalter, so werden die Lamport- beziehungsweise die Vektor-Zeitstempel in der Visualisierung dargestellt. Damit die Übersichtlichkeit nicht leidet, kann der Anwender nur jeweils einen dieser beiden Schalter zur gleichen Zeit aktiviert haben. 
 
 \begin{figure}[h]
 	\centering
@@ -183,15 +185,15 @@ Weitere Unterschiede machen sich unterhalb des Loggfensters bemerkbar. Dort gibt
 	\label{fig:SidebarExpertenmodus}
 \end{figure}
 
-Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren beziehungsweise zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performance-gründen ist Anti-Aliasing standardmäßig nicht aktiv.
+Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren beziehungsweise zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performance-Gründen ist Anti-Aliasing standardmäßig nicht aktiv.
 
-\subsubsection{Der Loggfilter}
+\subsubsection{Der Logfilter}
 
-Je komplexer eine Simulation wird, desto unübersichtlicher werden die Einträge im Loggfenster. Hier fällt es zunehmend schwerer die Übersicht aller Ereignisse zu behalten. Um dem entgegenzuwirken gibt es im Expertenmodus einen Loggfilter, welcher es ermöglicht nur die wesentlichen Daten aus den Loggs zu filtern. 
+Je komplexer eine Simulation wird, desto unübersichtlicher werden die Einträge im Logfenster. Hier fällt es zunehmend schwerer die Übersicht aller Ereignisse zu behalten. Um dem entgegenzuwirken gibt es im Expertenmodus einen Logfilter, welcher es ermöglicht nur die wesentlichen Daten aus den Logs zu filtern. 
 
-Der Loggfilter wird anhand dem dazugehörigen Schalter ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Loggzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die zum Beispiel nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Loggfilter werden nur die Loggzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Loggfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
+Der Logfilter wird anhand des dazugehörigen Schalters ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax, beschrieben in \cite{Regexp}, angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Logzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die zum Beispiel nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Logfilter werden nur die Logzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Logfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
 
-Der Loggfilter kann auch während einer laufenden Simulation verwendet werden. Bei Filterdeaktivierung werden alle Nachrichten wieder dargestellt. Loggnachrichten, die aufgrund des Filters noch nie angezeigt wurden, werden dann nachträglich angezeigt.
+Der Logfilter kann auch während einer laufenden Simulation verwendet werden. Bei Filterdeaktivierung werden alle Nachrichten wieder dargestellt. Lognachrichten, die aufgrund des Filters noch nie angezeigt wurden, werden dann nachträglich angezeigt.
 
 \begin{figure}[h]
 	\centering
@@ -202,11 +204,11 @@ Der Loggfilter kann auch während einer laufenden Simulation verwendet werden. Be
 
 \section{Ereignisse}
 
-Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht-programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie zum Beispiel das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers, worauf später nochmal genauer eingegangen wird.
+Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie zum Beispiel das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers, worauf später nochmal genauer eingegangen wird.
 
 \subsubsection{Prozessabsturz- und Wiederbelebung (programmierbar)}
 
-Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann kann sie nicht verarbeitet werden und geht deshalb verloren. Die einzige Ausnahme bildet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen der Lamport- und Vektor-Uhren, normal weiter. Das heißt es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. Wenn im echten Leben ein Computer abstürzt oder abgeschaltet wird, dann läuft seine Hardware-Uhr unabhängig vom Betriebssystem auch weiter.
+Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann kann sie nicht verarbeitet werden und geht deshalb verloren. Die einzige Ausnahme bietet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen von den Lamport- und Vektor-Zeitstempel, normal weiter. Das heißt, es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. Wenn im echten Leben ein Computer abstürzt oder abgeschaltet wird, dann läuft seine Hardware-Uhr unabhängig vom Betriebssystem auch weiter.
 
 \subsubsection{Aktivierung und Deaktivierung von Protokollen sowie Starten von Anfragen (programmierbar)}
 Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und gegebenenfalls ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert beziehungsweise deaktiviert werden. Welche Protokolle es gibt wird später behandelt. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
@@ -219,11 +221,11 @@ Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch ser
 	\item Starten einer Client/Server-Anfrage eines gegebenen Protokolls
 \end{itemize}
 
-Ob sich das Ereignis für das Starten einer Anfrage auf einen Client oder einen Server bezieht, hängt vom verwendeten Protokoll ab. Es gibt Protokolle, wo der Client die Anfragen starten muss, und es gibt Protokolle, wo der Server diese Aufgabe übernimmt. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client- und bei dem ``Commit-Protokollen'' der Server immer die Anfragen. Es gibt kein Protokoll, wo der Client und der Server jeweils Anfragen starten können. 
+Ob sich das Ereignis für das Starten einer Anfrage auf einen Client oder einen Server bezieht, hängt vom verwendeten Protokoll ab. Es gibt Protokolle, wo der Client die Anfragen starten muss, und es gibt Protokolle, wo der Server diese Aufgabe übernimmt. Beispielsweise startet bei dem ``Ping-Pong Protokoll'' der Client und bei dem ``Commit-Protokollen'' der Server immer die Anfragen. Es gibt kein Protokoll, wo der Client und der Server jeweils Anfragen starten können. 
 
 \subsubsection{Nachrichtenempfang sowie Antwortnachrichten (nicht-programmierbar)}
 
-Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muss der Empfängerprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfängerprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
+Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das dazugehörige Protokoll unterstützt. Wenn der Prozess das Protokoll unterstützt, wird geschaut, ob es sich um eine Client- oder eine Servernachricht handelt. Wenn es sich um eine Clientnachricht handelt, so muss der Empfängerprozess das Protokoll serverseitig unterstützen und virce versa. Wenn alles passt, dann führt der Empfängerprozess die vom Protokoll definierten Aktionen aus. In der Regel berechnet der Prozess einen bestimmten Wert und schickt ihn über eine Antwortnachricht zurück. Es können aber auch beliebig andere Aktionen ausgeführt werden. Welche dies sind hängt vom Protokoll ab.
 
 \subsubsection{Callback-Ereignisse (nicht-programmierbar)}
 
@@ -268,12 +270,12 @@ In diesem Abschnitt wird genauer auf die möglichen Konfigurationsmöglichkeiten e
 \end{figure}
 
 
-Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (Tabelle \ref{tb:VariablenDatentypen}). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor (mehr zu Editoren später) angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen ändern.
+Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (Tabelle \ref{tb:VariablenDatentypen}.). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor (mehr zu Editoren später) angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen ändern.
 
 \subsection{Simulationseinstellungen}
 
 
-Beim Erstellen einer neuen Simulation erscheint zunächst das dazugehörige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}). In der Regel reicht es, wenn der Anwender hier, bis auf die Anzahl beteiligter Prozesse, die Standardwerte übernimmt. Es besteht auch die Möglichkeit die Einstellungen nachträglich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
+Beim Erstellen einer neuen Simulation erscheint zunächst das dazugehörige Einstellungsfenster (Abbildung \ref{fig:Simulationseinstellungen}.). In der Regel reicht es, wenn der Anwender hier, bis auf die Anzahl beteiligter Prozesse, die Standardwerte übernimmt. Es besteht auch die Möglichkeit die Einstellungen nachträglich zu editieren, indem das Einstellungsfenster via ``Editieren $\rightarrow$ Einstellungen'' erneut aufgerufen wird.
 
 Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen beschrieben. Die Klammern geben die Typen, Namen und die Standardwerte an, in denen die Variablen vorliegen. 
 
@@ -287,15 +289,15 @@ Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen b
 
 \begin{itemize}
 	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean: sim.message.own.recv = false)}: Standardmäßig können Prozesse keine Nachrichten empfangen, die sie selbst verschickt haben. Dies trägt zur Übersichtlichkeit der Simulation bei. Wenn diese Variable jedoch auf \textit{true} gesetzt wird, dann kann ein Prozess auch selbst verschickte Nachrichten empfangen und auf diese ebenso antworten. Die Zeit für das Versenden und Empfangen einer Nachricht an sich selbst beträgt jedoch stets \textit{0ms}. Diese Variable sollte mit Vorsicht verwendet werden, da bedingt durch den \textit{0ms} Endlosschleifen entstehen können. 
-	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, so wird hier der Mittelwert aus den Verlustwahrscheinlichkeiten vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Verlustwahrscheinlichkeit, die beim Senderprozesses angegeben wurde, verwendet. 
-	\item \textbf{Mittelwerte der Übertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht die verschickt wird hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Übertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen später). Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Übertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
+	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht, die verschickt wird, hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, so wird hier der Mittelwert aus den Verlustwahrscheinlichkeiten vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Verlustwahrscheinlichkeit, die beim Senderprozesses angegeben wurde, verwendet. 
+	\item \textbf{Mittelwerte der Übertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht, die verschickt wird, hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Übertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen später). Wenn diese Option aktiviert ist, so wird der Mittelwert vom Sender- und Empfängerprozess gebildet. Ansonsten wird stets die Übertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
 	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean: sim.messages.relevant = true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, dann werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann, weil er das dazugehörige Protokoll nicht unterstützt, nicht angezeigt. Dies verbessert die Übersicht.
-	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean: sim.mode.expert = false)}: Hier lässt sich der Expertenmodus aktivieren beziehungsweise deaktivieren. Alternativ kann dies über den gleichnamigen Schalter unterhalb des Loggfensters geschehen.
+	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean: sim.mode.expert = false)}: Hier lässt sich der Expertenmodus aktivieren beziehungsweise deaktivieren. Alternativ kann dies über den gleichnamigen Schalter unterhalb des Logfensters geschehen.
 	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean: sim.periodic = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann wird die Simulation jedes Mal nach Ablauf automatisch erneut gestartet. 
-	\item \textbf{Lamportzeiten betreffen alle Ereignisse} \textit{(Boolean: sim.update.lamporttime.all = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann werden bei jedem Ereignis alle Lamportzeitstempel aller Prozesse jeweils inkrementiert. Bei einem Wert \textit{false} inkrementieren sich die Lamportzeitstempel jeweils nur, wenn eine Nachricht empfangen oder verschickt wurde.
+	\item \textbf{Lamportzeiten betreffen alle Ereignisse} \textit{(Boolean: sim.update.lamporttime.all = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann werden bei jedem Ereignis alle Lamport-Zeitstempel aller Prozesse jeweils inkrementiert. Bei einem Wert \textit{false} inkrementieren sich die Lamport-Zeitstempel jeweils nur, wenn eine Nachricht empfangen oder verschickt wurde.
 	\item \textbf{Vektorzeiten betreffen alle Ereignisse} \textit{(Boolean: sim.update.vectortime.all = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann werden bei jedem Ereignis alle Vektor-Zeitstempel aller Prozesse jeweils inkrementiert. Bei einem Wert \textit{false} inkrementieren sich die Vektor-Zeitstempel jeweils nur, wenn eine Nachricht empfangen oder verschickt wurde.
 
-	Lamport- und Vektorzeitstempel werden später anhand eines Beispiels verdeutlicht.
+	Lamport- und Vektor-Zeitstempel werden später anhand eines Beispiels verdeutlicht.
 	\item \textbf{Abspielgeschwindigkeit der Simulation} \textit{(Float: sim.clock.speed = 0.5)}: Gibt den Faktor der Simulationsabspielgeschindigkeit an. Wenn als Faktor \textit{1} gewählt wird, dann dauert eine simulierte Sekunde so lange wie eine echte Sekunde. Der Faktor \textit{0.5} gibt somit an, dass die Simulation mit halber Echtzeitgschwindigkeit abgespielt wird.
 	\item \textbf{Anzahl der Prozesse} \textit{(Integer: sim.process.num = 3)}: Gibt die Anzahl beteiligter Prozesse an. Der Anwender kann auch nachträglich via Rechtsklick auf den Prozessbalken den jeweiligen Prozess aus der Simulation entfernen oder weitere Prozesse hinzufügen.
 	\item \textbf{Dauer der Simulation} \textit{(Integer: sim.seconds = 15)}: Gibt die Dauer der Simulation in Sekunden an.
@@ -362,758 +364,5 @@ Im selben Fenster (im Prozesseditor) lassen sich auch die Protokollvariablen edi
 	\label{tb:Farbeinstellungen}
 \end{table}
 
-Im Expertenmodus lassen sich zusätzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl oder Pixel verschiedener der GUI-Elemente, editieren. Auf Abbildung \ref{fig:SimulationseinstellungenExperten} sieht der Anwender alle einstellbaren Farben. Die fett-gedruckten Schlüssel in Tabelle \ref{tb:Farbeinstellungen} dienen nur als Standardwerte für die neu zu erstellenden Prozesse und sind auch jeweils in den Prozesseinstellungen für jeden Prozess separat editierbar.
+Im Expertenmodus lassen sich zusätzliche Variablen, wie beispielsweise diverse Farbwerte und Anzahl oder Pixel verschiedener der GUI-Elemente, editieren. Auf Abbildung \ref{fig:SimulationseinstellungenExperten}. sieht der Anwender alle einstellbaren Farben. Die fett-gedruckten Schlüssel in Tabelle \ref{tb:Farbeinstellungen}. dienen nur als Standardwerte für die neu zu erstellenden Prozesse und sind auch jeweils in den Prozesseinstellungen für jeden Prozess separat editierbar.
 
-\newpage
-\section{Protokolle}
-
-Im Folgenden werden alle verfügbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server können auf Clientnachrichten, und Client auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterstützen. Theoretisch ist es auch möglich, dass ein Prozess für ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels einer speziellen API (Application Programming Interface) erstellen. Wie eigene Protokolle erstellt werden können wird später behandelt. 
-
-Im mitgelieferten Verzeichnis \textit{saved-simulations} befinden sich alle Beispielsimulationen zum Selbst probieren als \textit{.dat} (Java-Serialisierungsobjekt) abgespeichert.
-
-\subsection{Beispiel (Dummy) Protokoll}
-
-Das Dummy-Protokoll dient lediglich als leeres Template für die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Ereignissen lediglich Loggnachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgeführt.
-
-\newpage
-\subsection{Das Ping-Pong Protokoll \small{\textit{(ping-pong.dat, ping-pong-sturm.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong}}
-	\caption{Das Ping-Pong Protokoll}
-	\label{fig:PingPongProto}
-\end{figure}
-
-Bei dem Ping-Pong Protokoll (Abbildung \ref{fig:PingPongProto}) werden zwischen zwei Prozessen, Client P1 und Server P2, ständig Nachrichten hin- und hergeschickt. Der Ping-Pong Client startet die erste Anfrage, worauf der Server dem Client antwortet. Auf diese Antwort wird vom Client ebenfalls geantwortet und so weiter. Jeder Nachricht wird ein Zähler mitgeschickt, der bei jeder Station um eins inkrementiert- und jeweils im Loggfenster protokolliert wird. In Tabelle \ref{tb:PingPongTasks} sind alle für dieses Beispiel programmierten Ereignisse aufgeführt. 
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-ping-pong-sturm}}
-	\caption{Das Ping-Pong Protokoll (Sturm)}
-	\label{fig:PingPongSturmProto}
-\end{figure}
-
-Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet! Wenn die Eintrittszeiten für die Aktivierung des Protokolls und das Starten der Anfrage identisch sind, so ordnet der Task-Manager (mehr dazu später) diese Ereignisse automatisch in der richtigen Reihenfolge an. Wenn der Ping-Pong Client nicht aktiviert werden würde, dann könnte P1 auch keine Ping-Pong Anfrage starten. Bevor ein Prozess eine Anfrage starten kann, muss er das dazugehörige Protokoll unterstützen beziehungsweise aktiviert haben. Dies gilt natürlich für alle anderen Protokolle analog. Anhand diesem Beispiel ist erkennbar, dass die noch nicht ausgelieferte Nachrichten grün eingefärbt ist. Alle ausgelieferten Nachrichten tragen bereits die Farbe Blau.
-
-Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks} abgeändert, so lässt sich ein Ping-Pong Sturm realisieren. Dort wurde ein neuer Prozess 3 eingeführt, der als zusätzlicher Ping-Pong Server agiert. Da auf jede Clientnachricht stets zwei Serverantworten folgen, verdoppelt sich bei jedem Ping-Pong Durchgang die Anzahl der kursierenden Nachrichten. Auf Abbildung \ref{fig:PingPongSturmProto} ist der dazugehörige Simulationsverlauf bis zum Zeitpunkt \textit{12676ms} dargestellt.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0 & 1 & Ping Pong Client aktivieren\\
-		 	0 & 2 & Ping Pong Server aktivieren\\
-		 	0 & 1 & Ping Pong Clientanfrage starten
-	\end{tabular}
-	}
-	\caption{Programmierte Ping-Pong Ereignisse}
-	\label{tb:PingPongTasks}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0 & 1 & Ping Pong Client aktivieren\\
-		 	0 & 2 & Ping Pong Server aktivieren\\
-		 	0 & 3 & Ping Pong Server aktivieren\\
-		 	0 & 1 & Ping Pong Clientanfrage starten
-	\end{tabular}
-	}
-	\caption{Programmierte Ping-Pong Ereignisse (Sturm)}
-	\label{tb:PingPongSturmTasks}
-\end{table}
-
-\newpage
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0000 & 1 & Broadcast Client aktivieren\\
-		 	0000 & 2 & Broadcast Client aktivieren\\
-		 	0000 & 3 & Broadcast Client aktivieren\\
-		 	0000 & 4 & Broadcast Client aktivieren\\
-		 	0000 & 5 & Broadcast Client aktivieren\\
-		 	0000 & 6 & Broadcast Client aktivieren\\
-		 	0000 & 1 & Broadcast Server aktivieren\\
-		 	0000 & 2 & Broadcast Server aktivieren\\
-		 	0000 & 3 & Broadcast Server aktivieren\\
-		 	0000 & 4 & Broadcast Server aktivieren\\
-		 	0000 & 5 & Broadcast Server aktivieren\\
-		 	0000 & 6 & Broadcast Server aktivieren\\
-		 	0000 & 1 & Broadcast Clientanfrage starten\\
-		 	2500 & 1 & Broadcast Clientanfrage starten
-	\end{tabular}
-	}
-	\caption{Programmierte Broadcast Ereignisse}
-	\label{tb:BroadcastSturmTasks}
-\end{table}
-\subsection{Das Broadcast Protokoll \small{\textit{(broadcast.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-broadcast-sturm}}
-	\caption{Das Broadcast Protokoll}
-	\label{fig:BroadcastSturmProto}
-\end{figure}
-
-Das Broadcast Protokoll verhält sich ähnlich wie das Ping-Pong Protokoll. Der Unterschied besteht darin, dass sich das Protokoll anhand einer eindeutigen Broadcast-ID merkt, welche Nachrichten bereits verschickt wurden. Das Broadcast Protokoll (server- und clientseitig) verschickt alle erhaltenen Nachrichten, sofern sie vom jeweiligen Prozess noch nicht schon einmal verschickt wurden, erneut. 
-
-Der Server und der Client unterscheiden sich in diesem Fall nicht und führen bei Ankunft einer Nachricht jeweils die selben Aktionen durch. Somit lässt sich, unter Verwendung mehrerer Prozesse (hier 6), wie auf Abbildung \ref{fig:BroadcastSturmProto}, ein Broadcast erzeugen. P1 ist der Client und startet je eine Anfrage nach \textit{0ms} und \textit{2500ms}. Die Simulationsdauer beträgt hier genau \textit{5000ms}. Da ein Client nur Servernachrichten und ein Server nur Clientnachrichten empfangen kann, ist in dieser Simulation jeder Prozess, wie in Tabelle \ref{tb:BroadcastSturmTasks} angegeben, gleichzeitig Server und Client. 
-
-\newpage
-\subsection{Das Protokoll zur internen Synchronisierung in einem synchronen System \small{\textit{(int-sync.dat)}}}
-
-Bisher wurden nur Protokolle vorgeführt, in denen die beteiligten Prozesse keine Uhrabweichung eingestellt hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine falsche lokale Zeit $t_c$ mit einem Server synchronisieren möchte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zurück, womit der Client seine neue und genauere Prozesszeit berechnen kann. Wie genau die neue Prozesszeit berechnet wird, ist im Folgenden beschrieben: 
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync}}
-	\caption{Das Protokoll zur internen Synchronisierung}
-	\label{fig:TimeSyncProto}
-\end{figure}
-
-Hier (Abbildung \ref{fig:TimeSyncProto}) stellt P1 den Client und P2 den Server dar. Da die Übertragungszeit $t_u$ einer Nachricht angenommen zwischen $t'_{min}$ und $t'_{max}$ liegt, setzt der Client P1 nach Empfang der Serverantwort seine lokale Prozesszeit auf 
-
-\begin{equation*}
-	t_c := t_s + \frac{1}{2} (t'_{min} + t'_{max})
-\end{equation*}
-
-Somit wurde die lokale Zeit von P1, bis auf einen Fehler von $< \frac{1}{2} (t'_{max} - t'_{min})$, synchronisiert. 
-
-Der Clientprozess hat in der Abbildung \ref{fig:TimeSyncProto} als Uhrabweichung den Wert \textit{0.1} und der Server hat als Uhrabweichung den Wert \textit{0.0} konfiguriert. Der Client startet, wie in Tabelle \ref{tb:InterneSyncTasks} angegeben, nach \textit{0ms}, \textit{5000ms} und \textit{10000ms} seiner lokalen Prozesszeit jeweils eine Clientanfrage. In der Abbildung lässt sich erkennen, dass die 2. und die 3. Anfrage nicht synchron zu der globalen Zeit (siehe Sekunden-Gatter) gestartet wurden, was auf die Uhrabweichung von P1 zurückzuführen ist. Nach Simulationsende ist die Zeit von P1 bis auf \textit{15000ms} - \textit{15976ms} = \textit{-976ms} synchronisiert.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	00000 & 1 & Interne Sync. Client aktivieren \\
-		 	00000 & 2 & Interne Sync. Server aktivieren\\
-		 	00000 & 1 & Interne Sync. Clientanfrage starten\\
-		 	05000 & 1 & Interne Sync. Clientanfrage starten\\
-		 	10000 & 1 & Interne Sync. Clientanfrage starten\\
-	\end{tabular}
-	}
-	\caption{Programmierte Ereignisse zur internen Synchronisierung}
-	\label{tb:InterneSyncTasks}
-\end{table}
-
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Interne Sync. Client'' konfiguriert werden können. Serverseitig gibt es hier keine Variablen.
-
-\begin{itemize}
-	\item \textbf{Min. Übertragungszeit} \textit{(Long: 500)}: Gibt den Wert $t'_{min}$ in Millisekunden an
-	\item \textbf{Max. Übertragungszeit} \textit{(Long: 2000)}: Gibt den Wert $t'_{max}$ in Millisekunden an
-\end{itemize}
-
-$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (siehe Sektion über Prozesseinstellungen) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wo in der Zeitsynchronisierung große Fehler auftreten können.
-
-\newpage
-\subsection{Christians Methode zur externen Synchronisierung \small{\textit{(ext-vs-int-sync.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync-2}}
-	\caption{Interne Synchronisierung und Christians Methode im Vergleich}
-	\label{fig:TimeSync2Proto}
-\end{figure}
-
-Ein weiteres Protokoll für die Synchronisierung von Uhrzeiten funktioniert nach der Christians Methode zur externen Synchronisierung. Die Christians Methode benutzt die RTT (Round Trip Time) $t_{rtt}$, um die Übertragungszeit von einzelnen Nachrichten zu approximieren. 
-
-Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren möchte, so verschickt er eine Anfrage, und misst dabei bis zur Ankunft der Serverantwort die dazugehörige RTT $t_{rtt}$. Die Serverantwort beinhaltet die lokale Prozesszeit $t_s$ vom Server von dem Zeitpunkt, als der Server die Antwort verschickte. Der Client setzt dann seine lokale Zeit neu auf:
-
-\begin{equation*}
-	t_c := t_s + \frac{1}{2} t_{rtt}
-\end{equation*}
-
-und zwar mit einer Genauigkeit von $\pm(\frac{1}{2} t_{rtt} - u_{min}$) wenn $u_{min}$ eine Schranke für eine Nachrichtenübertragung mit $t_{rtt} < u_{min}$ ist (siehe \cite{Vorlesung}).
-
-Im Prinzip sieht ein Verlauf einer Christians-Simulation so aus wie auf Abbildung \ref{fig:TimeSyncProto}, daher wird hier auf eine einfache Abbildung vom Christians-Protokoll verzichtet. Viel Interessanter ist der direkte Vergleich zwischen dem Protokoll zur internen Synchronisierung und der Christians Methode der externen Synchronisierung (Abbildung \ref{fig:TimeSync2Proto}). Hier stellt P1 den Client zur internen Synchronisierung und P3 den Client zur externen Synchronisierung dar. P2 fungiert für beide Protokolle gleichzeitig als Server. P1 und P3 starten jeweils zu den lokalen Prozesszeiten \textit{0ms}, \textit{5000ms} und \textit{10000ms} eine Clientanfrage (Tabelle \ref{tb:InterneSync2Tasks}). P1 und P3 haben als Uhrabweichung \textit{0.1} eingestellt und die Simulationsdauer beträgt insgesamt \textit{15000ms}.
-
-Auf der Abbildung \ref{fig:TimeSync2Proto} ist ablesbar, dass nach Ablauf der Simulation P1 seine Zeit bis auf \textit{15000ms} - \textit{14567ms} = \textit{433ms} und P3 seine Zeit bis auf \textit{15000ms} - \textit{15539ms} = \textit{-539ms} synchronisiert hat. In diesem Beispiel hat also das Protokoll zur internen Synchronisierung ein besseres Ergebnis geliefert. Dies ist allerdings nicht zwingend immer der Fall, da nach einer erneuten Simulationsausführung alle Nachrichten jeweils eine neue zufällige Übertragungszeit zwischen $t_{min}$ und $t_{max}$ haben werden, die auf das eine oder andere Protokoll wieder andere Auswirkungen haben können.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	00000 & 1 & Interne Sync. Client aktivieren \\
-		 	00000 & 1 & Interne Sync. Clientanfrage starten\\
-		 	00000 & 2 & Christians Server aktivieren\\
-		 	00000 & 2 & Interne Sync. Server aktivieren\\
-		 	00000 & 3 & Christians Client aktivieren \\
-		 	00000 & 3 & Christians Clientanfrage starten\\
-		 	05000 & 1 & Interne Sync. Clientanfrage starten\\
-		 	05000 & 3 & Christians Clientanfrage starten\\
-		 	10000 & 1 & Interne Sync. Clientanfrage starten\\
-		 	10000 & 3 & Christians Clientanfrage starten\\
-	\end{tabular}
-	}
-	\caption{Programmierte Ereignisse, Vergleich interne und externe Synchronisierung}
-	\label{tb:InterneSync2Tasks}
-\end{table}
-
-\newpage
-\subsection{Der Berkeley Algorithmus zur internen Synchronisierung \small{\textit{(berkeley.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-berkeley}}
-	\caption{Der Berkeley Algorithmus zur internen Synchronisierung}
-	\label{fig:BerkeleyProto}
-\end{figure}
-
-Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere Möglichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, wo der Server die Anfragen startet. Der Server stellt den Koordinator des Protokolls dar. Die Clients sind somit passiv und müssen warten, bis eine Serveranfrage eintrifft. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Protokolleinstellungen des Servers einstellen lässt.
-
-Wenn der Server seine eigene lokale Zeit $t_s$ und auch die lokalen Prozesszeiten $t_i$ der Clients ($i = 1, ..., n$) synchronisieren möchte, so verschickt er eine Serveranfrage. $n$ sei hierbei die Anzahl beteiligter Clients. Die Clients senden dann ihre lokalen Prozesszeiten in einer Nachricht zurück zum Server. Der Server hat dabei die RTTs $r_i$ bis zur Ankunft aller Clientantworten gemessen. 
-
-Nachdem alle Antworten vorliegen, setzt er zunächst seine eigene Zeit $t_s$ auf den Mittelwert $t_{avg}$ aller bekannten Prozesszeiten (seiner eigenen Prozesszeit eingeschlossen). Die Übertragungszeit einer Clientantwort wird auf die Hälfte der RTT geschätzt und wird in der Berechnung berücksichtigt: 
-
-\begin{equation*}
-	t_{avg} :=
-	\frac{1}{n+1} ( t_s +
-		\sum_{\substack{
-			i=1\\
-		}}^n
-		\frac{r_i}{2} + t_i
-	)
-\end{equation*}
-\begin{equation*}
-	t_s := t_{avg}
-\end{equation*}
-
-Anschließend berechnet der Server für jeden Client einen Korrekturwert $k_i := t_{avg} - t_i$, den er jeweils in einer separaten Nachricht zurückschickt. Die Clients setzten dann jeweils die lokale Prozesszeit auf $t'_i := t'_i + k_i$. Hierbei stellt $t'_i$ die derzeit aktuelle Prozesszeit des jeweiligen Clients dar. Denn bis zum Eintreffen des Korrekturwertes ist inzwischen wieder neue Zeit verstrichen.
-
-Im Beispiel auf Abbildung \ref{fig:BerkeleyProto} gibt es die 2 Clientprozesse P1 und P3 sowie den Serverprozess P2. Der Server startet nach jeweils \textit{0ms} und \textit{7500ms} eine Synchronisierungsanfrage (Tabelle \ref{tb:BerkeleyTasks}). Hier fällt auf, dass der Server stets 2 Korrekturwerte verschickt, die jeweils P1 und P3 erreichen. Es werden hier also pro Synchronisierungsvorgang insgesamt 4 Korrekturwerte ausgeliefert. Eine Korrekturnachricht enthält neben dem Korrekturwert $k_i$ auch die PID des Prozesses, für den die Nachricht bestimmt ist. Indem das Protokoll die PID überprüft verarbeitet ein Client so nur die für ihn bestimmten Korrekturwerte.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0000 & 1 & Berkeley Client aktivieren \\
-		 	0000 & 2 & Berkeley Server aktivieren \\
-		 	0000 & 3 & Berkeley Client aktivieren \\
-		 	0000 & 2 & Berkeley Serveranfrage starten\\
-		 	7500 & 2 & Berkeley Serveranfrage starten\\
-	\end{tabular}
-	}
-	\caption{Programmierte Ereignisse zum Berkeley Algorithmus}
-	\label{tb:BerkeleyTasks}
-\end{table}
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozesseinstellungen unter dem Punkt ``Berkeley Server'' konfiguriert werden kann. Clientseitig gibt es hier keine Variablen.
-
-\begin{itemize}
-	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die gar nicht existiert oder nicht das Berkeley Protokoll clientseitig gar nicht unterstützt. In diesem Fall würde ewig auf eine fehlende Clientantwort gewartet werden.
-\end{itemize}
-
-\newpage
-\subsection{Das Ein-Phasen Commit Protokoll \small{\textit{(one-phase-commit.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-one-phase-commit}}
-	\caption{Das Ein-Phasen Commit Protokoll}
-	\label{fig:OnePhaseCommitProto}
-\end{figure}
-
-Das Ein-Phasen Commit Protokoll ist dafür gedacht beliebig vielen Clients zu einer Festschreibung zu bewegen. Im realen Leben könnte dies beispielsweise das Erstellen oder Löschen einer Datei sein, von der auf jedem Client eine lokale Kopie existiert. Der Server ist der Koordinator und auch derjenige, der einen Festschreibewunsch initiiert. Hierbei verschickt der Server periodisch so oft den Festschreibewunsch, bis er von jedem Client eine Bestätigung erhalten hat. Der Server muss dabei die PIDs aller beteiligten Clientprozesse sowie einen Wecker für erneutes Versenden des Festschreibewunsches eingestellt bekommen. 
-
-Die programmierten Ereignisse des Beispiels auf Abbildung \ref{fig:OnePhaseCommitProto} sind in Tabelle \ref{tb:OnePhaseCommitTasks} aufgelistet. P1 und P3 simulieren jeweils einen Client und P2 den Server. Damit die Simulation mehrere Festschreibewünsche verschickt, stürzt in der Simulation P1 nach \textit{1000ms} ab und nach \textit{5000ms} steht er wieder zur Verfügung. Die ersten beide Festschreibewünsche erreichen dadurch P1 nicht und erst der dritte Versuch verläuft erfolgreich. Bevor die Bestätigung von P1 bei P2 eintrifft, läuft jedoch der Wecker erneut ab, sodass ein weiterer Festschreibewunsch versendet wird. Da P1 und P3 jeweils schon eine Bestätigung verschickt haben, wird diese Festschreibewunschnachricht ignoriert. Jeder Client bestätigt auf einen Festschreibewunsch nur ein einziges Mal.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0000 & 1 & 1-Phasen Commit Client aktivieren\\
-		 	0000 & 2 & 1-Phasen Commit Server aktivieren\\
-		 	0000 & 3 & 1-Phasen Commit Client aktivieren\\
-		 	0000 & 2 & 1-Phasen Commit Serveranfrage starten\\
-		 	1000 & 1 & Prozessabsturz\\
-		 	5000 & 1 & Prozesswiederbelebung
-	\end{tabular}
-	}
-	\caption{Programmierte Ein-Phasen Commit Ereignisse}
-	\label{tb:OnePhaseCommitTasks}
-\end{table}
-
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``1-Phasen Commit Server'' konfiguriert werden können. Clientseitig gibt es hier keine Variablen.
-
-\begin{itemize}
-	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneut verschickt wird.
-	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
-\end{itemize}
-
-\newpage
-\subsection{Das Zwei-Phasen Commit Protokoll \small{\textit{(two-phase-commit.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-two-phase-commit}}
-	\caption{Das Zwei-Phasen Commit Protokoll}
-	\label{fig:TwoPhaseCommitProto}
-\end{figure}
-
-Das Zwei-Phasen Commit Protokoll ist eine Erweiterung des Ein-Phasen Commit Protokolls. Der Server startet zunächst eine Anfrage an alle beteiligten Clients, ob festgeschrieben werden soll. Jeder Client antwortet dann mit \textit{true} oder \textit{false}. Der Server fragt so oft periodisch nach, bis alle Ergebnisse aller Clients vorliegen. Nach Erhalt aller Abstimmungen überprüft der Server, ob alle mit \textit{true} abgestimmt haben. Für den Fall dass mindestens ein Client mit \textit{false} abgestimmt hat, wird der Festschreibevorgang abgebrochen und als globales Abstimmungsergebnis \textit{false} verschickt. Wenn jedoch alle mit \textit{true} abstimmten, soll festgeschrieben werden. Dabei wird das globale Abstimmungsergebnis \textit{true} verschickt. Das globale Abstimmungsergebnis wird periodisch so oft erneut verschickt, bis von jedem Client eine Bestätigung des Erhalts vorliegt.
-
-In dem Beispiel (Abbildung \ref{fig:TwoPhaseCommitProto}) sind P1 und P3 Clients und P2 der Server. Der Server verschickt nach \textit{0ms} seine erste Anfrage (Tabelle \ref{tb:TwoPhaseCommitTasks}). Da diese Simulation recht unübersichtlich ist, liegen in den Tabellen \ref{tb:TwoPhaseCommitLoggs} und \ref{tb:TwoPhaseCommitLoggs2} Auszüge aus dem Loggfenster vor. Auf die Lamport- und Vektorzeitstempel sowie die lokalen Prozesszeiten wurde hier wegen Irrelevanz verzichtet. Da keine Uhrabweichungen konfiguriert wurden, sind die lokalen Prozesszeiten stets gleich der globalen Zeit und deswegen wird in den Tabellen pro Loggeintrag jeweils nur eine Zeit angegeben. Anhand der Nachrichten IDs lassen sich dort die einzelnen Sendungen zuordnen. In den Loggs wird auch ständig der Inhalt der verschickten Nachricht sowie die dazugehörigen Datentypen aufgeführt. Hier stimmen P1 und P3 jeweils mit \textit{true}, d.h. es soll festgeschrieben werden, ab. 
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	0000 & 1 & 2-Phasen Commit Client aktivieren\\
-		 	0000 & 2 & 2-Phasen Commit Server aktivieren\\
-		 	0000 & 3 & 2-Phasen Commit Client aktivieren\\
-		 	0000 & 2 & 2-Phasen Commit Serveranfrage starten
-	\end{tabular}
-	}
-	\caption{Programmierte Zwei-Phasen Commit Ereignisse}
-	\label{tb:TwoPhaseCommitTasks}
-\end{table}
-
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``2-Phasen Commit Server'' konfiguriert werden können:
-
-\begin{itemize}
-	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneut verschickt wird.
-	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse die über eine Festschreibung abstimmen und anschließend gegebenenfalls festschreiben sollen. 
-\end{itemize}
-
-Und folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt ``2-Phasen Commit Client'' konfiguriert werden:
-
-\begin{itemize}
-	\item \textbf{Festschreibwahrscheinlichkeit} \textit{(Integer: ackProb = 50)}: Gibt die Wahrscheinlichkeit in Prozent an, die der Client mit \textit{true}, also für das Festschreiben, abstimmt.
-\end{itemize}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
-			\hline
-000000 & & Simulation gestartet\\
-\hline
-000000 & 1 & 2-Phasen Commit Client aktiviert\\
-\hline
-000000 & 2 & 2-Phasen Commit Server aktiviert\\
-\hline
-000000 & 2 & Nachricht versendet; ID: 94; Protokoll: 2-Phasen Commit\\
-	& & Boolean: wantVote=true\\
-\hline
-000000 & 3 & 2-Phasen Commit Client aktiviert\\
-\hline
-000905 & 3 & Nachricht erhalten; ID: 94; Protokoll: 2-Phasen Commit\\
-\hline
-000905 & 3 & Nachricht versendet; ID: 95; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=3; Boolean: isVote=true; vote=true\\
-\hline
-000905 & 3 & Abstimmung true versendet\\
-\hline
-001880 & 2 & Nachricht erhalten; ID: 95; Protokoll: 2-Phasen Commit\\
-\hline
-001880 & 2 & Abstimmung von Prozess 3 erhalten! Ergebnis: true\\
-\hline
-001947 & 1 & Nachricht erhalten; ID: 94; Protokoll: 2-Phasen Commit\\
-\hline
-001947 & 1 & Nachricht versendet; ID: 96; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
-\hline
-001947 & 1 & Abstimmung true versendet\\
-\hline
-002500 & 2 & Nachricht versendet; ID: 97; Protokoll: 2-Phasen Commit\\
-	& & Boolean: wantVote=true\\
-\hline
-003006 & 3 & Nachricht erhalten; ID: 97; Protokoll: 2-Phasen Commit\\
-\hline
-003006 & 3 & Nachricht versendet; ID: 98; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=3; Boolean: isVote=true; vote=true\\
-\hline
-003006 & 3 & Abstimmung true versendet\\
-\hline
-003137 & 2 & Nachricht erhalten; ID: 96; Protokoll: 2-Phasen Commit\\
-\hline
-003137 & 2 & Abstimmung von Prozess 1 erhalten! Ergebnis: true\\
-\hline
-003137 & 2 & Abstimmungen von allen beteiligten Prozessen erhalten!\\
-	& & Globales Ergebnis: true\\
-\hline
-003137 & 2 & Nachricht versendet; ID: 99; Protokoll: 2-Phasen Commit\\
-	& & Boolean: isVoteResult=true; voteResult=true\\
-\hline
-004124 & 1 & Nachricht erhalten; ID: 99; Protokoll: 2-Phasen Commit\\
-\hline
-004124 & 1 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
-\hline
-004124 & 1 & Nachricht versendet; ID: 100; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=1; Boolean: isAck=true\\
-\hline
-004354 & 3 & Nachricht erhalten; ID: 99; Protokoll: 2-Phasen Commit\\
-\hline
-004354 & 3 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
-\hline
-004354 & 3 & Nachricht versendet; ID: 101; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=3; Boolean: isAck=true\\
-\hline
-004434 & 1 & Nachricht erhalten; ID: 97; Protokoll: 2-Phasen Commit\\
-\hline
-004434 & 1 & Nachricht versendet; ID: 102; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
-	\end{tabular}
-	}
-	\caption{Auszug aus der Loggausgabe des Zwei-Phasen Commit Beispiels}
-	\label{tb:TwoPhaseCommitLoggs}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
-			\hline
-004434 & 1 & Abstimmung true versendet\\
-\hline
-004527 & 2 & Nachricht erhalten; ID: 98; Protokoll: 2-Phasen Commit\\
-\hline
-004975 & 2 & Nachricht erhalten; ID: 101; Protokoll: 2-Phasen Commit\\
-\hline
-005311 & 2 & Nachricht erhalten; ID: 102; Protokoll: 2-Phasen Commit\\
-\hline
-005637 & 2 & Nachricht versendet; ID: 103; Protokoll: 2-Phasen Commit\\
-	& & Boolean: isVoteResult=true; voteResult=true\\
-\hline
-006051 & 2 & Nachricht erhalten; ID: 100; Protokoll: 2-Phasen Commit\\
-\hline
-006051 & 2 & Alle Teilnehmer haben die Abstimmung erhalten\\
-\hline
-006766 & 1 & Nachricht erhalten; ID: 103; Protokoll: 2-Phasen Commit\\
-\hline
-006766 & 1 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
-\hline
-006766 & 1 & Nachricht versendet; ID: 104; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=1; Boolean: isAck=true\\
-\hline
-007279 & 2 & Nachricht erhalten; ID: 104; Protokoll: 2-Phasen Commit\\
-\hline
-007618 & 3 & Nachricht erhalten; ID: 103; Protokoll: 2-Phasen Commit\\
-\hline
-007618 & 3 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
-\hline
-007618 & 3 & Nachricht versendet; ID: 105; Protokoll: 2-Phasen Commit\\
-	& & Integer: pid=3; Boolean: isAck=true\\
-\hline
-009170 & 2 & Nachricht erhalten; ID: 105; Protokoll: 2-Phasen Commit\\
-\hline
-010000 & & Simulation beendet
-	\end{tabular}
-	}
-	\caption{Auszug aus der Loggausgabe des Zwei-Phasen Commit Beispiels (2)}
-	\label{tb:TwoPhaseCommitLoggs2}
-\end{table}
-
-\newpage
-\subsection{Der ungenügende (Basic) Multicast \small{\textit{(basic-multicast.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-basic-multicast}}
-	\caption{Das Basic-Multicast Protokoll}
-	\label{fig:BasicMulticastProto}
-\end{figure}
-
-Das Basic-Multicast Protokoll ist sehr einfach aufgebaut. Im Beispiel auf Abbildung \ref{fig:BasicMulticastProto} sind P1 und P3 Server und P2 der Client. Bei diesem Protokoll startet der Client immer die Anfrage, welche bei diesem Protokoll eine einfache Multicast-Nachricht darstellen soll. Die Basic-Multicast Server dienen lediglich für den Empfang einer Nachricht. Es werden keine Bestätigungen verschickt. Wie in Tabelle \ref{tb:BasicMulticastTasks} aufgeführt verschickt P2 alle \textit{2500ms} jeweils eine Multicast-Nachricht, die alle voneinander völlig unabhängig sind. 
-
-P1 kann jedoch erst nach \textit{2500ms} Multicast-Nachrichten empfangen, da er vorher das Protokoll nicht unterstützt während P3 von \textit{3000ms} bis \textit{6000ms} abgestürzt ist und in dieser Zeit auch keine Nachrichten empfangen kann. Je nach Interpretation könnte P1 einen Server simulieren, der erst später ans Netz angeschlossen wird. Da die Einstellung ``Nur relevante Nachrichten anzeigen'' aktiviert ist, wird die erste Multicast-Nachricht von P2 an P1 nicht dargestellt. Bei jedem Prozess wurde die Nachrichtenverlustwahrscheinlichkeit auf \textit{30} Prozent gestellt, weswegen alle in dieser Simulation verschickten Nachrichten mit einer Wahrscheinlichkeit von \textit{30} Prozent ausfallen. 
-
-In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5. sowie 6. Nachricht auf den Weg zu P1 verloren. Lediglich die 4. Multicast-Nachricht hat alle beiden Ziele auf einmal erreicht.
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	00000 & 2 & Basic Multicast Client aktivieren\\
-		 	00000 & 3 & Basic Multicast Server aktivieren\\
-		 	00000 & 2 & Basic Multicast Clientanfrage starten\\
-		 	02500 & 1 & Basic Multicast Server aktivieren\\
-		 	02500 & 2 & Basic Multicast Clientanfrage starten\\
-		 	03000 & 3 & Prozessabsturz\\
-		 	05000 & 2 & Basic Multicast Clientanfrage starten\\
-		 	06000 & 3 & Prozesswiederbelebung\\
-		 	07500 & 2 & Basic Multicast Clientanfrage starten\\
-		 	10000 & 2 & Basic Multicast Clientanfrage starten\\
-		 	12500 & 2 & Basic Multicast Clientanfrage starten
-	\end{tabular}
-	}
-	\caption{Programmierte Basic-Multicast Ereignisse}
-	\label{tb:BasicMulticastTasks}
-\end{table}
-
-\newpage
-\subsection{Der zuverlässige (Reliable) Multicast \small{\textit{(reliable-multicast.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-reliable-multicast}}
-	\caption{Das Reliable-Multicast Protokoll}
-	\label{fig:ReliableMulticastProto}
-\end{figure}
-
-Bei dem  zuverlässigen (Reliable) Multicast verschickt der Client so oft periodisch seine Multicast-Nachricht erneut, bis er von allen beteiligten Servern eine Bestätigung erhalten hat. Nach jedem erneuten Versuch vergisst der Client, von welchen Servern er bereits eine Bestätigung erhalten hat, womit jeder erneuter Versuch von allen Teilnehmern aufs Neue bestätigt werden muss. In dem Beispiel (Abbildung \ref{fig:ReliableMulticastProto}, Tabelle \ref{tb:ReliableMulticastTasks}, sowie den Loggs in den Tabellen \ref{tb:ReliableMulticastLoggs} und \ref{tb:ReliableMulticastLoggs2}) ist P2 der Multicast-verschickende Client, während P1 und P3 die Server darstellen. Bei \textit{0ms} initiiert der Client seine Multicast-Nachricht. Die Nachrichtenverlustwahrscheinlichkeiten sind bei allen Prozessen auf \textit{30} Prozent eingestellt.
-
-In diesem Beispiel benötigt der Client bis zur erfolgreichen Auslieferung des zuverlässigen Multicasts genau 5 Versuche:
-
-\begin{enumerate}
-	\setlength{\itemsep}{-1mm}
-	\item Versuch: 
-		\begin{itemize}
-			\setlength{\itemsep}{-2.5mm}
-			\item P1 unterstützt das Reliable-Multicast Protokoll noch nicht, und kann somit weder Multicast-Nachricht erhalten noch eine Bestätigung verschicken.
-			\item P3 empfängt die Multicast-Nachricht, jedoch geht seine Bestätigungsnachricht verloren.
-		\end{itemize}
-	\item Versuch: 
-		\begin{itemize}
-			\setlength{\itemsep}{-2.5mm}
-			\item P1: Die Multicast-Nachricht geht unterwegs zu P1 verloren.
-			\item P3: Die Multicast-Nachricht erreicht P3, aber P3 ist abgestürzt und kann somit keine Nachricht verarbeiten.
-		\end{itemize}
-	\item Versuch: 
-		\begin{itemize}
-			\setlength{\itemsep}{-2.5mm}
-			\item P1 empfängt die Multicast-Nachricht und seine Bestätigung kommt wie geplant bei P2 an. 
-			\item P3: Die Multicast-Nachricht geht unterwegs zu P3 verloren.
-		\end{itemize}
-	\item Versuch: 
-		\begin{itemize}
-			\setlength{\itemsep}{-2.5mm}
-			\item P1 empfängt die Multicast-Nachricht und seine Bestätigung kommt wie geplant bei P2 an. 
-			\item P3: Die Multicast-Nachricht erreicht P3, aber P3 ist abgestürzt und kann somit keine Nachricht verarbeiten.
-		\end{itemize}
-	\item Versuch: 
-		\begin{itemize}
-			\item P1 empfängt die Multicast-Nachricht und seine Bestätigung kommt wie geplant bei P2 an. 
-			\setlength{\itemsep}{-2.5mm}
-			\item P3 empfängt die Multicast-Nachricht und seine Bestätigung kommt wie geplant bei P2 an. 
-		\end{itemize}
-\end{enumerate}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Ereignis} \\
-		\hline 
-		 	00000 & 3 & Reliable Multicast Server aktivieren\\
-		 	00000 & 2 & Reliable Multicast Client aktivieren\\
-		 	00000 & 2 & Reliable Multicast Clientanfrage starten\\
-		 	02500 & 1 & Reliable Multicast Server aktivieren\\
-		 	03000 & 3 & Prozessabsturz\\
-		 	10000 & 3 & Prozesswiederbelebung\\
-	\end{tabular}
-	}
-	\caption{Programmierte Reliable-Multicast Ereignisse}
-	\label{tb:ReliableMulticastTasks}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
-			\hline
-000000 & & Simulation gestartet\\
-\hline
-000000 & 2 & Reliable Multicast Client aktiviert\\
-\hline
-000000 & 2 & Nachricht versendet; ID: 280; Protokoll: Reliable Multicast;\\
-	   & & Boolean: isMulticast=true\\
-\hline
-000000 & 3 & Reliable Multicast Server aktiviert\\
-\hline
-001590 & 3 & Nachricht erhalten; ID: 280; Protokoll: Reliable Multicast\\
-\hline
-001590 & 3 & Nachricht versendet; ID: 281; Protokoll: Reliable Multicast\\
-	   & & Integer: pid=3; Boolean: isAck=true\\
-\hline
-001590 & 3 & ACK versendet\\
-\hline
-002500 & 1 & Reliable Multicast Server aktiviert\\
-\hline
-002500 & 2 & Nachricht versendet; ID: 282; Protokoll: Reliable Multicast\\
-	   & & Boolean: isMulticast=true\\
-\hline
-003000 & 3 & Abgestürzt\\
-\hline
-005000 & 2 & Nachricht versendet; ID: 283; Protokoll: Reliable Multicast\\
-	   & & Boolean: isMulticast=true\\
-\hline
-005952 & 1 & Nachricht erhalten; ID: 283; Protokoll: Reliable Multicast\\
-\hline
-005952 & 1 & Nachricht versendet; ID: 284; Protokoll: Reliable Multicast\\
-	   & & Integer: pid=1; Boolean: isAck=true\\
-\hline
-005952 & 1 & ACK versendet\\
-\hline
-007500 & 2 & Nachricht versendet; ID: 285; Protokoll: Reliable Multicast\\
-	   & & Boolean: isMulticast=true\\
-\hline
-007937 & 2 & Nachricht erhalten; ID: 284; Protokoll: Reliable Multicast\\
-\hline
-007937 & 2 & ACK von Prozess 1 erhalten!\\
-\hline
-008469 & 1 & Nachricht erhalten; ID: 285; Protokoll: Reliable Multicast\\
-\hline
-008469 & 1 & Nachricht versendet; ID: 286; Protokoll: Reliable Multicast\\
-	   & & Integer: pid=1; Boolean: isAck=true\\
-\hline
-008469 & 1 & ACK erneut versendet\\
-\hline
-010000 & 2 & Nachricht versendet; ID: 287; Protokoll: Reliable Multicast\\
-	   & & Boolean: isMulticast=true\\
-\hline
-010000 & 3 & Wiederbelebt\\
-\hline
-010395 & 2 & Nachricht erhalten; ID: 286; Protokoll: Reliable Multicast\\
-\hline
-010995 & 3 & Nachricht erhalten; ID: 287; Protokoll: Reliable Multicast\\
-\hline
-010995 & 3 & Nachricht versendet; ID: 288; Protokoll: Reliable Multicast\\
-	   & & Integer: pid=3; Boolean: isAck=true\\
-\hline
-010995 & 3 & ACK erneut versendet\\
-\hline
-011213 & 1 & Nachricht erhalten; ID: 287; Protokoll: Reliable Multicast\\
-\hline
-011213 & 1 & Nachricht versendet; ID: 289; Protokoll: Reliable Multicast\\
-	   & & Integer: pid=1; Boolean: isAck=true\\
-	\end{tabular}
-	}
-	\caption{Auszug aus der Loggausgabe des Reliable-Multicast Beispiels}
-	\label{tb:ReliableMulticastLoggs}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Loggnachricht} \\
-			\hline
-011213 & 1 & ACK erneut versendet\\
-\hline
-011813 & 2 &  Nachricht erhalten; ID: 288; Protokoll: Reliable Multicast\\
-\hline
-011813 & 2 &  ACK von Prozess 3 erhalten!\\
-\hline
-011813 & 2 &  ACKs von allen beteiligten Prozessen erhalten!\\
-\hline
-012047 & 2 &  Nachricht erhalten; ID: 289; Protokoll: Reliable Multicast\\
-\hline
-015000 & & Simulation beendet\\
-	\end{tabular}
-	}
-	\caption{Auszug aus der Loggausgabe des Reliable-Multicast Beispiels (2)}
-	\label{tb:ReliableMulticastLoggs2}
-\end{table}
-
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Reliable Multicast Server'' konfiguriert werden können:
-
-\begin{itemize}
-	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Muticast erneut verschickt wird.
-	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
-\end{itemize}
-
-\newpage
-\section{Weitere Beispiele}
-
-Bisher wurden alle verfügbaren Protokolle anhand von Beispielen aufgeführt. Mit dem Simulator lassen sich allerdings noch viel mehr Szenarien simulieren. Daher soll hier auf weitere Anwendungsbeispiele eingegangen werden.
-
-\subsection{Simulation von Vektor- und Lamportzeitstempel}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-berkeley-lamport}}
-	\caption{Lamportzeitstempel}
-	\label{fig:Lamportzeit}
-\end{figure}
-
-Die Vektor- und Lamportzeitstempel lassen sich sehr gut am bereits behandeltem Beispiel des Berkeley-Protokoll's demonstrieren. Nach Aktivierung des Lamportzeit-Schalters erscheint bei jedem Ereignis eines Prozesses der aktuelle Lamportzeitstempel (Abbildung \ref{fig:Lamportzeit}). Jeder Prozess besitzt einen eigenen Lamportzeitstempel, der bei jedem Versenden oder Erhalten einer Nachricht inkrementiert wird. Jeder Nachricht wird die aktuelle Lamportzeit $t_l(i)$ des Senderprozesses $i$ beigefügt. Wenn ein weiterer Prozess $j$ diese Nachricht erhält, so wird der aktuelle Lamportzeitstempel $t_l(j)$ von Prozess $j$ wie folgt neu berechnet:
-
-\begin{equation*}
-	t_l(j) := 1 + max(t_l(j), t_l(i))
-\end{equation*}
-
-Es wird also stets die größere Lamportzeit vom Sender- und Empfängerprozess verwendet und anschließend wird diese um \textit{1} inkrementiert. Nach Ablauf der Berkeley-Simulation hat P1 \textit{(16)}, P2 (\textit{14}) und P3 (\textit{15}) als Lamportzeitstempel abgespeichert. 
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-berkeley-vektor}}
-	\caption{Vektorzeitstempel}
-	\label{fig:Vektorzeit}
-\end{figure}
-
-Mit aktivem Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (Abbildung \ref{fig:Vektorzeit}). Wie bei den Lamportzeitstempel wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigefügt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die Größe $n$. Somit gibt es für jeden beteiligten Prozess $i$ einen eigenen Index $i$. über $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empfängerprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektorzeitstempel wie folgt (hier in Pseudo-Code angegeben) neu berechnet:
-
-\begin{code}
-for (i := 0; i < n; i++) {
-    if (i = j) {
-        v(i)++;
-    } else if (v(i) < w(i)) {
-        v(i) := w(i);
-    }
-}
-\end{code}
-
-Standardmäßig wird der Vektor-Zeitstempel nur inkrementiert, wenn eine Nachricht verschickt- oder erhalten wird. Bei beiden Fällen inkrementiert der Sender- und Empfängerprozess jeweils seinen eigenen Index im Vektor-Zeitstempel mit $v(i) = v(i) + 1$. Beim Empfang einer Nachricht wird anschließend der lokale Vektor-Zeitstempel mit dem des Senderprozesses verglichen und für alle Indizes stets der größere Wert in den lokalen Vektor-Zeitstempel übernommen.
-
-Im Beispiel auf Abbildung \ref{fig:Vektorzeit} hat P1 \textit{(8,10,6)}, P2 \textit{(6,10,6)} und P3 \textit{(6,10,8)} als Vektor-Zeitstempel abgespeichert.
-
-Wenn während einer Simulation Prozesse entfernt- oder neue Prozesse hinzugefügt werden, so passt sich die Größe der Vektor-Zeitstempel aller anderen Prozesse automatisch der totalen Anzahl der Prozesse an.
-
-Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardmäßig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, berücksichtigt. Für eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
-
-\newpage
-\subsection{Simulation langsamer Verbindungen \small{\textit{(slow-connection.dat)}}}
-
-Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. Für die Demonstration wird das Beispiel aus Kapitel 2.5.5 wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (P1) mit der Christians-Methode (P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verfügung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, sodass Nachrichten von- und an P3 stets eine längere Übertragungszeit benötigen.
-
-Die Ereignisse sind so wie bereits auf Tabelle \ref{tb:InterneSync2Tasks} dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der Übertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde ``Minimale Übertragungszeit'' auf \textit{2000ms} und ``Maximale Übertragungszeit'' auf \textit{8000ms} gestellt. P1 und P2 behalten als Standardeinstellungen für die minimale und maximale Übertragungszeiten jeweils \textit{500ms} und \textit{2000ms} eingestellt. Die Simulationsdauer wurde auf \textit{20000ms} gestellt.
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-time-sync-2-long-transfer}}
-	\caption{Simulation einer langsamen Verbindung}
-	\label{fig:TimeSync2LongTransferProto}
-\end{figure}
-
-Als Folge (Abbildung \ref{fig:TimeSync2LongTransferProto}) benötigen Nachrichten, die von- und an P3 verschickt werden, für eine Übertragung immer mehr Zeit. Bevor P3 eine Antwort auf seine vorherige Anfrage bekommt, verschickt er eine erneute Anfrage. Da P3 die Serverantworten immer stets seiner letzten verschickten Anfrage zuordnet, berechnet er die RTTs allesamt falsch und seine lokale Zeit wird bei jedem Durchgang zusätzlich verfälscht. Die Berechnungsformeln der Übertragungszeiten wurde bereits in Kapitel 2.4.3 bei den Prozesseinstellungen behandelt. Konkret bedeutet dies für die Übertragungszeiten alle Nachrichten von- und an P3 jeweils:
-
-\begin{equation*}
-	\frac{1}{2} (rand(500, 2000) + rand(2000, 8000)) = \frac{1}{2} rand(2500, 10000) = rand(1250, 5000) ms
-\end{equation*}
-
-In dem Beispiel auf Abbildung \ref{fig:TimeSync2LongTransferProto} ist die lokale Prozesszeit von P1 bis auf \textit{20000 - 21446 = - 1446ms} synchronisiert, w\"{a}hrend die Prozesszeit von P3 satte \textit{20000 - 16557 = 3443ms} falsch geht.
