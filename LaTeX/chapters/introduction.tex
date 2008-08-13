@@ -10,7 +10,7 @@ Der Anwender muss sich nur mit dem lokalen, vor ihm befindlichen Computer ausein
 
 Diese Diplomarbeit soll den Anwendern die Betrachtung von verteilten Systemen aus einer anderen Perspektive erleichtern. Hierbei wird nicht die Sichtweise eines Endbenutzers eingenommen, sondern es sollen die Funktionsweisen von Protokollen und deren Prozesse in verteilten Systemen begreifbar gemacht und gleichzeitig alle relevanten Ereignisse eines verteilten Systems transparent dargestellt werden. 
 
-Um dieses Ziel zu erreichen wurde, insbesondere f\"{u}r Lehr- und Lernzwecke an der Fachhochschule Aachen, ein Simulator entwickelt. Mit dem Simulator sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren anhand von Simulationen nachgeblidet werden k\"{o}nnen. Gleichzeitig muss für eigene Experimente ein großer Spielraum zur Verfügung stehen, wobei es keine Beschränkung auf eine feste Anzahl von Protokollen geben darf. Es ist also wichtig, dass es dem Anwender ermöglicht wird eigene Protokolle zu entwerfen.
+Um dieses Ziel zu erreichen soll, insbesondere f\"{u}r Lehr- und Lernzwecke an der Fachhochschule Aachen, ein Simulator entwickelt werden. Mit dem Simulator sollen Protokolle aus den verteilten Systemen mit ihren wichtigsten Einflussfaktoren anhand von Simulationen nachgeblidet werden k\"{o}nnen. Gleichzeitig muss für eigene Experimente ein großer Spielraum zur Verfügung stehen, wobei es keine Beschränkung auf eine feste Anzahl von Protokollen geben darf. Es ist also wichtig, dass es dem Anwender ermöglicht wird eigene Protokolle zu entwerfen.
 
 \section{Grundlagen}
 
@@ -25,7 +25,7 @@ Für das Grundverständnis werden im Folgenden einige Grundlagen erläutert. Eine V
 	\label{fig:ClientServer}
 \end{figure}
 
-Der Simulator basiert auf dem Client/Server-Prinzip. Jede Simulation besteht in der Regel aus einen teilnehmenden Client und einen Server, die miteinander über Nachrichten kommunizieren (Abbildung \ref{fig:ClientServer}.). Bei komplexen Simulationen können auch mehrere Clients und/oder Server mitwirken. 
+Der Simulator basiert auf dem Client/Server-Prinzip. Jede Simulation besteht in der Regel aus einen teilnehmenden Client und einen Server, die miteinander über Nachrichten kommunizieren (s. Abbildung \ref{fig:ClientServer}.). Bei komplexen Simulationen können auch mehrere Clients und/oder Server mitwirken. 
 
 \subsubsection{Prozesse und deren Rollen}
 
@@ -48,7 +48,7 @@ Zudem besitzt jeder beteiligte Prozess eine eigene lokale Uhr. Sie stellt die ak
 	\label{fig:ClientServerProtokolle}
 \end{figure}
 
-Neben den normalen Uhren sind auch die Vektor-Zeitstempel sowie die logischen Uhren von Lamport von Interesse. Jeder Prozess besitzt zusätzlich einen Vektor-Zeitstempel für seine Vektorzeit, sowie einen Lamport-Zeitstempel für seine Lamportzeit. Für die Vektor- und Lamportzeiten gibt es hier, im Gegensatz zu der normalen Zeit, keine globalen Äquivalente. Konkrete Beispiele zu den Lamport- und Vektorzeiten werden später anhand einer Simulation behandelt.
+Neben den normalen Uhren sind auch die Vektor-Zeitstempel sowie die logischen Uhren von Lamport von Interesse. Jeder Prozess besitzt zusätzlich einen Vektor-Zeitstempel für seine Vektorzeit, sowie einen Lamport-Zeitstempel für seine Lamportzeit. Für die Vektor- und Lamportzeiten gibt es hier, im Gegensatz zu der normalen Zeit, keine globalen Äquivalente. Konkrete Beispiele zu den Lamport- und Vektorzeiten werden später in Kapitel 3.11.1. behandelt.
 
 \subsubsection{Ereignisse}
 
@@ -60,5 +60,5 @@ Eine Simulation besteht auch aus der Anwendung von Protokollen. Es wurde bereits
 
 In Abbildung \ref{fig:ClientServerProtokolle}. sind 3 Prozesse dargestellt. Prozess 1 unterstützt serverseitig das Protokoll ``A'' und clientseitig das Protokoll ``B''. Prozess 2 unterstützt clientseitig das Protokoll ``A'' und Prozess 3 serverseitig das Protokoll ``B''. Das heißt, dass Prozess 1 mit Prozess 2 via Protokoll ``A'' und mit Prozess 3 via Protokoll ``B'' kommunizieren kann. Die Prozesse 2 und 3 sind zueinander inkompatibel und können voneinander erhaltene Nachrichten nicht verarbeiten.
 
-Clients können nicht mit Clients, und Server nicht mit Servern kommunizieren. Für eine Kommunikation wird stets mindestens ein Client und ein Server benötigt. Diese Einschränkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unterstützen (siehe Broadcast-Sturm Protokoll später). Alle vom Simulator verfügbaren Protokolle werden später genauer behandelt.
+Clients können nicht mit Clients, und Server nicht mit Servern kommunizieren. Für eine Kommunikation wird stets mindestens ein Client und ein Server benötigt. Diese Einschränkung kann aber umgangen werden, indem Prozesse ein gegebenes Protokoll sowohl server- als auch clientseitig unterstützen (vgl. Broadcast Protokoll in Kapitel 3.3.). 
 
