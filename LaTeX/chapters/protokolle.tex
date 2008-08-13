@@ -86,6 +86,8 @@ Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks}. vorgegeben, so
 	\caption{Programmierte Broadcast Ereignisse}
 	\label{tb:BroadcastSturmTasks}
 \end{table}
+
+\newpage
 \section{Das Broadcast Protokoll \small{\textit{(broadcast.dat)}}}
 
 \begin{figure}[h]
@@ -149,7 +151,7 @@ Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Pro
 
 $t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (s. Kap. 2.4.3.) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wobei der Zeitsynchronisierung große Fehler auftreten können.
 
-
+\newpage
 \section{Christians Methode zur externen Synchronisierung \small{\textit{(ext-vs-int-sync.dat)}}}
 
 \begin{figure}[h]
@@ -565,6 +567,15 @@ In diesem Beispiel benötigt der Client bis zur erfolgreichen Auslieferung des zu
 	\label{tb:ReliableMulticastTasks}
 \end{table}
 
+\subsubsection{Protokollvariablen}
+
+Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Reliable Multicast Server'' konfiguriert werden können:
+
+\begin{itemize}
+	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Muticast erneut verschickt wird.
+	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
+\end{itemize}
+
 \begin{table}
 	\centering
 	\fbox{
@@ -599,6 +610,17 @@ In diesem Beispiel benötigt der Client bis zur erfolgreichen Auslieferung des zu
 \hline
 005952 & 1 & Nachricht erhalten; ID: 283; Protokoll: Reliable Multicast\\
 \hline
+	\end{tabular}
+	}
+	\caption{Auszug aus dem Logfenster des Reliable-Multicast Beispiels}
+	\label{tb:ReliableMulticastLogs}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
 005952 & 1 & Nachricht versendet; ID: 284; Protokoll: Reliable Multicast\\
 	   & & Integer: pid=1; Boolean: isAck=true\\
 \hline
@@ -636,18 +658,6 @@ In diesem Beispiel benötigt der Client bis zur erfolgreichen Auslieferung des zu
 \hline
 011213 & 1 & Nachricht versendet; ID: 289; Protokoll: Reliable Multicast\\
 	   & & Integer: pid=1; Boolean: isAck=true\\
-	\end{tabular}
-	}
-	\caption{Auszug aus dem Logfenster des Reliable-Multicast Beispiels}
-	\label{tb:ReliableMulticastLogs}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
-			\hline
 011213 & 1 & ACK erneut versendet\\
 \hline
 011813 & 2 &  Nachricht erhalten; ID: 288; Protokoll: Reliable Multicast\\
@@ -665,16 +675,7 @@ In diesem Beispiel benötigt der Client bis zur erfolgreichen Auslieferung des zu
 	\label{tb:ReliableMulticastLogs2}
 \end{table}
 
-\subsubsection{Protokollvariablen}
-
-Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesseinstellungen unter dem Punkt ``Reliable Multicast Server'' konfiguriert werden können:
-
-\begin{itemize}
-	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Muticast erneut verschickt wird.
-	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Serverprozesse, die die Multicast-Nachricht erhalten sollen.
-\end{itemize}
-
-
+\newpage
 \section{Weitere Beispiele}
 
 Bisher wurden alle verfügbaren Protokolle anhand von Beispielen aufgeführt. Mit dem Simulator lassen sich jedoch noch weitere Szenarien simulieren. Aus diesem Grund soll hier auf weitere Anwendungsbeispiele eingegangen werden.

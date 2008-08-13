@@ -144,14 +144,14 @@ In der Sidebar gibt es neben dem Ereignis-Tab einen weiteren Tab ``Variablen''. 
 
 \subsubsection{Das Logfenster}
 
+Das Logfenster (s. Abb. \ref{fig:NeuErstellteSimulation}., unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. In Abbildung \ref{fig:Logfenster}. ist das Logfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Logeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokalen Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
+
 \begin{figure}[h]
 	\centering
 	\fbox{\includegraphics[width=16.5cm]{images/ss-loggfenster}}
 	\caption{Das Logfenster}
 	\label{fig:Logfenster}
 \end{figure}
-
-Das Logfenster (s. Abb. \ref{fig:NeuErstellteSimulation}., unten) protokolliert  in chronologischer Reihenfolge alle eingetroffenen Ereignisse. In Abbildung \ref{fig:Logfenster}. ist das Logfenster nach Erstellung der Demo-Simulation zu sehen, an welcher 3 Prozesse beteiligt sind. Am Anfang eines Logeintrages wird stets die globale Zeit in Millisekunden protokolliert. Bei jedem Prozess werden ebenso seine lokalen Zeiten sowie die Lamport- und die Vektor-Zeitstempel aufgeführt. Hinter den Zeitangaben werden weitere Angaben, wie beispielsweise welche Nachricht mit welchem Inhalt verschickt wurde und welchem Protokoll sie angehört, gemacht. Dies wird später noch anhand von Beispielen demonstriert.
 
 Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
@@ -303,6 +303,33 @@ Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen b
 
 Alle weiteren Simulationeinstellungen unter ``Einstellungen für neue Prozesse'' sowie ``Nachrichteneinstellungen für neue Prozesse'' definieren das Verhalten des jedes neu erzeugten Prozesses. 
 
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{l|l}
+		\textbf{Schlüssel} & \textbf{Beschreibung}\\
+		\hline 
+			\textit{col.background} & Hintergrundfarbe des Simulationsfensters\\
+			\textit{col.message.arrived} & Nachrichtenfarbe wenn sie ihr Ziel erreicht hat\\
+			\textit{col.message.lost} & Nachrichtenfarbe wenn sie verloren ging\\
+			\textit{col.message.sending} & Nachrichtenfarbe wenn sie noch unterwegs ist\\
+			\textbf{\textit{col.process.crashed}} & Prozessfarbe wenn er abgestürzt ist\\
+			\textbf{\textit{col.process.default}} & Prozessfarbe wenn die Simulation aktuell nicht läuft und \\
+				& der Prozess aktuell nicht abgestürzt ist \\
+			\textbf{\textit{col.process.highlight}} & Prozessfarbe wenn die Maus über seinem Balken liegt\\
+			\textit{col.process.line} & Farbe, in der die kleine ``Prozessfahne'' an der auch die \\
+				& lokale Prozesszeit angegeben wird, dargestellt wird\\
+			\textbf{\textit{col.process.running}} & Prozessfarbe wenn er nicht abgestürzt ist und die\\
+				& Simulation aktuell läuft\\
+			\textit{col.process.secondline} & Farbe der Sekunden-Zeitgitter\\
+			\textit{col.process.sepline} & Farbe der globalen Zeitachse\\
+			\textbf{\textit{col.process.stopped}} & Prozessfarbe wenn die Simulation pausiert wurde\\
+	\end{tabular}
+	}
+	\caption{Farbeinstellungen}
+	\label{tb:Farbeinstellungen}
+\end{table}
+
 \subsection{Prozess- und Protokolleinstellungen}
 
 Jeder Prozess besitzt folgende Variablen:
@@ -334,33 +361,6 @@ Das bedeutet, dass stets der Mittelwert der Nachrichtenübertragungszeiten vom Se
 Im Prozesseditor lassen sich ebenfalls die Protokollvariablen editieren. Die Protokollvariablen werden in Kapitel 3. beschrieben.
 
 \subsection{Einstellungen im Expertenmodus}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{l|l}
-		\textbf{Schlüssel} & \textbf{Beschreibung}\\
-		\hline 
-			\textit{col.background} & Hintergrundfarbe des Simulationsfensters\\
-			\textit{col.message.arrived} & Nachrichtenfarbe wenn sie ihr Ziel erreicht hat\\
-			\textit{col.message.lost} & Nachrichtenfarbe wenn sie verloren ging\\
-			\textit{col.message.sending} & Nachrichtenfarbe wenn sie noch unterwegs ist\\
-			\textbf{\textit{col.process.crashed}} & Prozessfarbe wenn er abgestürzt ist\\
-			\textbf{\textit{col.process.default}} & Prozessfarbe wenn die Simulation aktuell nicht läuft und \\
-				& der Prozess aktuell nicht abgestürzt ist \\
-			\textbf{\textit{col.process.highlight}} & Prozessfarbe wenn die Maus über seinem Balken liegt\\
-			\textit{col.process.line} & Farbe, in der die kleine ``Prozessfahne'' an der auch die \\
-				& lokale Prozesszeit angegeben wird, dargestellt wird\\
-			\textbf{\textit{col.process.running}} & Prozessfarbe wenn er nicht abgestürzt ist und die\\
-				& Simulation aktuell läuft\\
-			\textit{col.process.secondline} & Farbe der Sekunden-Zeitgitter\\
-			\textit{col.process.sepline} & Farbe der globalen Zeitachse\\
-			\textbf{\textit{col.process.stopped}} & Prozessfarbe wenn die Simulation pausiert wurde\\
-	\end{tabular}
-	}
-	\caption{Farbeinstellungen}
-	\label{tb:Farbeinstellungen}
-\end{table}
 
 Im Expertenmodus lassen sich zusätzliche Variablen, wie Farbwerte und Fenstergrößen, editieren. Abbildung \ref{fig:SimulationseinstellungenExperten}. zeigt alle einstellbaren Farben. Die fett gedruckten Schlüssel in Tabelle \ref{tb:Farbeinstellungen}. sind mit Standardwerten für die neu zu erstellenden Prozesse belegt. Alle Werte sind in den Prozesseinstellungen des jeweiligen Prozesses individuell einstellbar.
 
