@@ -155,7 +155,7 @@ Das Logfenster (s. Abbildung \ref{fig:NeuErstellteSimulation}., unten) protokoll
 
 Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
 
-Über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert, beziehungsweise deaktiviert. 
+Über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert, bzw. deaktiviert. 
 
 \section{Expertenmodus}
 
@@ -176,7 +176,7 @@ Des Weiteren kann der Anwender bei der Programmierung eines neuen Ereignisses di
 
 \subsubsection{Lamportzeit-, Vektorzeit- und Anti-Aliasing Schalter}
 
-Weitere Unterschiede machen sich unterhalb des Logfensters bemerkbar. Dort gibt es unter anderem zwei neue Schalter ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Anwender einen dieser beiden Schalter, so werden die Lamport- beziehungsweise die Vektor-Zeitstempel in der Visualisierung dargestellt. Damit die Übersichtlichkeit nicht leidet, kann der Anwender nur jeweils einen dieser beiden Schalter zur gleichen Zeit aktiviert haben. 
+Weitere Unterschiede machen sich unterhalb des Logfensters bemerkbar. Dort gibt es unter anderem zwei neue Schalter ``Lamportzeit'' und ``Vektorzeit''.  Aktiviert der Anwender einen dieser beiden Schalter, so werden die Lamport- bzw. die Vektor-Zeitstempel in der Visualisierung dargestellt. Damit die Übersichtlichkeit nicht leidet, kann der Anwender nur jeweils einen dieser beiden Schalter zur gleichen Zeit aktiviert haben. 
 
 \begin{figure}[h]
 	\centering
@@ -185,7 +185,7 @@ Weitere Unterschiede machen sich unterhalb des Logfensters bemerkbar. Dort gibt 
 	\label{fig:SidebarExpertenmodus}
 \end{figure}
 
-Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren beziehungsweise zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performance-Gründen ist Anti-Aliasing standardmäßig nicht aktiv.
+Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren bzw. zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performance-Gründen ist Anti-Aliasing standardmäßig nicht aktiv.
 
 \subsubsection{Der Logfilter}
 
@@ -211,7 +211,7 @@ Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare 
 Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann kann sie nicht verarbeitet werden und geht deshalb verloren. Die einzige Ausnahme bietet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen von den Lamport- und Vektor-Zeitstempel, normal weiter. Das heißt, es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. Wenn im echten Leben ein Computer abstürzt oder abgeschaltet wird, dann läuft seine Hardware-Uhr unabhängig vom Betriebssystem auch weiter.
 
 \subsubsection{Aktivierung und Deaktivierung von Protokollen sowie Starten von Anfragen (programmierbar)}
-Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und gegebenenfalls ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert beziehungsweise deaktiviert werden. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
+Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und gegebenenfalls ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert bzw. deaktiviert werden. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
 
 \begin{itemize}
 	\item Aktivierung des Clients eines gegebenen Protokolls
