@@ -140,7 +140,7 @@ In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschied
 			\item \textit{VSProtocolEvent}: Diese Klasse implementiert gleichzeitig vier verschiedene Ereignisse: Das Aktivieren bzw. Deaktivieren eines Servers oder Clients eines gegebenen Protokolls. Der Ereigniseditor berechnet anhand der verfügbaren Protokolle automatisch alle möglichen Kombinationen und bietet sie dem Anwender in seiner Auswahl an. Für alle dieser vier Ereignisse wird jeweils ein Objekt von \textit{VSProtocolEvent} verwendet, jeweils mit individuellen Attributwerten.  
 			\item \textit{VSProtocolScheduleEvent}: Diese Klasse wird für die Wecker-Ereignisse benötigt. Wecker-Ereignisse können nur von Protokollen erstellt werden. \textit{VSProtocolScheduleEvent} besitzt eine Referenz auf das verwendete Protokoll und ruft bei Ereigniseintrittszeit entweder die Methode \textit{onServerScheduleStart} bei einem Server- oder \textit{onClientScheduleStart} bei einem Clientprotokoll auf. 
 		\end{itemize}
-	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt seine eigene Klasse. Alle Protokolle erben hierbei von der in Abbildung \ref{fig:PackageEvents}. zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- bzw. einer Clientanfrage entspricht (s. Kapitel 4.4.4.). 
+	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt seine eigene Klasse. Alle Protokolle erben hierbei von der in Abbildung \ref{fig:PackageEvents}. zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- bzw. einer Clientanfrage entspricht (s. Kap. 4.4.4.). 
 \end{enumerate}
 
 Alle Ereignisse, die das Interface \textit{VSCopyableEvent} implementieren, können vom Anwender im Ereigniseditor mit einem Rechtsklick kopiert werden, des Weiteren müssen sie die Methode \textit{initCopy(VSAbstractEvent copy)} implementieren. Es werden dann alle relevanten Attribute in das neue Ereignis \textit{copy} kopiert. 
@@ -341,11 +341,11 @@ Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attrib
 	\item \textit{public long getLamportTime()}: Gibt den aktuelle Lamport-Zeitstempel des Prozesses zurück.
 	\item \textit{public void setLamportTime(long lamportTime)}: Setzt den aktuellen Lamport-Zeitstempel des Prozesses.
 	\item \textit{public void increaseLamportTime()}: Inkrementiert den Lamport-Zeitstempel um eins.
-	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert den Lamport-Zeitstempel (vgl. Kapitel 3.11.1.).
+	\item \textit{public void updateLamportTime(long lamportTime)}: Erneuert den Lamport-Zeitstempel (vgl. Kap. 3.11.1.).
 	\item \textit{public VSVectorTime getVectorTime()}: Gibt den aktuelle Vektor-Zeitstempel des Prozesses zurück.
 	\item \textit{public VSTime[] getLamportTimeArray()}: Gibt die gesamte Lamport-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSLamportTime umgewandelt werden.
 	\item \textit{public VSTime getVectorTimeArray()}: Gibt die gesamte Vektor-Zeitstempel-Historie des Prozesses zurück. Kann jeweils nach VSVectorTime umgewandelt werden.
-	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert den Vektor-Zeitstempel (vgl. Kapitel 3.11.1.).
+	\item \textit{public void updateVectorTime(VSVectorTime vectorTimeUpdate)}: Erneuert den Vektor-Zeitstempel (vgl. Kap. 3.11.1.).
 	\item \textit{public void increaseVectorTime()}: Inkrementiert den Vektor-Zeitstempel am lokalen Index um eins.
 	\item \textit{public int getProcessID()}: Gibt die PID zurück.
 	\item \textit{public void setProcessID(int processID)}: Setzt die PID.
@@ -551,17 +551,17 @@ Die Klasse \textit{VSMenuItemStates} wird für die Synchronisierung des Simulatio
 
 Die Klasse \textit{VSCreateTask} wird vom Ereigniseditor verwendet. Der Ereigniseditor (s. Abbildung \ref{fig:SidebarMitEreignissen}.) wird in der Klasse \textit{VSSimulator} implementiert. Hinter jeder Ereignisauswahl verbirgt sich ein \textit{VSCreateTask}-Objekt, welches angibt wie das ein Ereignis anzulegen ist.
 
-Die Klasse \textit{VSLogging} kapselt f\"{u}r das Loggen von Nachrichten ein \textit{JTextArea}-Objekt. In dieser Klasse werden alle Logfunktionen implementiert. Die \textit{JTextArea} wird f\"{u}r die Darstellung dem Simulationsobjekt \textit{VSSimulator} \"{u}bergeben. Für den Logfilter wird auf das Java-Standardpaket \textit{java.util.regex} (s. \cite{Regexp}) zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können (s. Kapitel 2.2.2. im Abschnitt Logfilter).
+Die Klasse \textit{VSLogging} kapselt f\"{u}r das Loggen von Nachrichten ein \textit{JTextArea}-Objekt. In dieser Klasse werden alle Logfunktionen implementiert. Die \textit{JTextArea} wird f\"{u}r die Darstellung dem Simulationsobjekt \textit{VSSimulator} \"{u}bergeben. Für den Logfilter wird auf das Java-Standardpaket \textit{java.util.regex} (s. \cite{Regexp}) zugegriffen, womit anhand von regulären Ausdrücken in Java-Syntax die Logs gefiltert werden können (s. Kap. 2.2.2. im Abschnitt Logfilter).
 
 \subsubsection{Threads und Zeitsynchronisierung}
 
-Der Simulator soll auf jede Millisekunde genau simulieren k\"{o}nnen und jede simulierte Sekunde soll dabei relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit lässt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen (s. Kapitel 2.4.2.). Hierf\"{u}r muss folgendes berücksichtigt werden:
+Der Simulator soll auf jede Millisekunde genau simulieren k\"{o}nnen und jede simulierte Sekunde soll dabei relativ zur echten Zeit fortschreiten. Die Simulationsabspielgeschwindigkeit lässt sich bei den Simulationseinstellungen unter ``Abspielgeschwindigkeit der Simulation'' (Float: \textit{sim.clock.speed}) einstellen (s. Kap. 2.4.2.). Hierf\"{u}r muss folgendes berücksichtigt werden:
 
 \begin{itemize}
 	\item Das Zeichnen der Visualisierung benötigt pro Aktualisierung einige Millisekunden. Hier werden ständig mathematische Berechnungen (z.B. die Berechnung einer Nachrichtenlinie, die automatische Skalierung des Diagramms, u.s.w.) durchgef\"{u}hrt.
 	\item Das Neuberechnen der Simulation benötigt pro Aktualisierung einige Millisekunden. Hier wird insbesondere der Task-Manager beansprucht, welcher überprüft ob Ereignisse auszuführen sind.
 	\item Jeder simulierte Prozess sollte mit selber Geschwindigkeit fortschreiten, und dies auf jedem Betriebssystem und auf jeder Architektur. Da Java-Threads nicht komplett plattformunabhängig sind (Threads sind im Betriebssystem implementiert), k\"{o}nnte das Verhalten auf verschiedenen Betriebssystemen oder Architekturen variieren. Außerdem übernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf. Außer man synchronisiert Threads manuell so, dass sie den eigenen Ansprüchen entsprechen. Letzteres bedeutet aber auch mehr Programmieraufwand.
-	\item Die Simulationszeit ist stets in Millisekunden angegeben und sie wird intern in einer \textit{long}-Variable abgespeichert. Somit kann eine Simulationszeit immer nur den Wert einer ganze Zahl betragen. Berechnungsrundungsfehler wegen \textit{sim.clock.speed} (s. Kapitel 2.4.2.) müssen berücksichtigt werden.
+	\item Die Simulationszeit ist stets in Millisekunden angegeben und sie wird intern in einer \textit{long}-Variable abgespeichert. Somit kann eine Simulationszeit immer nur den Wert einer ganze Zahl betragen. Berechnungsrundungsfehler wegen \textit{sim.clock.speed} (s. Kap. 2.4.2.) müssen berücksichtigt werden.
 	\item Der Simulator soll nicht ständig die komplette CPU des Anwender-Computers voll auslasten.
 \end{itemize}
 

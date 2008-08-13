@@ -1,11 +1,11 @@
 \chapter{Protokolle und Beispiele}
 
-Im Folgenden werden alle verfügbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server können auf Clientnachrichten, und Clients auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterstützen. Theoretisch ist es auch möglich, dass ein Prozess für ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels der simulatoreigenen API (Application Programming Interface) erstellen (siehe Kapitel 4.4.4.).  
+Im Folgenden werden alle verfügbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server können auf Clientnachrichten, und Clients auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterstützen. Theoretisch ist es auch möglich, dass ein Prozess für ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels der simulatoreigenen API (Application Programming Interface) erstellen (s. Kap. 4.4.4.).  
 Im Programmverzeichnis des Simulators befindet sich das Verzeichnis \textit{saved-simulations} mit Beispielsimulationen. Diese liegen jeweils als serialisierter plattformunabh\"{a}ngiger Java-Bytecode in \textit{.dat}-Dateien vor. Alle Protokolle, bis auf das Beispiel-, Ping Pong- sowie das Broadcast-Protokoll, orientieren sich an den in \cite{Tanenbaum} und \cite{Vorlesung} behandelten Protokollen.
 
 \section{Beispiel (Dummy) Protokoll}
 
-Das Dummy-Protokoll dient lediglich als Vorlage für die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Auftreten von Ereignissen (siehe Kapitel 2.2.3.) lediglich Lognachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgeführt.
+Das Dummy-Protokoll dient lediglich als Vorlage für die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Auftreten von Ereignissen (s. Kap. 2.2.3.) lediglich Lognachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgeführt.
 
 \newpage
 \section{Das Ping-Pong Protokoll \small{\textit{(ping-pong.dat, ping-pong-sturm.dat)}}}
@@ -26,7 +26,7 @@ Bei dem Ping-Pong Protokoll (s. Abbildung \ref{fig:PingPongProto}.) werden zwisc
 	\label{fig:PingPongSturmProto}
 \end{figure}
 
-Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet. Wenn die Eintrittszeiten für die Aktivierung des Protokolls und das Starten der Anfrage identisch sind, ordnet der Task-Manager (siehe Kapitel 4.4.3.) diese Ereignisse automatisch in der richtigen Reihenfolge an. Bei nicht aktiviertem Ping-Pong Client kann P1 keine Ping-Pong Anfrage starten. Bevor ein Prozess eine Anfrage starten kann, muss er das dazugehörige Protokoll aktiviert haben. Entsprechend gilt dies auch für alle anderen Protokolle. Anhand dieses Beispiels ist erkennbar, dass die noch nicht ausgelieferte Nachrichte grün eingefärbt ist während alle ausgelieferten Nachrichten bereits die Farbe Blau tragen (s. Tabelle \ref{tb:Farben}.).
+Wichtig ist, dass Prozess 1 seinen Ping-Pong Client aktiviert, bevor er eine Ping-Pong Clientanfrage startet. Wenn die Eintrittszeiten für die Aktivierung des Protokolls und das Starten der Anfrage identisch sind, ordnet der Task-Manager (s. Kap. 4.4.3.) diese Ereignisse automatisch in der richtigen Reihenfolge an. Bei nicht aktiviertem Ping-Pong Client kann P1 keine Ping-Pong Anfrage starten. Bevor ein Prozess eine Anfrage starten kann, muss er das dazugehörige Protokoll aktiviert haben. Entsprechend gilt dies auch für alle anderen Protokolle. Anhand dieses Beispiels ist erkennbar, dass die noch nicht ausgelieferte Nachrichte grün eingefärbt ist während alle ausgelieferten Nachrichten bereits die Farbe Blau tragen (s. Tabelle \ref{tb:Farben}.).
 
 Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks}. vorgegeben, so lässt sich ein Ping-Pong Sturm realisieren. Hier wird ein neuer Prozess P3 eingeführt, der als zusätzlicher Ping-Pong Server agiert. Da auf jede Clientnachricht stets zwei Serverantworten folgen, verdoppelt sich bei jedem Ping-Pong Durchgang die Anzahl der Nachrichten. In Abbildung \ref{fig:PingPongSturmProto}. ist der dazugehörige Simulationsverlauf bis zum Zeitpunkt \textit{12676ms} dargestellt.
 
@@ -147,7 +147,7 @@ Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Pro
 	\item \textbf{Max. Übertragungszeit} \textit{(Long: 2000)}: Gibt den Wert $t'_{max}$ in Millisekunden an
 \end{itemize}
 
-$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (siehe Kapitel 2.4.3.) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wobei der Zeitsynchronisierung große Fehler auftreten können.
+$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (s. Kap. 2.4.3.) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wobei der Zeitsynchronisierung große Fehler auftreten können.
 
 
 \section{Christians Methode zur externen Synchronisierung \small{\textit{(ext-vs-int-sync.dat)}}}
@@ -204,7 +204,7 @@ Aus Abbildung \ref{fig:TimeSync2Proto}. ist ersichtlich, dass nach Ablauf der Si
 	\label{fig:BerkeleyProto}
 \end{figure}
 
-Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere Möglichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, wo der Server die Anfragen startet. Der Server fungiert gewissermaßen Koordinator des Protokolls. Die Clientprozesse sind somit passiv und müssen warten, bis eine Serveranfrage eintrifft. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Protokolleinstellungen des Servers einstellen lässt (s. Kapitel 2.4.3.).
+Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere Möglichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, wo der Server die Anfragen startet. Der Server fungiert gewissermaßen Koordinator des Protokolls. Die Clientprozesse sind somit passiv und müssen warten, bis eine Serveranfrage eintrifft. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Protokolleinstellungen des Servers einstellen lässt (s. Kap. 2.4.3.).
 
 Wenn der Server seine lokale Zeit $t_s$ und auch die Prozesszeiten $t_i$ der Clients ($i = 1, ..., n$) synchronisieren möchte, so verschickt er eine Serveranfrage. $n$ sei hierbei die Anzahl beteiligter Clients. Die Clients senden dann ihre lokalen Prozesszeiten in einer Nachricht zurück zum Server. Der Server hat dabei die RTTs $r_i$ bis zur Ankunft aller Clientantworten gemessen. 
 
@@ -688,7 +688,7 @@ Bisher wurden alle verfügbaren Protokolle anhand von Beispielen aufgeführt. Mit 
 	\label{fig:Lamportzeit}
 \end{figure}
 
-Die Vektor- und Lamport-Zeitstempel lassen sich sehr gut am bereits behandeltem Beispiel des Berkeley-Protokoll's (vgl. Kapitel 3.6.) demonstrieren. Nach Aktivierung des Lamportzeit-Schalters erscheint bei jedem Ereignis eines Prozesses der aktuelle Lamport-Zeitstempel (s. Abbildung \ref{fig:Lamportzeit}.). Jeder Prozess besitzt einen eigenen Lamport-Zeitstempel, der beim Versenden und Erhalten einer Nachricht inkrementiert wird. Jeder Nachricht wird die aktuelle Lamportzeit $t_l(i)$ des Senderprozesses $i$ beigefügt. Wenn ein weiterer Prozess $j$ diese Nachricht erhält, so wird der aktuelle Lamport-Zeitstempel $t_l(j)$ von Prozess $j$ wie folgt neu berechnet:
+Die Vektor- und Lamport-Zeitstempel lassen sich sehr gut am bereits behandeltem Beispiel des Berkeley-Protokoll's (vgl. Kap. 3.6.) demonstrieren. Nach Aktivierung des Lamportzeit-Schalters erscheint bei jedem Ereignis eines Prozesses der aktuelle Lamport-Zeitstempel (s. Abbildung \ref{fig:Lamportzeit}.). Jeder Prozess besitzt einen eigenen Lamport-Zeitstempel, der beim Versenden und Erhalten einer Nachricht inkrementiert wird. Jeder Nachricht wird die aktuelle Lamportzeit $t_l(i)$ des Senderprozesses $i$ beigefügt. Wenn ein weiterer Prozess $j$ diese Nachricht erhält, so wird der aktuelle Lamport-Zeitstempel $t_l(j)$ von Prozess $j$ wie folgt neu berechnet:
 
 \begin{equation*}
 	t_l(j) := 1 + max(t_l(j), t_l(i))
