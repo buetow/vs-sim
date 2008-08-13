@@ -48,7 +48,7 @@ import serialize.*;
  * @author Paul C. Buetow
  */
 public class VSSimulator extends JPanel implements VSSerializable {
-	   /** The serial version uid */
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
     /** The global text fields. */
@@ -203,7 +203,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         //private JTable table;
 
         /** The editor. */
-       //private VSTaskManagerCellEditor editor;
+        //private VSTaskManagerCellEditor editor;
 
         /**
          * Instantiates a new VSTaskManagerTableModel object
@@ -229,7 +229,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param table the table
          */
         public void setTable(JTable table) {
-			/* Maybe needed for future usage */
+            /* Maybe needed for future usage */
             //this.table = table;
         }
 
@@ -239,7 +239,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param editor the editor
          */
         public void setEditor(VSTaskManagerCellEditor editor) {
-			/* Maybe needed for future usage */
+            /* Maybe needed for future usage */
             //this.editor = editor;
         }
 
@@ -656,7 +656,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         /* Not null if init has been called from the deserialization */
         if (this.simulatorVisualization == null)
-            simulatorVisualization = new VSSimulatorVisualization(prefs, this, loging);
+            simulatorVisualization = new VSSimulatorVisualization(
+                prefs, this, loging);
 
         taskManager = simulatorVisualization.getTaskManager();
         loging.setSimulatorCanvas(simulatorVisualization);
@@ -724,7 +725,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorVisualization.showLamport(buttonModel.isSelected());
+                    simulatorVisualization.showLamport(
+                        buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         vectorTimeActiveCheckBox.setSelected(false);
                 }
@@ -739,7 +741,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorVisualization.showVectorTime(buttonModel.isSelected());
+                    simulatorVisualization.showVectorTime(
+                        buttonModel.isSelected());
                     if (buttonModel.isSelected())
                         lamportActiveCheckBox.setSelected(false);
                 }
@@ -754,7 +757,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    simulatorVisualization.isAntiAliased(buttonModel.isSelected());
+                    simulatorVisualization.isAntiAliased(
+                        buttonModel.isSelected());
                 }
             });
             toolsPanel.add(antiAliasing);
@@ -1034,7 +1038,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         final JComboBox comboBox = new JComboBox();
         JButton takeoverButton = new JButton(prefs.getString("lang.takeover"));
-		takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
+        takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
         takeoverButton.addActionListener(new ActionListener() {
             private boolean isRed;
             public void actionPerformed(ActionEvent ae) {
@@ -1463,7 +1467,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
         tabbedPane.setSelectedIndex(selectedIndex);
 
         /* Update the 'Variables tab' */
-        if (getSelectedProcessNum() != simulatorVisualization.getNumProcesses()) {
+        if (getSelectedProcessNum() !=
+                simulatorVisualization.getNumProcesses()) {
             VSInternalProcess process = getSelectedProcess();
             VSProcessEditor editor = new VSProcessEditor(prefs, process);
             tabbedPane.setComponentAt(1, editor.getContentPane());

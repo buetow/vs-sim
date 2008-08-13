@@ -214,7 +214,8 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
      * @param loging the loging object
      */
     protected void init(VSPrefs prefs, int processNum,
-                        VSSimulatorVisualization simulatorVisualization, VSLogging loging) {
+                        VSSimulatorVisualization simulatorVisualization,
+                        VSLogging loging) {
         /* May be not null if called from deserialization */
         if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
@@ -430,9 +431,9 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
         /* Check if the process will crash or not */
         if (getRandomPercentage() < getInteger("process.prob.crash")) {
             /* Calculate the random crash time! */
-            final long crashTime =  random.nextLong(
-                                        simulatorVisualization.getUntilTime()+1) %
-                                    simulatorVisualization.getUntilTime();
+            final long crashTime =
+                random.nextLong(simulatorVisualization.getUntilTime()+1) %
+                simulatorVisualization.getUntilTime();
             return crashTime;
         }
 

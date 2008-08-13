@@ -68,7 +68,7 @@ public class VSMain {
      */
     private void init(VSPrefs prefs, Component relativeTo) {
         //VSSimulatorFrame simulatorFrame =
-        	new VSSimulatorFrame(prefs, relativeTo);
+        new VSSimulatorFrame(prefs, relativeTo);
     }
 
     /**

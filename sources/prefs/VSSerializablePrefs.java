@@ -44,7 +44,7 @@ public class VSSerializablePrefs extends VSPrefs implements VSSerializable {
     public synchronized void serialize(VSSerialize serialize,
                                        ObjectOutputStream objectOutputStream)
     throws IOException {
-		super.serialize_(serialize, objectOutputStream);
+        super.serialize_(serialize, objectOutputStream);
     }
 
     /* (non-Javadoc)
@@ -55,6 +55,6 @@ public class VSSerializablePrefs extends VSPrefs implements VSSerializable {
     public synchronized void deserialize(VSSerialize serialize,
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
-		super.deserialize_(serialize, objectInputStream);
+        super.deserialize_(serialize, objectInputStream);
     }
 }

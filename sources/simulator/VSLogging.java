@@ -83,8 +83,8 @@ public class VSLogging {
      *
      * @param simulatorVisualization the simulator canvas
      */
-    public void setSimulatorCanvas(VSSimulatorVisualization simulatorVisualization) {
-        this.simulatorVisualization = simulatorVisualization;
+    public void setSimulatorCanvas(VSSimulatorVisualization sv) {
+        this.simulatorVisualization = sv;
     }
 
     /**

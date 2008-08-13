@@ -111,7 +111,7 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
 
             if (pids.size() == 0) {
                 log("ACKs von allen beteiligten Prozessen erhalten! " +
-                     "Festgeschrieben!");
+                    "Festgeschrieben!");
 
                 /* Remove the active schedule which has been created in the
                    onServerStart method */

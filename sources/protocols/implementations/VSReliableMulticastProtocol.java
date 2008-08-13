@@ -108,7 +108,7 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
 
             if (pids.size() == 0) {
                 log("ACKs von allen beteiligten Prozessen " +
-                     "erhalten!");
+                    "erhalten!");
 
                 /* Remove the active schedule which has been created in the
                    onClientStart method */

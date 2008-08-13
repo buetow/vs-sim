@@ -129,14 +129,14 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
 
             boolean vote = recvMessage.getBoolean("vote");
             log("Abstimmung von Prozess " + pid +
-                 " erhalten! Ergebnis: " + vote);
+                " erhalten! Ergebnis: " + vote);
 
             if (!vote)
                 voteResult = false;
 
             if (votePids.size() == 0) {
                 log("Abstimmungen von allen beteiligten Prozessen " +
-                     "erhalten! Globales Ergebnis: " + voteResult);
+                    "erhalten! Globales Ergebnis: " + voteResult);
 
                 /* Remove the active schedule which has been created in the
                    onServerStart method */
@@ -207,7 +207,7 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
         } else if (recvMessage.getBoolean("isVoteResult")) {
             boolean voteResult = recvMessage.getBoolean("voteResult");
             log("Globales Abstimmungsergebnis erhalten. Ergebnis: " +
-                 voteResult);
+                voteResult);
 
             VSMessage message = new VSMessage();
             message.setBoolean("isAck", true);

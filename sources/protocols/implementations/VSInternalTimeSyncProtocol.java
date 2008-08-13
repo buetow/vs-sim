@@ -93,9 +93,9 @@ public class VSInternalTimeSyncProtocol extends VSAbstractProtocol {
         long newTime = serverTime + (long) ((tMax + tMin) / 2 );
 
         log("Server Zeit: " + serverTime + "; (t_min,t_max): (" + tMin +
-             "," + tMax + "); Alte Zeit: " + process.getTime() +
-             "; Neue Zeit: " + newTime + "; Offset: " +
-             (process.getTime() - newTime));
+            "," + tMax + "); Alte Zeit: " + process.getTime() +
+            "; Neue Zeit: " + newTime + "; Offset: " +
+            (process.getTime() - newTime));
 
         process.setTime(newTime);
     }

@@ -914,8 +914,8 @@ public class VSPrefs {
      * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
      *	java.io.ObjectOutputStream)
      */
-    protected synchronized void serialize_(VSSerialize serialize,
-                                       ObjectOutputStream objectOutputStream)
+    protected synchronized void serialize_(
+        VSSerialize serialize, ObjectOutputStream objectOutputStream)
     throws IOException {
         /** For later backwards compatibility, to add more stuff */
         objectOutputStream.writeObject(new Boolean(false));
@@ -941,7 +941,7 @@ public class VSPrefs {
      */
     @SuppressWarnings("unchecked")
     protected synchronized void deserialize_(VSSerialize serialize,
-                                         ObjectInputStream objectInputStream)
+            ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         objectPrefs.clear();
 

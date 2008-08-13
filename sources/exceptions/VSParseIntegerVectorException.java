@@ -31,6 +31,6 @@ package exceptions;
  * @author Paul C. Buetow
  */
 public class VSParseIntegerVectorException extends Exception {
-	   /** The serial version uid */
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 }

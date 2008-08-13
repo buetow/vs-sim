@@ -30,6 +30,6 @@ package exceptions;
  * @author Paul C. Buetow
  */
 public class VSNegativeNumberException extends Exception {
-	   /** The serial version uid */
+    /** The serial version uid */
     private static final long serialVersionUID = 1L;
 }

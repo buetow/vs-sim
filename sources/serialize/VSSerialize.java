@@ -173,8 +173,8 @@ public final class VSSerialize {
             ObjectOutputStream objectOutputStream =
                 new ObjectOutputStream(fileOutputStream);
 
-            VSSerializablePrefs prefs = (VSSerializablePrefs) 
-				simulator.getPrefs();
+            VSSerializablePrefs prefs = (VSSerializablePrefs)
+                                        simulator.getPrefs();
             prefs.serialize(this, objectOutputStream);
             simulator.serialize(this, objectOutputStream);
 
@@ -197,7 +197,7 @@ public final class VSSerialize {
 
         String saveText = prefs.getString("lang.save");
         JFileChooser fileChooser = new JFileChooser(
-				new File(".").getPath());
+            new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
         fileChooser.setApproveButtonText(saveText);
@@ -261,7 +261,7 @@ public final class VSSerialize {
 
         String openText = prefs.getString("lang.open");
         JFileChooser fileChooser = new JFileChooser(
-				new File(".").getPath());
+            new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(createFileFilter(prefs));
         fileChooser.setApproveButtonText(openText);

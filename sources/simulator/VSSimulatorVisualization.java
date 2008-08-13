@@ -475,7 +475,7 @@ public class VSSimulatorVisualization extends Canvas
      * @param loging the loging
      */
     public VSSimulatorVisualization(VSPrefs prefs, VSSimulator simulator,
-                             VSLogging loging) {
+                                    VSLogging loging) {
         init(prefs, simulator, loging);
     }
 
@@ -1467,7 +1467,7 @@ public class VSSimulatorVisualization extends Canvas
         VSTask task = null;
         VSAbstractEvent receiveEvent = null;
         VSInternalProcess sendingProcess = (VSInternalProcess)
-			message.getSendingProcess();
+                                           message.getSendingProcess();
         long deliverTime, outageTime, durationTime;
         boolean recvOwn = prefs.getBoolean("sim.message.own.recv");
 
