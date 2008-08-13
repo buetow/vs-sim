@@ -29,7 +29,7 @@ import javax.swing.*;
 
 import events.*;
 import prefs.*;
-import prefs.editors.*;
+//import prefs.editors.*;
 
 /**
  * The class VSMain. This class contains the static main method. The simulator
@@ -67,14 +67,8 @@ public class VSMain {
      * @param relativeTo the component to open the window relative to
      */
     private void init(VSPrefs prefs, Component relativeTo) {
-        VSSimulatorFrame simulatorFrame =
-            new VSSimulatorFrame(prefs, relativeTo);
-        /*
-                VSSimulatorEditor editor =
-                    new VSSimulatorEditor(prefs, simulatorFrame,
-                                          VSSimulatorEditor.OPENED_NEW_WINDOW);
-                new VSEditorFrame(prefs, relativeTo, editor);
-        		*/
+        //VSSimulatorFrame simulatorFrame =
+        	new VSSimulatorFrame(prefs, relativeTo);
     }
 
     /**

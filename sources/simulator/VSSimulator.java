@@ -33,12 +33,12 @@ import javax.swing.table.*;
 
 import core.*;
 import events.*;
-import events.internal.*;
+//import events.internal.*;
 import exceptions.*;
 import prefs.*;
 import prefs.editors.*;
 import serialize.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSSimulator, an object of this class represents a whole simulator.
@@ -48,8 +48,8 @@ import utils.*;
  * @author Paul C. Buetow
  */
 public class VSSimulator extends JPanel implements VSSerializable {
-    /** the serial version uid */
-    private static final long serialversionuid = 1l;
+	   /** The serial version uid */
+    private static final long serialVersionUID = 1L;
 
     /** The global text fields. */
     private ArrayList<String> globalTextFields;
@@ -79,7 +79,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private JComboBox processesComboBox;
 
     /** The global add panel. */
-    private JPanel globalAddPanel;
+    //private JPanel globalAddPanel;
 
     /** The local add panel. */
     private JPanel localAddPanel;
@@ -91,7 +91,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private JPanel logingPanel;
 
     /** The tools panel. */
-    private JPanel toolsPanel;
+    //private JPanel toolsPanel;
 
     /** The split pane1. */
     private JSplitPane splitPane1;
@@ -151,7 +151,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private VSTaskManagerCellEditor taskManagerLocalEditor;
 
     /** The simulator has started. */
-    private boolean hasStarted = false;
+    //private boolean hasStarted = false;
 
     /** The last selected process num. */
     private int lastSelectedProcessNum;
@@ -173,7 +173,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private class VSTaskManagerTableModel extends AbstractTableModel
                 implements MouseListener {
         /** the serial version uid */
-        private static final long serialversionuid = 1l;
+        private static final long serialVersionUID = 1l;
 
         /** The Constant LOCAL. */
         public static final boolean LOCAL = true;
@@ -200,10 +200,10 @@ public class VSSimulator extends JPanel implements VSSerializable {
         private int numColumns;
 
         /** The table. */
-        private JTable table;
+        //private JTable table;
 
         /** The editor. */
-        private VSTaskManagerCellEditor editor;
+       //private VSTaskManagerCellEditor editor;
 
         /**
          * Instantiates a new VSTaskManagerTableModel object
@@ -229,7 +229,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param table the table
          */
         public void setTable(JTable table) {
-            this.table = table;
+			/* Maybe needed for future usage */
+            //this.table = table;
         }
 
         /**
@@ -238,7 +239,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
          * @param editor the editor
          */
         public void setEditor(VSTaskManagerCellEditor editor) {
-            this.editor = editor;
+			/* Maybe needed for future usage */
+            //this.editor = editor;
         }
 
         /**
@@ -409,8 +411,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
          */
         public void mouseClicked(MouseEvent me) {
             final JTable source = (JTable) me.getSource();
-            final int row = source.rowAtPoint(me.getPoint());
-            final int col = source.columnAtPoint(me.getPoint());
+            //final int row = source.rowAtPoint(me.getPoint());
+            //final int col = source.columnAtPoint(me.getPoint());
 
             if (SwingUtilities.isRightMouseButton(me)) {
                 ActionListener actionListener = new ActionListener() {
@@ -474,7 +476,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
     private class VSTaskManagerCellEditor extends AbstractCellEditor
                 implements TableCellEditor {
         /** the serial version uid */
-        private static final long serialversionuid = 1l;
+        private static final long serialVersionUID = 1L;
 
         /** The JTable model */
         private VSTaskManagerTableModel model;
@@ -948,7 +950,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
         if (localTasks)
             localAddPanel = initAddPanel(panel, localTasks);
         else
-            globalAddPanel = initAddPanel(panel, localTasks);
+            /*globalAddPanel = */ initAddPanel(panel, localTasks);
 
         return panel;
     }

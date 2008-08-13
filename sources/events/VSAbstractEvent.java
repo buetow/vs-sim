@@ -30,7 +30,7 @@ import core.VSInternalProcess;
 import exceptions.*;
 import prefs.*;
 import serialize.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSAbstractEvent. This abstract class defines the basic framework

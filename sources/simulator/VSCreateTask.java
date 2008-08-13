@@ -36,7 +36,7 @@ import events.internal.*;
  */
 public class VSCreateTask {
     /** the serial version uid */
-    private static final long serialversionuid = 1l;
+    private static final long serialVersionUID = 1L;
 
     /** The event classname. */
     private String eventClassname;

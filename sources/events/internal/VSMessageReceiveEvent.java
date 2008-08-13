@@ -23,7 +23,7 @@
 
 package events.internal;
 
-import java.io.*;
+//import java.io.*;
 
 import core.VSMessage;
 import protocols.VSAbstractProtocol;
@@ -66,7 +66,7 @@ public class VSMessageReceiveEvent extends VSAbstractInternalEvent
         boolean onlyRelevantMessages = process.getPrefs().getBoolean(
                                            "sim.messages.relevant");
 
-        String eventName = message.getName();
+        //String eventName = message.getName();
         String protocolClassname = message.getProtocolClassname();
 
         if (onlyRelevantMessages && !isRelevantMessage())

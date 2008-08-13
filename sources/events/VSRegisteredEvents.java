@@ -71,7 +71,7 @@ public final class VSRegisteredEvents {
         new HashMap<String,Boolean>();
 
     /** The prefs. */
-    private static VSPrefs prefs;
+    //private static VSPrefs prefs;
 
     /**
      * Registers available events.
@@ -79,7 +79,7 @@ public final class VSRegisteredEvents {
      * @param prefs_ the prefs_
      */
     public static void init(VSPrefs prefs_) {
-        prefs = prefs_;
+        //prefs = prefs_;
 
         registerEvent("events.implementations.VSProcessCrashEvent",
                       "Prozessabsturz");

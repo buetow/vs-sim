@@ -28,7 +28,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import prefs.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSAboutFrame. This class is only for the about window which

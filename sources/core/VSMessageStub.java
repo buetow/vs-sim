@@ -23,9 +23,9 @@
 
 package core;
 
-import core.time.*;
-import events.*;
-import prefs.VSPrefs;
+//import core.time.*;
+//import events.*;
+//import prefs.VSPrefs;
 
 /**
  * An object of this class represents a message stub. A message stub allows

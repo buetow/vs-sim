@@ -24,7 +24,7 @@ package simulator;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+//import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -443,7 +443,7 @@ public class VSSimulatorFrame extends VSFrame {
         ArrayList<VSInternalProcess> arr =
             currentSimulator.getSimulatorCanvas().getProcessesArray();
 
-        int numProcesses = arr.size();
+        //int numProcesses = arr.size();
         int processNum = 0;
 
         for (VSInternalProcess process : arr) {

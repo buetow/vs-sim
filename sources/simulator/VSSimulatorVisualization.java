@@ -38,7 +38,7 @@ import events.internal.*;
 import prefs.*;
 import prefs.editors.*;
 import serialize.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSSimulatorVisualization. An instance of this object represents the

@@ -25,7 +25,7 @@ package events.internal;
 
 import java.io.*;
 
-import events.*;
+//import events.*;
 import protocols.VSAbstractProtocol;
 import serialize.*;
 

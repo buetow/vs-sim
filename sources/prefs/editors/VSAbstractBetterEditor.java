@@ -28,7 +28,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import prefs.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSAbstractBetterEditor, is an improved VSAbstractEditor.
@@ -94,7 +94,7 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
         JPanel editPanel = getEditPanel();
         JPanel buttonPanel = getButtonPanel();
 
-        JScrollPane scrollPane = new JScrollPane(editPanel);
+        //JScrollPane scrollPane = new JScrollPane(editPanel);
         panel.add(editPanel);
         //panel.add(infoArea);
         panel.add(buttonPanel);

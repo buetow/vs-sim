@@ -206,7 +206,7 @@ public class VSBerkelyTimeProtocol extends VSAbstractProtocol {
                 return;
 
             long timeDiff = recvMessage.getLong("timeDiff");
-            long recvTime = process.getTime();
+            //long recvTime = process.getTime();
             long newTime = process.getTime() + timeDiff;
             log("Neue Zeit: " + newTime);
 

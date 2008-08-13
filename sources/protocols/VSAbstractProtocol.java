@@ -31,7 +31,7 @@ import events.*;
 import events.internal.*;
 import serialize.*;
 import simulator.VSSimulatorVisualization;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSAbstractProtocol, this class defined the basic framework of a

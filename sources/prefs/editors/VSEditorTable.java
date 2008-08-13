@@ -26,7 +26,7 @@ package prefs.editors;
 import java.util.*;
 
 import java.awt.*;
-import java.io.*;
+//import java.io.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
@@ -44,10 +44,10 @@ public class VSEditorTable extends JTable {
     private static final long serialVersionUID = 1L;
 
     /** The Constant MIN_ROWS. */
-    private static final int MIN_ROWS = 20;
+    //private static final int MIN_ROWS = 20;
 
     /** The prefs. */
-    private VSPrefs prefs;
+    //private VSPrefs prefs;
 
     /** The nodes. */
     private ArrayList<VSNode> nodes;
@@ -267,7 +267,7 @@ public class VSEditorTable extends JTable {
      * @param prefs the prefs
      */
     public VSEditorTable(VSPrefs prefs) {
-        this.prefs = prefs;
+        //this.prefs = prefs;
         this.nodes = new ArrayList<VSNode>();
         this.model = new VSEditorTableModel();
         setModel(model);

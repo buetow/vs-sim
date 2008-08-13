@@ -32,7 +32,7 @@ import exceptions.*;
 import prefs.VSPrefs;
 import protocols.VSAbstractProtocol;
 import serialize.*;
-import utils.*;
+//import utils.*;
 
 /**
  * The class VSTask, an object of this class represents a task to do or done.
@@ -351,9 +351,11 @@ public class VSTask implements Comparable, VSSerializable {
      *
      * @param message the message to log
      */
+    /*
     private void log(String message) {
         process.log(message);
     }
+    */
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
