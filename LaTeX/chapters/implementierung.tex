@@ -43,7 +43,7 @@ In Abbildung \ref{fig:PackagePrefs}. ist der Aufbau des Pakets \textit{prefs} zu
 	\label{fig:PackagePrefs}
 \end{figure}
 
-Jede Variable hat einen Datentypen, einen Variablennamen, eine optionale Beschreibung sowie einen Variablenwert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mit Hilfe der Klasse \textit{VSPrefsRestriction} implementiert wird. Da der Anwender beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
+Jede Variable hat einen Datentypen, einen Variablennamen, eine optionale Beschreibung sowie einen Variablenwert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (z.B. besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mit Hilfe der Klasse \textit{VSPrefsRestriction} implementiert wird. Da der Anwender beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
 
 Eine Variablenbeschreibung wird für die Darstellung im GUI verwendet, während der Variablenname für die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) als Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn für eine Variable keine Beschreibung existiert so werden f\"{u}r die Anzeige einer Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die in Tabelle \ref{tb:VariablenPraefixe}. angegebenen Präfixkonventionen. Alle verfügbaren Datentypen wurden bereits in Tabelle \ref{tb:VariablenDatentypen}. aufgelistet. Die Klasse \textit{VSPrefs} stellt für alle Variablentypen entsprechende Selektoren zur Verfügung.  
 
@@ -225,7 +225,7 @@ Das Paket \textit{core.time} in Abbildung \ref{fig:PackageCoreTime}. stellt ledi
 
 In Abbildung \ref{fig:PackageCore}. ist das Paket \textit{core} dargestellt. Für jedes auszuführende Ereignis wird eine Instanz von \textit{VSTask} benötigt, welche die Ereigniseintrittszeit als Attribut abgpeichert. Die Instanz besitzt eine Referenz auf das Ereignisobjekt (\textit{VSAbstractEvent}) sowie das Prozessobjekt (\textit{VSInternalProcess}). Geplante \textit{VSTask}-Instanzen werden dem Task-Manager für eine spätere Ausführung übergeben.
 
-Die Kapselung eines \textit{VSAbstractEvent}-Objektes in einem \textit{VSTask}-Objekt erlaubt es, dass die gleiche \textit{VSAbstractEvent}-Instanz mehrmals im Task-Manager geplant werden kann. Ohne dieser Kapselung gäbe es für jedes Ereignis nur eine einzige mögliche Eintrittszeit. Von dieser Möglichkeit wird zum Beispiel bei den Server- und Clientanfragen eines Protokollobjektes Gebrauch gemacht. Für jedes Protokoll kann der Anwender in einer Simulation beliebig viele Anfragen programmieren, wobei für jede Anfrage stets das selbe Protokollobjekt als Ereignis verwendet wird.
+Die Kapselung eines \textit{VSAbstractEvent}-Objektes in einem \textit{VSTask}-Objekt erlaubt es, dass die gleiche \textit{VSAbstractEvent}-Instanz mehrmals im Task-Manager geplant werden kann. Ohne dieser Kapselung gäbe es für jedes Ereignis nur eine einzige mögliche Eintrittszeit. Von dieser Möglichkeit wird z.B. bei den Server- und Clientanfragen eines Protokollobjektes Gebrauch gemacht. Für jedes Protokoll kann der Anwender in einer Simulation beliebig viele Anfragen programmieren, wobei für jede Anfrage stets das selbe Protokollobjekt als Ereignis verwendet wird.
 
 Jede Simulation besitzt genau eine Instanz von \textit{VSTaskManager}. Eine Instanz dieser Klasse stellt den Task-Manager dar. Er verwaltet alle \textit{VSTask}-Instanzen und überprüft periodisch, ob es auszuführende Ereignisse gibt. Der Task-Manager unterscheidet zwischen globalen und lokalen Ereignissen. Hierbei werden alle globalen Ereignisse (gekapselt in einem \textit{VSTask}-Objekt) in einer Prioritäts-Warteschlange (vgl. \cite{Algorithms}, \cite{AlgorithmsC}) abgelegt. Die Prioritäts-Warteschlange stellt hierbei die korrekte Ereigniseintrittsreihenfolge sicher. Da sich die lokalen Zeiten aller beteiligten Prozesse voneinander unterscheiden können, muss für jeden Prozess eine separate lokale Prioritäts-Warteschlange verwendet werden, auf die jedes Prozessobjekt seine eigene Referenz hat. In den lokalen Warteschlangen sind die geplanten lokalen Ereignisse (auch gekapselt in einem \textit{VSTask}-Objekt) abgelegt. Der Task-Manager greift über eine \textit{java.util.ArrayList} auf alle Prozessobjekte zu und kann somit auch auf alle lokalen Warteschlangen zugreifen und diese verwalten.
 
@@ -251,7 +251,7 @@ Der Task-Manager speichert anschließend die Nachrichtenempfangsereignisse in sei
 
 Eine Instanz von \textit{VSInternalProcess} repräsentiert einen simulierten Prozess. Ein \textit{VSInternalProcess} stellt alle vom Simulator intern verwendeten Methoden zur Verfügung, während ein \textit{VSAbstractProcess} lediglich Methoden hat, die der Protokollentwickler für die Erstellung eigener Protokolle verwenden darf. Da \textit{VSAbstractProcess} abstrakt ist und hiervon keine Instanz gebildet werden darf, muss für einen neuen Prozesses stets ein \textit{VSInternalProcess}-Objekt erstellt werden. Via Polymorphie wird dieses Objekt nach \textit{VSAbstractProcess} umgewandelt und so dem Protokoll-API zur Verfügung gestellt. Beispielsweise darf mit \textit{getTasks()} nur vom Simulator intern auf die Prioritäts-Warteschlangen zugegriffen werden, während man im Protokoll-API selbiges vermeiden sollte und dies auch gar nicht direkt möglich ist. Hier wäre auch ein Stub-Objekt \textit{VSProcessStub} denkbar gewesen. Da aber fast jede Millisekunde auf die Methoden von \textit{VSInternalProcess} zugegriffen wird, wurde hier aus Performance-Gründen der Weg über eine Vererbungsstufe preferiert. 
 
-Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-Gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs}, bzw. die lokalen Kopien, auf den neuesten Stand gebracht. Selbiges gilt für weitere Variablen, wie zum Beispiel der Uhrabweichung eines Prozesses.
+Alle einstellbaren Prozessvariablen werden von der Klasse \textit{VSPrefs} vererbt. Damit bei Neuberechnungen die Variablen nicht dauernd über eine \textit{HashMap} von \textit{VSPrefs} zugegriffen werden muss, speichert \textit{VSInternalProcess} aus Performance-Gründen einige Variablen als lokale Kopie ab. Zum Beispiel wird für die lokale Prozesszeit nicht auf das \textit{HashMap<String,Long>}-Objekt von \textit{VSPrefs}, sondern auf das Klassenattribut \textit{private long localTime} zugegriffen. Vor und nach dem Editieren über den Prozesseditor werden die \textit{VSPrefs}, bzw. die lokalen Kopien, auf den neuesten Stand gebracht. Selbiges gilt für weitere Variablen, wie z.B. der Uhrabweichung eines Prozesses.
 
 \subsubsection{Beispiel für die Erstellung von Prozessereignissen}
 
@@ -329,7 +329,7 @@ Jede Protokollklasse bekommt folgende Methoden von \textit{VSAbstractProtocol} v
 	\item \textit{pubic final int getNumProcesses()}: Gibt die totale Anzahl an der Simulation beteiligten Prozesse zurück.
 \end{itemize}
 
-Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (zum Beispiel die Simulationsvariable die Angibt, ob Prozesse eigene Nachrichten empfangen: \textit{bool recvOwn = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API verwendet werden:
+Bei der Implementierung von Protokollen kann zusätzlich auf die vererbten Attribute \textit{VSAbstractProcess process} und \textit{VSPrefs prefs} zugegriffen werden. Verfügbare Methoden von \textit{VSPrefs} wurden bereits behandelt. über \textit{prefs} lassen sich alle globalen Simulationseinstellungen abrufen (z.B. die Simulationsvariable die Angibt, ob Prozesse eigene Nachrichten empfangen: \textit{bool recvOwn = prefs.getBoolean(``sim.message.own.recv'')}). Folgende Prozessmethoden dürfen auf \textit{process} aus dem Protokoll-API verwendet werden:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -680,7 +680,7 @@ Die Programmierrichtlinien entsprechen in den meisten Fällen denen aus \cite{OOS
 
 Die \textit{main}-Methode befindet sich in der Klasse \textit{simulator.VSMain}. 
 \begin{itemize}
-	\item Es wird kein Gebrauch vom Java-Standardpaket gemacht. Alle Klassen befinden sich somit in explizit angegebenen Paketen (zum Beispiel \textit{events.implementations}).
+	\item Es wird kein Gebrauch vom Java-Standardpaket gemacht. Alle Klassen befinden sich somit in explizit angegebenen Paketen (z.B. \textit{events.implementations}).
 	\item Alle Klassen- und Interfacenamen beginnen mit großen Buchstaben, während alle Variablen-, Methoden- und Attributnamen mit kleinen Buchstaben beginnen. Namen finaler Variablen und Attribute sind komplett in Großbuchstaben gehalten.
 	\item Alle Quelltext-Dateien besitzen einen Header, der Informationen der verwendeten Lizenz angibt.
 	\item Alle Quelltext-Dateien werden vollständig mit Javadoc dokumentiert. 
@@ -690,10 +690,10 @@ Die \textit{main}-Methode befindet sich in der Klasse \textit{simulator.VSMain}.
 	\item Für die Einrückung des Quelltextes wird das Tool \textit{astyle} mit den Aufrufparametern \textit{--style=java --mode=java} verwendet. Hierbei wird eine Einrückungslänge von 4 Zeichen verwendet.
 	\item Namen aller Klassen und Interfaces tragen als Präfix stets \textit{VS}, was für Verteilte Systeme steht. 
 	\item Namen abstrakter Klassen tragen als Präfix stets \textit{VSAbstract}.
-	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol} (zum Beispiel \textit{VSPingPongProtocol}).
-	\item Namen aller Ereignisklassen, die keine Protokolle implementieren, tragen als Postfix \textit{Event} (zum Beispiel \textit{VSProcessCrashEvent}).
-	\item Namen aller dejenigen Klassen, die ein Fenster implementieren, tragen als Postfix \textit{Frame} (zum Beispiel \textit{VSSimulatorFrame}).
-	\item überall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (zum Beispiel \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}).
+	\item Namen aller Protokollklassen tragen als Postfix \textit{Protocol} (z.B. \textit{VSPingPongProtocol}).
+	\item Namen aller Ereignisklassen, die keine Protokolle implementieren, tragen als Postfix \textit{Event} (z.B. \textit{VSProcessCrashEvent}).
+	\item Namen aller dejenigen Klassen, die ein Fenster implementieren, tragen als Postfix \textit{Frame} (z.B. \textit{VSSimulatorFrame}).
+	\item überall wo es Sinn ergibt werden Java-Generic-Datentypen verwendet (z.B. \textit{java.util.Vector<Integer>} anstelle von \textit{java.util.Vector}).
 \end{itemize}
 
 \section{Entwicklungsumgebung}

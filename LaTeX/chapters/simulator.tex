@@ -191,7 +191,7 @@ Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren b
 
 Je komplexer eine Simulation wird, desto unübersichtlicher werden die Einträge im Logfenster. Hier fällt es zunehmend schwerer die Übersicht aller Ereignisse zu behalten. Um dem entgegenzuwirken gibt es im Expertenmodus einen Logfilter, welcher es ermöglicht nur die wesentlichen Daten aus den Logs zu filtern. 
 
-Der Logfilter wird anhand des dazugehörigen Schalters ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax, beschrieben in \cite{Regexp}, angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Logzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die zum Beispiel nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Logfilter werden nur die Logzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Logfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
+Der Logfilter wird anhand des dazugehörigen Schalters ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax, beschrieben in \cite{Regexp}, angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Logzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die z.B. nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Logfilter werden nur die Logzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Logfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
 
 Der Logfilter kann auch während einer laufenden Simulation verwendet werden. Bei Filterdeaktivierung werden alle Nachrichten wieder dargestellt. Lognachrichten, die aufgrund des Filters noch nie angezeigt wurden, werden dann nachträglich angezeigt.
 
@@ -204,7 +204,7 @@ Der Logfilter kann auch während einer laufenden Simulation verwendet werden. Bei
 
 \section{Ereignisse}
 
-Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie zum Beispiel das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers, worauf später nochmal genauer eingegangen wird.
+Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie z.B. das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers, worauf später nochmal genauer eingegangen wird.
 
 \subsubsection{Prozessabsturz- und Wiederbelebung (programmierbar)}
 
