@@ -49,12 +49,12 @@ public class VSInternalProcess extends VSAbstractProcess {
      * @param prefs the simulator's default prefs
      * @param processNum the process num
      * @param simulatorVisualization the simulator canvas
-     * @param logging the logging object
+     * @param loging the loging object
      */
     public VSInternalProcess(VSPrefs prefs, int processNum,
                              VSSimulatorVisualization simulatorVisualization,
-                             VSLogging logging) {
-        super(prefs, processNum, simulatorVisualization, logging);
+                             VSLogging loging) {
+        super(prefs, processNum, simulatorVisualization, loging);
     }
 
     /**
@@ -340,7 +340,7 @@ public class VSInternalProcess extends VSAbstractProcess {
         buffer.append(prefs.getString("lang.message.sent"));
         buffer.append("; ");
         buffer.append(message.toStringFull());
-        logg(buffer.toString());
+        log(buffer.toString());
         simulatorVisualization.sendMessage(message);
     }
 

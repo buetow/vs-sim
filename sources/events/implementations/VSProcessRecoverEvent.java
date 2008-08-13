@@ -55,7 +55,7 @@ public class VSProcessRecoverEvent extends VSAbstractEvent
     public void onStart() {
         if (process.isCrashed()) {
             process.isCrashed(false);
-            logg(prefs.getString("lang.recovered"));
+            log(prefs.getString("lang.recovered"));
         }
     }
 }

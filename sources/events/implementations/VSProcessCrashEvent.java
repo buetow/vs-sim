@@ -54,7 +54,7 @@ public class VSProcessCrashEvent extends VSAbstractEvent
     public void onStart() {
         if (!process.isCrashed()) {
             process.isCrashed(true);
-            logg(prefs.getString("lang.crashed"));
+            log(prefs.getString("lang.crashed"));
         }
     }
 }

@@ -94,7 +94,7 @@ public class VSBasicMulticastProtocol extends VSAbstractProtocol {
      */
     public void onServerRecv(VSMessage recvMessage) {
         if (recvMessage.getBoolean("isMulticast"))
-            logg("Multicast erhalten");
+            log("Multicast erhalten");
     }
 
     /* (non-Javadoc)

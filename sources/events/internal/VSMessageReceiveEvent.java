@@ -84,7 +84,7 @@ public class VSMessageReceiveEvent extends VSAbstractInternalEvent
         buffer.append(prefs.getString("lang.message.recv"));
         buffer.append("; ");
         buffer.append(message);;
-        logg(buffer.toString());
+        log(buffer.toString());
 
         if (protocolObj != null)
             ((VSAbstractProtocol) protocolObj).onMessageRecvStart(message);

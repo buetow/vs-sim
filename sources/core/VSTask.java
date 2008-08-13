@@ -349,10 +349,10 @@ public class VSTask implements Comparable, VSSerializable {
     /**
      * Logg a message.
      *
-     * @param message the message to logg
+     * @param message the message to log
      */
-    private void logg(String message) {
-        process.logg(message);
+    private void log(String message) {
+        process.log(message);
     }
 
     /* (non-Javadoc)

@@ -147,7 +147,7 @@ public class VSProtocolEvent extends VSAbstractInternalEvent
                       ? prefs.getString("lang.activated")
                       : prefs.getString("lang.deactivated"));
 
-        logg(buffer.toString());
+        log(buffer.toString());
     }
 
     /* (non-Javadoc)

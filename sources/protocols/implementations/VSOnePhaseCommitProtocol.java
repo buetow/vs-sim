@@ -107,10 +107,10 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
             else
                 return;
 
-            logg("ACK von Prozess " + pid + " erhalten!");
+            log("ACK von Prozess " + pid + " erhalten!");
 
             if (pids.size() == 0) {
-                logg("ACKs von allen beteiligten Prozessen erhalten! " +
+                log("ACKs von allen beteiligten Prozessen erhalten! " +
                      "Festgeschrieben!");
 
                 /* Remove the active schedule which has been created in the
@@ -156,7 +156,7 @@ public class VSOnePhaseCommitProtocol extends VSAbstractProtocol {
         message.setInteger("pid", process.getProcessID());
         sendMessage(message);
         ackSent = true;
-        logg("Festgeschrieben");
+        log("Festgeschrieben");
     }
 
     /* (non-Javadoc)

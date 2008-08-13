@@ -54,14 +54,14 @@ public class VSDummyProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientReset()
      */
     public void onClientReset() {
-        logg("onClientReset()");
+        log("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onClientStart()
      */
     public void onClientStart() {
-        logg("onClientStart()");
+        log("onClientStart()");
 
         VSMessage message = new VSMessage();
         message.setString("Greeting", "Hello World!");
@@ -75,7 +75,7 @@ public class VSDummyProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onClientRecv(core.VSMessage)
      */
     public void onClientRecv(VSMessage recvMessage) {
-        logg("onClientRecv("+recvMessage+")");
+        log("onClientRecv("+recvMessage+")");
 
         String s = recvMessage.getString("Greeting");
         int n = recvMessage.getInteger("A number");
@@ -99,14 +99,14 @@ public class VSDummyProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#onServerReset()
      */
     public void onServerReset() {
-        logg("onClientReset()");
+        log("onClientReset()");
     }
 
     /* (non-Javadoc)
      * @see protocols.VSAbstractProtocol#onServerRecv(core.VSMessage)
      */
     public void onServerRecv(VSMessage recvMessage) {
-        logg("onServerRecv("+recvMessage+")");
+        log("onServerRecv("+recvMessage+")");
     }
 
     /* (non-Javadoc)

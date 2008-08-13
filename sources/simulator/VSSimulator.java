@@ -87,8 +87,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /** The local panel. */
     private JPanel localPanel;
 
-    /** The logging panel. */
-    private JPanel loggingPanel;
+    /** The loging panel. */
+    private JPanel logingPanel;
 
     /** The tools panel. */
     private JPanel toolsPanel;
@@ -105,8 +105,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /** The tabbed pane. */
     private JTabbedPane tabbedPane;
 
-    /** The logging area. */
-    private JTextArea loggingArea;
+    /** The loging area. */
+    private JTextArea logingArea;
 
     /** The filter text field. */
     private JTextField filterTextField;
@@ -120,8 +120,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /** The thread. */
     private Thread thread;
 
-    /** The logging. */
-    private VSLogging logging;
+    /** The loging. */
+    private VSLogging loging;
 
     /** The menu item states. */
     private VSMenuItemStates menuItemStates;
@@ -612,10 +612,10 @@ public class VSSimulator extends JPanel implements VSSerializable {
         this.globalTextFields = new ArrayList<String>();
 
         /* Not null if init has been called from the deserialization */
-        if (this.logging == null)
-            this.logging = new VSLogging();
+        if (this.loging == null)
+            this.loging = new VSLogging();
 
-        logging.logg(prefs.getString("lang.simulator.new"));
+        loging.log(prefs.getString("lang.simulator.new"));
 
         fillContentPane();
         updateFromPrefs();
@@ -625,7 +625,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         splitPaneV.setDividerLocation(
             prefs.getInteger("div.window.ysize")
-            - prefs.getInteger("div.window.loggsize"));
+            - prefs.getInteger("div.window.logsize"));
 
         splitPane1.setDividerLocation((int) (getPaintSize()/2) - 20);
 
@@ -647,17 +647,17 @@ public class VSSimulator extends JPanel implements VSSerializable {
      * Fills the content pane.
      */
     private void fillContentPane() {
-        loggingArea = logging.getLoggingArea();
+        logingArea = loging.getLoggingArea();
 
         splitPaneH = new JSplitPane();
         splitPaneV = new JSplitPane();
 
         /* Not null if init has been called from the deserialization */
         if (this.simulatorVisualization == null)
-            simulatorVisualization = new VSSimulatorVisualization(prefs, this, logging);
+            simulatorVisualization = new VSSimulatorVisualization(prefs, this, loging);
 
         taskManager = simulatorVisualization.getTaskManager();
-        logging.setSimulatorCanvas(simulatorVisualization);
+        loging.setSimulatorCanvas(simulatorVisualization);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new GridLayout(1, 1, 3, 3));
@@ -665,10 +665,10 @@ public class VSSimulator extends JPanel implements VSSerializable {
         canvasPanel.setMinimumSize(new Dimension(0, 0));
         canvasPanel.setMaximumSize(new Dimension(0, 0));
 
-        loggingPanel = new JPanel(new BorderLayout());
-        loggingPanel.add(new JScrollPane(loggingArea), BorderLayout.CENTER);
-        loggingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
-        loggingPanel.setPreferredSize(new Dimension(200, 1));
+        logingPanel = new JPanel(new BorderLayout());
+        logingPanel.add(new JScrollPane(logingArea), BorderLayout.CENTER);
+        logingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
+        logingPanel.setPreferredSize(new Dimension(200, 1));
 
         splitPaneH.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPaneH.setLeftComponent(createProcessPanel());
@@ -678,7 +678,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
         splitPaneV.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPaneV.setTopComponent(splitPaneH);
-        splitPaneV.setBottomComponent(loggingPanel);
+        splitPaneV.setBottomComponent(logingPanel);
         splitPaneV.setContinuousLayout(true);
 
         this.add(splitPaneV);
@@ -758,18 +758,18 @@ public class VSSimulator extends JPanel implements VSSerializable {
             toolsPanel.add(antiAliasing);
         }
 
-        JCheckBox loggingActiveCheckBox = new JCheckBox(
-            prefs.getString("lang.logging.active"));
-        loggingActiveCheckBox.setSelected(true);
-        loggingActiveCheckBox.addChangeListener(new ChangeListener() {
+        JCheckBox logingActiveCheckBox = new JCheckBox(
+            prefs.getString("lang.loging.active"));
+        logingActiveCheckBox.setSelected(true);
+        logingActiveCheckBox.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent ce) {
                 AbstractButton abstractButton =
                     (AbstractButton) ce.getSource();
                 ButtonModel buttonModel = abstractButton.getModel();
-                logging.isPaused(!buttonModel.isSelected());
+                loging.isPaused(!buttonModel.isSelected());
             }
         });
-        toolsPanel.add(loggingActiveCheckBox);
+        toolsPanel.add(logingActiveCheckBox);
 
         if (expertMode) {
             filterActiveCheckBox = new JCheckBox(
@@ -780,9 +780,9 @@ public class VSSimulator extends JPanel implements VSSerializable {
                     AbstractButton abstractButton =
                         (AbstractButton) ce.getSource();
                     ButtonModel buttonModel = abstractButton.getModel();
-                    logging.isFiltered(buttonModel.isSelected());
+                    loging.isFiltered(buttonModel.isSelected());
                     if (buttonModel.isSelected())
-                        logging.setFilterText(filterTextField.getText());
+                        loging.setFilterText(filterTextField.getText());
                 }
             });
             toolsPanel.add(filterActiveCheckBox);
@@ -791,25 +791,25 @@ public class VSSimulator extends JPanel implements VSSerializable {
             filterTextField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void insertUpdate(DocumentEvent de) {
-                    logging.setFilterText(filterTextField.getText());
+                    loging.setFilterText(filterTextField.getText());
                 }
                 public void removeUpdate(DocumentEvent de) {
-                    logging.setFilterText(filterTextField.getText());
+                    loging.setFilterText(filterTextField.getText());
                 }
                 public void changedUpdate(DocumentEvent de) {
-                    logging.setFilterText(filterTextField.getText());
+                    loging.setFilterText(filterTextField.getText());
                 }
             });
             toolsPanel.add(filterTextField);
 
             JButton clearButton = new JButton(
-                prefs.getString("lang.logging.clear"));
+                prefs.getString("lang.loging.clear"));
             clearButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     String command = ae.getActionCommand();
                     if (command.equals(
-                    prefs.getString("lang.logging.clear"))) {
-                        logging.clear();
+                    prefs.getString("lang.loging.clear"))) {
+                        loging.clear();
                     }
                 }
             });
@@ -1468,8 +1468,8 @@ public class VSSimulator extends JPanel implements VSSerializable {
         }
 
         /* Update the tools panel */
-        loggingPanel.remove(1);
-        loggingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
+        logingPanel.remove(1);
+        logingPanel.add(createToolsPanel(), BorderLayout.SOUTH);
         updateUI();
     }
 
@@ -1522,7 +1522,7 @@ public class VSSimulator extends JPanel implements VSSerializable {
             System.out.println("Deserializing: VSSimulator");
 
         serialize.setObject("simulator", this);
-        serialize.setObject("logging", logging);
+        serialize.setObject("loging", loging);
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();

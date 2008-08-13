@@ -64,8 +64,8 @@ public class VSSimulatorVisualization extends Canvas
     /** The prefs. */
     private VSPrefs prefs;
 
-    /** The logging. */
-    private VSLogging logging;
+    /** The loging. */
+    private VSLogging loging;
 
     /** The num processes. */
     private volatile int numProcesses;
@@ -472,11 +472,11 @@ public class VSSimulatorVisualization extends Canvas
      *
      * @param prefs the prefs
      * @param simulator the simulator
-     * @param logging the logging
+     * @param loging the loging
      */
     public VSSimulatorVisualization(VSPrefs prefs, VSSimulator simulator,
-                             VSLogging logging) {
-        init(prefs, simulator, logging);
+                             VSLogging loging) {
+        init(prefs, simulator, loging);
     }
 
     /**
@@ -484,13 +484,13 @@ public class VSSimulatorVisualization extends Canvas
      *
      * @param prefs the prefs
      * @param simulator the simulator
-     * @param logging the logging
+     * @param loging the loging
      */
     private void init(VSPrefs prefs, VSSimulator simulator,
-                      VSLogging logging) {
+                      VSLogging loging) {
         this.prefs = prefs;
         this.simulator = simulator;
-        this.logging = logging;
+        this.loging = loging;
         this.messageLines = new LinkedList<VSMessageLine>();
         this.messageLinesToRemove = new LinkedList<VSMessageLine>();
 
@@ -1300,7 +1300,7 @@ public class VSSimulatorVisualization extends Canvas
      * Starts/plays the simulator.
      */
     public void play() {
-        logging.logg(prefs.getString("lang.simulator.started"));
+        loging.log(prefs.getString("lang.simulator.started"));
         final long currentTime = System.currentTimeMillis();
 
         synchronized (processes) {
@@ -1338,7 +1338,7 @@ public class VSSimulatorVisualization extends Canvas
 
         simulator.finish();
         hasFinished = true;
-        logging.logg(prefs.getString("lang.simulator.finished"));
+        loging.log(prefs.getString("lang.simulator.finished"));
         paint();
 
         if (prefs.getBoolean("sim.periodic")) {
@@ -1359,7 +1359,7 @@ public class VSSimulatorVisualization extends Canvas
         }
 
         pauseTime = System.currentTimeMillis();
-        logging.logg(prefs.getString("lang.simulator.paused"));
+        loging.log(prefs.getString("lang.simulator.paused"));
         paint();
     }
 
@@ -1368,7 +1368,7 @@ public class VSSimulatorVisualization extends Canvas
      */
     public void reset() {
         if (!isResetted) {
-            logging.logg(prefs.getString("lang.simulator.resetted"));
+            loging.log(prefs.getString("lang.simulator.resetted"));
 
             isResetted = true;
             isPaused = false;
@@ -1402,7 +1402,7 @@ public class VSSimulatorVisualization extends Canvas
             }
 
             paint();
-            logging.clear();
+            loging.clear();
         }
     }
 
@@ -1677,8 +1677,8 @@ public class VSSimulatorVisualization extends Canvas
      */
     private VSInternalProcess createProcess(int processNum) {
         VSInternalProcess process =
-            new VSInternalProcess(prefs, processNum, this, logging);
-        logging.logg(prefs.getString("lang.process.new") + "; " + process);
+            new VSInternalProcess(prefs, processNum, this, loging);
+        loging.log(prefs.getString("lang.process.new") + "; " + process);
         return process;
     }
 
@@ -1799,7 +1799,7 @@ public class VSSimulatorVisualization extends Canvas
         processCounter = ((Integer) objectInputStream.readObject()).intValue();
 
         int num = ((Integer) objectInputStream.readObject()).intValue();
-        logging.clear();
+        loging.clear();
 
         if (num > numProcesses) {
             for (int i = numProcesses; i < num; ++i)

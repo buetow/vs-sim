@@ -128,14 +128,14 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
                 return;
 
             boolean vote = recvMessage.getBoolean("vote");
-            logg("Abstimmung von Prozess " + pid +
+            log("Abstimmung von Prozess " + pid +
                  " erhalten! Ergebnis: " + vote);
 
             if (!vote)
                 voteResult = false;
 
             if (votePids.size() == 0) {
-                logg("Abstimmungen von allen beteiligten Prozessen " +
+                log("Abstimmungen von allen beteiligten Prozessen " +
                      "erhalten! Globales Ergebnis: " + voteResult);
 
                 /* Remove the active schedule which has been created in the
@@ -156,7 +156,7 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
                 /* Remove the active schedule which has been created in the
                    onServerStart method */
                 removeSchedules();
-                logg("Alle Teilnehmer haben die Abstimmung erhalten");
+                log("Alle Teilnehmer haben die Abstimmung erhalten");
             }
         }
     }
@@ -202,11 +202,11 @@ public class VSTwoPhaseCommitProtocol extends VSAbstractProtocol {
             message.setInteger("pid", process.getProcessID());
             sendMessage(message);
 
-            logg("Abstimmung " + myVote + " versendet");
+            log("Abstimmung " + myVote + " versendet");
 
         } else if (recvMessage.getBoolean("isVoteResult")) {
             boolean voteResult = recvMessage.getBoolean("voteResult");
-            logg("Globales Abstimmungsergebnis erhalten. Ergebnis: " +
+            log("Globales Abstimmungsergebnis erhalten. Ergebnis: " +
                  voteResult);
 
             VSMessage message = new VSMessage();

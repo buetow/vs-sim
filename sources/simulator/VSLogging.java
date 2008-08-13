@@ -30,8 +30,8 @@ import javax.swing.*;
 import utils.*;
 
 /**
- * The class VSLogging, an object of this class is responsible for the logging
- * of text messages into the simulator's logging window.
+ * The class VSLogging, an object of this class is responsible for the loging
+ * of text messages into the simulator's loging window.
  *
  * @author Paul C. Buetow
  */
@@ -39,27 +39,27 @@ public class VSLogging {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
-    /** The logging area. */
-    private JTextArea loggingArea;
+    /** The loging area. */
+    private JTextArea logingArea;
 
     /** The filter text. */
     private String filterText;
 
-    /** The pause lines. Used for cacheing the logging if the logging is
+    /** The pause lines. Used for cacheing the loging if the loging is
      * deactivated for a while
      */
     private ArrayList<StringBuffer> pauseLines;
 
-    /** The logging lines. */
-    private ArrayList<StringBuffer> loggingLines;
+    /** The loging lines. */
+    private ArrayList<StringBuffer> logingLines;
 
     /** The simulator canvas. */
     private VSSimulatorVisualization simulatorVisualization;
 
-    /** The logging messages are filtered. */
+    /** The loging messages are filtered. */
     private boolean isFiltered;
 
-    /** The logging is paused. */
+    /** The loging is paused. */
     private boolean isPaused;
 
     /** The filter pattern. */
@@ -69,11 +69,11 @@ public class VSLogging {
      * Instantiates a new VSLogging object.
      */
     public VSLogging() {
-        loggingArea = new JTextArea(0, 0);
-        loggingArea.setEditable(false);
-        loggingArea.setLineWrap(true);
-        loggingArea.setWrapStyleWord(true);
-        loggingLines = new ArrayList<StringBuffer>();
+        logingArea = new JTextArea(0, 0);
+        logingArea.setEditable(false);
+        logingArea.setLineWrap(true);
+        logingArea.setWrapStyleWord(true);
+        logingLines = new ArrayList<StringBuffer>();
         pauseLines = new ArrayList<StringBuffer>();
         filterText = "";
     }
@@ -88,12 +88,12 @@ public class VSLogging {
     }
 
     /**
-     * Gets the logging area.
+     * Gets the loging area.
      *
-     * @return the logging area
+     * @return the loging area
      */
     public JTextArea getLoggingArea() {
-        return loggingArea;
+        return logingArea;
     }
 
     /**
@@ -101,11 +101,11 @@ public class VSLogging {
      *
      * @param message the message
      */
-    public void logg(String message) {
+    public void log(String message) {
         if (simulatorVisualization == null)
-            logg(message, 0);
+            log(message, 0);
         else
-            logg(message, simulatorVisualization.getTime());
+            log(message, simulatorVisualization.getTime());
     }
 
     /**
@@ -114,7 +114,7 @@ public class VSLogging {
      * @param message the message
      * @param time the time
      */
-    public synchronized void logg(String message, long time) {
+    public synchronized void log(String message, long time) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(VSTools.getTimeString(time));
         buffer.append(": ");
@@ -123,49 +123,49 @@ public class VSLogging {
         if (isPaused)
             pauseLines.add(buffer);
         else
-            loggFiltered(buffer);
+            logFiltered(buffer);
     }
 
     /**
-     * Sets if the logging is paused.
+     * Sets if the loging is paused.
      *
-     * @param isPaused true, if the logging is paused
+     * @param isPaused true, if the loging is paused
      */
     public synchronized void isPaused(boolean isPaused) {
         this.isPaused = isPaused;
 
         if (!isPaused) {
             for (StringBuffer buffer : pauseLines)
-                loggFiltered(buffer);
+                logFiltered(buffer);
 
             pauseLines.clear();
         }
     }
 
     /**
-     * If the logging is filtered, it's using the pattern matching.
+     * If the loging is filtered, it's using the pattern matching.
      *
-     * @param buffer the logging buffer to filter
+     * @param buffer the loging buffer to filter
      */
-    private void loggFiltered(StringBuffer buffer) {
-        loggingLines.add(buffer);
+    private void logFiltered(StringBuffer buffer) {
+        logingLines.add(buffer);
         if (!isFiltered) {
-            loggingArea.append(buffer.toString()+"\n");
-            loggingArea.setCaretPosition(
-                loggingArea.getDocument().getLength());
+            logingArea.append(buffer.toString()+"\n");
+            logingArea.setCaretPosition(
+                logingArea.getDocument().getLength());
 
         } else if (filterPattern != null &&
                    filterPattern.matcher(buffer).find()) {
-            loggingArea.append(buffer.toString()+"\n");
-            loggingArea.setCaretPosition(
-                loggingArea.getDocument().getLength());
+            logingArea.append(buffer.toString()+"\n");
+            logingArea.setCaretPosition(
+                logingArea.getDocument().getLength());
         }
     }
 
     /**
-     * Checks if the logging is filtered.
+     * Checks if the loging is filtered.
      *
-     * @param isFiltered true, if the logging is filtered
+     * @param isFiltered true, if the loging is filtered
      */
     public synchronized void isFiltered(boolean isFiltered) {
         this.isFiltered = isFiltered;
@@ -187,23 +187,23 @@ public class VSLogging {
     }
 
     /**
-     * Clears the logging.
+     * Clears the loging.
      */
     public synchronized void clear() {
-        loggingLines.clear();
+        logingLines.clear();
         pauseLines.clear();
-        loggingArea.setText("");
+        logingArea.setText("");
     }
 
     /**
-     * Filters the logging.
+     * Filters the loging.
      */
     private void filter() {
         try {
             filterPattern = Pattern.compile(filterText);
             StringBuffer buffer = new StringBuffer();
 
-            for (StringBuffer line : loggingLines) {
+            for (StringBuffer line : logingLines) {
                 if (isFiltered) {
                     Matcher matcher = filterPattern.matcher(line);
                     if (matcher.find()) {
@@ -215,11 +215,11 @@ public class VSLogging {
                     buffer.append("\n");
                 }
             }
-            loggingArea.setText(buffer.toString());
+            logingArea.setText(buffer.toString());
 
         } catch (Exception e) {
             filterPattern = null;
-            loggingArea.setText("");
+            logingArea.setText("");
         }
     }
 }

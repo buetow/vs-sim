@@ -79,7 +79,7 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
         if (!recvMessage.getBoolean("fromServer"))
             return;
 
-        logg("message: " + recvMessage.getInteger("counter"));
+        log("message: " + recvMessage.getInteger("counter"));
 
         VSMessage message = new VSMessage();
         message.setBoolean("fromClient", true);
@@ -113,7 +113,7 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
         if (!recvMessage.getBoolean("fromClient"))
             return;
 
-        logg("message: " + recvMessage.getInteger("counter"));
+        log("message: " + recvMessage.getInteger("counter"));
 
         VSMessage message = new VSMessage();
         message.setBoolean("fromServer", true);

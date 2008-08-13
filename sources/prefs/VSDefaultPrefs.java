@@ -101,8 +101,8 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
         initString("lang.events.process", "Prozessereignisse");
         initString("lang.file", "Datei");
         initString("lang.filter", "Filter");
-        initString("lang.logging.active", "Logging");
-        initString("lang.logging.clear", "Loggs löschen");
+        initString("lang.loging.active", "Logging");
+        initString("lang.loging.clear", "Loggs löschen");
         initString("lang.message", "Nachricht");
         initString("lang.message.recv", "Nachricht erhalten");
         initString("lang.message.sent", "Nachricht versendet");
@@ -217,7 +217,7 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
 
         initInteger("div.window.prefs.xsize", 400, "Einstellungsfenster X-Achse", 550, 3200, "px");
         initInteger("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
-        initInteger("div.window.loggsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
+        initInteger("div.window.logsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
         initInteger("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
         initInteger("div.window.xsize", 1024, "Hauptfenster X-Achse", 750, 3200, "px");
         initInteger("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");

@@ -72,8 +72,8 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
     /** A temp. color. For internal usage. */
     protected Color tmpColor;
 
-    /** The logging object. */
-    protected VSLogging logging;
+    /** The loging object. */
+    protected VSLogging loging;
 
     /** The simulator's default prefs. */
     protected VSPrefs prefs;
@@ -197,12 +197,12 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
      * @param prefs the simulator's default prefs
      * @param processNum the process num
      * @param simulatorVisualization the simulator canvas
-     * @param logging the logging object
+     * @param loging the loging object
      */
     public VSAbstractProcess(VSPrefs prefs, int processNum,
                              VSSimulatorVisualization simulatorVisualization,
-                             VSLogging logging) {
-        init(prefs, processNum, simulatorVisualization, logging);
+                             VSLogging loging) {
+        init(prefs, processNum, simulatorVisualization, loging);
     }
 
     /**
@@ -211,10 +211,10 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
      * @param prefs the simulator's default prefs
      * @param processNum the process num
      * @param simulatorVisualization the simulator canvas
-     * @param logging the logging object
+     * @param loging the loging object
      */
     protected void init(VSPrefs prefs, int processNum,
-                        VSSimulatorVisualization simulatorVisualization, VSLogging logging) {
+                        VSSimulatorVisualization simulatorVisualization, VSLogging loging) {
         /* May be not null if called from deserialization */
         if (this.protocolsToReset == null)
             this.protocolsToReset = new ArrayList<VSAbstractProtocol>();
@@ -222,7 +222,7 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
         this.processNum = processNum;
         this.prefs = prefs;
         this.simulatorVisualization = simulatorVisualization;
-        this.logging = logging;
+        this.loging = loging;
 
         processID = simulatorVisualization.processIDCount();
         random = new VSRandom(processID*processNum+processID+processNum);
@@ -578,12 +578,12 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
     }
 
     /**
-     * Logg a message to the logging area.
+     * Logg a message to the loging area.
      *
-     * @param message the message to logg
+     * @param message the message to log
      */
-    public void logg(String message) {
-        logging.logg(toString() + "; " + message, globalTime);
+    public void log(String message) {
+        loging.log(toString() + "; " + message, globalTime);
     }
 
     /* (non-Javadoc)

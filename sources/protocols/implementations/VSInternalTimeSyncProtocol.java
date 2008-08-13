@@ -92,7 +92,7 @@ public class VSInternalTimeSyncProtocol extends VSAbstractProtocol {
         long serverTime = recvMessage.getLong("time");
         long newTime = serverTime + (long) ((tMax + tMin) / 2 );
 
-        logg("Server Zeit: " + serverTime + "; (t_min,t_max): (" + tMin +
+        log("Server Zeit: " + serverTime + "; (t_min,t_max): (" + tMin +
              "," + tMax + "); Alte Zeit: " + process.getTime() +
              "; Neue Zeit: " + newTime + "; Offset: " +
              (process.getTime() - newTime));

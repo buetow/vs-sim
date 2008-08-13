@@ -104,10 +104,10 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
             else
                 return;
 
-            logg("ACK von Prozess " + pid + " erhalten!");
+            log("ACK von Prozess " + pid + " erhalten!");
 
             if (pids.size() == 0) {
-                logg("ACKs von allen beteiligten Prozessen " +
+                log("ACKs von allen beteiligten Prozessen " +
                      "erhalten!");
 
                 /* Remove the active schedule which has been created in the
@@ -151,10 +151,10 @@ public class VSReliableMulticastProtocol extends VSAbstractProtocol {
             sendMessage(message);
 
             if (ackSent) {
-                logg("ACK erneut versendet");
+                log("ACK erneut versendet");
 
             } else {
-                logg("ACK versendet");
+                log("ACK versendet");
                 ackSent = true;
             }
         }

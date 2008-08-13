@@ -71,7 +71,7 @@ public class VSMessage extends VSPrefs {
      */
     private long lamportTime;
 
-    /** Each message has its own unique ID. The ID will show up in the logging
+    /** Each message has its own unique ID. The ID will show up in the loging
      * window of the simulator
      */
     private long messageID;

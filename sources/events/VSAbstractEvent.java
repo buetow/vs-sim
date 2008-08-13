@@ -174,10 +174,10 @@ abstract public class VSAbstractEvent extends VSSerializablePrefs {
     /**
      * Logg a specific message.
      *
-     * @param message the logging message
+     * @param message the loging message
      */
-    public void logg(String message) {
-        process.logg(/*toString() + "; " + */message);
+    public void log(String message) {
+        process.log(/*toString() + "; " + */message);
     }
 
     /**
