@@ -26,15 +26,15 @@ In diesem Kapitel wird auf die Implementierung des Simulators eingegangen. Der S
 	\label{tb:Pakete}
 \end{table}
 
-Da es sonst den Rahmen sprengen würde, soll im Folgenden der komplette Quelltext nicht bis in das letzte Detail behandelt werden. Der Quelltext erstreckt sich nämlich, einschließlich Kommentare, auf über 15.000 Zeilen und über 61 Dateien. Zudem ist die generierte Quelltext-Dokumentation (Javadoc) über 2MB groß. Alle folgenden UML-Diagramme stellen aufgrund der Übersichtlichkeit lediglich die wesentlichen Dinge dar. Alle Details lassen sich im Quelltext und der dazugehörigen Dokumentation einsehen. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete}. in alphanumerischer Reihenfolge aufgeführt.  
+Im Folgenden wird der Quelltext auszugsweise behandelt. Der Quelltext erstreckt sich, einschließlich Kommentare, auf ca. 15.000 Zeilen Text und 61 Dateien. Der Umfang der generierten Quelltext-Dokumentationen im Javadoc-Format ist ca. 2MB groß. Alle folgenden UML-Diagramme stellen zwecks Übersichtlichkeit lediglich die wesentlichen Sachverhalte dar. Alle weiteren Details k\"{o}nnen im Quelltext und der dazugehörigen Dokumentation eingesehen werden. Die Paketstruktur des Quelltextes ist in Tabelle \ref{tb:Pakete}. in alphanumerischer Reihenfolge aufgeführt.  
 
 \section{Einstellungen und Editoren}
 
-Eine Simulation ist von einer Vielzahl von Einstellungen abhängig. Da auf diese Einstellungen in den weiteren Teilkapitel stets zurückgegriffen wird, macht es Sinn, die dazugehörigen Klassen zuerst zu betrachten.
+Der Verlauf einer Simulation ist von einer Vielzahl von Einstellungen abhängig. Da auf diese Einstellungen in Weiteren stets zurückgegriffen wird, werden die dazugeh\"{o}rigen Klassen zuerst betrachtet. 
 
 \subsubsection{Einstellungsobjekte}
 
-In Abbildung \ref{fig:PackagePrefs}. ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen für eine spätere Verwendung dynamisch ablegen und stellt somit einen Container für diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle seine Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Ereignisobjekt für lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Später wird noch erklärt, dass Protokollobjekte auch als Ereignisse eingesetzt werden, womit Protokolleinstellungen auch in einem \textit{VSPrefs}-Objekt abgespeichert werden k\"{o}nnen. Selbst Nachrichtenobjekte besitzt hiervon eine eigene Instanz, wobei hier die zu verschickenden Daten abgelegt werden. 
+In Abbildung \ref{fig:PackagePrefs}. ist der Aufbau des Pakets \textit{prefs} zu sehen. In einer Instanz der Klasse \textit{VSPrefs} lassen sich viele verschiedene Daten als Variablen für eine spätere Verwendung dynamisch ablegen, damit stellt somit einen Container für diese Daten dar. In einem \textit{VSPrefs}-Objekt speichert der Simulator alle Einstellungen ab. Zudem besitzt jedes Prozessobjekt und jedes Ereignisobjekt für lokale Einstellungen seine eigene Instanz von \textit{VSPrefs}. Später wird gezeigt, wie Protokollobjekte auch als Ereignisse eingesetzt werden, womit Protokolleinstellungen auch in einem \textit{VSPrefs}-Objekt abgespeichert werden k\"{o}nnen. Auch Nachrichtenobjekte besitzt hiervon eine eigene Instanz dieser Klasse, um die zu verschickenden Daten zwischen zu speichern. 
 
 \begin{figure}[h]
 	\centering
@@ -43,11 +43,11 @@ In Abbildung \ref{fig:PackagePrefs}. ist der Aufbau des Pakets \textit{prefs} zu
 	\label{fig:PackagePrefs}
 \end{figure}
 
-Jede Variable besteht aus einen Datentypen, einen Variablennamen und einer optionalen Beschreibung sowie einen Wert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mit Hilfe der \textit{VSPrefsRestriction}-Klasse implementiert wird. Da der Anwender beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
+Jede Variable hat einen Datentypen, einen Variablennamen, eine optionale Beschreibung sowie einen Variablenwert. Einige Datentypen unterstützen auch die Angabe von Minimal- und Maximalwerten (zum Beispiel besteht eine Prozentangabe aus einen Integerwert zwischen \textit{0} und \textit{100}), was mit Hilfe der Klasse \textit{VSPrefsRestriction} implementiert wird. Da der Anwender beispielsweise bei Prozent ein \textit{\%} und bei Millisekunden ein \textit{ms} hinter der Variable sehen möchte, kann für jede Variable auch ein optionaler Einheiten-String abgespeichert werden. 
 
-Eine Variablenbeschreibung wird für die Darstellung im GUI verwendet, während der Variablenname eher für die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) als Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn für eine Variable keine Beschreibung existiert so wird, wie in Abbildung \ref{fig:SimulationseinstellungenExperten}. anhand der Farbvariablen schon gesehen wurde, für die Anzeige einer Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die in Tabelle \ref{tb:VariablenPraefixe}. angegebenen Präfixkonventionen. Alle verfügbaren Typen wurden bereits in Tabelle \ref{tb:VariablenDatentypen}. aufgelistet. \textit{VSPrefs} stellt für alle Variablentypen entsprechende Zugriffsmethoden zur Verfügung.  
+Eine Variablenbeschreibung wird für die Darstellung im GUI verwendet, während der Variablenname für die interne Verwendung vom Simulator verwendet wird. Zum Beispiel hat die Variable \textit{message.prob.outage} (Verlustwahrscheinlichkeit einer Nachricht) als Variablenbeschreibung ``Nachrichtenverlustw'keit''. Wenn für eine Variable keine Beschreibung existiert so werden f\"{u}r die Anzeige einer Variable der Datentyp und der Variablenname verwendet. Variablennamen verwenden die in Tabelle \ref{tb:VariablenPraefixe}. angegebenen Präfixkonventionen. Alle verfügbaren Datentypen wurden bereits in Tabelle \ref{tb:VariablenDatentypen}. aufgelistet. Die Klasse \textit{VSPrefs} stellt für alle Variablentypen entsprechende Selektoren zur Verfügung.  
 
-Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch in der Quelltext-Dokumentation eingesehen werden können. Stattdessen werden die Methoden nur anhand des Integer-Datentyps verdeutlicht. Für alle anderen Typen gilt fast alles analog. Für Integer stehen in \textit{VSPrefs} folgende Methoden zur Verfügung:
+Im Folgenden werden einige der existierenden Methoden aufgelistet, eine komplette Liste kann in der Quelltext-Dokumentation eingesehen werden. Die Methoden werden anhand des Integer-Datentyps verdeutlicht. Für Integer stehen in \textit{VSPrefs} folgende Methoden zur Verfügung:
 
 \begin{itemize}
 	\setlength{\itemsep}{-2mm}
@@ -80,27 +80,27 @@ Im Folgenden werden nicht alle existierenden Methoden aufgelistet, da diese auch
 		\textit{sim} & Allgemeine Simulationsvariablen & \textit{Integer: sim.process.num = 3}\\
 	\end{tabular}
 	}
-	\caption{Konventionen für Variablennamen-Präfixe in \textit{VSDefautPrefs}}
+	\caption{Konventionen f\"{u}r Präfixe von Variablennamen}
 	\label{tb:VariablenPraefixe}
 \end{table}
 
-Hierbei stellt \textit{key} den Variablennamen- und \textit{val} den Variablenwert dar. \textit{descr} ist eine optionale Variablenbeschreibung. Es können sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern allerdings als Integer-Objekt abgespeichert (für eine spätere Serialisierung, mehr dazu aber später) und macht somit keinen großen Unterschied. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} zurück.
+Hierbei steht \textit{key} f\"{u}r den Variablennamen- und \textit{val} f\"{u}r den Variablenwert. \textit{descr} ist die optionale Variablenbeschreibung. Es können sowohl Java's Integer-Objekte, als auch Java's primitiver Integer-Typ \textit{int} verwendet werden. Ein \textit{int}-Wert wird intern zwecks Serialisierbarkeit als Integer-Objekt abgespeichert. Die Methode \textit{getIntegerKeySet} gibt alle vorhandenen Integer-Variablennamen (\textit{key}s) als \textit{Set} TODO zurück.
 
-\textit{VSPrefs} bietet auch eine Reihe von \textit{initInteger}-Methoden an, welche sich von den \textit{setInteger}-Methoden dadurch unterscheiden, dass sie einer Variable nur einen Wert zuweisen, wenn sie vorher noch nicht initialisiert wurde, was durch \textit{setInteger} oder \textit{initInteger} selbst geschehen sein kann. Eine komplette Übersicht aller Methoden (auch für andere Datentypen) gibt es in der Quelltext-Dokumentation.
+Die Klasse \textit{VSPrefs} bietet auch eine Reihe von \textit{initInteger}-Methoden an, welche sich von den \textit{setInteger}-Methoden dadurch unterscheiden, dass sie einer Variable nur einen Wert zuweisen, wenn sie vorher noch nicht initialisiert wurde, was durch \textit{setInteger} oder \textit{initInteger} selbst geschehen sein kann. Eine komplette Übersicht aller Methoden (auch für andere Datentypen) gibt es in der Quelltext-Dokumentation.
 
-\textit{VSPrefs} speichert alle Integervariablen in einem \textit{HashMap<String,Integer>}-Objekt ab, wobei der String-Wert den Variablennamen \textit{key} angibt. Für die Beschreibung \textit{descr}, den Einheiten-String \textit{unit} sowie möglichen Minimal- und Maximalwerte werden separate Instanzen von \textit{HashMap} verwendet. Da alle \textit{HashMap}-Objekte synchronisiert sind, können alle Methoden von \textit{VSPrefs} aus verschiednenen Threads gleichzeitig verwendet werden. 
+Die Klasse \textit{VSPrefs} speichert alle Integervariablen in einem \textit{HashMap<String,Integer>}-Objekt ab, wobei der String-Wert den Variablennamen \textit{key} angibt. Für die Beschreibung \textit{descr}, den Einheiten-String \textit{unit} sowie möglichen Minimal- und Maximalwerte werden separate Instanzen von \textit{HashMap} verwendet. Da die Methoden eines \textit{HashMap}-Objektes synchronisiert sind, können alle Methoden von \textit{VSPrefs} aus verschiednenen Threads gleichzeitig verwendet werden. 
 
-\textit{VSSerializablePrefs} implementiert das Interface \textit{VSSerializable} und kann somit alle enthaltenen Daten in eine Datei abspeichern beziehungsweise laden. Auf die Serialisierung und Deserialisierung von Simulationen wird später genauer eingegangen.
+Die Klasse \textit{VSSerializablePrefs} implementiert das Interface \textit{VSSerializable} und kann somit durch Serialisierung alle enthaltenen Daten in eine Datei abspeichern beziehungsweise wieder in den Speicher laden. 
 
-Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSSerializablePrefs} und initialisiert bei Instantiierung automatisch alle verfügbaren Simulationsvariablen (bereits schon \"{u}ber 160) mit ihren Standardwerten. Dort sind auch alle Spracheinstellungen abgelegt. Sollte jemand den Simulator in eine andere Sprache, zum Beispiel ins Englische, übersetzen wollen, so muss er lediglich diese Datei und die Protokoll-Klassen (mehr dazu später) editieren. Die Spracheinstellungen sind einem \textit{VSPrefs}-Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen für Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort für den Protokollentwickler bedeutet und für jede neu programmierte Textausgabe nicht ständig \textit{VSDefaultPrefs.java} editiert werden muss. 
+Die Klasse \textit{VSDefaultPrefs} erweitert \textit{VSSerializablePrefs} und initialisiert bei ihrer Instantiierung automatisch alle verfügbaren Simulationsvariablen mit Standardwerten. Hier sind auch alle Spracheinstellungen abgelegt. M\"{o}chte man den Simulator in eine andere Sprache (z.B. Englisch) übersetzen wollen, so muss lediglich diese Datei und die Protokoll-Klassen editiert werden. Die Spracheinstellungen sind einem referenzierten \textit{VSPrefs}-Objekt als versteckte String-Variablen abgespeichert. Spracheinstellungen für Protokolle wurden in den Protokollklassen direkt angegeben, da dies mehr Komfort für Protokollentwickler bedeutet und damit für jede neu programmierte Textausgabe nicht \textit{VSDefaultPrefs.java} editiert werden muss. 
 
-Alle Variablen die als Präfix \textit{lang}, \textit{keyevent}, \textit{div} oder \textit{col} im Namen tragen, sind versteckte Variablen und werden in einem Editor nicht angezeigt. Im Expertenmodus sind hingegen nur Variablen, die mit \textit{lang} und \textit{keyevent} beginnen, versteckt. Somit lassen sich im Expertenmodus weitere Variablen vom Anwender editieren.
+Alle Variablen die als Präfix \textit{lang}, \textit{keyevent}, \textit{div} oder \textit{col} im Variablennamen tragen, sind versteckte Variablen und werden in einem Editor nicht angezeigt. Im Expertenmodus sind hingegen nur Variablen, die mit \textit{lang} und \textit{keyevent} beginnen, versteckt. Im Expertenmodus lassen sich so weitere Variablen vom Anwender editieren.
 
 \subsubsection{Editorobjekte}
 
-Wie Variablen intern abgespeichert werden, ist bereits bekannt. Für das Editieren der Variablen werden Editor-Objekte verwendet. In Abbildung \ref{fig:PackagePrefsEditors}. ist die Klassenstruktur des dazugehörigen Paketes \textit{prefs.editors} angegeben. 
+Wie Variablen intern abgespeichert werden, ist nun bekannt. Für das Editieren von Variablen werden Editor-Objekte verwendet. In Abbildung \ref{fig:PackagePrefsEditors}. ist die Klassenstruktur des dazugehörigen Paketes \textit{prefs.editors} angegeben. 
 
-Die Basis eines Editors stellt die abstrakte Klasse \textit{VSAbstractEditor} dar, dem ein \textit{VSPrefs} Objekt zum Editieren übergeben wird. Ein Editor stellt alle verfügbaren nicht-versteckten Variablen des \textit{VSPrefs}-Objektes im GUI dar und bietet gleichzeitig die Möglichkeit, alle Variablen darüber zu editieren. Für das Editieren von Farbwerten wird auf \textit{VSColorChooser} zurückgegriffen. Die Klasse \textit{VSEditorTable} ist für das \textit{JTable}-Objekt aus Java's Swing-Bibliothek (vgl. \cite{Swing}) zuständig, welches bei der graphischen Darstellung aller Variablen eingesetzt wird. Die abstrakte Klasse \textit{VSAbstractBetterEditor} wurde, wegen der Übersicht, als Zwischenschritt eingefügt. 
+Die Basis eines solchen Editors ist die abstrakte Klasse \textit{VSAbstractEditor}. Jedem Objekt dieser Klasse wird jeweils ein \textit{VSPrefs}-Objekt zum Editieren übergeben. Ein Editor stellt alle verfügbaren nicht-versteckten Variablen des \textit{VSPrefs}-Objektes im GUI dar und bietet die Möglichkeit diese Variablen zu editieren. Für das Editieren von Farbwerten wird auf die Klasse \textit{VSColorChooser} zurückgegriffen. Die Klasse \textit{VSEditorTable} ist für das \textit{JTable}-Objekt aus Java's Swing-Bibliothek (s. \cite{Swing}) zuständig, welches zur graphischen Darstellung aller Variablen eingesetzt wird. Die abstrakte Klasse \textit{VSAbstractBetterEditor} wurde zur Verbesserung der Wartbarkeit des Quelltextes als Zwischenklasse eingef\"{u}hrt. 
 
 \begin{figure}[h]
 	\centering
@@ -109,21 +109,22 @@ Die Basis eines Editors stellt die abstrakte Klasse \textit{VSAbstractEditor} da
 	\label{fig:PackagePrefsEditors}
 \end{figure}
 
-Die Klasse \textit{VSSimulatorEditor} dient für das Editieren der globalen Simulationseinstellungen und \textit{VSProcessEditor} für das Editieren der Prozesseinstellungen sowie der dazugehörigen Protokollvariablen. Da diese beiden Klassen von \textit{VSAbstractBetterEditor} erben, können sie mit Hilfe von \textit{VSEditorFrame} in einem separaten Fenster angezeigt werden. Alternativ können die Editoren auch in der Sidebar im Tab ``Variablen'' angezeigt werden. In Abbildung \ref{fig:Simulationseinstellungen}. wurde bereits ein \textit{VSEditorFrame} in Aktion gesehen. In Abbildung \ref{fig:NeueSimulationVariablen}. wurde hingegen ein Prozesseditor in der Sidebar geöffnet. Für Protokolle gibt es keine separate Editor-Klasse, da sie bereits vom Prozesseditor aus editiert werden können. Dabei iteriert der Prozesseditor über alle für den jeweiligen Prozess verfügbaren Protokollobjekte und fügt deren Variablen in den Prozesseditor zusätzlich ein. Somit erscheinen die Prozess- und die dazugehörigen Protokollvariablen im selben Editor und bieten dem Benutzer so eine bessere Übersicht.
+Die Klasse \textit{VSSimulatorEditor} erlaubt das Editieren der globalen Simulationseinstellungen und der \textit{VSProcessEditor} das Editieren der Prozesseinstellungen sowie der dazugehörigen Protokollvariablen. Da diese beiden Klassen die abstrakte Klasse \textit{VSAbstractBetterEditor} erweitern, können sie mit Hilfe von \textit{VSEditorFrame} in einem separaten Fenster angezeigt werden. Alternativ können die Editoren auch in der Sidebar im Tab ``Variablen'' angezeigt werden. In Abbildung \ref{fig:Simulationseinstellungen}. wurde bereits ein \textit{VSEditorFrame} in Aktion gesehen. In Abbildung \ref{fig:NeueSimulationVariablen}. hingegen wurde ein Prozesseditor in der Sidebar geöffnet. Für Protokolle gibt es keine separate Editor-Klasse, da diese bereits im Prozesseditor editiert werden können. Hierbei iteriert der Prozesseditor über alle dem jeweiligen Prozess verfügbaren Protokollobjekte und fügt deren Variablen in den Prozesseditor ein. Somit erscheinen die Prozess- und die dazugehörigen Protokollvariablen im selben Editor und bieten dem Benutzer eine bessere Übersicht.
 
 \section{Ereignisse}
 
-Für jedes Ereignis existiert eine dazugehörige Klasse, welche die auszuführenden Aktionen implementiert. Eine Instanz davon wird für eine spätere Ausführung dem Task-Manager übergeben. Auf den Task-Manager wird später noch genauer eingegangen. 
-Jedes programmierbare Ereignis muss, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Der Simulator bezieht alle verf\"{u}gbaren Ereignisse aus \textit{VSRegisterEvents}, womit der Entwickler bei jeder Entwicklung eines neuen Ereignisses keine andere Stelle mehr im Quelltext des gesamten Simulators \"{a}ndern muss. Da sich die Anzahl der verfügbaren Ereignisklassen des Simulators bei Laufzeit nicht ändert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind hier statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann müssen alle neuen Ereignisse per Hand in die Datei \textit{VSRegisteredEvents.java} übernommen- und der Simulator neu kompiliert werden.
+Für jedes Ereignis existiert eine dazugehörige Klasse, welche die auszuführenden Aktionen implementiert. Eine Instanz einer solchen Klasse wird für eine spätere Ausführung dem Task-Manager übergeben. 
+
+Jedes programmierbare Ereignis muss, bevor es vom Simulator verwendet werden kann, in der statischen Klasse \textit{VSRegisteredEvents} registriert werden. Der Simulator bezieht die Liste aller verf\"{u}gbaren Ereignisse aus \textit{VSRegisterEvents}, wodurch der Entwickler bei der Entwicklung eines neuen Ereignisses keine andere Stelle im Quelltext des Simulators \"{a}ndern muss. Da sich die Anzahl der verfügbaren Ereignisklassen des Simulators bei Laufzeit nicht ändert, gibt es keine Instanzen von \textit{VSRegisteredEvents}. Alle Methoden und Klassenattribute sind statisch. Wenn beispielsweise eigene Ereignisse implementiert werden, dann müssen alle neuen Ereignisse per Hand in der Quelltext-Datei \textit{VSRegisteredEvents.java} übernommen werden, und der Simulator muss neu kompiliert werden.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=13.5cm]{images/events}
-	\caption{Die Pakete \textit{events} und \textit{events.*}}
+	\caption{Das Paket \textit{events.*}}
 	\label{fig:PackageEvents}
 \end{figure}
 
-In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in verschiedenen Paketen liegen (s. Abbildung \ref{fig:PackageEvents}.):
+In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschieden, die jeweils in einem unterschiedlichen Paket liegen (s. Abbildung \ref{fig:PackageEvents}.):
 
 \begin{enumerate}
 	\item \textit{events.implementations}: In diesem Paket befinden sich alle Ereignisse, die ohne weitere Spezialbehandlung vom Simulator eingesetzt werden können und vom Benutzer direkt im Ereigniseditor programmierbar sind. 
@@ -134,43 +135,43 @@ In der Implementierung wird zwischen drei Haupttypen von Ereignissen unterschied
 
 	\item \textit{events.internal}: In diesem Paket befinden sich alle Ereignisse, die vom Simulator intern verwendet werden. 
 		\begin{itemize}
-			\item \textit{VSAbstractInternalEvent}: Diese Klasse stellt weitere Methoden zur Verfügung, die von allen internen Ereignissen benötigt werden. Derzeit betrifft dies nur Methoden zur Serialisierung der gegebenen Objekte. 
-			\item \textit{VSMessageReceiveEvent}: Diese Klasse wird für die Ankunft einer Nachricht bei einem Empfängerprozess benötigt. Sie kapselt die eigentliche Nachricht und überprüft, ob der Empfängerprozess das zur Nachricht dazugehörige Protokoll versteht. Diese Klasse überprüft auch die Simulationseinstellung ``Nur relevante Nachrichten anzeigen'' und entscheidet, ob die Nachricht nach Eintreffen in der Visualisierung und im Logfenster berücksichtigt werden soll oder nicht.
-			\item \textit{VSProtocolEvent}: Diese Klasse implementiert gleichzeitig vier verschiedene Ereignisse: Das Aktivieren/Deaktivieren eines Servers/Clients eines gegebenen Protokolls. Der Ereigniseditor berechnet anhand der verfügbaren Protokolle automatisch alle möglichen Kombinationen und bietet sie dem Anwender in seiner Auswahl an. Für alle dieser vier Ereignisse wird jeweils ein Objekt von \textit{VSProtocolEvent} verwendet, jedoch mit jeweils anderen Attributwerten.  
-			\item \textit{VSProtocolScheduleEvent}: Diese Klasse wird für die Wecker-Ereignisse benötigt. Wecker-Ereignisse können nur von Protokollen (mehr dazu später) erstellt werden. \textit{VSProtocolScheduleEvent} besitzt eine Referenz auf das gegebene Protokoll und ruft bei Ereigniseintrittszeit entweder die Methode \textit{onServerScheduleStart} bei einem Server- oder \textit{onClientScheduleStart} bei einem Clientprotokoll auf. 
+			\item \textit{VSAbstractInternalEvent}: Diese Klasse stellt weitere Methoden zur Verfügung, die von allen internen Ereignissen zur Serialisierung benötigt werden. 
+			\item \textit{VSMessageReceiveEvent}: Diese Klasse wird für die Ankunft einer Nachricht bei einem Empfängerprozess benötigt. Sie kapselt die eigentliche Nachricht und überprüft, ob der Empfängerprozess das zur Nachricht gehörige Protokoll versteht. Diese Klasse überprüft auch die Simulationseinstellung ``Nur relevante Nachrichten anzeigen'' und entscheidet, ob die Nachricht nach Eintreffen in der Visualisierung und im Logfenster berücksichtigt werden soll oder nicht.
+			\item \textit{VSProtocolEvent}: Diese Klasse implementiert gleichzeitig vier verschiedene Ereignisse: Das Aktivieren beziehungsweise Deaktivieren eines Servers oder Clients eines gegebenen Protokolls. Der Ereigniseditor berechnet anhand der verfügbaren Protokolle automatisch alle möglichen Kombinationen und bietet sie dem Anwender in seiner Auswahl an. Für alle dieser vier Ereignisse wird jeweils ein Objekt von \textit{VSProtocolEvent} verwendet, jeweils mit individuellen Attributwerten.  
+			\item \textit{VSProtocolScheduleEvent}: Diese Klasse wird für die Wecker-Ereignisse benötigt. Wecker-Ereignisse können nur von Protokollen erstellt werden. \textit{VSProtocolScheduleEvent} besitzt eine Referenz auf das verwendete Protokoll und ruft bei Ereigniseintrittszeit entweder die Methode \textit{onServerScheduleStart} bei einem Server- oder \textit{onClientScheduleStart} bei einem Clientprotokoll auf. 
 		\end{itemize}
-	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt hier seine eigene Klasse. Alle Protokolle erben hierbei von der in Abbildung \ref{fig:PackageEvents}. zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- beziehungsweise einer Clientanfrage entspricht (s. Kapitel 4.4.4.). 
+	\item \textit{protocols.implementations}: In diesem Paket befinden sich alle Protokollimplementierung. Jedes Protokoll besitzt seine eigene Klasse. Alle Protokolle erben hierbei von der in Abbildung \ref{fig:PackageEvents}. zu sehenden Klasse \textit{protocols.VSAbstractProtocol}. Da \textit{protocols.VSAbstractProtocol} von \textit{events.VSAbstractEvent} erbt, kann ein Protokollobjekt auch als Ereignis eingesetzt werden. Ein solches Ereignis ruft bei Eintritt entweder die Methode \textit{onServerStart} oder die Methode \textit{onClientStart} des Protokolls auf, was einer Server- beziehungsweise einer Clientanfrage entspricht (s. Kapitel 4.4.4.). 
 \end{enumerate}
 
-Alle Ereignisse, die das Interface \textit{VSCopyableEvent} implementieren, können vom Anwender im Ereigniseditor mit einem Rechtsklick kopiert werden und müssen die Methode \textit{initCopy(VSAbstractEvent copy)} implementieren. Dort werden dann alle relevanten Attribute in das neue Ereignis \textit{copy} kopiert. 
+Alle Ereignisse, die das Interface \textit{VSCopyableEvent} implementieren, können vom Anwender im Ereigniseditor mit einem Rechtsklick kopiert werden, des Weiteren müssen sie die Methode \textit{initCopy(VSAbstractEvent copy)} implementieren. Es werden dann alle relevanten Attribute in das neue Ereignis \textit{copy} kopiert. 
 
 Alle Ereignisklassen erweitern die abstrakte Klasse \textit{VSAbstractEvent} und müssen folgende abstrakten Methoden implementieren:
 
 \begin{itemize}
-	\item \textit{abstract public void onInit()}: Bevor ein Ereignisobjekt vom Simulator verwendet werden kann, muss es initialisiert werden. Je nach Ereignis können hier verschiedene Werte initialisiert werden. Diese Methode wird pro Ereignisobjekt nach Erstellung nur ein einziges Mal ausgeführt. 
+	\item \textit{abstract public void onInit()}: Bevor ein Ereignisobjekt vom Simulator verwendet werden kann, muss es initialisiert werden. Je nach Ereignis können verschiedene Werte initialisiert werden. Diese Methode wird pro Ereignisobjekt nach dessen Erzeugung nur ein einziges Mal ausgeführt. 
 	\item \textit{abstract public void onStart()}: Diese Methode wird jedes Mal ausgeführt, wenn das Ereignis eintritt. Sie stellt somit das Kernstück eines Ereignisses dar. 
 \end{itemize}
 
-Des Weiteren werden folgende nicht-abstrakte Methoden von \textit{VSAbstractEvent} vererbt:
+Des Weiteren werden folgende nicht-abstrakte Methoden der Klasse \textit{VSAbstractEvent} geerbt:
 
 \begin{itemize}
 	\item \textit{public void log(String message)}: Diese Methode schreibt eine Lognachricht in das Simulationslogfenster.
-	\item \textit{public VSAbstractEvent getCopy()}: Diese Methode erstellt vom aktuellen Ereignis eine Kopie, worauf eine Referenz zurückgegeben wird. Alle Ereignisse, die kopiert werden können, müssen auch das Interface \textit{VSCopyableEvent} implementieren. Wenn ein Ereignis dies nicht tut und \textit{getCopy()} aufgerufen wird, dann wird die Ausnahme \textit{exceptions.VSEventNotCopyable} geworfen.
-	\item \textit{public VSAbstractEvent getCopy(VSInternalProcess process)}: Diese Methode erstellt vom aktuellen Ereignis ebenso eine Kopie, jedoch mit dem Unterschied, dass das Ereignis einem anderen Prozess zugewiesen wird. 
+	\item \textit{public VSAbstractEvent getCopy()}: Diese Methode erstellt vom aktuellen Ereignis eine Kopie, auf die eine Referenz zurückgegeben wird. Alle Ereignisse, die kopiert werden können, müssen auch das Interface \textit{VSCopyableEvent} implementieren. Wenn ein Ereignis dies nicht tut und \textit{getCopy()} aufgerufen wird, wird die Ausnahme \textit{exceptions.VSEventNotCopyable} ausgel\"{o}st.
+	\item \textit{public VSAbstractEvent getCopy(VSInternalProcess process)}: Diese Methode erstellt vom aktuellen Ereignis ebenfalls eine Kopie, mit dem Unterschied, dass das Ereignis einem anderen Prozess zugewiesen wird. 
 \end{itemize}
 
-Jede Ereignisklasse hat außerdem Zugriff auf folgende Attribute, die von \textit{VSAbstractEvent} vererbt werden:
+Jede Ereignisklasse hat außerdem Zugriff auf folgende Attribute, welche von \textit{VSAbstractEvent} geerbt werden:
 
 \begin{itemize}
-	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hierüber lassen sich alle Simulationseinstellungen beziehen. 
+	\item \textit{protected VSPrefs prefs}: Eine Referenz auf das Simulationseinstellungsobjekt. Hierüber lassen sich alle Simulationseinstellungen abfragen. 
 	\item \textit{protected VSAbstractProcess process}: Eine Referenz auf das Prozessobjekt des jeweiligen Prozesses, auf welches das Ereignis angewendet wird.
 \end{itemize}
 
-Da \textit{VSAbstractEvent} die Klasse \textit{VSSerializablePrefs} erweitert, können alle Ereignisse mit allen ihren Variablen serialisiert werden. 
+Da \textit{VSAbstractEvent} die Klasse \textit{VSSerializablePrefs} erweitert, sind alle Ereignisse mit allen ihren Variablen serialisierbar. 
 
 \subsubsection{Beispielimplementierung eines Ereignisses}
 
-Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt hier auch die \textit{initCopy}-Methode mit leerem Rumpf. Wegen der Serializierung und Deserialisierung von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wo der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird überprüft, ob der Prozess bereits abgestürzt (hier eigentlich nicht notwendig, verbessert hier aber die Lesbarkeit) ist und gegebenenfalls wird der Prozess dann zum Absturz bewegt. 
+Im Folgenden wird als Beispiel die Implementierung des Prozessabsturzereignisses \textit{VSProcessCrashEvent} behandelt. Da die dazugehörige Klasse keine Attribute besitzt, verbleibt auch hier die \textit{initCopy}-Methode mit leerem Klassenrumpf. Aufgrund der Serializierbarkeit von Ereignisobjektten muss jede Ereignisklasse in \textit{onInit()} mit \textit{setClassname} den eigenen Klassennamen mitteilen. Bei der Deserialisierung von Ereignissen werden n\"{a}mlich Objekte anhand der Klassennamen dynamisch neu erstellt, wobei der Klassenname stets bekannt sein muss. In \textit{onStart()} wird das eigentliche Ereignis ausgeführt. Hier wird überprüft, ob der Prozess bereits abgestürzt ist und gegebenenfalls zum Absturz gebracht. 
 \begin{code}
 package events.implementations;
 
@@ -193,7 +194,8 @@ extends VSAbstractEvent implements VSCopyableEvent {
     }
 }
 \end{code}
-Der Task-Manager überprüft bereits, ob der Prozess abgestürzt ist oder nicht. Das heißt, dass ein Ereignis bei einem abgestürztem Prozess gar nicht erst ausgeführt wird. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches vom Task-Manager ausgeführt wird, auch wenn der Prozess abgestürzt ist. Mit \textit{log} wird eine Nachricht (die über \textit{prefs} bezogen wird) in das Logfenster geschrieben.
+
+Der Task-Manager überprüft bereits, ob der Prozess abgestürzt ist oder nicht. Das f\"{u}hrt dazu, dass ein Ereignis bei einem abgestürztem Prozess gar nicht erst ausgeführt wird. Die einzige Ausnahme bildet ein Wiederbelebungsereignis (\text{VSProcessRecover}), welches auch dann ausgeführt wird, auch wenn der Prozess abgestürzt ist. Mit \textit{log} wird eine Nachricht (die über \textit{prefs} bezogen wird) in das Logfenster geschrieben.
 
 In der Datei \textit{events/VSRegisteredEvents.java} muss in der \textit{init}-Methode für jedes Ereignis ein Eintrag existieren. Die \textit{init}-Methode wird einmal beim Starten des Simulators ausgeführt:
 
@@ -210,8 +212,6 @@ public static void init(VSPrefs prefs_) {
 }
 \end{code}
 
-Als Resultat kann das Prozessabsturzereignis nach Belieben via GUI programmiert- und eingesetzt werden.
-
 \section{Zeitformate, Prozesse, Nachrichten sowie Task-Manager}
 
 Das Paket \textit{core.time} in Abbildung \ref{fig:PackageCoreTime}. stellt lediglich die Klassen für die Vektor- und Lamport-Zeitstempel zur Verfügung. Für die normale lokale Prozesszeit wird, aus Performance-Gründen, keine eigene Klasse, sondern ein einfaches \textit{long}-Attribut des Prozessobjektes verwendet.
@@ -223,7 +223,7 @@ Das Paket \textit{core.time} in Abbildung \ref{fig:PackageCoreTime}. stellt ledi
 	\label{fig:PackageCoreTime}
 \end{figure}
 
-In Abbildung \ref{fig:PackageCore}. ist, stark vereinfacht, das Paket \textit{core} dargestellt. Für jedes auszuführende Ereignis wird eine Instanz von \textit{VSTask} benötigt, welche die Ereigniseintrittszeit als Attribut abgespeichert hat sowie eine Referenz auf das Objekt des auszuführenden Ereignisses (\textit{VSAbstractEvent}) und dem Prozessobjekt (\textit{VSInternalProcess}) besitzt. Ein \textit{VSTask} merkt sich auch, ob es sich um ein globales oder ein lokales Ereignis handelt. Geplante \textit{VSTask}-Instanzen werden für eine spätere Ausführung dem Task-Manager übergeben.
+In Abbildung \ref{fig:PackageCore}. ist das Paket \textit{core} dargestellt. Für jedes auszuführende Ereignis wird eine Instanz von \textit{VSTask} benötigt, welche die Ereigniseintrittszeit als Attribut abgespeichert hat. Die Instanz besitzt ebenso eine Referenz auf das Ereignisobjekt (\textit{VSAbstractEvent}) und das Prozessobjekt (\textit{VSInternalProcess}). Geplante \textit{VSTask}-Instanzen werden für eine spätere Ausführung dem Task-Manager übergeben.
 
 Die Kapselung eines \textit{VSAbstractEvent}-Objektes in einem \textit{VSTask}-Objekt erlaubt es, dass die selbe \textit{VSAbstractEvent}-Instanz mehrmals auf einmal im Task-Manager geplant werden kann. Ohne dieser Kapselung gäbe es für jedes Ereignis lediglich nur eine einzige mögliche Eintrittszeit. Von dieser Möglichkeit wird zum Beispiel bei den Server- und Clientanfragen eines Protokollobjektes Gebrauch gemacht. Für jedes Protokoll kann der Anwender in einer Simulation beliebig viele Anfragen programmieren, wobei für jede Anfrage stets das selbe Protokollobjekt als Ereignis verwendet wird.
 
