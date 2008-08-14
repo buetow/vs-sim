@@ -5,7 +5,7 @@ Im Programmverzeichnis des Simulators befindet sich das Verzeichnis \textit{save
 
 \section{Beispiel (Dummy) Protokoll}
 
-Das Dummy-Protokoll dient lediglich als Vorlage für die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Auftreten von Ereignissen (s. Kap. 2.2.3.) lediglich Lognachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgeführt.
+Das Dummy-Protokoll dient lediglich als Vorlage für die Erstellung eigener Protokolle. Bei der Verwendung des Dummy-Protokolls werden bei Auftreten von Ereignissen lediglich Lognachrichten ausgegeben. Es werden aber keine weiteren Aktionen ausgeführt.
 
 \newpage
 \section{Das Ping-Pong Protokoll \small{\textit{(ping-pong.dat, ping-pong-sturm.dat)}}}
@@ -61,6 +61,9 @@ Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks}. vorgegeben, so
 	\label{tb:PingPongSturmTasks}
 \end{table}
 
+\newpage
+\section{Das Broadcast Protokoll \small{\textit{(broadcast.dat)}}}
+
 \begin{table}
 	\centering
 	\fbox{
@@ -87,9 +90,6 @@ Werden die Ereignisse wie in Tabelle \ref{tb:PingPongSturmTasks}. vorgegeben, so
 	\label{tb:BroadcastSturmTasks}
 \end{table}
 
-\newpage
-\section{Das Broadcast Protokoll \small{\textit{(broadcast.dat)}}}
-
 \begin{figure}[h]
 	\centering
 	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-broadcast-sturm}}
@@ -101,10 +101,10 @@ Das Broadcast Protokoll verhält sich ähnlich wie das Ping-Pong Protokoll. Der Un
 
 In diesem Fall wird nicht zwischen Client und Server unterschieden, so dass bei der Ankunft einer Nachricht jeweils die gleiche Aktion durchgef\"{u}hrt wird. Somit lässt sich, unter Verwendung mehrerer Prozesse (s. Abb. \ref{fig:BroadcastSturmProto}.) ein Broadcast erzeugen. P1 ist der Client und startet je eine Anfrage nach \textit{0ms} und \textit{2500ms}. Die Simulationsdauer beträgt hier genau \textit{5000ms}. Da ein Client nur Servernachrichten und ein Server nur Clientnachrichten empfangen kann, ist in dieser Simulation jeder Prozess (s. Tabelle \ref{tb:BroadcastSturmTasks}) gleichzeitig Server und Client. 
 
-
+\newpage
 \section{Das Protokoll zur internen Synchronisierung in einem synchronen System \small{\textit{(int-sync.dat)}}}
 
-Bisher wurden nur Protokolle dargestellt, in denen die beteiligten Prozesse keine Uhrabweichungen hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine (falsche) lokale Prozesszeit $t_c$ mit einem Server synchronisieren möchte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zurück, womit der Client eine neue und genauere Prozesszeit f\"{u}r sich berechnen kann. Die neue Prozesszeit wird wie folgt berechnet:
+Bisher wurden nur Protokolle dargestellt, in denen die beteiligten Prozesse keine Uhrabweichungen hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine (falsche) lokale Prozesszeit $t_c$ mit einem Server synchronisieren möchte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zurück, womit der Client eine neue und genauere Prozesszeit f\"{u}r sich berechnen kann. 
 
 \begin{figure}[h]
 	\centering
@@ -121,7 +121,7 @@ Hier (s. Abb. \ref{fig:TimeSyncProto}.) stellt P1 den Client und P2 den Server d
 
 Somit wird die lokale Zeit von P1, mit einem Fehler von $< \frac{1}{2} (t'_{max} - t'_{min})$, mit der Serverzeit synchronisiert (siehe \cite{Vorlesung}). 
 
-Im Beispiel hat der Clientprozess als Uhrabweichung den Wert \textit{0.1} und der Server hat als Uhrabweichung den Wert \textit{0.0} konfiguriert. Der Client startet, wie in Tabelle \ref{tb:InterneSyncTasks}. angegeben, nach \textit{0ms}, \textit{5000ms} und \textit{10000ms} seiner lokalen Prozesszeit jeweils eine Clientanfrage. In der Abbildung lässt sich erkennen, dass die zweite und die dritte Anfrage nicht synchron zu der globalen Zeit (vgl. Sekunden-Zeitgatter, Abbildung \ref{tb:TimeSyncProto)}.) gestartet wurden, was auf die Uhrabweichung von P1 zurückzuführen ist. Nach Simulationsende ist die Zeit von P1 bis auf \textit{15000ms} - \textit{15976ms} = \textit{-976ms} synchronisiert.
+Im Beispiel hat der Clientprozess als Uhrabweichung den Wert \textit{0.1} und der Server hat als Uhrabweichung den Wert \textit{0.0} konfiguriert. Der Client startet, wie in Tabelle \ref{tb:InterneSyncTasks}. angegeben, nach \textit{0ms}, \textit{5000ms} und \textit{10000ms} seiner lokalen Prozesszeit jeweils eine Clientanfrage. In der Abbildung lässt sich erkennen, dass die zweite und die dritte Anfrage nicht synchron zu der globalen Zeit gestartet wurden, was auf die Uhrabweichung von P1 zurückzuführen ist. Nach Simulationsende ist die Zeit von P1 bis auf \textit{15000ms} - \textit{15976ms} = \textit{-976ms} synchronisiert.
 
 \begin{table}
 	\centering
@@ -149,7 +149,7 @@ Dieses Protokoll verwendet folgende zwei clientseitige Variablen, die in den Pro
 	\item \textbf{Max. Übertragungszeit} \textit{(Long: 2000)}: Gibt den Wert $t'_{max}$ in Millisekunden an
 \end{itemize}
 
-$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (s. Kap. 2.4.3.) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wobei der Zeitsynchronisierung große Fehler auftreten können.
+$t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Werte. Sie können sich allerdings von den tatsächlichen Nachrichtenübertragungszeiten $t_{min}$ und $t_{max}$ (s. Kap. 2.4.3.) unterscheiden. Somit lassen sich auch Szenarien simulieren, in denen das Protokoll falsch eingestellt wurde und wo bei der Zeitsynchronisierung große Fehler auftreten können.
 
 \newpage
 \section{Christians Methode zur externen Synchronisierung \small{\textit{(ext-vs-int-sync.dat)}}}
@@ -161,9 +161,9 @@ $t'_{min}$ und $t'_{max}$ sind die bei den Protokollberechnungen verwendeten Wer
 	\label{fig:TimeSync2Proto}
 \end{figure}
 
-Ein weiteres Protokoll für die Synchronisierung von Uhrzeiten funktioniert nach der Christians Methode zur externen Synchronisierung. Die Christians Methode benutzt die RTT (Round Trip Time) $t_{rtt}$, um die Übertragungszeit von einzelnen Nachrichten zu approximieren. 
+Ein weiteres Protokoll für die Synchronisierung von Uhrzeiten funktioniert nach der Christians Methode zur externen Synchronisierung. Die Christians Methode benutzt die RTT (Round Trip Time), um die Übertragungszeit von einzelnen Nachrichten zu approximieren. 
 
-Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren möchte, so verschickt er eine Anfrage, und misst dabei die dazugehörige RTT $t_{rtt}$ bis zur Ankunft der Serverantwort. Die Serverantwort beinhaltet die lokale Prozesszeit $t_s$ des Servers von dem Zeitpunkt an dem der Server die Antwort verschickt. Der Client berechnet dann seine lokale Zeit neu mit:
+Wenn der Client seine lokale Zeit $t_c$ bei einem Server synchronisieren möchte, so verschickt er eine Anfrage, und misst dabei bis zur Ankunft der Serverantwort die dazugehörige RTT $t_{rtt}$. Die Serverantwort beinhaltet die lokale Prozesszeit $t_s$ des Servers von dem Zeitpunkt an dem der Server die Antwort verschickte. Der Client berechnet dann seine lokale Zeit neu mit:
 
 \begin{equation*}
 	t_c := t_s + \frac{1}{2} t_{rtt}
@@ -197,6 +197,7 @@ Aus Abbildung \ref{fig:TimeSync2Proto}. ist ersichtlich, dass nach Ablauf der Si
 	\label{tb:InterneSync2Tasks}
 \end{table}
 
+\newpage
 \section{Der Berkeley Algorithmus zur internen Synchronisierung \small{\textit{(berkeley.dat)}}}
 
 \begin{figure}[h]
@@ -206,7 +207,7 @@ Aus Abbildung \ref{fig:TimeSync2Proto}. ist ersichtlich, dass nach Ablauf der Si
 	\label{fig:BerkeleyProto}
 \end{figure}
 
-Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere Möglichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, wo der Server die Anfragen startet. Der Server fungiert gewissermaßen Koordinator des Protokolls. Die Clientprozesse sind somit passiv und müssen warten, bis eine Serveranfrage eintrifft. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Protokolleinstellungen des Servers einstellen lässt (s. Kap. 2.4.3.).
+Der Berkeley Algorithmus zur internen Synchronisierung ist eine weitere Möglichkeit lokale Uhrzeiten abzugleichen. Dies ist das erste Protokoll, wo der Server die Anfragen startet. Der Server fungiert gewissermaßen als Koordinator des Protokolls. Die Clientprozesse sind somit passiv und müssen warten, bis eine Serveranfrage eintrifft. Hierbei muss der Server wissen, welche Clientprozesse an dem Protokoll teilnehmen, was sich in den Protokolleinstellungen des Servers einstellen lässt.
 
 Wenn der Server seine lokale Zeit $t_s$ und auch die Prozesszeiten $t_i$ der Clients ($i = 1, ..., n$) synchronisieren möchte, so verschickt er eine Serveranfrage. $n$ sei hierbei die Anzahl beteiligter Clients. Die Clients senden dann ihre lokalen Prozesszeiten in einer Nachricht zurück zum Server. Der Server hat dabei die RTTs $r_i$ bis zur Ankunft aller Clientantworten gemessen. 
 
@@ -252,6 +253,7 @@ Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozessei
 	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die nicht existiert oder die das Berkeley Protokoll clientseitig nicht unterstützt. In diesem Fall würde ewig auf eine (fehlende) Clientantwort gewartet werden.
 \end{itemize}
 
+\newpage
 \section{Das Ein-Phasen Commit Protokoll \small{\textit{(one-phase-commit.dat)}}}
 
 \begin{figure}[h]
@@ -263,7 +265,7 @@ Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozessei
 
 Das Ein-Phasen Commit Protokoll ist dafür gedacht beliebig vielen Clients zu einer Festschreibung zu bewegen. Im realen Leben könnte dies beispielsweise das Erstellen oder Löschen einer Datei sein, von der auf jedem Client eine lokale Kopie existiert. Der Server ist der Koordinator und auch derjenige, der einen Festschreibewunsch initiiert. Hierbei verschickt der Server periodisch so oft den Festschreibewunsch, bis er von jedem Client eine Bestätigung erhalten hat. Hierf\"{u}r m\"{u}ssen f\"{u}r den Server die PIDs aller beteiligten Clientprozesse sowie ein Wecker f\"{u}r erneutes Versenden des Festschreibewunsches konfiguriert werden.
 
-Die programmierten Ereignisse des Beispiels auf (s. Abb. \ref{fig:OnePhaseCommitProto}.) sind in Tabelle \ref{tb:OnePhaseCommitTasks}. aufgelistet. P1 und P3 simulieren jeweils einen Client und P2 den Server. Damit die Simulation mehrere Festschreibewünsche verschickt, stürzt in der Simulation P1 nach \textit{1000ms} ab und nach \textit{5000ms} steht er wieder zur Verfügung. Die ersten beide Festschreibewünsche erreichen dadurch P1 nicht und erst der dritte Versuch verläuft erfolgreich. Bevor die Bestätigung von P1 bei P2 eintrifft, läuft jedoch der Wecker erneut ab, so dass ein weiterer Festschreibewunsch versendet wird. Da P1 und P3 jeweils schon eine Bestätigung verschickt haben, wird diese Festschreibewunschnachricht ignoriert. Jeder Client bestätigt auf einen Festschreibewunsch nur ein einziges Mal.
+Die programmierten Ereignisse des Beispiels auf (s. Abb. \ref{fig:OnePhaseCommitProto}.) sind in Tabelle \ref{tb:OnePhaseCommitTasks}. aufgelistet. P1 und P3 simulieren jeweils einen Client und P2 den Server. Damit die Simulation mehrere Festschreibewünsche verschickt, stürzt in der Simulation P1 nach \textit{1000ms} ab und nach \textit{5000ms} steht er wieder zur Verfügung. Die ersten beiden Festschreibewünsche erreichen dadurch P1 nicht und erst der dritte Versuch verläuft erfolgreich. Bevor die Bestätigung von P1 bei P2 eintrifft, läuft jedoch der Wecker erneut ab, so dass ein weiterer Festschreibewunsch versendet wird. Da P1 und P3 jeweils schon eine Bestätigung verschickt haben, wird diese Festschreibewunschnachricht ignoriert. Jeder Client bestätigt auf einen Festschreibewunsch nur ein einziges Mal.
 
 \begin{table}
 	\centering
@@ -293,6 +295,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 \end{itemize}
 
 
+\newpage
 \section{Das Zwei-Phasen Commit Protokoll \small{\textit{(two-phase-commit.dat)}}}
 
 \begin{figure}[h]
@@ -463,20 +466,8 @@ Die folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 \end{table}
 
 
+\newpage
 \section{Der ungenügende (Basic) Multicast \small{\textit{(basic-multicast.dat)}}}
-
-\begin{figure}[h]
-	\centering
-	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-basic-multicast}}
-	\caption{Das Basic-Multicast Protokoll}
-	\label{fig:BasicMulticastProto}
-\end{figure}
-
-Das Basic-Multicast Protokoll ist sehr einfach aufgebaut. Im Beispiel in Abbildung \ref{fig:BasicMulticastProto}. sind P1 und P3 Server und P2 der Client. Bei diesem Protokoll startet der Client immer die Anfrage, welche bei diesem Protokoll eine einfache Multicast-Nachricht darstellt. Die Basic-Multicast Server dienen dabei lediglich zum Empfang einer Nachricht. Es werden keine Bestätigungen verschickt. Wie in Tabelle \ref{tb:BasicMulticastTasks}. aufgeführt verschickt P2 alle \textit{2500ms} jeweils eine Multicast-Nachricht, die alle voneinander völlig unabhängig sind. 
-
-P1 kann jedoch erst nach \textit{2500ms} Multicast-Nachrichten empfangen, da er vorher das Protokoll nicht unterstützt während P3 von \textit{3000ms} bis \textit{6000ms} abgestürzt ist und in dieser Zeit auch keine Nachrichten empfangen kann. In diesem Beispiel ist P1 ein Server, der erst sp\"{a}ter ans Netz angeschlossen wird. Da die Einstellung ``Nur relevante Nachrichten anzeigen'' aktiviert ist, wird die erste Multicast-Nachricht von P2 an P1 nicht dargestellt. Bei jedem Prozess wurde die Nachrichtenverlustwahrscheinlichkeit auf \textit{30} Prozent gestellt, so dass alle in dieser Simulation verschickten Nachrichten mit einer Wahrscheinlichkeit von \textit{30} Prozent ausfallen. 
-
-In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5. sowie 6. Nachricht auf den Weg zu P1 verloren. Lediglich die 4. Multicast-Nachricht hat beide Ziele erreicht.
 
 \begin{table}
 	\centering
@@ -501,7 +492,20 @@ In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5.
 	\label{tb:BasicMulticastTasks}
 \end{table}
 
+\begin{figure}[h]
+	\centering
+	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-basic-multicast}}
+	\caption{Das Basic-Multicast Protokoll}
+	\label{fig:BasicMulticastProto}
+\end{figure}
 
+Das Basic-Multicast Protokoll ist sehr einfach aufgebaut. Im Beispiel in Abbildung \ref{fig:BasicMulticastProto}. sind P1 und P3 Server und P2 der Client. Bei diesem Protokoll startet der Client immer die Anfrage, welche bei diesem Protokoll eine einfache Multicast-Nachricht darstellt. Die Basic-Multicast Server dienen dabei lediglich zum Empfang einer Nachricht. Es werden keine Bestätigungen verschickt. Wie in Tabelle \ref{tb:BasicMulticastTasks}. aufgeführt verschickt P2 alle \textit{2500ms} jeweils eine Multicast-Nachricht, die alle voneinander völlig unabhängig sind. 
+
+P1 kann jedoch erst nach \textit{2500ms} Multicast-Nachrichten empfangen, da er vorher das Protokoll nicht unterstützt während P3 von \textit{3000ms} bis \textit{6000ms} abgestürzt ist und in dieser Zeit auch keine Nachrichten empfangen kann. In diesem Beispiel simuliert P1 ein Server, der erst sp\"{a}ter ans Netz angeschlossen wird. Da die Einstellung ``Nur relevante Nachrichten anzeigen'' aktiviert ist, wird die erste Multicast-Nachricht von P2 an P1 nicht dargestellt. Bei jedem Prozess wurde die Nachrichtenverlustwahrscheinlichkeit auf \textit{30} Prozent gestellt, so dass alle in dieser Simulation verschickten Nachrichten mit einer Wahrscheinlichkeit von \textit{30} Prozent ausfallen. 
+
+In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5. sowie 6. Nachricht auf den Weg zu P1 verloren. Lediglich die 4. Multicast-Nachricht hat beide Ziele erreicht.
+
+\newpage
 \section{Das zuverlässige (Reliable) Multicast Protokoll \small{\textit{(reliable-multicast.dat)}}}
 
 \begin{figure}[h]
@@ -609,7 +613,6 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	   & & Boolean: isMulticast=true\\
 \hline
 005952 & 1 & Nachricht erhalten; ID: 283; Protokoll: Reliable Multicast\\
-\hline
 	\end{tabular}
 	}
 	\caption{Auszug aus dem Logfenster des Reliable-Multicast Beispiels}
@@ -704,7 +707,7 @@ Es wird also stets die größere Lamportzeit vom Sender- und Empfängerprozess verw
 	\label{fig:Vektorzeit}
 \end{figure}
 
-Mit aktivem Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (s. Abb. \ref{fig:Vektorzeit}.). Wie beim Lamport-Zeitstempel wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigefügt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die Größe $n$. Somit gibt es für jeden beteiligten Prozess $i$ einen eigenen Index $i$. Mit $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empfängerprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektor-Zeitstempel wie folgt neu berechnet:
+Mit aktivem Vektorzeit-Schalter werden alle Vektor-Zeitstempel angezeigt (s. Abb. \ref{fig:Vektorzeit}.). Wie beim Lamport-Zeitstempel wird auch hier jeder Nachricht der aktuelle Vektor-Zeitstempel des Senderprozesses beigefügt. Bei $n$ beteiligten Prozessen hat der Vektor-Zeitstempel $v$ die Größe $n$. Somit gibt es für jeden beteiligten Prozess $i$ einen eigenen Index $i$. Mit $v(i)$ kann jeder Prozess auf seinen lokalen Eintrag zugreifen. Wenn $v$ der Vektor-Zeitstempel des Empfängerprozesses $j$ ist und $w$ der Vektor-Zeitstempel des Senderprozesses ist, dann wird der neue lokale Vektor-Zeitstempel vom Prozess $j$ wie folgt neu berechnet:
 
 \textbf{Pseudo-Code}
 
@@ -724,8 +727,9 @@ Im Beispiel (vgl. Abbildung \ref{fig:Vektorzeit}.) hat P1 \textit{(8,10,6)}, P2 
 
 Wenn während einer Simulation Prozesse entfernt- oder neue Prozesse hinzugefügt werden, so passt sich die Größe der Vektor-Zeitstempel aller anderen Prozesse automatisch der Gesamtzahl der Prozesse an.
 
-Wie bereits beschrieben gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardmäßig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, berücksichtigt. Für eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
+Wie bereits beschrieben (s. Kap. 2.4.2.) gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardmäßig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, berücksichtigt. Für eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
 
+\newpage
 \subsection{Simulation langsamer Verbindungen \small{\textit{(slow-connection.dat)}}}
 
 Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. Für die Demonstration wird das Beispiel aus Kapitel 3.5. wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (durch P1) mit der Christians-Methode (durch P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verfügung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, so dass Nachrichten von- und an P3 stets eine längere Übertragungszeit benötigen.

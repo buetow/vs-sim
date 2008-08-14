@@ -77,9 +77,9 @@ Mittig rechts befindet sich die grafische Simulationsvisualisierung. Die X-Achse
 
 Die Prozessbalken dienen auch für Start- und Zielpunkte von Nachrichten. Wenn beispielsweise Prozess 1 eine Nachricht an Prozess 2 verschickt, so wird eine Linie vom einen Prozessbalken zum anderen gezeichnet. Nachrichten, die ein Prozess an sich selbst verschicken, werden nicht visualisiert. Sie werden aber im Logfenster (mehr dazu später) protokolliert.
 
-Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Dies muss also nicht immer über das Simulator-Menü geschehen. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (s. Abb. \ref{fig:RechtsklickProzessbalken}.). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
+Eine andere Möglichkeit einen Prozesseditor aufzurufen ist ein Linksklick auf den zum Prozess gehörigen Prozessbalken. Ein Rechtsklick hingegen öffnet ein Popup-Fenster mit weiteren Auswahlmöglichkeiten (s. Abb. \ref{fig:RechtsklickProzessbalken}.). Ein Prozess kann über das Popup-Menü nur während einer laufenden Simulation zu einem Absturz oder einer Wiederbelebung bewegt werden.
 
-Generell kann die Anzahl der Prozesse nach Belieben variieren. Die Dauer der Simulation beträgt mindestens \textit{5} und höchstens \textit{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit, die angegebene Simulationsendzeit (hier \textit{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
+Generell kann die Anzahl der Prozesse nach Belieben variieren. Die Dauer der Simulation beträgt mindestens \textit{5} und höchstens \textit{120} Sekunden. Die Simulation endet erst, wenn sie die globale Zeit die angegebene Simulationsendzeit (hier \textit{15} Sekunden) erreicht hat, und nicht, wenn eine lokale Prozesszeit diese Endzeit erreicht. 
 
 \subsubsection{Farbliche Differenzierung}
 
@@ -153,7 +153,7 @@ Das Logfenster (s. Abb. \ref{fig:NeuErstellteSimulation}., unten) protokolliert 
 	\label{fig:Logfenster}
 \end{figure}
 
-Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die schnelle Updates nur sehr träge durchführt.
+Mit dem Deaktivieren des Logging-Schalters lässt sich das Loggen von Nachrichten temporär ausstellen. Mit deaktiviertem Loggen werden keine neuen Nachrichten mehr ins Logfenster geschrieben. Nach Reaktivieren des Schalters werden alle ausgelassenen Nachrichten nachträglich in das Fenster geschrieben. Ein deaktiviertes Loggen kann zu verbessertem Leistungsverhalten des Simulators führen. Dieser Umstand ist der sehr langsamen Java-Implementierung der JTextArea-Klasse zu verdanken, die Updates nur sehr träge durchführt (s. \cite{Swing}).
 
 Über den Schalter ``Expertenmodus'' wird der Expertenmodus aktiviert, bzw. deaktiviert. 
 
@@ -185,13 +185,13 @@ Weitere Unterschiede machen sich unterhalb des Logfensters bemerkbar. Dort gibt 
 	\label{fig:SidebarExpertenmodus}
 \end{figure}
 
-Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren bzw. zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt. Aus Performance-Gründen ist Anti-Aliasing standardmäßig nicht aktiv.
+Der Anti-Aliasing-Schalter ermöglicht dem Anwender Anti-Aliasing zu aktivieren bzw. zu deaktivieren. Mit Anti-Aliasing werden alle Grafiken der Visualisierung gerundet dargestellt (s. \cite{Games}). Aus Performance-Gründen ist Anti-Aliasing standardmäßig nicht aktiv.
 
 \subsubsection{Der Logfilter}
 
 Je komplexer eine Simulation wird, desto unübersichtlicher werden die Einträge im Logfenster. Hier fällt es zunehmend schwerer die Übersicht aller Ereignisse zu behalten. Um dem entgegenzuwirken gibt es im Expertenmodus einen Logfilter, welcher es ermöglicht nur die wesentlichen Daten aus den Logs zu filtern. 
 
-Der Logfilter wird anhand des dazugehörigen Schalters ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax, beschrieben in \cite{Regexp}, angegeben werden. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Logzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die z.B. nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Logfilter werden nur die Logzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Logfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
+Der Logfilter wird anhand des dazugehörigen Schalters ``Filter'' aktiviert und deaktiviert. In der dahinterliegenden Eingabezeile kann ein regulärer Ausdruck in Java-Syntax, angegeben werden. Die Verwendung regul\"{a}rer Ausdr\"{u}cke mittels Java wird in \cite{Regexp} behandelt. Beispielsweise werden mit ``\textit{PID: (1|2)}'' nur Logzeilen angezeigt, die entweder ``\textit{PID: 1}'' oder ``\textit{PID: 2}'' beinhalten. Alle anderen Zeilen, die z.B. nur ``\textit{PID: 3}'' beinhalten, werden dabei nicht angezeigt. Mit Logfilter werden nur die Logzeilen angezeigt, auf die der angegebene reguläre Ausdruck passt. Der Logfilter kann auch nachträglich aktiviert werden, da bereits protokollierte Ereignisse nach jeder Filteränderung erneut gefiltert werden. 
 
 Der Logfilter kann auch während einer laufenden Simulation verwendet werden. Bei Filterdeaktivierung werden alle Nachrichten wieder dargestellt. Lognachrichten, die aufgrund des Filters noch nie angezeigt wurden, werden dann nachträglich angezeigt.
 
@@ -204,11 +204,11 @@ Der Logfilter kann auch während einer laufenden Simulation verwendet werden. Bei
 
 \section{Ereignisse}
 
-Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie z.B. das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers, worauf später nochmal genauer eingegangen wird.
+Es wird zwischen zwei Haupttypen von Ereignissen unterschieden: Programmierbare Ereignisse und nicht programmierbare Ereignisse. Programmierbare Ereignisse lassen sich im Ereigniseditor programmieren und editieren und deren Eintrittszeiten hängen von den lokalen Prozessuhren oder der globalen Uhr ab. Nicht programmierbare Ereignisse lassen sich hingegen nicht im Ereigniseditor programmieren und treten nicht wegen einer bestimmten Uhrzeit ein, sondern aufgrund anderer Gegebenheiten wie z.B. das Eintreffen einer Nachricht oder das Ausführen einer Aktion aufgrund eines Weckers (mehr dazu sp\"{a}ter).
 
 \subsubsection{Prozessabsturz- und Wiederbelebung (programmierbar)}
 
-Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann kann sie nicht verarbeitet werden und geht deshalb verloren. Die einzige Ausnahme bietet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen von den Lamport- und Vektor-Zeitstempel, normal weiter. Das heißt, es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. Wenn im echten Leben ein Computer abstürzt oder abgeschaltet wird, dann läuft seine Hardware-Uhr unabhängig vom Betriebssystem auch weiter.
+Die beiden einfachsten Ereignisse sind ``Prozessabsturz'' sowie ``Prozesswiederbelebung''. Wenn ein Prozess abgestürzt ist, so wird sein Prozessbalken in rot dargestellt. Ein abgestürzter Prozess kann keine weiteren Ereignisse mehr verarbeiten und wenn bei ihm eine Nachricht eintrifft, dann geht sie verloren. Die einzige Ausnahme bietet ein Wiederbelebungsereignis. Ein abgestürzter Prozess kann nichts, außer wiederbelebt werden. Während eines Prozessabsturzes läuft die lokale Prozessuhr, abgesehen von den Lamport- und Vektor-Zeitstempel, normal weiter. Das heißt, es besteht die Möglichkeit, dass ein Prozess einige seiner Ereignisse gar nicht ausführt, da er zu den Ereigniseintrittszeiten abgestürzt ist. 
 
 \subsubsection{Aktivierung und Deaktivierung von Protokollen sowie Starten von Anfragen (programmierbar)}
 Es ist bereits bekannt, dass ein Prozess mehrere Protokolle client- und auch serverseitig unterstützen kann. Welches Protokoll von einem Prozess unterstützt wird, kann der Anwender anhand von Protokollaktivierungs- und Protokolldeaktivierungsereignissen konfigurieren. Somit besteht die Möglichkeit, dass ein gegebener Prozess ein bestimmtes Protokoll erst zu einem bestimmten Zeitpunkt unterstützt und ggf. ein anderes Protokoll ablöst. Jedes Protokoll kann entweder server- oder clientseitig aktiviert bzw. deaktiviert werden. Der Anwender hat somit die Auswahl zwischen fünf verschiedenen Protokollereignistypen: 
@@ -229,11 +229,11 @@ Nachdem ein Prozess eine Nachricht empfängt wird zuerst überprüft, ob er das daz
 
 \subsubsection{Callback-Ereignisse (nicht-programmierbar)}
 
-Ein Callback-Ereignis kann von einem Protokoll ausgelöst werden. Das Protokoll setzt einen Wecker, der angibt zur welcher lokalen Uhrzeit eine weitere Aktion ausgeführt werden soll. Zum Beispiel lassen sich hiermit Timeouts realisieren: Wenn ein Protokoll eine Antwort erwartet, diese aber nicht eintrifft, dann kann nach einer bestimmten Zeit eine Anfrage erneut verschickt werden! Es können beliebig viele Callback-Ereignisse definiert werden. Wenn sie noch nicht ausgeführt wurden und aufgrund eines anderen Ereignisses nicht mehr benötigt werden, dann können sie vom Protokoll wieder nachträglich entfernt werden. Wenn ein Callback-Ereignis ausgeführt wird, dann kann es sich selbst wieder für eine weitere Ausführung erneut planen. So lassen sich periodisch wieder-eintreffende Ereignisse realisieren. Beispielsweise verwenden die ``Commit-Protokolle'' (mehr dazu später) Callback-Ereignisse, indem solange Anfragen verschickt werden, bis alle benötigten Antworten vorliegen.
+Ein Callback-Ereignis kann von einem Protokoll ausgelöst werden. Das Protokoll setzt einen Wecker, der angibt zur welcher lokalen Uhrzeit eine weitere Aktion ausgeführt werden soll. Zum Beispiel lassen sich hiermit Timeouts realisieren: Wenn ein Protokoll eine Antwort erwartet, diese aber nicht eintrifft, dann kann nach einer bestimmten Zeit eine Anfrage erneut verschickt werden! Es können beliebig viele Callback-Ereignisse definiert werden. Wenn sie noch nicht ausgeführt wurden und aufgrund eines anderen Ereignisses nicht mehr benötigt werden, dann können sie vom Protokoll wieder nachträglich entfernt werden. Wenn ein Callback-Ereignis ausgeführt wird, dann kann es sich selbst wieder für eine weitere Ausführung erneut planen. So lassen sich periodisch wieder-eintreffende Ereignisse realisieren. Beispielsweise verwenden die sog. Commit-Protokolle (s. Kap. 3.3.7, 3.3.8) Callback-Ereignisse, indem solange Anfragen verschickt werden, bis alle benötigten Antworten vorliegen.
 
 \subsubsection{Zufallsereignisse (nicht-programmierbar)}
 
-Die Eintrittszeit eines Zufallsereignisses wird vom Simulator zufällig gewählt. Es besteht lediglich die Möglichkeit die Wahrscheinlichkeit, dass das Ereignis überhaupt eintritt, einzustellen. Ein Beispiel ist ein zufälliger Prozessabsturz, dessen Wahrscheinlichkeit unter den Prozessvariablen konfiguriert werden kann. Diese Variable wird im Abschnitt über den Prozesseditor noch ausführlicher beschrieben.
+Die Eintrittszeit eines Zufallsereignisses wird vom Simulator zufällig gewählt. Es besteht lediglich die Möglichkeit die Wahrscheinlichkeit, dass das Ereignis überhaupt eintritt, einzustellen. Ein Beispiel ist ein zufälliger Prozessabsturz, dessen Wahrscheinlichkeit unter den Prozessvariablen konfiguriert werden kann (s. Kapitel 2.4.3.).
 
 
 \section{Einstellungen}
@@ -270,7 +270,7 @@ In diesem Abschnitt wird genauer auf die möglichen Konfigurationsmöglichkeiten e
 \end{figure}
 
 
-Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (s. Tabelle \ref{tb:VariablenDatentypen}.). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor (mehr zu Editoren später) angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen ändern.
+Der Simulator unterscheidet zwischen mehreren Datentypen, in denen die einstellbaren Variablen vorliegen können (s. Tabelle \ref{tb:VariablenDatentypen}.). Jede Variable besitzt einen Namen, einen Wert und eine optionale Beschreibung. Wenn eine Variablenbeschreibung vorhanden ist, so wird sie anstelle des Variablennamen in einem Editor angezeigt. Der Variablenname wird vom Simulator lediglich für die interne Verwendung benötigt. Im folgenden bedeutet \textit{Typ: varname = wert}, dass die Variable vom Typ \textit{Typ} ist, der interne Variablenname \textit{varname} lautet, und standardmäßig den Wert \textit{wert} zugewiesen hat. Vom Anwender lassen sich lediglich die Variablenwerte, jedoch nicht die Variablentypen, Variablennamen und Beschreibungen ändern.
 
 \subsection{Simulationseinstellungen}
 
@@ -291,7 +291,7 @@ Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen b
 	\item \textbf{Prozesse empfangen eigene Nachrichten} \textit{(Boolean: sim.message.own.recv = false)}: Standardmäßig können Prozesse keine Nachrichten empfangen, die sie selbst verschickt haben. Dies trägt zur Übersichtlichkeit der Simulation bei. Wenn diese Variable jedoch auf \textit{true} gesetzt wird, dann kann ein Prozess auch selbst verschickte Nachrichten empfangen und auf diese ebenso antworten. Die Zeit für das Versenden und Empfangen einer Nachricht an sich selbst beträgt jedoch stets \textit{0ms}. Diese Variable sollte mit Vorsicht verwendet werden, da bedingt durch den \textit{0ms} Endlosschleifen entstehen können. 
 	\item \textbf{Mittelwerte der Nachrichtenverlustwahrscheinlichkeiten bilden} \textit{(Boolean: sim.message.prob.mean = true)}: Jede Nachricht, die verschickt wird, hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Verlustwahrscheinlichkeit. Wenn diese Option aktiviert ist, wird der Mittelwert aus den Verlustwahrscheinlichkeiten des Senders- und Empfängerprozesses gebildet. Ansonsten wird die Verlustwahrscheinlichkeit, die beim Senderprozesses eingestellt wurde, verwendet. 
 	\item \textbf{Mittelwerte der Übertragungszeiten bilden} \textit{(Boolean: sim.message.sendingtime.mean = true)}: Jede Nachricht, die verschickt wird, hat, je nach Einstellungen, eine vom verschickenden Prozess abhängige zufällige Übertragungszeit bis sie ihr Ziel erreicht (siehe Prozesseinstellungen später). Wenn diese Option aktiviert ist, wird der Mittelwert vom Sender- und Empfängerprozess gebildet. Ansonsten wird die Übertragungszeit, die beim Senderprozesses angegeben wurde, verwendet.
-	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean: sim.messages.relevant = true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, dann werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann nicht angezeigt, da er das dazugehörige Protokoll nicht unterstützt. Dadurch wird die \"{U}bersichtlichkeit verbessert Übersicht.
+	\item \textbf{Nur relevante Nachrichten anzeigen} \textit{(Boolean: sim.messages.relevant = true)}: Wenn nur alle relevanten Nachrichten angezeigt werden, dann werden Nachrichten an einen Prozess die er selbst nicht verarbeiten kann nicht angezeigt, da er das dazugehörige Protokoll nicht unterstützt. Dadurch wird die \"{U}bersichtlichkeit verbessert.
 	\item \textbf{Expertenmodus aktivieren} \textit{(Boolean: sim.mode.expert = false)}: Hier lässt sich der Expertenmodus aktivieren und deaktivieren. Alternativ kann dies über den gleichnamigen Schalter unterhalb des Logfensters geschehen.
 	\item \textbf{Simulation periodisch wiederholen} \textit{(Boolean: sim.periodic = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann wird die Simulation jedes Mal nach Ablauf automatisch neu gestartet. 
 	\item \textbf{Lamportzeiten betreffen alle Ereignisse} \textit{(Boolean: sim.update.lamporttime.all = false)}: Wenn diese Variable auf \textit{true} gesetzt ist, dann werden bei jedem Ereignis alle Lamport-Zeitstempel aller Prozesse inkrementiert. Bei einem Wert \textit{false} werden die Lamport-Zeitstempel jeweils nur inkrementiert, wenn eine Nachricht empfangen oder verschickt wurde.
@@ -301,7 +301,7 @@ Im Folgenden werden alle in den Simulationseinstellungen verfügbaren Variablen b
 	\item \textbf{Dauer der Simulation} \textit{(Integer: sim.seconds = 15)}: Gibt die Dauer der Simulation in Sekunden vor.
 \end{itemize}
 
-Alle weiteren Simulationeinstellungen unter ``Einstellungen für neue Prozesse'' sowie ``Nachrichteneinstellungen für neue Prozesse'' definieren das Verhalten des jedes neu erzeugten Prozesses. 
+Alle weiteren Simulationeinstellungen unter ``Einstellungen für neue Prozesse'' sowie ``Nachrichteneinstellungen für neue Prozesse'' definieren das Verhalten des jeden neu erzeugten Prozesses. 
 
 \begin{table}
 	\centering
@@ -335,7 +335,11 @@ Alle weiteren Simulationeinstellungen unter ``Einstellungen für neue Prozesse'' 
 Jeder Prozess besitzt folgende Variablen:
 
 \begin{itemize}
-	\item \textbf{Uhrabweichung} \textit{(Float: process.clock.variance = 0.0)}: Gibt den Wert an, um den die lokale Prozessuhr abweicht. Der Wert \textit{0.0} besagt beispielsweise, dass die Uhr keine Abweichung hat und somit global-korrekt läuft. Ein Wert von \textit{1.0} hingegen bedeuten, dass die Uhr mit doppelter Geschwindigkeit l\"{a}uft. Ein Wert von \textit{-0.5} bedeutet, dass die lokale Prozessuhr mit halber globaler Geschwindigkeit fortschreitet. Es sind nur Werte > \textit{-1.0} erlaubt, da sonst die Prozessuhr rückwärts laufen könnte. Bei allen anderen Werten wird die Einstellung wieder automatisch auf \textit{0.0} gesetzt. Der Simulator arbeitet intern mit Fließkommazahlen doppelter Genauigkeit arbeitet, so dass es es zu kleinen, jedoch vernachlässigbaren Rundungsfehlern kommen. 
+	\item \textbf{Uhrabweichung} \textit{(Float: process.clock.variance = 0.0)}: Gibt den Wert $t_v$ an, um den die lokale Prozessuhr $t$ abweicht. Wenn $t_n$ die neu verstrichene Zeit ist, dann wird die lokale Prozessuhr wie folgt neu berechnet:
+\begin{equation*}
+	t := t + t_n * t_v 
+\end{equation*}
+	Der Wert \textit{0.0} besagt beispielsweise, dass die Uhr keine Abweichung hat und somit global-korrekt läuft. Ein Wert von \textit{1.0} hingegen bedeuten, dass die Uhr mit doppelter Geschwindigkeit l\"{a}uft. Ein Wert von \textit{-0.5} bedeutet, dass die lokale Prozessuhr mit halber globaler Geschwindigkeit fortschreitet. Es sind nur Werte > \textit{-1.0} erlaubt, da sonst die Prozessuhr rückwärts laufen könnte. Bei allen anderen Werten wird die Einstellung wieder automatisch auf \textit{0.0} gesetzt. Der Simulator arbeitet intern mit Fließkommazahlen doppelter Genauigkeit arbeitet, so dass es es zu kleinen, jedoch vernachlässigbaren Rundungsfehlern kommen. 
 	\item \textbf{Prozessausfallwahrscheinlichkeit} \textit{(Integer: process.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, mit der der Prozess während der Simulation zufällig abstürzt. Die Wahrscheinlichkeit bezieht sich auf die komplette Simulationsdauer. Bei einer Einstellung von \textit{100} Prozent und der Simulationsdauer von \textit{15} Sekunden stürzt der Prozess auf jeden Fall zwischen \textit{0ms} und \textit{15000ms} ab. An welcher Stelle dies geschieht wird zufällig bestimmt. Wenn der Prozess nach seinem Absturz wiederbelebt wird, stürzt er nicht mehr ab. Dies gilt allerdings nicht, wenn die Prozesseinstellungen nach dem Zufallsabsturz erneut geändert und übernommen werden, da dann das Zufallsabstürzereignis erneut erstellt wird. 
 	\item \textbf{Lokale Zeit} \textit{(Long: process.localtime = 0)}: Gibt die lokale Prozesszeit in Millisekunden an. 
 	\item \textbf{Nachrichtenverlustwahrscheinlichkeit} \textit{(Integer: message.prob.crash = 0)}: Gibt eine Wahrscheinlichkeit in Prozent an, mit der eine vom aktuell ausgewählten Prozess verschickte Nachricht unterwegs verloren geht. An welcher Stelle die Nachricht zwischen dem Sende- und Empfängerprozess verloren geht wird zufällig bestimmt.
@@ -354,7 +358,7 @@ Das heißt, dass die Nachricht nach einer zufälligen Zeit zwischen $t_{min}$ und 
 	t_e := t_g + \frac{1}{2} (rand(t_{min}, t_{max}) + rand(t'_{min}, t'_{max}))
 \end{equation*}
 
-Das bedeutet, dass stets der Mittelwert der Nachrichtenübertragungszeiten vom Sender- und Empfängerprozesses verwendet wird.
+Das bedeutet, dass der Mittelwert der Nachrichtenübertragungszeiten vom Sender- und Empfängerprozesses verwendet wird.
 
 \end{itemize}
 
