@@ -101,7 +101,7 @@ Das Broadcast Protokoll verhält sich ähnlich wie das Ping-Pong Protokoll. Der Un
 
 In diesem Fall wird nicht zwischen Client und Server unterschieden, so dass bei der Ankunft einer Nachricht jeweils die gleiche Aktion durchgef\"{u}hrt wird. Somit lässt sich, unter Verwendung mehrerer Prozesse (s. Abb. \ref{fig:BroadcastSturmProto}.) ein Broadcast erzeugen. P1 ist der Client und startet je eine Anfrage nach \textit{0ms} und \textit{2500ms}. Die Simulationsdauer beträgt hier genau \textit{5000ms}. Da ein Client nur Servernachrichten und ein Server nur Clientnachrichten empfangen kann, ist in dieser Simulation jeder Prozess (s. Tabelle \ref{tb:BroadcastSturmTasks}) gleichzeitig Server und Client. 
 
-
+\newpage
 \section{Das Protokoll zur internen Synchronisierung in einem synchronen System \small{\textit{(int-sync.dat)}}}
 
 Bisher wurden nur Protokolle dargestellt, in denen die beteiligten Prozesse keine Uhrabweichungen hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine (falsche) lokale Prozesszeit $t_c$ mit einem Server synchronisieren möchte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zurück, womit der Client eine neue und genauere Prozesszeit f\"{u}r sich berechnen kann. 
@@ -197,7 +197,7 @@ Aus Abbildung \ref{fig:TimeSync2Proto}. ist ersichtlich, dass nach Ablauf der Si
 	\label{tb:InterneSync2Tasks}
 \end{table}
 
-
+\newpage
 \section{Der Berkeley Algorithmus zur internen Synchronisierung \small{\textit{(berkeley.dat)}}}
 
 \begin{figure}[h]
@@ -253,7 +253,7 @@ Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozessei
 	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die nicht existiert oder die das Berkeley Protokoll clientseitig nicht unterstützt. In diesem Fall würde ewig auf eine (fehlende) Clientantwort gewartet werden.
 \end{itemize}
 
-
+\newpage
 \section{Das Ein-Phasen Commit Protokoll \small{\textit{(one-phase-commit.dat)}}}
 
 \begin{figure}[h]
@@ -293,8 +293,6 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	\item \textbf{Zeit bis erneute Anfrage} \textit{(Long: timeout = 2500)}: Gibt die Anzahl von Millisekunden an, die gewartet werden sollen, bis der Festschreibewunsch erneut verschickt wird.
 	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: pids = [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Clientprozesse, die festschreiben sollen. 
 \end{itemize}
-
-
 
 \section{Das Zwei-Phasen Commit Protokoll \small{\textit{(two-phase-commit.dat)}}}
 
@@ -679,6 +677,8 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	\label{tb:ReliableMulticastLogs2}
 \end{table}
 
+\newpage
+~
 \newpage
 \section{Weitere Beispiele}
 
