@@ -346,11 +346,6 @@ public class VSTask implements Comparable, VSSerializable {
         return event;
     }
 
-    /**
-     * Logg a message.
-     *
-     * @param message the message to log
-     */
     /*
     private void log(String message) {
         process.log(message);

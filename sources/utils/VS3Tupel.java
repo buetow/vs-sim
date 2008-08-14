@@ -24,12 +24,12 @@
 package utils;
 
 /**
- * The class VSTupel, an object of this class represents a 3-Tupel of objects.
+ * The class VS3Tupel, an object of this class represents a 3-Tupel of objects.
  * Each object can have its own type.
  *
  * @author Paul C. Buetow
  */
-public final class VSTupel<A,B,C> {
+public final class VS3Tupel<A,B,C> {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public final class VSTupel<A,B,C> {
      * @param b the b
      * @param c the c
      */
-    public VSTupel(A a, B b, C c) {
+    public VS3Tupel(A a, B b, C c) {
         this.a = a;
         this.b = b;
         this.c = c;

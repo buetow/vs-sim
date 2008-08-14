@@ -337,7 +337,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JComboBox> createIntegerComponent(
+    protected VS3Tupel<String,Component,JComboBox> createIntegerComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -365,7 +365,7 @@ public abstract class VSAbstractEditor implements ActionListener {
             valComboBox.addItem(new Integer(i));
         valComboBox.setBorder(null);
 
-        return new VSTupel<String,Component,JComboBox>(label,
+        return new VS3Tupel<String,Component,JComboBox>(label,
                 createUnitPanel(prefsToEdit, valComboBox, fullKey),
                 valComboBox);
     }
@@ -379,7 +379,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createVectorComponent(
+    protected VS3Tupel<String,Component,JTextField> createVectorComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -389,7 +389,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         valField.setBorder(null);
         valField.setText(vec.toString());
 
-        return new VSTupel<String,Component,JTextField>(label,
+        return new VS3Tupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -400,7 +400,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      * @param key the key
      * @param prefsToEdit the prefs to edit
      */
-    protected VSTupel<String,Component,JCheckBox> createBooleanComponent(
+    protected VS3Tupel<String,Component,JCheckBox> createBooleanComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         final String activated = prefs.getString("lang.activated");
         String descr = prefsToEdit.getDescription(fullKey);
@@ -409,7 +409,7 @@ public abstract class VSAbstractEditor implements ActionListener {
                                            prefsToEdit.getBoolean(key));
         valField.setBackground(Color.WHITE);
         valField.setBorder(null);
-        return new VSTupel<String,Component,JCheckBox>(label,
+        return new VS3Tupel<String,Component,JCheckBox>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -422,7 +422,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createLongComponent(
+    protected VS3Tupel<String,Component,JTextField> createLongComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -436,7 +436,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         });
         valField.setText(""+prefsToEdit.getLong(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label,
+        return new VS3Tupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -449,7 +449,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createFloatComponent(
+    protected VS3Tupel<String,Component,JTextField> createFloatComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -463,7 +463,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         });
         valField.setText(""+prefsToEdit.getFloat(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label,
+        return new VS3Tupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -476,7 +476,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createColorComponent(
+    protected VS3Tupel<String,Component,JTextField> createColorComponent(
         String fullKey, String key, final VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -507,7 +507,7 @@ public abstract class VSAbstractEditor implements ActionListener {
             }
         });
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label,
+        return new VS3Tupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -520,7 +520,7 @@ public abstract class VSAbstractEditor implements ActionListener {
      *
      * @return the tupel representing the component
      */
-    protected VSTupel<String,Component,JTextField> createStringComponent(
+    protected VS3Tupel<String,Component,JTextField> createStringComponent(
         String fullKey, String key, VSPrefs prefsToEdit) {
         String descr = prefsToEdit.getDescription(fullKey);
         String label = descr == null ? fullKey : descr;
@@ -534,7 +534,7 @@ public abstract class VSAbstractEditor implements ActionListener {
         });
         valField.setText(prefsToEdit.getString(key));
         valField.setBorder(null);
-        return new VSTupel<String,Component,JTextField>(label,
+        return new VS3Tupel<String,Component,JTextField>(label,
                 createUnitPanel(prefsToEdit, valField, fullKey), valField);
     }
 
@@ -557,7 +557,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : integerKeys) {
             String fullKey = VSPrefs.INTEGER_PREFIX + key;
-            VSTupel<String,Component,JComboBox> tupel =
+            VS3Tupel<String,Component,JComboBox> tupel =
                 createIntegerComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -566,7 +566,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : vectorKeys) {
             String fullKey = VSPrefs.VECTOR_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel =
+            VS3Tupel<String,Component,JTextField> tupel =
                 createVectorComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -575,7 +575,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : booleanKeys) {
             String fullKey = VSPrefs.BOOLEAN_PREFIX + key;
-            VSTupel<String,Component,JCheckBox> tupel =
+            VS3Tupel<String,Component,JCheckBox> tupel =
                 createBooleanComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -584,7 +584,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : longKeys) {
             String fullKey = VSPrefs.LONG_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel =
+            VS3Tupel<String,Component,JTextField> tupel =
                 createLongComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -594,7 +594,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : floatKeys) {
             String fullKey = VSPrefs.FLOAT_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel =
+            VS3Tupel<String,Component,JTextField> tupel =
                 createFloatComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -604,7 +604,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : colorKeys) {
             String fullKey = VSPrefs.COLOR_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel =
+            VS3Tupel<String,Component,JTextField> tupel =
                 createColorComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -613,7 +613,7 @@ public abstract class VSAbstractEditor implements ActionListener {
 
         for (String key : stringKeys) {
             String fullKey = VSPrefs.STRING_PREFIX + key;
-            VSTupel<String,Component,JTextField> tupel =
+            VS3Tupel<String,Component,JTextField> tupel =
                 createStringComponent(fullKey, key, prefsToEdit);
             labels.put(fullKey, tupel.getA());
             components.put(fullKey, tupel.getB());
@@ -765,42 +765,42 @@ public abstract class VSAbstractEditor implements ActionListener {
         for (String fullKey : fullKeys) {
             String key = fullKey.substring(fullKey.indexOf(": ") + 2);
             if (fullKey.startsWith(VSPrefs.INTEGER_PREFIX)) {
-                VSTupel<String,Component,JComboBox> tupel =
+                VS3Tupel<String,Component,JComboBox> tupel =
                     createIntegerComponent(fullKey, key, prefsToAdd);
                 this.integerKeys.add(prefsKey+key);
                 this.integerFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.VECTOR_PREFIX)) {
-                VSTupel<String,Component,JTextField> tupel =
+                VS3Tupel<String,Component,JTextField> tupel =
                     createVectorComponent(fullKey, key, prefsToAdd);
                 this.vectorKeys.add(prefsKey+key);
                 this.vectorFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.BOOLEAN_PREFIX)) {
-                VSTupel<String,Component,JCheckBox> tupel =
+                VS3Tupel<String,Component,JCheckBox> tupel =
                     createBooleanComponent(fullKey, key, prefsToAdd);
                 this.booleanKeys.add(prefsKey + key);
                 this.booleanFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.LONG_PREFIX)) {
-                VSTupel<String,Component,JTextField> tupel =
+                VS3Tupel<String,Component,JTextField> tupel =
                     createLongComponent(fullKey, key, prefsToAdd);
                 this.longKeys.add(prefsKey+key);
                 this.longFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.FLOAT_PREFIX)) {
-                VSTupel<String,Component,JTextField> tupel =
+                VS3Tupel<String,Component,JTextField> tupel =
                     createFloatComponent(fullKey, key, prefsToAdd);
                 this.floatKeys.add(prefsKey + key);
                 this.floatFields.put(prefsKey+key, tupel.getC());
                 addVariable(prefsKey, tupel.getA(), tupel.getB(), prefsToAdd);
 
             } else if (fullKey.startsWith(VSPrefs.STRING_PREFIX)) {
-                VSTupel<String,Component,JTextField> tupel =
+                VS3Tupel<String,Component,JTextField> tupel =
                     createStringComponent(fullKey, key, prefsToAdd);
                 this.stringKeys.add(prefsKey + key);
                 this.stringFields.put(prefsKey+key, tupel.getC());
