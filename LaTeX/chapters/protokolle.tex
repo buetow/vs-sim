@@ -1,7 +1,7 @@
 \chapter{Protokolle und Beispiele}
 
 Im Folgenden werden alle verfügbaren Protokolle behandelt. Wie bereits beschrieben wird bei Protokollen zwischen Server- und Clientseite unterschieden. Server können auf Clientnachrichten, und Clients auf Servernachrichten antworten. Jeder Prozess kann beliebig viele Protokolle sowohl clientseitig als auch serverseitig unterstützen. Theoretisch ist es auch möglich, dass ein Prozess für ein bestimmtes Protokoll gleichzeitig der Server und der Client ist. Der Anwender kann auch weitere eigene Protokolle in der Programmiersprache Java mittels der simulatoreigenen API (Application Programming Interface) erstellen (s. Kap. 4.4.4.).  
-Im Programmverzeichnis des Simulators befindet sich das Verzeichnis \textit{saved-simulations} mit Beispielsimulationen. Diese liegen jeweils als serialisierter plattformunabh\"{a}ngiger Java-Bytecode in \textit{.dat}-Dateien vor. Alle Protokolle, bis auf das Beispiel-, Ping Pong- sowie das Broadcast-Protokoll, orientieren sich an den in \cite{Tanenbaum} und \cite{Vorlesung} behandelten Protokollen.
+Im Programmverzeichnis des Simulators befindet sich das Verzeichnis \textit{saved-simulations} mit Beispielsimulationen. Diese liegen jeweils als serialisierter plattformunabh\"{a}ngiger Java-Bytecode in \textit{.dat}-Dateien vor. Alle Protokolle, bis auf das Beispiel-, Ping Pong- sowie das Broadcast-Protokoll, orientieren sich an den in \cite{Tanenbaum}, \cite{Coul} und \cite{Vorlesung} behandelten Protokollen.
 
 \section{Beispiel (Dummy) Protokoll}
 
@@ -101,7 +101,7 @@ Das Broadcast Protokoll verhält sich ähnlich wie das Ping-Pong Protokoll. Der Un
 
 In diesem Fall wird nicht zwischen Client und Server unterschieden, so dass bei der Ankunft einer Nachricht jeweils die gleiche Aktion durchgef\"{u}hrt wird. Somit lässt sich, unter Verwendung mehrerer Prozesse (s. Abb. \ref{fig:BroadcastSturmProto}.) ein Broadcast erzeugen. P1 ist der Client und startet je eine Anfrage nach \textit{0ms} und \textit{2500ms}. Die Simulationsdauer beträgt hier genau \textit{5000ms}. Da ein Client nur Servernachrichten und ein Server nur Clientnachrichten empfangen kann, ist in dieser Simulation jeder Prozess (s. Tabelle \ref{tb:BroadcastSturmTasks}) gleichzeitig Server und Client. 
 
-\newpage
+
 \section{Das Protokoll zur internen Synchronisierung in einem synchronen System \small{\textit{(int-sync.dat)}}}
 
 Bisher wurden nur Protokolle dargestellt, in denen die beteiligten Prozesse keine Uhrabweichungen hatten. Das Protokoll zur internen Synchronisierung ist ein Protokoll zur Synchronisierung der lokalen Prozesszeit, welches beispielsweise angewendet werden kann, wenn eine Prozesszeit aufgrund einer Uhrabweichung falsch geht. Wenn der Client seine (falsche) lokale Prozesszeit $t_c$ mit einem Server synchronisieren möchte, so schickt er ihm eine Clientanfrage. Der Server schickt als Antwort seine eigene lokale Prozesszeit $t_s$ zurück, womit der Client eine neue und genauere Prozesszeit f\"{u}r sich berechnen kann. 
@@ -197,7 +197,7 @@ Aus Abbildung \ref{fig:TimeSync2Proto}. ist ersichtlich, dass nach Ablauf der Si
 	\label{tb:InterneSync2Tasks}
 \end{table}
 
-\newpage
+
 \section{Der Berkeley Algorithmus zur internen Synchronisierung \small{\textit{(berkeley.dat)}}}
 
 \begin{figure}[h]
@@ -253,7 +253,7 @@ Dieses Protokoll verwendet folgende serverseitige Variable, die in den Prozessei
 	\item \textbf{PIDs beteiligter Prozesse} \textit{(Integer[]: [1,3])}: Dieser Vektor aus Integerwerten beinhaltet alle PIDs der Berkeley Clientprozesse, mit denen der Berkeley Server die Zeit synchronisieren soll. Das Protokoll funktioniert nicht, wenn hier eine PID angegeben wird die nicht existiert oder die das Berkeley Protokoll clientseitig nicht unterstützt. In diesem Fall würde ewig auf eine (fehlende) Clientantwort gewartet werden.
 \end{itemize}
 
-\newpage
+
 \section{Das Ein-Phasen Commit Protokoll \small{\textit{(one-phase-commit.dat)}}}
 
 \begin{figure}[h]
@@ -295,7 +295,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 \end{itemize}
 
 
-\newpage
+
 \section{Das Zwei-Phasen Commit Protokoll \small{\textit{(two-phase-commit.dat)}}}
 
 \begin{figure}[h]
@@ -396,7 +396,18 @@ Die folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 	& & Boolean: isVoteResult=true; voteResult=true\\
 \hline
 004124 & 1 & Nachricht erhalten; ID: 99; Protokoll: 2-Phasen Commit\\
-\hline
+	\end{tabular}
+	}
+	\caption{Auszug aus dem Logfenster des Zwei-Phasen Commit Beispiels}
+	\label{tb:TwoPhaseCommitLogs}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
+			\hline
 004124 & 1 & Globales Abstimmungsergebnis erhalten. Ergebnis: true\\
 \hline
 004124 & 1 & Nachricht versendet; ID: 100; Protokoll: 2-Phasen Commit\\
@@ -413,18 +424,7 @@ Die folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 \hline
 004434 & 1 & Nachricht versendet; ID: 102; Protokoll: 2-Phasen Commit\\
 	& & Integer: pid=1; Boolean: isVote=true; vote=true\\
-	\end{tabular}
-	}
-	\caption{Auszug aus dem Logfenster des Zwei-Phasen Commit Beispiels}
-	\label{tb:TwoPhaseCommitLogs}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
-			\hline
+\hline
 004434 & 1 & Abstimmung true versendet\\
 \hline
 004527 & 2 & Nachricht erhalten; ID: 98; Protokoll: 2-Phasen Commit\\
@@ -465,7 +465,7 @@ Die folgende Clientvariable kann unter den Prozesseinstellungen unter dem Punkt 
 	\label{tb:TwoPhaseCommitLogs2}
 \end{table}
 
-
+\newpage
 \newpage
 \section{Der ungenügende (Basic) Multicast \small{\textit{(basic-multicast.dat)}}}
 
@@ -505,7 +505,7 @@ P1 kann jedoch erst nach \textit{2500ms} Multicast-Nachrichten empfangen, da er 
 
 In diesem Beispiel ging die 3. Multicast-Nachricht auf den Weg zu P3- und die 5. sowie 6. Nachricht auf den Weg zu P1 verloren. Lediglich die 4. Multicast-Nachricht hat beide Ziele erreicht.
 
-\newpage
+
 \section{Das zuverlässige (Reliable) Multicast Protokoll \small{\textit{(reliable-multicast.dat)}}}
 
 \begin{figure}[h]
@@ -613,17 +613,7 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 	   & & Boolean: isMulticast=true\\
 \hline
 005952 & 1 & Nachricht erhalten; ID: 283; Protokoll: Reliable Multicast\\
-	\end{tabular}
-	}
-	\caption{Auszug aus dem Logfenster des Reliable-Multicast Beispiels}
-	\label{tb:ReliableMulticastLogs}
-\end{table}
-
-\begin{table}
-	\centering
-	\fbox{
-	\begin{tabular}{c|c|l}
-		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
+\hline
 005952 & 1 & Nachricht versendet; ID: 284; Protokoll: Reliable Multicast\\
 	   & & Integer: pid=1; Boolean: isAck=true\\
 \hline
@@ -640,6 +630,17 @@ Dieses Protokoll verwendet folgende serverseitige Variablen, die in den Prozesse
 \hline
 008469 & 1 & Nachricht versendet; ID: 286; Protokoll: Reliable Multicast\\
 	   & & Integer: pid=1; Boolean: isAck=true\\
+	\end{tabular}
+	}
+	\caption{Auszug aus dem Logfenster des Reliable-Multicast Beispiels}
+	\label{tb:ReliableMulticastLogs}
+\end{table}
+
+\begin{table}
+	\centering
+	\fbox{
+	\begin{tabular}{c|c|l}
+		\textbf{Zeit (ms)} & \textbf{PID} & \textbf{Lognachricht} \\
 \hline
 008469 & 1 & ACK erneut versendet\\
 \hline
@@ -685,6 +686,10 @@ Bisher wurden alle verfügbaren Protokolle anhand von Beispielen aufgeführt. Mit 
 
 \subsection{Simulation von Lamport- und Vektor-Zeitstempel}
 
+\cite{Tanenbaum} ``\textit{F\"{u}r viele Zwecke ist es ausreichend, dass sich alle Maschinen \"{u}ber dieselbe Zeit einig sind. Es ist nicht erforderlich, dass diese Zeit auch mit der realen Zeit \"{u}bereinstimmt, wie sie jede Stunde im Radio angek\"{u}ndigt wird.... F\"{u}r eine bestimmte Klasse von Algorithmen ist nur die interne Konsistenz der Uhren wichtig}''.
+
+Uhren die eine solche Zeit angeben, sind auch als logische Uhren bekannt. Zwei davon werden anhand der Lamport- und Vektor-Zeitstempel wie folgt realisiert:
+
 \begin{figure}[h]
 	\centering
 	\fbox{\includegraphics[width=10cm]{images/ss-protokoll-berkeley-lamport}}
@@ -729,12 +734,9 @@ Wenn während einer Simulation Prozesse entfernt- oder neue Prozesse hinzugefügt 
 
 Wie bereits beschrieben (s. Kap. 2.4.2.) gibt es in den Simulationseinstellungen die boolschen Variablen ``Lamportzeiten betreffen alle Ereignisse'' und ``Vektorzeiten betreffen alle Ereignisse'', die standardmäßig auf \textit{false} gesetzt sind. Mit \textit{true} werden alle Ereignisse, und nicht nur der Empfang oder das Versenden einer Nachricht, berücksichtigt. Für eine weitere Betrachtung der Lamport- sowie Vektor-Zeitstempel siehe \cite{Vorlesung} oder \cite{Tanenbaum}.
 
-\newpage
 \subsection{Simulation langsamer Verbindungen \small{\textit{(slow-connection.dat)}}}
 
 Mit dem Simulator lassen sich auch langsame Verbindungen zu einem bestimmten Prozess simulieren. Für die Demonstration wird das Beispiel aus Kapitel 3.5. wieder aufgegriffen, wo das Protokoll zur internen Synchronisation (durch P1) mit der Christians-Methode (durch P3) parallel simuliert wurden. P2 stellt den Server beider Protokolle zur Verfügung. In diesem Szenario soll P3 eine schlechte Netzwerkverbindung besitzen, so dass Nachrichten von- und an P3 stets eine längere Übertragungszeit benötigen.
-
-Die Ereignisse sind so wie bereits in Tabelle \ref{tb:InterneSync2Tasks}. dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der Übertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde die ``Minimale Übertragungszeit'' auf \textit{2000ms} und die ``Maximale Übertragungszeit'' auf \textit{8000ms} gestellt. P1 und P2 behalten als Standardeinstellungen für die minimale und maximale Übertragungszeiten die Werte \textit{500ms} und \textit{2000ms}, die Simulationsdauer betr\"{a}gt nun \textit{20000ms}.
 
 \begin{figure}[h]
 	\centering
@@ -742,6 +744,8 @@ Die Ereignisse sind so wie bereits in Tabelle \ref{tb:InterneSync2Tasks}. darges
 	\caption{Simulation einer langsamen Verbindung}
 	\label{fig:TimeSync2LongTransferProto}
 \end{figure}
+
+Die Ereignisse sind so wie bereits in Tabelle \ref{tb:InterneSync2Tasks}. dargestellt wurde programmiert. In den Simulationseinstellungen ist hier die Einstellung ``Mittelwerte der Übertragungszeiten bilden'' aktiviert. In den Prozesseinstellungen von P3 wurde die ``Minimale Übertragungszeit'' auf \textit{2000ms} und die ``Maximale Übertragungszeit'' auf \textit{8000ms} gestellt. P1 und P2 behalten als Standardeinstellungen für die minimale und maximale Übertragungszeiten die Werte \textit{500ms} und \textit{2000ms}, die Simulationsdauer betr\"{a}gt nun \textit{20000ms}.
 
 Als Folge (s. Abb. \ref{fig:TimeSync2LongTransferProto}.) benötigen Nachrichten, die von- und an P3 verschickt werden, für eine Übertragung immer mehr Zeit. Bevor P3 eine Antwort auf seine vorherige Anfrage bekommt, verschickt er eine erneute Anfrage. Da P3 die Serverantworten immer stets seiner letzten verschickten Anfrage zuordnet, berechnet er alle RTTs inkorrekt und seine lokale Zeit wird dadurch bei jedem Durchgang erneut falsch bestimmt. Die Berechnungsformeln der Übertragungszeiten wurde bereits in Kapitel 2.4.3. bei den Prozesseinstellungen behandelt. Konkret bedeutet dies hier für die Übertragungszeiten alle Nachrichten von- und an P3 jeweils:
 

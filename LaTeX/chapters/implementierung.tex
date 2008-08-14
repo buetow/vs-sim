@@ -559,7 +559,7 @@ Der Simulator soll auf die Millisekunde genau simulieren k\"{o}nnen und dabei so
 \begin{itemize}
 	\item Das Zeichnen der Visualisierung benötigt pro Aktualisierung einige Millisekunden. Hier werden ständig mathematische Berechnungen wie z.B. die Berechnung einer Nachrichtenlinie oder die automatische Skalierung des Diagramms durchgef\"{u}hrt.
 	\item Das Neuberechnen der Simulation benötigt pro Aktualisierung einige Millisekunden. Hier arbeitet insbesondere der Task-Manager, welcher überprüft, ob Ereignisse auszuführen sind.
-	\item Jeder simulierte Prozess sollte mit der selben Geschwindigkeit fortschreiten, und dies auf jedem Betriebssystem und auf jeder Architektur. Da Threads auf Betriebssystemebene implementiert sind sind Java-Threads nicht komplett plattformunabhängig. Dadurch kann das Verhalten je nach Betriebssystem und Architekturen variieren. Insbesondere übernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf.
+	\item Jeder simulierte Prozess sollte mit der selben Geschwindigkeit fortschreiten, und dies auf jedem Betriebssystem und auf jeder Architektur. Da Threads auf Betriebssystemebene implementiert sind sind Java-Threads nicht komplett plattformunabhängig. Dadurch kann das Verhalten je nach Betriebssystem und Architekturen variieren. Insbesondere übernimmt das Betriebssystem die Entscheidung, wann welcher Thread arbeiten darf (vgl. \cite{Threads}).
 	\item Die Simulationszeit wird stets in Millisekunden angegeben und sie wird intern in einer \textit{long}-Variable abgespeichert. Somit kann eine Simulationszeit immer nur den Wert einer ganze Zahl betragen. Berechnungsrundungsfehler durch \textit{sim.clock.speed} (s. Kap. 2.4.2.) müssen berücksichtigt werden.
 	\item Der Simulator soll die komplette CPU des Anwender-Computers nicht konstant auslasten.
 \end{itemize}
@@ -651,7 +651,7 @@ Es wurden noch nicht die Klassen der Pakete \textit{utils} (s. Abb. \ref{fig:Pac
 	\item \textit{VSHelper}: In dieser Klasse befinden sich statische Helfermethoden, die in keine andere Klasse gehören.
 	\item \textit{VSPriorityQueue}: Diese Klasse wird für das Verwalten von \textit{core.VSTask}-Objekte im Task-Manager benötigt. 
 	\item \textit{VSRandom}: Wird für Zufallsereignisse benötigt. Jedes Prozessobjekt besitzt einen solchen eigenen Pseudozufallsgenerator. Diese Klasse setzt gleichzeitig einen eigenen Seed basierend auf der lokalen Systemzeit und anderer Zahlen fest.
-	\item \textit{VSTupel}: Diese Klasse ist eine Implementierung eines einfach aufgebauten 3-Tupel Datentyps. Alle 3 Elemente können von einem anderen Typ sein, was mit Hilfe der Java-Generics verwirklicht wurde. \textit{VSTupel} wird von den Editorklassen für die Generierung von GUI-Elementen benötigt.
+	\item \textit{VS3Tupel}: Diese Klasse ist eine Implementierung eines einfach aufgebauten 3-Tupel Datentyps. Alle 3 Elemente können von einem anderen Typ sein, was mit Hilfe der Java-Generics verwirklicht wurde. \textit{VS3Tupel} wird von den Editorklassen für die Generierung von GUI-Elementen benötigt.
 \end{itemize}
 
 \begin{figure}[h]
@@ -706,7 +706,7 @@ Für das Schreiben des Java-Quelltextes wurde  Graphical Vi IMproved (GVim) sowie
 
 Für die Erstellung dieses PDF-Dokumentes wurde LaTeX in Verbindung mit dem Built-Tool GNU Make und Rubber verwendet. Eine Rechtschreibüberprüfung wurde mit aspell sowie OpenOffice.org durchgeführt. xPDF diente dabei als PDF-Anzeigeprogramm.
 
-Sämtliche UML-Diagramme wurden mit ArgoUML angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. Mit dem zip-Programm wurden alle VS-Simulator Distributionen verpackt.
+Sämtliche UML-Diagramme wurden mit ArgoUML und \cite{UML} angefertigt und die Screenshots mit The GIMP (GNU Image Manipulation Program) sowie ImageMagick nachbearbeitet. Mit dem zip-Programm wurden alle VS-Simulator Distributionen verpackt.
 
 \subsubsection{Linkliste der verwendeten Software}
 
