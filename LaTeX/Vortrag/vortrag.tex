@@ -35,7 +35,7 @@
 \frame{
 \frametitle{Was ist ein verteiltes System?}
 \begin{itemize}
-	\item<1-> Zitat A. Tanenbaum und M. van Steen, Verteilte Systeme: ``\textit{Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Anwender wie ein einzelnes, koh\"{a}rentes System erscheinen}''
+	\item<1-> Zitat Tanenbaum, van Steen; Verteilte Systeme: ``\textit{Ein verteiltes System ist eine Menge voneinander unabh\"{a}ngiger Computer, die dem Anwender wie ein einzelnes, koh\"{a}rentes System erscheinen}''
 	\item<1-> Anwender muss sich nur mit dem vor ihm befindlichen Computer auseinandersetzen
 	\item<1-> Verteiltes System stellt die Kommunikation mit anderen Computern sicher 
 	\item<1-> Gemeinsame Nutzung von Ressourcen
@@ -47,7 +47,7 @@
 \frame{
 \frametitle{Motivation}
 \begin{itemize}
-	\item<1-> Betrachtung von verteilten Systemen aus einer anderen Sicht (Lehr- und Lernzwecke)
+	\item<1-> Betrachtung von verteilten Systemen aus einer anderen Sicht (Lehrzwecke)
 	\item<1-> Transparente Darstellung von verteilten Systemen
 	\item<1-> Entwicklung eines Simulators (VS-Simulator oder auch VS-Sim.)
 		\begin{itemize}
@@ -160,7 +160,7 @@
 \frame{
 \frametitle{Verschiedene Einstellungsm\"{o}glichkeiten}
 \begin{itemize}
-	\item<1-> Vom Anwender einstellbar 
+	\item<1-> Vom Anwender einstellbar und abspeicherbar
 	\begin{itemize}
 		\item<1-> Globale Simulationseinstellungen
 		\item<1-> Separate Einstellungen f\"{u}r jeden Prozess
@@ -201,8 +201,8 @@
 	\item<1-> Das Beispiel (Dummy) Protokoll
 	\item<1-> Das Ping-Pong Protokoll
 	\item<1-> Ping-Pong Sturm
-	\item<1-> Das Protokoll zur Christians Methode zur externen Synchronisierung
-	\item<1-> Der zuverl\"{a}ssige (Reliable) Multicast
+	\item<1-> Das Protokoll zur Christians Methode zur externen Synchronisierung \textit{(wenn genug Zeit)}
+	\item<1-> Der zuverl\"{a}ssige (Reliable) Multicast \textit{(wenn genug Zeit)}
 \end{itemize}
 } 
 
@@ -227,7 +227,6 @@
 	\item<1-> \texttt{public void onServerStart()}
 	\item<1-> \texttt{public void onServerRecv(VSMessage message)}
 	\item<1-> \texttt{public void onServerSchedule()}
-	\item<1-> \texttt{String toString()} (Nur optional)
 \end{itemize}
 } 
 
@@ -271,7 +270,7 @@
 \subsection{Zahlen und Fakten}
 
 \frame{
-\frametitle{Zahlen und Fakten von VS-Sim.}
+\frametitle{VS-Sim.: Zahlen und Fakten}
 \begin{itemize}
 	\item<1-> Quelltext-Dateien: 61
 	\item<1-> Java-Pakete: 12 

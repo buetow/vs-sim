@@ -69,7 +69,7 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
         VSMessage message = new VSMessage();
         message.setBoolean("fromClient", true);
         message.setInteger("counter", ++clientCounter);
-        sendMessage(message);
+        super.sendMessage(message);
     }
 
     /* (non-Javadoc)
@@ -79,12 +79,12 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
         if (!recvMessage.getBoolean("fromServer"))
             return;
 
-        log("message: " + recvMessage.getInteger("counter"));
+        super.log("message: " + recvMessage.getInteger("counter"));
 
         VSMessage message = new VSMessage();
         message.setBoolean("fromClient", true);
         message.setInteger("counter", ++clientCounter);
-        sendMessage(message);
+        super.sendMessage(message);
     }
 
     /* (non-Javadoc)
@@ -113,12 +113,12 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
         if (!recvMessage.getBoolean("fromClient"))
             return;
 
-        log("message: " + recvMessage.getInteger("counter"));
+        super.log("message: " + recvMessage.getInteger("counter"));
 
         VSMessage message = new VSMessage();
         message.setBoolean("fromServer", true);
         message.setInteger("counter", ++serverCounter);
-        sendMessage(message);
+        super.sendMessage(message);
     }
 
     /* (non-Javadoc)
@@ -131,6 +131,6 @@ public class VSPingPongProtocol extends VSAbstractProtocol {
      * @see protocols.VSAbstractProtocol#toString()
      */
     public String toString() {
-        return super.toString();
+        return super.toString() + "; Neue Nachricht da hinter";
     }
 }
