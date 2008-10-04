@@ -1,13 +1,20 @@
-Evtl.:
-	Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
-	Ereigniseintritt bei Lamport und Vektorzeiten?	
-	Helper:
-		Print warning if not activated protocol while doing a protocol request
+VS-Simulator Plan:
+
+Version 1.1:
+	English version
+	Easy Plugin-API, w/o having the complete sources available		
+	Update of diplomarbeit.pdf (german only), rename it into vs-sim.pdf.
+
+Version 1.2 and later:
+	Ereigniseintritt bei Lamport und Vektorzeiten
+	Print warning if not activated protocol while doing a protocol request
+	vs-sim.pdf: Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
 	Splash screen
 	Simulationen beliebig lang machen
 	KeyEvent Manager
 	Loggingfenster soll nur Lamport/Vektorzeit anzeigen, wenn ausgewaehlt
-Evtl. nicht:
+
+Maybe more later:
 	Protocols:
 		Waehlermengen nach Maekawa?
 		NFS
