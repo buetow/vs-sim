@@ -81,7 +81,7 @@ public class VSMessageReceiveEvent extends VSAbstractInternalEvent
         process.updateVectorTime(message.getVectorTime());
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append(prefs.getString("lang.message.recv"));
+        buffer.append(prefs.getString("lang.en.message.recv"));
         buffer.append("; ");
         buffer.append(message);;
         log(buffer.toString());

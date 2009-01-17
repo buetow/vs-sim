@@ -71,7 +71,7 @@ public final class VSRegisteredEvents {
         new HashMap<String,Boolean>();
 
     /** The prefs. */
-    //private static VSPrefs prefs;
+    private static VSPrefs prefs;
 
     /**
      * Registers available events.
@@ -79,32 +79,50 @@ public final class VSRegisteredEvents {
      * @param prefs_ the prefs_
      */
     public static void init(VSPrefs prefs_) {
-        //prefs = prefs_;
+        prefs = prefs_;
 
-        registerEvent("events.implementations.VSProcessCrashEvent",
-                      "Prozessabsturz");
-        registerEvent("events.implementations.VSProcessRecoverEvent",
-                      "Prozesswiederbelebung");
-        registerEvent("protocols.implementations.VSBasicMulticastProtocol",
-                      "Basic Multicast", "Basic Multicast");
-        registerEvent("protocols.implementations.VSBerkelyTimeProtocol",
-                      "Berkeley Algorithmus zur internen Sync.", "Berkeley");
-        registerEvent("protocols.implementations.VSBroadcastProtocol",
-                      "Broadcast");
-        registerEvent("protocols.implementations.VSDummyProtocol",
-                      "Beispiel/Dummy");
-        registerEvent("protocols.implementations.VSExternalTimeSyncProtocol",
-                      "Christians Methode zur externen Sync.", "Christians");
-        registerEvent("protocols.implementations.VSInternalTimeSyncProtocol",
-                      "Interne Synchronisation", "Interne Sync.");
-        registerEvent("protocols.implementations.VSOnePhaseCommitProtocol",
-                      "Ein-Phasen Commit", "1-Phasen Commit");
-        registerEvent("protocols.implementations.VSPingPongProtocol",
-                      "Ping Pong");
-        registerEvent("protocols.implementations.VSReliableMulticastProtocol",
-                      "Reliable Multicast", "Reliable Multicast");
-        registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol",
-                      "Zwei-Phasen Commit", "2-Phasen Commit");
+        /*
+                registerEvent("events.implementations.VSProcessCrashEvent",
+                              "Prozessabsturz");
+                registerEvent("events.implementations.VSProcessRecoverEvent",
+                              "Prozesswiederbelebung");
+                registerEvent("protocols.implementations.VSBasicMulticastProtocol",
+                              "Basic Multicast", "Basic Multicast");
+                registerEvent("protocols.implementations.VSBerkelyTimeProtocol",
+                              "Berkeley Algorithmus zur internen Sync.", "Berkeley");
+                registerEvent("protocols.implementations.VSBroadcastProtocol",
+                              "Broadcast");
+                registerEvent("protocols.implementations.VSDummyProtocol",
+                              "Beispiel/Dummy");
+                registerEvent("protocols.implementations.VSExternalTimeSyncProtocol",
+                              "Christians Methode zur externen Sync.", "Christians");
+                registerEvent("protocols.implementations.VSInternalTimeSyncProtocol",
+                              "Interne Synchronisation", "Interne Sync.");
+                registerEvent("protocols.implementations.VSOnePhaseCommitProtocol",
+                              "Ein-Phasen Commit", "1-Phasen Commit");
+                registerEvent("protocols.implementations.VSPingPongProtocol",
+                              "Ping Pong");
+                registerEvent("protocols.implementations.VSReliableMulticastProtocol",
+                              "Reliable Multicast", "Reliable Multicast");
+                registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol",
+                              "Zwei-Phasen Commit", "2-Phasen Commit");
+        */
+
+        /* Using the NEW way. The old way above (specifying protocol names
+           in this file still works as well */
+
+        registerEvent("events.implementations.VSProcessCrashEvent");
+        registerEvent("events.implementations.VSProcessRecoverEvent");
+        registerEvent("protocols.implementations.VSBasicMulticastProtocol");
+        registerEvent("protocols.implementations.VSBerkelyTimeProtocol");
+        registerEvent("protocols.implementations.VSBroadcastProtocol");
+        registerEvent("protocols.implementations.VSDummyProtocol");
+        registerEvent("protocols.implementations.VSExternalTimeSyncProtocol");
+        registerEvent("protocols.implementations.VSInternalTimeSyncProtocol");
+        registerEvent("protocols.implementations.VSOnePhaseCommitProtocol");
+        registerEvent("protocols.implementations.VSPingPongProtocol");
+        registerEvent("protocols.implementations.VSReliableMulticastProtocol");
+        registerEvent("protocols.implementations.VSTwoPhaseCommitProtocol");
 
         /* Make dummy objects of each protocol, to see if they contain VSPrefs
            values to edit */
@@ -346,6 +364,19 @@ public final class VSRegisteredEvents {
             VSInternalProcess process) {
         return createEventInstanceByClassname(
                    eventClassnamesByNames.get(eventName), process);
+    }
+
+    /**
+     * Registers an event. Use the language settings of VSPrefs.
+     *
+     * @param eventClassname the event classname
+     */
+    private static void registerEvent(String eventClassname) {
+        String eventName =
+            prefs.getString("lang.en." + eventClassname);
+        String eventShortname =
+            prefs.getString("lang.en." + eventClassname + ".short");
+        registerEvent(eventClassname, eventName, eventShortname);
     }
 
     /**

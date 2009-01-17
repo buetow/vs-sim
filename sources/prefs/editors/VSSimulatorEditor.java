@@ -68,8 +68,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
      */
     public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame,
                              VSSimulator simulator) {
-        super(prefs, prefs, prefs.getString("lang.name")
-              + " - " + prefs.getString("lang.prefs"));
+        super(prefs, prefs, prefs.getString("lang.en.name")
+              + " - " + prefs.getString("lang.en.prefs"));
         this.dontStartNewSimulator = true;//simulator != null;
         this.simulatorFrame = simulatorFrame;
         this.simulator = simulator;
@@ -83,8 +83,8 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
      */
     public VSSimulatorEditor(VSPrefs prefs, VSSimulatorFrame simulatorFrame,
                              boolean openedNewWindow) {
-        super(prefs, prefs, prefs.getString("lang.name")
-              + " - " + prefs.getString("lang.prefs"));
+        super(prefs, prefs, prefs.getString("lang.en.name")
+              + " - " + prefs.getString("lang.en.prefs"));
         this.simulatorFrame = simulatorFrame;
         this.openedNewWindow = openedNewWindow;
     }
@@ -97,7 +97,7 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
         if (TAKEOVER_BUTTON) {
             TAKEOVER_BUTTON = false;
             JButton takeoverButton = new JButton(
-                prefs.getString("lang.takeover"));
+                prefs.getString("lang.en.takeover"));
             takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
             takeoverButton.addActionListener(this);
             buttonPanel.add(takeoverButton);
@@ -111,7 +111,7 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 
-        if (actionCommand.equals(prefs.getString("lang.takeover"))) {
+        if (actionCommand.equals(prefs.getString("lang.en.takeover"))) {
             savePrefs();
 
             if (simulator != null) {
@@ -120,11 +120,11 @@ public class VSSimulatorEditor extends VSAbstractBetterEditor {
                 simulator.updateFromPrefs();
             }
 
-        } else if (actionCommand.equals(prefs.getString("lang.cancel"))) {
+        } else if (actionCommand.equals(prefs.getString("lang.en.cancel"))) {
             if (!dontStartNewSimulator && openedNewWindow)
                 simulatorFrame.dispose();
 
-        } else if (actionCommand.equals(prefs.getString("lang.ok"))) {
+        } else if (actionCommand.equals(prefs.getString("lang.en.ok"))) {
             savePrefs();
             if (expertModeChanged()) {
                 if (simulator != null)

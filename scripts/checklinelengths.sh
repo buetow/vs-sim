@@ -18,7 +18,7 @@
 
 MAXLEN=80
 
-for i in `find ./sources -name \*.java | grep -v VSDefaultPrefs.java`
+for i in `find ./sources -name \*.java | grep -v VSDefaultPrefs`
 do
 	awk -v MAXLEN=$MAXLEN -v file=$i '{
 		if (length > MAXLEN)

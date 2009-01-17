@@ -54,8 +54,8 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
      * @param process the process
      */
     public VSProcessEditor(VSPrefs prefs, VSInternalProcess process) {
-        super(prefs, process, prefs.getString("lang.name") + " - " +
-              prefs.getString("lang.prefs.process"));;
+        super(prefs, process, prefs.getString("lang.en.name") + " - " +
+              prefs.getString("lang.en.prefs.process"));;
         this.process = process;
         disposeFrameWithParentIfExists();
         makeProtocolVariablesEditable();
@@ -67,7 +67,7 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
      */
     protected void addToButtonPanelFront(JPanel buttonPanel) {
         JButton takeoverButton = new JButton(
-            prefs.getString("lang.takeover"));
+            prefs.getString("lang.en.takeover"));
         takeoverButton.setMnemonic(prefs.getInteger("keyevent.takeover"));
         takeoverButton.addActionListener(this);
         buttonPanel.add(takeoverButton);
@@ -80,9 +80,9 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
         ArrayList<String> editableProtocolsClassnames =
             VSRegisteredEvents.getEditableProtocolsClassnames();
 
-        //String protocolString = " " + prefs.getString("lang.protocol");
-        String clientString = " " + prefs.getString("lang.client");
-        String serverString = " " + prefs.getString("lang.server");
+        //String protocolString = " " + prefs.getString("lang.en.protocol");
+        String clientString = " " + prefs.getString("lang.en.client");
+        String serverString = " " + prefs.getString("lang.en.server");
 
         for (String protocolClassname : editableProtocolsClassnames) {
             String protocolShortname =
@@ -116,11 +116,11 @@ public class VSProcessEditor extends VSAbstractBetterEditor {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
 
-        if (actionCommand.equals(prefs.getString("lang.ok"))) {
+        if (actionCommand.equals(prefs.getString("lang.en.ok"))) {
             savePrefs();
             process.updateFromPrefs();
 
-        } else if (actionCommand.equals(prefs.getString("lang.takeover"))) {
+        } else if (actionCommand.equals(prefs.getString("lang.en.takeover"))) {
             savePrefs();
             process.updateFromPrefs();
 

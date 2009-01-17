@@ -36,6 +36,9 @@ import serialize.*;
  * @author Paul C. Buetow
  */
 public class VSPrefs {
+    /** Check if we want to overwrite description strings */
+    //private boolean useDefaultStrings = false;
+
     /** The Constant BOOLEAN_PREFIX. */
     public static final String BOOLEAN_PREFIX = "Boolean: ";
 
@@ -826,6 +829,14 @@ public class VSPrefs {
         initUnit(LONG_PREFIX + key, unit);
     }
 
+    /**
+     * Deletes the long.
+     *
+     * @param key the key
+     */
+    public synchronized void deleteLong(String key) {
+        longPrefs.remove(key);
+    }
 
     /**
      * Sets the long.
@@ -1187,4 +1198,13 @@ public class VSPrefs {
 
         return allKeys;
     }
+
+    /**
+     * Not overwrite description string defaults
+     */
+    /*
+        public void useDefaultStrings(boolean value) {
+    	useDefaultStrings = value;
+        }
+    */
 }

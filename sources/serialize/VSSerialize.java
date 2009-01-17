@@ -41,7 +41,7 @@ public final class VSSerialize {
     private static final long serialVersionUID = 1L;
 
     /** True if debug mode of serialization/deserialization */
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     /** The last filename used for saveing/opening*/
     public static String LAST_FILENAME = null;
@@ -195,7 +195,7 @@ public final class VSSerialize {
         VSPrefs prefs = simulator.getPrefs();
         VSSimulatorFrame simulatorFrame = simulator.getSimulatorFrame();
 
-        String saveText = prefs.getString("lang.save");
+        String saveText = prefs.getString("lang.en.save");
         JFileChooser fileChooser = new JFileChooser(
             new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
@@ -232,7 +232,9 @@ public final class VSSerialize {
 
             VSDefaultPrefs prefs = new VSDefaultPrefs();
             prefs.deserialize(this, objectInputStream);
+            //prefs.useDefaultStrings(true);
             prefs.addWithDefaults();
+
             this.setObject("prefs", prefs);
 
             simulator = new VSSimulator(prefs, simulatorFrame);
@@ -259,7 +261,7 @@ public final class VSSerialize {
     public VSSimulator openSimulator(VSSimulatorFrame simulatorFrame) {
         VSPrefs prefs = simulatorFrame.getPrefs();
 
-        String openText = prefs.getString("lang.open");
+        String openText = prefs.getString("lang.en.open");
         JFileChooser fileChooser = new JFileChooser(
             new File(".").getPath());
         fileChooser.setMultiSelectionEnabled(false);
@@ -291,7 +293,7 @@ public final class VSSerialize {
             }
 
             public String getDescription() {
-                return prefs.getString("lang.dat");
+                return prefs.getString("lang.en.dat");
             }
         };
     }

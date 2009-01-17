@@ -62,7 +62,7 @@ public class VSColorChooser extends JPanel implements ChangeListener {
         colorChooser.setColor(color);
         colorChooser.getSelectionModel().addChangeListener(this);
         colorChooser.setBorder(BorderFactory.createTitledBorder(
-                                   prefs.getString("lang.colorchooser2")));
+                                   prefs.getString("lang.en.colorchooser2")));
         add(colorChooser, BorderLayout.CENTER);
     }
 

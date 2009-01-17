@@ -113,7 +113,7 @@ public class VSSimulatorFrame extends VSFrame {
      * @param relativeTo the component to open the window relative to
      */
     public VSSimulatorFrame(VSPrefs prefs, Component relativeTo) {
-        super(prefs.getString("lang.name"), relativeTo);
+        super(prefs.getString("lang.en.name"), relativeTo);
         this.prefs = prefs;
         this.simulators = new Vector<VSSimulator>();
 
@@ -130,11 +130,11 @@ public class VSSimulatorFrame extends VSFrame {
                                  getDescription();
 
                 if (sourceText.equals(
-                finalPrefs.getString("lang.simulator.close"))) {
+                finalPrefs.getString("lang.en.simulator.close"))) {
                     removeCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.simulator.new"))) {
+                finalPrefs.getString("lang.en.simulator.new"))) {
                     VSPrefs newPrefs = VSDefaultPrefs.init();
                     VSSimulatorEditor simulatorEditor =
                         new VSSimulatorEditor(newPrefs, VSSimulatorFrame.this,
@@ -143,21 +143,21 @@ public class VSSimulatorFrame extends VSFrame {
                                       simulatorEditor);
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.window.new"))) {
+                finalPrefs.getString("lang.en.window.new"))) {
                     new VSMain(VSDefaultPrefs.init(),
                                VSSimulatorFrame.this);
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.window.close"))) {
+                finalPrefs.getString("lang.en.window.close"))) {
                     dispose();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.open"))) {
+                finalPrefs.getString("lang.en.open"))) {
                     VSSerialize serialize = new VSSerialize();
                     serialize.openSimulator(VSSimulatorFrame.this);
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.save"))) {
+                finalPrefs.getString("lang.en.save"))) {
                     VSSimulatorVisualization simulatorVisualization =
                         currentSimulator.getSimulatorCanvas();
                     boolean flag = !simulatorVisualization.isPaused()
@@ -174,7 +174,7 @@ public class VSSimulatorFrame extends VSFrame {
                         startCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.saveas"))) {
+                finalPrefs.getString("lang.en.saveas"))) {
                     VSSimulatorVisualization simulatorVisualization =
                         currentSimulator.getSimulatorCanvas();
                     boolean flag = !simulatorVisualization.isPaused()
@@ -190,27 +190,27 @@ public class VSSimulatorFrame extends VSFrame {
                         startCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.about"))) {
+                finalPrefs.getString("lang.en.about"))) {
                     new VSAboutFrame(finalPrefs, VSSimulatorFrame.this);
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.quit"))) {
+                finalPrefs.getString("lang.en.quit"))) {
                     System.exit(0);
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.start"))) {
+                finalPrefs.getString("lang.en.start"))) {
                     startCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.pause"))) {
+                finalPrefs.getString("lang.en.pause"))) {
                     pauseCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.reset"))) {
+                finalPrefs.getString("lang.en.reset"))) {
                     resetCurrentSimulator();
 
                 } else if (sourceText.equals(
-                finalPrefs.getString("lang.replay"))) {
+                finalPrefs.getString("lang.en.replay"))) {
                     VSMenuItemStates menuItemState =
                         currentSimulator.getMenuItemStates();
                     menuItemState.setStart(false);
@@ -253,11 +253,11 @@ public class VSSimulatorFrame extends VSFrame {
      */
     private JMenuBar createMenuBar() {
         /* File menu */
-        menuFile = new JMenu(prefs.getString("lang.file"));
+        menuFile = new JMenu(prefs.getString("lang.en.file"));
         menuFile.setMnemonic(prefs.getInteger("keyevent.file"));
         JMenuItem menuItem;
 
-        menuItem = new JMenuItem(prefs.getString("lang.simulator.new"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.simulator.new"));
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.new"),
                                     ActionEvent.ALT_MASK));
@@ -265,7 +265,7 @@ public class VSSimulatorFrame extends VSFrame {
         menuFile.add(menuItem);
 
         closeItem = new JMenuItem(
-            prefs.getString("lang.simulator.close"));
+            prefs.getString("lang.en.simulator.close"));
         closeItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.close"),
                                      ActionEvent.ALT_MASK));
@@ -274,31 +274,31 @@ public class VSSimulatorFrame extends VSFrame {
 
         menuFile.addSeparator();
 
-        menuItem = new JMenuItem(prefs.getString("lang.window.new"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.window.new"));
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
-        menuItem = new JMenuItem(prefs.getString("lang.window.close"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.window.close"));
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         menuFile.addSeparator();
 
-        menuItem = new JMenuItem(prefs.getString("lang.open"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.open"));
         menuItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.open"),
                                     ActionEvent.ALT_MASK));
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
-        saveItem = new JMenuItem(prefs.getString("lang.save"));
+        saveItem = new JMenuItem(prefs.getString("lang.en.save"));
         saveItem.setAccelerator(KeyStroke.getKeyStroke(
                                     prefs.getInteger("keyevent.save"),
                                     ActionEvent.ALT_MASK));
         saveItem.addActionListener(actionListener);
         menuFile.add(saveItem);
 
-        saveAsItem = new JMenuItem(prefs.getString("lang.saveas"));
+        saveAsItem = new JMenuItem(prefs.getString("lang.en.saveas"));
         saveAsItem.setAccelerator(KeyStroke.getKeyStroke(
                                       prefs.getInteger("keyevent.saveas"),
                                       ActionEvent.ALT_MASK));
@@ -307,27 +307,27 @@ public class VSSimulatorFrame extends VSFrame {
 
         menuFile.addSeparator();
 
-        menuItem = new JMenuItem(prefs.getString("lang.about"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.about"));
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
-        menuItem = new JMenuItem(prefs.getString("lang.quit"));
+        menuItem = new JMenuItem(prefs.getString("lang.en.quit"));
         menuItem.addActionListener(actionListener);
         menuFile.add(menuItem);
 
         /* Edit menu */
         menuEdit = new JMenu(
-            prefs.getString("lang.edit"));
+            prefs.getString("lang.en.edit"));
         menuEdit.setMnemonic(prefs.getInteger("keyevent.edit"));
         updateEditMenu();
 
         /* Simulator menu */
         toolBar = new JToolBar();
         menuSimulator = new JMenu(
-            prefs.getString("lang.simulator"));
+            prefs.getString("lang.en.simulator"));
         menuSimulator.setMnemonic(prefs.getInteger("keyevent.simulator"));
 
-        resetItem = new JMenuItem(prefs.getString("lang.reset"));
+        resetItem = new JMenuItem(prefs.getString("lang.en.reset"));
         resetItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.reset"),
                                      ActionEvent.ALT_MASK));
@@ -335,12 +335,12 @@ public class VSSimulatorFrame extends VSFrame {
         resetItem.setEnabled(false);
         menuSimulator.add(resetItem);
         resetButton = new JButton(getImageIcon("reset.png",
-                                               prefs.getString("lang.reset")));
+                                               prefs.getString("lang.en.reset")));
         resetButton.addActionListener(actionListener);
         toolBar.add(resetButton);
 
         replayItem = new JMenuItem(
-            prefs.getString("lang.replay"));
+            prefs.getString("lang.en.replay"));
         replayItem.setAccelerator(KeyStroke.getKeyStroke(
                                       prefs.getInteger("keyevent.replay"),
                                       ActionEvent.ALT_MASK));
@@ -348,11 +348,11 @@ public class VSSimulatorFrame extends VSFrame {
         replayItem.setEnabled(false);
         menuSimulator.add(replayItem);
         replayButton = new JButton(
-            getImageIcon("replay.png", prefs.getString("lang.replay")));
+            getImageIcon("replay.png", prefs.getString("lang.en.replay")));
         replayButton.addActionListener(actionListener);
         toolBar.add(replayButton);
 
-        pauseItem = new JMenuItem(prefs.getString("lang.pause"));
+        pauseItem = new JMenuItem(prefs.getString("lang.en.pause"));
         pauseItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.pause"),
                                      ActionEvent.ALT_MASK));
@@ -360,18 +360,18 @@ public class VSSimulatorFrame extends VSFrame {
         menuSimulator.add(pauseItem);
         pauseItem.setEnabled(false);
         pauseButton = new JButton(getImageIcon("pause.png",
-                                               prefs.getString("lang.pause")));
+                                               prefs.getString("lang.en.pause")));
         pauseButton.addActionListener(actionListener);
         toolBar.add(pauseButton);
 
-        startItem = new JMenuItem(prefs.getString("lang.start"));
+        startItem = new JMenuItem(prefs.getString("lang.en.start"));
         startItem.setAccelerator(KeyStroke.getKeyStroke(
                                      prefs.getInteger("keyevent.start"),
                                      ActionEvent.ALT_MASK));
         startItem.addActionListener(actionListener);
         menuSimulator.add(startItem);
         startButton = new JButton(getImageIcon("start.png",
-                                               prefs.getString("lang.start")));
+                                               prefs.getString("lang.en.start")));
         startButton.addActionListener(actionListener);
         toolBar.add(startButton);
 
@@ -420,7 +420,7 @@ public class VSSimulatorFrame extends VSFrame {
         menuEdit.removeAll();
 
         JMenuItem globalPrefsItem = new JMenuItem(
-            prefs.getString("lang.prefs"));
+            prefs.getString("lang.en.prefs"));
 
         globalPrefsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -439,7 +439,7 @@ public class VSSimulatorFrame extends VSFrame {
         if (currentSimulator == null)
             return;
 
-        String processString = prefs.getString("lang.process");
+        String processString = prefs.getString("lang.en.process");
         ArrayList<VSInternalProcess> arr =
             currentSimulator.getSimulatorCanvas().getProcessesArray();
 
@@ -505,7 +505,7 @@ public class VSSimulatorFrame extends VSFrame {
         simulator.setMaximumSize(new Dimension(0, 0));
 
         simulators.add(simulator);
-        tabbedPane.addTab(prefs.getString("lang.simulator")
+        tabbedPane.addTab(prefs.getString("lang.en.simulator")
                           + " " + simulator.getSimulatorNum(), simulator);
         tabbedPane.setSelectedComponent(simulator);
 

@@ -24,15 +24,12 @@
 package core;
 
 import java.awt.*;
-//import java.io.*;
-//import java.util.*;
 
 import core.time.*;
 import events.*;
 import events.implementations.*;
 import prefs.*;
 import protocols.*;
-//import serialize.*;
 import simulator.*;
 import utils.*;
 
@@ -337,7 +334,7 @@ public class VSInternalProcess extends VSAbstractProcess {
      */
     public synchronized void sendMessage(VSMessage message) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(prefs.getString("lang.message.sent"));
+        buffer.append(prefs.getString("lang.en.message.sent"));
         buffer.append("; ");
         buffer.append(message.toStringFull());
         log(buffer.toString());

@@ -28,8 +28,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * The class VSDefaultPrefs, makes sure that the simulator has its default
- * configuration values. (Btw: This is the only class which is allowed to have
- * code lines which are longer than 80 chars!)
+ * configuration values.
  *
  * @author Paul C. Buetow
  */
@@ -72,113 +71,139 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      * Fill with default strings.
      */
     public void fillDefaultStrings() {
-        initString("lang.about", "About");
-        initString("lang.about.info", "Dieses Programm wurde von Paul Bütow im Rahmen der Diplomarbeit \"Objektorientierte Entwicklung eines GUI-basierten Tools für die ereignisbasierte Simulator verteilter Systeme\" bei Prof. Dr.-Ing. Oßmann als 1. Prüfer sowie Betreuer und Prof. Dr. rer. nat. Fassbender als 2. Prüfer erstellt. Bei Fehlern bitte eine kurze Mail mit Fehlerbeschreibung an vs@paul.buetow.org schicken!");
-        initString("lang.activate", "aktivieren");
-        initString("lang.activated", "aktiviert");
-        initString("lang.actualize", "Aktualisieren");
-        initString("lang.all", "Alle");
-        initString("lang.antialiasing", "Anti-Aliasing");
-        initString("lang.cancel", "Abbrechen");
-        initString("lang.client", "Client");
-        initString("lang.clientrequest.start", "Clientanfrage starten");
-        initString("lang.close", "Schliessen");
-        initString("lang.colorchooser", "Farbauswahl");
-        initString("lang.colorchooser2", "Bitte Farbe auswählen");
-        initString("lang.copy", "Kopieren");
-        initString("lang.crashed", "Abgestürzt");
-        initString("lang.dat", "Simulation (.dat)");
-        initString("lang.deactivate", "deaktivieren");
-        initString("lang.deactivated", "deaktiviert");
-        initString("lang.default", "Defaults");
-        initString("lang.edit", "Editieren");
-        initString("lang.editor", "Editor");
-        initString("lang.event", "Ereignis");
-        initString("lang.event.add.global", "Globales Ereignis einfügen");
-        initString("lang.event.add.local", "Lokales Ereignis einfügen");
-        initString("lang.event.add.time", "bei");
-        initString("lang.events", "Ereignisse");
-        initString("lang.events.process", "Prozessereignisse");
-        initString("lang.file", "Datei");
-        initString("lang.filter", "Filter");
-        initString("lang.loging.active", "Logging");
-        initString("lang.loging.clear", "Loggs löschen");
-        initString("lang.message", "Nachricht");
-        initString("lang.message.recv", "Nachricht erhalten");
-        initString("lang.message.sent", "Nachricht versendet");
-        initString("lang.mode.expert", "Expertenmodus");
-        initString("lang.name", "VS-Simulator 1.0");
-        initString("lang.ok", "OK");
-        initString("lang.open", "Öffnen");
-        initString("lang.pause", "Pausieren");
-        initString("lang.prefs", "Einstellungen");
-        initString("lang.prefs.color", "Farbeinstellungen");
-        initString("lang.prefs.diverse", "Diverse Einstellungen");
-        initString("lang.prefs.ext", "Erweiterte Einstellungen");
-        initString("lang.prefs.message", "Nachrichteneinstellungen");
-        initString("lang.prefs.message.defaults", "Nachrichteneinstellungen für neue Prozesse");
-        initString("lang.prefs.more", "Mehr Einstellungen");
-        initString("lang.prefs.process", "Prozesseinstellungen");
-        initString("lang.prefs.process", "Prozessstandardeinstellungen");
-        initString("lang.prefs.process.defaults", "Einstellungen für neue Prozesse");
-        initString("lang.prefs.process.ext", "Erweiterte Prozesseinstellungen");
-        initString("lang.prefs.protocols", "Protokolleinstellungen");
-        initString("lang.prefs.simulator", "Simulationseinstellungen");
-        initString("lang.process", "Prozess");
-        initString("lang.process.add.new", "Neuen Prozess hinzufügen");
-        initString("lang.process.crash", "Prozess abstürzen");
-        initString("lang.process.edit", "Prozess editieren");
-        initString("lang.process.id", "PID");
-        initString("lang.process.new", "Neuer Prozess");
-        initString("lang.process.not.selected", "Kein Prozess ausgewählt");
-        initString("lang.process.recover", "Prozess wiederbeleben");
-        initString("lang.process.remove", "Prozess entfernen");
-        initString("lang.process.selected", "Aktuell ausgewählter Prozess");
-        initString("lang.process.time.local", "Lokale Zeit");
-        initString("lang.processes.all", "Alle Prozesse");
-        initString("lang.protocol", "Protokoll");
-        initString("lang.protocol.client", "Clientseite");
-        initString("lang.protocol.editor", "Protokolleditor");
-        initString("lang.protocol.server", "Serverseite");
-        initString("lang.protocol.tasks.activation", "Client-/Serverprotokoll Aktivierung");
-        initString("lang.protocol.tasks.client", "Client Task-Manager (Clientanfragen)");
-        initString("lang.protocols", "Protokolle");
-        initString("lang.quit", "Beenden");
-        initString("lang.recovered", "Wiederbelebt");
-        initString("lang.remove", "Entfernen");
-        initString("lang.replay", "Wiederholen");
-        initString("lang.reset", "Reset");
-        initString("lang.save", "Speichern");
-        initString("lang.saveas", "Speichern unter");
-        initString("lang.server", "Server");
-        initString("lang.serverrequest.start", "Serveranfrage starten");
-        initString("lang.simulator", "Simulator");
-        initString("lang.simulator.close", "Simulation schliessen");
-        initString("lang.simulator.finished", "Simulation beendet");
-        initString("lang.simulator.new", "Neue Simulation");
-        initString("lang.simulator.paused", "Simulation pausiert");
-        initString("lang.simulator.resetted", "Simulation zurückgesetzt");
-        initString("lang.simulator.started", "Simulation gestartet");
-        initString("lang.start", "Starten");
-        initString("lang.stop", "Stoppen");
-        initString("lang.takeover", "Übernehmen");
-        initString("lang.task", "Aufgabe");
-        initString("lang.task.manager", "Ereigniseditor");
-        initString("lang.tasks.fullfilled", "Abgelaufene Aufgaben");
-        initString("lang.tasks.global", "Globale Aufgaben");
-        initString("lang.tasks.local", "Lokale Aufgaben");
-        initString("lang.time", "Zeit");
-        initString("lang.time.lamport", "Lamportzeit");
-        initString("lang.time.vector", "Vektorzeit");
-        initString("lang.timed.global", "Globale Ereignisse");
-        initString("lang.timed.local", "Lokale Ereignisse");
-        initString("lang.type", "Typ");
-        initString("lang.value", "Wert");
-        initString("lang.variable", "Variable");
-        initString("lang.variables", "Variablen");
-        initString("lang.variables.global", "Globale Variablen");
-        initString("lang.window.close", "Fenster schliessen");
-        initString("lang.window.new", "Neues Fenster");
+        initString("lang.en.about", "About");
+        initString("lang.en.about.info", "This program used to be the diploma thesis of Paul C. Buetow. Please contact vs@dev.buetow.org, if you find any errors!");
+        initString("lang.en.activate", "activate");
+        initString("lang.en.activated", "activated");
+        initString("lang.en.actualize", "Activation");
+        initString("lang.en.all", "All");
+        initString("lang.en.antialiasing", "Anti-Aliasing");
+        initString("lang.en.cancel", "Abort");
+        initString("lang.en.client", "Client");
+        initString("lang.en.clientrequest.start", "Start client request");
+        initString("lang.en.close", "Close");
+        initString("lang.en.colorchooser", "Color chooser");
+        initString("lang.en.colorchooser2", "Please select color");
+        initString("lang.en.copy", "Copy");
+        initString("lang.en.crashed", "Crashed");
+        initString("lang.en.dat", "Simulation (.dat)");
+        initString("lang.en.deactivate", "deactivate");
+        initString("lang.en.deactivated", "deactivated");
+        initString("lang.en.default", "Defaults");
+        initString("lang.en.edit", "Edit");
+        initString("lang.en.editor", "Editor");
+        initString("lang.en.event", "Event");
+        initString("lang.en.event.add.global", "Insert global event");
+        initString("lang.en.event.add.local", "Insert local event");
+        initString("lang.en.event.add.time", "at");
+        initString("lang.en.events", "Events");
+        initString("lang.en.events.process", "Process events");
+        initString("lang.en.file", "File");
+        initString("lang.en.filter", "Filter");
+        initString("lang.en.loging.active", "Logging");
+        initString("lang.en.loging.clear", "Delete logs");
+        initString("lang.en.message", "Message");
+        initString("lang.en.message.recv", "Message received");
+        initString("lang.en.message.sent", "Message sent");
+        initString("lang.en.mode.expert", "Expert mode");
+        initString("lang.en.name", "VS-Simulator 1.1");
+        initString("lang.en.ok", "OK");
+        initString("lang.en.open", "Open");
+        initString("lang.en.pause", "Paus");
+        initString("lang.en.prefs", "Preferences");
+        initString("lang.en.prefs.color", "Color preferences");
+        initString("lang.en.prefs.diverse", "Diverse preferences");
+        initString("lang.en.prefs.ext", "Extended preferences");
+        initString("lang.en.prefs.message", "Message preferences");
+        initString("lang.en.prefs.message.defaults", "Message prefs. for new processes");
+        initString("lang.en.prefs.more", "More preferences");
+        initString("lang.en.prefs.process", "Process preferences");
+        initString("lang.en.prefs.process", "Standard process preferences");
+        initString("lang.en.prefs.process.defaults", "Preferences for new processes");
+        initString("lang.en.prefs.process.ext", "Extended process preferences");
+        initString("lang.en.prefs.protocols", "Protocol preferences");
+        initString("lang.en.prefs.simulator", "Simulator preferences");
+        initString("lang.en.process", "Process");
+        initString("lang.en.process.add.new", "Insert new process");
+        initString("lang.en.process.crash", "Crash process");
+        initString("lang.en.process.edit", "Edit process");
+        initString("lang.en.process.id", "PID");
+        initString("lang.en.process.new", "New process");
+        initString("lang.en.process.not.selected", "No process selected");
+        initString("lang.en.process.recover", "Recover process");
+        initString("lang.en.process.remove", "Remove process");
+        initString("lang.en.process.selected", "Selected process");
+        initString("lang.en.process.time.local", "Local time");
+        initString("lang.en.processes.all", "All processes");
+        initString("lang.en.protocol", "Protocol");
+        initString("lang.en.protocol.client", "Client side");
+        initString("lang.en.protocol.editor", "Protocol editor");
+        initString("lang.en.protocol.server", "Server side");
+        initString("lang.en.protocol.tasks.activation", "Client-/Server protocol activation");
+        initString("lang.en.protocol.tasks.client", "Client Task-Manager (Client request)");
+        initString("lang.en.protocols", "Protocols");
+        initString("lang.en.quit", "Quit");
+        initString("lang.en.recovered", "Recovered");
+        initString("lang.en.remove", "Remove");
+        initString("lang.en.replay", "Repeat");
+        initString("lang.en.reset", "Reset");
+        initString("lang.en.save", "Save");
+        initString("lang.en.saveas", "Save as");
+        initString("lang.en.server", "Server");
+        initString("lang.en.serverrequest.start", "Start server request");
+        initString("lang.en.simulator", "Simulator");
+        initString("lang.en.simulator.close", "Close simulation");
+        initString("lang.en.simulator.finished", "Simulation closed");
+        initString("lang.en.simulator.new", "New simulation");
+        initString("lang.en.simulator.paused", "Simulation paused");
+        initString("lang.en.simulator.resetted", "Simulation resetted");
+        initString("lang.en.simulator.started", "Simulation started");
+        initString("lang.en.start", "Start");
+        initString("lang.en.stop", "Stop");
+        initString("lang.en.takeover", "Take over");
+        initString("lang.en.task", "Task");
+        initString("lang.en.task.manager", "Event editor");
+        initString("lang.en.tasks.fullfilled", "Fullfilled tasks");
+        initString("lang.en.tasks.global", "GLobal tasks");
+        initString("lang.en.tasks.local", "Local tasks");
+        initString("lang.en.time", "Time");
+        initString("lang.en.time.lamport", "Lamport time");
+        initString("lang.en.time.vector", "Vector time");
+        initString("lang.en.timed.global", "Global events");
+        initString("lang.en.timed.local", "Local events");
+        initString("lang.en.type", "Type");
+        initString("lang.en.value", "Value");
+        initString("lang.en.variable", "Variable");
+        initString("lang.en.variables", "Variables");
+        initString("lang.en.variables.global", "Global variables");
+        initString("lang.en.window.close", "Close window");
+        initString("lang.en.window.new", "New window");
+
+        /* Protocol names */
+        initString("lang.en.events.implementations.VSProcessCrashEvent", "Process Crash Event");
+        initString("lang.en.events.implementations.VSProcessCrashEvent.short", "Process Crash");
+        initString("lang.en.events.implementations.VSProcessRecoverEvent", "Process Recover Event");
+        initString("lang.en.events.implementations.VSProcessRecoverEvent.short", "Process Recover");
+        initString("lang.en.protocols.implementations.VSBasicMulticastProtocol", "Basic Multicast Protocol");
+        initString("lang.en.protocols.implementations.VSBasicMulticastProtocol.short", "Basic Multicast");
+        initString("lang.en.protocols.implementations.VSBerkelyTimeProtocol", "Berkley algorithm for internal sync.");
+        initString("lang.en.protocols.implementations.VSBerkelyTimeProtocol.short", "Berkley Protocol");
+        initString("lang.en.protocols.implementations.VSBroadcastProtocol", "Broadcast Protocol");
+        initString("lang.en.protocols.implementations.VSBroadcastProtocol.short", "Broadcast");
+        initString("lang.en.protocols.implementations.VSDummyProtocol", "Example/Dummy Protocol");
+        initString("lang.en.protocols.implementations.VSDummyProtocol.short", "Example/Dummy");
+        initString("lang.en.protocols.implementations.VSExternalTimeSyncProtocol", "Christians method for external sync.");
+        initString("lang.en.protocols.implementations.VSExternalTimeSyncProtocol.short", "Christians");
+        initString("lang.en.protocols.implementations.VSInternalTimeSyncProtocol", "Internal Synchronization Protocol");
+        initString("lang.en.protocols.implementations.VSInternalTimeSyncProtocol.short", "Internal sync.");
+        initString("lang.en.protocols.implementations.VSOnePhaseCommitProtocol", "One-Phase Commit Protocol");
+        initString("lang.en.protocols.implementations.VSOnePhaseCommitProtocol.short", "1-Phase Commit");
+        initString("lang.en.protocols.implementations.VSPingPongProtocol", "Ping-Pong Protocol");
+        initString("lang.en.protocols.implementations.VSPingPongProtocol.short", "Ping-Pong");
+        initString("lang.en.protocols.implementations.VSReliableMulticastProtocol", "Reliable Multicast Protocol");
+        initString("lang.en.protocols.implementations.VSReliableMulticastProtocol.short", "Reliable Multicast");
+        initString("lang.en.protocols.implementations.VSTwoPhaseCommitProtocol", "Two-Phase Commit");
+        initString("lang.en.protocols.implementations.VSTwoPhaseCommitProtocol.short", "2-Phase Commit");
     }
 
     /**
@@ -186,10 +211,10 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      */
     public void fillDefaultIntegers() {
         /* Simulator prefs */
-        initInteger("sim.process.num", 3, "Anzahl der Prozesse", 1, 6);
-        initInteger("message.prob.outage", 0, "Nachrichtenverlustw'keit", 0, 100, "%");
-        initInteger("process.prob.crash", 0, "Prozessausfallw'keit", 0, 100, "%");
-        initInteger("sim.seconds", 15, "Dauer der Simulation", 5, 120, "s");
+        initInteger("sim.process.num", 3, "Number of processes", 1, 6);
+        initInteger("message.prob.outage", 0, "Message lost prob.", 0, 100, "%");
+        initInteger("process.prob.crash", 0, "Process crash prob.", 0, 100, "%");
+        initInteger("sim.seconds", 15, "Simulation duration", 5, 120, "s");
 
         /* Internal prefs */
         initInteger("keyevent.about", KeyEvent.VK_A, null, 0, 100);
@@ -215,12 +240,12 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
         initInteger("keyevent.start", KeyEvent.VK_S, null, 0, 100);
         initInteger("keyevent.stop", KeyEvent.VK_P, null, 0, 100);
 
-        initInteger("div.window.prefs.xsize", 400, "Einstellungsfenster X-Achse", 550, 3200, "px");
-        initInteger("div.window.prefs.ysize", 400, "Einstellungsfenster Y-Achse", 640, 2400, "px");
-        initInteger("div.window.logsize", 300, "Loggfenster Y-Achse", 100, 1000, "px");
-        initInteger("div.window.splitsize", 320, "Toolbar X-Achse", 100, 1000, "px");
-        initInteger("div.window.xsize", 1024, "Hauptfenster X-Achse", 750, 3200, "px");
-        initInteger("div.window.ysize", 768, "Hauptfenster Y-Achse", 600, 2400, "px");
+        initInteger("div.window.prefs.xsize", 400, "Configuration window X-Axis", 550, 3200, "px");
+        initInteger("div.window.prefs.ysize", 400, "Configuration window Y-Axis", 640, 2400, "px");
+        initInteger("div.window.logsize", 300, "Log window Y-Axis", 100, 1000, "px");
+        initInteger("div.window.splitsize", 320, "Toolbar X-Axis", 100, 1000, "px");
+        initInteger("div.window.xsize", 1024, "Main window X-Axis", 750, 3200, "px");
+        initInteger("div.window.ysize", 768, "Main window Y-Axis", 600, 2400, "px");
     }
 
     /**
@@ -228,8 +253,8 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      */
     public void fillDefaultFloats() {
         /* Simulator prefs */
-        initFloat("process.clock.variance", 0, "Uhrabweichung");
-        initFloat("sim.clock.speed", 0.5f, "Abspielgeschwindigkeit der Simulation");
+        initFloat("process.clock.variance", 0, "Clock variance");
+        initFloat("sim.clock.speed", 0.5f, "Simulation play speed");
     }
 
     /**
@@ -237,8 +262,8 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      */
     public void fillDefaultLongs() {
         /* Simulator prefs */
-        initLong("message.sendingtime.min", 500, "Minimale Übertragungszeit", "ms");
-        initLong("message.sendingtime.max", 2000, "Maximale Übertragungszeit", "ms");
+        initLong("message.sendingtime.min", 500, "Max transmission time", "ms");
+        initLong("message.sendingtime.max", 2000, "Min transmission time", "ms");
     }
 
     /**
@@ -264,13 +289,13 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      * Fill with default booleans.
      */
     public void fillDefaultBooleans() {
-        initBoolean("sim.mode.expert", false, "Expertenmodus aktivieren");
-        initBoolean("sim.message.own.recv", false, "Prozesse empfangen eigene Nachrichten");
-        initBoolean("sim.message.prob.mean", true, "Mittelwerte der Nachrichtverlustw'k. bilden");
-        initBoolean("sim.message.sendingtime.mean", true, "Mittelwerte der Übertragungszeiten bilden");
-        initBoolean("sim.messages.relevant", true, "Nur relevante Nachrichten anzeigen");
-        initBoolean("sim.periodic", false, "Simulation periodisch wiederholen");
-        initBoolean("sim.update.lamporttime.all", false, "Lamportzeiten betreffen alle Ereignisse");
-        initBoolean("sim.update.vectortime.all", false, "Vektorzeiten betreffen alle Ereignisse");
+        initBoolean("sim.mode.expert", false, "Expert mode");
+        initBoolean("sim.message.own.recv", false, "Processes receive own messages");
+        initBoolean("sim.message.prob.mean", true, "Use mean value of message lost prob.");
+        initBoolean("sim.message.sendingtime.mean", true, "Use mean value of transmission times");
+        initBoolean("sim.messages.relevant", true, "Only show relevant messages");
+        initBoolean("sim.periodic", false, "Repeat simulation periodically");
+        initBoolean("sim.update.lamporttime.all", false, "Lamport timestamps affect all events");
+        initBoolean("sim.update.vectortime.all", false, "Vector timestamps affect all events");
     }
 }

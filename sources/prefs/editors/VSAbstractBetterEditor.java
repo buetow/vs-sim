@@ -28,7 +28,6 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import prefs.*;
-//import utils.*;
 
 /**
  * The class VSAbstractBetterEditor, is an improved VSAbstractEditor.
@@ -43,7 +42,6 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
     private Container contentPane;
 
     /** The info area. */
-    //private VSInfoArea infoArea;
 
     /** The title. */
     private String title;
@@ -90,13 +88,10 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
         JPanel panel  = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        //infoArea = new VSInfoArea();
         JPanel editPanel = getEditPanel();
         JPanel buttonPanel = getButtonPanel();
 
-        //JScrollPane scrollPane = new JScrollPane(editPanel);
         panel.add(editPanel);
-        //panel.add(infoArea);
         panel.add(buttonPanel);
 
         return panel;
@@ -128,13 +123,4 @@ public abstract class VSAbstractBetterEditor extends VSAbstractEditor {
         /* More action in the super class!!! */
         super.actionPerformed(e);
     }
-
-    /**
-     * Gets the info area.
-     *
-     * @return the info area
-     */
-    //protected VSInfoArea getInfoArea() {
-    //   return infoArea;
-    //}
 }

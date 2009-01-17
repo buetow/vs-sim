@@ -358,7 +358,7 @@ public class VSTask implements Comparable, VSSerializable {
     public String toString() {
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append(prefs.getString("lang.task"));
+        buffer.append(prefs.getString("lang.en.task"));
         buffer.append(" ");
         buffer.append(getTaskTime());
         buffer.append(event.toString());

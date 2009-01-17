@@ -41,6 +41,9 @@ public class VSMain {
     /** The serial version uid */
     private static final long serialVersionUID = 1L;
 
+    /** The global preferences */
+    public static VSPrefs prefs;
+
     /**
      * Instantiates a new VSMain object.
      *
@@ -68,6 +71,7 @@ public class VSMain {
      */
     private void init(VSPrefs prefs, Component relativeTo) {
         //VSSimulatorFrame simulatorFrame =
+        VSMain.prefs = prefs;
         new VSSimulatorFrame(prefs, relativeTo);
     }
 

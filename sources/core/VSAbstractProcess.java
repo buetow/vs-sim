@@ -243,7 +243,7 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
 
         /* Make additional process settings editable through GUI */
         initLong("process.localtime", localTime,
-                 prefs.getString("lang.process.time.local"), "ms");
+                 prefs.getString("lang.en.process.time.local"), "ms");
 
         createRandomCrashTask_();
     }
@@ -603,19 +603,19 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
      */
     public synchronized String toString() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(prefs.getString("lang.process.id"));
+        buffer.append(prefs.getString("lang.en.process.id"));
         buffer.append(": ");
         buffer.append(getProcessID());
         buffer.append("; ");
-        buffer.append(prefs.getString("lang.process.time.local"));
+        buffer.append(prefs.getString("lang.en.process.time.local"));
         buffer.append(": ");
         buffer.append(VSTools.getTimeString(getTime()));
         buffer.append("; ");
-        buffer.append(prefs.getString("lang.time.lamport"));
+        buffer.append(prefs.getString("lang.en.time.lamport"));
         buffer.append(": ");
         buffer.append(lamportTime);
         buffer.append("; ");
-        buffer.append(prefs.getString("lang.time.vector"));
+        buffer.append(prefs.getString("lang.en.time.vector"));
         buffer.append(": ");
         buffer.append(vectorTime);
         return buffer.toString();
@@ -695,6 +695,11 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
                                          ObjectInputStream objectInputStream)
     throws IOException, ClassNotFoundException {
         super.deserialize(serialize, objectInputStream);
+
+        /* Bugfix, being compatible with old versions */
+        super.deleteLong("process.localTime");
+
+
         updateFromPrefs_();
 
         if (VSSerialize.DEBUG)
@@ -715,7 +720,7 @@ public abstract class VSAbstractProcess extends VSSerializablePrefs
         }
 
         localTime = 0;
-        setLong("process.localTime", localTime);
+        setLong("process.localtime", localTime);
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();

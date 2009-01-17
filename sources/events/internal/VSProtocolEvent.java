@@ -139,13 +139,13 @@ public class VSProtocolEvent extends VSAbstractInternalEvent
 
         buffer.append(" ");
         buffer.append(isClientProtocol
-                      ? prefs.getString("lang.client")
-                      : prefs.getString("lang.server"));
+                      ? prefs.getString("lang.en.client")
+                      : prefs.getString("lang.en.server"));
 
         buffer.append(" ");
         buffer.append(isProtocolActivation
-                      ? prefs.getString("lang.activated")
-                      : prefs.getString("lang.deactivated"));
+                      ? prefs.getString("lang.en.activated")
+                      : prefs.getString("lang.en.deactivated"));
 
         log(buffer.toString());
     }
@@ -195,6 +195,5 @@ public class VSProtocolEvent extends VSAbstractInternalEvent
 
         /** For later backwards compatibility, to add more stuff */
         objectInputStream.readObject();
-
     }
 }
