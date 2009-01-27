@@ -2,10 +2,12 @@ VS-Simulator Plan:
 
 Version 1.1:
 	English version (in progress)
-	Easy Plugin-API, w/o having the complete sources available		
+		Protocol language specific has to be in VSDefaultPrefs as well.
 	Update of diplomarbeit.pdf (german only), rename it into vs-sim.pdf.
+		Has to include the language thing
 
 Version 1.2 and later:
+	Easy Plugin-API, w/o having the complete sources available		
 	Ereigniseintritt bei Lamport und Vektorzeiten
 	Print warning if not activated protocol while doing a protocol request
 	vs-sim.pdf: Beschreiben, dass Aktivierung/Deaktivierung prioritaet hat bei Ereigniseditor
