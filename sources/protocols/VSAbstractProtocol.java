@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * VS-Simulator (http://vs-sim.buetow.org)
+ * Copyright (c) 2008 - 2009 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,7 +32,6 @@ import events.*;
 import events.internal.*;
 import serialize.*;
 import simulator.VSSimulatorVisualization;
-//import utils.*;
 
 /**
  * The class VSAbstractProtocol, this class defined the basic framework of a
@@ -401,6 +401,13 @@ abstract public class VSAbstractProtocol extends VSAbstractEvent {
 
         VSInternalProcess internalProcess = (VSInternalProcess) process;
         return internalProcess.getSimulatorCanvas().getNumProcesses();
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractEvent#createShortname()()
+     */
+    protected String createShortname(String savedShortname) {
+	return savedShortname;
     }
 
     /* (non-Javadoc)

@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * VS-Simulator (http://vs-sim.buetow.org)
+ * Copyright (c) 2008 - 2009 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +31,6 @@ import core.VSInternalProcess;
 import exceptions.*;
 import prefs.*;
 import serialize.*;
-//import utils.*;
 
 /**
  * The class VSAbstractEvent. This abstract class defines the basic framework
@@ -202,6 +202,15 @@ abstract public class VSAbstractEvent extends VSSerializablePrefs {
      */
     abstract public void onStart();
 
+    /**
+     * Every event has to be able to set its own shortname
+     *
+     * @param shortName The saved short name. May be overwritten due wrong lang
+     *
+     * @return The event's shortname
+     */
+    abstract protected String createShortname(String savedShortname);
+
     /* (non-Javadoc)
      * @see serialize.VSSerializable#serialize(serialize.VSSerialize,
      *	java.io.ObjectOutputStream)
@@ -242,8 +251,9 @@ abstract public class VSAbstractEvent extends VSSerializablePrefs {
         objectInputStream.readObject();
 
         int id = ((Integer) objectInputStream.readObject()).intValue();
-        this.eventShortname = (String) objectInputStream.readObject();
+        String savedEventShortname = (String) objectInputStream.readObject();
         this.eventClassname = (String) objectInputStream.readObject();
+	this.eventShortname = createShortname(savedEventShortname);
 
         if (VSSerialize.DEBUG)
             System.out.println(eventClassname);

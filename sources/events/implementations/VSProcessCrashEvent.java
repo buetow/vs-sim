@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * VS-Simulator (http://vs-sim.buetow.org)
+ * Copyright (c) 2008 - 2009 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,6 +25,7 @@
 package events.implementations;
 
 import events.*;
+import simulator.*;
 
 /**
  * The class VSProcessCrashEvent. This event makes a process to crash.
@@ -46,6 +48,13 @@ public class VSProcessCrashEvent extends VSAbstractEvent
      */
     public void onInit() {
         setClassname(getClass().toString());
+    }
+
+    /* (non-Javadoc)
+     * @see events.VSAbstractEvent#createShortname()()
+     */
+    protected String createShortname(String savedShortname) {
+	return VSMain.prefs.getString("lang.en.process.crash");
     }
 
     /* (non-Javadoc)

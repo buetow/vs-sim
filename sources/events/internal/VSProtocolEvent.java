@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * VS-Simulator (http://vs-sim.buetow.org)
+ * Copyright (c) 2008 - 2009 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +30,6 @@ import core.VSInternalProcess;
 import events.*;
 import protocols.VSAbstractProtocol;
 import serialize.VSSerialize;
-//import simulator.VSSimulatorVisualization;
 
 /**
  * The class VSProtocolEvent, this event is used if a protocol (server or

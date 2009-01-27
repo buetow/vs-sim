@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * VS-Simulator (http://vs-sim.buetow.org)
+ * Copyright (c) 2008 - 2009 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,12 +34,10 @@ import javax.swing.table.*;
 
 import core.*;
 import events.*;
-//import events.internal.*;
 import exceptions.*;
 import prefs.*;
 import prefs.editors.*;
 import serialize.*;
-//import utils.*;
 
 /**
  * The class VSSimulator, an object of this class represents a whole simulator.
@@ -78,9 +77,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
     /** The processes combo box. */
     private JComboBox processesComboBox;
 
-    /** The global add panel. */
-    //private JPanel globalAddPanel;
-
     /** The local add panel. */
     private JPanel localAddPanel;
 
@@ -89,9 +85,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
     /** The loging panel. */
     private JPanel logingPanel;
-
-    /** The tools panel. */
-    //private JPanel toolsPanel;
 
     /** The split pane1. */
     private JSplitPane splitPane1;
@@ -149,9 +142,6 @@ public class VSSimulator extends JPanel implements VSSerializable {
 
     /** The task manager local editor. */
     private VSTaskManagerCellEditor taskManagerLocalEditor;
-
-    /** The simulator has started. */
-    //private boolean hasStarted = false;
 
     /** The last selected process num. */
     private int lastSelectedProcessNum;
