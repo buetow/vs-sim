@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Paul C. Buetow, vs@dev.buetow.org
+ * Copyright (c) 2008 Paul C. Buetow, vs-sim@dev.buetow.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -72,7 +72,7 @@ public class VSDefaultPrefs extends VSSerializablePrefs {
      */
     public void fillDefaultStrings() {
         initString("lang.en.about", "About");
-        initString("lang.en.about.info", "This program used to be the diploma thesis of Paul C. Buetow. Please contact vs@dev.buetow.org, if you find any errors!");
+        initString("lang.en.about.info", "This program used to be the diploma thesis of Paul C. Buetow. Please contact vs-sim@dev.buetow.org, if you find any errors!");
         initString("lang.en.activate", "activate");
         initString("lang.en.activated", "activated");
         initString("lang.en.actualize", "Activation");

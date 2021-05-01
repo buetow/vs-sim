@@ -1,5 +1,5 @@
 /*
- * VS-Simulator (http://vs-sim.buetow.org)
+ * VS-Simulator (http://buetow.org)
  * Copyright (c) 2008 by Dipl.-Inform. (FH) Paul C. Buetow
  *
  * This program is free software; you can redistribute it and/or
